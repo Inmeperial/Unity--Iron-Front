@@ -3,18 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 public class TileHighlight : MonoBehaviour
 {
+    public Character character;
     Transform previousTile;
+    public AStarAgent agent;
     public LayerMask mask;
+    List<Tile> _previewPath = new List<Tile>();
+    public bool characterMoving;
     // Update is called once per frame
     void Update()
     {
         if (previousTile != null)
         {
             MouseExitsTile();
-            previousTile = null;
+            if (!characterMoving)
+                EndPreview();
         }
 
-        CheckTile();
+        if (!characterMoving)
+        {
+            CheckTile();
+        }
     }
 
     void CheckTile()
@@ -33,10 +41,11 @@ public class TileHighlight : MonoBehaviour
     public void MouseOverTile(Tile tile)
     {
         Material mat = new Material(tile.render.sharedMaterial);
-        mat.color = Color.yellow;
+        mat.color = Color.blue;
 
         tile.render.sharedMaterial = mat;
         previousTile = tile.transform;
+        PathPreview(character.GetTileBelow(), tile);
     }
 
     public void MouseExitsTile()
@@ -46,5 +55,31 @@ public class TileHighlight : MonoBehaviour
         mat.color = Color.green;
 
         tile.render.sharedMaterial = mat;
+    }
+
+    public void EndPreview()
+    {
+        previousTile = null;
+        if (_previewPath.Count > 0)
+        {
+            foreach (var item in _previewPath)
+            {
+                item.EndPreview();
+            }
+            _previewPath.Clear();
+        }
+    }
+    public void PathPreview(Tile start, Tile end)
+    {
+        agent.init = start;
+        agent.finit = end;
+        _previewPath = agent.PathFindingAstar();
+        if (_previewPath.Count > 0)
+        {
+            foreach (var tile in _previewPath)
+            {
+                tile.PreviewColor();
+            }
+        }
     }
 }

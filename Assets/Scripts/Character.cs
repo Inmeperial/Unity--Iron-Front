@@ -42,7 +42,7 @@ public class Character : MonoBehaviour
         else return false;
     }
 
-    Tile GetTileBelow()
+    public Tile GetTileBelow()
     {
         RaycastHit hit;
         Physics.Raycast(transform.position, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
