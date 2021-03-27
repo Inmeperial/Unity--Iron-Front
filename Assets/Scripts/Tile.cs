@@ -8,10 +8,14 @@ public class Tile : MonoBehaviour
     public bool isWalkable;
     public MeshRenderer render;
     public List<Tile> neighbours;
+    public LayerMask obstacle;
 
     private void Start()
     {
-        GetNeighbours();
+
+        if (TileAbove() == false)
+            GetNeighbours();
+        else MakeNotWalkable();
     }
 
     public void MakeWalkable()
@@ -31,13 +35,6 @@ public class Tile : MonoBehaviour
         render.sharedMaterial = mat;
     }
 
-    //public void Change()
-    //{
-    //    if (isWalkable)
-    //        MakeNotWalkable();
-    //    else MakeWalkable();
-    //}
-
     void RayToNeighbours(Vector3 dir)
     {
         RaycastHit hit;
@@ -45,7 +42,8 @@ public class Tile : MonoBehaviour
         {
             var neighbour = hit.collider.GetComponent<Tile>();
             if (neighbour != null && neighbour.isWalkable)
-                neighbours.Add(neighbour);
+                if (!neighbours.Contains(neighbour))
+                    neighbours.Add(neighbour);
         }
     }
 
@@ -74,16 +72,19 @@ public class Tile : MonoBehaviour
         RayToNeighbours(Vector3.left);
         RayToNeighbours(Vector3.forward);
         RayToNeighbours(Vector3.back);
-        RayToNeighbours(Vector3.up);
         RayToNeighbours((Vector3.up + Vector3.right).normalized);
         RayToNeighbours((Vector3.up + Vector3.back).normalized);
         RayToNeighbours((Vector3.up + Vector3.left).normalized);
         RayToNeighbours((Vector3.up + Vector3.forward).normalized);
-        RayToNeighbours(Vector3.down);
         RayToNeighbours((Vector3.down + Vector3.right).normalized);
         RayToNeighbours((Vector3.down + Vector3.back).normalized);
         RayToNeighbours((Vector3.down + Vector3.left).normalized);
         RayToNeighbours((Vector3.down + Vector3.forward).normalized);
+    }
+
+    bool TileAbove()
+    {
+        return Physics.Raycast(transform.position, transform.up, 1, obstacle);
     }
 
 

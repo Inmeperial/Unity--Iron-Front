@@ -78,12 +78,14 @@ public class GridGenerator : EditorWindow
                 GameObject obj;
                 if (container)
                 {
-                    obj = Instantiate(tiles, pos, container.transform.rotation, container);
+                    //obj = Instantiate(tiles, pos, container.transform.rotation, container);
+                    obj = PrefabUtility.InstantiatePrefab(tiles, container) as GameObject;
                 }
                 else
                 {
-                    obj = Instantiate(tiles, pos, Quaternion.identity);
+                    obj = PrefabUtility.InstantiatePrefab(tiles) as GameObject;
                 }
+                obj.transform.localPosition = pos;
                 obj.GetComponent<Tile>().MakeWalkable();
             }
         }
