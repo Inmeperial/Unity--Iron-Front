@@ -6,6 +6,11 @@ public class CharacterSelection : MonoBehaviour
 {
     public LayerMask charMask;
     public Character _selection;
+    TileHighlight _highlight;
+    private void Start()
+    {
+        _highlight = GetComponent<TileHighlight>();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -16,7 +21,7 @@ public class CharacterSelection : MonoBehaviour
     void SelectCharacter(LayerMask charMask)
     {
         var character = MouseRay.GetTarget(charMask);
-        if (character.CompareTag("Character"))
+        if (character != null && character.CompareTag("Character"))
         {
             Debug.Log("SELECCION");
             if (_selection != null)
@@ -25,6 +30,7 @@ public class CharacterSelection : MonoBehaviour
             }
             _selection = character.GetComponent<Character>();
             _selection.SelectThisUnit();
+            _highlight.ChangeActiveCharacter(_selection);
         }
     }
 

@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 public class TileHighlight : MonoBehaviour
 {
-    public Character character;
+    Character _character;
     Transform previousTile;
     public AStarAgent agent;
     public LayerMask mask;
     List<Tile> _previewPath = new List<Tile>();
     public bool characterMoving;
-    public CharacterSelection charSelector;
+    CharacterSelection _charSelector;
+
+    private void Start()
+    {
+        _charSelector = GetComponent<CharacterSelection>();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -20,7 +25,7 @@ public class TileHighlight : MonoBehaviour
                 EndPreview();
         }
 
-        if (character != null && character._selected && !characterMoving)
+        if (_character != null && _character._selected && !characterMoving)
         {
             CheckTile();
         }
@@ -46,7 +51,7 @@ public class TileHighlight : MonoBehaviour
 
         tile.render.sharedMaterial = mat;
         previousTile = tile.transform;
-        PathPreview(charSelector.GetActualChar());
+        PathPreview(_charSelector.GetActualChar());
     }
 
     public void MouseExitsTile()
@@ -87,5 +92,10 @@ public class TileHighlight : MonoBehaviour
             }
         }
         
+    }
+
+    public void ChangeActiveCharacter(Character character)
+    {
+        this._character = character;
     }
 }
