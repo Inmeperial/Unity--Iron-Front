@@ -9,6 +9,7 @@ public class TileHighlight : MonoBehaviour
     public LayerMask mask;
     List<Tile> _previewPath = new List<Tile>();
     public bool characterMoving;
+    public CharacterSelection charSelector;
     // Update is called once per frame
     void Update()
     {
@@ -19,7 +20,7 @@ public class TileHighlight : MonoBehaviour
                 EndPreview();
         }
 
-        if (!characterMoving)
+        if (character != null && character._selected && !characterMoving)
         {
             CheckTile();
         }
@@ -45,7 +46,7 @@ public class TileHighlight : MonoBehaviour
 
         tile.render.sharedMaterial = mat;
         previousTile = tile.transform;
-        PathPreview(character.GetTileBelow(), tile);
+        PathPreview(charSelector.GetActualChar());
     }
 
     public void MouseExitsTile()
@@ -69,17 +70,22 @@ public class TileHighlight : MonoBehaviour
             _previewPath.Clear();
         }
     }
-    public void PathPreview(Tile start, Tile end)
+    public void PathPreview(Character character)
     {
-        agent.init = start;
-        agent.finit = end;
-        _previewPath = agent.PathFindingAstar();
-        if (_previewPath.Count > 0)
+        var start = character.GetTileBelow();
+        if (start)
         {
-            foreach (var tile in _previewPath)
+            agent.init = start;
+            agent.finit = previousTile.GetComponent<Tile>();
+            _previewPath = agent.PathFindingAstar();
+            if (_previewPath.Count > 0)
             {
-                tile.PreviewColor();
+                foreach (var tile in _previewPath)
+                {
+                    tile.PreviewColor();
+                }
             }
         }
+        
     }
 }
