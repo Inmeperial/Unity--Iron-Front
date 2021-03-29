@@ -56,7 +56,6 @@ public class TileHighlight : MonoBehaviour
         {
             PathPreview(_charSelector.GetActualChar());
         }
-        
     }
 
     public void MouseExitsTile()

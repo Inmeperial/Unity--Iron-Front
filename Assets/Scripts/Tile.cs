@@ -77,14 +77,14 @@ public class Tile : MonoBehaviour
         RayToNeighbours(Vector3.left);
         RayToNeighbours(Vector3.forward);
         RayToNeighbours(Vector3.back);
-        RayToNeighbours((Vector3.up + Vector3.right).normalized);
-        RayToNeighbours((Vector3.up + Vector3.back).normalized);
-        RayToNeighbours((Vector3.up + Vector3.left).normalized);
-        RayToNeighbours((Vector3.up + Vector3.forward).normalized);
-        RayToNeighbours((Vector3.down + Vector3.right).normalized);
-        RayToNeighbours((Vector3.down + Vector3.back).normalized);
-        RayToNeighbours((Vector3.down + Vector3.left).normalized);
-        RayToNeighbours((Vector3.down + Vector3.forward).normalized);
+        RayToNeighbours((Vector3.up + Vector3.right + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.up + Vector3.back + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.up + Vector3.left + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.up + Vector3.forward + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.down + Vector3.right + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.down + Vector3.back + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.down + Vector3.left + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.down + Vector3.forward + new Vector3(0, 0.01f, 0)).normalized);
     }
 
     //Check if there is a tile above.
