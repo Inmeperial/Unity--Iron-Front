@@ -15,6 +15,7 @@ public class TileHighlight : MonoBehaviour
     {
         _charSelector = GetComponent<CharacterSelection>();
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -25,15 +26,14 @@ public class TileHighlight : MonoBehaviour
                 EndPreview();
         }
 
-        if (_character != null && _character._selected && !characterMoving)
-        {
-            CheckTile();
-        }
+        if (!characterMoving)
+            RayToTile();
     }
 
-    void CheckTile()
+    //Check if mouse is over a tile.
+    void RayToTile()
     {
-        var obj = MouseRay.GetTarget(mask);
+        var obj = MouseRay.GetTargetTransform(mask);
         if (obj != null && obj.CompareTag("GridBlock"))
         {
             var tile = obj.gameObject.GetComponent<Tile>();
@@ -44,14 +44,19 @@ public class TileHighlight : MonoBehaviour
         }
     }
 
+    //Change tile color.
     public void MouseOverTile(Tile tile)
     {
         Material mat = new Material(tile.render.sharedMaterial);
-        mat.color = Color.blue;
+        mat.color = Color.yellow;
 
         tile.render.sharedMaterial = mat;
         previousTile = tile.transform;
-        PathPreview(_charSelector.GetActualChar());
+        if (_character != null && _character.IsSelected() && !characterMoving)
+        {
+            PathPreview(_charSelector.GetActualChar());
+        }
+        
     }
 
     public void MouseExitsTile()
@@ -70,14 +75,14 @@ public class TileHighlight : MonoBehaviour
         {
             foreach (var item in _previewPath)
             {
-                item.EndPreview();
+                item.EndPathfindingPreview();
             }
             _previewPath.Clear();
         }
     }
     public void PathPreview(Character character)
     {
-        var start = character.GetTileBelow();
+        var start = character.ActualPosition();
         if (start)
         {
             agent.init = start;
@@ -87,7 +92,8 @@ public class TileHighlight : MonoBehaviour
             {
                 foreach (var tile in _previewPath)
                 {
-                    tile.PreviewColor();
+                    if (tile.isWalkable)
+                        tile.PathFindingPreviewColor();
                 }
             }
         }

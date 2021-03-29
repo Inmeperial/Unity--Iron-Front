@@ -9,9 +9,11 @@ public class GridMovement : MonoBehaviour
     int _tilesIndex;
     bool _moveVertical = false;
     public TileHighlight highlight;
+    Character _character;
     private void Start()
     {
         _agent = FindObjectOfType<AStarAgent>();
+        _character = GetComponent<Character>();
     }
     public void StartMovement(Tile start, Transform target, float speed)
     {
@@ -49,7 +51,11 @@ public class GridMovement : MonoBehaviour
 
             if (tilesIndex < _tilesList.Count)
                 StartCoroutine(Move(tilesIndex, speed));
-            else highlight.characterMoving = false;
+            else 
+            {
+                highlight.characterMoving = false;
+                _character.ReachedEnd();
+            }
         }
     }
 

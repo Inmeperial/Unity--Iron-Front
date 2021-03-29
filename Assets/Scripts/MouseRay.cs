@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class MouseRay : MonoBehaviour
 {
-    public static Transform GetTarget(LayerMask mask)
+    /// <summary>
+    /// Return the Transform of the object collided by the ray coincident with the given mask.
+    /// </summary>
+    public static Transform GetTargetTransform(LayerMask mask)
     {
         RaycastHit hit;
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);

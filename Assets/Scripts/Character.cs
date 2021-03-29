@@ -7,21 +7,28 @@ public class Character : MonoBehaviour
     GridMovement _move;
     public float speed;
     public LayerMask mask;
-    public bool _selected;
-    Tile _endTile;
+    private bool _selected;
+    Tile _myPositionTile;
+    Tile _targetTile;
     MeshRenderer _render;
+    private bool _moving = false;
+
+    TurnManager _turnManager;
     // Start is called before the first frame update
     void Start()
     {
         _selected = false;
         _move = GetComponent<GridMovement>();
         _render = GetComponent<MeshRenderer>();
+        _turnManager = FindObjectOfType<TurnManager>();
+        _myPositionTile = GetTileBelow();
+        _myPositionTile.MakeTileOccupied();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_selected && Input.GetMouseButtonDown(0))
+        if (_selected && !_moving && Input.GetMouseButtonDown(0))
         {
             GetTargetToMove();
         }
@@ -29,18 +36,27 @@ public class Character : MonoBehaviour
 
     public void GetTargetToMove()
     {
-        Transform target = MouseRay.GetTarget(mask);
+        Transform target = MouseRay.GetTargetTransform(mask);
         if (IsValidTarget(target))
         {
+            _moving = true;
+            _turnManager.UnitIsMoving();
             _move.StartMovement(GetTileBelow(), target, speed);
-            _endTile = target.GetComponent<Tile>();
+            _targetTile = target.GetComponent<Tile>();
         }
     }
 
     bool IsValidTarget(Transform target)
     {
-        if (target != null && target.CompareTag("GridBlock") && target.gameObject.GetComponent<Tile>().isWalkable)
-            return true;
+        if (target != null)
+        {
+            var tile = target.gameObject.GetComponent<Tile>();
+            if (tile != null && tile.isWalkable && tile.IsFree())
+            {
+                return true;
+            }
+            else return false;
+        }
         else return false;
     }
 
@@ -71,6 +87,26 @@ public class Character : MonoBehaviour
 
     public Tile GetEndTile()
     {
-        return _endTile;
+        return _targetTile;
+    }
+
+    public bool IsSelected()
+    {
+        return _selected;
+    }
+
+    public void ReachedEnd()
+    {
+        _moving = false;
+        _myPositionTile.MakeTileFree();
+        _myPositionTile = _targetTile;
+        _myPositionTile.MakeTileOccupied();
+        _targetTile = null;
+        _turnManager.UnitStoppedMoving();
+    }
+
+    public Tile ActualPosition()
+    {
+        return _myPositionTile;
     }
 }
