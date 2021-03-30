@@ -11,9 +11,11 @@ public class Character : MonoBehaviour
     Tile _myPositionTile;
     Tile _targetTile;
     MeshRenderer _render;
-    private bool _moving = false;
+    public bool _moving = false;
 
     TurnManager _turnManager;
+    AStarAgent _agent;
+    public TileHighlight highlight;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,8 @@ public class Character : MonoBehaviour
         _turnManager = FindObjectOfType<TurnManager>();
         _myPositionTile = GetTileBelow();
         _myPositionTile.MakeTileOccupied();
+        _agent = FindObjectOfType<AStarAgent>();
+        highlight = FindObjectOfType<TileHighlight>();
     }
 
     // Update is called once per frame
@@ -39,10 +43,18 @@ public class Character : MonoBehaviour
         Transform target = MouseRay.GetTargetTransform(mask);
         if (IsValidTarget(target))
         {
-            _moving = true;
-            _turnManager.UnitIsMoving();
-            _move.StartMovement(GetTileBelow(), target, speed);
             _targetTile = target.GetComponent<Tile>();
+            _agent.init = GetTileBelow();
+            _agent.finit = _targetTile;
+            var tilesList = _agent.PathFindingAstar();
+            if (tilesList.Count > 0)
+            {
+                _moving = true;
+                _turnManager.UnitIsMoving();
+                highlight.characterMoving = true;
+                _move.StartMovement(tilesList, speed);
+            }
+            else Debug.Log("Can't reach tile");
         }
     }
 
@@ -97,6 +109,7 @@ public class Character : MonoBehaviour
 
     public void ReachedEnd()
     {
+        highlight.characterMoving = false;
         _moving = false;
         _myPositionTile.MakeTileFree();
         _myPositionTile = _targetTile;

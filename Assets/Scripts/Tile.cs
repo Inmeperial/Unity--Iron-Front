@@ -124,8 +124,7 @@ public class Tile : MonoBehaviour
 
     public void AddNeighbour(Tile tile)
     {
-        if (!neighbours.Contains(tile))
-            neighbours.Add(tile);
+        GetNeighbours();
     }
 
     private void OnDrawGizmos()

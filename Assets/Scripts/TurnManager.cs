@@ -5,7 +5,7 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour
 {
     Character[] _units;
-    CharacterSelection _charSelect;
+    public CharacterSelection _charSelect;
     void Start()
     {
         _units = FindObjectsOfType<Character>();

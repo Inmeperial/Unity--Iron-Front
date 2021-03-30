@@ -5,28 +5,18 @@ using UnityEngine;
 public class GridMovement : MonoBehaviour
 {
     List<Tile> _tilesList;
-    AStarAgent _agent;
     int _tilesIndex;
     bool _moveVertical = false;
-    public TileHighlight highlight;
     Character _character;
     private void Start()
     {
-        _agent = FindObjectOfType<AStarAgent>();
         _character = GetComponent<Character>();
     }
-    public void StartMovement(Tile start, Transform target, float speed)
+    public void StartMovement(List<Tile> tilesList, float speed)
     {
-        _agent.init = start;
-        _agent.finit = target.gameObject.GetComponent<Tile>();
-        _tilesList = _agent.PathFindingAstar();
-        if (_tilesList.Count > 0)
-        {
-            _tilesIndex = 1;
-            highlight.characterMoving = true;
-            StartCoroutine(Move(_tilesIndex, speed));
-        }
-        else Debug.Log("Can't reach tile");
+        _tilesList = tilesList;
+        _tilesIndex = 1;
+        StartCoroutine(Move(_tilesIndex, speed));
     }
 
     IEnumerator Move(int tilesIndex, float speed)
@@ -53,7 +43,6 @@ public class GridMovement : MonoBehaviour
                 StartCoroutine(Move(tilesIndex, speed));
             else 
             {
-                highlight.characterMoving = false;
                 _character.ReachedEnd();
             }
         }
