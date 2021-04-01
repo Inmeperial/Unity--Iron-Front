@@ -1,13 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterSelection : MonoBehaviour
 {
     public LayerMask charMask;
-    public Character _selection;
+    private Character _selection;
     TileHighlight _highlight;
     public bool _canSelect;
+
+    public event Action OnCharacterSelect = delegate { };
+    public event Action OnCharacterDeselect = delegate { };
     private void Start()
     {
         _canSelect = true;
@@ -32,10 +36,11 @@ public class CharacterSelection : MonoBehaviour
             {
                 _selection.DeselectThisUnit();
             }
-
+            OnCharacterDeselect();
             _selection = character.GetComponent<Character>();
             _selection.SelectThisUnit();
             _highlight.ChangeActiveCharacter(_selection);
+            OnCharacterSelect();
         }
     }
 

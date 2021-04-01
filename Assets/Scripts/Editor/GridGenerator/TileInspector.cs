@@ -17,9 +17,9 @@ public class TileInspector : Editor
         base.OnInspectorGUI();
 
         if (GUILayout.Button("Make Walkable"))
-            _tile.MakeWalkable();
+            _tile.MakeWalkableColor();
 
         if (GUILayout.Button("Make Not Walkable"))
-            _tile.MakeNotWalkable();
+            _tile.MakeNotWalkableColor();
     }
 }

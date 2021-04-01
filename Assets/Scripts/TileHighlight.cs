@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class TileHighlight : MonoBehaviour
@@ -6,10 +7,13 @@ public class TileHighlight : MonoBehaviour
     Character _character;
     Transform previousTile;
     public AStarAgent agent;
-    public LayerMask mask;
+    public LayerMask tileMask;
     List<Tile> _previewPath = new List<Tile>();
     public bool characterMoving;
     CharacterSelection _charSelector;
+    private int _characterMoveRadius;
+    private List<Tile> _inRangeTiles = new List<Tile>();
+
 
     private void Start()
     {
@@ -33,7 +37,7 @@ public class TileHighlight : MonoBehaviour
     //Check if mouse is over a tile.
     void RayToTile()
     {
-        var obj = MouseRay.GetTargetTransform(mask);
+        var obj = MouseRay.GetTargetTransform(tileMask);
         if (obj != null && obj.CompareTag("GridBlock"))
         {
             var tile = obj.gameObject.GetComponent<Tile>();
@@ -44,13 +48,10 @@ public class TileHighlight : MonoBehaviour
         }
     }
 
-    //Change tile color.
+    #region Change tile color methods.
     public void MouseOverTile(Tile tile)
     {
-        Material mat = new Material(tile.render.sharedMaterial);
-        mat.color = Color.yellow;
-
-        tile.render.sharedMaterial = mat;
+        tile.MouseOverColor();
         previousTile = tile.transform;
         if (_character != null && _character.IsSelected() && !characterMoving)
         {
@@ -61,10 +62,7 @@ public class TileHighlight : MonoBehaviour
     public void MouseExitsTile()
     {
         Tile tile = previousTile.gameObject.GetComponent<Tile>();
-        Material mat = new Material(tile.render.sharedMaterial);
-        mat.color = Color.green;
-
-        tile.render.sharedMaterial = mat;
+        tile.NotSelectedColor();
     }
 
     public void EndPreview()
@@ -74,7 +72,7 @@ public class TileHighlight : MonoBehaviour
         {
             foreach (var item in _previewPath)
             {
-                item.EndPathfindingPreview();
+                item.EndPathfindingPreviewColor();
             }
             _previewPath.Clear();
         }
@@ -89,18 +87,30 @@ public class TileHighlight : MonoBehaviour
             _previewPath = agent.PathFindingAstar();
             if (_previewPath.Count > 0)
             {
-                foreach (var tile in _previewPath)
+                if (_previewPath.Count <= _characterMoveRadius)
                 {
-                    if (tile.isWalkable)
-                        tile.PathFindingPreviewColor();
+                    for (int i = 0; i < _previewPath.Count; i++)
+                    {
+                        if (_previewPath[i].isWalkable && _previewPath[i].IsFree())
+                            _previewPath[i].PathFindingPreviewColor();
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i <= _characterMoveRadius; i++)
+                    {
+                        if (_previewPath[i].isWalkable && _previewPath[i].IsFree())
+                            _previewPath[i].PathFindingPreviewColor();
+                    }
                 }
             }
         }
         
     }
-
+    #endregion
     public void ChangeActiveCharacter(Character character)
     {
-        this._character = character;
+        _character = character;
+        _characterMoveRadius = _character.GetMoveRadius();
     }
 }
