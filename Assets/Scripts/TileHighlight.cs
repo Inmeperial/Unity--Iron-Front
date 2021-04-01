@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 public class TileHighlight : MonoBehaviour
 {
-    public Character character;
+    Character _character;
     Transform previousTile;
     public AStarAgent agent;
     public LayerMask mask;
     List<Tile> _previewPath = new List<Tile>();
     public bool characterMoving;
+    CharacterSelection _charSelector;
+
+    private void Start()
+    {
+        _charSelector = GetComponent<CharacterSelection>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -20,14 +27,13 @@ public class TileHighlight : MonoBehaviour
         }
 
         if (!characterMoving)
-        {
-            CheckTile();
-        }
+            RayToTile();
     }
 
-    void CheckTile()
+    //Check if mouse is over a tile.
+    void RayToTile()
     {
-        var obj = MouseRay.GetTarget(mask);
+        var obj = MouseRay.GetTargetTransform(mask);
         if (obj != null && obj.CompareTag("GridBlock"))
         {
             var tile = obj.gameObject.GetComponent<Tile>();
@@ -38,14 +44,18 @@ public class TileHighlight : MonoBehaviour
         }
     }
 
+    //Change tile color.
     public void MouseOverTile(Tile tile)
     {
         Material mat = new Material(tile.render.sharedMaterial);
-        mat.color = Color.blue;
+        mat.color = Color.yellow;
 
         tile.render.sharedMaterial = mat;
         previousTile = tile.transform;
-        PathPreview(character.GetTileBelow(), tile);
+        if (_character != null && _character.IsSelected() && !characterMoving)
+        {
+            PathPreview(_charSelector.GetActualChar());
+        }
     }
 
     public void MouseExitsTile()
@@ -64,22 +74,33 @@ public class TileHighlight : MonoBehaviour
         {
             foreach (var item in _previewPath)
             {
-                item.EndPreview();
+                item.EndPathfindingPreview();
             }
             _previewPath.Clear();
         }
     }
-    public void PathPreview(Tile start, Tile end)
+    public void PathPreview(Character character)
     {
-        agent.init = start;
-        agent.finit = end;
-        _previewPath = agent.PathFindingAstar();
-        if (_previewPath.Count > 0)
+        var start = character.ActualPosition();
+        if (start)
         {
-            foreach (var tile in _previewPath)
+            agent.init = start;
+            agent.finit = previousTile.GetComponent<Tile>();
+            _previewPath = agent.PathFindingAstar();
+            if (_previewPath.Count > 0)
             {
-                tile.PreviewColor();
+                foreach (var tile in _previewPath)
+                {
+                    if (tile.isWalkable)
+                        tile.PathFindingPreviewColor();
+                }
             }
         }
+        
+    }
+
+    public void ChangeActiveCharacter(Character character)
+    {
+        this._character = character;
     }
 }

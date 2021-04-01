@@ -12,6 +12,7 @@ public class GridGenerator : EditorWindow
     int _width;
     int _length;
     Transform _container;
+
     bool _error;
     private void OnEnable()
     {
@@ -20,6 +21,7 @@ public class GridGenerator : EditorWindow
         this.minSize = new Vector2(300, 130);
         _importantStyle.fontStyle = FontStyle.Bold;
 
+        //Get GridBlock prefab location.
         var folder = AssetDatabase.FindAssets("GridBlock");
 
         if (folder.Length < 1)
@@ -28,12 +30,14 @@ public class GridGenerator : EditorWindow
         }
         else
         {
+            //Get path of GridBlock prefab.
             string[] files = new string[folder.Length];
             for (int i = 0; i < folder.Length; i++)
             {
                 files[i] = AssetDatabase.GUIDToAssetPath(folder[i]);
             }
 
+            //Load GridBlock prefab for use.
             GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(files[0], typeof(GameObject));
 
             tiles = prefab;
@@ -69,9 +73,13 @@ public class GridGenerator : EditorWindow
     {
         Vector3 pos = Vector3.zero;
 
+        //Instantiate of prefabs
+        //i = x coordinate
         for (int i = 0; i < width; i++)
         {
             pos.x = i;
+
+            //j = y coordinate
             for (int j = 0; j < length; j++)
             {
                 pos.z = j;
