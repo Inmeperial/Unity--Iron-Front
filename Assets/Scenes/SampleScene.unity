@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: b6c8d82c46294e44e9d97fe54cd52348, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44929665, g: 0.49612617, b: 0.558285, a: 1}
+  m_IndirectSpecularColor: {r: 0.51038533, g: 0.51582074, b: 0.5533627, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1018,6 +1018,8 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 256
+  _moving: 0
+  highlight: {fileID: 0}
 --- !u!114 &112879124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1030,7 +1032,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73116bb87e8c6a9429d1a63dee406f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlight: {fileID: 936179227}
 --- !u!136 &112879125
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5583,7 +5584,7 @@ Light:
   serializedVersion: 9
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.38
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5862,6 +5863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd14718fc209a45429ae8aaf76f40349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _charSelect: {fileID: 0}
 --- !u!4 &714501757
 Transform:
   m_ObjectHideFlags: 0
@@ -7172,7 +7174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73116bb87e8c6a9429d1a63dee406f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlight: {fileID: 936179227}
 --- !u!136 &903744151
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7263,6 +7264,8 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 256
+  _moving: 0
+  highlight: {fileID: 0}
 --- !u!1 &909885129
 GameObject:
   m_ObjectHideFlags: 0
