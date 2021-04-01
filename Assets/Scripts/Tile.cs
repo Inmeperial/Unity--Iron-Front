@@ -9,17 +9,17 @@ public class Tile : MonoBehaviour
     public MeshRenderer render;
     public List<Tile> neighbours;
     public LayerMask obstacle;
-    public bool _isFree = true;
+    private bool _isFree = true;
     private void Start()
     {
         _isFree = true;
         if (TileAbove() == false)
             GetNeighbours();
-        else MakeNotWalkable();
+        else MakeNotWalkableColor();
     }
 
     //Make this tile walkable.
-    public void MakeWalkable()
+    public void MakeWalkableColor()
     {
         isWalkable = true;
         Material mat = new Material(render.sharedMaterial);
@@ -28,7 +28,7 @@ public class Tile : MonoBehaviour
         render.sharedMaterial = mat;
     }
     //Make this tile not walkable.
-    public void MakeNotWalkable()
+    public void MakeNotWalkableColor()
     {
         isWalkable = false;
         Material mat = new Material(render.sharedMaterial);
@@ -60,7 +60,7 @@ public class Tile : MonoBehaviour
     }
 
     //Revert tile color when pathfinding preview ends.
-    public void EndPathfindingPreview()
+    public void EndPathfindingPreviewColor()
     {
         Material mat = new Material(render.sharedMaterial);
 
@@ -70,6 +70,32 @@ public class Tile : MonoBehaviour
 
         render.sharedMaterial = mat;
     }
+
+    public void MouseOverColor()
+    {
+        Material mat = new Material(render.sharedMaterial);
+        mat.color = Color.yellow;
+
+        render.sharedMaterial = mat;
+    }
+
+    public void NotSelectedColor()
+    {
+        Material mat = new Material(render.sharedMaterial);
+        mat.color = Color.green;
+
+        render.sharedMaterial = mat;
+    }
+
+    public void InRangeColor()
+    {
+        Material mat = new Material(render.sharedMaterial);
+        mat.color = Color.white;
+
+        render.sharedMaterial = mat;
+    }
+
+
 
     void GetNeighbours()
     {

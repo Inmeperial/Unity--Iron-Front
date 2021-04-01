@@ -92,7 +92,7 @@ public class GridGenerator : EditorWindow
                 {
                     obj = Instantiate(tiles, pos, Quaternion.identity);
                 }
-                obj.GetComponent<Tile>().MakeWalkable();
+                obj.GetComponent<Tile>().MakeWalkableColor();
             }
         }
     }

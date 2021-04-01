@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,15 +8,21 @@ public class Character : MonoBehaviour
     GridMovement _move;
     public float speed;
     public LayerMask mask;
+
+    [SerializeField] private int _moveRadius;
+
     private bool _selected;
-    Tile _myPositionTile;
+    private bool _moving = false;
+
+    public Tile _myPositionTile;
     Tile _targetTile;
     MeshRenderer _render;
-    public bool _moving = false;
 
-    TurnManager _turnManager;
-    AStarAgent _agent;
-    public TileHighlight highlight;
+    [SerializeField] private TurnManager _turnManager;
+    [SerializeField] private AStarAgent _agent;
+    [SerializeField] private TileHighlight highlight;
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +54,8 @@ public class Character : MonoBehaviour
             _agent.init = GetTileBelow();
             _agent.finit = _targetTile;
             var tilesList = _agent.PathFindingAstar();
-            if (tilesList.Count > 0)
+            Debug.Log(tilesList.Count);
+            if (tilesList.Count > 0 && tilesList.Count <= _moveRadius+1)
             {
                 _moving = true;
                 _turnManager.UnitIsMoving();
@@ -65,7 +73,11 @@ public class Character : MonoBehaviour
             var tile = target.gameObject.GetComponent<Tile>();
             if (tile != null && tile.isWalkable && tile.IsFree())
             {
-                return true;
+                if ((target.position - transform.position).magnitude <= _moveRadius+1)
+                {
+                    return true;
+                }
+                else return false;
             }
             else return false;
         }
@@ -121,5 +133,10 @@ public class Character : MonoBehaviour
     public Tile ActualPosition()
     {
         return _myPositionTile;
+    }
+
+    public int GetMoveRadius()
+    {
+        return _moveRadius;
     }
 }
