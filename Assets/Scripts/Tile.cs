@@ -18,6 +18,52 @@ public class Tile : MonoBehaviour
         else MakeNotWalkableColor();
     }
 
+    void GetNeighbours()
+    {
+        RayToNeighbours(Vector3.right);
+        RayToNeighbours(Vector3.left);
+        RayToNeighbours(Vector3.forward);
+        RayToNeighbours(Vector3.back);
+        RayToNeighbours((Vector3.up + Vector3.right + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.up + Vector3.back + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.up + Vector3.left + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.up + Vector3.forward + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.down + Vector3.right + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.down + Vector3.back + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.down + Vector3.left + new Vector3(0, 0.01f, 0)).normalized);
+        RayToNeighbours((Vector3.down + Vector3.forward + new Vector3(0, 0.01f, 0)).normalized);
+    }
+
+    //Cast a ray to neighbouring tiles and check if they are walkable.
+    void RayToNeighbours(Vector3 dir)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, dir, out hit, 1))
+        {
+            var neighbour = hit.collider.GetComponent<Tile>();
+            if (neighbour != null && neighbour.isWalkable)
+                if (!neighbours.Contains(neighbour))
+                    neighbours.Add(neighbour);
+        }
+    }
+
+    //Check if there is a tile above.
+    bool TileAbove()
+    {
+        return Physics.Raycast(transform.position, transform.up, 1, obstacle);
+    }
+
+    public void RemoveNeighbour(Tile tile)
+    {
+        if (neighbours.Contains(tile))
+            neighbours.Remove(tile);
+    }
+
+    public void AddNeighbour(Tile tile)
+    {
+        GetNeighbours();
+    }
+
     //Make this tile walkable.
     public void MakeWalkableColor()
     {
@@ -37,19 +83,8 @@ public class Tile : MonoBehaviour
         render.sharedMaterial = mat;
     }
 
-    //Cast a ray to neighbouring tiles and check if they are walkable.
-    void RayToNeighbours(Vector3 dir)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, dir, out hit, 1))
-        {
-            var neighbour = hit.collider.GetComponent<Tile>();
-            if (neighbour != null && neighbour.isWalkable)
-                if (!neighbours.Contains(neighbour))
-                    neighbours.Add(neighbour);
-        }
-    }
 
+    #region Change tile color methods.
     //Change tile color for pathfinding preview.
     public void PathFindingPreviewColor()
     {
@@ -94,30 +129,7 @@ public class Tile : MonoBehaviour
 
         render.sharedMaterial = mat;
     }
-
-
-
-    void GetNeighbours()
-    {
-        RayToNeighbours(Vector3.right);
-        RayToNeighbours(Vector3.left);
-        RayToNeighbours(Vector3.forward);
-        RayToNeighbours(Vector3.back);
-        RayToNeighbours((Vector3.up + Vector3.right + new Vector3(0, 0.01f, 0)).normalized);
-        RayToNeighbours((Vector3.up + Vector3.back + new Vector3(0, 0.01f, 0)).normalized);
-        RayToNeighbours((Vector3.up + Vector3.left + new Vector3(0, 0.01f, 0)).normalized);
-        RayToNeighbours((Vector3.up + Vector3.forward + new Vector3(0, 0.01f, 0)).normalized);
-        RayToNeighbours((Vector3.down + Vector3.right + new Vector3(0, 0.01f, 0)).normalized);
-        RayToNeighbours((Vector3.down + Vector3.back + new Vector3(0, 0.01f, 0)).normalized);
-        RayToNeighbours((Vector3.down + Vector3.left + new Vector3(0, 0.01f, 0)).normalized);
-        RayToNeighbours((Vector3.down + Vector3.forward + new Vector3(0, 0.01f, 0)).normalized);
-    }
-
-    //Check if there is a tile above.
-    bool TileAbove()
-    {
-        return Physics.Raycast(transform.position, transform.up, 1, obstacle);
-    }
+    #endregion
 
     public bool IsFree()
     {
@@ -142,16 +154,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void RemoveNeighbour(Tile tile)
-    {
-        if (neighbours.Contains(tile))
-            neighbours.Remove(tile);
-    }
-
-    public void AddNeighbour(Tile tile)
-    {
-        GetNeighbours();
-    }
+    
 
     private void OnDrawGizmos()
     {

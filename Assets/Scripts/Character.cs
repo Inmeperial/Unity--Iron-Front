@@ -65,7 +65,7 @@ public class Character : MonoBehaviour
             else Debug.Log("Can't reach tile");
         }
     }
-
+    //Check if selected object is a tile.
     bool IsValidTarget(Transform target)
     {
         if (target != null)

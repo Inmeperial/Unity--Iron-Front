@@ -14,13 +14,10 @@ public class TileHighlight : MonoBehaviour
     private int _characterMoveRadius;
     private List<Tile> _inRangeTiles = new List<Tile>();
 
-    public event Action OnCharacterSelection = delegate { };
 
     private void Start()
     {
         _charSelector = GetComponent<CharacterSelection>();
-        _charSelector.OnCharacterSelect += CharacterMoveRadius;
-        _charSelector.OnCharacterDeselect += NoCharacterSelectedOrMoving;
     }
 
     // Update is called once per frame
@@ -35,12 +32,6 @@ public class TileHighlight : MonoBehaviour
 
         if (!characterMoving)
             RayToTile();
-
-        if (_character != null)
-            CharacterMoveRadius();
-
-        if (_character == null || characterMoving)
-            NoCharacterSelectedOrMoving();
     }
 
     //Check if mouse is over a tile.
@@ -57,7 +48,7 @@ public class TileHighlight : MonoBehaviour
         }
     }
 
-    //Change tile color.
+    #region Change tile color methods.
     public void MouseOverTile(Tile tile)
     {
         tile.MouseOverColor();
@@ -116,39 +107,7 @@ public class TileHighlight : MonoBehaviour
         }
         
     }
-
-    public void CharacterMoveRadius()
-    {
-        //Vector3 radius = new Vector3(_characterMoveRadius, _characterMoveRadius, _characterMoveRadius);
-        //var tiles = Physics.OverlapBox(_character.transform.position, radius, Quaternion.identity, tileMask);
-        //_inRangeTiles = new List<Tile>();
-        //foreach (var tile in tiles)
-        //{
-        //    var t = tile.GetComponent<Tile>();
-        //    if (t.isWalkable && t.IsFree())
-        //    {
-        //        if ((t.transform.position - _character.transform.position).magnitude <= _characterMoveRadius)
-        //        {
-        //            _inRangeTiles.Add(t);
-        //            t.InRangeColor();
-        //        }
-        //    }
-        //}
-    }
-
-    public void NoCharacterSelectedOrMoving()
-    {
-        if (_inRangeTiles.Count > 0)
-        {
-            foreach (var tile in _inRangeTiles)
-            {
-                tile.NotSelectedColor();
-            }
-            _inRangeTiles.Clear();
-        }
-        
-    }
-
+    #endregion
     public void ChangeActiveCharacter(Character character)
     {
         _character = character;
