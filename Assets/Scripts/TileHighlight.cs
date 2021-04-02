@@ -105,7 +105,6 @@ public class TileHighlight : MonoBehaviour
                 }
             }
         }
-        
     }
     #endregion
     public void ChangeActiveCharacter(Character character)
