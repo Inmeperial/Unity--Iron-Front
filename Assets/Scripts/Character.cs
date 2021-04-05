@@ -3,16 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Character : Teams
 {
     GridMovement _move;
     public float speed;
     public LayerMask mask;
-
+    [SerializeField] private Team _unitTeam;
     [SerializeField] private int _moveRadius;
 
     private bool _selected;
     private bool _moving = false;
+    public bool _canMove = true;
+    public bool _attacked = false;
 
     public Tile _myPositionTile;
     Tile _targetTile;
@@ -21,12 +23,12 @@ public class Character : MonoBehaviour
     [SerializeField] private TurnManager _turnManager;
     [SerializeField] private AStarAgent _agent;
     [SerializeField] private TileHighlight highlight;
-
     
     // Start is called before the first frame update
     void Start()
     {
         _selected = false;
+        _canMove = true;
         _move = GetComponent<GridMovement>();
         _render = GetComponent<MeshRenderer>();
         _turnManager = FindObjectOfType<TurnManager>();
@@ -39,7 +41,7 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_selected && !_moving && Input.GetMouseButtonDown(0))
+        if (_selected && !_moving && _canMove && Input.GetMouseButtonDown(0))
         {
             GetTargetToMove();
         }
@@ -114,6 +116,11 @@ public class Character : MonoBehaviour
         return _targetTile;
     }
 
+    public Team GetUnitTeam()
+    {
+        return _unitTeam;
+    }
+
     public bool IsSelected()
     {
         return _selected;
@@ -121,6 +128,7 @@ public class Character : MonoBehaviour
 
     public void ReachedEnd()
     {
+        _canMove = false;
         highlight.characterMoving = false;
         _moving = false;
         _myPositionTile.MakeTileFree();
@@ -138,5 +146,15 @@ public class Character : MonoBehaviour
     public int GetMoveRadius()
     {
         return _moveRadius;
+    }
+
+    public void NewTurn()
+    {
+        _canMove = true;
+    }
+
+    public bool ThisUnitCanMove()
+    {
+        return _canMove;
     }
 }

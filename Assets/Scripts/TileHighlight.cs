@@ -79,28 +79,31 @@ public class TileHighlight : MonoBehaviour
     }
     public void PathPreview(Character character)
     {
-        var start = character.ActualPosition();
-        if (start)
+        if (character.ThisUnitCanMove())
         {
-            agent.init = start;
-            agent.finit = previousTile.GetComponent<Tile>();
-            _previewPath = agent.PathFindingAstar();
-            if (_previewPath.Count > 0)
+            var start = character.ActualPosition();
+            if (start)
             {
-                if (_previewPath.Count <= _characterMoveRadius)
+                agent.init = start;
+                agent.finit = previousTile.GetComponent<Tile>();
+                _previewPath = agent.PathFindingAstar();
+                if (_previewPath.Count > 0)
                 {
-                    for (int i = 0; i < _previewPath.Count; i++)
+                    if (_previewPath.Count <= _characterMoveRadius)
                     {
-                        if (_previewPath[i].isWalkable && _previewPath[i].IsFree())
-                            _previewPath[i].PathFindingPreviewColor();
+                        for (int i = 0; i < _previewPath.Count; i++)
+                        {
+                            if (_previewPath[i].isWalkable && _previewPath[i].IsFree())
+                                _previewPath[i].PathFindingPreviewColor();
+                        }
                     }
-                }
-                else
-                {
-                    for (int i = 0; i <= _characterMoveRadius; i++)
+                    else
                     {
-                        if (_previewPath[i].isWalkable && _previewPath[i].IsFree())
-                            _previewPath[i].PathFindingPreviewColor();
+                        for (int i = 0; i <= _characterMoveRadius; i++)
+                        {
+                            if (_previewPath[i].isWalkable && _previewPath[i].IsFree())
+                                _previewPath[i].PathFindingPreviewColor();
+                        }
                     }
                 }
             }

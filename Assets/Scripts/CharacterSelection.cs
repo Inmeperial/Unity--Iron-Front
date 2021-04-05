@@ -8,6 +8,7 @@ public class CharacterSelection : MonoBehaviour
     public LayerMask charMask;
     private Character _selection;
     TileHighlight _highlight;
+    TurnManager _turnManager;
     public bool _canSelect;
 
     public event Action OnCharacterSelect = delegate { };
@@ -16,6 +17,7 @@ public class CharacterSelection : MonoBehaviour
     {
         _canSelect = true;
         _highlight = GetComponent<TileHighlight>();
+        _turnManager = FindObjectOfType<TurnManager>();
     }
 
     // Update is called once per frame
@@ -31,16 +33,20 @@ public class CharacterSelection : MonoBehaviour
         var character = MouseRay.GetTargetTransform(charMask);
         if (character != null && character.CompareTag("Character"))
         {
-            //Check if i have a previous unit and deselect it.
-            if (_selection != null)
+            var c = character.GetComponent<Character>();
+            if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
             {
-                _selection.DeselectThisUnit();
+                //Check if i have a previous unit and deselect it.
+                if (_selection != null)
+                {
+                    _selection.DeselectThisUnit();
+                }
+                OnCharacterDeselect();
+                _selection = c;
+                _selection.SelectThisUnit();
+                _highlight.ChangeActiveCharacter(_selection);
+                OnCharacterSelect();
             }
-            OnCharacterDeselect();
-            _selection = character.GetComponent<Character>();
-            _selection.SelectThisUnit();
-            _highlight.ChangeActiveCharacter(_selection);
-            OnCharacterSelect();
         }
     }
 
@@ -53,5 +59,11 @@ public class CharacterSelection : MonoBehaviour
     public void ActivateCharacterSelection(bool state)
     {
         _canSelect = state;
+    }
+
+    public void DeselectUnit()
+    {
+        if (_selection)
+            _selection.DeselectThisUnit();
     }
 }
