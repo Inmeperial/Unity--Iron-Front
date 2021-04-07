@@ -6,13 +6,12 @@ public class AStarAgent : MonoBehaviour
     public Tile init;
     public Tile finit;
     AStar<Tile> _aStar = new AStar<Tile>();
-    
     public List<Tile> PathFindingAstar()
     {
         return _aStar.Run(init, Satisfies, GetNeighboursCost, Heuristic);
     }
     float Heuristic(Tile curr)
-    {
+    { 
         return Vector3.Distance(curr.transform.position, finit.transform.position);
     }
     Dictionary<Tile, float> GetNeighboursCost(Tile curr)

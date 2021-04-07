@@ -12,7 +12,7 @@ public class TurnManager : Teams
     public TextMeshProUGUI teamText;
     public string _CapsuleTeamText = "Capsule Team Turn.";
     public string _BoxTeamText = "Box Team Turn.";
-
+    
     public Team _activeTeam;
     void Start()
     {

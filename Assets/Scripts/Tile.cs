@@ -92,6 +92,7 @@ public class Tile : MonoBehaviour
         mat.color = Color.blue;
 
         render.sharedMaterial = mat;
+        Debug.Log("me pinte");
     }
 
     //Revert tile color when pathfinding preview ends.

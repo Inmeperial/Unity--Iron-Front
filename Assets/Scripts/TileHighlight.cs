@@ -14,7 +14,6 @@ public class TileHighlight : MonoBehaviour
     private int _characterMoveRadius;
     private List<Tile> _inRangeTiles = new List<Tile>();
 
-
     private void Start()
     {
         _charSelector = GetComponent<CharacterSelection>();
@@ -53,10 +52,10 @@ public class TileHighlight : MonoBehaviour
     {
         tile.MouseOverColor();
         previousTile = tile.transform;
-        if (_character != null && _character.IsSelected() && !characterMoving)
-        {
-            PathPreview(_charSelector.GetActualChar());
-        }
+        //if (_character != null && _character.IsSelected() && !characterMoving)
+        //{
+        //    PathPreview(_charSelector.GetActualChar());
+        //}
     }
 
     public void MouseExitsTile()
@@ -79,35 +78,43 @@ public class TileHighlight : MonoBehaviour
     }
     public void PathPreview(Character character)
     {
-        if (character.ThisUnitCanMove())
-        {
-            var start = character.ActualPosition();
-            if (start)
-            {
-                agent.init = start;
-                agent.finit = previousTile.GetComponent<Tile>();
-                _previewPath = agent.PathFindingAstar();
-                if (_previewPath.Count > 0)
-                {
-                    if (_previewPath.Count <= _characterMoveRadius)
-                    {
-                        for (int i = 0; i < _previewPath.Count; i++)
-                        {
-                            if (_previewPath[i].isWalkable && _previewPath[i].IsFree())
-                                _previewPath[i].PathFindingPreviewColor();
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i <= _characterMoveRadius; i++)
-                        {
-                            if (_previewPath[i].isWalkable && _previewPath[i].IsFree())
-                                _previewPath[i].PathFindingPreviewColor();
-                        }
-                    }
-                }
-            }
-        }
+        //if (_previewPath != null && _previewPath.Count > 0)
+        //{
+        //    for (int i = 1; i < _previewPath.Count; i++)
+        //    {
+        //        var tile = _previewPath[i];
+        //        tile.PathFindingPreviewColor();
+        //    }
+        //}
+        //if (character.ThisUnitCanMove())
+        //{
+        //    var start = character.ActualPosition();
+        //    if (start)
+        //    {
+        //        agent.init = start;
+        //        agent.finit = previousTile.GetComponent<Tile>();
+        //        _previewPath = agent.PathFindingAstar();
+        //        if (_previewPath.Count > 0)
+        //        {
+        //            if (_previewPath.Count <= _characterMoveRadius)
+        //            {
+        //                for (int i = 0; i < _previewPath.Count; i++)
+        //                {
+        //                    if (_previewPath[i].isWalkable && _previewPath[i].IsFree())
+        //                        _previewPath[i].PathFindingPreviewColor();
+        //                }
+        //            }
+        //            else
+        //            {
+        //                for (int i = 0; i <= _characterMoveRadius; i++)
+        //                {
+        //                    if (_previewPath[i].isWalkable && _previewPath[i].IsFree())
+        //                        _previewPath[i].PathFindingPreviewColor();
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
     }
     #endregion
     public void ChangeActiveCharacter(Character character)

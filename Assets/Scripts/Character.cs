@@ -8,6 +8,7 @@ public class Character : Teams
     GridMovement _move;
     public float speed;
     public LayerMask mask;
+    IPathCreator _pathCreator;
     [SerializeField] private Team _unitTeam;
     [SerializeField] private int _moveRadius;
 
@@ -19,10 +20,11 @@ public class Character : Teams
     public Tile _myPositionTile;
     Tile _targetTile;
     MeshRenderer _render;
+    public List<Tile> _path = new List<Tile>();
 
     [SerializeField] private TurnManager _turnManager;
-    [SerializeField] private AStarAgent _agent;
-    [SerializeField] private TileHighlight highlight;
+
+    [SerializeField] private TileHighlight _highlight;
     
     // Start is called before the first frame update
     void Start()
@@ -34,8 +36,8 @@ public class Character : Teams
         _turnManager = FindObjectOfType<TurnManager>();
         _myPositionTile = GetTileBelow();
         _myPositionTile.MakeTileOccupied();
-        _agent = FindObjectOfType<AStarAgent>();
-        highlight = FindObjectOfType<TileHighlight>();
+        _highlight = FindObjectOfType<TileHighlight>();
+        _pathCreator = GetComponent<IPathCreator>();
     }
 
     // Update is called once per frame
@@ -47,24 +49,23 @@ public class Character : Teams
         }
     }
 
+    //This method is called from UI Button "Move".
+    public void Move()
+    {
+        _moving = true;
+        _turnManager.UnitIsMoving();
+        _highlight.characterMoving = true;
+        _move.StartMovement(_path, speed);
+    }
     public void GetTargetToMove()
     {
         Transform target = MouseRay.GetTargetTransform(mask);
+        
         if (IsValidTarget(target))
         {
             _targetTile = target.GetComponent<Tile>();
-            _agent.init = GetTileBelow();
-            _agent.finit = _targetTile;
-            var tilesList = _agent.PathFindingAstar();
-            Debug.Log(tilesList.Count);
-            if (tilesList.Count > 0 && tilesList.Count <= _moveRadius+1)
-            {
-                _moving = true;
-                _turnManager.UnitIsMoving();
-                highlight.characterMoving = true;
-                _move.StartMovement(tilesList, speed);
-            }
-            else Debug.Log("Can't reach tile");
+            _pathCreator.Calculate(this, _targetTile);
+            _path = _pathCreator.GetPath();
         }
     }
     //Check if selected object is a tile.
@@ -129,7 +130,7 @@ public class Character : Teams
     public void ReachedEnd()
     {
         _canMove = false;
-        highlight.characterMoving = false;
+        _highlight.characterMoving = false;
         _moving = false;
         _myPositionTile.MakeTileFree();
         _myPositionTile = _targetTile;
@@ -148,9 +149,15 @@ public class Character : Teams
         return _moveRadius;
     }
 
+    public List<Tile> GetPath()
+    {
+        return _path;
+    }
     public void NewTurn()
     {
         _canMove = true;
+        _path.Clear();
+        _pathCreator.Reset();
     }
 
     public bool ThisUnitCanMove()
