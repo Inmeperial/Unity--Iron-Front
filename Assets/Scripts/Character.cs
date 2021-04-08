@@ -26,6 +26,7 @@ public class Character : Teams
 
     [SerializeField] private TileHighlight _highlight;
     
+
     // Start is called before the first frame update
     void Start()
     {
