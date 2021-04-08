@@ -6,9 +6,10 @@ using TMPro;
 
 public class TurnManager : Teams
 {
-    public List<Character> _capsuleTeam = new List<Character>();
-    public List<Character> _boxTeam = new List<Character>();
-    public CharacterSelection _charSelect;
+    [SerializeField] List<Character> _capsuleTeam = new List<Character>();
+    [SerializeField] List<Character> _boxTeam = new List<Character>();
+    [SerializeField] CharacterSelection _charSelect;
+    [SerializeField] TileHighlight _highlight;
     public TextMeshProUGUI teamText;
     public string _CapsuleTeamText = "Capsule Team Turn.";
     public string _BoxTeamText = "Box Team Turn.";
@@ -19,6 +20,7 @@ public class TurnManager : Teams
         var units = FindObjectsOfType<Character>();
         SeparateByTeam(units);
         _charSelect = FindObjectOfType<CharacterSelection>();
+        _highlight = FindObjectOfType<TileHighlight>();
         _activeTeam = Team.Capsule;
         teamText.text = _CapsuleTeamText;
     }

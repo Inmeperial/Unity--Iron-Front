@@ -132,6 +132,7 @@ public class Character : Teams
     {
         _canMove = false;
         _highlight.characterMoving = false;
+        _highlight.EndPreview();
         _moving = false;
         _myPositionTile.MakeTileFree();
         _myPositionTile = _targetTile;

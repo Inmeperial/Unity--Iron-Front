@@ -25,8 +25,6 @@ public class TileHighlight : MonoBehaviour
         if (previousTile != null)
         {
             MouseExitsTile();
-            if (!characterMoving)
-                EndPreview();
         }
 
         if (!characterMoving)
@@ -82,13 +80,13 @@ public class TileHighlight : MonoBehaviour
         if (character != null)
         {
             _character = character;
-            var path = _character.GetPath();
+            _previewPath = _character.GetPath();
 
-            if (path != null)
+            if (_previewPath != null)
             {
-                for (int i = 0; i < path.Count; i++)
+                for (int i = 0; i < _previewPath.Count; i++)
                 {
-                    var tile = path[i];
+                    var tile = _previewPath[i];
                     if (tile.isWalkable && tile.IsFree())
                         tile.PathFindingPreviewColor();
                 }
