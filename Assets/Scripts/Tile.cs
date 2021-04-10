@@ -10,6 +10,8 @@ public class Tile : MonoBehaviour
     public List<Tile> neighbours;
     public LayerMask obstacle;
     private bool _isFree = true;
+
+    public bool showLineGizmo = true;
     private void Start()
     {
         _isFree = true;
@@ -155,11 +157,17 @@ public class Tile : MonoBehaviour
         }
     }
 
-    
+    public void ShowGizmo()
+    {
+        showLineGizmo = !showLineGizmo;
+    }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.black;
-        Gizmos.DrawWireCube(transform.position, transform.localScale);
+        if (showLineGizmo)
+        {
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireCube(transform.position, transform.localScale);
+        }
     }
 }
