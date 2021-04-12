@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CharacterSelection : MonoBehaviour
 {
@@ -12,8 +13,9 @@ public class CharacterSelection : MonoBehaviour
     TurnManager _turnManager;
     public bool _canSelect;
     
-    public Button moveButton;
-
+    public Button buttonMove;
+    public Button buttonUndo;
+    public TextMeshProUGUI stepsCounter;
     public event Action OnCharacterSelect = delegate { };
     public event Action OnCharacterDeselect = delegate { };
     private void Start()
@@ -28,6 +30,9 @@ public class CharacterSelection : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && _canSelect)
             SelectCharacter(charMask);
+
+        if (_selection)
+            stepsCounter.text = _selection.GetSteps().ToString();
     }
 
     //Selection of the character that will move.
@@ -48,8 +53,11 @@ public class CharacterSelection : MonoBehaviour
                 _selection = c;
                 _selection.SelectThisUnit();
                 _highlight.ChangeActiveCharacter(_selection);
-                moveButton.onClick.RemoveAllListeners();
-                moveButton.onClick.AddListener(_selection.Move);
+                buttonMove.onClick.RemoveAllListeners();
+                buttonMove.onClick.AddListener(_selection.Move);
+                buttonUndo.onClick.RemoveAllListeners();
+                buttonUndo.onClick.AddListener(_selection.pathCreator.UndoLastWaypoint);
+                stepsCounter.text = _selection.GetSteps().ToString();
                 OnCharacterSelect();
             }
         }

@@ -28,4 +28,13 @@ public class ShortPathfind : MonoBehaviour, IPathCreator
     {
         _path.Clear();
     }
+
+    public void UndoLastWaypoint()
+    {
+    }
+
+    public int GetDistance()
+    {
+        return 0;
+    }
 }

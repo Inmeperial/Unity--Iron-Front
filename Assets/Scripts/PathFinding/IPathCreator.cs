@@ -7,5 +7,8 @@ public interface IPathCreator
     void Calculate(Character character, Tile end);
     List<Tile> GetPath();
 
+    int GetDistance();
+
+    void UndoLastWaypoint();
     void Reset();
 }

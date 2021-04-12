@@ -11,7 +11,6 @@ public class TileHighlight : MonoBehaviour
     List<Tile> _previewPath = new List<Tile>();
     public bool characterMoving;
     CharacterSelection _charSelector;
-    private int _characterMoveRadius;
     private List<Tile> _inRangeTiles = new List<Tile>();
 
     private void Start()
@@ -137,6 +136,5 @@ public class TileHighlight : MonoBehaviour
     public void ChangeActiveCharacter(Character character)
     {
         _character = character;
-        _characterMoveRadius = _character.GetMoveRadius();
     }
 }

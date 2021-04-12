@@ -6,11 +6,11 @@ using UnityEngine;
 public class Character : Teams
 {
     GridMovement _move;
+    [SerializeField] private int _steps;
     public float speed;
     public LayerMask mask;
-    IPathCreator _pathCreator;
+    public IPathCreator pathCreator;
     [SerializeField] private Team _unitTeam;
-    [SerializeField] private int _moveRadius;
 
     private bool _selected;
     private bool _moving = false;
@@ -38,7 +38,7 @@ public class Character : Teams
         _myPositionTile = GetTileBelow();
         _myPositionTile.MakeTileOccupied();
         _highlight = FindObjectOfType<TileHighlight>();
-        _pathCreator = GetComponent<IPathCreator>();
+        pathCreator = GetComponent<IPathCreator>();
     }
 
     // Update is called once per frame
@@ -65,8 +65,9 @@ public class Character : Teams
         if (IsValidTarget(target))
         {
             _targetTile = target.GetComponent<Tile>();
-            _pathCreator.Calculate(this, _targetTile);
-            _path = _pathCreator.GetPath();
+            pathCreator.Calculate(this, _targetTile);
+            if (pathCreator.GetDistance() <= _steps)
+                _path = pathCreator.GetPath();
         }
     }
     //Check if selected object is a tile.
@@ -77,11 +78,7 @@ public class Character : Teams
             var tile = target.gameObject.GetComponent<Tile>();
             if (tile != null && tile.isWalkable && tile.IsFree())
             {
-                if ((target.position - transform.position).magnitude <= _moveRadius+1)
-                {
-                    return true;
-                }
-                else return false;
+                return true;
             }
             else return false;
         }
@@ -123,9 +120,24 @@ public class Character : Teams
         return _unitTeam;
     }
 
+    public int GetSteps()
+    {
+        return _steps;
+    }
+
     public bool IsSelected()
     {
         return _selected;
+    }
+
+    public void ReduceAvailableSteps(int amount)
+    {
+        _steps -= amount;
+    }
+
+    public void IncreaseAvailableSteps(int amount)
+    {
+        _steps += amount;
     }
 
     public void ReachedEnd()
@@ -146,20 +158,16 @@ public class Character : Teams
         return _myPositionTile;
     }
 
-    public int GetMoveRadius()
-    {
-        return _moveRadius;
-    }
-
     public List<Tile> GetPath()
     {
+        pathCreator.GetPath();
         return _path;
     }
     public void NewTurn()
     {
         _canMove = true;
         _path.Clear();
-        _pathCreator.Reset();
+        pathCreator.Reset();
     }
 
     public bool ThisUnitCanMove()
