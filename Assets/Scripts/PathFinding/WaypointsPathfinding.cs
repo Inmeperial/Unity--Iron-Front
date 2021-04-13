@@ -26,7 +26,6 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         else if (_fullPath.Count > 1)
         {
             _agent.init = _fullPath[_fullPath.Count - 1];
-            Debug.Log("pos: " + _fullPath[_fullPath.Count - 1].transform.position);
         }
         
         _agent.finit = end;
@@ -35,11 +34,13 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         temp.RemoveAt(0);
         if (temp.Count <= _char.GetSteps())
         {
-            _fullPath.AddRange(temp);
+            foreach (var item in temp)
+            {
+                _fullPath.Add(item);
+            }
             _char.ReduceAvailableSteps(temp.Count);
             _partialPaths.Push(temp);
         }
-
 
         //for (int i = 0; i < temp.Count; i++)
         //{

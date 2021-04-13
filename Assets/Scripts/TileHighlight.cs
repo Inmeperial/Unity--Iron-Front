@@ -28,7 +28,6 @@ public class TileHighlight : MonoBehaviour
 
         if (!characterMoving)
             RayToTile();
-        PathPreview(_charSelector.GetActualChar());
     }
 
     //Check if mouse is over a tile.
@@ -74,23 +73,14 @@ public class TileHighlight : MonoBehaviour
             _previewPath.Clear();
         }
     }
-    public void PathPreview(Character character)
+    public void PathPreview(List<Tile> path)
     {
-        if (character != null)
+        _previewPath = path;
+        for (int i = 0; i < path.Count; i++)
         {
-            _character = character;
-            _previewPath = _character.GetPath();
-
-            if (_previewPath != null)
-            {
-                for (int i = 0; i < _previewPath.Count; i++)
-                {
-                    var tile = _previewPath[i];
-                    if (tile.isWalkable && tile.IsFree())
-                        tile.PathFindingPreviewColor();
-                }
-            }
-            
+            var tile = path[i];
+            if (tile.isWalkable && tile.IsFree())
+                tile.PathFindingPreviewColor();
         }
         
 

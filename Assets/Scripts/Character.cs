@@ -74,9 +74,13 @@ public class Character : Teams
             else
             {
                 _targetTile = newTile;
-                pathCreator.Calculate(this, _targetTile);
-                if (pathCreator.GetDistance() <= _steps)
+                
+                if (pathCreator.GetDistance() <= steps)
+                {
+                    pathCreator.Calculate(this, _targetTile);
                     _path = pathCreator.GetPath();
+                    _highlight.PathPreview(_path);
+                }
             }
             
         }

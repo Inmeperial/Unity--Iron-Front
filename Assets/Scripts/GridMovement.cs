@@ -26,7 +26,6 @@ public class GridMovement : MonoBehaviour
             var newPos = _tilesList[tilesIndex].transform.position;
             _moveVertical = false;
             newPos.y += 1;
-            Debug.Log("Tile: " + newPos);
             if ((newPos - transform.position).magnitude <= 0.1f)
             {
                 transform.position = newPos;

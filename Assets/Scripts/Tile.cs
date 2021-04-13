@@ -10,6 +10,7 @@ public class Tile : MonoBehaviour
     public List<Tile> neighbours;
     public LayerMask obstacle;
     private bool _isFree = true;
+    public bool painted;
 
     public bool showLineGizmo = true;
     private void Start()
@@ -94,7 +95,7 @@ public class Tile : MonoBehaviour
         mat.color = Color.blue;
 
         render.sharedMaterial = mat;
-        Debug.Log("me pinte");
+        painted = true;
     }
 
     //Revert tile color when pathfinding preview ends.
@@ -107,22 +108,31 @@ public class Tile : MonoBehaviour
         else mat.color = Color.red;
 
         render.sharedMaterial = mat;
+        painted = false;
     }
 
     public void MouseOverColor()
     {
-        Material mat = new Material(render.sharedMaterial);
-        mat.color = Color.yellow;
+        if (painted == false)
+        {
+            Material mat = new Material(render.sharedMaterial);
+            mat.color = Color.yellow;
 
-        render.sharedMaterial = mat;
+            render.sharedMaterial = mat;
+        }
+        
     }
 
     public void NotSelectedColor()
     {
-        Material mat = new Material(render.sharedMaterial);
-        mat.color = Color.green;
+        if (painted == false)
+        {
+            Material mat = new Material(render.sharedMaterial);
+            mat.color = Color.green;
 
-        render.sharedMaterial = mat;
+            render.sharedMaterial = mat;
+        }
+        
     }
 
     public void InRangeColor()
