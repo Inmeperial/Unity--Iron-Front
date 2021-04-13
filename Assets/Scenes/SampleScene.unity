@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.3508059, g: 0.39045656, b: 0.46388394, a: 1}
+  m_IndirectSpecularColor: {r: 0.109662846, g: 0.13827278, b: 0.19952747, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3338,7 +3338,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 66.85
+  m_fontSize: 66.45
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8649,7 +8649,7 @@ Light:
   serializedVersion: 9
   m_Type: 1
   m_Color: {r: 0.8584906, g: 0.7335492, b: 0.39279994, a: 1}
-  m_Intensity: 0.82
+  m_Intensity: 1.36
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -8694,7 +8694,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.65e-43, y: 1.9476883e-38, z: 0, w: 89.08923}
+  m_BoundingSphereOverride: {x: 7.2e-43, y: 9.2740836e-38, z: 0, w: 6.567349e+30}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -8705,13 +8705,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_LocalRotation: {x: 0.29259, y: -0.36885765, z: -0.22198062, w: 0.85385}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.33994693, y: -0.09602175, z: -0.38980356, w: 0.85045236}
+  m_LocalPosition: {x: 0, y: 37.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 19.627, y: -53.771004, z: -39.170002}
+  m_LocalEulerAnglesHint: {x: 30.222002, y: -29.718002, z: -57.444004}
 --- !u!1 &712308230
 GameObject:
   m_ObjectHideFlags: 0
@@ -10126,7 +10126,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 33.5
+  m_fontSize: 33.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11696,13 +11696,13 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
+  m_AllowDynamicResolution: 1
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -14157,7 +14157,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 67.35
+  m_fontSize: 66.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15397,7 +15397,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 29.95
+  m_fontSize: 29.8
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -19060,7 +19060,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: a6a362261feb48c4ab2b93de44c7b39b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.854904
+      value: 22.3
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a6a362261feb48c4ab2b93de44c7b39b,
         type: 3}
@@ -20889,7 +20889,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: a6a362261feb48c4ab2b93de44c7b39b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.854904
+      value: 22.3
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a6a362261feb48c4ab2b93de44c7b39b,
         type: 3}
@@ -24403,7 +24403,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 67.35
+  m_fontSize: 66.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
