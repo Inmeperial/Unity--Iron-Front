@@ -60,27 +60,31 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
     }
     public void UndoLastWaypoint()
     {
-        if (_partialPaths.Count > 0)
+        if (_char.IsMoving() == false)
         {
-            var removed = _partialPaths.Pop();
-            foreach (var tile in removed)
+            if (_partialPaths.Count > 0)
             {
-                tile.EndPathfindingPreviewColor();
-                _char.IncreaseAvailableSteps(1);
-            }
-            var tempStack = new Stack<List<Tile>>();
+                var removed = _partialPaths.Pop();
+                foreach (var tile in removed)
+                {
+                    tile.EndPathfindingPreviewColor();
+                    _char.IncreaseAvailableSteps(1);
+                }
+                var tempStack = new Stack<List<Tile>>();
 
-            foreach (var partialList in _partialPaths)
-            {
-                tempStack.Push(partialList);
+                foreach (var partialList in _partialPaths)
+                {
+                    tempStack.Push(partialList);
+                }
+                _fullPath.Clear();
+                foreach (var item in tempStack)
+                {
+                    _fullPath.AddRange(item);
+                }
+                _char.ClearTargetTile();
             }
-            _fullPath.Clear();
-            foreach (var item in tempStack)
-            {
-                _fullPath.AddRange(item);
-            }
-            _char.ClearTargetTile();
         }
+        
     }
 
     public void Reset()

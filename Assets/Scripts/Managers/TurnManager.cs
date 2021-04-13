@@ -51,19 +51,22 @@ public class TurnManager : Teams
         }
     }
 
-    public void ChangeTurn()
+    public void EndTurn()
     {
-        if (_activeTeam == Team.Capsule)
+        if (_charSelect.GetActualChar().IsMoving() == false)
         {
-            _activeTeam = Team.Box;
-            teamText.text = _BoxTeamText;
-            ResetTurn(_boxTeam);
-        }
-        else
-        {
-            _activeTeam = Team.Capsule;
-            teamText.text = _CapsuleTeamText;
-            ResetTurn(_capsuleTeam);
+            if (_activeTeam == Team.Capsule)
+            {
+                _activeTeam = Team.Box;
+                teamText.text = _BoxTeamText;
+                ResetTurn(_boxTeam);
+            }
+            else
+            {
+                _activeTeam = Team.Capsule;
+                teamText.text = _CapsuleTeamText;
+                ResetTurn(_capsuleTeam);
+            }
         }
     }
 

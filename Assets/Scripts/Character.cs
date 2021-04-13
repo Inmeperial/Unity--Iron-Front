@@ -166,6 +166,7 @@ public class Character : Teams
         _myPositionTile.MakeTileOccupied();
         _targetTile = null;
         _turnManager.UnitStoppedMoving();
+        pathCreator.Reset();
     }
 
     public Tile ActualPosition()
@@ -189,6 +190,11 @@ public class Character : Teams
     public bool ThisUnitCanMove()
     {
         return _canMove;
+    }
+
+    public bool IsMoving()
+    {
+        return _moving;
     }
 
     public void ClearTargetTile()
