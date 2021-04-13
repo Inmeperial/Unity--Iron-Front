@@ -6,7 +6,8 @@ using UnityEngine;
 public class Character : Teams
 {
     GridMovement _move;
-    [SerializeField] private int _steps;
+    public int steps;
+    private int _steps;
     public float speed;
     public LayerMask mask;
     public IPathCreator pathCreator;
@@ -30,6 +31,7 @@ public class Character : Teams
     // Start is called before the first frame update
     void Start()
     {
+        _steps = steps;
         _selected = false;
         _canMove = true;
         _move = GetComponent<GridMovement>();
@@ -53,10 +55,13 @@ public class Character : Teams
     //This method is called from UI Button "Move".
     public void Move()
     {
-        _moving = true;
-        _turnManager.UnitIsMoving();
-        _highlight.characterMoving = true;
-        _move.StartMovement(_path, speed);
+        if (_path != null && _path.Count > 0)
+        {
+            _moving = true;
+            _turnManager.UnitIsMoving();
+            _highlight.characterMoving = true;
+            _move.StartMovement(_path, speed);
+        }
     }
     public void GetTargetToMove()
     {
@@ -64,10 +69,16 @@ public class Character : Teams
         
         if (IsValidTarget(target))
         {
-            _targetTile = target.GetComponent<Tile>();
-            pathCreator.Calculate(this, _targetTile);
-            if (pathCreator.GetDistance() <= _steps)
-                _path = pathCreator.GetPath();
+            var newTile = target.GetComponent<Tile>();
+            if (_targetTile != null && _targetTile == newTile) return;
+            else
+            {
+                _targetTile = newTile;
+                pathCreator.Calculate(this, _targetTile);
+                if (pathCreator.GetDistance() <= _steps)
+                    _path = pathCreator.GetPath();
+            }
+            
         }
     }
     //Check if selected object is a tile.
@@ -167,11 +178,17 @@ public class Character : Teams
     {
         _canMove = true;
         _path.Clear();
+        _steps = steps;
         pathCreator.Reset();
     }
 
     public bool ThisUnitCanMove()
     {
         return _canMove;
+    }
+
+    public void ClearTargetTile()
+    {
+        _targetTile = null;
     }
 }

@@ -78,6 +78,7 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
             {
                 _fullPath.AddRange(item);
             }
+            _char.ClearTargetTile();
         }
     }
 
