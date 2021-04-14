@@ -77,12 +77,12 @@ public class GridGenerator : EditorWindow
         //i = x coordinate
         for (int i = 0; i < width; i++)
         {
-            pos.x = i;
+            pos.x = i * tiles.transform.localScale.x;
 
             //j = y coordinate
             for (int j = 0; j < length; j++)
             {
-                pos.z = j;
+                pos.z = j * tiles.transform.localScale.z;
                 GameObject obj;
                 if (container)
                 {
