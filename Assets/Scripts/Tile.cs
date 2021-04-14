@@ -67,6 +67,7 @@ public class Tile : MonoBehaviour
         GetNeighbours();
     }
 
+    #region Color methods.
     //Make this tile walkable.
     public void MakeWalkableColor()
     {
@@ -86,8 +87,6 @@ public class Tile : MonoBehaviour
         render.sharedMaterial = mat;
     }
 
-
-    #region Change tile color methods.
     //Change tile color for pathfinding preview.
     public void PathFindingPreviewColor()
     {

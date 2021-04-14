@@ -11,16 +11,20 @@ public class CharacterSelection : MonoBehaviour
     private Character _selection;
     TileHighlight _highlight;
     TurnManager _turnManager;
-    public bool _canSelect;
-    
+    public bool _canSelectUnit;
+    private Character _enemySelection;
     public Button buttonMove;
     public Button buttonUndo;
+    public Button buttonSelectEnemy;
+    public Button buttonAttack;
     public TextMeshProUGUI stepsCounter;
     public event Action OnCharacterSelect = delegate { };
     public event Action OnCharacterDeselect = delegate { };
+
+    private bool _selectingEnemy;
     private void Start()
     {
-        _canSelect = true;
+        _canSelectUnit = true;
         _highlight = GetComponent<TileHighlight>();
         _turnManager = FindObjectOfType<TurnManager>();
     }
@@ -28,11 +32,13 @@ public class CharacterSelection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && _canSelect)
+        if (Input.GetMouseButtonDown(0) && _canSelectUnit)
             SelectCharacter(charMask);
 
         if (_selection)
+        {
             stepsCounter.text = _selection.GetSteps().ToString();
+        }
     }
 
     //Selection of the character that will move.
@@ -57,10 +63,25 @@ public class CharacterSelection : MonoBehaviour
                 buttonMove.onClick.AddListener(_selection.Move);
                 buttonUndo.onClick.RemoveAllListeners();
                 buttonUndo.onClick.AddListener(_selection.pathCreator.UndoLastWaypoint);
+                buttonAttack.onClick.RemoveAllListeners();
+                buttonAttack.onClick.AddListener(_selection.Attack);
+                buttonSelectEnemy.interactable = true;
                 stepsCounter.text = _selection.GetSteps().ToString();
                 OnCharacterSelect();
             }
+            else if (_selectingEnemy)
+            {
+                _enemySelection = c;
+                _enemySelection.SelectedAsEnemy();
+                _selection.SetEnemy(_enemySelection);
+                buttonAttack.interactable = true;
+            }
         }
+    }
+
+    public void SelectEnemy()
+    {
+        _selectingEnemy = true;
     }
 
     //Returns the character that is currently selected.
@@ -69,14 +90,50 @@ public class CharacterSelection : MonoBehaviour
         return _selection;
     }
 
+    //Returns the enemy that is currently selected.
+    public Character GetSelectedEnemy()
+    {
+        return _enemySelection;
+    }
+
     public void ActivateCharacterSelection(bool state)
     {
-        _canSelect = state;
+        _canSelectUnit = state;
+    }
+
+    public void ResetSelector()
+    {
+        DeselectUnit();
+        _selectingEnemy = false;
+        buttonAttack.interactable = false;
+        buttonSelectEnemy.interactable = false;
+        buttonMove.interactable = false;
+        buttonUndo.interactable = false;
     }
 
     public void DeselectUnit()
     {
         if (_selection)
+        {
             _selection.DeselectThisUnit();
+            _selection = null;
+        }
+        if (_enemySelection)
+        {
+            _enemySelection.DeselectThisUnit();
+            _selection = null;
+        }
+    }
+
+    public void ActivateMoveButton()
+    {
+        buttonMove.interactable = true;
+        buttonUndo.interactable = true;
+    }
+
+    public void DeactivateMoveButton()
+    {
+        buttonMove.interactable = false;
+        buttonUndo.interactable = false;
     }
 }

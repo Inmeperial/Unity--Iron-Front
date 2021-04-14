@@ -40,13 +40,7 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
             }
             _char.ReduceAvailableSteps(temp.Count);
             _partialPaths.Push(temp);
-        }
-
-        //for (int i = 0; i < temp.Count; i++)
-        //{
-        //    _fullPath.Add(temp[i]);
-        //}
-        
+        }        
     }
 
     public List<Tile> GetPath()
@@ -58,33 +52,47 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
     {
         return _fullPath.Count;
     }
+
     public void UndoLastWaypoint()
     {
+        //Prevents path from breaking during movement.
         if (_char.IsMoving() == false)
         {
+            //Check if there is a path.
             if (_partialPaths.Count > 0)
             {
+                //Get the partial path and return tiles to their normal color.
                 var removed = _partialPaths.Pop();
                 foreach (var tile in removed)
                 {
                     tile.EndPathfindingPreviewColor();
                     _char.IncreaseAvailableSteps(1);
                 }
+
+
                 var tempStack = new Stack<List<Tile>>();
 
+                //Invert the stack so tiles are added in the correct order.
                 foreach (var partialList in _partialPaths)
                 {
                     tempStack.Push(partialList);
                 }
+
                 _fullPath.Clear();
+
+                //Recreate the path.
                 foreach (var item in tempStack)
                 {
                     _fullPath.AddRange(item);
                 }
                 _char.ClearTargetTile();
+
+                Debug.Log("path: " + _fullPath.Count);
+
+                if (_fullPath == null || _fullPath.Count == 0)
+                    _char.DeactivateMoveButton();
             }
         }
-        
     }
 
     public void Reset()

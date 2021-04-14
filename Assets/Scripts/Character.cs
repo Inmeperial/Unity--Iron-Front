@@ -6,22 +6,25 @@ using UnityEngine;
 public class Character : Teams
 {
     GridMovement _move;
+    public int maxHp;
+    private int _hp;
+    public int damage;
     public int steps;
     private int _steps;
     public float speed;
     public LayerMask mask;
     public IPathCreator pathCreator;
     [SerializeField] private Team _unitTeam;
-
+    public Character _enemy;
     private bool _selected;
     private bool _moving = false;
     public bool _canMove = true;
     public bool _attacked = false;
 
-    public Tile _myPositionTile;
-    Tile _targetTile;
-    MeshRenderer _render;
-    public List<Tile> _path = new List<Tile>();
+    private Tile _myPositionTile;
+    private Tile _targetTile;
+    private MeshRenderer _render;
+    private List<Tile> _path = new List<Tile>();
 
     [SerializeField] private TurnManager _turnManager;
 
@@ -32,6 +35,7 @@ public class Character : Teams
     void Start()
     {
         _steps = steps;
+        _hp = maxHp;
         _selected = false;
         _canMove = true;
         _move = GetComponent<GridMovement>();
@@ -52,6 +56,7 @@ public class Character : Teams
         }
     }
 
+    #region Actions
     //This method is called from UI Button "Move".
     public void Move()
     {
@@ -63,6 +68,21 @@ public class Character : Teams
             _move.StartMovement(_path, speed);
         }
     }
+
+    public void Attack()
+    {
+        _enemy.TakeDamage(damage);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Debug.Log(name + " took: " + damage + " damage.");
+        _hp -= damage;
+        Debug.Log(name + " current hp: " + _hp);
+    }
+    #endregion
+
+    #region Getters
     public void GetTargetToMove()
     {
         Transform target = MouseRay.GetTargetTransform(mask);
@@ -80,24 +100,46 @@ public class Character : Teams
                     pathCreator.Calculate(this, _targetTile);
                     _path = pathCreator.GetPath();
                     _highlight.PathPreview(_path);
+                    ActivateMoveButton();
                 }
             }
-            
         }
     }
-    //Check if selected object is a tile.
-    bool IsValidTarget(Transform target)
+
+    public Tile GetEndTile()
     {
-        if (target != null)
-        {
-            var tile = target.gameObject.GetComponent<Tile>();
-            if (tile != null && tile.isWalkable && tile.IsFree())
-            {
-                return true;
-            }
-            else return false;
-        }
-        else return false;
+        return _targetTile;
+    }
+
+    public Team GetUnitTeam()
+    {
+        return _unitTeam;
+    }
+
+    public int GetSteps()
+    {
+        return _steps;
+    }
+
+    public int GetHP()
+    {
+        return _hp;
+    }
+
+    public bool IsSelected()
+    {
+        return _selected;
+    }
+
+    public Tile GetActualTilePosition()
+    {
+        return _myPositionTile;
+    }
+
+    public List<Tile> GetPath()
+    {
+        pathCreator.GetPath();
+        return _path;
     }
 
     public Tile GetTileBelow()
@@ -105,6 +147,45 @@ public class Character : Teams
         RaycastHit hit;
         Physics.Raycast(transform.position, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
         return hit.transform.gameObject.GetComponent<Tile>();
+    }
+    #endregion
+
+    #region Utilities
+    public void NewTurn()
+    {
+        _canMove = true;
+        _path.Clear();
+        _steps = steps;
+        pathCreator.Reset();
+    }
+
+    public void ClearTargetTile()
+    {
+        _targetTile = null;
+    }
+
+    public void ReachedEnd()
+    {
+        _canMove = false;
+        _highlight.characterMoving = false;
+        _highlight.EndPreview();
+        _moving = false;
+        _myPositionTile.MakeTileFree();
+        _myPositionTile = _targetTile;
+        _myPositionTile.MakeTileOccupied();
+        _targetTile = null;
+        _turnManager.UnitStoppedMoving();
+        pathCreator.Reset();
+    }
+
+    public void ReduceAvailableSteps(int amount)
+    {
+        _steps -= amount;
+    }
+
+    public void IncreaseAvailableSteps(int amount)
+    {
+        _steps += amount;
     }
 
     public void SelectThisUnit()
@@ -125,67 +206,29 @@ public class Character : Teams
         _selected = false;
     }
 
-    public Tile GetEndTile()
+    public void SelectedAsEnemy()
     {
-        return _targetTile;
+        Material mat = new Material(_render.sharedMaterial);
+        mat.color = Color.red;
+
+        _render.sharedMaterial = mat;
     }
 
-    public Team GetUnitTeam()
+    //Check if selected object is a tile.
+    bool IsValidTarget(Transform target)
     {
-        return _unitTeam;
+        if (target != null)
+        {
+            var tile = target.gameObject.GetComponent<Tile>();
+            if (tile != null && tile.isWalkable && tile.IsFree())
+            {
+                return true;
+            }
+            else return false;
+        }
+        else return false;
     }
-
-    public int GetSteps()
-    {
-        return _steps;
-    }
-
-    public bool IsSelected()
-    {
-        return _selected;
-    }
-
-    public void ReduceAvailableSteps(int amount)
-    {
-        _steps -= amount;
-    }
-
-    public void IncreaseAvailableSteps(int amount)
-    {
-        _steps += amount;
-    }
-
-    public void ReachedEnd()
-    {
-        _canMove = false;
-        _highlight.characterMoving = false;
-        _highlight.EndPreview();
-        _moving = false;
-        _myPositionTile.MakeTileFree();
-        _myPositionTile = _targetTile;
-        _myPositionTile.MakeTileOccupied();
-        _targetTile = null;
-        _turnManager.UnitStoppedMoving();
-        pathCreator.Reset();
-    }
-
-    public Tile ActualPosition()
-    {
-        return _myPositionTile;
-    }
-
-    public List<Tile> GetPath()
-    {
-        pathCreator.GetPath();
-        return _path;
-    }
-    public void NewTurn()
-    {
-        _canMove = true;
-        _path.Clear();
-        _steps = steps;
-        pathCreator.Reset();
-    }
+    #endregion
 
     public bool ThisUnitCanMove()
     {
@@ -197,8 +240,18 @@ public class Character : Teams
         return _moving;
     }
 
-    public void ClearTargetTile()
+    public void SetEnemy(Character enemy)
     {
-        _targetTile = null;
+        _enemy = enemy;
+    }
+
+    void ActivateMoveButton()
+    {
+        _turnManager.ActivateMoveButton();
+    }
+
+    public void DeactivateMoveButton()
+    {
+        _turnManager.DeactivateMoveButton();
     }
 }

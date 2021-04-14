@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class TurnManager : Teams
 {
@@ -25,12 +26,6 @@ public class TurnManager : Teams
         teamText.text = _CapsuleTeamText;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void UnitIsMoving()
     {
         _charSelect.ActivateCharacterSelection(false);
@@ -39,6 +34,7 @@ public class TurnManager : Teams
     public void UnitStoppedMoving()
     {
         _charSelect.ActivateCharacterSelection(true);
+        _charSelect.DeactivateMoveButton();
     }
 
     void SeparateByTeam(Character[] units)
@@ -72,7 +68,7 @@ public class TurnManager : Teams
 
     void ResetTurn(List<Character> team)
     {
-        _charSelect.DeselectUnit();
+        _charSelect.ResetSelector();
         foreach (var unit in team)
         {
             unit.NewTurn();
@@ -82,5 +78,15 @@ public class TurnManager : Teams
     public Team GetActiveTeam()
     {
         return _activeTeam;
+    }
+
+    internal void ActivateMoveButton()
+    {
+        _charSelect.ActivateMoveButton();
+    }
+
+    internal void DeactivateMoveButton()
+    {
+        _charSelect.DeactivateMoveButton();
     }
 }

@@ -47,20 +47,20 @@ public class GridMovement : MonoBehaviour
         }
     }
 
-    IEnumerator MoveVertical(float finalYPosition, float speed)
-    {
-        if (transform.position.y <= finalYPosition)
-        {
-            transform.position += Vector3.up * speed * Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-            MoveVertical(finalYPosition, speed);
-        }
-        else
-        {
-            transform.position += Vector3.down * speed * Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-            MoveVertical(finalYPosition, speed);
-        }
-        _moveVertical = true;
-    }
+    //IEnumerator MoveVertical(float finalYPosition, float speed)
+    //{
+    //    if (transform.position.y <= finalYPosition)
+    //    {
+    //        transform.position += Vector3.up * speed * Time.deltaTime;
+    //        yield return new WaitForEndOfFrame();
+    //        MoveVertical(finalYPosition, speed);
+    //    }
+    //    else
+    //    {
+    //        transform.position += Vector3.down * speed * Time.deltaTime;
+    //        yield return new WaitForEndOfFrame();
+    //        MoveVertical(finalYPosition, speed);
+    //    }
+    //    _moveVertical = true;
+    //}
 }
