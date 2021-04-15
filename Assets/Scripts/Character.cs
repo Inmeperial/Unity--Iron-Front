@@ -79,7 +79,7 @@ public class Character : Teams
         foreach (var item in neighbours)
         {
             _tilesInAttackRange.Add(item);
-            item.InRangeColor();
+            _highlight.PaintTilesInAttackRange(item);
             PaintTilesInAttackRange(item.neighbours, count + 1);
         }
     }
@@ -145,6 +145,9 @@ public class Character : Teams
                     _path = pathCreator.GetPath();
                     _highlight.PathPreview(_path);
                     ActivateMoveButton();
+                    _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
+                    _tilesInAttackRange.Clear();
+                    PaintTilesInAttackRange(_path[_path.Count - 1].neighbours, 0);
                 }
             }
         }
@@ -195,6 +198,12 @@ public class Character : Teams
     #endregion
 
     #region Utilities
+
+    public void Undo()
+    {
+        _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
+        _tilesInAttackRange.Clear();
+    }
     public void NewTurn()
     {
         _canMove = true;

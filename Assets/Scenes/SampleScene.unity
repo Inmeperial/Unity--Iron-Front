@@ -1315,6 +1315,7 @@ MonoBehaviour:
   _enemy: {fileID: 0}
   _canMove: 0
   _attacked: 0
+  _path: []
   _turnManager: {fileID: 0}
   _highlight: {fileID: 0}
 --- !u!114 &112879124
@@ -11872,7 +11873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 20
   damage: 5
-  steps: 2
+  steps: 5
   speed: 2
   block:
     serializedVersion: 2
@@ -11884,6 +11885,7 @@ MonoBehaviour:
   _enemy: {fileID: 0}
   _canMove: 0
   _attacked: 0
+  _path: []
   _turnManager: {fileID: 0}
   _highlight: {fileID: 0}
 --- !u!114 &903744156

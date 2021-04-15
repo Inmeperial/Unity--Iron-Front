@@ -122,6 +122,19 @@ public class TileHighlight : MonoBehaviour
         //    }
         //}
     }
+
+    public void PaintTilesInAttackRange(Tile tile)
+    {
+        tile.InRangeColor();
+    }
+
+    public void ClearTilesInAttackRange(List<Tile> tiles)
+    {
+        foreach (var item in tiles)
+        {
+            item.EndPathfindingPreviewColor();
+        }
+    }
     #endregion
 
     public void ChangeActiveCharacter(Character character)
