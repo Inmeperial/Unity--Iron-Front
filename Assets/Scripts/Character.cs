@@ -13,7 +13,8 @@ public class Character : Teams
     public int steps;
     private int _steps;
     public float speed;
-    public LayerMask mask;
+    public LayerMask block;
+    public int attackRange;
 
     public IPathCreator pathCreator;
     [SerializeField] private Team _unitTeam;
@@ -90,7 +91,7 @@ public class Character : Teams
     #region Getters
     public void GetTargetToMove()
     {
-        Transform target = MouseRay.GetTargetTransform(mask);
+        Transform target = MouseRay.GetTargetTransform(block);
         
         if (IsValidTarget(target))
         {
@@ -239,6 +240,14 @@ public class Character : Teams
         }
         else return false;
     }
+
+    void CheckCloseEnemies()
+    {
+        if (_path.Count == 0)
+        {
+
+        }
+    }
     #endregion
 
     public bool ThisUnitCanMove()
@@ -254,6 +263,11 @@ public class Character : Teams
     public void SetEnemy(Character enemy)
     {
         _enemy = enemy;
+    }
+
+    public void SetTargetTile(Tile target)
+    {
+        _targetTile = target;
     }
 
     void ActivateMoveButton()

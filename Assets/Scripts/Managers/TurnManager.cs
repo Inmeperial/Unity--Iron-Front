@@ -48,6 +48,8 @@ public class TurnManager : Teams
         }
     }
 
+    //public void GetEnemies
+
     public void EndTurn()
     {
         var character = _charSelect.GetActualChar();

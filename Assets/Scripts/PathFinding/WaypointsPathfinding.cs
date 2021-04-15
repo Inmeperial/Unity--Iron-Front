@@ -84,13 +84,18 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
                 foreach (var item in tempStack)
                 {
                     _fullPath.AddRange(item);
-                }
-                _char.ClearTargetTile();
 
-                Debug.Log("path: " + _fullPath.Count);
+                }
 
                 if (_fullPath == null || _fullPath.Count == 0)
+                {
+                    _char.ClearTargetTile();
                     _char.DeactivateMoveButton();
+                }
+                else
+                {
+                    _char.SetTargetTile(_fullPath[_fullPath.Count - 1]);
+                }               
             }
         }
     }

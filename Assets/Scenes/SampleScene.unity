@@ -38,13 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.109662846, g: 0.13827278, b: 0.19952747, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -247,6 +247,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &48488589
@@ -360,6 +364,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &48607891
@@ -655,6 +663,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &83182901
@@ -799,7 +811,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36.45
+  m_fontSize: 47.7
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -845,7 +857,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 2
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -923,6 +935,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &101500708
@@ -1036,6 +1052,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &103568562
@@ -1285,9 +1305,10 @@ MonoBehaviour:
   damage: 3
   steps: 10
   speed: 2
-  mask:
+  block:
     serializedVersion: 2
     m_Bits: 256
+  attackRange: 0
   _unitTeam: 1
   _enemy: {fileID: 0}
   _canMove: 0
@@ -1529,6 +1550,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &121335714
@@ -2340,6 +2365,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &168088368
@@ -2528,6 +2557,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &175574388
@@ -2866,6 +2899,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &204774416
@@ -3204,6 +3241,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &243732597
@@ -3583,7 +3624,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 66.85
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3977,6 +4018,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &296012917
@@ -4245,6 +4290,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &314865347
@@ -4358,6 +4407,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &315672060
@@ -4471,6 +4524,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &317971558
@@ -4713,6 +4770,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &339039181
@@ -5051,6 +5112,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &362244739
@@ -5164,6 +5229,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &366206775
@@ -5362,6 +5431,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &396645684
@@ -5700,6 +5773,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &451985707
@@ -5813,6 +5890,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &453191295
@@ -5926,6 +6007,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &465852338
@@ -6199,6 +6284,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &482152829
@@ -6612,6 +6701,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &513557537
@@ -6929,6 +7022,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &541029726
@@ -7042,6 +7139,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &545904960
@@ -7155,6 +7256,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &550765557
@@ -7268,6 +7373,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &561057873
@@ -7381,6 +7490,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &578514463
@@ -7654,6 +7767,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &590712293
@@ -7767,6 +7884,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &601251209
@@ -7880,6 +8001,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &604861749
@@ -7993,6 +8118,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &613350457
@@ -8106,6 +8235,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &621766862
@@ -8379,6 +8512,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &647596264
@@ -8492,6 +8629,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &650909787
@@ -8605,6 +8746,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &652532333
@@ -9037,6 +9182,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &712969892
@@ -9276,6 +9425,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &732492551
@@ -9999,6 +10152,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &753122045
@@ -10337,6 +10494,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &798617359
@@ -10450,6 +10611,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &801496436
@@ -10638,6 +10803,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &818033189
@@ -10787,7 +10956,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 33.5
+  m_fontSize: 40.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -10833,7 +11002,7 @@ MonoBehaviour:
     spaceCount: 25
     wordCount: 26
     linkCount: 0
-    lineCount: 5
+    lineCount: 6
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -10911,6 +11080,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &824008376
@@ -11024,6 +11197,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &832749664
@@ -11137,6 +11314,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &845753982
@@ -11691,9 +11872,10 @@ MonoBehaviour:
   damage: 5
   steps: 15
   speed: 2
-  mask:
+  block:
     serializedVersion: 2
     m_Bits: 256
+  attackRange: 0
   _unitTeam: 0
   _enemy: {fileID: 0}
   _canMove: 0
@@ -11840,6 +12022,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &923252600
@@ -11953,6 +12139,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &930432601
@@ -12211,6 +12401,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &949309876
@@ -12324,6 +12518,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &954630755
@@ -12599,6 +12797,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &972321421
@@ -12797,6 +12999,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &995557227
@@ -12985,6 +13191,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1000106577
@@ -13098,6 +13308,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1005498982
@@ -13361,6 +13575,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1023871868
@@ -13549,6 +13767,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1034409940
@@ -13737,6 +13959,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1039125168
@@ -14150,6 +14376,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1059304280
@@ -14418,6 +14648,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1062483518
@@ -14751,6 +14985,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1074636220
@@ -14864,6 +15102,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1084926060
@@ -14977,6 +15219,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1094329086
@@ -15165,6 +15411,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1104441473
@@ -15664,6 +15914,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1158019069
@@ -15852,6 +16106,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1171761916
@@ -16415,6 +16673,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1220670412
@@ -16528,6 +16790,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1222382219
@@ -16641,6 +16907,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1247291696
@@ -16860,7 +17130,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 67.35
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -16984,6 +17254,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1269489585
@@ -17172,6 +17446,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1280035142
@@ -17510,6 +17788,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1320156598
@@ -17623,6 +17905,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1322480094
@@ -17736,6 +18022,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1326638402
@@ -17849,6 +18139,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1338881900
@@ -18068,7 +18362,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 29.95
+  m_fontSize: 43.8
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -18342,6 +18636,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1393652637
@@ -18605,6 +18903,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1404797444
@@ -18868,6 +19170,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1420695231
@@ -19056,6 +19362,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1421605216
@@ -19244,6 +19554,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1427205281
@@ -19357,6 +19671,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1435716692
@@ -19849,6 +20167,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1447931315
@@ -20037,6 +20359,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1464215473
@@ -20300,6 +20626,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1498081833
@@ -20488,6 +20818,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1531884649
@@ -20676,6 +21010,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1551800657
@@ -20939,6 +21277,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1602634607
@@ -21331,6 +21673,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1624829584
@@ -21873,6 +22219,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1669841200
@@ -21986,6 +22336,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1681107205
@@ -22308,6 +22662,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1689905929
@@ -22421,6 +22779,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1690573838
@@ -22534,6 +22896,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1692344996
@@ -22976,6 +23342,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1722802693
@@ -23089,6 +23459,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1724407343
@@ -23202,6 +23576,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1762698114
@@ -23519,6 +23897,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1791358069
@@ -23707,6 +24089,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1803741243
@@ -24050,6 +24436,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1831021522
@@ -24194,7 +24584,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 46.8
+  m_fontSize: 68.4
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -24318,6 +24708,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1832728195
@@ -24431,6 +24825,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1834156989
@@ -25004,6 +25402,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1887285172
@@ -25117,6 +25519,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1887356012
@@ -25230,6 +25636,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1892976013
@@ -25343,6 +25753,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1906837097
@@ -25531,6 +25945,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1908294421
@@ -25719,6 +26137,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1928635772
@@ -26261,6 +26683,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &1971787433
@@ -26524,6 +26950,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &2001057796
@@ -26668,7 +27098,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 39.4
+  m_fontSize: 46.8
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -26714,7 +27144,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 2
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -27027,6 +27457,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &2035006300
@@ -27300,6 +27734,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &2041604468
@@ -27446,7 +27884,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 67.35
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -27570,6 +28008,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &2069437234
@@ -27683,6 +28125,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &2071100206
@@ -27796,6 +28242,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &2075241990
@@ -28005,6 +28455,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &2084601161
@@ -28193,6 +28647,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &2106162143
@@ -28306,6 +28764,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &2108702332
@@ -28644,6 +29106,10 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
+  character:
+    serializedVersion: 2
+    m_Bits: 0
+  _isFree: 0
   painted: 0
   showLineGizmo: 0
 --- !u!65 &2147408598
