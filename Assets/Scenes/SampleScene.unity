@@ -811,7 +811,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 37.5
+  m_fontSize: 50.6
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1311,6 +1311,7 @@ MonoBehaviour:
   attackRange: 0
   _tilesInAttackRange: []
   _tilesInMoveRange: []
+  _enemyTargets: []
   _unitTeam: 1
   _enemy: {fileID: 0}
   _canMove: 0
@@ -1318,6 +1319,7 @@ MonoBehaviour:
   _path: []
   _turnManager: {fileID: 0}
   _highlight: {fileID: 0}
+  _agent: {fileID: 0}
 --- !u!114 &112879124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3127,7 +3129,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 444a9736528b1544cb747f6aa725950b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.06207
+      value: 16.862068
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 444a9736528b1544cb747f6aa725950b,
         type: 3}
@@ -6587,7 +6589,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 444a9736528b1544cb747f6aa725950b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.05
+      value: 20.85
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 444a9736528b1544cb747f6aa725950b,
         type: 3}
@@ -10959,7 +10961,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 33.55
+  m_fontSize: 43.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11005,7 +11007,7 @@ MonoBehaviour:
     spaceCount: 25
     wordCount: 26
     linkCount: 0
-    lineCount: 5
+    lineCount: 6
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -11878,9 +11880,10 @@ MonoBehaviour:
   block:
     serializedVersion: 2
     m_Bits: 256
-  attackRange: 2
+  attackRange: 5
   _tilesInAttackRange: []
   _tilesInMoveRange: []
+  _enemyTargets: []
   _unitTeam: 0
   _enemy: {fileID: 0}
   _canMove: 0
@@ -11888,6 +11891,7 @@ MonoBehaviour:
   _path: []
   _turnManager: {fileID: 0}
   _highlight: {fileID: 0}
+  _agent: {fileID: 0}
 --- !u!114 &903744156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16562,7 +16566,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 1693028b25ce1814cac652ecd947099b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.22
+      value: 14.0199995
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1693028b25ce1814cac652ecd947099b,
         type: 3}
@@ -18368,7 +18372,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 34.45
+  m_fontSize: 46.45
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -18792,7 +18796,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 444a9736528b1544cb747f6aa725950b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.04
+      value: 28.84
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 444a9736528b1544cb747f6aa725950b,
         type: 3}
@@ -19752,7 +19756,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 1693028b25ce1814cac652ecd947099b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.91
+      value: 35.71
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1693028b25ce1814cac652ecd947099b,
         type: 3}
@@ -20440,7 +20444,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 444a9736528b1544cb747f6aa725950b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.04
+      value: 24.84
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 444a9736528b1544cb747f6aa725950b,
         type: 3}
@@ -23667,7 +23671,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: a6a362261feb48c4ab2b93de44c7b39b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.3
+      value: 33.64
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a6a362261feb48c4ab2b93de44c7b39b,
         type: 3}
@@ -24590,7 +24594,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 53.8
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -27104,7 +27108,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 39.4
+  m_fontSize: 49.6
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -27150,7 +27154,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 2
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -27271,7 +27275,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 444a9736528b1544cb747f6aa725950b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.02
+      value: 32.82
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 444a9736528b1544cb747f6aa725950b,
         type: 3}

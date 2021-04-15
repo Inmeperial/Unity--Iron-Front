@@ -68,7 +68,7 @@ public class TileHighlight : MonoBehaviour
         {
             foreach (var item in _previewPath)
             {
-                item.EndPathfindingPreviewColor();
+                item.ResetColor();
             }
             _previewPath.Clear();
         }
@@ -132,7 +132,7 @@ public class TileHighlight : MonoBehaviour
     {
         foreach (var item in tiles)
         {
-            item.EndPathfindingPreviewColor();
+            item.ResetColor();
         }
     }
     #endregion

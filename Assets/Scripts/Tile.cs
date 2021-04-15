@@ -10,13 +10,16 @@ public class Tile : MonoBehaviour
     public List<Tile> neighbours;
     public LayerMask obstacle;
     public LayerMask character;
-    [SerializeField] private bool _isFree;
+    [SerializeField] private bool _isFree = true;
     public bool painted;
 
     public bool showLineGizmo = true;
+    private void Awake()
+    {
+        _isFree = true;
+    }
     private void Start()
     {
-        _isFree = !IsCharacterAbove();
         if (TileAbove() == false)
             GetNeighbours();
         else MakeNotWalkableColor();
@@ -104,7 +107,7 @@ public class Tile : MonoBehaviour
     }
 
     //Revert tile color when pathfinding preview ends.
-    public void EndPathfindingPreviewColor()
+    public void ResetColor()
     {
         Material mat = new Material(render.sharedMaterial);
 
@@ -142,9 +145,22 @@ public class Tile : MonoBehaviour
 
     public void InRangeColor()
     {
+        if (painted == false)
+        {
+            painted = true;
+            Material mat = new Material(render.sharedMaterial);
+            mat.color = Color.white;
+
+            render.sharedMaterial = mat;
+        }
+        
+    }
+
+    public void CanBeAttackedColor()
+    {
         painted = true;
         Material mat = new Material(render.sharedMaterial);
-        mat.color = Color.white;
+        mat.color = Color.blue;
 
         render.sharedMaterial = mat;
     }

@@ -65,7 +65,7 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
                 var removed = _partialPaths.Pop();
                 foreach (var tile in removed)
                 {
-                    tile.EndPathfindingPreviewColor();
+                    tile.ResetColor();
                     _char.IncreaseAvailableSteps(1);
                 }
 

@@ -15,10 +15,11 @@ public class Character : Teams
     public float speed;
     public LayerMask block;
     public int attackRange;
+    private bool _canBeAttacked;
 
     public List<Tile> _tilesInAttackRange = new List<Tile>();
     public List<Tile> _tilesInMoveRange = new List<Tile>();
-
+    public List<Character> _enemyTargets = new List<Character>();
     public IPathCreator pathCreator;
     [SerializeField] private Team _unitTeam;
     public Character _enemy;
@@ -30,13 +31,14 @@ public class Character : Teams
     private Tile _myPositionTile;
     private Tile _targetTile;
     private MeshRenderer _render;
+
     [SerializeField] private List<Tile> _path = new List<Tile>();
 
     [SerializeField] private TurnManager _turnManager;
 
     [SerializeField] private TileHighlight _highlight;
-    
 
+    [SerializeField] private AStarAgent _agent;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +52,7 @@ public class Character : Teams
         _myPositionTile = GetTileBelow();
         _myPositionTile.MakeTileOccupied();
         _highlight = FindObjectOfType<TileHighlight>();
+        _agent = FindObjectOfType<AStarAgent>();
         pathCreator = GetComponent<IPathCreator>();
     }
 
@@ -81,7 +84,7 @@ public class Character : Teams
             _tilesInAttackRange.Add(item);
             _highlight.PaintTilesInAttackRange(item);
             PaintTilesInAttackRange(item.neighbours, count + 1);
-        }
+        } 
     }
 
     public void PaintTilesInMoveRange(List<Tile> neighbours, int count)
@@ -138,16 +141,19 @@ public class Character : Teams
             else
             {
                 _targetTile = newTile;
-                pathCreator.Calculate(this, _targetTile, steps);
-                var dist = pathCreator.GetDistance();
-                if (dist != 0 && dist <= steps)
+                if (pathCreator.GetDistance() <= _steps)
                 {
+                    pathCreator.Calculate(this, _targetTile, _steps);    
                     _path = pathCreator.GetPath();
-                    _highlight.PathPreview(_path);
-                    ActivateMoveButton();
-                    _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
-                    _tilesInAttackRange.Clear();
-                    PaintTilesInAttackRange(_path[_path.Count - 1].neighbours, 0);
+                    if (_path.Count > 0)
+                    {
+                        _highlight.PathPreview(_path);
+                        ActivateMoveButton();
+                        _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
+                        _tilesInAttackRange.Clear();
+                        PaintTilesInAttackRange(_path[_path.Count - 1].neighbours, 0);
+                        CheckCloseEnemies();
+                    }
                 }
             }
         }
@@ -209,6 +215,8 @@ public class Character : Teams
         _canMove = true;
         _path.Clear();
         _steps = steps;
+        _enemyTargets.Clear();
+        CannotBeAttacked();
         pathCreator.Reset();
     }
 
@@ -261,13 +269,13 @@ public class Character : Teams
 
         foreach (var item in _tilesInMoveRange)
         {
-            item.EndPathfindingPreviewColor();
+            item.ResetColor();
         }
         _tilesInMoveRange.Clear();
 
         foreach (var item in _tilesInAttackRange)
         {
-            item.EndPathfindingPreviewColor();
+            item.ResetColor();
         }
         _tilesInAttackRange.Clear();
     }
@@ -301,18 +309,51 @@ public class Character : Teams
         else return false;
     }
 
-    //void CheckCloseEnemies()
-    //{
-    //    if (_path.Count == 0)
-    //    {
-    //        var enemies = _turnManager.GetEnemies(_unitTeam);
+    void CheckCloseEnemies()
+    {
+        var enemies = _turnManager.GetEnemies(_unitTeam);
 
-    //        foreach (var unit in enemies)
-    //        {
-    //            var distance = pathCreator.Calculate()
-    //        }
-    //    }
-    //}
+        _enemyTargets.Clear();
+        if (_path.Count == 0)
+        {
+            
+            foreach (var unit in enemies)
+            {
+                var dist = CalculateDistanceToEnemie(unit, _myPositionTile);
+
+                if (dist <= attackRange)
+                {
+                    _enemyTargets.Add(unit);
+                    unit.CanBeAttacked();
+                    unit.GetTileBelow().CanBeAttackedColor();
+                }
+            }
+        }
+        else
+        {
+            foreach (var unit in enemies)
+            {
+                var dist = CalculateDistanceToEnemie(unit, _path[_path.Count-1]);
+
+                if (dist <= attackRange)
+                {
+                    _enemyTargets.Add(unit);
+                    unit.CanBeAttacked();
+                    unit.GetTileBelow().CanBeAttackedColor();
+                }
+            }
+        }
+    }
+
+    int CalculateDistanceToEnemie(Character enemy, Tile from)
+    {
+        _agent.init = from;
+        _agent.finit = enemy.GetTileBelow();
+
+        var path = _agent.PathFindingAstar();
+
+        return path.Count-1;
+    }
     #endregion
 
     public bool ThisUnitCanMove()
@@ -343,5 +384,15 @@ public class Character : Teams
     public void DeactivateMoveButton()
     {
         _turnManager.DeactivateMoveButton();
+    }
+
+    public void CanBeAttacked()
+    {
+        _canBeAttacked = true;
+    }
+
+    public void CannotBeAttacked()
+    {
+        _canBeAttacked = false;
     }
 }
