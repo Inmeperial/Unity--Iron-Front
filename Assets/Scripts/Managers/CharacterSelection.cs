@@ -136,4 +136,14 @@ public class CharacterSelection : MonoBehaviour
         buttonMove.interactable = false;
         buttonUndo.interactable = false;
     }
+
+    public void ActivateAttackButton()
+    {
+        buttonAttack.interactable = true;
+    }
+
+    public void DeactivateAttackButton()
+    {
+        buttonAttack.interactable = false;
+    }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Character : Teams
 {
@@ -13,6 +14,7 @@ public class Character : Teams
     private int _steps;
     public float speed;
     public LayerMask mask;
+
     public IPathCreator pathCreator;
     [SerializeField] private Team _unitTeam;
     public Character _enemy;
@@ -60,7 +62,7 @@ public class Character : Teams
     //This method is called from UI Button "Move".
     public void Move()
     {
-        if (_path != null && _path.Count > 0)
+        if (_moving == false && _path != null && _path.Count > 0)
         {
             _moving = true;
             _turnManager.UnitIsMoving();
@@ -71,6 +73,9 @@ public class Character : Teams
 
     public void Attack()
     {
+        _canMove = false;
+        _turnManager.DeactivateMoveButton();
+        _turnManager.DeactivateAttackButton();
         _enemy.TakeDamage(damage);
     }
 
@@ -217,14 +222,20 @@ public class Character : Teams
     //Check if selected object is a tile.
     bool IsValidTarget(Transform target)
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return false;
         if (target != null)
         {
-            var tile = target.gameObject.GetComponent<Tile>();
-            if (tile != null && tile.isWalkable && tile.IsFree())
+            if (target.gameObject.layer == LayerMask.NameToLayer("GridBlock"))
             {
-                return true;
+                var tile = target.gameObject.GetComponent<Tile>();
+                if (tile != null && tile.isWalkable && tile.IsFree())
+                {
+                    return true;
+                }
+                else return false;
             }
-            else return false;
+            return false;
         }
         else return false;
     }

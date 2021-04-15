@@ -9,13 +9,14 @@ public class Tile : MonoBehaviour
     public MeshRenderer render;
     public List<Tile> neighbours;
     public LayerMask obstacle;
-    private bool _isFree = true;
+    public LayerMask character;
+    [SerializeField] private bool _isFree;
     public bool painted;
 
     public bool showLineGizmo = true;
     private void Start()
     {
-        _isFree = true;
+        _isFree = !IsCharacterAbove();
         if (TileAbove() == false)
             GetNeighbours();
         else MakeNotWalkableColor();
@@ -54,6 +55,11 @@ public class Tile : MonoBehaviour
     bool TileAbove()
     {
         return Physics.Raycast(transform.position, transform.up, 1, obstacle);
+    }
+
+    bool IsCharacterAbove()
+    {
+        return Physics.Raycast(transform.position, transform.up, 1, character);
     }
 
     public void RemoveNeighbour(Tile tile)

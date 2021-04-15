@@ -29,6 +29,7 @@ public class TurnManager : Teams
     public void UnitIsMoving()
     {
         _charSelect.ActivateCharacterSelection(false);
+        DeactivateMoveButton();
     }
 
     public void UnitStoppedMoving()
@@ -49,7 +50,8 @@ public class TurnManager : Teams
 
     public void EndTurn()
     {
-        if (_charSelect.GetActualChar().IsMoving() == false)
+        var character = _charSelect.GetActualChar();
+        if (character ==null || character.IsMoving() == false)
         {
             if (_activeTeam == Team.Capsule)
             {
@@ -80,13 +82,23 @@ public class TurnManager : Teams
         return _activeTeam;
     }
 
-    internal void ActivateMoveButton()
+    public void ActivateMoveButton()
     {
         _charSelect.ActivateMoveButton();
     }
 
-    internal void DeactivateMoveButton()
+    public void DeactivateMoveButton()
     {
         _charSelect.DeactivateMoveButton();
+    }
+
+    public void ActivateAttackButton()
+    {
+        _charSelect.ActivateAttackButton();
+    }
+
+    public void DeactivateAttackButton()
+    {
+        _charSelect.DeactivateAttackButton();
     }
 }
