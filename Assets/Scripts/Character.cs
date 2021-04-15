@@ -63,7 +63,11 @@ public class Character : Teams
 
         if (_selected && Input.GetKeyDown(KeyCode.Space))
         {
-            PaintTilesInAttackRange(_myPositionTile.neighbours, 0);
+            if (_path.Count > 0)
+            {
+                PaintTilesInAttackRange(_path[_path.Count-1].neighbours, 0);
+            }
+            else PaintTilesInAttackRange(_myPositionTile.neighbours, 0);
         }
     }
 
@@ -82,15 +86,15 @@ public class Character : Teams
 
     public void PaintTilesInMoveRange(List<Tile> neighbours, int count)
     {
-        if (count >= steps)
-            return;
+        //if (count >= steps)
+        //    return;
 
-        foreach (var item in neighbours)
-        {
-            _tilesInMoveRange.Add(item);
-            item.InRangeColor();
-            PaintTilesInAttackRange(item.neighbours, count + 1);
-        }
+        //foreach (var item in neighbours)
+        //{
+        //    _tilesInMoveRange.Add(item);
+        //    item.InRangeColor();
+        //    PaintTilesInAttackRange(item.neighbours, count + 1);
+        //}
     }
 
     #region Actions
@@ -250,11 +254,13 @@ public class Character : Teams
         {
             item.EndPathfindingPreviewColor();
         }
+        _tilesInMoveRange.Clear();
 
         foreach (var item in _tilesInAttackRange)
         {
             item.EndPathfindingPreviewColor();
         }
+        _tilesInAttackRange.Clear();
     }
 
     public void SelectedAsEnemy()
