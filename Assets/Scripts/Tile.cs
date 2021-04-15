@@ -142,6 +142,7 @@ public class Tile : MonoBehaviour
 
     public void InRangeColor()
     {
+        painted = true;
         Material mat = new Material(render.sharedMaterial);
         mat.color = Color.white;
 

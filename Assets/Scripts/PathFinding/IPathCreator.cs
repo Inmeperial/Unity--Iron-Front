@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IPathCreator
 {
-    void Calculate(Character character, Tile end);
+    void Calculate(Character character, Tile end, int distance);
     List<Tile> GetPath();
 
     int GetDistance();

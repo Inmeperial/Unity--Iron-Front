@@ -16,6 +16,9 @@ public class Character : Teams
     public LayerMask block;
     public int attackRange;
 
+    public List<Tile> _tilesInAttackRange = new List<Tile>();
+    public List<Tile> _tilesInMoveRange = new List<Tile>();
+
     public IPathCreator pathCreator;
     [SerializeField] private Team _unitTeam;
     public Character _enemy;
@@ -27,7 +30,7 @@ public class Character : Teams
     private Tile _myPositionTile;
     private Tile _targetTile;
     private MeshRenderer _render;
-    private List<Tile> _path = new List<Tile>();
+    [SerializeField] private List<Tile> _path = new List<Tile>();
 
     [SerializeField] private TurnManager _turnManager;
 
@@ -56,6 +59,37 @@ public class Character : Teams
         if (_selected && !_moving && _canMove && Input.GetMouseButtonDown(0))
         {
             GetTargetToMove();
+        }
+
+        if (_selected && Input.GetKeyDown(KeyCode.Space))
+        {
+            PaintTilesInAttackRange(_myPositionTile.neighbours, 0);
+        }
+    }
+
+    void PaintTilesInAttackRange(List<Tile> neighbours, int count)
+    {
+        if (count >= attackRange)
+            return;
+
+        foreach (var item in neighbours)
+        {
+            _tilesInAttackRange.Add(item);
+            item.InRangeColor();
+            PaintTilesInAttackRange(item.neighbours, count + 1);
+        }
+    }
+
+    public void PaintTilesInMoveRange(List<Tile> neighbours, int count)
+    {
+        if (count >= steps)
+            return;
+
+        foreach (var item in neighbours)
+        {
+            _tilesInMoveRange.Add(item);
+            item.InRangeColor();
+            PaintTilesInAttackRange(item.neighbours, count + 1);
         }
     }
 
@@ -100,10 +134,10 @@ public class Character : Teams
             else
             {
                 _targetTile = newTile;
-                
-                if (pathCreator.GetDistance() <= steps)
+                pathCreator.Calculate(this, _targetTile, steps);
+                var dist = pathCreator.GetDistance();
+                if (dist != 0 && dist <= steps)
                 {
-                    pathCreator.Calculate(this, _targetTile);
                     _path = pathCreator.GetPath();
                     _highlight.PathPreview(_path);
                     ActivateMoveButton();
@@ -201,6 +235,7 @@ public class Character : Teams
 
         _render.sharedMaterial = mat;
         _selected = true;
+        PaintTilesInMoveRange(_myPositionTile.neighbours, 0);
     }
 
     public void DeselectThisUnit()
@@ -210,6 +245,16 @@ public class Character : Teams
 
         _render.sharedMaterial = mat;
         _selected = false;
+
+        foreach (var item in _tilesInMoveRange)
+        {
+            item.EndPathfindingPreviewColor();
+        }
+
+        foreach (var item in _tilesInAttackRange)
+        {
+            item.EndPathfindingPreviewColor();
+        }
     }
 
     public void SelectedAsEnemy()
@@ -241,13 +286,18 @@ public class Character : Teams
         else return false;
     }
 
-    void CheckCloseEnemies()
-    {
-        if (_path.Count == 0)
-        {
+    //void CheckCloseEnemies()
+    //{
+    //    if (_path.Count == 0)
+    //    {
+    //        var enemies = _turnManager.GetEnemies(_unitTeam);
 
-        }
-    }
+    //        foreach (var unit in enemies)
+    //        {
+    //            var distance = pathCreator.Calculate()
+    //        }
+    //    }
+    //}
     #endregion
 
     public bool ThisUnitCanMove()

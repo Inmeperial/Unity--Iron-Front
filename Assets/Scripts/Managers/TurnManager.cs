@@ -48,7 +48,13 @@ public class TurnManager : Teams
         }
     }
 
-    //public void GetEnemies
+    public List<Character> GetEnemies(Teams.Team myTeam)
+    {
+        if (myTeam == Team.Capsule)
+            return _boxTeam;
+
+        else return _capsuleTeam;
+    }
 
     public void EndTurn()
     {
