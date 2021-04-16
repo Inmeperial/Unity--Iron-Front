@@ -109,4 +109,9 @@ public class TurnManager : Teams
     {
         _charSelect.DeactivateAttackButton();
     }
+
+    public void UpdateHP(int currentHP, int maxHP)
+    {
+        _charSelect.UpdateHP(currentHP, maxHP);
+    }
 }

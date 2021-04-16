@@ -127,6 +127,7 @@ public class Character : Teams
     {
         Debug.Log(name + " took: " + damage + " damage.");
         _hp -= damage;
+        _turnManager.UpdateHP(_hp, maxHp);
         Debug.Log(name + " current hp: " + _hp);
     }
     #endregion
