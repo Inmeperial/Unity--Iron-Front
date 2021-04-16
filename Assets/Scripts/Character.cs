@@ -25,8 +25,8 @@ public class Character : Teams
     public Character _enemy;
     private bool _selected;
     private bool _moving = false;
-    public bool _canMove = true;
-    public bool _attacked = false;
+    private bool _canMove = true;
+    private bool _canAttack = true;
 
     private Tile _myPositionTile;
     private Tile _targetTile;
@@ -118,6 +118,7 @@ public class Character : Teams
     public void Attack()
     {
         _canMove = false;
+        _canAttack = false;
         _turnManager.DeactivateMoveButton();
         _turnManager.DeactivateAttackButton();
         _enemy.TakeDamage(damage);
@@ -400,5 +401,10 @@ public class Character : Teams
     public void CannotBeAttacked()
     {
         _canBeAttacked = false;
+    }
+
+    public bool CanAttack()
+    {
+        return _canAttack;
     }
 }
