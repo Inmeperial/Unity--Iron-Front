@@ -55,7 +55,6 @@ public class CharacterSelection : MonoBehaviour
                 {
                     _selection.DeselectThisUnit();
                 }
-                OnCharacterDeselect();
                 _selection = c;
                 _selection.SelectThisUnit();
                 _highlight.ChangeActiveCharacter(_selection);
@@ -67,7 +66,6 @@ public class CharacterSelection : MonoBehaviour
                 buttonAttack.onClick.AddListener(_selection.Attack);
                 buttonSelectEnemy.interactable = true;
                 stepsCounter.text = _selection.GetSteps().ToString();
-                OnCharacterSelect();
             }
             else if (_selectingEnemy)
             {
@@ -135,5 +133,15 @@ public class CharacterSelection : MonoBehaviour
     {
         buttonMove.interactable = false;
         buttonUndo.interactable = false;
+    }
+
+    public void ActivateAttackButton()
+    {
+        buttonAttack.interactable = true;
+    }
+
+    public void DeactivateAttackButton()
+    {
+        buttonAttack.interactable = false;
     }
 }

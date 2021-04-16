@@ -68,7 +68,7 @@ public class TileHighlight : MonoBehaviour
         {
             foreach (var item in _previewPath)
             {
-                item.EndPathfindingPreviewColor();
+                item.ResetColor();
             }
             _previewPath.Clear();
         }
@@ -121,6 +121,19 @@ public class TileHighlight : MonoBehaviour
         //        }
         //    }
         //}
+    }
+
+    public void PaintTilesInAttackRange(Tile tile)
+    {
+        tile.InRangeColor();
+    }
+
+    public void ClearTilesInRange(List<Tile> tiles)
+    {
+        foreach (var item in tiles)
+        {
+            item.ResetColor();
+        }
     }
     #endregion
 

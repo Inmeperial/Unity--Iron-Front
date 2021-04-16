@@ -5,7 +5,7 @@ using UnityEngine;
 public class WaypointsPathfinding : MonoBehaviour, IPathCreator
 {
     [SerializeField] private AStarAgent _agent;
-    private List<Tile> _fullPath = new List<Tile>();
+    private List<Tile> _fullMovePath = new List<Tile>();
     private Stack<List<Tile>> _partialPaths = new Stack<List<Tile>>();
     private Character _char;
     void Start()
@@ -14,29 +14,29 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         _char = GetComponent<Character>();
     }
 
-    public void Calculate(Character character, Tile end)
+    public void Calculate(Character character, Tile end, int distance)
     {
         //If list is empty, pathfinding starts with the tile of player position.
-        if (_fullPath == null || _fullPath.Count == 0)
+        if (_fullMovePath == null || _fullMovePath.Count == 0)
         {
-            _fullPath = new List<Tile>();
+            _fullMovePath = new List<Tile>();
             _agent.init = character.GetTileBelow();
         }
         //If list is not empty, pathfinding starts with last tile of the list.
-        else if (_fullPath.Count > 1)
+        else if (_fullMovePath.Count > 1)
         {
-            _agent.init = _fullPath[_fullPath.Count - 1];
+            _agent.init = _fullMovePath[_fullMovePath.Count - 1];
         }
         
         _agent.finit = end;
         var temp = _agent.PathFindingAstar();
 
         temp.RemoveAt(0);
-        if (temp.Count <= _char.GetSteps())
+        if (temp.Count <= distance)
         {
             foreach (var item in temp)
             {
-                _fullPath.Add(item);
+                _fullMovePath.Add(item);
             }
             _char.ReduceAvailableSteps(temp.Count);
             _partialPaths.Push(temp);
@@ -45,12 +45,12 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
 
     public List<Tile> GetPath()
     {
-        return _fullPath;
+        return _fullMovePath;
     }
 
     public int GetDistance()
     {
-        return _fullPath.Count;
+        return _fullMovePath.Count;
     }
 
     public void UndoLastWaypoint()
@@ -65,7 +65,7 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
                 var removed = _partialPaths.Pop();
                 foreach (var tile in removed)
                 {
-                    tile.EndPathfindingPreviewColor();
+                    tile.ResetColor();
                     _char.IncreaseAvailableSteps(1);
                 }
 
@@ -78,26 +78,31 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
                     tempStack.Push(partialList);
                 }
 
-                _fullPath.Clear();
+                _fullMovePath.Clear();
 
+                _char.Undo();
                 //Recreate the path.
                 foreach (var item in tempStack)
                 {
-                    _fullPath.AddRange(item);
+                    _fullMovePath.AddRange(item);
+
                 }
-                _char.ClearTargetTile();
-
-                Debug.Log("path: " + _fullPath.Count);
-
-                if (_fullPath == null || _fullPath.Count == 0)
+                if (_fullMovePath == null || _fullMovePath.Count == 0)
+                {
+                    _char.ClearTargetTile();
                     _char.DeactivateMoveButton();
+                }
+                else
+                {
+                    _char.SetTargetTile(_fullMovePath[_fullMovePath.Count - 1]);
+                }               
             }
         }
     }
 
     public void Reset()
     {
-        _fullPath.Clear();
+        _fullMovePath.Clear();
         _partialPaths.Clear();
     }
 }

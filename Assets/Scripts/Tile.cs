@@ -9,13 +9,18 @@ public class Tile : MonoBehaviour
     public MeshRenderer render;
     public List<Tile> neighbours;
     public LayerMask obstacle;
-    private bool _isFree = true;
+    public LayerMask character;
+    [SerializeField] private bool _isFree = true;
     public bool painted;
-
+    Material _mat;
     public bool showLineGizmo = true;
-    private void Start()
+    private void Awake()
     {
         _isFree = true;
+    }
+    private void Start()
+    {
+        _mat = new Material(render.sharedMaterial);
         if (TileAbove() == false)
             GetNeighbours();
         else MakeNotWalkableColor();
@@ -56,6 +61,11 @@ public class Tile : MonoBehaviour
         return Physics.Raycast(transform.position, transform.up, 1, obstacle);
     }
 
+    bool IsCharacterAbove()
+    {
+        return Physics.Raycast(transform.position, transform.up, 1, character);
+    }
+
     public void RemoveNeighbour(Tile tile)
     {
         if (neighbours.Contains(tile))
@@ -72,41 +82,36 @@ public class Tile : MonoBehaviour
     public void MakeWalkableColor()
     {
         isWalkable = true;
-        Material mat = new Material(render.sharedMaterial);
-        mat.color = Color.green;
+        _mat.color = Color.green;
 
-        render.sharedMaterial = mat;
+        render.sharedMaterial = _mat;
     }
     //Make this tile not walkable.
     public void MakeNotWalkableColor()
     {
         isWalkable = false;
-        Material mat = new Material(render.sharedMaterial);
-        mat.color = Color.red;
+        _mat.color = Color.red;
 
-        render.sharedMaterial = mat;
+        render.sharedMaterial = _mat;
     }
 
     //Change tile color for pathfinding preview.
     public void PathFindingPreviewColor()
     {
-        Material mat = new Material(render.sharedMaterial);
-        mat.color = Color.blue;
+        _mat.color = Color.blue;
 
-        render.sharedMaterial = mat;
+        render.sharedMaterial = _mat;
         painted = true;
     }
 
     //Revert tile color when pathfinding preview ends.
-    public void EndPathfindingPreviewColor()
+    public void ResetColor()
     {
-        Material mat = new Material(render.sharedMaterial);
-
         if (isWalkable)
-            mat.color = Color.green;
-        else mat.color = Color.red;
+            _mat.color = Color.green;
+        else _mat.color = Color.red;
 
-        render.sharedMaterial = mat;
+        render.sharedMaterial = _mat;
         painted = false;
     }
 
@@ -114,10 +119,9 @@ public class Tile : MonoBehaviour
     {
         if (painted == false)
         {
-            Material mat = new Material(render.sharedMaterial);
-            mat.color = Color.yellow;
+            _mat.color = Color.yellow;
 
-            render.sharedMaterial = mat;
+            render.sharedMaterial = _mat;
         }
         
     }
@@ -126,20 +130,31 @@ public class Tile : MonoBehaviour
     {
         if (painted == false)
         {
-            Material mat = new Material(render.sharedMaterial);
-            mat.color = Color.green;
+            _mat.color = Color.green;
 
-            render.sharedMaterial = mat;
+            render.sharedMaterial = _mat;
         }
         
     }
 
     public void InRangeColor()
     {
-        Material mat = new Material(render.sharedMaterial);
-        mat.color = Color.white;
+        if (painted == false)
+        {
+            painted = true;
+            _mat.color = Color.white;
 
-        render.sharedMaterial = mat;
+            render.sharedMaterial = _mat;
+        }
+
+    }
+
+    public void CanBeAttackedColor()
+    {
+        painted = true;
+        _mat.color = Color.blue;
+
+        render.sharedMaterial = _mat;
     }
     #endregion
 

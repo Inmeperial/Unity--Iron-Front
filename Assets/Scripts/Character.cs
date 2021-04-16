@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Character : Teams
 {
@@ -10,9 +11,15 @@ public class Character : Teams
     private int _hp;
     public int damage;
     public int steps;
-    private int _steps;
+    [SerializeField] private int _steps;
     public float speed;
-    public LayerMask mask;
+    public LayerMask block;
+    public int attackRange;
+    private bool _canBeAttacked;
+
+    public List<Tile> _tilesInAttackRange = new List<Tile>();
+    public List<Tile> _tilesInMoveRange = new List<Tile>();
+    public List<Character> _enemyTargets = new List<Character>();
     public IPathCreator pathCreator;
     [SerializeField] private Team _unitTeam;
     public Character _enemy;
@@ -24,13 +31,14 @@ public class Character : Teams
     private Tile _myPositionTile;
     private Tile _targetTile;
     private MeshRenderer _render;
-    private List<Tile> _path = new List<Tile>();
+
+    [SerializeField] private List<Tile> _path = new List<Tile>();
 
     [SerializeField] private TurnManager _turnManager;
 
     [SerializeField] private TileHighlight _highlight;
-    
 
+    [SerializeField] private AStarAgent _agent;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +52,7 @@ public class Character : Teams
         _myPositionTile = GetTileBelow();
         _myPositionTile.MakeTileOccupied();
         _highlight = FindObjectOfType<TileHighlight>();
+        _agent = FindObjectOfType<AStarAgent>();
         pathCreator = GetComponent<IPathCreator>();
     }
 
@@ -54,13 +63,50 @@ public class Character : Teams
         {
             GetTargetToMove();
         }
+
+        if (_selected && Input.GetKeyDown(KeyCode.Space))
+        {
+            if (_path.Count > 0)
+            {
+                PaintTilesInAttackRange(_path[_path.Count-1].neighbours, 0);
+            }
+            else PaintTilesInAttackRange(_myPositionTile.neighbours, 0);
+        }
+    }
+
+    void PaintTilesInAttackRange(List<Tile> neighbours, int count)
+    {
+        if (count >= attackRange)
+            return;
+
+        foreach (var item in neighbours)
+        {
+            _tilesInAttackRange.Add(item);
+            _highlight.PaintTilesInAttackRange(item);
+            PaintTilesInAttackRange(item.neighbours, count + 1);
+        }
+ 
+    }
+
+    public void PaintTilesInMoveRange(List<Tile> neighbours, int count)
+    {
+        if (count >= _steps)
+            return;
+
+        foreach (var item in neighbours)
+        {
+            _tilesInMoveRange.Add(item);
+            item.InRangeColor();
+            //PaintTilesInAttackRange(item.neighbours, count + 1);
+            PaintTilesInMoveRange(item.neighbours, count + 1);
+        }
     }
 
     #region Actions
     //This method is called from UI Button "Move".
     public void Move()
     {
-        if (_path != null && _path.Count > 0)
+        if (_moving == false && _path != null && _path.Count > 0)
         {
             _moving = true;
             _turnManager.UnitIsMoving();
@@ -71,6 +117,9 @@ public class Character : Teams
 
     public void Attack()
     {
+        _canMove = false;
+        _turnManager.DeactivateMoveButton();
+        _turnManager.DeactivateAttackButton();
         _enemy.TakeDamage(damage);
     }
 
@@ -85,7 +134,7 @@ public class Character : Teams
     #region Getters
     public void GetTargetToMove()
     {
-        Transform target = MouseRay.GetTargetTransform(mask);
+        Transform target = MouseRay.GetTargetTransform(block);
         
         if (IsValidTarget(target))
         {
@@ -94,13 +143,22 @@ public class Character : Teams
             else
             {
                 _targetTile = newTile;
-                
+                pathCreator.Calculate(this, _targetTile, _steps);
                 if (pathCreator.GetDistance() <= steps)
                 {
-                    pathCreator.Calculate(this, _targetTile);
                     _path = pathCreator.GetPath();
-                    _highlight.PathPreview(_path);
-                    ActivateMoveButton();
+                    if (_path.Count > 0)
+                    {
+                        _highlight.PathPreview(_path);
+                        ActivateMoveButton();
+                        _highlight.ClearTilesInRange(_tilesInAttackRange);
+                        _highlight.ClearTilesInRange(_tilesInMoveRange);
+                        _tilesInAttackRange.Clear();
+                        _tilesInMoveRange.Clear();
+                        PaintTilesInMoveRange(_path[_path.Count - 1].neighbours, 0);
+                        //PaintTilesInAttackRange(_path[_path.Count - 1].neighbours, 0);
+                        CheckCloseEnemies();
+                    }
                 }
             }
         }
@@ -151,11 +209,19 @@ public class Character : Teams
     #endregion
 
     #region Utilities
+
+    public void Undo()
+    {
+        _highlight.ClearTilesInRange(_tilesInAttackRange);
+        _tilesInAttackRange.Clear();
+    }
     public void NewTurn()
     {
         _canMove = true;
         _path.Clear();
         _steps = steps;
+        _enemyTargets.Clear();
+        CannotBeAttacked();
         pathCreator.Reset();
     }
 
@@ -195,6 +261,7 @@ public class Character : Teams
 
         _render.sharedMaterial = mat;
         _selected = true;
+        PaintTilesInMoveRange(_myPositionTile.neighbours, 0);
     }
 
     public void DeselectThisUnit()
@@ -204,6 +271,18 @@ public class Character : Teams
 
         _render.sharedMaterial = mat;
         _selected = false;
+
+        foreach (var item in _tilesInMoveRange)
+        {
+            item.ResetColor();
+        }
+        _tilesInMoveRange.Clear();
+
+        foreach (var item in _tilesInAttackRange)
+        {
+            item.ResetColor();
+        }
+        _tilesInAttackRange.Clear();
     }
 
     public void SelectedAsEnemy()
@@ -217,16 +296,68 @@ public class Character : Teams
     //Check if selected object is a tile.
     bool IsValidTarget(Transform target)
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return false;
         if (target != null)
         {
-            var tile = target.gameObject.GetComponent<Tile>();
-            if (tile != null && tile.isWalkable && tile.IsFree())
+            if (target.gameObject.layer == LayerMask.NameToLayer("GridBlock"))
             {
-                return true;
+                var tile = target.gameObject.GetComponent<Tile>();
+                if (tile != null && tile.isWalkable && tile.IsFree())
+                {
+                    return true;
+                }
+                else return false;
             }
-            else return false;
+            return false;
         }
         else return false;
+    }
+
+    void CheckCloseEnemies()
+    {
+        var enemies = _turnManager.GetEnemies(_unitTeam);
+
+        _enemyTargets.Clear();
+        if (_path.Count == 0)
+        {
+            
+            foreach (var unit in enemies)
+            {
+                var dist = CalculateDistanceToEnemie(unit, _myPositionTile);
+
+                if (dist <= attackRange)
+                {
+                    _enemyTargets.Add(unit);
+                    unit.CanBeAttacked();
+                    unit.GetTileBelow().CanBeAttackedColor();
+                }
+            }
+        }
+        else
+        {
+            foreach (var unit in enemies)
+            {
+                var dist = CalculateDistanceToEnemie(unit, _path[_path.Count-1]);
+
+                if (dist <= attackRange)
+                {
+                    _enemyTargets.Add(unit);
+                    unit.CanBeAttacked();
+                    unit.GetTileBelow().CanBeAttackedColor();
+                }
+            }
+        }
+    }
+
+    int CalculateDistanceToEnemie(Character enemy, Tile from)
+    {
+        _agent.init = from;
+        _agent.finit = enemy.GetTileBelow();
+
+        var path = _agent.PathFindingAstar();
+
+        return path.Count-1;
     }
     #endregion
 
@@ -245,6 +376,11 @@ public class Character : Teams
         _enemy = enemy;
     }
 
+    public void SetTargetTile(Tile target)
+    {
+        _targetTile = target;
+    }
+
     void ActivateMoveButton()
     {
         _turnManager.ActivateMoveButton();
@@ -253,5 +389,15 @@ public class Character : Teams
     public void DeactivateMoveButton()
     {
         _turnManager.DeactivateMoveButton();
+    }
+
+    public void CanBeAttacked()
+    {
+        _canBeAttacked = true;
+    }
+
+    public void CannotBeAttacked()
+    {
+        _canBeAttacked = false;
     }
 }
