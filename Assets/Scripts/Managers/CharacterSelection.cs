@@ -59,6 +59,7 @@ public class CharacterSelection : MonoBehaviour
                 }
                 _selection = c;
                 _selection.SelectThisUnit();
+                _selection.AddTilesInMoveRange();
                 _highlight.ChangeActiveCharacter(_selection);
                 buttonMove.onClick.RemoveAllListeners();
                 buttonMove.onClick.AddListener(_selection.Move);

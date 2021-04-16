@@ -46,6 +46,7 @@ public class Character : Teams
         _hp = maxHp;
         _selected = false;
         _canMove = true;
+        _canAttack = true;
         _move = GetComponent<GridMovement>();
         _render = GetComponent<MeshRenderer>();
         _turnManager = FindObjectOfType<TurnManager>();
@@ -81,8 +82,12 @@ public class Character : Teams
 
         foreach (var item in neighbours)
         {
-            _tilesInAttackRange.Add(item);
-            _highlight.PaintTilesInAttackRange(item);
+            if (!_tilesInAttackRange.Contains(item))
+            {
+                _tilesInAttackRange.Add(item);
+                _highlight.PaintTilesInAttackRange(item);
+            }
+            
             GetTilesInAttackRange(item.neighbours, count + 1);
         }
  
@@ -98,11 +103,16 @@ public class Character : Teams
             if (!_tilesInMoveRange.Contains(item))
             {
                 _tilesInMoveRange.Add(item);
-                item.InRangeColor();
+                _highlight.PaintTilesInMoveRange(item);
             }
             //GetTilesInAttackRange(item.neighbours, count + 1);
             PaintTilesInMoveRange(item.neighbours, count + 1);
         }
+    }
+
+    public void AddTilesInMoveRange()
+    {
+        _highlight.AddTilesInMoveRange(_tilesInMoveRange);
     }
 
     #region Actions
@@ -114,6 +124,7 @@ public class Character : Teams
             _moving = true;
             _turnManager.UnitIsMoving();
             _highlight.characterMoving = true;
+            _highlight.ClearTilesInRange(_tilesInMoveRange);
             _move.StartMovement(_path, speed);
         }
     }
@@ -124,16 +135,15 @@ public class Character : Teams
         _canAttack = false;
         _turnManager.DeactivateMoveButton();
         _turnManager.DeactivateAttackButton();
-        _enemy.TakeDamage(damage);
+        _turnManager.DamageEnemy(_enemy, damage);
+        _highlight.ClearTilesInRange(_tilesInMoveRange);
     }
 
     public void TakeDamage(int damage)
     {
-        Debug.Log(name + " took: " + damage + " damage.");
         _hp -= damage;
         _turnManager.UpdateHP(_hp, maxHp);
         DeselectThisUnit();
-        Debug.Log(name + " current hp: " + _hp);
     }
     #endregion
 
@@ -162,6 +172,7 @@ public class Character : Teams
                         _tilesInAttackRange.Clear();
                         _tilesInMoveRange.Clear();
                         PaintTilesInMoveRange(_path[_path.Count - 1].neighbours, 0);
+                        AddTilesInMoveRange();
                         //PaintTilesInAttackRange(_path[_path.Count - 1].neighbours, 0);
                         CheckCloseEnemies();
                     }
@@ -218,8 +229,8 @@ public class Character : Teams
 
     public void Undo()
     {
-        _highlight.ClearTilesInRange(_tilesInAttackRange);
-        _tilesInAttackRange.Clear();
+        //_highlight.ClearTilesInRange(_tilesInAttackRange);
+        //_tilesInAttackRange.Clear();
         foreach (var item in _enemyTargets)
         {
             item.MakeNotAttackable();
@@ -235,6 +246,7 @@ public class Character : Teams
         {
             item.ResetColor();
         }
+        _highlight.Undo();
         _tilesInMoveRange.Clear();
 
         foreach (var item in _tilesInAttackRange)
@@ -322,7 +334,7 @@ public class Character : Teams
             if (target.gameObject.layer == LayerMask.NameToLayer("GridBlock"))
             {
                 var tile = target.gameObject.GetComponent<Tile>();
-                if (tile != null && tile.isWalkable && tile.IsFree())
+                if (tile != null && tile.IsWalkable() && tile.IsFree())
                 {
                     return true;
                 }
@@ -348,8 +360,9 @@ public class Character : Teams
                 if (dist <= attackRange)
                 {
                     _enemyTargets.Add(unit);
-                    unit.MakeAttackable();
-                    unit.GetTileBelow().CanBeAttackedColor();
+                    _turnManager.UnitCanBeAttacked(unit);
+                    var tile = _turnManager.GetUnitTile(unit);
+                    _highlight.PaintTilesInAttackRange(tile);
                 }
             }
         }
@@ -362,8 +375,9 @@ public class Character : Teams
                 if (dist <= attackRange)
                 {
                     _enemyTargets.Add(unit);
-                    unit.MakeAttackable();
-                    unit.GetTileBelow().CanBeAttackedColor();
+                    _turnManager.UnitCanBeAttacked(unit);
+                    var tile = _turnManager.GetUnitTile(unit);
+                    _highlight.PaintTilesInAttackRange(tile);
                 }
             }
         }

@@ -114,4 +114,19 @@ public class TurnManager : Teams
     {
         _charSelect.UpdateHP(currentHP, maxHP);
     }
+
+    public void UnitCanBeAttacked(Character unit)
+    {
+        unit.MakeAttackable();
+    }
+
+    public Tile GetUnitTile(Character unit)
+    {
+        return unit.GetTileBelow();
+    }
+
+    public void DamageEnemy(Character unit, int damage)
+    {
+        unit.TakeDamage(damage);
+    }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    public bool isWalkable;
+    [SerializeField] private bool isWalkable;
     public MeshRenderer render;
     public List<Tile> neighbours;
     public LayerMask obstacle;
@@ -163,6 +163,11 @@ public class Tile : MonoBehaviour
     public bool IsFree()
     {
         return _isFree;
+    }
+
+    public bool IsWalkable()
+    {
+        return isWalkable;
     }
 
     public void MakeTileOccupied()
