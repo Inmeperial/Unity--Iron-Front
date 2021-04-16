@@ -11,7 +11,7 @@ public class Character : Teams
     private int _hp;
     public int damage;
     public int steps;
-    private int _steps;
+    [SerializeField] private int _steps;
     public float speed;
     public LayerMask block;
     public int attackRange;
@@ -84,20 +84,22 @@ public class Character : Teams
             _tilesInAttackRange.Add(item);
             _highlight.PaintTilesInAttackRange(item);
             PaintTilesInAttackRange(item.neighbours, count + 1);
-        } 
+        }
+ 
     }
 
     public void PaintTilesInMoveRange(List<Tile> neighbours, int count)
     {
-        //if (count >= steps)
-        //    return;
+        if (count >= _steps)
+            return;
 
-        //foreach (var item in neighbours)
-        //{
-        //    _tilesInMoveRange.Add(item);
-        //    item.InRangeColor();
-        //    PaintTilesInAttackRange(item.neighbours, count + 1);
-        //}
+        foreach (var item in neighbours)
+        {
+            _tilesInMoveRange.Add(item);
+            item.InRangeColor();
+            //PaintTilesInAttackRange(item.neighbours, count + 1);
+            PaintTilesInMoveRange(item.neighbours, count + 1);
+        }
     }
 
     #region Actions
@@ -141,17 +143,20 @@ public class Character : Teams
             else
             {
                 _targetTile = newTile;
-                if (pathCreator.GetDistance() <= _steps)
+                pathCreator.Calculate(this, _targetTile, _steps);
+                if (pathCreator.GetDistance() <= steps)
                 {
-                    pathCreator.Calculate(this, _targetTile, _steps);    
                     _path = pathCreator.GetPath();
                     if (_path.Count > 0)
                     {
                         _highlight.PathPreview(_path);
                         ActivateMoveButton();
-                        _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
+                        _highlight.ClearTilesInRange(_tilesInAttackRange);
+                        _highlight.ClearTilesInRange(_tilesInMoveRange);
                         _tilesInAttackRange.Clear();
-                        PaintTilesInAttackRange(_path[_path.Count - 1].neighbours, 0);
+                        _tilesInMoveRange.Clear();
+                        PaintTilesInMoveRange(_path[_path.Count - 1].neighbours, 0);
+                        //PaintTilesInAttackRange(_path[_path.Count - 1].neighbours, 0);
                         CheckCloseEnemies();
                     }
                 }
@@ -207,7 +212,7 @@ public class Character : Teams
 
     public void Undo()
     {
-        _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
+        _highlight.ClearTilesInRange(_tilesInAttackRange);
         _tilesInAttackRange.Clear();
     }
     public void NewTurn()

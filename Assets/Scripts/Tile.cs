@@ -146,7 +146,7 @@ public class Tile : MonoBehaviour
 
             render.sharedMaterial = _mat;
         }
-        
+
     }
 
     public void CanBeAttackedColor()

@@ -128,7 +128,7 @@ public class TileHighlight : MonoBehaviour
         tile.InRangeColor();
     }
 
-    public void ClearTilesInAttackRange(List<Tile> tiles)
+    public void ClearTilesInRange(List<Tile> tiles)
     {
         foreach (var item in tiles)
         {
