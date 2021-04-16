@@ -82,17 +82,19 @@ public class Tile : MonoBehaviour
     public void MakeWalkableColor()
     {
         isWalkable = true;
-        _mat.color = Color.green;
+        var mat = new Material(render.sharedMaterial);
+        mat.color = Color.green;
 
-        render.sharedMaterial = _mat;
+        render.sharedMaterial = mat;
     }
     //Make this tile not walkable.
     public void MakeNotWalkableColor()
     {
         isWalkable = false;
-        _mat.color = Color.red;
+        var mat = new Material(render.sharedMaterial);
+        mat.color = Color.red;
 
-        render.sharedMaterial = _mat;
+        render.sharedMaterial = mat;
     }
 
     //Change tile color for pathfinding preview.
