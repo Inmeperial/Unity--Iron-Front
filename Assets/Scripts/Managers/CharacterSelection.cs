@@ -69,7 +69,7 @@ public class CharacterSelection : MonoBehaviour
                 buttonSelectEnemy.interactable = true;
                 stepsCounter.text = _selection.GetSteps().ToString();
             }
-            else if (_selectingEnemy)
+            else if (_selectingEnemy && c.CanBeAttacked())
             {
                 _enemySelection = c;
                 _enemySelection.SelectedAsEnemy();

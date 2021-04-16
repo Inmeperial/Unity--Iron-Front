@@ -15,7 +15,7 @@ public class Character : Teams
     public float speed;
     public LayerMask block;
     public int attackRange;
-    private bool _canBeAttacked;
+    public bool _canBeAttacked = false;
 
     public List<Tile> _tilesInAttackRange = new List<Tile>();
     public List<Tile> _tilesInMoveRange = new List<Tile>();
@@ -26,7 +26,7 @@ public class Character : Teams
     private bool _selected;
     private bool _moving = false;
     public bool _canMove = true;
-    public bool _attacked = false;
+    public bool _canAttack = true;
 
     private Tile _myPositionTile;
     private Tile _targetTile;
@@ -68,13 +68,13 @@ public class Character : Teams
         {
             if (_path.Count > 0)
             {
-                PaintTilesInAttackRange(_path[_path.Count-1].neighbours, 0);
+                GetTilesInAttackRange(_path[_path.Count-1].neighbours, 0);
             }
-            else PaintTilesInAttackRange(_myPositionTile.neighbours, 0);
+            else GetTilesInAttackRange(_myPositionTile.neighbours, 0);
         }
     }
 
-    void PaintTilesInAttackRange(List<Tile> neighbours, int count)
+    void GetTilesInAttackRange(List<Tile> neighbours, int count)
     {
         if (count >= attackRange)
             return;
@@ -83,7 +83,7 @@ public class Character : Teams
         {
             _tilesInAttackRange.Add(item);
             _highlight.PaintTilesInAttackRange(item);
-            PaintTilesInAttackRange(item.neighbours, count + 1);
+            GetTilesInAttackRange(item.neighbours, count + 1);
         }
  
     }
@@ -95,9 +95,12 @@ public class Character : Teams
 
         foreach (var item in neighbours)
         {
-            _tilesInMoveRange.Add(item);
-            item.InRangeColor();
-            //PaintTilesInAttackRange(item.neighbours, count + 1);
+            if (!_tilesInMoveRange.Contains(item))
+            {
+                _tilesInMoveRange.Add(item);
+                item.InRangeColor();
+            }
+            //GetTilesInAttackRange(item.neighbours, count + 1);
             PaintTilesInMoveRange(item.neighbours, count + 1);
         }
     }
@@ -118,6 +121,7 @@ public class Character : Teams
     public void Attack()
     {
         _canMove = false;
+        _canAttack = false;
         _turnManager.DeactivateMoveButton();
         _turnManager.DeactivateAttackButton();
         _enemy.TakeDamage(damage);
@@ -216,10 +220,33 @@ public class Character : Teams
     {
         _highlight.ClearTilesInRange(_tilesInAttackRange);
         _tilesInAttackRange.Clear();
+        foreach (var item in _enemyTargets)
+        {
+            item.MakeNotAttackable();
+        }
+        _enemyTargets.Clear();
+
+        ResetInRangeLists();
+    }
+
+    void ResetInRangeLists()
+    {
+        foreach (var item in _tilesInMoveRange)
+        {
+            item.ResetColor();
+        }
+        _tilesInMoveRange.Clear();
+
+        foreach (var item in _tilesInAttackRange)
+        {
+            item.ResetColor();
+        }
+        _tilesInAttackRange.Clear();
     }
     public void NewTurn()
     {
         _canMove = true;
+        _canAttack = true;
         _path.Clear();
         _steps = steps;
         _enemyTargets.Clear();
@@ -274,17 +301,7 @@ public class Character : Teams
         _render.sharedMaterial = mat;
         _selected = false;
 
-        foreach (var item in _tilesInMoveRange)
-        {
-            item.ResetColor();
-        }
-        _tilesInMoveRange.Clear();
-
-        foreach (var item in _tilesInAttackRange)
-        {
-            item.ResetColor();
-        }
-        _tilesInAttackRange.Clear();
+        ResetInRangeLists();
     }
 
     public void SelectedAsEnemy()
