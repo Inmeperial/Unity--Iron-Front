@@ -128,6 +128,7 @@ public class Character : Teams
         Debug.Log(name + " took: " + damage + " damage.");
         _hp -= damage;
         _turnManager.UpdateHP(_hp, maxHp);
+        DeselectThisUnit();
         Debug.Log(name + " current hp: " + _hp);
     }
     #endregion
@@ -222,7 +223,7 @@ public class Character : Teams
         _path.Clear();
         _steps = steps;
         _enemyTargets.Clear();
-        CannotBeAttacked();
+        MakeNotAttackable();
         pathCreator.Reset();
     }
 
@@ -330,7 +331,7 @@ public class Character : Teams
                 if (dist <= attackRange)
                 {
                     _enemyTargets.Add(unit);
-                    unit.CanBeAttacked();
+                    unit.MakeAttackable();
                     unit.GetTileBelow().CanBeAttackedColor();
                 }
             }
@@ -344,7 +345,7 @@ public class Character : Teams
                 if (dist <= attackRange)
                 {
                     _enemyTargets.Add(unit);
-                    unit.CanBeAttacked();
+                    unit.MakeAttackable();
                     unit.GetTileBelow().CanBeAttackedColor();
                 }
             }
@@ -392,13 +393,23 @@ public class Character : Teams
         _turnManager.DeactivateMoveButton();
     }
 
-    public void CanBeAttacked()
+    public void MakeAttackable()
     {
         _canBeAttacked = true;
     }
 
-    public void CannotBeAttacked()
+    public void MakeNotAttackable()
     {
         _canBeAttacked = false;
+    }
+
+    public bool CanBeAttacked()
+    {
+        return _canBeAttacked;
+    }
+
+    public bool CanAttack()
+    {
+        return _canAttack;
     }
 }
