@@ -11,7 +11,7 @@ public class TileHighlight : MonoBehaviour
     List<Tile> _previewPath = new List<Tile>();
     public bool characterMoving;
     CharacterSelection _charSelector;
-    private List<Tile> _inRangeTiles = new List<Tile>();
+    private Stack<List<Tile>> _inMoveRangeTiles = new Stack<List<Tile>>();
 
     private void Start()
     {
@@ -37,7 +37,7 @@ public class TileHighlight : MonoBehaviour
         if (obj != null && obj.CompareTag("GridBlock"))
         {
             var tile = obj.gameObject.GetComponent<Tile>();
-            if (tile.isWalkable)
+            if (tile.IsWalkable())
             {
                 MouseOverTile(tile);
             }
@@ -79,53 +79,25 @@ public class TileHighlight : MonoBehaviour
         for (int i = 0; i < path.Count; i++)
         {
             var tile = path[i];
-            if (tile.isWalkable && tile.IsFree())
+            if (tile.IsWalkable() && tile.IsFree())
                 tile.PathFindingPreviewColor();
         }
-        
-
-        //if (_previewPath != null && _previewPath.Count > 0)
-        //{
-        //    for (int i = 1; i < _previewPath.Count; i++)
-        //    {
-        //        var tile = _previewPath[i];
-        //        tile.PathFindingPreviewColor();
-        //    }
-        //}
-        //if (character.ThisUnitCanMove())
-        //{
-        //    var start = character.ActualPosition();
-        //    if (start)
-        //    {
-        //        agent.init = start;
-        //        agent.finit = previousTile.GetComponent<Tile>();
-        //        _previewPath = agent.PathFindingAstar();
-        //        if (_previewPath.Count > 0)
-        //        {
-        //            if (_previewPath.Count <= _characterMoveRadius)
-        //            {
-        //                for (int i = 0; i < _previewPath.Count; i++)
-        //                {
-        //                    if (_previewPath[i].isWalkable && _previewPath[i].IsFree())
-        //                        _previewPath[i].PathFindingPreviewColor();
-        //                }
-        //            }
-        //            else
-        //            {
-        //                for (int i = 0; i <= _characterMoveRadius; i++)
-        //                {
-        //                    if (_previewPath[i].isWalkable && _previewPath[i].IsFree())
-        //                        _previewPath[i].PathFindingPreviewColor();
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
     }
 
     public void PaintTilesInAttackRange(Tile tile)
     {
+        tile.CanBeAttackedColor();
+    }
+
+    public void PaintTilesInMoveRange(Tile tile)
+    {
         tile.InRangeColor();
+    }
+
+    public void AddTilesInMoveRange(List<Tile> tiles)
+    {
+        _inMoveRangeTiles.Push(tiles);
+        Debug.Log("stack size: " + _inMoveRangeTiles.Count);
     }
 
     public void ClearTilesInRange(List<Tile> tiles)
@@ -140,5 +112,16 @@ public class TileHighlight : MonoBehaviour
     public void ChangeActiveCharacter(Character character)
     {
         _character = character;
+    }
+
+    public void Undo()
+    {
+        var removed = _inMoveRangeTiles.Pop();
+        Debug.Log("stack size: " + _inMoveRangeTiles.Count);
+        foreach (var tile in removed)
+        {
+            Debug.Log("Reset color");
+            tile.ResetColor();
+        }
     }
 }
