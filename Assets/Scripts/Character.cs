@@ -129,7 +129,7 @@ public class Character : Teams
         }
     }
 
-    public void Attack()
+    public virtual void Attack()
     {
         _canMove = false;
         _canAttack = false;
