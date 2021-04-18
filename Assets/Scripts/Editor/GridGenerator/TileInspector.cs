@@ -9,7 +9,7 @@ public class TileInspector : Editor
     Tile _tile;
     private void OnEnable()
     {
-        _tile = Selection.activeGameObject.GetComponent<Tile>();
+        //_tile = Selection.activeGameObject.GetComponent<Tile>();
     }
 
     public override void OnInspectorGUI()
