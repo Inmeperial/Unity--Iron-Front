@@ -80,7 +80,6 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
 
                 _fullMovePath.Clear();
 
-                _char.Undo();
                 //Recreate the path.
                 foreach (var item in tempStack)
                 {
@@ -95,7 +94,9 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
                 else
                 {
                     _char.SetTargetTile(_fullMovePath[_fullMovePath.Count - 1]);
-                }               
+                }
+
+                _char.Undo();
             }
         }
     }

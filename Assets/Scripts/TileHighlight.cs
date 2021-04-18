@@ -12,10 +12,11 @@ public class TileHighlight : MonoBehaviour
     public bool characterMoving;
     CharacterSelection _charSelector;
     private Stack<List<Tile>> _inMoveRangeTiles = new Stack<List<Tile>>();
-
+    private LineRenderer _lineRenderer;
     private void Start()
     {
         _charSelector = GetComponent<CharacterSelection>();
+        _lineRenderer = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -97,7 +98,6 @@ public class TileHighlight : MonoBehaviour
     public void AddTilesInMoveRange(List<Tile> tiles)
     {
         _inMoveRangeTiles.Push(tiles);
-        Debug.Log("stack size: " + _inMoveRangeTiles.Count);
     }
 
     public void ClearTilesInRange(List<Tile> tiles)
@@ -116,12 +116,37 @@ public class TileHighlight : MonoBehaviour
 
     public void Undo()
     {
-        var removed = _inMoveRangeTiles.Pop();
-        Debug.Log("stack size: " + _inMoveRangeTiles.Count);
-        foreach (var tile in removed)
+        if (_inMoveRangeTiles.Count > 0)
         {
-            Debug.Log("Reset color");
-            tile.ResetColor();
+            var removed = _inMoveRangeTiles.Pop();
+            foreach (var tile in removed)
+            {
+                tile.ResetColor();
+            }
+
+            var path = _character.GetPath();
+
+            CreatePathLines(path);
+        }
+        
+    }
+
+    public void CreatePathLines(List<Tile> path)
+    {
+        Debug.Log("path size: " + path.Count);
+        _lineRenderer.positionCount = path.Count;
+        if (path.Count > 0)
+        {
+            var v = path[0].transform.position;
+            v.y = v.y + 1;
+            _lineRenderer.positionCount = path.Count;
+            _lineRenderer.transform.position = v;
+            for (int i = 0; i < path.Count; i++)
+            {
+                v = path[i].transform.position;
+                v.y = v.y + 1;
+                _lineRenderer.SetPosition(i, v);
+            }
         }
     }
 }

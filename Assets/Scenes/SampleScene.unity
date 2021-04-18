@@ -403,7 +403,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 48488590}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -413,6 +414,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &48488589
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -520,7 +522,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 48607892}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -530,6 +533,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &48607891
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -844,7 +848,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!21 &69289040
 Material:
@@ -1119,7 +1123,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 83182902}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -1129,6 +1134,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &83182901
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1346,7 +1352,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36.45
+  m_fontSize: 52
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1392,7 +1398,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 2
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1541,7 +1547,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 101500709}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -1551,6 +1558,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &101500708
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1658,7 +1666,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 103568563}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -1668,6 +1677,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &103568562
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1940,7 +1950,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &112879129
 MonoBehaviour:
@@ -2088,7 +2098,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 121335715}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -2098,6 +2109,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &121335714
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2634,7 +2646,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 168088369}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -2644,6 +2657,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &168088368
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2751,7 +2765,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 175574389}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -2761,6 +2776,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &175574388
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3093,7 +3109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 204774417}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -3103,6 +3120,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &204774416
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3237,6 +3255,36 @@ Material:
     m_Colors:
     - _Color: {r: 0, g: 1, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!1 &224664697
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 167074232}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224664698}
+  m_Layer: 0
+  m_Name: TriPlanarExampleObj (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &224664698
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 167074232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224664697}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!21 &225905050
 Material:
   serializedVersion: 6
@@ -3510,7 +3558,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 243732598}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -3520,6 +3569,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &243732597
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3747,7 +3797,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 66.65
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3923,7 +3973,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &285137928
 MonoBehaviour:
@@ -4062,7 +4112,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 296012918}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -4072,6 +4123,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &296012917
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4559,7 +4611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 314865348}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -4569,6 +4622,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &314865347
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4676,7 +4730,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 315672061}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -4686,6 +4741,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &315672060
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5018,7 +5074,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 317971559}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -5028,6 +5085,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &317971558
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5264,7 +5322,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 339039182}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -5274,6 +5333,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &339039181
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5531,7 +5591,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 362244740}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -5541,6 +5602,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &362244739
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5723,7 +5785,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 366206776}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -5733,6 +5796,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &366206775
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6150,7 +6214,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 396645685}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -6160,6 +6225,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &396645684
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6492,7 +6558,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 451985708}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -6502,6 +6569,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &451985707
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6609,7 +6677,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 453191296}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -6619,6 +6688,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &453191295
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6726,7 +6796,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 465852339}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -6736,6 +6807,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &465852338
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7153,7 +7225,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 482152830}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -7163,6 +7236,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &482152829
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7420,7 +7494,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 513557538}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -7430,6 +7505,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &513557537
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7966,7 +8042,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 541029727}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -7976,6 +8053,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &541029726
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8083,7 +8161,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 545904961}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -8093,6 +8172,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &545904960
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8200,7 +8280,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 550765558}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -8210,6 +8291,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &550765557
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8467,7 +8549,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 561057874}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -8477,6 +8560,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &561057873
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8584,7 +8668,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 578514464}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -8594,6 +8679,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &578514463
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8786,7 +8872,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 590712294}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -8796,6 +8883,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &590712293
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8978,7 +9066,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 601251210}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -8988,6 +9077,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &601251209
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9170,7 +9260,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 604861750}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -9180,6 +9271,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &604861749
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9287,7 +9379,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 613350458}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -9297,6 +9390,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &613350457
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9404,7 +9498,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 621766863}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -9414,6 +9509,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &621766862
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9848,81 +9944,6 @@ Material:
     m_Colors:
     - _Color: {r: 0, g: 1, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
---- !u!21 &633448464
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Default
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _BumpScale: 1
-    - _Cutoff: 0.5
-    - _DetailNormalMapScale: 1
-    - _DstBlend: 0
-    - _GlossMapScale: 1
-    - _Glossiness: 0.5
-    - _GlossyReflections: 1
-    - _Metallic: 0
-    - _Mode: 0
-    - _OcclusionStrength: 1
-    - _Parallax: 0.02
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
-    - _SrcBlend: 1
-    - _UVSec: 0
-    - _ZWrite: 1
-    m_Colors:
-    - _Color: {r: 1, g: 0, b: 0, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!21 &634935668
 Material:
   serializedVersion: 6
@@ -10281,7 +10302,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 647596265}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -10291,6 +10313,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &647596264
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10398,7 +10421,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 650909788}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -10408,6 +10432,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &650909787
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10515,7 +10540,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 652532334}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -10525,6 +10551,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &652532333
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10898,7 +10925,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 30.222002, y: -29.718002, z: -57.444004}
 --- !u!1 &712308230
 GameObject:
@@ -11026,7 +11053,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 712969893}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -11036,6 +11064,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &712969892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11144,7 +11173,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!21 &717202114
 Material:
@@ -11344,7 +11373,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 732492552}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -11354,6 +11384,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &732492551
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11771,7 +11802,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 0
   render: {fileID: 753122046}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -11781,6 +11813,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &753122045
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11811,7 +11844,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 633448464}
+  - {fileID: 1657331907}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12038,7 +12071,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 798617360}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -12048,6 +12082,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &798617359
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12155,7 +12190,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 801496437}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -12165,6 +12201,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &801496436
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12272,7 +12309,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 818033190}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -12282,6 +12320,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &818033189
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12429,7 +12468,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 33.4
+  m_fontSize: 43.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -12475,7 +12514,7 @@ MonoBehaviour:
     spaceCount: 25
     wordCount: 26
     linkCount: 0
-    lineCount: 5
+    lineCount: 6
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -12624,7 +12663,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 824008377}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -12634,6 +12674,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &824008376
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12741,7 +12782,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 832749665}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -12751,6 +12793,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &832749664
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13083,7 +13126,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 845753983}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -13093,6 +13137,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &845753982
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13422,7 +13467,7 @@ PrefabInstance:
     - target: {fileID: 4552148290549553905, guid: 071f8f043cc645b49a4552065e647de2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4552148290549553905, guid: 071f8f043cc645b49a4552065e647de2,
         type: 3}
@@ -13510,7 +13555,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &879725626
 PrefabInstance:
@@ -13927,7 +13972,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &903744155
 MonoBehaviour:
@@ -13943,7 +13988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 20
   damage: 5
-  steps: 3
+  steps: 5
   _steps: 0
   speed: 2
   block:
@@ -14023,7 +14068,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 923252601}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -14033,6 +14079,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &923252600
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14140,7 +14187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 930432602}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -14150,6 +14198,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &930432601
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14220,6 +14269,7 @@ GameObject:
   - component: {fileID: 936179228}
   - component: {fileID: 936179227}
   - component: {fileID: 936179230}
+  - component: {fileID: 936179229}
   m_Layer: 0
   m_Name: MouseController
   m_TagString: Untagged
@@ -14256,8 +14306,102 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!120 &936179229
+LineRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936179226}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Positions: []
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.24793434
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 0
+    numCapVertices: 0
+    alignment: 0
+    textureMode: 0
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_UseWorldSpace: 1
+  m_Loop: 0
 --- !u!114 &936179230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14329,7 +14473,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 949309877}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -14339,6 +14484,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &949309876
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14521,7 +14667,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 0
   render: {fileID: 954630756}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -14531,6 +14678,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &954630755
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14875,7 +15023,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 972321422}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -14885,6 +15034,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &972321421
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15152,7 +15302,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 995557228}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -15162,6 +15313,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &995557227
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15269,7 +15421,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1000106578}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -15279,6 +15432,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1000106577
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15386,7 +15540,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1005498983}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -15396,6 +15551,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1005498982
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15653,7 +15809,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1023871869}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -15663,6 +15820,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1023871868
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15920,7 +16078,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1034409941}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -15930,6 +16089,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1034409940
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16037,7 +16197,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1039125169}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -16047,6 +16208,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1039125168
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16454,7 +16616,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 0
   render: {fileID: 1059304281}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -16464,6 +16627,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1059304280
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16726,7 +16890,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1062483519}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -16736,6 +16901,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1062483518
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16988,7 +17154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1074636221}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -16998,6 +17165,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1074636220
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17105,7 +17273,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1084926061}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -17115,6 +17284,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1084926060
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17372,7 +17542,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1094329087}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -17382,6 +17553,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1094329086
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17489,7 +17661,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1104441474}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -17499,6 +17672,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1104441473
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17889,7 +18063,7 @@ Transform:
   - {fileID: 296012915}
   - {fileID: 1722802691}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1130399761
 PrefabInstance:
@@ -18329,7 +18503,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1158019070}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -18339,6 +18514,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1158019069
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18521,7 +18697,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1171761917}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -18531,6 +18708,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1171761916
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19013,7 +19191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1220670413}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -19023,6 +19202,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1220670412
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19130,7 +19310,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1222382220}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -19140,6 +19321,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1222382219
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19247,7 +19429,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1247291697}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -19257,6 +19440,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1247291696
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19399,7 +19583,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 67.15
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -19519,7 +19703,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1269489586}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -19529,6 +19714,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1269489585
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19711,7 +19897,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1280035143}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -19721,6 +19908,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1280035142
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20068,7 +20256,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1320156599}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -20078,6 +20267,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1320156598
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20185,7 +20375,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1322480095}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -20195,6 +20386,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1322480094
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20302,7 +20494,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1326638403}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -20312,6 +20505,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1326638402
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20419,7 +20613,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1338881901}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -20429,6 +20624,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1338881900
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20721,7 +20917,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 29.85
+  m_fontSize: 47.75
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -21066,7 +21262,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1393652638}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -21076,6 +21273,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1393652637
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21333,7 +21531,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1404797445}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -21343,6 +21542,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1404797444
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21450,7 +21650,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1420695232}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -21460,6 +21661,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1420695231
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21642,7 +21844,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1421605217}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -21652,6 +21855,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1421605216
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21759,7 +21963,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1427205282}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -21769,6 +21974,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1427205281
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21951,7 +22157,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1435716693}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -21961,6 +22168,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1435716692
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22388,7 +22596,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1447931316}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -22398,6 +22607,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1447931315
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22580,7 +22790,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1464215474}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -22590,6 +22801,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1464215473
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22922,7 +23134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1498081834}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -22932,6 +23145,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1498081833
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23189,7 +23403,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1531884650}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -23199,6 +23414,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1531884649
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23456,7 +23672,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1551800658}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -23466,6 +23683,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1551800657
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23798,7 +24016,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1602634608}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -23808,6 +24027,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1602634607
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24194,7 +24414,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1624829585}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -24204,6 +24425,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1624829584
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24718,6 +24940,81 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1639498688}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &1657331907
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Default
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &1669365724
 GameObject:
   m_ObjectHideFlags: 0
@@ -24895,7 +25192,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1669841201}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -24905,6 +25203,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1669841200
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25237,7 +25536,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1681107206}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -25247,6 +25547,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1681107205
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25563,7 +25864,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1689905930}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -25573,6 +25875,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1689905929
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25680,7 +25983,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1690573839}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -25690,6 +25994,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1690573838
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25797,7 +26102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1692344997}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -25807,6 +26113,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1692344996
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26043,7 +26350,7 @@ Transform:
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!21 &1709848321
 Material:
@@ -26243,7 +26550,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1722802694}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -26253,6 +26561,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1722802693
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26435,7 +26744,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1724407344}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -26445,6 +26755,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1724407343
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26702,7 +27013,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1762698115}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -26712,6 +27024,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1762698114
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27173,7 +27486,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1791358070}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -27183,6 +27497,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1791358069
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27290,7 +27605,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1803741244}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -27300,6 +27616,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1803741243
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27359,6 +27676,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1803741240}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1808347410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 879725626}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1808347411}
+  m_Layer: 0
+  m_Name: TriPlanarExampleObjAlone (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1808347411
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 879725626}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808347410}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1825520507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27487,7 +27834,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1831021523}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -27497,6 +27845,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1831021522
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27639,7 +27988,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 46.65
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -27759,7 +28108,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1832728196}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -27769,6 +28119,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1832728195
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27876,7 +28227,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1834156990}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -27886,6 +28238,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1834156989
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28220,7 +28573,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1887285173}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -28230,6 +28584,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1887285172
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28337,7 +28692,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1887356013}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -28347,6 +28703,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1887356012
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28454,7 +28811,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1892976014}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -28464,6 +28822,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1892976013
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28571,7 +28930,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1906837098}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -28581,6 +28941,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1906837097
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28763,7 +29124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1908294422}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -28773,6 +29135,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1908294421
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28880,7 +29243,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1928635773}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -28890,6 +29254,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1928635772
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29276,7 +29641,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 1971787434}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -29286,6 +29652,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &1971787433
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29468,7 +29835,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 0
   render: {fileID: 2001057797}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -29478,6 +29846,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &2001057796
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29620,7 +29989,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 39.4
+  m_fontSize: 51
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -29666,7 +30035,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 2
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -30205,7 +30574,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 2035006301}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -30215,6 +30585,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &2035006300
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30482,7 +30853,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 2041604469}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -30492,6 +30864,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &2041604468
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30721,7 +31094,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 67.15
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -30916,7 +31289,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 2069437235}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -30926,6 +31300,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &2069437234
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31033,7 +31408,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 2071100207}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -31043,6 +31419,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &2071100206
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31225,7 +31602,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 2075241991}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -31235,6 +31613,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &2075241990
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31388,7 +31767,7 @@ Transform:
   - {fileID: 963194228}
   - {fileID: 712308231}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2084601158
 GameObject:
@@ -31438,7 +31817,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 2084601162}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -31448,6 +31828,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &2084601161
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31555,7 +31936,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 2106162144}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -31565,6 +31947,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &2106162143
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31672,7 +32055,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 2108702333}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -31682,6 +32066,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &2108702332
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31939,7 +32324,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 2147408599}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -31949,6 +32335,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 0
+  _hasTileAbove: 0
 --- !u!65 &2147408598
 BoxCollider:
   m_ObjectHideFlags: 0

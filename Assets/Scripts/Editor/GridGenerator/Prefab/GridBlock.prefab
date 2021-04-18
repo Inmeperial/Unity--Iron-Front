@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6588739765501300013}
   - component: {fileID: 4961349336544433998}
   - component: {fileID: 5741295033913314007}
-  - component: {fileID: 3555006841405815072}
   m_Layer: 0
   m_Name: PlaneForShaders
   m_TagString: Untagged
@@ -79,20 +78,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &3555006841405815072
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 929437324712114953}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &5613293744069766106
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkable: 1
   render: {fileID: 4097351670578799379}
-  neighbours: []
+  neighboursForMove: []
+  allNeighbours: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -212,6 +198,7 @@ MonoBehaviour:
   _isFree: 0
   painted: 0
   showLineGizmo: 1
+  _hasTileAbove: 0
 --- !u!114 &-6419408271986061796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,4 +211,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a868b7a54cd182644833343c8cea5375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFresnelOn: 0

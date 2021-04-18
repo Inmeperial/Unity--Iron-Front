@@ -69,9 +69,9 @@ public class Character : Teams
         {
             if (_path.Count > 0)
             {
-                GetTilesInAttackRange(_path[_path.Count-1].neighbours, 0);
+                GetTilesInAttackRange(_path[_path.Count-1].allNeighbours, 0);
             }
-            else GetTilesInAttackRange(_myPositionTile.neighbours, 0);
+            else GetTilesInAttackRange(_myPositionTile.allNeighbours, 0);
         }
     }
 
@@ -84,11 +84,15 @@ public class Character : Teams
         {
             if (!_tilesInAttackRange.Contains(item))
             {
-                _tilesInAttackRange.Add(item);
-                _highlight.PaintTilesInAttackRange(item);
+                if (!item.HasTileAbove() && item.IsWalkable())
+                {
+                    _tilesInAttackRange.Add(item);
+                    _highlight.PaintTilesInAttackRange(item);
+                }
+               
             }
             
-            GetTilesInAttackRange(item.neighbours, count + 1);
+            GetTilesInAttackRange(item.allNeighbours, count + 1);
         }
  
     }
@@ -106,7 +110,7 @@ public class Character : Teams
                 _highlight.PaintTilesInMoveRange(item);
             }
             //GetTilesInAttackRange(item.neighbours, count + 1);
-            PaintTilesInMoveRange(item.neighbours, count + 1);
+            PaintTilesInMoveRange(item.neighboursForMove, count + 1);
         }
     }
 
@@ -169,9 +173,10 @@ public class Character : Teams
                         ActivateMoveButton();
                         _highlight.ClearTilesInRange(_tilesInAttackRange);
                         _highlight.ClearTilesInRange(_tilesInMoveRange);
+                        _highlight.CreatePathLines(_path);
                         _tilesInAttackRange.Clear();
                         _tilesInMoveRange.Clear();
-                        PaintTilesInMoveRange(_path[_path.Count - 1].neighbours, 0);
+                        PaintTilesInMoveRange(_path[_path.Count - 1].neighboursForMove, 0);
                         AddTilesInMoveRange();
                         //PaintTilesInAttackRange(_path[_path.Count - 1].neighbours, 0);
                         CheckCloseEnemies();
@@ -236,8 +241,14 @@ public class Character : Teams
             item.MakeNotAttackable();
         }
         _enemyTargets.Clear();
-
+        GetPath();
         ResetInRangeLists();
+        if (_path.Count > 0)
+        {
+            PaintTilesInMoveRange(_path[_path.Count - 1].neighboursForMove, 0);
+        }
+        else PaintTilesInMoveRange(_myPositionTile.neighboursForMove, 0);
+
     }
 
     void ResetInRangeLists()
@@ -302,7 +313,7 @@ public class Character : Teams
 
         _render.sharedMaterial = mat;
         _selected = true;
-        PaintTilesInMoveRange(_myPositionTile.neighbours, 0);
+        PaintTilesInMoveRange(_myPositionTile.neighboursForMove, 0);
     }
 
     public void DeselectThisUnit()

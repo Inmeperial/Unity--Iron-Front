@@ -53,7 +53,7 @@ public class CharacterSelection : MonoBehaviour
             if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
             {
                 //Check if i have a previous unit and deselect it.
-                if (_selection != null)
+                if (_selection != null && _selection != c)
                 {
                     _selection.DeselectThisUnit();
                 }
