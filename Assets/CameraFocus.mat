@@ -8,14 +8,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CameraFocus
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 14b5d4aa7c436574d8140662191dbb12, type: 3}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -64,6 +63,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
+    - _IsFresnelOn: 0
+    - _IsSelected: 0
     - _Metallic: 0
     - _Mode: 3
     - _OcclusionStrength: 1
@@ -73,6 +74,9 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 0
+    - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 0.4745098}
+    - _Color0: {r: 0.8584906, g: 0.8415912, b: 0.17412776, a: 0}
+    - _ColorTile: {r: 0, g: 0.9800038, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
