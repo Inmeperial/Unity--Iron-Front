@@ -11,7 +11,7 @@ public class CharacterSelection : MonoBehaviour
     private Character _selection;
     TileHighlight _highlight;
     TurnManager _turnManager;
-    ButtonsManager _buttonsManager;
+    ButtonsUIManager _buttonsManager;
     public bool _canSelectUnit;
     private Character _enemySelection;
     
@@ -29,7 +29,7 @@ public class CharacterSelection : MonoBehaviour
         _canSelectUnit = true;
         _highlight = GetComponent<TileHighlight>();
         _turnManager = FindObjectOfType<TurnManager>();
-        _buttonsManager = FindObjectOfType<ButtonsManager>();
+        _buttonsManager = FindObjectOfType<ButtonsUIManager>();
     }
 
     // Update is called once per frame
@@ -76,7 +76,7 @@ public class CharacterSelection : MonoBehaviour
                 //enemyHpCounter.text = _enemySelection.GetHP() + " / " + _enemySelection.maxHp;
                 if (_selection.CanAttack())
                 {
-                    _buttonsManager.SetCharacterAttackButtons();
+                    _buttonsManager.SetEnemyUI();
                     //SetBodyPartsButtons(_enemySelection);
                 }
             }

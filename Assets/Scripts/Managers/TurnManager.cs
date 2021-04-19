@@ -11,7 +11,7 @@ public class TurnManager : Teams
     [SerializeField] List<Character> _boxTeam = new List<Character>();
     [SerializeField] CharacterSelection _charSelect;
     [SerializeField] TileHighlight _highlight;
-    ButtonsManager _buttonsManager;
+    ButtonsUIManager _buttonsManager;
     public TextMeshProUGUI teamText;
     public string _CapsuleTeamText = "Capsule Team Turn.";
     public string _BoxTeamText = "Box Team Turn.";
@@ -23,7 +23,7 @@ public class TurnManager : Teams
         SeparateByTeam(units);
         _charSelect = FindObjectOfType<CharacterSelection>();
         _highlight = FindObjectOfType<TileHighlight>();
-        _buttonsManager = FindObjectOfType<ButtonsManager>();
+        _buttonsManager = FindObjectOfType<ButtonsUIManager>();
         _activeTeam = Team.Capsule;
         teamText.text = _CapsuleTeamText;
     }
