@@ -8,21 +8,21 @@ public class Character : Teams
 {
     //STATS
     [SerializeField] private Team _unitTeam;
-    public int bodyMaxHP;
+    [SerializeField] private int _bodyMaxHP;
     [SerializeField] private int _bodyHP;
-    public int leftArmMaxHP;
+    [SerializeField] private int _leftArmMaxHP;
     [SerializeField] private int _leftArmHP;
-    public int rightArmMaxHP;
+    [SerializeField] private int _rightArmMaxHP;
     [SerializeField] private int _rightArmHP;
-    public int legsMaxHP;
+    [SerializeField] private int _legsMaxHP;
     [SerializeField] private int _legsHP;
-    public int maxBullets;
+    [SerializeField] private int _maxBullets;
     [SerializeField] private int _availableBullets;
-    public int damage;
-    public int steps;
-    [SerializeField] private int _steps;
-    public float speed;
-    public int attackRange;
+    [SerializeField] private int _damage;
+    [SerializeField] private int _MaxSteps;
+    [SerializeField] private int _currentSteps;
+    [SerializeField] private float _speed;
+    [SerializeField] private int _attackRange;
 
     //MOVEMENT RELATED
     public IPathCreator pathCreator;
@@ -57,12 +57,12 @@ public class Character : Teams
     // Start is called before the first frame update
     void Start()
     {
-        _steps = steps;
-        _bodyHP = bodyMaxHP;
-        _leftArmHP = leftArmMaxHP;
-        _rightArmHP = rightArmMaxHP;
-        _legsHP = legsMaxHP;
-        _availableBullets = maxBullets;
+        _currentSteps = _MaxSteps;
+        _bodyHP = _bodyMaxHP;
+        _leftArmHP = _leftArmMaxHP;
+        _rightArmHP = _rightArmMaxHP;
+        _legsHP = _legsMaxHP;
+        _availableBullets = _maxBullets;
         _selected = false;
         _canMove = true;
         _canAttack = true;
@@ -96,7 +96,7 @@ public class Character : Teams
 
     void PaintTilesInAttackRange(List<Tile> neighbours, int count)
     {
-        if (count >= attackRange)
+        if (count >= _attackRange)
             return;
 
         foreach (var item in neighbours)
@@ -118,7 +118,7 @@ public class Character : Teams
 
     public void PaintTilesInMoveRange(List<Tile> neighbours, int count)
     {
-        if (count >= _steps)
+        if (count >= _currentSteps)
             return;
 
         foreach (var item in neighbours)
@@ -148,7 +148,7 @@ public class Character : Teams
             _turnManager.UnitIsMoving();
             _highlight.characterMoving = true;
             _highlight.ClearTilesInRange(_tilesInMoveRange);
-            _move.StartMovement(_path, speed);
+            _move.StartMovement(_path, _speed);
         }
     }
 
@@ -182,8 +182,8 @@ public class Character : Teams
             else
             {
                 _targetTile = newTile;
-                pathCreator.Calculate(this, _targetTile, _steps);
-                if (pathCreator.GetDistance() <= steps)
+                pathCreator.Calculate(this, _targetTile, _currentSteps);
+                if (pathCreator.GetDistance() <= _MaxSteps)
                 {
                     _path = pathCreator.GetPath();
                     if (_path.Count > 0)
@@ -205,15 +205,7 @@ public class Character : Teams
         }
     }
 
-    public void ActivateMoveButton()
-    {
-        _turnManager.ActivateMoveButton();
-    }
-
-    public void DeactivateMoveButton()
-    {
-        _turnManager.DeactivateMoveButton();
-    }
+    
     public Tile GetEndTile()
     {
         return _targetTile;
@@ -226,13 +218,53 @@ public class Character : Teams
 
     public int GetSteps()
     {
-        return _steps;
+        return _currentSteps;
     }
 
-    //public int GetHP()
-    //{
-    //    return _hp;
-    //}
+    public int GetBulletDamage()
+    {
+        return _damage;
+    }
+
+    public int GetBodyMaxHP()
+    {
+        return _bodyMaxHP;
+    }
+
+    public int GetBodyHP()
+    {
+        return _bodyHP;
+    }
+
+    public int GetLeftArmMaxHP()
+    {
+        return _leftArmMaxHP;
+    }
+
+    public int GetLeftArmHP()
+    {
+        return _leftArmHP;
+    }
+
+    public int GetRightArmMaxHP()
+    {
+        return _rightArmMaxHP;
+    }
+
+    public int GetRightArmHP()
+    {
+        return _rightArmHP;
+    }
+
+    public int GetLegsMaxHP()
+    {
+        return _legsMaxHP;
+    }
+
+    public int GetLegsHP()
+    {
+        return _legsHP;
+    }
 
     public bool IsSelected()
     {
@@ -260,6 +292,11 @@ public class Character : Teams
     public int GetAvailableBullets()
     {
         return _availableBullets;
+    }
+
+    public int GetRange()
+    {
+        return _attackRange;
     }
     #endregion
 
@@ -313,9 +350,9 @@ public class Character : Teams
     {
         _canMove = true;
         _canAttack = true;
-        _availableBullets = maxBullets;
+        _availableBullets = _maxBullets;
         _path.Clear();
-        _steps = steps;
+        _currentSteps = _MaxSteps;
         _enemyTargets.Clear();
         MakeNotAttackable();
         pathCreator.Reset();
@@ -340,14 +377,24 @@ public class Character : Teams
         pathCreator.Reset();
     }
 
+    public void ActivateMoveButton()
+    {
+        _turnManager.ActivateMoveButton();
+    }
+
+    public void DeactivateMoveButton()
+    {
+        _turnManager.DeactivateMoveButton();
+    }
+
     public void ReduceAvailableSteps(int amount)
     {
-        _steps -= amount;
+        _currentSteps -= amount;
     }
 
     public void IncreaseAvailableSteps(int amount)
     {
-        _steps += amount;
+        _currentSteps += amount;
     }
 
     public void SelectThisUnit()
@@ -412,7 +459,7 @@ public class Character : Teams
             {
                 var dist = CalculateDistanceToEnemie(unit, _myPositionTile);
 
-                if (dist <= attackRange)
+                if (dist <= _attackRange)
                 {
                     _enemyTargets.Add(unit);
                     _turnManager.UnitCanBeAttacked(unit);
@@ -427,7 +474,7 @@ public class Character : Teams
             {
                 var dist = CalculateDistanceToEnemie(unit, _path[_path.Count-1]);
 
-                if (dist <= attackRange)
+                if (dist <= _attackRange)
                 {
                     _enemyTargets.Add(unit);
                     _turnManager.UnitCanBeAttacked(unit);
