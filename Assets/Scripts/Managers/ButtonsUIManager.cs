@@ -90,8 +90,8 @@ public class ButtonsUIManager : MonoBehaviour
     public void SetEnemyUI()
     {
         hud.SetActive(true);
-        SetSliders();
-        SetText();
+        ShowHUDSliders();
+        ShowHUDText();
         buttonExecuteAttack.interactable = true;
     }
 
@@ -155,34 +155,38 @@ public class ButtonsUIManager : MonoBehaviour
             if (_bulletsForBody > 0)
             {
                 _selectedEnemy.AttackBody(_bulletsForBody, _selectedChar.GetBulletDamage());
+                bodySlider.value = _selectedEnemy.GetBodyHP();
+                bodyCurrHP.text = _selectedEnemy.GetBodyHP().ToString();
             }
                 
 
             if (_bulletsForLArm > 0)
             {
                 _selectedEnemy.AttackLeftArm(_bulletsForLArm, _selectedChar.GetBulletDamage());
-
+                leftArmSlider.value = _selectedEnemy.GetLeftArmHP();
+                leftArmCurrHP.text = _selectedEnemy.GetLeftArmHP().ToString();
             }
 
             if (_bulletsForRArm > 0)
             {
                 _selectedEnemy.AttackRightArm(_bulletsForRArm, _selectedChar.GetBulletDamage());
-
+                rightArmSlider.value = _selectedEnemy.GetRightArmHP();
+                rightArmCurrHP.text = _selectedEnemy.GetRightArmHP().ToString();
             }
+        }
 
             if (_bulletsForLegs > 0)
             {
                 _selectedEnemy.AttackLegs(_bulletsForLegs, _selectedChar.GetBulletDamage());
-
+                legsSlider.value = _selectedEnemy.GetLegsHP();
+                legsCurrHP.text = _selectedEnemy.GetLegsHP().ToString();
             }
 
             if (_selectedEnemy.CanAttack() == false)
             {
                 _selectedEnemy = null;
-                hud.SetActive(false);
                 buttonExecuteAttack.interactable = false;
             }
-        }
     }
     public void SelectEnemy()
     {
@@ -191,12 +195,13 @@ public class ButtonsUIManager : MonoBehaviour
     public void EndTurn()
     {
         _turnManager.EndTurn();
+        hud.SetActive(false);
     }
     #endregion
 
     #region UI Text
 
-    void SetSliders()
+    void ShowHUDSliders()
     {
         bodySlider.maxValue = _selectedEnemy.GetBodyMaxHP();
         bodySlider.value = _selectedEnemy.GetBodyHP();
@@ -211,7 +216,7 @@ public class ButtonsUIManager : MonoBehaviour
         legsSlider.value = _selectedEnemy.GetLegsHP();
     }
 
-    void SetText()
+    void ShowHUDText()
     {
         var dmg = _selectedChar.GetBulletDamage();
         var bullets = _selectedChar.GetAvailableBullets();
