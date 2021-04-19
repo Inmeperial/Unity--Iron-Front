@@ -11,6 +11,7 @@ public class TurnManager : Teams
     [SerializeField] List<Character> _boxTeam = new List<Character>();
     [SerializeField] CharacterSelection _charSelect;
     [SerializeField] TileHighlight _highlight;
+    ButtonsManager _buttonsManager;
     public TextMeshProUGUI teamText;
     public string _CapsuleTeamText = "Capsule Team Turn.";
     public string _BoxTeamText = "Box Team Turn.";
@@ -22,6 +23,7 @@ public class TurnManager : Teams
         SeparateByTeam(units);
         _charSelect = FindObjectOfType<CharacterSelection>();
         _highlight = FindObjectOfType<TileHighlight>();
+        _buttonsManager = FindObjectOfType<ButtonsManager>();
         _activeTeam = Team.Capsule;
         teamText.text = _CapsuleTeamText;
     }
@@ -35,7 +37,7 @@ public class TurnManager : Teams
     public void UnitStoppedMoving()
     {
         _charSelect.ActivateCharacterSelection(true);
-        _charSelect.DeactivateMoveButton();
+        _buttonsManager.DeactivateMoveButton();
     }
 
     void SeparateByTeam(Character[] units)
@@ -79,6 +81,7 @@ public class TurnManager : Teams
     void ResetTurn(List<Character> team)
     {
         _charSelect.ResetSelector();
+        _highlight.EndPreview();
         foreach (var unit in team)
         {
             unit.NewTurn();
@@ -92,22 +95,22 @@ public class TurnManager : Teams
 
     public void ActivateMoveButton()
     {
-        _charSelect.ActivateMoveButton();
+        _buttonsManager.ActivateMoveButton();
     }
 
     public void DeactivateMoveButton()
     {
-        _charSelect.DeactivateMoveButton();
+        _buttonsManager.DeactivateMoveButton();
     }
 
     public void ActivateAttackButton()
     {
-        _charSelect.ActivateAttackButton();
+        _buttonsManager.ActivateAttackButton();
     }
 
     public void DeactivateAttackButton()
     {
-        _charSelect.DeactivateAttackButton();
+        _buttonsManager.DeactivateAttackButton();
     }
 
     public void UpdateHP(int currentHP, int maxHP)

@@ -198,6 +198,15 @@ public class Character : Teams
         }
     }
 
+    public void ActivateMoveButton()
+    {
+        _turnManager.ActivateMoveButton();
+    }
+
+    public void DeactivateMoveButton()
+    {
+        _turnManager.DeactivateMoveButton();
+    }
     public Tile GetEndTile()
     {
         return _targetTile;
@@ -437,15 +446,7 @@ public class Character : Teams
         _targetTile = target;
     }
 
-    void ActivateMoveButton()
-    {
-        _turnManager.ActivateMoveButton();
-    }
-
-    public void DeactivateMoveButton()
-    {
-        _turnManager.DeactivateMoveButton();
-    }
+    
 
     public void MakeAttackable()
     {

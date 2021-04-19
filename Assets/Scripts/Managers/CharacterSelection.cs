@@ -11,12 +11,10 @@ public class CharacterSelection : MonoBehaviour
     private Character _selection;
     TileHighlight _highlight;
     TurnManager _turnManager;
+    ButtonsManager _buttonsManager;
     public bool _canSelectUnit;
     private Character _enemySelection;
-    public Button buttonMove;
-    public Button buttonUndo;
-    public Button buttonSelectEnemy;
-    public Button buttonExecuteAttack;
+    
     public TextMeshProUGUI stepsCounter;
     public TextMeshProUGUI enemyHpCounter;
     public GameObject enemyHPContainer;
@@ -25,27 +23,13 @@ public class CharacterSelection : MonoBehaviour
 
     private bool _selectingEnemy;
 
-    public GameObject bodyPartsButtons;
-    public Button buttonBody;
-    public bool _buttonBodySelected;
-    public Button buttonLArm;
-    public bool _buttonLArmSelected;
-    public Button buttonRArm;
-    public bool _buttonRArmSelected;
-    public Button buttonLegs;
-    public bool _buttonLegsSelected;
+   
     private void Start()
     {
         _canSelectUnit = true;
         _highlight = GetComponent<TileHighlight>();
         _turnManager = FindObjectOfType<TurnManager>();
-        bodyPartsButtons.SetActive(false);
-
-        _buttonBodySelected = false;
-        _buttonLArmSelected = false;
-        _buttonRArmSelected = false;
-        _buttonLegsSelected = false;
-
+        _buttonsManager = FindObjectOfType<ButtonsManager>();
     }
 
     // Update is called once per frame
@@ -78,11 +62,7 @@ public class CharacterSelection : MonoBehaviour
                 _selection.SelectThisUnit();
                 _selection.AddTilesInMoveRange();
                 _highlight.ChangeActiveCharacter(_selection);
-                buttonMove.onClick.RemoveAllListeners();
-                buttonMove.onClick.AddListener(_selection.Move);
-                buttonUndo.onClick.RemoveAllListeners();
-                buttonUndo.onClick.AddListener(_selection.pathCreator.UndoLastWaypoint);
-                buttonSelectEnemy.interactable = true;
+                _buttonsManager.SetCharacterMovementButtons(_selection);
                 stepsCounter.text = _selection.GetSteps().ToString();
             }
             else if (_selectingEnemy && c.CanBeAttacked())
@@ -90,22 +70,19 @@ public class CharacterSelection : MonoBehaviour
                 _enemySelection = c;
                 _enemySelection.SelectedAsEnemy();
                 _selection.SetEnemy(_enemySelection);
+                _buttonsManager.SetEnemy(_enemySelection);
                 enemyHPContainer.SetActive(true);
                 enemyHpCounter.text = _enemySelection.GetHP() + " / " + _enemySelection.maxHp;
                 if (_selection.CanAttack())
                 {
-                    bodyPartsButtons.SetActive(true);
-                    buttonExecuteAttack.interactable = true;
+                    _buttonsManager.SetCharacterAttackButtons();
                     //SetBodyPartsButtons(_enemySelection);
                 }
             }
         }
     }
 
-    public void SelectEnemy()
-    {
-        _selectingEnemy = true;
-    }
+    
 
     //Returns the character that is currently selected.
     public Character GetActualChar()
@@ -128,10 +105,7 @@ public class CharacterSelection : MonoBehaviour
     {
         DeselectUnit();
         _selectingEnemy = false;
-        buttonExecuteAttack.interactable = false;
-        buttonSelectEnemy.interactable = false;
-        buttonMove.interactable = false;
-        buttonUndo.interactable = false;
+        _buttonsManager.DeactivateCharacterButtons();
     }
 
     public void DeselectUnit()
@@ -166,74 +140,15 @@ public class CharacterSelection : MonoBehaviour
     //    buttonLegs.onClick.AddListener(unit.AttackLegs);
     //}
 
-    public void ActivateMoveButton()
-    {
-        buttonMove.interactable = true;
-        buttonUndo.interactable = true;
-    }
-
-    public void DeactivateMoveButton()
-    {
-        buttonMove.interactable = false;
-        buttonUndo.interactable = false;
-    }
-
-    public void ActivateAttackButton()
-    {
-        buttonExecuteAttack.interactable = true;
-    }
-
-    public void DeactivateAttackButton()
-    {
-        buttonExecuteAttack.interactable = false;
-    }
+    
 
     public void UpdateHP(int currentHP, int maxHP)
     {
         enemyHpCounter.text = currentHP + " / " + maxHP;
     }
 
-    public void BodySelection()
+    public void CanSelectEnemy()
     {
-        _buttonBodySelected = !_buttonBodySelected;
-    }
-
-    public void LeftArmSelection()
-    {
-        _buttonLArmSelected = !_buttonLArmSelected;
-    }
-
-    public void RightArmSelection()
-    {
-        _buttonRArmSelected = !_buttonRArmSelected;
-    }
-
-    public void LegsSelection()
-    {
-        _buttonLegsSelected = !_buttonLegsSelected;
-    }
-
-    public void ExecuteAttack()
-    {
-        if (_enemySelection != null)
-        {
-            if (_buttonBodySelected)
-                _enemySelection.AttackBody();
-
-            if (_buttonLArmSelected)
-                _enemySelection.AttackLeftArm();
-            
-            if (_buttonRArmSelected)
-                _enemySelection.AttackRightArm();
-
-            if (_buttonLegsSelected)
-                _enemySelection.AttackLegs();
-
-            if (_enemySelection.CanAttack() == false)
-            {
-                bodyPartsButtons.SetActive(false);
-                buttonExecuteAttack.interactable = false;
-            }
-        }
+        _selectingEnemy = true;
     }
 }

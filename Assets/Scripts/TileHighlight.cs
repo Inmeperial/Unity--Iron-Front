@@ -72,6 +72,7 @@ public class TileHighlight : MonoBehaviour
                 item.ResetColor();
             }
             _previewPath.Clear();
+            _lineRenderer.positionCount = 0;
         }
     }
     public void PathPreview(List<Tile> path)
