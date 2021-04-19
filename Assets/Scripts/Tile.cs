@@ -57,6 +57,10 @@ public class Tile : MonoBehaviour
     //Cast a ray to neighbouring tiles and check if they are walkable.
     void RayForMoveNeighbours(Vector3 dir)
     {
+        float d;
+        if (transform.localScale.x >= transform.localScale.z)
+            d = transform.localScale.x;
+        else d = transform.localScale.z;
         RaycastHit hit;
         if (Physics.Raycast(transform.position, dir, out hit, 1))
         {
@@ -70,7 +74,11 @@ public class Tile : MonoBehaviour
     void RayToAllNeighbours(Vector3 dir)
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, dir, out hit, 1))
+        float d;
+        if (transform.localScale.x >= transform.localScale.z)
+            d = transform.localScale.x;
+        else d = transform.localScale.z;
+        if (Physics.Raycast(transform.position, dir, out hit, d))
         {
             var neighbour = hit.collider.GetComponent<Tile>();
             if (neighbour != null)
