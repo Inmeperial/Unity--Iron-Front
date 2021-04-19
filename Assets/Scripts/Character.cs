@@ -7,6 +7,14 @@ using UnityEngine.EventSystems;
 public class Character : Teams
 {
     GridMovement _move;
+    public int bodyMaxHP;
+    private int _bodyHP;
+    public int leftArmMaxHP;
+    private int _leftArmHP;
+    public int rightArmMaxHP;
+    private int _rightArmHP;
+    public int legsMaxHP;
+    private int _legsHP;
     public int maxHp;
     private int _hp;
     public int damage;
@@ -44,6 +52,10 @@ public class Character : Teams
     {
         _steps = steps;
         _hp = maxHp;
+        _bodyHP = bodyMaxHP;
+        _leftArmHP = leftArmMaxHP;
+        _rightArmHP = rightArmMaxHP;
+        _legsHP = legsMaxHP;
         _selected = false;
         _canMove = true;
         _canAttack = true;
@@ -453,5 +465,29 @@ public class Character : Teams
     public bool CanAttack()
     {
         return _canAttack;
+    }
+
+    public void AttackBody()
+    {
+        Debug.Log("Body attacked");
+        _canAttack = false;
+    }
+
+    public void AttackLeftArm()
+    {
+        Debug.Log("larm attacked");
+        _canAttack = false;
+    }
+
+    public void AttackRightArm()
+    {
+        Debug.Log("rarm attacked");
+        _canAttack = false;
+    }
+
+    public void AttackLegs()
+    {
+        Debug.Log("legs attacked");
+        _canAttack = false;
     }
 }
