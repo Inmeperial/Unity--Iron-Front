@@ -62,7 +62,7 @@ public class Tile : MonoBehaviour
             d = transform.localScale.x;
         else d = transform.localScale.z;
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, dir, out hit, 1))
+        if (Physics.Raycast(transform.position, dir, out hit, d))
         {
             var neighbour = hit.collider.GetComponent<Tile>();
             if (neighbour != null && neighbour.isWalkable)

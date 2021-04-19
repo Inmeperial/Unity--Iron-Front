@@ -6,14 +6,54 @@ using UnityEngine.EventSystems;
 
 public class BodyPartSelection : MonoBehaviour
 {
-	public Image squareBracket;
+	public Image counterUI;
+	public int _count = 0;
+	public List<Image> myCounters = new List<Image>();
 
-	public void GenerateBracket()
+	public void GenerateCounter()
 	{
+		
 		var myButton = EventSystem.current.currentSelectedGameObject.transform;
-		var tempSquareBracket = Instantiate(squareBracket);
-		tempSquareBracket.transform.SetParent(myButton, false);
-		tempSquareBracket.rectTransform.anchorMin = new Vector2(0, 0);
-		tempSquareBracket.rectTransform.anchorMax = new Vector2(1, 1);
+		var tempCounterUI = Instantiate(counterUI);
+		myCounters.Add(tempCounterUI);
+		tempCounterUI.transform.SetParent(myButton, false);
+		if(_count <= 0)
+			tempCounterUI.rectTransform.anchorMin = new Vector2(0, 0);
+		else
+			tempCounterUI.rectTransform.anchorMin = new Vector2(0.1f * _count, 0);
+
+		_count++;
+
+		tempCounterUI.rectTransform.anchorMax = new Vector2(0.1f * _count, 0.15f);
+		
+	}
+
+	public void RemoveCounter()
+	{
+		if (myCounters.Count <= 0)
+		{
+			return;
+		}
+
+		_count--;
+		var bulletToRemove = myCounters[_count];
+		myCounters.Remove(bulletToRemove);
+		DestroyImmediate(bulletToRemove);
+	}
+
+	public void ClearCounters()
+	{
+		if (myCounters.Count <= 0)
+		{
+			return;
+		}
+
+		for (int i = myCounters.Count - 1; i >= 0; i--)
+		{
+			var tempItem = myCounters[i];
+			myCounters.Remove(tempItem);
+			DestroyImmediate(tempItem);
+		}
+		_count = 0;
 	}
 }
