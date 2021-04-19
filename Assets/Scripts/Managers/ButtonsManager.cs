@@ -13,16 +13,21 @@ public class ButtonsManager : MonoBehaviour
     public GameObject bodyPartsButtons;
     public Button buttonBody;
     public bool _buttonBodySelected;
+    private int _bulletsForBody;
     public Button buttonLArm;
     public bool _buttonLArmSelected;
+    private int _bulletsForLArm;
     public Button buttonRArm;
     public bool _buttonRArmSelected;
+    private int _bulletsForRArm;
     public Button buttonLegs;
     public bool _buttonLegsSelected;
+    private int _bulletsForLegs;
 
 
-    private Character _selectedEnemy;
-    private CharacterSelection _charSelection;
+    [SerializeField] private Character _selectedEnemy;
+    [SerializeField] private CharacterSelection _charSelection;
+    [SerializeField] private Character _selectedChar;
     private TurnManager _turnManager;
     private void Start()
     {
@@ -79,46 +84,84 @@ public class ButtonsManager : MonoBehaviour
         buttonSelectEnemy.interactable = false;
         buttonMove.interactable = false;
         buttonUndo.interactable = false;
+        _selectedEnemy = null;
     }
 
     public void BodySelection()
     {
-        _buttonBodySelected = !_buttonBodySelected;
+        if (CharacterHasBullets(_selectedChar))
+        {
+            Debug.Log("entro al body");
+            _bulletsForBody++;
+            _selectedChar.ReduceAvailableBullets(1);
+        }
+
     }
 
     public void LeftArmSelection()
     {
-        _buttonLArmSelected = !_buttonLArmSelected;
+        if (CharacterHasBullets(_selectedChar))
+        {
+            _bulletsForLArm++;
+            _selectedChar.ReduceAvailableBullets(1);
+        }
     }
 
     public void RightArmSelection()
     {
-        _buttonRArmSelected = !_buttonRArmSelected;
+        if (CharacterHasBullets(_selectedChar))
+        {
+            _bulletsForRArm++;
+            _selectedChar.ReduceAvailableBullets(1);
+        }
     }
 
     public void LegsSelection()
     {
-        _buttonLegsSelected = !_buttonLegsSelected;
+        if (CharacterHasBullets(_selectedChar))
+        {
+            _bulletsForLegs++;
+            _selectedChar.ReduceAvailableBullets(1);
+        }
     }
 
+    bool CharacterHasBullets(Character c)
+    {
+        if (c.GetAvailableBullets() > 0)
+            return true;
+        else return false;
+    }
     public void ExecuteAttack()
     {
         if (_selectedEnemy != null)
         {
-            if (_buttonBodySelected)
-                _selectedEnemy.AttackBody();
+            if (_bulletsForBody > 0)
+            {
+                _selectedEnemy.AttackBody(_bulletsForBody, _selectedChar.damage);
+            }
+                
 
-            if (_buttonLArmSelected)
-                _selectedEnemy.AttackLeftArm();
+            if (_bulletsForLArm > 0)
+            {
+                _selectedEnemy.AttackLeftArm(_bulletsForLArm, _selectedChar.damage);
 
-            if (_buttonRArmSelected)
-                _selectedEnemy.AttackRightArm();
+            }
 
-            if (_buttonLegsSelected)
-                _selectedEnemy.AttackLegs();
+            if (_bulletsForRArm > 0)
+            {
+                _selectedEnemy.AttackRightArm(_bulletsForRArm, _selectedChar.damage);
+
+            }
+
+            if (_bulletsForLegs > 0)
+            {
+                _selectedEnemy.AttackLegs(_bulletsForLegs, _selectedChar.damage);
+
+            }
 
             if (_selectedEnemy.CanAttack() == false)
             {
+                _selectedEnemy = null;
                 bodyPartsButtons.SetActive(false);
                 buttonExecuteAttack.interactable = false;
             }
@@ -128,6 +171,11 @@ public class ButtonsManager : MonoBehaviour
     public void SetEnemy(Character enemy)
     {
         _selectedEnemy = enemy;
+    }
+
+    public void SetCharacter(Character character)
+    {
+        _selectedChar = character;
     }
 
     public void SelectEnemy()

@@ -15,6 +15,8 @@ public class Character : Teams
     private int _rightArmHP;
     public int legsMaxHP;
     private int _legsHP;
+    public int maxBullets;
+    [SerializeField] private int _availableBullets;
     public int maxHp;
     private int _hp;
     public int damage;
@@ -56,6 +58,7 @@ public class Character : Teams
         _leftArmHP = leftArmMaxHP;
         _rightArmHP = rightArmMaxHP;
         _legsHP = legsMaxHP;
+        _availableBullets = maxBullets;
         _selected = false;
         _canMove = true;
         _canAttack = true;
@@ -81,13 +84,13 @@ public class Character : Teams
         {
             if (_path.Count > 0)
             {
-                GetTilesInAttackRange(_path[_path.Count-1].allNeighbours, 0);
+                PaintTilesInAttackRange(_path[_path.Count-1].allNeighbours, 0);
             }
-            else GetTilesInAttackRange(_myPositionTile.allNeighbours, 0);
+            else PaintTilesInAttackRange(_myPositionTile.allNeighbours, 0);
         }
     }
 
-    void GetTilesInAttackRange(List<Tile> neighbours, int count)
+    void PaintTilesInAttackRange(List<Tile> neighbours, int count)
     {
         if (count >= attackRange)
             return;
@@ -104,7 +107,7 @@ public class Character : Teams
                
             }
             
-            GetTilesInAttackRange(item.allNeighbours, count + 1);
+            PaintTilesInAttackRange(item.allNeighbours, count + 1);
         }
  
     }
@@ -189,8 +192,8 @@ public class Character : Teams
                         _tilesInAttackRange.Clear();
                         _tilesInMoveRange.Clear();
                         PaintTilesInMoveRange(_path[_path.Count - 1].neighboursForMove, 0);
+                        PaintTilesInAttackRange(_path[_path.Count - 1].allNeighbours, 0);
                         AddTilesInMoveRange();
-                        //PaintTilesInAttackRange(_path[_path.Count - 1].neighbours, 0);
                         CheckCloseEnemies();
                     }
                 }
@@ -249,10 +252,25 @@ public class Character : Teams
         Physics.Raycast(transform.position, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
         return hit.transform.gameObject.GetComponent<Tile>();
     }
+
+    public int GetAvailableBullets()
+    {
+        return _availableBullets;
+    }
     #endregion
 
     #region Utilities
 
+    public void ReduceAvailableBullets(int quantity)
+    {
+        Debug.Log("reduzco balas");
+        _availableBullets -= quantity;
+    }
+
+    public void IncreaseAvailableBullets(int quantity)
+    {
+        _availableBullets += quantity;
+    }
     public void Undo()
     {
         //_highlight.ClearTilesInRange(_tilesInAttackRange);
@@ -291,6 +309,7 @@ public class Character : Teams
     {
         _canMove = true;
         _canAttack = true;
+        _availableBullets = maxBullets;
         _path.Clear();
         _steps = steps;
         _enemyTargets.Clear();
@@ -468,27 +487,27 @@ public class Character : Teams
         return _canAttack;
     }
 
-    public void AttackBody()
+    public void AttackBody(int bullets, int bulletDamage)
     {
-        Debug.Log("Body attacked");
+        Debug.Log("Body attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
         _canAttack = false;
     }
 
-    public void AttackLeftArm()
+    public void AttackLeftArm(int bullets, int bulletDamage)
     {
-        Debug.Log("larm attacked");
+        Debug.Log("larm attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
         _canAttack = false;
     }
 
-    public void AttackRightArm()
+    public void AttackRightArm(int bullets, int bulletDamage)
     {
-        Debug.Log("rarm attacked");
+        Debug.Log("rarm attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
         _canAttack = false;
     }
 
-    public void AttackLegs()
+    public void AttackLegs(int bullets, int bulletDamage)
     {
-        Debug.Log("legs attacked");
+        Debug.Log("legs attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
         _canAttack = false;
     }
 }
