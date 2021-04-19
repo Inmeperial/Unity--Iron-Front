@@ -128,8 +128,8 @@ public class TurnManager : Teams
         return unit.GetTileBelow();
     }
 
-    public void DamageEnemy(Character unit, int damage)
-    {
-        unit.TakeDamage(damage);
-    }
+    //public void DamageEnemy(Character unit, int damage)
+    //{
+    //    unit.TakeDamage(damage);
+    //}
 }

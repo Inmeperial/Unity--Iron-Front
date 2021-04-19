@@ -73,7 +73,7 @@ public class CharacterSelection : MonoBehaviour
                 _selection.SetEnemy(_enemySelection);
                 _buttonsManager.SetEnemy(_enemySelection);
                 enemyHPContainer.SetActive(true);
-                enemyHpCounter.text = _enemySelection.GetHP() + " / " + _enemySelection.maxHp;
+                //enemyHpCounter.text = _enemySelection.GetHP() + " / " + _enemySelection.maxHp;
                 if (_selection.CanAttack())
                 {
                     _buttonsManager.SetCharacterAttackButtons();

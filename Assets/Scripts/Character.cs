@@ -6,54 +6,58 @@ using UnityEngine.EventSystems;
 
 public class Character : Teams
 {
-    GridMovement _move;
+    //STATS
+    [SerializeField] private Team _unitTeam;
     public int bodyMaxHP;
-    private int _bodyHP;
+    [SerializeField] private int _bodyHP;
     public int leftArmMaxHP;
-    private int _leftArmHP;
+    [SerializeField] private int _leftArmHP;
     public int rightArmMaxHP;
-    private int _rightArmHP;
+    [SerializeField] private int _rightArmHP;
     public int legsMaxHP;
-    private int _legsHP;
+    [SerializeField] private int _legsHP;
     public int maxBullets;
     [SerializeField] private int _availableBullets;
-    public int maxHp;
-    private int _hp;
     public int damage;
     public int steps;
     [SerializeField] private int _steps;
     public float speed;
-    public LayerMask block;
     public int attackRange;
-    public bool _canBeAttacked = false;
 
-    public List<Tile> _tilesInAttackRange = new List<Tile>();
-    public List<Tile> _tilesInMoveRange = new List<Tile>();
-    public List<Character> _enemyTargets = new List<Character>();
+    //MOVEMENT RELATED
     public IPathCreator pathCreator;
-    [SerializeField] private Team _unitTeam;
-    public Character _enemy;
-    private bool _selected;
-    private bool _moving = false;
-    public bool _canMove = true;
-    public bool _canAttack = true;
-
+    private GridMovement _move;
+    public LayerMask block;
+    private bool _canBeAttacked = false;
+    private List<Tile> _tilesInMoveRange = new List<Tile>();
     private Tile _myPositionTile;
     private Tile _targetTile;
+    [SerializeField] private List<Tile> _path = new List<Tile>();
+
+    //FLAGS
+    private bool _selected;
+    private bool _moving = false;
+    private bool _canMove = true;
+    private bool _canAttack = true;
+
+    //OTHERS
+    private List<Tile> _tilesInAttackRange = new List<Tile>();
+    private List<Character> _enemyTargets = new List<Character>();
+    private Character _enemy;
     private MeshRenderer _render;
 
-    [SerializeField] private List<Tile> _path = new List<Tile>();
 
     [SerializeField] private TurnManager _turnManager;
 
     [SerializeField] private TileHighlight _highlight;
 
     [SerializeField] private AStarAgent _agent;
+
+
     // Start is called before the first frame update
     void Start()
     {
         _steps = steps;
-        _hp = maxHp;
         _bodyHP = bodyMaxHP;
         _leftArmHP = leftArmMaxHP;
         _rightArmHP = rightArmMaxHP;
@@ -148,22 +152,22 @@ public class Character : Teams
         }
     }
 
-    public virtual void Attack()
-    {
-        _canMove = false;
-        _canAttack = false;
-        _turnManager.DeactivateMoveButton();
-        _turnManager.DeactivateAttackButton();
-        _turnManager.DamageEnemy(_enemy, damage);
-        _highlight.ClearTilesInRange(_tilesInMoveRange);
-    }
+    //public virtual void Attack()
+    //{
+    //    _canMove = false;
+    //    _canAttack = false;
+    //    _turnManager.DeactivateMoveButton();
+    //    _turnManager.DeactivateAttackButton();
+    //    _turnManager.DamageEnemy(_enemy, damage);
+    //    _highlight.ClearTilesInRange(_tilesInMoveRange);
+    //}
 
-    public void TakeDamage(int damage)
-    {
-        _hp -= damage;
-        _turnManager.UpdateHP(_hp, maxHp);
-        DeselectThisUnit();
-    }
+    //public void TakeDamage(int damage)
+    //{
+    //    _hp -= damage;
+    //    _turnManager.UpdateHP(_hp, maxHp);
+    //    DeselectThisUnit();
+    //}
     #endregion
 
     #region Getters
@@ -225,10 +229,10 @@ public class Character : Teams
         return _steps;
     }
 
-    public int GetHP()
-    {
-        return _hp;
-    }
+    //public int GetHP()
+    //{
+    //    return _hp;
+    //}
 
     public bool IsSelected()
     {
@@ -490,24 +494,28 @@ public class Character : Teams
     public void AttackBody(int bullets, int bulletDamage)
     {
         Debug.Log("Body attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
+        _bodyHP -= bullets * bulletDamage;
         _canAttack = false;
     }
 
     public void AttackLeftArm(int bullets, int bulletDamage)
     {
         Debug.Log("larm attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
+        _leftArmHP -= bullets * bulletDamage;
         _canAttack = false;
     }
 
     public void AttackRightArm(int bullets, int bulletDamage)
     {
         Debug.Log("rarm attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
+        _rightArmHP -= bullets * bulletDamage;
         _canAttack = false;
     }
 
     public void AttackLegs(int bullets, int bulletDamage)
     {
         Debug.Log("legs attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
+        _legsHP -= bullets * bulletDamage;
         _canAttack = false;
     }
 }

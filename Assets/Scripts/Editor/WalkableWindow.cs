@@ -9,8 +9,8 @@ public class WalkableWindow : EditorWindow
 
     private void OnEnable()
     {
-        maxSize = new Vector2(200, 50);
-        minSize = new Vector2(200, 50);
+        this.maxSize = new Vector2(300, 130);
+        this.minSize = new Vector2(300, 130);
         var tiles = FindObjectsOfType<Tile>();
         _tiles = new Tile[tiles.Length];
         _tiles = tiles;
@@ -24,10 +24,12 @@ public class WalkableWindow : EditorWindow
 
     private void OnGUI()
     {
-        if (GUILayout.Button("Make all tiles Walkable"))
+        if (GUILayout.Button("Make all tiles Walkable and clear neighbours"))
         {
             foreach (var item in _tiles)
             {
+                item.allNeighbours.Clear();
+                item.neighboursForMove.Clear();
                 item.MakeWalkableColor();
             }
         }

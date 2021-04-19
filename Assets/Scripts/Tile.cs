@@ -16,21 +16,17 @@ public class Tile : MonoBehaviour
     Material _mat;
     public bool showLineGizmo = true;
 
-    public bool _hasTileAbove;
+    private bool _hasTileAbove;
     private void Awake()
     {
         _isFree = true;
-        TileAbove();
     }
     private void Start()
     {
         _mat = new Material(render.sharedMaterial);
-        if (HasTileAbove() == false)
-            GetNeighbours();
-        else MakeNotWalkableColor();
     }
 
-    void GetNeighbours()
+    public void GetNeighbours()
     {
         RayForMoveNeighbours(Vector3.right);
         RayForMoveNeighbours(Vector3.left);
@@ -84,7 +80,7 @@ public class Tile : MonoBehaviour
     }
 
     //Check if there is a tile above.
-    bool TileAbove()
+    public bool CheckIfTileAbove()
     {
         return _hasTileAbove = Physics.Raycast(transform.position, transform.up, 1, obstacle);
     }
@@ -115,6 +111,7 @@ public class Tile : MonoBehaviour
     public void MakeWalkableColor()
     {
         isWalkable = true;
+        _hasTileAbove = false;
         var mat = new Material(render.sharedMaterial);
         mat.color = Color.green;
 
