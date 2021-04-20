@@ -14,7 +14,7 @@ public class CharacterSelection : MonoBehaviour
     ButtonsUIManager _buttonsManager;
     public bool _canSelectUnit;
     private Character _enemySelection;
-    
+
     public TextMeshProUGUI stepsCounter;
     public TextMeshProUGUI enemyHpCounter;
     public GameObject enemyHPContainer;
@@ -23,7 +23,7 @@ public class CharacterSelection : MonoBehaviour
 
     private bool _selectingEnemy;
 
-   
+
     private void Start()
     {
         _canSelectUnit = true;
@@ -83,7 +83,7 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
-    
+
 
     //Returns the character that is currently selected.
     public Character GetActualChar()
@@ -141,7 +141,7 @@ public class CharacterSelection : MonoBehaviour
     //    buttonLegs.onClick.AddListener(unit.AttackLegs);
     //}
 
-    
+
 
     public void UpdateHP(int currentHP, int maxHP)
     {

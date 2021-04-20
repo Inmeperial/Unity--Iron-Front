@@ -131,7 +131,7 @@ public class ButtonsUIManager : MonoBehaviour
         actionMenu.SetActive(true);
     }
 
-    
+
     public void SetEnemyUI()
     {
         bodyPartsButtonsContainer.SetActive(true);
@@ -260,7 +260,7 @@ public class ButtonsUIManager : MonoBehaviour
                 enemyBodySlider.value = _selectedEnemy.GetBodyHP();
                 enemyBodyCurrHP.text = _selectedEnemy.GetBodyHP().ToString();
             }
-                
+
 
             if (_bulletsForLArm > 0)
             {
@@ -277,18 +277,18 @@ public class ButtonsUIManager : MonoBehaviour
             }
         }
 
-            if (_bulletsForLegs > 0)
-            {
-                _selectedEnemy.AttackLegs(_bulletsForLegs, _selectedChar.GetBulletDamage());
-                enemyLegsSlider.value = _selectedEnemy.GetLegsHP();
-                enemyLegsCurrHP.text = _selectedEnemy.GetLegsHP().ToString();
-            }
+        if (_bulletsForLegs > 0)
+        {
+            _selectedEnemy.AttackLegs(_bulletsForLegs, _selectedChar.GetBulletDamage());
+            enemyLegsSlider.value = _selectedEnemy.GetLegsHP();
+            enemyLegsCurrHP.text = _selectedEnemy.GetLegsHP().ToString();
+        }
 
-            if (_selectedEnemy.CanAttack() == false)
-            {
-                _selectedEnemy = null;
-                buttonExecuteAttack.interactable = false;
-            }
+        if (_selectedEnemy.CanAttack() == false)
+        {
+            _selectedEnemy = null;
+            buttonExecuteAttack.interactable = false;
+        }
     }
     public void SelectEnemy()
     {
@@ -302,7 +302,7 @@ public class ButtonsUIManager : MonoBehaviour
         DeactivateMoveButton();
     }
 
-    
+
     #endregion
 
     #region HUD Text
@@ -352,7 +352,7 @@ public class ButtonsUIManager : MonoBehaviour
         enemyLegsCurrHP.text = _selectedEnemy.GetLegsHP().ToString();
     }
 
-    
+
     #endregion
     public void SetEnemy(Character enemy)
     {
