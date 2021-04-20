@@ -7,22 +7,35 @@ using UnityEngine.EventSystems;
 public class Character : Teams
 {
     //STATS
+    [Header("Team")]
     [SerializeField] private Team _unitTeam;
+
+    [Header("Body")]
     [SerializeField] private int _bodyMaxHP;
     [SerializeField] private int _bodyHP;
+
+    [Header("Left Arm")]
     [SerializeField] private int _leftArmMaxHP;
     [SerializeField] private int _leftArmHP;
+
+    [Header("Right Arm")]
     [SerializeField] private int _rightArmMaxHP;
     [SerializeField] private int _rightArmHP;
+
+    [Header("Legs")]
     [SerializeField] private int _legsMaxHP;
     [SerializeField] private int _legsHP;
+
+    [Header("Weapon")]
     [SerializeField] private int _maxBullets;
     [SerializeField] private int _availableBullets;
     [SerializeField] private int _damage;
+    [SerializeField] private int _attackRange;
+
+    [Header("Movement")]
     [SerializeField] private int _MaxSteps;
     [SerializeField] private int _currentSteps;
     [SerializeField] private float _speed;
-    [SerializeField] private int _attackRange;
 
     //MOVEMENT RELATED
     public IPathCreator pathCreator;
@@ -32,7 +45,7 @@ public class Character : Teams
     private List<Tile> _tilesInMoveRange = new List<Tile>();
     private Tile _myPositionTile;
     private Tile _targetTile;
-    [SerializeField] private List<Tile> _path = new List<Tile>();
+    private List<Tile> _path = new List<Tile>();
 
     //FLAGS
     private bool _selected;
@@ -47,11 +60,11 @@ public class Character : Teams
     private MeshRenderer _render;
 
 
-    [SerializeField] private TurnManager _turnManager;
+    private TurnManager _turnManager;
 
-    [SerializeField] private TileHighlight _highlight;
+    private TileHighlight _highlight;
 
-    [SerializeField] private AStarAgent _agent;
+    private AStarAgent _agent;
 
 
     // Start is called before the first frame update
