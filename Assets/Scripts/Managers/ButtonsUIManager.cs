@@ -75,7 +75,6 @@ public class ButtonsUIManager : MonoBehaviour
         playerHudContainer.SetActive(false);
         moveContainer.SetActive(false);
         actionMenu.SetActive(false);
-        bodyPartsButtonsContainer.SetActive(false);
         _buttonBodySelected = false;
         _buttonLArmSelected = false;
         _buttonRArmSelected = false;
@@ -84,7 +83,6 @@ public class ButtonsUIManager : MonoBehaviour
         _charSelection = FindObjectOfType<CharacterSelection>();
         _turnManager = FindObjectOfType<TurnManager>();
     }
-
     #region Buttons
     public void ActivateMoveButton()
     {
@@ -137,9 +135,10 @@ public class ButtonsUIManager : MonoBehaviour
     public void SetEnemyUI()
     {
         bodyPartsButtonsContainer.SetActive(true);
+        buttonExecuteAttack.enabled = true;
         ShowEnemyHUDSliders();
         ShowEnemyHUDText();
-        
+        buttonExecuteAttack.interactable = true;
         enemyHudContainer.SetActive(true);
     }
 
@@ -166,7 +165,6 @@ public class ButtonsUIManager : MonoBehaviour
             Debug.Log("entro al body");
             _bulletsForBody++;
             _selectedChar.ReduceAvailableBullets(1);
-            buttonExecuteAttack.interactable = true;
         }
 
     }
@@ -175,14 +173,12 @@ public class ButtonsUIManager : MonoBehaviour
     {
         _bulletsForBody--;
         _selectedChar.IncreaseAvailableBullets(1);
-        CheckIfCanExecuteAttack();
     }
 
     public void BodyClear()
     {
         _selectedChar.IncreaseAvailableBullets(_bulletsForBody);
         _bulletsForBody = 0;
-        CheckIfCanExecuteAttack();
     }
 
     public void LeftArmSelection()
@@ -191,7 +187,6 @@ public class ButtonsUIManager : MonoBehaviour
         {
             _bulletsForLArm++;
             _selectedChar.ReduceAvailableBullets(1);
-            buttonExecuteAttack.interactable = true;
         }
     }
 
@@ -199,14 +194,12 @@ public class ButtonsUIManager : MonoBehaviour
     {
         _bulletsForLArm--;
         _selectedChar.IncreaseAvailableBullets(1);
-        CheckIfCanExecuteAttack();
     }
 
     public void LeftArmClear()
     {
         _selectedChar.IncreaseAvailableBullets(_bulletsForLArm);
         _bulletsForLArm = 0;
-        CheckIfCanExecuteAttack();
     }
 
     public void RightArmSelection()
@@ -215,7 +208,6 @@ public class ButtonsUIManager : MonoBehaviour
         {
             _bulletsForRArm++;
             _selectedChar.ReduceAvailableBullets(1);
-            buttonExecuteAttack.interactable = true;
         }
     }
 
@@ -223,14 +215,12 @@ public class ButtonsUIManager : MonoBehaviour
     {
         _bulletsForRArm--;
         _selectedChar.IncreaseAvailableBullets(1);
-        CheckIfCanExecuteAttack();
     }
 
     public void RightArmClear()
     {
         _selectedChar.IncreaseAvailableBullets(_bulletsForRArm);
         _bulletsForRArm = 0;
-        CheckIfCanExecuteAttack();
     }
 
     public void LegsSelection()
@@ -239,7 +229,6 @@ public class ButtonsUIManager : MonoBehaviour
         {
             _bulletsForLegs++;
             _selectedChar.ReduceAvailableBullets(1);
-            buttonExecuteAttack.interactable = true;
         }
     }
 
@@ -247,14 +236,12 @@ public class ButtonsUIManager : MonoBehaviour
     {
         _bulletsForLegs--;
         _selectedChar.IncreaseAvailableBullets(1);
-        CheckIfCanExecuteAttack();
     }
 
     public void LegsClear()
     {
         _selectedChar.IncreaseAvailableBullets(_bulletsForLegs);
         _bulletsForLegs = 0;
-        CheckIfCanExecuteAttack();
     }
 
     bool CharacterHasBullets(Character c)
@@ -262,12 +249,6 @@ public class ButtonsUIManager : MonoBehaviour
         if (c.GetAvailableBullets() > 0)
             return true;
         else return false;
-    }
-
-    void CheckIfCanExecuteAttack()
-    {
-        if (_bulletsForBody == 0 && _bulletsForLArm == 0 && _bulletsForLegs == 0 && _bulletsForRArm == 0)
-            buttonExecuteAttack.interactable = false;
     }
     public void ExecuteAttack()
     {
