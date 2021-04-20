@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 public class BodyPartSelection : MonoBehaviour
 {
 	public Image counterUI;
-	public int _count = 0;
-	public List<Image> myCounters = new List<Image>();
+	int _count = 0;
+	List<Image> myCounters = new List<Image>();
 
 	public void GenerateCounter()
 	{
