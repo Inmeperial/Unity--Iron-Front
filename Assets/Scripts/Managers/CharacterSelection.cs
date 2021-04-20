@@ -62,8 +62,8 @@ public class CharacterSelection : MonoBehaviour
                 _selection.SelectThisUnit();
                 _selection.AddTilesInMoveRange();
                 _highlight.ChangeActiveCharacter(_selection);
-                _buttonsManager.SetCharacter(_selection);
-                _buttonsManager.SetCharacterMovementButtons(_selection);
+                _buttonsManager.SetPlayerCharacter(_selection);
+                _buttonsManager.SetPlayerUI();
                 stepsCounter.text = _selection.GetSteps().ToString();
             }
             else if (_selectingEnemy && c.CanBeAttacked())
