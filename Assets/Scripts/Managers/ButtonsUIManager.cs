@@ -65,9 +65,9 @@ public class ButtonsUIManager : MonoBehaviour
     public TextMeshProUGUI enemyLegsCurrHP;
     #endregion
     //OTHERS
-    [SerializeField] private CharacterSelection _charSelection;
-    [SerializeField] private Character _selectedChar;
-    [SerializeField] private Character _selectedEnemy;
+    private CharacterSelection _charSelection;
+    private Character _selectedChar;
+    private Character _selectedEnemy;
     private TurnManager _turnManager;
     private void Start()
     {
