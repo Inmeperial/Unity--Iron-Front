@@ -2,30 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class TileShader : MonoBehaviour
 {
-    private bool isFresnelOn = false;
+    public bool isEmissionOn = false;
+    public Material mat;
     private Material material;
+    private Material materialShared;
     private GameObject childObj;
-
+    
     // Start is called before the first frame update
     void Start()
     {
-        childObj = this.transform.GetChild(0).gameObject;
-        material = childObj.gameObject.GetComponent<Renderer>().sharedMaterial;
+        //childObj = this.transform.GetChild(0).gameObject;
+        material = this.gameObject.GetComponent<Renderer>().material;
+        materialShared = this.gameObject.GetComponent<Renderer>().sharedMaterial;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        if (isFresnelOn)
+    {   
+        if (isEmissionOn)
         {
-            //material.SetInt("_isMoveAvailable_ON", 1);
+            material.SetInt("_IsEmissionOn", 1);
+            materialShared.SetInt("_IsEmissionOn", 1);
+            mat.SetInt("_IsEmissionOn", 1);
+            //Debug.Log(material.name);
         }
         else
         {
-            //material.SetInt("_isMoveAvailable_ON", 0);
+            material.SetInt("_IsEmissionOn", 0);
+            materialShared.SetInt("_IsEmissionOn", 0);
+            mat.SetInt("_IsEmissionOn", 0);
         }
     }
 }
