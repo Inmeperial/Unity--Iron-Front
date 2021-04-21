@@ -11,4 +11,14 @@ public class ChangeScene : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			Change();
+		}
+
+	
+	}
 }
