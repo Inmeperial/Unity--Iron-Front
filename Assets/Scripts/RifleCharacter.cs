@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RifleEnemy : Character
+public class RifleCharacter : Character
 {
 
 }

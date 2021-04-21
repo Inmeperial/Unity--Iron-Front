@@ -69,6 +69,7 @@ public class ButtonsUIManager : MonoBehaviour
     [SerializeField] private Character _selectedChar;
     [SerializeField] private Character _selectedEnemy;
     private TurnManager _turnManager;
+    private int _partsSelected;
     private void Start()
     {
         enemyHudContainer.SetActive(false);
@@ -83,6 +84,10 @@ public class ButtonsUIManager : MonoBehaviour
 
         _charSelection = FindObjectOfType<CharacterSelection>();
         _turnManager = FindObjectOfType<TurnManager>();
+    }
+    private void Update()
+    {
+        Debug.Log("Bullets for left arm: " + _bulletsForLArm);
     }
 
     #region Buttons
@@ -163,103 +168,211 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (CharacterHasBullets(_selectedChar))
         {
-            Debug.Log("entro al body");
-            _bulletsForBody++;
-            _selectedChar.ReduceAvailableBullets(1);
-            buttonExecuteAttack.interactable = true;
+            if (_partsSelected <= _selectedChar.selectedGun.AvailableSelections())
+            {
+                Debug.Log("entro al body");
+                if (_bulletsForBody == 0)
+                {
+                    _partsSelected++;
+                }
+                _bulletsForBody++;
+                buttonBody.GetComponent<BodyPartSelection>().GenerateCounter();
+                _selectedChar.selectedGun.ReduceAvailableBullets(1);
+                buttonExecuteAttack.interactable = true;
+                _buttonBodySelected = true;
+                DeterminateButtonsActivation();
+            }
         }
 
     }
 
     public void BodyMinus()
     {
-        _bulletsForBody--;
-        _selectedChar.IncreaseAvailableBullets(1);
-        CheckIfCanExecuteAttack();
+        if (_bulletsForBody > 0)
+        {
+            _bulletsForBody--;
+            _selectedChar.selectedGun.IncreaseAvailableBullets(1);
+            CheckIfCanExecuteAttack();
+            if (_bulletsForBody == 0)
+            {
+                if (_partsSelected > 0)
+                    _partsSelected--;
+                _buttonBodySelected = false;
+                DeterminateButtonsActivation();
+            }
+        }
     }
 
     public void BodyClear()
     {
-        _selectedChar.IncreaseAvailableBullets(_bulletsForBody);
-        _bulletsForBody = 0;
-        CheckIfCanExecuteAttack();
+        if (_bulletsForBody > 0)
+        {
+            _selectedChar.selectedGun.IncreaseAvailableBullets(_bulletsForBody);
+            _bulletsForBody = 0;
+            _buttonBodySelected = false;
+            if (_partsSelected > 0)
+                _partsSelected--;
+            CheckIfCanExecuteAttack();
+            DeterminateButtonsActivation();
+        }
     }
 
     public void LeftArmSelection()
     {
         if (CharacterHasBullets(_selectedChar))
         {
-            _bulletsForLArm++;
-            _selectedChar.ReduceAvailableBullets(1);
-            buttonExecuteAttack.interactable = true;
+            if (_partsSelected <= _selectedChar.selectedGun.AvailableSelections())
+            {
+                if (_bulletsForLArm == 0)
+                {
+                    _partsSelected++;
+                }
+                _bulletsForLArm++;
+                buttonLArm.GetComponent<BodyPartSelection>().GenerateCounter();
+                _selectedChar.selectedGun.ReduceAvailableBullets(1);
+                buttonExecuteAttack.interactable = true;
+                _buttonLArmSelected = true;
+                DeterminateButtonsActivation();
+            }
         }
     }
 
     public void LeftArmMinus()
     {
-        _bulletsForLArm--;
-        _selectedChar.IncreaseAvailableBullets(1);
-        CheckIfCanExecuteAttack();
+        if (_bulletsForLArm > 0)
+        {
+            _bulletsForLArm--;
+            _selectedChar.selectedGun.IncreaseAvailableBullets(1);
+            CheckIfCanExecuteAttack();
+            if (_bulletsForLArm == 0)
+            {
+                if (_partsSelected > 0)
+                    _partsSelected--;
+                _buttonLArmSelected = false;
+                DeterminateButtonsActivation();
+            }
+        }
     }
 
     public void LeftArmClear()
     {
-        _selectedChar.IncreaseAvailableBullets(_bulletsForLArm);
-        _bulletsForLArm = 0;
-        CheckIfCanExecuteAttack();
+        if (_bulletsForLArm > 0)
+        {
+            _selectedChar.selectedGun.IncreaseAvailableBullets(_bulletsForLArm);
+            _bulletsForLArm = 0;
+            _buttonLArmSelected = false;
+            if (_partsSelected > 0)
+                _partsSelected--;
+            CheckIfCanExecuteAttack();
+            DeterminateButtonsActivation();
+        }
     }
 
     public void RightArmSelection()
     {
         if (CharacterHasBullets(_selectedChar))
         {
-            _bulletsForRArm++;
-            _selectedChar.ReduceAvailableBullets(1);
-            buttonExecuteAttack.interactable = true;
+            if (_partsSelected <= _selectedChar.selectedGun.AvailableSelections())
+            {
+                if (_bulletsForRArm == 0)
+                {
+                    _partsSelected++;
+                }
+                _bulletsForRArm++;
+                buttonRArm.GetComponent<BodyPartSelection>().GenerateCounter();
+                _selectedChar.selectedGun.ReduceAvailableBullets(1);
+                buttonExecuteAttack.interactable = true;
+                _buttonRArmSelected = true;
+                DeterminateButtonsActivation();
+            }
         }
     }
 
     public void RightArmMinus()
     {
-        _bulletsForRArm--;
-        _selectedChar.IncreaseAvailableBullets(1);
-        CheckIfCanExecuteAttack();
+        if (_bulletsForRArm > 0)
+        {
+            _bulletsForRArm--;
+            _selectedChar.selectedGun.IncreaseAvailableBullets(1);
+            CheckIfCanExecuteAttack();
+            if (_bulletsForRArm == 0)
+            {
+                if (_partsSelected > 0)
+                    _partsSelected--;
+                _buttonRArmSelected = false;
+                DeterminateButtonsActivation();
+            }
+        }
     }
 
     public void RightArmClear()
     {
-        _selectedChar.IncreaseAvailableBullets(_bulletsForRArm);
-        _bulletsForRArm = 0;
-        CheckIfCanExecuteAttack();
+        if (_bulletsForRArm > 0)
+        {
+            _selectedChar.selectedGun.IncreaseAvailableBullets(_bulletsForRArm);
+            _bulletsForRArm = 0;
+            _buttonRArmSelected = false;
+            if (_partsSelected > 0)
+                _partsSelected--;
+            CheckIfCanExecuteAttack();
+            DeterminateButtonsActivation();
+        }
     }
 
     public void LegsSelection()
     {
         if (CharacterHasBullets(_selectedChar))
         {
-            _bulletsForLegs++;
-            _selectedChar.ReduceAvailableBullets(1);
-            buttonExecuteAttack.interactable = true;
+            if (_partsSelected <= _selectedChar.selectedGun.AvailableSelections())
+            {
+                if (_bulletsForLegs == 0)
+                {
+                    _partsSelected++;
+                }
+                _bulletsForLegs++;
+                buttonLegs.GetComponent<BodyPartSelection>().GenerateCounter();
+                _selectedChar.selectedGun.ReduceAvailableBullets(1);
+                buttonExecuteAttack.interactable = true;
+                _buttonLegsSelected = true;
+                DeterminateButtonsActivation();
+            }
         }
     }
 
     public void LegsMinus()
     {
-        _bulletsForLegs--;
-        _selectedChar.IncreaseAvailableBullets(1);
-        CheckIfCanExecuteAttack();
+        if (_bulletsForLegs > 0)
+        {
+            _bulletsForLegs--;
+            _selectedChar.selectedGun.IncreaseAvailableBullets(1);
+            CheckIfCanExecuteAttack();
+            if (_bulletsForLegs == 0)
+            {
+                if (_partsSelected > 0)
+                    _partsSelected--;
+                _buttonLegsSelected = false;
+                DeterminateButtonsActivation();
+            }
+        }
     }
 
     public void LegsClear()
     {
-        _selectedChar.IncreaseAvailableBullets(_bulletsForLegs);
-        _bulletsForLegs = 0;
-        CheckIfCanExecuteAttack();
+        if (_bulletsForLegs > 0)
+        {
+            _selectedChar.selectedGun.IncreaseAvailableBullets(_bulletsForLegs);
+            _bulletsForLegs = 0;
+            _buttonLegsSelected = false;
+            if (_partsSelected > 0)
+                _partsSelected--;
+            CheckIfCanExecuteAttack();
+            DeterminateButtonsActivation();
+        }
     }
 
     bool CharacterHasBullets(Character c)
     {
-        if (c.GetAvailableBullets() > 0)
+        if (c.selectedGun.GetAvailableBullets() > 0)
             return true;
         else return false;
     }
@@ -269,13 +382,48 @@ public class ButtonsUIManager : MonoBehaviour
         if (_bulletsForBody == 0 && _bulletsForLArm == 0 && _bulletsForLegs == 0 && _bulletsForRArm == 0)
             buttonExecuteAttack.interactable = false;
     }
+
+    void DeterminateButtonsActivation()
+    {
+        var b = _bulletsForBody + _bulletsForLArm + _bulletsForLegs + _bulletsForRArm;
+        if (_partsSelected == _selectedChar.selectedGun.AvailableSelections() /*|| b >= _selectedChar.selectedGun.GetAvailableBullets()*/)
+        {
+            if (!_buttonBodySelected)
+                buttonBody.interactable = false;
+
+            if (!_buttonLArmSelected)
+                buttonLArm.interactable = false;
+
+            if (!_buttonRArmSelected)
+                buttonRArm.interactable = false;
+
+            if (!_buttonLegsSelected)
+                buttonLegs.interactable = false;
+        }
+
+        if (_partsSelected < _selectedChar.selectedGun.AvailableSelections() /*|| b < _selectedChar.selectedGun.GetAvailableBullets()*/)
+        {
+            if (!_buttonBodySelected)
+                buttonBody.interactable = true;
+
+            if (!_buttonLArmSelected)
+                buttonLArm.interactable = true;
+
+            if (!_buttonRArmSelected)
+                buttonRArm.interactable = true;
+
+            if (!_buttonLegsSelected)
+                buttonLegs.interactable = true;
+        }
+    }
+
     public void ExecuteAttack()
     {
         if (_selectedEnemy != null)
         {
             if (_bulletsForBody > 0)
             {
-                _selectedEnemy.AttackBody(_bulletsForBody, _selectedChar.GetBulletDamage());
+                _selectedEnemy.AttackBody(_bulletsForBody, _selectedChar.selectedGun.GetBulletDamage());
                 enemyBodySlider.value = _selectedEnemy.GetBodyHP();
                 enemyBodyCurrHP.text = _selectedEnemy.GetBodyHP().ToString();
             }
@@ -283,14 +431,14 @@ public class ButtonsUIManager : MonoBehaviour
 
             if (_bulletsForLArm > 0)
             {
-                _selectedEnemy.AttackLeftArm(_bulletsForLArm, _selectedChar.GetBulletDamage());
+                _selectedEnemy.AttackLeftArm(_bulletsForLArm, _selectedChar.selectedGun.GetBulletDamage());
                 enemyLeftArmSlider.value = _selectedEnemy.GetLeftArmHP();
                 enemyLeftArmCurrHP.text = _selectedEnemy.GetLeftArmHP().ToString();
             }
 
             if (_bulletsForRArm > 0)
             {
-                _selectedEnemy.AttackRightArm(_bulletsForRArm, _selectedChar.GetBulletDamage());
+                _selectedEnemy.AttackRightArm(_bulletsForRArm, _selectedChar.selectedGun.GetBulletDamage());
                 enemyRightArmSlider.value = _selectedEnemy.GetRightArmHP();
                 enemyRightArmCurrHP.text = _selectedEnemy.GetRightArmHP().ToString();
             }
@@ -298,7 +446,7 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_bulletsForLegs > 0)
         {
-            _selectedEnemy.AttackLegs(_bulletsForLegs, _selectedChar.GetBulletDamage());
+            _selectedEnemy.AttackLegs(_bulletsForLegs, _selectedChar.selectedGun.GetBulletDamage());
             enemyLegsSlider.value = _selectedEnemy.GetLegsHP();
             enemyLegsCurrHP.text = _selectedEnemy.GetLegsHP().ToString();
         }
@@ -346,6 +494,13 @@ public class ButtonsUIManager : MonoBehaviour
         playerLeftArmCurrHP.text = _selectedChar.GetLeftArmHP().ToString();
         playerRightArmCurrHP.text = _selectedChar.GetRightArmHP().ToString();
         playerLegsCurrHP.text = _selectedChar.GetLegsHP().ToString();
+
+        var dmg = _selectedChar.selectedGun.GetBulletDamage().ToString();
+        var b = _selectedChar.selectedGun.GetAvailableBullets();
+        damageText.text = "DMG " + dmg + " x " + b + " hits";
+
+        var r = _selectedChar.selectedGun.GetAttackRange().ToString();
+        rangeText.text = "Range " + r;
     }
 
     void ShowEnemyHUDSliders()

@@ -15,10 +15,12 @@ public class Character : Teams
     [SerializeField] private int _bodyHP;
 
     [Header("Left Arm")]
+    public Gun leftGun;
     [SerializeField] private int _leftArmMaxHP;
     [SerializeField] private int _leftArmHP;
 
     [Header("Right Arm")]
+    public Gun rightGun;
     [SerializeField] private int _rightArmMaxHP;
     [SerializeField] private int _rightArmHP;
 
@@ -26,11 +28,7 @@ public class Character : Teams
     [SerializeField] private int _legsMaxHP;
     [SerializeField] private int _legsHP;
 
-    [Header("Weapon")]
-    [SerializeField] private int _maxBullets;
-    [SerializeField] private int _availableBullets;
-    [SerializeField] private int _damage;
-    [SerializeField] private int _attackRange;
+    public Gun selectedGun;
 
     [Header("Movement")]
     [SerializeField] private int _MaxSteps;
@@ -75,7 +73,6 @@ public class Character : Teams
         _leftArmHP = _leftArmMaxHP;
         _rightArmHP = _rightArmMaxHP;
         _legsHP = _legsMaxHP;
-        _availableBullets = _maxBullets;
         _selected = false;
         _canMove = true;
         _canAttack = true;
@@ -87,6 +84,10 @@ public class Character : Teams
         _highlight = FindObjectOfType<TileHighlight>();
         _agent = FindObjectOfType<AStarAgent>();
         pathCreator = GetComponent<IPathCreator>();
+
+        selectedGun = leftGun;
+
+
     }
 
     // Update is called once per frame
@@ -109,7 +110,7 @@ public class Character : Teams
 
     void PaintTilesInAttackRange(List<Tile> neighbours, int count)
     {
-        if (count >= _attackRange)
+        if (count >= selectedGun.GetAttackRange())
             return;
 
         foreach (var item in neighbours)
@@ -234,11 +235,6 @@ public class Character : Teams
         return _currentSteps;
     }
 
-    public int GetBulletDamage()
-    {
-        return _damage;
-    }
-
     public int GetBodyMaxHP()
     {
         return _bodyMaxHP;
@@ -301,30 +297,13 @@ public class Character : Teams
         Physics.Raycast(transform.position, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
         return hit.transform.gameObject.GetComponent<Tile>();
     }
-
-    public int GetAvailableBullets()
-    {
-        return _availableBullets;
-    }
-
-    public int GetRange()
-    {
-        return _attackRange;
-    }
     #endregion
 
     #region Utilities
 
-    public void ReduceAvailableBullets(int quantity)
-    {
-        Debug.Log("reduzco balas");
-        _availableBullets -= quantity;
-    }
+    
 
-    public void IncreaseAvailableBullets(int quantity)
-    {
-        _availableBullets += quantity;
-    }
+    
     public void Undo()
     {
         //_highlight.ClearTilesInRange(_tilesInAttackRange);
@@ -363,7 +342,7 @@ public class Character : Teams
     {
         _canMove = true;
         _canAttack = true;
-        _availableBullets = _maxBullets;
+        selectedGun.SetGun();
         _path.Clear();
         _currentSteps = _MaxSteps;
         _enemyTargets.Clear();
@@ -472,7 +451,7 @@ public class Character : Teams
             {
                 var dist = CalculateDistanceToEnemie(unit, _myPositionTile);
 
-                if (dist <= _attackRange)
+                if (dist <= selectedGun.GetAttackRange())
                 {
                     _enemyTargets.Add(unit);
                     _turnManager.UnitCanBeAttacked(unit);
@@ -487,7 +466,7 @@ public class Character : Teams
             {
                 var dist = CalculateDistanceToEnemie(unit, _path[_path.Count-1]);
 
-                if (dist <= _attackRange)
+                if (dist <= selectedGun.GetAttackRange())
                 {
                     _enemyTargets.Add(unit);
                     _turnManager.UnitCanBeAttacked(unit);

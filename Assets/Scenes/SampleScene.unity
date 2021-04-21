@@ -437,7 +437,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.17050935, y: 0.46357068}
   m_AnchorMax: {x: 0.31054056, y: 0.8217616}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &25598898
@@ -2482,16 +2482,15 @@ MonoBehaviour:
   _unitTeam: 1
   _bodyMaxHP: 400
   _bodyHP: 0
+  leftGun: {fileID: 0}
   _leftArmMaxHP: 400
   _leftArmHP: 0
+  rightGun: {fileID: 0}
   _rightArmMaxHP: 400
   _rightArmHP: 0
   _legsMaxHP: 400
   _legsHP: 0
-  _maxBullets: 5
-  _availableBullets: 0
-  _damage: 5
-  _attackRange: 3
+  selectedGun: {fileID: 0}
   _MaxSteps: 5
   _currentSteps: 0
   _speed: 2
@@ -8295,7 +8294,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 100066935}
-        m_MethodName: LegsClear
+        m_MethodName: LeftArmClear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16876,17 +16875,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 772865817}
-        m_MethodName: GenerateCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 100066935}
         m_MethodName: LegsSelection
         m_Mode: 1
@@ -17246,17 +17234,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 794670864}
-        m_MethodName: GenerateCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 100066935}
         m_MethodName: BodySelection
         m_Mode: 1
@@ -19019,17 +18996,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 884095189}
-        m_MethodName: GenerateCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 100066935}
         m_MethodName: RightArmSelection
         m_Mode: 1
@@ -19350,17 +19316,16 @@ MonoBehaviour:
   _unitTeam: 0
   _bodyMaxHP: 500
   _bodyHP: 0
+  leftGun: {fileID: 1271214698}
   _leftArmMaxHP: 500
   _leftArmHP: 0
+  rightGun: {fileID: 0}
   _rightArmMaxHP: 500
   _rightArmHP: 0
   _legsMaxHP: 500
   _legsHP: 0
-  _maxBullets: 10
-  _availableBullets: 0
-  _damage: 5
-  _attackRange: 3
-  _MaxSteps: 5
+  selectedGun: {fileID: 0}
+  _MaxSteps: 3
   _currentSteps: 0
   _speed: 2
   block:
@@ -23126,7 +23091,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 100066935}
-        m_MethodName: LeftArmMinus
+        m_MethodName: LegsMinus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -27721,6 +27686,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1269489582}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1271214697
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1271214699}
+  - component: {fileID: 1271214698}
+  m_Layer: 0
+  m_Name: RIFLE
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1271214698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271214697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5899625c2e87a3a4fa2c230a776b2b7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data: {fileID: 11400000, guid: 922e7b88b21b28b4ea6c8fcb896cdd74, type: 2}
+  _maxBullets: 0
+  _availableBullets: 0
+  _damage: 0
+  _attackRange: 0
+  _bodyPartsSelectionQuantity: 0
+--- !u!4 &1271214699
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271214697}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 94.677216, y: 40.60524, z: -30.416428}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1280035139
 GameObject:
   m_ObjectHideFlags: 0
@@ -30137,7 +30151,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 56.7
+  m_fontSize: 56.75
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -39020,8 +39034,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 794670864}
-        m_MethodName: ClearCounters
+      - m_Target: {fileID: 100066935}
+        m_MethodName: BodyClear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -39031,8 +39045,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 100066935}
-        m_MethodName: BodyClear
+      - m_Target: {fileID: 794670864}
+        m_MethodName: ClearCounters
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -40951,17 +40965,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1964701203}
-        m_MethodName: GenerateCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 100066935}
         m_MethodName: LeftArmSelection
         m_Mode: 1
@@ -45300,8 +45303,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 794670864}
-        m_MethodName: RemoveCounter
+      - m_Target: {fileID: 100066935}
+        m_MethodName: BodyMinus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -45311,8 +45314,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 100066935}
-        m_MethodName: BodyMinus
+      - m_Target: {fileID: 794670864}
+        m_MethodName: RemoveCounter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
