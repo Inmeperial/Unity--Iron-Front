@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class BodyPartSelection : MonoBehaviour
 {
 	public Image counterUI;
-	int _count = 0;
+	public int count = 0;
 	List<Image> myCounters = new List<Image>();
 
 	public void GenerateCounter()
@@ -17,14 +17,14 @@ public class BodyPartSelection : MonoBehaviour
 		var tempCounterUI = Instantiate(counterUI);
 		myCounters.Add(tempCounterUI);
 		tempCounterUI.transform.SetParent(myButton, false);
-		if(_count <= 0)
+		if(count <= 0)
 			tempCounterUI.rectTransform.anchorMin = new Vector2(0, 0);
 		else
-			tempCounterUI.rectTransform.anchorMin = new Vector2(0.1f * _count, 0);
+			tempCounterUI.rectTransform.anchorMin = new Vector2(0.1f * count, 0);
 
-		_count++;
+		count++;
 
-		tempCounterUI.rectTransform.anchorMax = new Vector2(0.1f * _count, 0.15f);
+		tempCounterUI.rectTransform.anchorMax = new Vector2(0.1f * count, 0.15f);
 		
 	}
 
@@ -35,8 +35,8 @@ public class BodyPartSelection : MonoBehaviour
 			return;
 		}
 
-		_count--;
-		var bulletToRemove = myCounters[_count];
+		count--;
+		var bulletToRemove = myCounters[count];
 		myCounters.Remove(bulletToRemove);
 		DestroyImmediate(bulletToRemove);
 	}
@@ -54,6 +54,6 @@ public class BodyPartSelection : MonoBehaviour
 			myCounters.Remove(tempItem);
 			DestroyImmediate(tempItem);
 		}
-		_count = 0;
+		count = 0;
 	}
 }

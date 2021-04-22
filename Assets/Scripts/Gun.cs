@@ -20,6 +20,9 @@ public abstract class Gun : MonoBehaviour, IGun
     [SerializeField] protected int _availableBullets;
     [SerializeField] protected int _bulletsPerClick;
     [SerializeField] protected int _damage;
+    [SerializeField] protected int _critChance;
+    [SerializeField] protected int _hitChance;
+    [SerializeField] protected int _chanceToHitOtherParts;
     [SerializeField] protected int _attackRange;
     [SerializeField] protected int _bodyPartsSelectionQuantity;
     // Start is called before the first frame update
@@ -66,6 +69,9 @@ public abstract class Gun : MonoBehaviour, IGun
         _availableBullets = _maxBullets;
         _bulletsPerClick = _data.bulletsPerClick;
         _damage = _data.damage;
+        _critChance = _data.critChance;
+        _hitChance = _data.hitChance;
+        _chanceToHitOtherParts = _data.chanceToHitOtherParts;
         _attackRange = _data.attackRange;
         _bodyPartsSelectionQuantity = _data.bodyPartsSelectionQuantity;
     }
