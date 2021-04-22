@@ -170,7 +170,6 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (_partsSelected <= _selectedChar.selectedGun.AvailableSelections())
             {
-                Debug.Log("entro al body");
                 if (_bulletsForBody == 0)
                 {
                     _partsSelected++;
@@ -385,8 +384,7 @@ public class ButtonsUIManager : MonoBehaviour
 
     void DeterminateButtonsActivation()
     {
-        var b = _bulletsForBody + _bulletsForLArm + _bulletsForLegs + _bulletsForRArm;
-        if (_partsSelected == _selectedChar.selectedGun.AvailableSelections() /*|| b >= _selectedChar.selectedGun.GetAvailableBullets()*/)
+        if (_partsSelected == _selectedChar.selectedGun.AvailableSelections())
         {
             if (!_buttonBodySelected)
                 buttonBody.interactable = false;
@@ -401,7 +399,7 @@ public class ButtonsUIManager : MonoBehaviour
                 buttonLegs.interactable = false;
         }
 
-        if (_partsSelected < _selectedChar.selectedGun.AvailableSelections() /*|| b < _selectedChar.selectedGun.GetAvailableBullets()*/)
+        if (_partsSelected < _selectedChar.selectedGun.AvailableSelections())
         {
             if (!_buttonBodySelected)
                 buttonBody.interactable = true;
@@ -425,7 +423,8 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 _selectedEnemy.AttackBody(_bulletsForBody, _selectedChar.selectedGun.GetBulletDamage());
                 enemyBodySlider.value = _selectedEnemy.GetBodyHP();
-                enemyBodyCurrHP.text = _selectedEnemy.GetBodyHP().ToString();
+                enemyBodyCurrHP.text = enemyBodySlider.value.ToString();
+                _selectedChar.DeactivateAttack();
             }
 
 
@@ -433,30 +432,37 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 _selectedEnemy.AttackLeftArm(_bulletsForLArm, _selectedChar.selectedGun.GetBulletDamage());
                 enemyLeftArmSlider.value = _selectedEnemy.GetLeftArmHP();
-                enemyLeftArmCurrHP.text = _selectedEnemy.GetLeftArmHP().ToString();
+                enemyLeftArmCurrHP.text = enemyLeftArmSlider.value.ToString();
+                _selectedChar.DeactivateAttack();
             }
 
             if (_bulletsForRArm > 0)
             {
                 _selectedEnemy.AttackRightArm(_bulletsForRArm, _selectedChar.selectedGun.GetBulletDamage());
                 enemyRightArmSlider.value = _selectedEnemy.GetRightArmHP();
-                enemyRightArmCurrHP.text = _selectedEnemy.GetRightArmHP().ToString();
+                enemyRightArmCurrHP.text = enemyRightArmSlider.value.ToString();
+                _selectedChar.DeactivateAttack();
+            }
+
+            if (_bulletsForLegs > 0)
+            {
+                _selectedEnemy.AttackLegs(_bulletsForLegs, _selectedChar.selectedGun.GetBulletDamage());
+                enemyLegsSlider.value = _selectedEnemy.GetLegsHP();
+                enemyLegsCurrHP.text = enemyLegsSlider.value.ToString();
+                _selectedChar.DeactivateAttack();
             }
         }
 
-        if (_bulletsForLegs > 0)
-        {
-            _selectedEnemy.AttackLegs(_bulletsForLegs, _selectedChar.selectedGun.GetBulletDamage());
-            enemyLegsSlider.value = _selectedEnemy.GetLegsHP();
-            enemyLegsCurrHP.text = _selectedEnemy.GetLegsHP().ToString();
-        }
+        
 
-        if (_selectedEnemy.CanAttack() == false)
+        if (_selectedChar.CanAttack() == false)
         {
+            bodyPartsButtonsContainer.SetActive(false);
             _selectedEnemy = null;
             buttonExecuteAttack.interactable = false;
         }
     }
+
     public void SelectEnemy()
     {
         _charSelection.CanSelectEnemy();
@@ -467,33 +473,50 @@ public class ButtonsUIManager : MonoBehaviour
         DeactivateEnemyHUD();
         DeactivatePlayerHUD();
         DeactivateMoveButton();
+        ResetBodyParts();
     }
 
-
     #endregion
+
+    void ResetBodyParts()
+    {
+        _buttonBodySelected = false;
+        _bulletsForBody = 0;
+
+        _buttonLArmSelected = false;
+        _bulletsForLArm = 0;
+
+        _buttonRArmSelected = false;
+        _bulletsForRArm = 0;
+
+        _buttonLegsSelected = false;
+        _bulletsForLegs = 0;
+
+        _partsSelected = 0;
+    }
 
     #region HUD Text
     void ShowPlayerHUDSliders()
     {
         playerBodySlider.maxValue = _selectedChar.GetBodyMaxHP();
-        playerBodySlider.value = _selectedChar.GetBodyHP();
+        playerBodySlider.value = _selectedChar.GetBodyHP() > 0 ? _selectedChar.GetBodyHP() : 0;
 
         playerLeftArmSlider.maxValue = _selectedChar.GetLeftArmMaxHP();
-        playerLeftArmSlider.value = _selectedChar.GetLeftArmHP();
+        playerLeftArmSlider.value = _selectedChar.GetLeftArmHP() > 0 ? _selectedChar.GetLeftArmHP() : 0;
 
         playerRightArmSlider.maxValue = _selectedChar.GetRightArmMaxHP();
-        playerRightArmSlider.value = _selectedChar.GetRightArmHP();
+        playerRightArmSlider.value = _selectedChar.GetRightArmHP() > 0 ? _selectedChar.GetRightArmHP() : 0;
 
         playerLegsSlider.maxValue = _selectedChar.GetLegsMaxHP();
-        playerLegsSlider.value = _selectedChar.GetLegsHP();
+        playerLegsSlider.value = _selectedChar.GetLegsHP() > 0 ? _selectedChar.GetLegsHP() : 0;
     }
 
     void ShowPlayerUnitHudText()
     {
-        playerBodyCurrHP.text = _selectedChar.GetBodyHP().ToString();
-        playerLeftArmCurrHP.text = _selectedChar.GetLeftArmHP().ToString();
-        playerRightArmCurrHP.text = _selectedChar.GetRightArmHP().ToString();
-        playerLegsCurrHP.text = _selectedChar.GetLegsHP().ToString();
+        playerBodyCurrHP.text = playerBodySlider.value.ToString();
+        playerLeftArmCurrHP.text = playerLeftArmSlider.value.ToString();
+        playerRightArmCurrHP.text = playerRightArmSlider.value.ToString();
+        playerLegsCurrHP.text = playerLegsSlider.value.ToString();
 
         var dmg = _selectedChar.selectedGun.GetBulletDamage().ToString();
         var b = _selectedChar.selectedGun.GetAvailableBullets();
@@ -506,24 +529,24 @@ public class ButtonsUIManager : MonoBehaviour
     void ShowEnemyHUDSliders()
     {
         enemyBodySlider.maxValue = _selectedEnemy.GetBodyMaxHP();
-        enemyBodySlider.value = _selectedEnemy.GetBodyHP();
+        enemyBodySlider.value = _selectedEnemy.GetBodyHP() > 0 ? _selectedEnemy.GetBodyHP() : 0;
 
         enemyLeftArmSlider.maxValue = _selectedEnemy.GetLeftArmMaxHP();
-        enemyLeftArmSlider.value = _selectedEnemy.GetLeftArmHP();
+        enemyLeftArmSlider.value = _selectedEnemy.GetLeftArmHP() > 0 ? _selectedEnemy.GetLeftArmHP() : 0;
 
         enemyRightArmSlider.maxValue = _selectedEnemy.GetRightArmMaxHP();
-        enemyRightArmSlider.value = _selectedEnemy.GetRightArmHP();
+        enemyRightArmSlider.value = _selectedEnemy.GetRightArmHP() > 0 ? _selectedEnemy.GetRightArmHP() : 0;
 
         enemyLegsSlider.maxValue = _selectedEnemy.GetLegsMaxHP();
-        enemyLegsSlider.value = _selectedEnemy.GetLegsHP();
+        enemyLegsSlider.value = _selectedEnemy.GetLegsHP() > 0 ? _selectedEnemy.GetLegsHP() : 0;
     }
 
     void ShowEnemyHUDText()
     {
-        enemyBodyCurrHP.text = _selectedEnemy.GetBodyHP().ToString();
-        enemyLeftArmCurrHP.text = _selectedEnemy.GetLeftArmHP().ToString();
-        enemyRightArmCurrHP.text = _selectedEnemy.GetRightArmHP().ToString();
-        enemyLegsCurrHP.text = _selectedEnemy.GetLegsHP().ToString();
+        enemyBodyCurrHP.text = enemyBodySlider.value.ToString();
+        enemyLeftArmCurrHP.text = enemyLeftArmSlider.value.ToString();
+        enemyRightArmCurrHP.text = enemyRightArmSlider.value.ToString();
+        enemyLegsCurrHP.text = enemyLegsSlider.value.ToString();
     }
 
 

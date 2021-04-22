@@ -98,14 +98,14 @@ public class Character : Teams
             GetTargetToMove();
         }
 
-        if (_selected && Input.GetKeyDown(KeyCode.Space))
-        {
-            if (_path.Count > 0)
-            {
-                PaintTilesInAttackRange(_path[_path.Count-1].allNeighbours, 0);
-            }
-            else PaintTilesInAttackRange(_myPositionTile.allNeighbours, 0);
-        }
+        //if (_selected && Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    if (_path.Count > 0)
+        //    {
+        //        PaintTilesInAttackRange(_path[_path.Count-1].allNeighbours, 0);
+        //    }
+        //    else PaintTilesInAttackRange(_myPositionTile.allNeighbours, 0);
+        //}
     }
 
     void PaintTilesInAttackRange(List<Tile> neighbours, int count)
@@ -113,19 +113,19 @@ public class Character : Teams
         if (count >= selectedGun.GetAttackRange())
             return;
 
-        foreach (var item in neighbours)
+        foreach (var tile in neighbours)
         {
-            if (!_tilesInAttackRange.Contains(item))
+            if (!_tilesInAttackRange.Contains(tile))
             {
-                if (!item.HasTileAbove() && item.IsWalkable())
+                if (!tile.HasTileAbove() && tile.IsWalkable())
                 {
-                    _tilesInAttackRange.Add(item);
-                    _highlight.PaintTilesInAttackRange(item);
+                    _tilesInAttackRange.Add(tile);
+                    _highlight.PaintTilesInAttackRange(tile);
                 }
                
             }
             
-            PaintTilesInAttackRange(item.allNeighbours, count + 1);
+            PaintTilesInAttackRange(tile.allNeighbours, count + 1);
         }
  
     }
@@ -135,15 +135,15 @@ public class Character : Teams
         if (count >= _currentSteps)
             return;
 
-        foreach (var item in neighbours)
+        foreach (var tile in neighbours)
         {
-            if (!_tilesInMoveRange.Contains(item))
+            if (!_tilesInMoveRange.Contains(tile))
             {
-                _tilesInMoveRange.Add(item);
-                _highlight.PaintTilesInMoveRange(item);
+                _tilesInMoveRange.Add(tile);
+                _highlight.PaintTilesInMoveRange(tile);
             }
             //GetTilesInAttackRange(item.neighbours, count + 1);
-            PaintTilesInMoveRange(item.neighboursForMove, count + 1);
+            PaintTilesInMoveRange(tile.neighboursForMove, count + 1);
         }
     }
 
@@ -530,31 +530,35 @@ public class Character : Teams
         return _canAttack;
     }
 
+    public void DeactivateAttack()
+    {
+        _canAttack = false;
+    }
     public void AttackBody(int bullets, int bulletDamage)
     {
         Debug.Log("Body attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
-        _bodyHP -= bullets * bulletDamage;
-        _canAttack = false;
+        var hp = _bodyHP - (bullets * bulletDamage);
+        _bodyHP = hp > 0 ? hp : 0;
     }
 
     public void AttackLeftArm(int bullets, int bulletDamage)
     {
         Debug.Log("larm attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
-        _leftArmHP -= bullets * bulletDamage;
-        _canAttack = false;
+        var hp = _leftArmHP - (bullets * bulletDamage);
+        _leftArmHP = hp > 0 ? hp : 0;
     }
 
     public void AttackRightArm(int bullets, int bulletDamage)
     {
         Debug.Log("rarm attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
-        _rightArmHP -= bullets * bulletDamage;
-        _canAttack = false;
+        var hp = _rightArmHP - (bullets * bulletDamage);
+        _rightArmHP -= hp > 0 ? hp : 0;
     }
 
     public void AttackLegs(int bullets, int bulletDamage)
     {
         Debug.Log("legs attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
-        _legsHP -= bullets * bulletDamage;
-        _canAttack = false;
+        var hp = _legsHP - (bullets * bulletDamage);
+        _legsHP -= hp > 0 ? hp : 0;
     }
 }

@@ -5,7 +5,16 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour, IGun
 {
+    public enum GunType
+    {
+        AssaultRifle,
+        Melee,
+        Rifle,
+        Shotgun
+    };
+
     [Header("Weapon")]
+    [SerializeField] private GunType _gunType;
     [SerializeField] private GunSO _data;
     [SerializeField] private int _maxBullets;
     [SerializeField] private int _availableBullets;
@@ -38,6 +47,11 @@ public class Gun : MonoBehaviour, IGun
         return _attackRange;
     }
 
+    public GunType GetGunType()
+    {
+        return _gunType;
+    }
+
     public void ReduceAvailableBullets(int quantity)
     {
         Debug.Log("reduzco balas");
@@ -58,10 +72,16 @@ public class Gun : MonoBehaviour, IGun
     }
     public void SetGun()
     {
+        _gunType = (GunType)_data.gunType;
         _maxBullets = _data.maxBullets;
         _availableBullets = _maxBullets;
         _damage = _data.damage;
         _attackRange = _data.attackRange;
         _bodyPartsSelectionQuantity = _data.bodyPartsSelectionQuantity;
+    }
+
+    public void ResetGun()
+    {
+        _availableBullets = _maxBullets;
     }
 }

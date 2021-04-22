@@ -2497,6 +2497,7 @@ MonoBehaviour:
   block:
     serializedVersion: 2
     m_Bits: 256
+  _canAttack: 1
 --- !u!114 &112879124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19331,6 +19332,7 @@ MonoBehaviour:
   block:
     serializedVersion: 2
     m_Bits: 256
+  _canAttack: 1
 --- !u!114 &903744156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27715,6 +27717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5899625c2e87a3a4fa2c230a776b2b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gunType: 0
   _data: {fileID: 11400000, guid: 922e7b88b21b28b4ea6c8fcb896cdd74, type: 2}
   _maxBullets: 0
   _availableBullets: 0
@@ -30151,7 +30154,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 56.75
+  m_fontSize: 56.7
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
