@@ -21,6 +21,7 @@ public abstract class Gun : MonoBehaviour, IGun
     [SerializeField] protected int _bulletsPerClick;
     [SerializeField] protected int _damage;
     [SerializeField] protected int _critChance;
+    [SerializeField] protected int _critMultiplier;
     [SerializeField] protected int _hitChance;
     [SerializeField] protected int _chanceToHitOtherParts;
     [SerializeField] protected int _attackRange;
@@ -70,6 +71,7 @@ public abstract class Gun : MonoBehaviour, IGun
         _bulletsPerClick = _data.bulletsPerClick;
         _damage = _data.damage;
         _critChance = _data.critChance;
+        _critMultiplier = _data.critMultiplier;
         _hitChance = _data.hitChance;
         _chanceToHitOtherParts = _data.chanceToHitOtherParts;
         _attackRange = _data.attackRange;
