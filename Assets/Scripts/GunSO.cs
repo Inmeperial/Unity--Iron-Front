@@ -16,6 +16,7 @@ public class GunSO : ScriptableObject
     public GunType gunType;
     public int maxBullets;
     public int availableBullets;
+    public int bulletsPerClick;
     public int damage;
     public int attackRange;
     public int bodyPartsSelectionQuantity;

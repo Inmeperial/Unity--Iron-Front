@@ -12,11 +12,16 @@ public interface IGun
 
     int GetAttackRange();
 
-    void ReduceAvailableBullets(int quantity);
+    void ReduceAvailableBullets();
 
+    void IncreaseAvailableBullets();
     void IncreaseAvailableBullets(int quantity);
 
     void SetGun();
 
-    int AvailableSelections();
+    int GetAvailableSelections();
+
+    int BulletsPerClick();
+
+    int DamageCalculation();
 }

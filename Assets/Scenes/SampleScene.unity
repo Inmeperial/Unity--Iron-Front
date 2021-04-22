@@ -2497,7 +2497,6 @@ MonoBehaviour:
   block:
     serializedVersion: 2
     m_Bits: 256
-  _canAttack: 1
 --- !u!114 &112879124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19332,7 +19331,6 @@ MonoBehaviour:
   block:
     serializedVersion: 2
     m_Bits: 256
-  _canAttack: 1
 --- !u!114 &903744156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27714,13 +27712,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1271214697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5899625c2e87a3a4fa2c230a776b2b7b, type: 3}
+  m_Script: {fileID: 11500000, guid: 56871d98712449040bce62e65f803673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _gunType: 0
   _data: {fileID: 11400000, guid: 922e7b88b21b28b4ea6c8fcb896cdd74, type: 2}
   _maxBullets: 0
   _availableBullets: 0
+  _bulletsPerClick: 0
   _damage: 0
   _attackRange: 0
   _bodyPartsSelectionQuantity: 0

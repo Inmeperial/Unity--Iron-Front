@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Gun : MonoBehaviour, IGun
+public abstract class Gun : MonoBehaviour, IGun
 {
     public enum GunType
     {
@@ -14,13 +14,14 @@ public class Gun : MonoBehaviour, IGun
     };
 
     [Header("Weapon")]
-    [SerializeField] private GunType _gunType;
-    [SerializeField] private GunSO _data;
-    [SerializeField] private int _maxBullets;
-    [SerializeField] private int _availableBullets;
-    [SerializeField] private int _damage;
-    [SerializeField] private int _attackRange;
-    [SerializeField] private int _bodyPartsSelectionQuantity;
+    [SerializeField] protected GunType _gunType;
+    [SerializeField] protected GunSO _data;
+    [SerializeField] protected int _maxBullets;
+    [SerializeField] protected int _availableBullets;
+    [SerializeField] protected int _bulletsPerClick;
+    [SerializeField] protected int _damage;
+    [SerializeField] protected int _attackRange;
+    [SerializeField] protected int _bodyPartsSelectionQuantity;
     // Start is called before the first frame update
     public void Start()
     {
@@ -52,21 +53,9 @@ public class Gun : MonoBehaviour, IGun
         return _gunType;
     }
 
-    public void ReduceAvailableBullets(int quantity)
-    {
-        Debug.Log("reduzco balas");
-        if (_availableBullets > 0)
-            _availableBullets -= quantity;
-    }
-
-    public void IncreaseAvailableBullets(int quantity)
-    {
-        if (_availableBullets < _maxBullets)
-            _availableBullets += quantity;
-    }
 
 
-    public int AvailableSelections()
+    public int GetAvailableSelections()
     {
         return _bodyPartsSelectionQuantity;
     }
@@ -75,13 +64,38 @@ public class Gun : MonoBehaviour, IGun
         _gunType = (GunType)_data.gunType;
         _maxBullets = _data.maxBullets;
         _availableBullets = _maxBullets;
+        _bulletsPerClick = _data.bulletsPerClick;
         _damage = _data.damage;
         _attackRange = _data.attackRange;
         _bodyPartsSelectionQuantity = _data.bodyPartsSelectionQuantity;
     }
 
-    public void ResetGun()
+    public void ReloadGun()
     {
         _availableBullets = _maxBullets;
     }
+
+    public int BulletsPerClick()
+    {
+        return _bulletsPerClick;
+    }
+    public void ReduceAvailableBullets()
+    {
+        if (_availableBullets > 0)
+            _availableBullets -= BulletsPerClick();
+    }
+
+    public void IncreaseAvailableBullets()
+    {
+        if (_availableBullets < _maxBullets)
+            _availableBullets += BulletsPerClick();
+    }
+    public void IncreaseAvailableBullets(int quantity)
+    {
+        if (_availableBullets < _maxBullets)
+            _availableBullets += quantity;
+    }
+
+    public abstract int DamageCalculation();
+
 }
