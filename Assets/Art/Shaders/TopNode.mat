@@ -9,9 +9,10 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: TopNode
   m_Shader: {fileID: 4800000, guid: 14b5d4aa7c436574d8140662191dbb12, type: 3}
-  m_ShaderKeywords: _ISFRESNELON_ON _ISMOVEAVAILABLE_ON _ISSELECTED_ON _KEYWORD0_KEY0
-    _KEYWORD0_ON _SWITCHEMISSION_KEY0 _TOGGLESWITCH0_ON _isMoveAvailable
-  m_LightmapFlags: 4
+  m_ShaderKeywords: _ADDEFFECTTOEMISSION_ON _ISEMISSIONON_ON _ISFRESNELON_ON _ISMOVEAVAILABLE_ON
+    _ISSELECTED_ON _KEYWORD0_KEY0 _KEYWORD0_ON _SWITCHEMISSION_KEY3 _TOGGLESWITCH0_ON
+    _isMoveAvailable
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -90,6 +91,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _ActiveInvisibility: 1
+    - _AddEffectToEmission: 1
     - _AlbedoTrans: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -103,7 +105,7 @@ Material:
     - _Int0: 0
     - _IntMultiply: 4.78
     - _IsEmiisionOn: 0
-    - _IsEmissionOn: 0
+    - _IsEmissionOn: 1
     - _IsFresnelOn: 0
     - _IsSelected: 1
     - _Keyword0: 0
@@ -116,7 +118,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _SwitchEmission: 0
+    - _SwitchEmission: 3
     - _ToggleSwitch0: 1
     - _TransAmbient: 0.2
     - _TransDirect: 1
