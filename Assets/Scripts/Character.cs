@@ -534,25 +534,52 @@ public class Character : Teams
     {
         _canAttack = false;
     }
-    public void AttackBody(int bullets, int bulletDamage)
+    public void AttackBody(int[] damages)
     {
-        Debug.Log("Body attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
-        var hp = _bodyHP - (bullets * bulletDamage);
-        _bodyHP = hp > 0 ? hp : 0;
+        foreach (var item in damages)
+        {
+            if (item == 0)
+            {
+                Debug.Log("Bullet miss");
+            }
+            else
+            {
+                var hp = _bodyHP - item;
+                _bodyHP = hp > 0 ? hp : 0;
+            }
+        }
     }
 
-    public void AttackLeftArm(int bullets, int bulletDamage)
+    public void AttackLeftArm(int[] damages)
     {
-        Debug.Log("larm attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
-        var hp = _leftArmHP - (bullets * bulletDamage);
-        _leftArmHP = hp > 0 ? hp : 0;
+        foreach (var item in damages)
+        {
+            if (item == 0)
+            {
+                Debug.Log("Bullet miss");
+            }
+            else
+            {
+                var hp = _leftArmHP - item;
+                _leftArmHP = hp > 0 ? hp : 0;
+            }
+        }
     }
 
-    public void AttackRightArm(int bullets, int bulletDamage)
+    public void AttackRightArm(int[] damages)
     {
-        Debug.Log("rarm attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
-        var hp = _rightArmHP - (bullets * bulletDamage);
-        _rightArmHP = hp > 0 ? hp : 0;
+        foreach (var item in damages)
+        {
+            if (item == 0)
+            {
+                Debug.Log("Bullet miss");
+            }
+            else
+            {
+                var hp = _rightArmHP - item;
+                _rightArmHP = hp > 0 ? hp : 0;
+            }
+        }
     }
 
     public void AttackLegs(int[] damages)

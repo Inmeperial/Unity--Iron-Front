@@ -16,9 +16,10 @@ public class RouletteWheel
 
         foreach (var item in actions)
         {
+            Debug.Log("item es: " + item);
             random -= item.Value;
 
-            if (random < 0)
+            if (random <= 0)
             {
                 return item.Key;
             }

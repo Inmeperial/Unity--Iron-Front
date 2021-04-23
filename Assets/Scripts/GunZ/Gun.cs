@@ -30,10 +30,13 @@ public abstract class Gun : MonoBehaviour, IGun
     protected RouletteWheel _roulette;
     protected Dictionary<string, int> _critRoulette = new Dictionary<string, int>();
     protected Dictionary<string, int> _hitRoulette = new Dictionary<string, int>();
+
+    protected bool _abilityUsed;
     // Start is called before the first frame update
     public void Start()
     {
         SetGun();
+        StartRoulette();
     }
 
     public int GetMaxBullets()
@@ -80,11 +83,13 @@ public abstract class Gun : MonoBehaviour, IGun
         _chanceToHitOtherParts = _data.chanceToHitOtherParts;
         _attackRange = _data.attackRange;
         _bodyPartsSelectionQuantity = _data.bodyPartsSelectionQuantity;
+        _abilityUsed = false;
     }
 
     public void ReloadGun()
     {
         _availableBullets = _maxBullets;
+        _abilityUsed = false;
     }
 
     public int BulletsPerClick()
@@ -118,6 +123,7 @@ public abstract class Gun : MonoBehaviour, IGun
             //Determines if bullet hits.
             var h = _roulette.ExecuteAction(_hitRoulette);
 
+            Debug.Log("h es= " + h);
             if (h == "Hit")
             {
                 //Determines if it crits or not.
@@ -125,11 +131,19 @@ public abstract class Gun : MonoBehaviour, IGun
 
                 if (c == "Crit")
                 {
-                    damage[i] = _damage * _critMultiplier;
+                    if (AbilityUsed())
+                    {
+                        damage[i] = (_damage * _critMultiplier) / 2;
+                    }
+                    else damage[i] = _damage * _critMultiplier;
                 }
                 else if (c == "Normal")
                 {
-                    damage[i] = _damage;
+                    if (AbilityUsed())
+                    {
+                        damage[i] = _damage / 2;
+                    }
+                    else damage[i] = _damage;
                 }
             }
             else if (h == "Miss")
@@ -148,10 +162,17 @@ public abstract class Gun : MonoBehaviour, IGun
         var c = 100 - _critChance;
         _critRoulette.Add("Normal", c > 0 ? c : 0);
 
+
+        Debug.Log("hit: " + _hitChance);
         _hitRoulette.Add("Hit", _hitChance);
-        var h = 100 - _critChance;
+        var h = 100 - _hitChance;
         _hitRoulette.Add("Miss", h > 0 ? h : 0);
     }
 
     public abstract void Ability();
+
+    public bool AbilityUsed()
+    {
+        return _abilityUsed;
+    }
 }
