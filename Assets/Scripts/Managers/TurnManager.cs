@@ -123,6 +123,11 @@ public class TurnManager : Teams
         unit.MakeAttackable();
     }
 
+    public void UnitCantBeAttacked(Character unit)
+    {
+        unit.MakeNotAttackable();
+    }
+
     public Tile GetUnitTile(Character unit)
     {
         return unit.GetTileBelow();

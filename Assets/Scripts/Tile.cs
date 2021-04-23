@@ -17,6 +17,8 @@ public class Tile : MonoBehaviour
     public bool showLineGizmo = true;
 
     private bool _hasTileAbove;
+
+    private Character _unitAbove;
     private void Awake()
     {
         _isFree = true;
@@ -231,6 +233,15 @@ public class Tile : MonoBehaviour
         showLineGizmo = !showLineGizmo;
     }
 
+    public void SetUnitAbove(Character unit)
+    {
+        _unitAbove = unit;
+    }
+
+    public Character GetUnitAbove()
+    {
+        return _unitAbove;
+    }
     private void OnDrawGizmos()
     {
         if (showLineGizmo)

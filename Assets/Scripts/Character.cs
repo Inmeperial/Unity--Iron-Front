@@ -53,7 +53,7 @@ public class Character : Teams
 
     //OTHERS
     private List<Tile> _tilesInAttackRange = new List<Tile>();
-    private List<Character> _enemyTargets = new List<Character>();
+    private List<Character> _enemiesInRange = new List<Character>();
     private Character _enemy;
     private MeshRenderer _render;
 
@@ -68,19 +68,20 @@ public class Character : Teams
     // Start is called before the first frame update
     void Start()
     {
-        _currentSteps = _MaxSteps;
         _bodyHP = _bodyMaxHP;
         _leftArmHP = _leftArmMaxHP;
         _rightArmHP = _rightArmMaxHP;
         _legsHP = _legsMaxHP;
+        _canMove = _legsHP > 0 ? true : false;
+        _currentSteps = _canMove ? _MaxSteps : 0;
         _selected = false;
-        _canMove = true;
         _canAttack = true;
         _move = GetComponent<GridMovement>();
         _render = GetComponent<MeshRenderer>();
         _turnManager = FindObjectOfType<TurnManager>();
         _myPositionTile = GetTileBelow();
         _myPositionTile.MakeTileOccupied();
+        _myPositionTile.SetUnitAbove(this);
         _highlight = FindObjectOfType<TileHighlight>();
         _agent = FindObjectOfType<AStarAgent>();
         pathCreator = GetComponent<IPathCreator>();
@@ -142,7 +143,6 @@ public class Character : Teams
                 _tilesInMoveRange.Add(tile);
                 _highlight.PaintTilesInMoveRange(tile);
             }
-            //GetTilesInAttackRange(item.neighbours, count + 1);
             PaintTilesInMoveRange(tile.neighboursForMove, count + 1);
         }
     }
@@ -166,22 +166,81 @@ public class Character : Teams
         }
     }
 
-    //public virtual void Attack()
-    //{
-    //    _canMove = false;
-    //    _canAttack = false;
-    //    _turnManager.DeactivateMoveButton();
-    //    _turnManager.DeactivateAttackButton();
-    //    _turnManager.DamageEnemy(_enemy, damage);
-    //    _highlight.ClearTilesInRange(_tilesInMoveRange);
-    //}
+    public void AttackBody(int[] damages)
+    {
+        foreach (var item in damages)
+        {
+            if (item == 0)
+            {
+                Debug.Log("Bullet miss");
+            }
+            else
+            {
+                var hp = _bodyHP - item;
+                _bodyHP = hp > 0 ? hp : 0;
+            }
+        }
+    }
 
-    //public void TakeDamage(int damage)
-    //{
-    //    _hp -= damage;
-    //    _turnManager.UpdateHP(_hp, maxHp);
-    //    DeselectThisUnit();
-    //}
+    public void AttackLeftArm(int[] damages)
+    {
+        foreach (var item in damages)
+        {
+            if (item == 0)
+            {
+                Debug.Log("Bullet miss");
+            }
+            else
+            {
+                var hp = _leftArmHP - item;
+                _leftArmHP = hp > 0 ? hp : 0;
+            }
+        }
+    }
+
+    public void AttackRightArm(int[] damages)
+    {
+        foreach (var item in damages)
+        {
+            if (item == 0)
+            {
+                Debug.Log("Bullet miss");
+            }
+            else
+            {
+                var hp = _rightArmHP - item;
+                _rightArmHP = hp > 0 ? hp : 0;
+            }
+        }
+    }
+
+    public void AttackLegs(int[] damages)
+    {
+        foreach (var item in damages)
+        {
+            if (item == 0)
+            {
+                Debug.Log("Bullet miss");
+            }
+            else
+            {
+                var hp = _legsHP - item;
+                _legsHP = hp > 0 ? hp : 0;
+
+                if (_legsHP == 0)
+                    _canMove = false;
+            }
+        }
+    }
+
+    public void AttackLegs(int damage)
+    {
+        var hp = _legsHP - damage;
+        _legsHP = hp > 0 ? hp : 0;
+
+        if (_legsHP == 0)
+            _canMove = false;
+    }
     #endregion
 
     #region Getters
@@ -209,10 +268,10 @@ public class Character : Teams
                         _highlight.CreatePathLines(_path);
                         _tilesInAttackRange.Clear();
                         _tilesInMoveRange.Clear();
-                        PaintTilesInMoveRange(_path[_path.Count - 1].neighboursForMove, 0);
                         PaintTilesInAttackRange(_path[_path.Count - 1].allNeighbours, 0);
+                        PaintTilesInMoveRange(_path[_path.Count - 1].neighboursForMove, 0);
                         AddTilesInMoveRange();
-                        CheckCloseEnemies();
+                        //CheckCloseEnemies();
                     }
                 }
             }
@@ -308,11 +367,10 @@ public class Character : Teams
     {
         //_highlight.ClearTilesInRange(_tilesInAttackRange);
         //_tilesInAttackRange.Clear();
-        foreach (var item in _enemyTargets)
+        foreach (var item in _enemiesInRange)
         {
-            item.MakeNotAttackable();
+            _turnManager.UnitCantBeAttacked(item);
         }
-        _enemyTargets.Clear();
         GetPath();
         ResetInRangeLists();
         if (_path.Count > 0)
@@ -323,7 +381,7 @@ public class Character : Teams
 
     }
 
-    void ResetInRangeLists()
+    public void ResetInRangeLists()
     {
         foreach (var item in _tilesInMoveRange)
         {
@@ -337,15 +395,16 @@ public class Character : Teams
             item.ResetColor();
         }
         _tilesInAttackRange.Clear();
+        _enemiesInRange.Clear();
     }
     public void NewTurn()
     {
-        _canMove = true;
+        _canMove = _legsHP > 0 ? true : false;
         _canAttack = true;
         selectedGun.SetGun();
         _path.Clear();
-        _currentSteps = _MaxSteps;
-        _enemyTargets.Clear();
+        _currentSteps = _canMove ? _MaxSteps : 0;
+        _enemiesInRange.Clear();
         MakeNotAttackable();
         pathCreator.Reset();
     }
@@ -364,9 +423,12 @@ public class Character : Teams
         _myPositionTile.MakeTileFree();
         _myPositionTile = _targetTile;
         _myPositionTile.MakeTileOccupied();
+        _myPositionTile.SetUnitAbove(this);
         _targetTile = null;
         _turnManager.UnitStoppedMoving();
         pathCreator.Reset();
+
+        CheckEnemiesInAttackRange();
     }
 
     public void ActivateMoveButton()
@@ -396,7 +458,12 @@ public class Character : Teams
 
         _render.sharedMaterial = mat;
         _selected = true;
-        PaintTilesInMoveRange(_myPositionTile.neighboursForMove, 0);
+        //CheckCloseEnemies();
+        PaintTilesInAttackRange(_myPositionTile.allNeighbours, 0);
+        CheckEnemiesInAttackRange();
+        if (_canMove)
+            PaintTilesInMoveRange(_myPositionTile.neighboursForMove, 0);
+        //PaintTilesInAttackRange(_myPositionTile.allNeighbours, 0);
     }
 
     public void DeselectThisUnit()
@@ -406,7 +473,10 @@ public class Character : Teams
 
         _render.sharedMaterial = mat;
         _selected = false;
-
+        foreach (var item in _enemiesInRange)
+        {
+            _turnManager.UnitCantBeAttacked(item);
+        }
         ResetInRangeLists();
     }
 
@@ -439,43 +509,46 @@ public class Character : Teams
         else return false;
     }
 
-    void CheckCloseEnemies()
-    {
-        var enemies = _turnManager.GetEnemies(_unitTeam);
+    //void CheckCloseEnemies()
+    //{
+    //    var enemies = _turnManager.GetEnemies(_unitTeam);
 
-        _enemyTargets.Clear();
-        if (_path.Count == 0)
-        {
-            
-            foreach (var unit in enemies)
-            {
-                var dist = CalculateDistanceToEnemie(unit, _myPositionTile);
+    //    _enemyTargets.Clear();
+    //    if (_path.Count == 0)
+    //    {
+    //        Debug.Log("entro al == 0");
+    //        foreach (var unit in enemies)
+    //        {
+    //            var dist = CalculateDistanceToEnemie(unit, _myPositionTile);
 
-                if (dist <= selectedGun.GetAttackRange())
-                {
-                    _enemyTargets.Add(unit);
-                    _turnManager.UnitCanBeAttacked(unit);
-                    var tile = _turnManager.GetUnitTile(unit);
-                    _highlight.PaintTilesInAttackRange(tile);
-                }
-            }
-        }
-        else
-        {
-            foreach (var unit in enemies)
-            {
-                var dist = CalculateDistanceToEnemie(unit, _path[_path.Count-1]);
+    //            if (dist <= selectedGun.GetAttackRange() && dist > 0)
+    //            {
+    //                Debug.Log("entro al if de == 0");
+    //                _enemyTargets.Add(unit);
+    //                _turnManager.UnitCanBeAttacked(unit);
+    //                var tile = _turnManager.GetUnitTile(unit);
+    //                _highlight.PaintTilesInAttackRange(tile);
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("entro al > 0");
+    //        foreach (var unit in enemies)
+    //        {
+    //            var dist = CalculateDistanceToEnemie(unit, _path[_path.Count-1]);
 
-                if (dist <= selectedGun.GetAttackRange())
-                {
-                    _enemyTargets.Add(unit);
-                    _turnManager.UnitCanBeAttacked(unit);
-                    var tile = _turnManager.GetUnitTile(unit);
-                    _highlight.PaintTilesInAttackRange(tile);
-                }
-            }
-        }
-    }
+    //            if (dist <= selectedGun.GetAttackRange() && dist > 0)
+    //            {
+    //                Debug.Log("entro al if de > 0");
+    //                _enemyTargets.Add(unit);
+    //                _turnManager.UnitCanBeAttacked(unit);
+    //                var tile = _turnManager.GetUnitTile(unit);
+    //                _highlight.PaintTilesInAttackRange(tile);
+    //            }
+    //        }
+    //    }
+    //}
 
     int CalculateDistanceToEnemie(Character enemy, Tile from)
     {
@@ -485,6 +558,25 @@ public class Character : Teams
         var path = _agent.PathFindingAstar();
 
         return path.Count-1;
+    }
+
+    void CheckEnemiesInAttackRange()
+    {
+        if (_tilesInAttackRange != null && _tilesInAttackRange.Count > 0)
+        {
+            foreach (var item in _tilesInAttackRange)
+            {
+                if (item.IsFree() == false)
+                {
+                    var unit = item.GetUnitAbove();
+                    if (unit.GetUnitTeam() != _unitTeam)
+                    {
+                        _turnManager.UnitCanBeAttacked(unit);
+                        _enemiesInRange.Add(unit);
+                    }
+                }
+            }
+        }
     }
     #endregion
 
@@ -533,71 +625,7 @@ public class Character : Teams
     public void DeactivateAttack()
     {
         _canAttack = false;
+        _canMove = false;
     }
-    public void AttackBody(int[] damages)
-    {
-        foreach (var item in damages)
-        {
-            if (item == 0)
-            {
-                Debug.Log("Bullet miss");
-            }
-            else
-            {
-                var hp = _bodyHP - item;
-                _bodyHP = hp > 0 ? hp : 0;
-            }
-        }
-    }
-
-    public void AttackLeftArm(int[] damages)
-    {
-        foreach (var item in damages)
-        {
-            if (item == 0)
-            {
-                Debug.Log("Bullet miss");
-            }
-            else
-            {
-                var hp = _leftArmHP - item;
-                _leftArmHP = hp > 0 ? hp : 0;
-            }
-        }
-    }
-
-    public void AttackRightArm(int[] damages)
-    {
-        foreach (var item in damages)
-        {
-            if (item == 0)
-            {
-                Debug.Log("Bullet miss");
-            }
-            else
-            {
-                var hp = _rightArmHP - item;
-                _rightArmHP = hp > 0 ? hp : 0;
-            }
-        }
-    }
-
-    public void AttackLegs(int[] damages)
-    {
-        foreach (var item in damages)
-        {
-            if (item == 0)
-            {
-                Debug.Log("Bullet miss");
-            }
-            else
-            {
-                var hp = _legsHP - item;
-                _legsHP = hp > 0 ? hp : 0;
-            }
-        }
-        //Debug.Log("legs attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
-        //var hp = _legsHP - (bullets * bulletDamage);
-        //_legsHP = hp > 0 ? hp : 0;
-    }
+    
 }

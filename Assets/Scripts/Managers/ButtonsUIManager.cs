@@ -123,7 +123,9 @@ public class ButtonsUIManager : MonoBehaviour
         SetCharacterMovementButtons();
         ShowHUDSliders(_selectedChar, playerBodySlider, playerLeftArmSlider, playerRightArmSlider, playerLegsSlider);
         ShowPlayerHudText(playerBodyCurrHP, playerBodySlider, playerLeftArmCurrHP, playerLeftArmSlider, playerRightArmCurrHP, playerRightArmSlider, playerLegsCurrHP, playerLegsSlider);
-        ActivateMoveButton();
+        if (_selectedChar.ThisUnitCanMove())
+            ActivateMoveButton();
+        else DeactivateMoveButton();
         playerHudContainer.SetActive(true);
         actionMenu.SetActive(true);
     }
@@ -437,6 +439,8 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_selectedChar.CanAttack() == false)
         {
+            _selectedChar.ResetInRangeLists();
+            DeactivateMoveButton();
             bodyPartsButtonsContainer.SetActive(false);
             buttonExecuteAttack.interactable = false;
         }
@@ -614,6 +618,13 @@ public class ButtonsUIManager : MonoBehaviour
         _partsSelected = 0;
 
         DeterminateButtonsActivation();
+    }
+
+    public void DeselectUnit()
+    {
+        ResetBodyParts();
+        DeactivatePlayerHUD();
+        DeactivateEnemyHUD();
     }
     #endregion
 
