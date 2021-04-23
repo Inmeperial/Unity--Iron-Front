@@ -11,7 +11,9 @@ public class ButtonsUIManager : MonoBehaviour
     public Button buttonMove;
     public Button buttonUndo;
     public Button buttonSelectEnemy;
+    public Button buttonDeselectUnit;
     public Button buttonExecuteAttack;
+    public Button buttonEndTurn;
 
 
 
@@ -42,8 +44,11 @@ public class ButtonsUIManager : MonoBehaviour
     #region HUD
     //Player
     public GameObject playerHudContainer;
+    public TextMeshProUGUI gunTypeText;
     public TextMeshProUGUI damageText;
     public TextMeshProUGUI rangeText;
+    public TextMeshProUGUI critText;
+    public TextMeshProUGUI hitChanceText;
     public Slider playerBodySlider;
     public TextMeshProUGUI playerBodyCurrHP;
     public Slider playerLeftArmSlider;
@@ -92,6 +97,7 @@ public class ButtonsUIManager : MonoBehaviour
         moveContainer.SetActive(true);
         buttonMove.interactable = true;
         buttonUndo.interactable = true;
+        buttonEndTurn.gameObject.SetActive(false);
     }
 
     public void DeactivateMoveButton()
@@ -99,14 +105,15 @@ public class ButtonsUIManager : MonoBehaviour
         moveContainer.SetActive(false);
         buttonMove.interactable = false;
         buttonUndo.interactable = false;
+        buttonEndTurn.gameObject.SetActive(true);
     }
 
-    public void ActivateAttackButton()
+    public void ActivateExecuteAttackButton()
     {
         buttonExecuteAttack.interactable = true;
     }
 
-    public void DeactivateAttackButton()
+    public void DeactivateExecuteAttackButton()
     {
         buttonExecuteAttack.interactable = false;
     }
@@ -117,6 +124,9 @@ public class ButtonsUIManager : MonoBehaviour
         buttonMove.onClick.AddListener(_selectedChar.Move);
         buttonUndo.onClick.RemoveAllListeners();
         buttonUndo.onClick.AddListener(_selectedChar.pathCreator.UndoLastWaypoint);
+        //if (_selectedChar.HasEnemiesInRange())
+        //    buttonSelectEnemy.interactable = true;
+        //else buttonSelectEnemy.interactable = false;
         buttonSelectEnemy.interactable = true;
     }
     
@@ -426,6 +436,15 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    public void DeselectUnit()
+    {
+        ResetBodyParts();
+        DeactivatePlayerHUD();
+        DeactivateEnemyHUD();
+        actionMenu.SetActive(false);
+        _charSelection.DeselectUnit();
+    }
+
     #endregion
 
     #region Utilities
@@ -586,12 +605,7 @@ public class ButtonsUIManager : MonoBehaviour
         DeterminateButtonsActivation();
     }
 
-    public void DeselectUnit()
-    {
-        ResetBodyParts();
-        DeactivatePlayerHUD();
-        DeactivateEnemyHUD();
-    }
+    
     #endregion
 
     #region HUD Text
@@ -614,6 +628,7 @@ public class ButtonsUIManager : MonoBehaviour
     public void DeactivatePlayerHUD()
     {
         playerHudContainer.SetActive(false);
+        DeactivateMoveButton();
         actionMenu.SetActive(true);
     }
 
@@ -634,12 +649,24 @@ public class ButtonsUIManager : MonoBehaviour
     {
         ShowUnitHudText(bodyHpText, bodySlider, lArmHpText, lArmSlider, rArmHpText, rArmSlider, legsHpText, legsSlider);
 
-        var dmg = _selectedChar.selectedGun.GetBulletDamage().ToString();
-        var b = _selectedChar.selectedGun.GetAvailableBullets();
+        var gun = _selectedChar.selectedGun;
+
+        gunTypeText.text = gun.GetGunTypeString();
+
+        var dmg = gun.GetBulletDamage().ToString();
+        var b = gun.GetAvailableBullets();
         damageText.text = "DMG " + dmg + " x " + b + " hits";
 
-        var r = _selectedChar.selectedGun.GetAttackRange().ToString();
+        var r = gun.GetAttackRange().ToString();
         rangeText.text = "Range " + r;
+
+        var cc = gun.GetCritChance().ToString();
+        var cd = gun.GetCritMultiplier().ToString();
+
+        critText.text = "Crit % " + cc + " | " + "Crit Dmg x" + cd;
+
+        var h = gun.GetHitChance().ToString();
+        hitChanceText.text = "Hit % " + h;
     }
 
     void ShowHUDSliders(Character unit, Slider body, Slider lArm, Slider rArm, Slider legs)

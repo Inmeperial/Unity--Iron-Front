@@ -363,6 +363,11 @@ public class Character : Teams
         Physics.Raycast(transform.position, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
         return hit.transform.gameObject.GetComponent<Tile>();
     }
+    
+    public bool HasEnemiesInRange()
+    {
+        return _enemiesInRange.Count > 0 ? true : false;
+    }
     #endregion
 
     #region Utilities

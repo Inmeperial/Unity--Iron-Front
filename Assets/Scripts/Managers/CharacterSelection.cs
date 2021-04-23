@@ -123,7 +123,6 @@ public class CharacterSelection : MonoBehaviour
         }
         if (_enemySelection)
         {
-            //ClearBodyPartsButtons();
             _enemySelection.DeselectThisUnit();
             enemyHPContainer.SetActive(false);
             _selection = null;

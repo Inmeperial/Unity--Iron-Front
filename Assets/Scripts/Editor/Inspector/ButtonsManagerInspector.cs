@@ -28,7 +28,9 @@ public class ButtonsManagerInspector : Editor
         _selection.buttonMove = (Button)EditorGUILayout.ObjectField("Button Move", _selection.buttonMove, typeof(Button), true);
         _selection.buttonUndo = (Button)EditorGUILayout.ObjectField("Button Undo", _selection.buttonUndo, typeof(Button), true);
         _selection.buttonSelectEnemy = (Button)EditorGUILayout.ObjectField("Button Attack", _selection.buttonSelectEnemy, typeof(Button), true);
+        _selection.buttonDeselectUnit = (Button)EditorGUILayout.ObjectField("Button Deselect", _selection.buttonDeselectUnit, typeof(Button), true);
         _selection.buttonExecuteAttack = (Button)EditorGUILayout.ObjectField("Button Execute Attack", _selection.buttonExecuteAttack, typeof(Button), true);
+        _selection.buttonEndTurn = (Button)EditorGUILayout.ObjectField("Button End Turn", _selection.buttonEndTurn, typeof(Button), true);
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Buttons", _importantStyle);
@@ -64,9 +66,11 @@ public class ButtonsManagerInspector : Editor
         {
             _selection.playerHudContainer = (GameObject)EditorGUILayout.ObjectField("Player HUD Container", _selection.playerHudContainer, typeof(GameObject), true);
 
+            _selection.gunTypeText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Gun Type Text", _selection.gunTypeText, typeof(TextMeshProUGUI), true);
             _selection.damageText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Damage Text", _selection.damageText, typeof(TextMeshProUGUI), true);
             _selection.rangeText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Range Text", _selection.rangeText, typeof(TextMeshProUGUI), true);
-
+            _selection.critText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Crit Text", _selection.critText, typeof(TextMeshProUGUI), true);
+            _selection.hitChanceText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Hit Text", _selection.hitChanceText, typeof(TextMeshProUGUI), true);
 
             _selection.playerBodySlider = (Slider)EditorGUILayout.ObjectField("Body Slider", _selection.playerBodySlider, typeof(Slider), true);
             _selection.playerBodyCurrHP = (TextMeshProUGUI)EditorGUILayout.ObjectField("Body HP Text", _selection.playerBodyCurrHP, typeof(TextMeshProUGUI), true);

@@ -16,6 +16,7 @@ public abstract class Gun : MonoBehaviour, IGun
     [Header("Weapon")]
     [SerializeField] protected GunType _gunType;
     [SerializeField] protected GunSO _data;
+    protected string _gun;
     [SerializeField] protected int _maxBullets;
     [SerializeField] protected int _availableBullets;
     [SerializeField] protected int _bulletsPerClick;
@@ -59,12 +60,30 @@ public abstract class Gun : MonoBehaviour, IGun
         return _attackRange;
     }
 
+    public int GetCritChance()
+    {
+        return _critChance;
+    }
+
+    public int GetCritMultiplier()
+    {
+        return _critMultiplier;
+    }
+
+    public int GetHitChance()
+    {
+        return _hitChance;
+    }
+
     public GunType GetGunType()
     {
         return _gunType;
     }
 
-
+    public string GetGunTypeString()
+    {
+        return _gun;
+    }
 
     public int GetAvailableSelections()
     {
@@ -84,6 +103,22 @@ public abstract class Gun : MonoBehaviour, IGun
         _attackRange = _data.attackRange;
         _bodyPartsSelectionQuantity = _data.bodyPartsSelectionQuantity;
         _abilityUsed = false;
+
+        switch (_gunType)
+        {
+            case GunType.AssaultRifle:
+                _gun = "AssaultRifle";
+                break;
+            case GunType.Melee:
+                _gun = "Melee";
+                break;
+            case GunType.Rifle:
+                _gun = "Rifle";
+                break;
+            case GunType.Shotgun:
+                _gun = "Shotgun";
+                break;
+        }
     }
 
     public void ReloadGun()

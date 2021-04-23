@@ -105,12 +105,12 @@ public class TurnManager : Teams
 
     public void ActivateAttackButton()
     {
-        _buttonsManager.ActivateAttackButton();
+        _buttonsManager.ActivateExecuteAttackButton();
     }
 
     public void DeactivateAttackButton()
     {
-        _buttonsManager.DeactivateAttackButton();
+        _buttonsManager.DeactivateExecuteAttackButton();
     }
 
     public void UpdateHP(int currentHP, int maxHP)
