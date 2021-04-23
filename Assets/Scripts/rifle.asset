@@ -16,9 +16,10 @@ MonoBehaviour:
   maxBullets: 5
   availableBullets: 0
   bulletsPerClick: 5
-  damage: 10
-  critChance: 0
-  hitChance: 0
+  damage: 25
+  critChance: 10
+  critMultiplier: 3
+  hitChance: 80
   chanceToHitOtherParts: 0
-  attackRange: 3
-  bodyPartsSelectionQuantity: 2
+  attackRange: 4
+  bodyPartsSelectionQuantity: 1
