@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AssaultRifle : Gun
 {
-    public override int DamageCalculation()
+    public override void Ability()
     {
         throw new System.NotImplementedException();
     }
