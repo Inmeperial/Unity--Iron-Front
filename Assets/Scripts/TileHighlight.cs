@@ -145,8 +145,8 @@ public class TileHighlight : MonoBehaviour
             for (int i = 0; i < path.Count; i++)
             {
                 v = path[i].transform.position;
-                v.y = v.y + 1;
-                _lineRenderer.SetPosition(i, v);
+                v.y = v.y + path[i].transform.localScale.y;
+				_lineRenderer.SetPosition(i, v);
             }
         }
     }
