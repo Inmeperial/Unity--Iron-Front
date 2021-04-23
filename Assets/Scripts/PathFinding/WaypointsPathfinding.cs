@@ -20,7 +20,7 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         if (_fullMovePath == null || _fullMovePath.Count == 0)
         {
             _fullMovePath = new List<Tile>();
-            _agent.init = character.GetTileBelow();
+            _agent.init = character.GetActualTilePosition();
         }
         //If list is not empty, pathfinding starts with last tile of the list.
         else if (_fullMovePath.Count > 1)
