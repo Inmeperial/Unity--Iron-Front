@@ -26,6 +26,10 @@ public abstract class Gun : MonoBehaviour, IGun
     [SerializeField] protected int _chanceToHitOtherParts;
     [SerializeField] protected int _attackRange;
     [SerializeField] protected int _bodyPartsSelectionQuantity;
+
+    protected RouletteWheel _roulette;
+    protected Dictionary<string, int> _critRoulette = new Dictionary<string, int>();
+    protected Dictionary<string, int> _hitRoulette = new Dictionary<string, int>();
     // Start is called before the first frame update
     public void Start()
     {
@@ -104,6 +108,50 @@ public abstract class Gun : MonoBehaviour, IGun
             _availableBullets += quantity;
     }
 
-    public abstract int DamageCalculation();
 
+    public int[] DamageCalculation(int bullets)
+    {
+        var damage = new int[bullets];
+
+        for (int i = 0; i < bullets; i++)
+        {
+            //Determines if bullet hits.
+            var h = _roulette.ExecuteAction(_hitRoulette);
+
+            if (h == "Hit")
+            {
+                //Determines if it crits or not.
+                var c = _roulette.ExecuteAction(_critRoulette);
+
+                if (c == "Crit")
+                {
+                    damage[i] = _damage * _critMultiplier;
+                }
+                else if (c == "Normal")
+                {
+                    damage[i] = _damage;
+                }
+            }
+            else if (h == "Miss")
+            {
+                damage[i] = 0;
+            }
+        }
+        //Returns the damage each bullet will deal.
+        return damage;
+    }
+
+    public virtual void StartRoulette()
+    {
+        _roulette = new RouletteWheel();
+        _critRoulette.Add("Crit", _critChance);
+        var c = 100 - _critChance;
+        _critRoulette.Add("Normal", c > 0 ? c : 0);
+
+        _hitRoulette.Add("Hit", _hitChance);
+        var h = 100 - _critChance;
+        _hitRoulette.Add("Miss", h > 0 ? h : 0);
+    }
+
+    public abstract void Ability();
 }

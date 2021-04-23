@@ -23,5 +23,7 @@ public interface IGun
 
     int BulletsPerClick();
 
-    int DamageCalculation();
+    int[] DamageCalculation(int bullets);
+
+    void Ability();
 }

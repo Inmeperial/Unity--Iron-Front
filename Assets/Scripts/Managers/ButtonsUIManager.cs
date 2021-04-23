@@ -420,7 +420,8 @@ public class ButtonsUIManager : MonoBehaviour
 
             if (_bulletsForLegs > 0)
             {
-                _selectedEnemy.AttackLegs(_bulletsForLegs, _selectedChar.selectedGun.GetBulletDamage());
+                var d = _selectedChar.selectedGun.DamageCalculation(_bulletsForLegs);
+                _selectedEnemy.AttackLegs(d);
                 enemyLegsSlider.value = _selectedEnemy.GetLegsHP();
                 enemyLegsCurrHP.text = enemyLegsSlider.value.ToString();
                 _selectedChar.DeactivateAttack();

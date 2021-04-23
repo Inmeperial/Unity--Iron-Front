@@ -555,10 +555,22 @@ public class Character : Teams
         _rightArmHP = hp > 0 ? hp : 0;
     }
 
-    public void AttackLegs(int bullets, int bulletDamage)
+    public void AttackLegs(int[] damages)
     {
-        Debug.Log("legs attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
-        var hp = _legsHP - (bullets * bulletDamage);
-        _legsHP = hp > 0 ? hp : 0;
+        foreach (var item in damages)
+        {
+            if (item == 0)
+            {
+                Debug.Log("Bullet miss");
+            }
+            else
+            {
+                var hp = _legsHP - item;
+                _legsHP = hp > 0 ? hp : 0;
+            }
+        }
+        //Debug.Log("legs attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
+        //var hp = _legsHP - (bullets * bulletDamage);
+        //_legsHP = hp > 0 ? hp : 0;
     }
 }
