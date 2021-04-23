@@ -6,6 +6,6 @@ public class Rifle : Gun
 {
     public override void Ability()
     {
-        throw new System.NotImplementedException();
+        
     }
 }

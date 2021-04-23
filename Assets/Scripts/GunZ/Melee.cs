@@ -6,6 +6,6 @@ public class Melee : Gun
 {
     public override void Ability()
     {
-        throw new System.NotImplementedException();
+       
     }
 }
