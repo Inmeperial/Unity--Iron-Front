@@ -139,7 +139,7 @@ public class TileHighlight : MonoBehaviour
         if (path.Count > 0)
         {
             var v = path[0].transform.position;
-            v.y = v.y + 1;
+            v.y = v.y + path[0].transform.localScale.y;
             _lineRenderer.positionCount = path.Count;
             _lineRenderer.transform.position = v;
             for (int i = 0; i < path.Count; i++)
