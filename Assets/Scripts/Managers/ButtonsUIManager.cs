@@ -64,6 +64,7 @@ public class ButtonsUIManager : MonoBehaviour
     public Slider enemyLegsSlider;
     public TextMeshProUGUI enemyLegsCurrHP;
     #endregion
+
     //OTHERS
     [SerializeField] private CharacterSelection _charSelection;
     [SerializeField] private Character _selectedChar;
@@ -85,7 +86,7 @@ public class ButtonsUIManager : MonoBehaviour
         _charSelection = FindObjectOfType<CharacterSelection>();
         _turnManager = FindObjectOfType<TurnManager>();
     }
-    #region Buttons
+    #region ButtonsActions
     public void ActivateMoveButton()
     {
         moveContainer.SetActive(true);
@@ -118,37 +119,7 @@ public class ButtonsUIManager : MonoBehaviour
         buttonUndo.onClick.AddListener(_selectedChar.pathCreator.UndoLastWaypoint);
         buttonSelectEnemy.interactable = true;
     }
-    public void SetPlayerUI()
-    {
-        SetCharacterMovementButtons();
-        ShowHUDSliders(_selectedChar, playerBodySlider, playerLeftArmSlider, playerRightArmSlider, playerLegsSlider);
-        ShowPlayerHudText(playerBodyCurrHP, playerBodySlider, playerLeftArmCurrHP, playerLeftArmSlider, playerRightArmCurrHP, playerRightArmSlider, playerLegsCurrHP, playerLegsSlider);
-        if (_selectedChar.ThisUnitCanMove())
-            ActivateMoveButton();
-        else DeactivateMoveButton();
-        playerHudContainer.SetActive(true);
-        actionMenu.SetActive(true);
-    }
-    public void DeactivatePlayerHUD()
-    {
-        playerHudContainer.SetActive(false);
-        actionMenu.SetActive(true);
-    }
-
-
-    public void SetEnemyUI()
-    {
-        bodyPartsButtonsContainer.SetActive(true);
-        ShowHUDSliders(_selectedEnemy, enemyBodySlider, enemyLeftArmSlider, enemyRightArmSlider, enemyLegsSlider);
-        ShowUnitHudText(enemyBodyCurrHP, enemyBodySlider, enemyLeftArmCurrHP, enemyLeftArmSlider, enemyRightArmCurrHP, enemyRightArmSlider, enemyLegsCurrHP, enemyLegsSlider);
-        enemyHudContainer.SetActive(true);
-    }
-
-    public void DeactivateEnemyHUD()
-    {
-        bodyPartsButtonsContainer.SetActive(false);
-        enemyHudContainer.SetActive(false);
-    }
+    
 
     public void DeactivateCharacterButtons()
     {
@@ -399,8 +370,6 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 var d = gun.DamageCalculation(_bulletsForBody);
                 _selectedEnemy.AttackBody(d);
-                enemyBodySlider.value = _selectedEnemy.GetBodyHP();
-                enemyBodyCurrHP.text = enemyBodySlider.value.ToString();
                 if (gun.AbilityUsed() == false)
                 {
                     gun.Ability();
@@ -413,8 +382,6 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 var d = gun.DamageCalculation(_bulletsForLArm);
                 _selectedEnemy.AttackLeftArm(d);
-                enemyLeftArmSlider.value = _selectedEnemy.GetLeftArmHP();
-                enemyLeftArmCurrHP.text = enemyLeftArmSlider.value.ToString();
                 _selectedChar.DeactivateAttack();
             }
 
@@ -422,8 +389,6 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 var d = gun.DamageCalculation(_bulletsForRArm);
                 _selectedEnemy.AttackRightArm(d);
-                enemyRightArmSlider.value = _selectedEnemy.GetRightArmHP();
-                enemyRightArmCurrHP.text = enemyRightArmSlider.value.ToString();
                 _selectedChar.DeactivateAttack();
             }
 
@@ -431,8 +396,6 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 var d = gun.DamageCalculation(_bulletsForLegs);
                 _selectedEnemy.AttackLegs(d);
-                enemyLegsSlider.value = _selectedEnemy.GetLegsHP();
-                enemyLegsCurrHP.text = enemyLegsSlider.value.ToString();
                 _selectedChar.DeactivateAttack();
             }
         }
@@ -453,11 +416,14 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void EndTurn()
     {
-        _turnManager.EndTurn();
-        DeactivateEnemyHUD();
-        DeactivatePlayerHUD();
-        DeactivateMoveButton();
-        ResetBodyParts();
+        if (_selectedChar.IsMoving() == false)
+        {
+            _turnManager.EndTurn();
+            DeactivateEnemyHUD();
+            DeactivatePlayerHUD();
+            DeactivateMoveButton();
+            ResetBodyParts();
+        }
     }
 
     #endregion
@@ -629,7 +595,41 @@ public class ButtonsUIManager : MonoBehaviour
     #endregion
 
     #region HUD Text
+    public void SetPlayerUI()
+    {
+        SetCharacterMovementButtons();
 
+        ShowHUDSliders(_selectedChar, playerBodySlider, playerLeftArmSlider, playerRightArmSlider, playerLegsSlider);
+
+        ShowPlayerHudText(playerBodyCurrHP, playerBodySlider, playerLeftArmCurrHP, playerLeftArmSlider, playerRightArmCurrHP, playerRightArmSlider, playerLegsCurrHP, playerLegsSlider);
+
+        if (_selectedChar.ThisUnitCanMove())
+            ActivateMoveButton();
+        else DeactivateMoveButton();
+
+        playerHudContainer.SetActive(true);
+        actionMenu.SetActive(true);
+    }
+
+    public void DeactivatePlayerHUD()
+    {
+        playerHudContainer.SetActive(false);
+        actionMenu.SetActive(true);
+    }
+
+    public void SetEnemyUI()
+    {
+        bodyPartsButtonsContainer.SetActive(true);
+        ShowHUDSliders(_selectedEnemy, enemyBodySlider, enemyLeftArmSlider, enemyRightArmSlider, enemyLegsSlider);
+        ShowUnitHudText(enemyBodyCurrHP, enemyBodySlider, enemyLeftArmCurrHP, enemyLeftArmSlider, enemyRightArmCurrHP, enemyRightArmSlider, enemyLegsCurrHP, enemyLegsSlider);
+        enemyHudContainer.SetActive(true);
+    }
+
+    public void DeactivateEnemyHUD()
+    {
+        bodyPartsButtonsContainer.SetActive(false);
+        enemyHudContainer.SetActive(false);
+    }
     void ShowPlayerHudText(TextMeshProUGUI bodyHpText, Slider bodySlider, TextMeshProUGUI lArmHpText, Slider lArmSlider, TextMeshProUGUI rArmHpText, Slider rArmSlider, TextMeshProUGUI legsHpText, Slider legsSlider)
     {
         ShowUnitHudText(bodyHpText, bodySlider, lArmHpText, lArmSlider, rArmHpText, rArmSlider, legsHpText, legsSlider);
@@ -665,6 +665,62 @@ public class ButtonsUIManager : MonoBehaviour
         legsHpText.text = legsSlider.value.ToString();
     }
 
+    public void UpdateBodyHUD(int value, bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            playerBodySlider.value = value;
+            playerBodyCurrHP.text = playerBodySlider.value.ToString();
+        }
+        else
+        {
+            enemyBodySlider.value = value;
+            enemyBodyCurrHP.text = enemyBodySlider.value.ToString();
+        }
+        
+    }
+
+    public void UpdateLeftArmHUD(int value, bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            playerLeftArmSlider.value = value;
+            playerLeftArmCurrHP.text = playerLeftArmSlider.value.ToString();
+        }
+        else
+        {
+            enemyLeftArmSlider.value = value;
+            enemyLeftArmCurrHP.text = enemyLeftArmSlider.value.ToString();
+        }
+        
+    }
+
+    public void UpdateRightArmHUD(int value, bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            playerRightArmSlider.value = value;
+            playerRightArmCurrHP.text = playerRightArmSlider.value.ToString();
+        }
+        else
+        {
+            enemyRightArmSlider.value = value;
+            enemyRightArmCurrHP.text = enemyRightArmSlider.value.ToString();
+        }
+    }
+    public void UpdateLegsHUD(int value, bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            playerLegsSlider.value = value;
+            playerLegsCurrHP.text = playerLegsSlider.value.ToString();
+        }
+        else
+        {
+            enemyLegsSlider.value = value;
+            enemyLegsCurrHP.text = enemyLegsSlider.value.ToString();
+        }
+    }
 
     #endregion
     public void SetEnemy(Character enemy)

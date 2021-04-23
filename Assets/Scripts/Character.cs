@@ -57,10 +57,11 @@ public class Character : Teams
     private Character _enemy;
     private MeshRenderer _render;
 
-
     private TurnManager _turnManager;
 
     private TileHighlight _highlight;
+
+    private ButtonsUIManager _buttonsManager;
 
     private AStarAgent _agent;
 
@@ -84,6 +85,7 @@ public class Character : Teams
         _myPositionTile.SetUnitAbove(this);
         _highlight = FindObjectOfType<TileHighlight>();
         _agent = FindObjectOfType<AStarAgent>();
+        _buttonsManager = FindObjectOfType<ButtonsUIManager>();
         pathCreator = GetComponent<IPathCreator>();
 
         selectedGun = leftGun;
@@ -180,6 +182,7 @@ public class Character : Teams
                 _bodyHP = hp > 0 ? hp : 0;
             }
         }
+        _buttonsManager.UpdateBodyHUD(_bodyHP, false);
     }
 
     public void AttackLeftArm(int[] damages)
@@ -196,6 +199,7 @@ public class Character : Teams
                 _leftArmHP = hp > 0 ? hp : 0;
             }
         }
+        _buttonsManager.UpdateLeftArmHUD(_leftArmHP, false);
     }
 
     public void AttackRightArm(int[] damages)
@@ -212,6 +216,7 @@ public class Character : Teams
                 _rightArmHP = hp > 0 ? hp : 0;
             }
         }
+        _buttonsManager.UpdateRightArmHUD(_rightArmHP, false);
     }
 
     public void AttackLegs(int[] damages)
@@ -231,6 +236,7 @@ public class Character : Teams
                     _canMove = false;
             }
         }
+        _buttonsManager.UpdateLegsHUD(_legsHP, false);
     }
 
     public void AttackLegs(int damage)
@@ -238,6 +244,7 @@ public class Character : Teams
         var hp = _legsHP - damage;
         _legsHP = hp > 0 ? hp : 0;
 
+        _buttonsManager.UpdateLegsHUD(_legsHP, true);
         if (_legsHP == 0)
             _canMove = false;
     }
