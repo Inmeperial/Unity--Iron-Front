@@ -552,13 +552,13 @@ public class Character : Teams
     {
         Debug.Log("rarm attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
         var hp = _rightArmHP - (bullets * bulletDamage);
-        _rightArmHP -= hp > 0 ? hp : 0;
+        _rightArmHP = hp > 0 ? hp : 0;
     }
 
     public void AttackLegs(int bullets, int bulletDamage)
     {
         Debug.Log("legs attacked -- Bullets: " + bullets + " -- Damage: " + bulletDamage * bullets);
         var hp = _legsHP - (bullets * bulletDamage);
-        _legsHP -= hp > 0 ? hp : 0;
+        _legsHP = hp > 0 ? hp : 0;
     }
 }
