@@ -59,7 +59,7 @@ public class CharacterSelection : MonoBehaviour
                 //Check if i have a previous unit and deselect it.
                 if (_selection != null && _selection != c)
                 {
-                    _buttonsManager.DeselectUnit();
+                    _buttonsManager.DeselectActions();
                 }
                 _selection = c;
                 _selection.SelectThisUnit();
@@ -69,7 +69,7 @@ public class CharacterSelection : MonoBehaviour
                 _buttonsManager.SetPlayerUI();
                 stepsCounter.text = _selection.GetSteps().ToString();
             }
-            else if (_selectingEnemy && c.CanBeAttacked())
+            else
             {
                 if (_enemySelection != null && c != _enemySelection)
                 {
@@ -77,7 +77,8 @@ public class CharacterSelection : MonoBehaviour
                 }
                 _enemySelection = c;
                 _enemySelection.SelectedAsEnemy();
-                _selection.SetEnemy(_enemySelection);
+                if (_selection != null)
+                    _selection.SetEnemy(_enemySelection);
                 _buttonsManager.SetEnemy(_enemySelection);
                 _buttonsManager.SetEnemyUI();
             }
