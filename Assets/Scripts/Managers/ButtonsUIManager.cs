@@ -82,7 +82,7 @@ public class ButtonsUIManager : MonoBehaviour
         playerHudContainer.SetActive(false);
         moveContainer.SetActive(false);
         actionMenu.SetActive(false);
-        bodyPartsButtonsContainer.SetActive(false);
+        DeactivateBodyPartsContainer();
         _buttonBodySelected = false;
         _buttonLArmSelected = false;
         _buttonRArmSelected = false;
@@ -182,8 +182,8 @@ public class ButtonsUIManager : MonoBehaviour
                 if (_partsSelected > 0)
                     _partsSelected--;
                 _buttonBodySelected = false;
-                DeterminateButtonsActivation();
             }
+            DeterminateButtonsActivation();
         }
     }
 
@@ -240,8 +240,8 @@ public class ButtonsUIManager : MonoBehaviour
                 if (_partsSelected > 0)
                     _partsSelected--;
                 _buttonLArmSelected = false;
-                DeterminateButtonsActivation();
             }
+            DeterminateButtonsActivation();
         }
     }
 
@@ -295,8 +295,8 @@ public class ButtonsUIManager : MonoBehaviour
                 if (_partsSelected > 0)
                     _partsSelected--;
                 _buttonRArmSelected = false;
-                DeterminateButtonsActivation();
             }
+            DeterminateButtonsActivation();
         }
     }
 
@@ -350,8 +350,8 @@ public class ButtonsUIManager : MonoBehaviour
                 if (_partsSelected > 0)
                     _partsSelected--;
                 _buttonLegsSelected = false;
-                DeterminateButtonsActivation();
             }
+            DeterminateButtonsActivation();
         }
     }
 
@@ -381,6 +381,7 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 var d = gun.DamageCalculation(_bulletsForBody);
                 _selectedEnemy.AttackBody(d);
+                _bulletsForBody = 0;
                 if (gun.AbilityUsed() == false)
                 {
                     gun.Ability();
@@ -393,6 +394,11 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 var d = gun.DamageCalculation(_bulletsForLArm);
                 _selectedEnemy.AttackLeftArm(d);
+                _bulletsForLArm = 0;
+                if (gun.AbilityUsed() == false)
+                {
+                    gun.Ability();
+                }
                 _selectedChar.DeactivateAttack();
             }
 
@@ -400,6 +406,11 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 var d = gun.DamageCalculation(_bulletsForRArm);
                 _selectedEnemy.AttackRightArm(d);
+                _bulletsForRArm = 0;
+                if (gun.AbilityUsed() == false)
+                {
+                    gun.Ability();
+                }
                 _selectedChar.DeactivateAttack();
             }
 
@@ -407,6 +418,11 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 var d = gun.DamageCalculation(_bulletsForLegs);
                 _selectedEnemy.AttackLegs(d);
+                _bulletsForLegs = 0;
+                if (gun.AbilityUsed() == false)
+                {
+                    gun.Ability();
+                }
                 _selectedChar.DeactivateAttack();
             }
         }
@@ -416,10 +432,13 @@ public class ButtonsUIManager : MonoBehaviour
             _selectedChar.ResetInRangeLists();
             _charSelection.CantSelectEnemy();
             DeactivateMoveButton();
-            bodyPartsButtonsContainer.SetActive(false);
+            DeactivateSelectEnemyButton();
+            DeactivateBodyPartsContainer();
             buttonExecuteAttack.interactable = false;
         }
     }
+
+
 
     public void SelectEnemy()
     {
@@ -432,6 +451,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedChar.IsMoving() == false)
         {
             _turnManager.EndTurn();
+            DeactivateActionsMenu();
             DeactivateEnemyHUD();
             DeactivatePlayerHUD();
             DeactivateMoveButton();
@@ -441,11 +461,30 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void DeselectUnit()
     {
+        var gun = _selectedChar.selectedGun;
+
+        if (_bulletsForBody > 0)
+            gun.IncreaseAvailableBullets(_bulletsForBody);
+
+        if (_bulletsForLArm > 0)
+            gun.IncreaseAvailableBullets(_bulletsForLArm);
+
+        if (_bulletsForRArm > 0)
+            gun.IncreaseAvailableBullets(_bulletsForRArm);
+
+        if (_bulletsForLegs > 0)
+            gun.IncreaseAvailableBullets(_bulletsForLegs);
+
         ResetBodyParts();
+
         DeactivatePlayerHUD();
+
         DeactivateEnemyHUD();
-        actionMenu.SetActive(false);
+
+        DeactivateActionsMenu();
+
         _charSelection.DeselectUnit();
+
         ActivateEndTurnButton();
     }
 
@@ -622,31 +661,34 @@ public class ButtonsUIManager : MonoBehaviour
         ShowPlayerHudText(playerBodyCurrHP, playerBodySlider, playerLeftArmCurrHP, playerLeftArmSlider, playerRightArmCurrHP, playerRightArmSlider, playerLegsCurrHP, playerLegsSlider);
 
         if (_selectedChar.HasEnemiesInRange())
-            buttonSelectEnemy.interactable = true;
-        else buttonSelectEnemy.interactable = false;
+            ActivateSelectEnemyButton();
+        else DeactivateSelectEnemyButton();
 
         playerHudContainer.SetActive(true);
-        actionMenu.SetActive(true);
+        ActivateActionsMenu();
+        DeactivateEndTurnButton();
     }
 
     public void DeactivatePlayerHUD()
     {
         playerHudContainer.SetActive(false);
         DeactivateMoveButton();
-        actionMenu.SetActive(true);
+        actionMenu.SetActive(false);
     }
 
     public void SetEnemyUI()
     {
-        bodyPartsButtonsContainer.SetActive(true);
+        ActivateBodyPartsContainer();
         ShowHUDSliders(_selectedEnemy, enemyBodySlider, enemyLeftArmSlider, enemyRightArmSlider, enemyLegsSlider);
         ShowUnitHudText(enemyBodyCurrHP, enemyBodySlider, enemyLeftArmCurrHP, enemyLeftArmSlider, enemyRightArmCurrHP, enemyRightArmSlider, enemyLegsCurrHP, enemyLegsSlider);
         enemyHudContainer.SetActive(true);
     }
 
+
+
     public void DeactivateEnemyHUD()
     {
-        bodyPartsButtonsContainer.SetActive(false);
+        DeactivateBodyPartsContainer();
         enemyHudContainer.SetActive(false);
     }
     void ShowPlayerHudText(TextMeshProUGUI bodyHpText, Slider bodySlider, TextMeshProUGUI lArmHpText, Slider lArmSlider, TextMeshProUGUI rArmHpText, Slider rArmSlider, TextMeshProUGUI legsHpText, Slider legsSlider)
@@ -764,11 +806,7 @@ public class ButtonsUIManager : MonoBehaviour
         _selectedChar = character;
     }
 
-    public void ActivateSelectButton()
-    {
-        buttonSelectEnemy.interactable = true;
-    }
-
+    #region Activators
     public void ActivateEndTurnButton()
     {
         buttonEndTurn.gameObject.SetActive(true);
@@ -778,4 +816,60 @@ public class ButtonsUIManager : MonoBehaviour
     {
         buttonEndTurn.gameObject.SetActive(false);
     }
+
+    public void ActivateDeselectButton()
+    {
+        buttonDeselectUnit.gameObject.SetActive(true);
+    }
+
+    public void DeactivateDeselectButton()
+    {
+        buttonDeselectUnit.gameObject.SetActive(false);
+    }
+
+    public void ActivateActionsMenu()
+    {
+        actionMenu.SetActive(true);
+    }
+
+    public void DeactivateActionsMenu()
+    {
+        actionMenu.SetActive(false);
+    }
+
+    public void ActivateSelectEnemyButton()
+    {
+        buttonSelectEnemy.interactable = true;
+    }
+
+    public void DeactivateSelectEnemyButton()
+    {
+        buttonSelectEnemy.interactable = false;
+    }
+
+    public void ActivateBodyPartsContainer()
+    {
+        buttonBody.interactable = true;
+        buttonBodyMinus.interactable = true;
+        buttonBodyX.interactable = true;
+
+        buttonLArm.interactable = true;
+        buttonLArmMinus.interactable = true;
+        buttonLArmX.interactable = true;
+
+        buttonRArm.interactable = true;
+        buttonRArmMinus.interactable = true;
+        buttonRArmX.interactable = true;
+
+        buttonLegs.interactable = true;
+        buttonLegsMinus.interactable = true;
+        buttonLegsX.interactable = true;
+        bodyPartsButtonsContainer.SetActive(true);
+    }
+
+    public void DeactivateBodyPartsContainer()
+    {
+        bodyPartsButtonsContainer.SetActive(false);
+    }
+    #endregion
 }

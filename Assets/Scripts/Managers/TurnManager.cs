@@ -113,11 +113,6 @@ public class TurnManager : Teams
         _buttonsManager.DeactivateExecuteAttackButton();
     }
 
-    public void UpdateHP(int currentHP, int maxHP)
-    {
-        _charSelect.UpdateHP(currentHP, maxHP);
-    }
-
     public void UnitCanBeAttacked(Character unit)
     {
         unit.MakeAttackable();

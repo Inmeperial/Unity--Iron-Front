@@ -17,8 +17,6 @@ public class CharacterSelection : MonoBehaviour
     private Character _enemySelection;
 
     public TextMeshProUGUI stepsCounter;
-    public TextMeshProUGUI enemyHpCounter;
-    public GameObject enemyHPContainer;
     public event Action OnCharacterSelect = delegate { };
     public event Action OnCharacterDeselect = delegate { };
 
@@ -81,13 +79,7 @@ public class CharacterSelection : MonoBehaviour
                 _enemySelection.SelectedAsEnemy();
                 _selection.SetEnemy(_enemySelection);
                 _buttonsManager.SetEnemy(_enemySelection);
-                enemyHPContainer.SetActive(true);
-                //enemyHpCounter.text = _enemySelection.GetHP() + " / " + _enemySelection.maxHp;
-                if (_selection.CanAttack())
-                {
-                    _buttonsManager.SetEnemyUI();
-                    //SetBodyPartsButtons(_enemySelection);
-                }
+                _buttonsManager.SetEnemyUI();
             }
         }
     }
@@ -128,7 +120,6 @@ public class CharacterSelection : MonoBehaviour
         if (_enemySelection)
         {
             _enemySelection.DeselectThisUnit();
-            enemyHPContainer.SetActive(false);
             _selection = null;
         }
     }
@@ -148,13 +139,6 @@ public class CharacterSelection : MonoBehaviour
     //    buttonRArm.onClick.AddListener(unit.AttackRightArm);
     //    buttonLegs.onClick.AddListener(unit.AttackLegs);
     //}
-
-
-
-    public void UpdateHP(int currentHP, int maxHP)
-    {
-        enemyHpCounter.text = currentHP + " / " + maxHP;
-    }
 
     public void CanSelectEnemy()
     {

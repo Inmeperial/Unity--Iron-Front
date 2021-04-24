@@ -34,11 +34,10 @@ public class BodyPartSelection : MonoBehaviour
 		{
 			return;
 		}
-
-		count--;
-		var bulletToRemove = myCounters[count];
+		var bulletToRemove = myCounters[count-1];
 		myCounters.Remove(bulletToRemove);
 		DestroyImmediate(bulletToRemove);
+		count--;
 	}
 
 	public void ClearCounters()

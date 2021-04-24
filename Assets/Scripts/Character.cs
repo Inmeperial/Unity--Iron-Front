@@ -161,6 +161,7 @@ public class Character : Teams
         if (_moving == false && _path != null && _path.Count > 0)
         {
             _moving = true;
+            _buttonsManager.DeactivateActionsMenu();
             _turnManager.UnitIsMoving();
             _highlight.characterMoving = true;
             _highlight.ClearTilesInRange(_tilesInMoveRange);
@@ -443,7 +444,9 @@ public class Character : Teams
 
         CheckEnemiesInAttackRange();
         if (_enemiesInRange.Count > 0)
-            _buttonsManager.ActivateSelectButton();
+            _buttonsManager.ActivateSelectEnemyButton();
+
+        _buttonsManager.ActivateActionsMenu();
     }
 
     public void ActivateMoveButton()
