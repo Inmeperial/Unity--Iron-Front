@@ -6,7 +6,6 @@ public class GridMovement : MonoBehaviour
 {
     List<Tile> _tilesList;
     int _tilesIndex;
-    bool _moveVertical = false;
     Character _character;
     private void Start()
     {
@@ -24,7 +23,6 @@ public class GridMovement : MonoBehaviour
         if(transform.position != _tilesList[_tilesList.Count-1].transform.position)
         {
             var newPos = _tilesList[tilesIndex].transform.position;
-            _moveVertical = false;
             newPos.y += transform.position.y;
             if ((newPos - transform.position).magnitude <= 0.1f)
             {
@@ -46,21 +44,4 @@ public class GridMovement : MonoBehaviour
             }
         }
     }
-
-    //IEnumerator MoveVertical(float finalYPosition, float speed)
-    //{
-    //    if (transform.position.y <= finalYPosition)
-    //    {
-    //        transform.position += Vector3.up * speed * Time.deltaTime;
-    //        yield return new WaitForEndOfFrame();
-    //        MoveVertical(finalYPosition, speed);
-    //    }
-    //    else
-    //    {
-    //        transform.position += Vector3.down * speed * Time.deltaTime;
-    //        yield return new WaitForEndOfFrame();
-    //        MoveVertical(finalYPosition, speed);
-    //    }
-    //    _moveVertical = true;
-    //}
 }

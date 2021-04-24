@@ -150,4 +150,9 @@ public class TileHighlight : MonoBehaviour
             }
         }
     }
+
+    public void PathLinesClear()
+    {
+        _lineRenderer.positionCount = 0;
+    }
 }

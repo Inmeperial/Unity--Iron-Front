@@ -29,6 +29,7 @@ public class GetNeighboursWindow : EditorWindow
                 tile.CheckIfTileAbove();
                 if (tile.HasTileAbove())
                     tile.MakeNotWalkableColor();
+                EditorUtility.SetDirty(tile);
             }
         }
 
@@ -42,7 +43,8 @@ public class GetNeighboursWindow : EditorWindow
                     tile.neighboursForMove.Clear();
                     tile.allNeighbours.Clear();
                     tile.GetNeighbours();
-                } 
+                }
+                EditorUtility.SetDirty(tile);
             }
         }
     }

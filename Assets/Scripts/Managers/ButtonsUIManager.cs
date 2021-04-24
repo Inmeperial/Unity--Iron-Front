@@ -97,7 +97,7 @@ public class ButtonsUIManager : MonoBehaviour
         moveContainer.SetActive(true);
         buttonMove.interactable = true;
         buttonUndo.interactable = true;
-        buttonEndTurn.gameObject.SetActive(false);
+        DeactivateEndTurnButton();
     }
 
     public void DeactivateMoveButton()
@@ -105,7 +105,7 @@ public class ButtonsUIManager : MonoBehaviour
         moveContainer.SetActive(false);
         buttonMove.interactable = false;
         buttonUndo.interactable = false;
-        buttonEndTurn.gameObject.SetActive(true);
+        //buttonEndTurn.gameObject.SetActive(true);
     }
 
     public void ActivateExecuteAttackButton()
@@ -120,14 +120,15 @@ public class ButtonsUIManager : MonoBehaviour
 
     void SetCharacterMovementButtons()
     {
-        buttonMove.onClick.RemoveAllListeners();
-        buttonMove.onClick.AddListener(_selectedChar.Move);
-        buttonUndo.onClick.RemoveAllListeners();
-        buttonUndo.onClick.AddListener(_selectedChar.pathCreator.UndoLastWaypoint);
-        //if (_selectedChar.HasEnemiesInRange())
-        //    buttonSelectEnemy.interactable = true;
-        //else buttonSelectEnemy.interactable = false;
-        buttonSelectEnemy.interactable = true;
+        if (_selectedChar.ThisUnitCanMove())
+        {
+            buttonMove.onClick.RemoveAllListeners();
+            buttonMove.onClick.AddListener(_selectedChar.Move);
+            buttonUndo.onClick.RemoveAllListeners();
+            buttonUndo.onClick.AddListener(_selectedChar.pathCreator.UndoLastWaypoint);
+            ActivateMoveButton();
+        }
+        else DeactivateMoveButton();
     }
     
 
@@ -413,6 +414,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedChar.CanAttack() == false)
         {
             _selectedChar.ResetInRangeLists();
+            _charSelection.CantSelectEnemy();
             DeactivateMoveButton();
             bodyPartsButtonsContainer.SetActive(false);
             buttonExecuteAttack.interactable = false;
@@ -421,7 +423,8 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void SelectEnemy()
     {
-        _charSelection.CanSelectEnemy();
+        if (_selectedChar != null && _selectedChar.CanAttack())
+            _charSelection.CanSelectEnemy();
     }
 
     public void EndTurn()
@@ -443,6 +446,7 @@ public class ButtonsUIManager : MonoBehaviour
         DeactivateEnemyHUD();
         actionMenu.SetActive(false);
         _charSelection.DeselectUnit();
+        ActivateEndTurnButton();
     }
 
     #endregion
@@ -617,9 +621,9 @@ public class ButtonsUIManager : MonoBehaviour
 
         ShowPlayerHudText(playerBodyCurrHP, playerBodySlider, playerLeftArmCurrHP, playerLeftArmSlider, playerRightArmCurrHP, playerRightArmSlider, playerLegsCurrHP, playerLegsSlider);
 
-        if (_selectedChar.ThisUnitCanMove())
-            ActivateMoveButton();
-        else DeactivateMoveButton();
+        if (_selectedChar.HasEnemiesInRange())
+            buttonSelectEnemy.interactable = true;
+        else buttonSelectEnemy.interactable = false;
 
         playerHudContainer.SetActive(true);
         actionMenu.SetActive(true);
@@ -758,5 +762,20 @@ public class ButtonsUIManager : MonoBehaviour
     public void SetPlayerCharacter(Character character)
     {
         _selectedChar = character;
+    }
+
+    public void ActivateSelectButton()
+    {
+        buttonSelectEnemy.interactable = true;
+    }
+
+    public void ActivateEndTurnButton()
+    {
+        buttonEndTurn.gameObject.SetActive(true);
+    }
+
+    public void DeactivateEndTurnButton()
+    {
+        buttonEndTurn.gameObject.SetActive(false);
     }
 }

@@ -197,8 +197,6 @@ public abstract class Gun : MonoBehaviour, IGun
         var c = 100 - _critChance;
         _critRoulette.Add("Normal", c > 0 ? c : 0);
 
-
-        Debug.Log("hit: " + _hitChance);
         _hitRoulette.Add("Hit", _hitChance);
         var h = 100 - _hitChance;
         _hitRoulette.Add("Miss", h > 0 ? h : 0);

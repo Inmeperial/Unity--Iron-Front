@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class CharacterSelection : MonoBehaviour
 {
@@ -35,8 +36,12 @@ public class CharacterSelection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && _canSelectUnit)
-            SelectCharacter(charMask);
+        if (EventSystem.current.IsPointerOverGameObject() == false)
+        {
+            if (Input.GetMouseButtonDown(0) && _canSelectUnit)
+                SelectCharacter(charMask);
+        }
+        
 
         if (_selection)
         {
@@ -57,7 +62,6 @@ public class CharacterSelection : MonoBehaviour
                 if (_selection != null && _selection != c)
                 {
                     _buttonsManager.DeselectUnit();
-                    _selection.DeselectThisUnit();
                 }
                 _selection = c;
                 _selection.SelectThisUnit();
@@ -155,5 +159,10 @@ public class CharacterSelection : MonoBehaviour
     public void CanSelectEnemy()
     {
         _selectingEnemy = true;
+    }
+
+    public void CantSelectEnemy()
+    {
+        _selectingEnemy = false;
     }
 }

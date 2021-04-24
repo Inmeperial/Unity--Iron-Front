@@ -383,8 +383,8 @@ public class Character : Teams
         {
             _turnManager.UnitCantBeAttacked(item);
         }
-        GetPath();
         ResetInRangeLists();
+        GetPath();
         if (_path.Count > 0)
         {
             PaintTilesInMoveRange(_path[_path.Count - 1].neighboursForMove, 0);
@@ -408,6 +408,7 @@ public class Character : Teams
         }
         _tilesInAttackRange.Clear();
         _enemiesInRange.Clear();
+        _path.Clear();
     }
     public void NewTurn()
     {
@@ -441,6 +442,8 @@ public class Character : Teams
         pathCreator.Reset();
 
         CheckEnemiesInAttackRange();
+        if (_enemiesInRange.Count > 0)
+            _buttonsManager.ActivateSelectButton();
     }
 
     public void ActivateMoveButton()
@@ -467,15 +470,22 @@ public class Character : Teams
     {
         Material mat = new Material(_render.sharedMaterial);
         mat.color = Color.blue;
-
         _render.sharedMaterial = mat;
+
         _selected = true;
-        //CheckCloseEnemies();
-        PaintTilesInAttackRange(_myPositionTile.allNeighbours, 0);
-        CheckEnemiesInAttackRange();
+        ResetInRangeLists();
+        _highlight.PathLinesClear();
+        Debug.Log("can move: " + _canMove);
+        if (_canAttack)
+        {
+            PaintTilesInAttackRange(_myPositionTile.allNeighbours, 0);
+            CheckEnemiesInAttackRange();
+        }
         if (_canMove)
+        {
+            _currentSteps = _MaxSteps;
             PaintTilesInMoveRange(_myPositionTile.neighboursForMove, 0);
-        //PaintTilesInAttackRange(_myPositionTile.allNeighbours, 0);
+        }
     }
 
     public void DeselectThisUnit()
@@ -489,7 +499,11 @@ public class Character : Teams
         {
             _turnManager.UnitCantBeAttacked(item);
         }
+
+        if (_canMove)
+            _currentSteps = _MaxSteps;
         ResetInRangeLists();
+        _highlight.PathLinesClear();
     }
 
     public void SelectedAsEnemy()
@@ -562,20 +576,21 @@ public class Character : Teams
     //    }
     //}
 
-    int CalculateDistanceToEnemie(Character enemy, Tile from)
-    {
-        _agent.init = from;
-        _agent.finit = enemy.GetTileBelow();
+    //int CalculateDistanceToEnemie(Character enemy, Tile from)
+    //{
+    //    _agent.init = from;
+    //    _agent.finit = enemy.GetTileBelow();
 
-        var path = _agent.PathFindingAstar();
+    //    var path = _agent.PathFindingAstar();
 
-        return path.Count-1;
-    }
+    //    return path.Count-1;
+    //}
 
     void CheckEnemiesInAttackRange()
     {
         if (_tilesInAttackRange != null && _tilesInAttackRange.Count > 0)
         {
+            _enemiesInRange.Clear();
             foreach (var item in _tilesInAttackRange)
             {
                 if (item.IsFree() == false)
