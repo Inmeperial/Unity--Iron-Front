@@ -92,8 +92,14 @@ public class ButtonsUIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(deselectKey))
+        if (_selectedChar != null && _selectedChar.IsMoving() == false && Input.GetKeyDown(deselectKey))
             DeselectUnit();
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            UnitSwapToLeftGun();
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            UnitSwapToRightGun();
     }
 
     #region ButtonsActions
@@ -149,7 +155,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (CharacterHasBullets(_selectedChar))
         {
-            var gun = _selectedChar.selectedGun;
+            var gun = _selectedChar.GetSelectedGun();
             if (_partsSelected <= gun.GetAvailableSelections())
             {
                 if (_bulletsForBody == 0)
@@ -176,7 +182,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForBody > 0)
         {
-            var gun = _selectedChar.selectedGun;
+            var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets();
             _bulletsForBody = _bulletsForBody > 0 ? (_bulletsForBody - gun.BulletsPerClick()) : 0;
             DeleteBulletInUI(buttonBody, gun.BulletsPerClick());
@@ -195,10 +201,11 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForBody > 0)
         {
-            var gun = _selectedChar.selectedGun;
+            var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets(_bulletsForBody);
             _bulletsForBody = 0;
             _buttonBodySelected = false;
+            ClearBulletsInUI(buttonBody);
             if (_partsSelected > 0)
                 _partsSelected--;
             CheckIfCanExecuteAttack();
@@ -210,8 +217,8 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (CharacterHasBullets(_selectedChar))
         {
-            var gun = _selectedChar.selectedGun;
-            if (_partsSelected <= _selectedChar.selectedGun.GetAvailableSelections())
+            var gun = _selectedChar.GetSelectedGun();
+            if (_partsSelected <= gun.GetAvailableSelections())
             {
                 if (_bulletsForLArm == 0)
                 {
@@ -234,7 +241,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForLArm > 0)
         {
-            var gun = _selectedChar.selectedGun;
+            var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets();
             _bulletsForLArm = _bulletsForLArm > 0 ? (_bulletsForLArm - gun.BulletsPerClick()) : 0;
             DeleteBulletInUI(buttonLArm, gun.BulletsPerClick());
@@ -253,10 +260,11 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForLArm > 0)
         {
-            var gun = _selectedChar.selectedGun;
+            var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets(_bulletsForLArm);
             _bulletsForLArm = 0;
             _buttonLArmSelected = false;
+            ClearBulletsInUI(buttonLArm);
             if (_partsSelected > 0)
                 _partsSelected--;
             CheckIfCanExecuteAttack();
@@ -268,8 +276,8 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (CharacterHasBullets(_selectedChar))
         {
-            var gun = _selectedChar.selectedGun;
-            if (_partsSelected <= _selectedChar.selectedGun.GetAvailableSelections())
+            var gun = _selectedChar.GetSelectedGun();
+            if (_partsSelected <= gun.GetAvailableSelections())
             {
                 if (_bulletsForRArm == 0)
                 {
@@ -289,7 +297,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForRArm > 0)
         {
-            var gun = _selectedChar.selectedGun;
+            var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets();
             _bulletsForRArm = _bulletsForRArm > 0 ? (_bulletsForRArm - gun.BulletsPerClick()) : 0;
             DeleteBulletInUI(buttonRArm, gun.BulletsPerClick());
@@ -308,10 +316,11 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForRArm > 0)
         {
-            var gun = _selectedChar.selectedGun;
+            var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets(_bulletsForRArm);
             _bulletsForRArm = 0;
             _buttonRArmSelected = false;
+            ClearBulletsInUI(buttonRArm);
             if (_partsSelected > 0)
                 _partsSelected--;
             CheckIfCanExecuteAttack();
@@ -323,8 +332,8 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (CharacterHasBullets(_selectedChar))
         {
-            var gun = _selectedChar.selectedGun;
-            if (_partsSelected <= _selectedChar.selectedGun.GetAvailableSelections())
+            var gun = _selectedChar.GetSelectedGun();
+            if (_partsSelected <= gun.GetAvailableSelections())
             {
                 if (_bulletsForLegs == 0)
                 {
@@ -344,7 +353,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForLegs > 0)
         {
-            var gun = _selectedChar.selectedGun;
+            var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets();
             _bulletsForLegs = _bulletsForLegs > 0 ? (_bulletsForLegs - gun.BulletsPerClick()) : 0;
             DeleteBulletInUI(buttonLegs, gun.BulletsPerClick());
@@ -363,10 +372,11 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForLegs > 0)
         {
-            var gun = _selectedChar.selectedGun;
+            var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets(_bulletsForLegs);
             _bulletsForLegs = 0;
             _buttonLegsSelected = false;
+            ClearBulletsInUI(buttonLegs);
             if (_partsSelected > 0)
                 _partsSelected--;
             CheckIfCanExecuteAttack();
@@ -380,11 +390,11 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedEnemy != null)
         {
-            var gun = _selectedChar.selectedGun;
+            var gun = _selectedChar.GetSelectedGun();
             if (_bulletsForBody > 0)
             {
                 var d = gun.DamageCalculation(_bulletsForBody);
-                _selectedEnemy.AttackBody(d);
+                _selectedEnemy.TakeDamageBody(d);
                 _bulletsForBody = 0;
                 if (gun.AbilityUsed() == false)
                 {
@@ -397,8 +407,9 @@ public class ButtonsUIManager : MonoBehaviour
             if (_bulletsForLArm > 0)
             {
                 var d = gun.DamageCalculation(_bulletsForLArm);
-                _selectedEnemy.AttackLeftArm(d);
+                _selectedEnemy.TakeDamageLeftArm(d);
                 _bulletsForLArm = 0;
+                
                 if (gun.AbilityUsed() == false)
                 {
                     gun.Ability();
@@ -409,7 +420,7 @@ public class ButtonsUIManager : MonoBehaviour
             if (_bulletsForRArm > 0)
             {
                 var d = gun.DamageCalculation(_bulletsForRArm);
-                _selectedEnemy.AttackRightArm(d);
+                _selectedEnemy.TakeDamageRightArm(d);
                 _bulletsForRArm = 0;
                 if (gun.AbilityUsed() == false)
                 {
@@ -421,7 +432,7 @@ public class ButtonsUIManager : MonoBehaviour
             if (_bulletsForLegs > 0)
             {
                 var d = gun.DamageCalculation(_bulletsForLegs);
-                _selectedEnemy.AttackLegs(d);
+                _selectedEnemy.TakeDamageLegs(d);
                 _bulletsForLegs = 0;
                 if (gun.AbilityUsed() == false)
                 {
@@ -465,7 +476,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedChar != null)
         {
-            var gun = _selectedChar.selectedGun;
+            var gun = _selectedChar.GetSelectedGun();
 
             if (_bulletsForBody > 0)
                 gun.IncreaseAvailableBullets(_bulletsForBody);
@@ -496,6 +507,32 @@ public class ButtonsUIManager : MonoBehaviour
     {
         DeselectActions();
         _charSelection.DeselectUnit();
+    }
+
+    public void UnitSwapToLeftGun()
+    {
+        if (_selectedChar != null)
+        {
+            BodyClear();
+            LeftArmClear();
+            RightArmClear();
+            LegsClear();
+            _selectedChar.SelectLeftGun();
+            ShowPlayerHudText(playerBodyCurrHP, playerBodySlider, playerLeftArmCurrHP, playerLeftArmSlider, playerRightArmCurrHP, playerRightArmSlider, playerLegsCurrHP, playerLegsSlider);
+        }
+    }
+
+    public void UnitSwapToRightGun()
+    {
+        if (_selectedChar != null)
+        {
+            BodyClear();
+            LeftArmClear();
+            RightArmClear();
+            LegsClear();
+            _selectedChar.SelectRightGun();
+            ShowPlayerHudText(playerBodyCurrHP, playerBodySlider, playerLeftArmCurrHP, playerLeftArmSlider, playerRightArmCurrHP, playerRightArmSlider, playerLegsCurrHP, playerLegsSlider);
+        }
     }
 
     #endregion
@@ -554,9 +591,14 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    void ClearBulletsInUI(Button button)
+    {
+        button.GetComponent<BodyPartSelection>().ClearCounters();
+    }
+
     bool CharacterHasBullets(Character c)
     {
-        if (c.selectedGun.GetAvailableBullets() > 0)
+        if (c.GetSelectedGun().GetAvailableBullets() > 0)
             return true;
         else return false;
     }
@@ -573,7 +615,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedChar != null)
         {
-            if (_selectedChar.selectedGun.GetAvailableBullets() <= 0 || _partsSelected == _selectedChar.selectedGun.GetAvailableSelections())
+            if (_selectedChar.GetSelectedGun().GetAvailableBullets() <= 0 || _partsSelected == _selectedChar.GetSelectedGun().GetAvailableSelections())
             {
                 if (_buttonBodySelected == false)
                 {
@@ -605,7 +647,7 @@ public class ButtonsUIManager : MonoBehaviour
 
                 buttonExecuteAttack.interactable = true;
             }
-            else if (_partsSelected < _selectedChar.selectedGun.GetAvailableSelections())
+            else if (_partsSelected < _selectedChar.GetSelectedGun().GetAvailableSelections())
             {
                 if (!_buttonBodySelected)
                 {
@@ -675,7 +717,7 @@ public class ButtonsUIManager : MonoBehaviour
 
         ShowPlayerHudText(playerBodyCurrHP, playerBodySlider, playerLeftArmCurrHP, playerLeftArmSlider, playerRightArmCurrHP, playerRightArmSlider, playerLegsCurrHP, playerLegsSlider);
 
-        if (_selectedChar.HasEnemiesInRange())
+        if (_selectedChar.CanAttack() && _selectedChar.HasEnemiesInRange() && _selectedEnemy != null)
             ActivateBodyPartsContainer();
         //else DeactivateBodyPartsContainer();
 
@@ -692,7 +734,11 @@ public class ButtonsUIManager : MonoBehaviour
     public void SetEnemyUI()
     {
         if (_selectedChar != null)
-            ActivateBodyPartsContainer();
+        {
+            if (_selectedEnemy.CanBeAttacked())
+                ActivateBodyPartsContainer();
+            else DeactivateBodyPartsContainer();
+        }
         ShowHUDSliders(_selectedEnemy, enemyBodySlider, enemyLeftArmSlider, enemyRightArmSlider, enemyLegsSlider);
         ShowUnitHudText(enemyBodyCurrHP, enemyBodySlider, enemyLeftArmCurrHP, enemyLeftArmSlider, enemyRightArmCurrHP, enemyRightArmSlider, enemyLegsCurrHP, enemyLegsSlider);
         enemyHudContainer.SetActive(true);
@@ -709,7 +755,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         ShowUnitHudText(bodyHpText, bodySlider, lArmHpText, lArmSlider, rArmHpText, rArmSlider, legsHpText, legsSlider);
 
-        var gun = _selectedChar.selectedGun;
+        var gun = _selectedChar.GetSelectedGun();
 
         gunTypeText.text = gun.GetGunTypeString();
 

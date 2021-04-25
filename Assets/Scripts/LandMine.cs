@@ -11,7 +11,7 @@ public class LandMine : MonoBehaviour
         var obj = other.GetComponent<Character>();
         if (obj)
         {
-            obj.AttackLegs(damage);
+            obj.TakeDamageLegs(damage);
 
             Destroy(gameObject);
         }

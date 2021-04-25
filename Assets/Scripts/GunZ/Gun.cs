@@ -14,8 +14,10 @@ public abstract class Gun : MonoBehaviour, IGun
     };
 
     [Header("Weapon")]
-    [SerializeField] protected GunType _gunType;
     [SerializeField] protected GunSO _data;
+
+    [Header("DON'T MODIFY BELOW THIS")]
+    [SerializeField] protected GunType _gunType;
     protected string _gun;
     [SerializeField] protected int _maxBullets;
     [SerializeField] protected int _availableBullets;
@@ -38,6 +40,15 @@ public abstract class Gun : MonoBehaviour, IGun
     {
         SetGun();
         StartRoulette();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log("apreto f");
+            Ability();
+        }
     }
 
     public int GetMaxBullets()
@@ -158,7 +169,6 @@ public abstract class Gun : MonoBehaviour, IGun
             //Determines if bullet hits.
             var h = _roulette.ExecuteAction(_hitRoulette);
 
-            Debug.Log("h es= " + h);
             if (h == "Hit")
             {
                 //Determines if it crits or not.

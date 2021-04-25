@@ -59,7 +59,6 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
 
     public List<Tile> GetPath()
     {
-        Debug.Log("full move path " + _fullMovePath.Count);
         return _fullMovePath;
     }
 

@@ -60,10 +60,18 @@ public class CharacterSelection : MonoBehaviour
                 if (_selection != null && _selection != c)
                 {
                     _buttonsManager.DeselectActions();
+                    _selection.DeselectThisUnit();
+                    if (_enemySelection != null)
+                    {
+                        _selection.SetEnemy(null);
+                        _enemySelection.DeselectThisUnit();
+                        _enemySelection = null;
+                    }
                 }
                 _selection = c;
                 _selection.SelectThisUnit();
                 _highlight.ChangeActiveCharacter(_selection);
+//                if (_enemySelection != null)
                 _buttonsManager.SetPlayerCharacter(_selection);
                 _buttonsManager.SetPlayerUI();
                 stepsCounter.text = _selection.GetSteps().ToString();

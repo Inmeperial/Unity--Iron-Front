@@ -10,8 +10,9 @@ public class Shotgun : Gun
     string[] _parts = { "Body", "LArm", "RArm", "Legs" };
     public override void Ability()
     {
+        Debug.Log("ability used");
         var m = _roulette.ExecuteAction(_multipleHitRoulette);
-
+        Debug.Log("string: " + m);
         _abilityUsed = true;
         if (m == "Multiple")
         {
