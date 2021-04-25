@@ -31,7 +31,7 @@ public class Character : Teams
 
 
     [Header("Movement")]
-    [SerializeField] private int _MaxSteps;
+    [SerializeField] private int _maxSteps;
     [SerializeField] private int _currentSteps;
     [SerializeField] private float _speed;
     #endregion
@@ -57,7 +57,6 @@ public class Character : Teams
     //OTHERS
     private List<Tile> _tilesInAttackRange = new List<Tile>();
     private List<Character> _enemiesInRange = new List<Character>();
-    private Character _enemy;
     private MeshRenderer _render;
 
     private TurnManager _turnManager;
@@ -65,9 +64,6 @@ public class Character : Teams
     private TileHighlight _highlight;
 
     private ButtonsUIManager _buttonsManager;
-
-    private AStarAgent _agent;
-
 
     // Start is called before the first frame update
     void Start()
@@ -77,7 +73,7 @@ public class Character : Teams
         _rightArmHP = _rightArmMaxHP;
         _legsHP = _legsMaxHP;
         _canMove = _legsHP > 0 ? true : false;
-        _currentSteps = _canMove ? _MaxSteps : 0;
+        _currentSteps = _canMove ? _maxSteps : 0;
         _selected = false;
         _canAttack = true;
         _move = GetComponent<GridMovement>();
@@ -87,7 +83,6 @@ public class Character : Teams
         _myPositionTile.MakeTileOccupied();
         _myPositionTile.SetUnitAbove(this);
         _highlight = FindObjectOfType<TileHighlight>();
-        _agent = FindObjectOfType<AStarAgent>();
         _buttonsManager = FindObjectOfType<ButtonsUIManager>();
         pathCreator = GetComponent<IPathCreator>();
 
@@ -156,6 +151,7 @@ public class Character : Teams
         {
             _moving = true;
             _buttonsManager.DeactivateBodyPartsContainer();
+            _buttonsManager.DeactivateMoveContainer();
             _turnManager.UnitIsMoving();
             _highlight.characterMoving = true;
             _highlight.ClearTilesInRange(_tilesInMoveRange);
@@ -273,13 +269,14 @@ public class Character : Teams
             {
                 _targetTile = newTile;
                 pathCreator.Calculate(this, _targetTile, _currentSteps);
-                if (pathCreator.GetDistance() <= _MaxSteps)
+                if (pathCreator.GetDistance() <= _maxSteps)
                 {
                     _path = pathCreator.GetPath();
                     if (_path.Count > 0)
                     {
                         _highlight.PathPreview(_path);
-                        ActivateMoveButton();
+                        _buttonsManager.ActivateMoveButton();
+                        _buttonsManager.ActivateUndo();
                         _highlight.ClearTilesInRange(_tilesInAttackRange);
                         _highlight.ClearTilesInRange(_tilesInMoveRange);
                         _highlight.CreatePathLines(_path);
@@ -397,9 +394,14 @@ public class Character : Teams
         Debug.Log("path count: " + _path.Count);
         if (_path.Count > 0)
         {
+            _buttonsManager.ActivateUndo();
             PaintTilesInMoveRange(_path[_path.Count - 1].neighboursForMove, 0);
         }
-        else PaintTilesInMoveRange(_myPositionTile.neighboursForMove, 0);
+        else
+        {
+            _buttonsManager.DeactivateUndo();
+            PaintTilesInMoveRange(_myPositionTile.neighboursForMove, 0);
+        }
 
     }
 
@@ -431,7 +433,7 @@ public class Character : Teams
         _canAttack = true;
         _selectedGun.SetGun();
         _path.Clear();
-        _currentSteps = _canMove ? _MaxSteps : 0;
+        _currentSteps = _canMove ? _maxSteps : 0;
         _enemiesInRange.Clear();
         MakeNotAttackable();
         pathCreator.ResetPath();
@@ -459,24 +461,16 @@ public class Character : Teams
         CheckEnemiesInAttackRange();
     }
 
-    public void ActivateMoveButton()
-    {
-        _turnManager.ActivateMoveButton();
-    }
-
-    public void DeactivateMoveButton()
-    {
-        _turnManager.DeactivateMoveButton();
-    }
-
     public void ReduceAvailableSteps(int amount)
     {
-        _currentSteps -= amount;
+        var s = _currentSteps - amount;
+        _currentSteps = s >= 0 ? s : 0;
     }
 
     public void IncreaseAvailableSteps(int amount)
     {
-        _currentSteps += amount;
+        var s = _currentSteps + amount;
+        _currentSteps = s <= _maxSteps ? s : _maxSteps;
     }
 
     public void SelectThisUnit()
@@ -496,7 +490,7 @@ public class Character : Teams
         }
         if (_canMove)
         {
-            _currentSteps = _MaxSteps;
+            _currentSteps = _maxSteps;
             AddTilesInMoveRange();
             PaintTilesInMoveRange(_myPositionTile.neighboursForMove, 0);
         }
@@ -515,10 +509,11 @@ public class Character : Teams
         }
 
         if (_canMove)
-            _currentSteps = _MaxSteps;
+            _currentSteps = _maxSteps;
         ResetInRangeLists();
         _path.Clear();
         _highlight.PathLinesClear();
+        pathCreator.ResetPath();
     }
 
     public void SelectedAsEnemy()
@@ -580,11 +575,6 @@ public class Character : Teams
         return _moving;
     }
 
-    public void SetEnemy(Character enemy)
-    {
-        _enemy = enemy;
-    }
-
     public void SetTargetTile(Tile target)
     {
         _targetTile = target;
@@ -616,6 +606,10 @@ public class Character : Teams
         _canMove = false;
     }
 
+    public void DeactivateMoveButton()
+    {
+        _buttonsManager.DeactivateMoveButton();
+    }
     #endregion
 
 

@@ -56,36 +56,30 @@ public class CharacterSelection : MonoBehaviour
             var c = character.GetComponent<Character>();
             if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
             {
-                //Check if i have a previous unit and deselect it.
-                if (_selection != null && _selection != c)
-                {
-                    _buttonsManager.DeselectActions();
+                _buttonsManager.DeselectActions();
+                if (_selection != null)
                     _selection.DeselectThisUnit();
-                    if (_enemySelection != null)
-                    {
-                        _selection.SetEnemy(null);
-                        _enemySelection.DeselectThisUnit();
-                        _enemySelection = null;
-                    }
+                if (_enemySelection != null)
+                {
+                    _enemySelection.DeselectThisUnit();
+                    _enemySelection = null;
                 }
                 _selection = c;
                 _selection.SelectThisUnit();
                 _highlight.ChangeActiveCharacter(_selection);
-//                if (_enemySelection != null)
+                _buttonsManager.DeactivateUndo();
                 _buttonsManager.SetPlayerCharacter(_selection);
                 _buttonsManager.SetPlayerUI();
                 stepsCounter.text = _selection.GetSteps().ToString();
             }
             else
             {
-                if (_enemySelection != null && c != _enemySelection)
+                if (_enemySelection != null)
                 {
                     _enemySelection.DeselectThisUnit();
                 }
                 _enemySelection = c;
                 _enemySelection.SelectedAsEnemy();
-                if (_selection != null)
-                    _selection.SetEnemy(_enemySelection);
                 _buttonsManager.SetEnemy(_enemySelection);
                 _buttonsManager.SetEnemyUI();
             }
@@ -120,6 +114,7 @@ public class CharacterSelection : MonoBehaviour
 
     public void DeselectUnit()
     {
+        Debug.Log("entro al deselect unit del char selection");
         if (_selection)
         {
             _selection.DeselectThisUnit();
@@ -127,26 +122,11 @@ public class CharacterSelection : MonoBehaviour
         }
         if (_enemySelection)
         {
+            Debug.Log("deselect enemy");
             _enemySelection.DeselectThisUnit();
-            _selection = null;
+            _enemySelection = null;
         }
     }
-
-    //void ClearBodyPartsButtons()
-    //{
-    //    buttonBody.onClick.RemoveListener(_enemySelection.AttackBody);
-    //    buttonLArm.onClick.RemoveListener(_enemySelection.AttackLeftArm);
-    //    buttonRArm.onClick.RemoveListener(_enemySelection.AttackRightArm);
-    //    buttonLegs.onClick.RemoveListener(_enemySelection.AttackLegs);
-    //}
-
-    //void SetBodyPartsButtons(Character unit)
-    //{
-    //    buttonBody.onClick.AddListener(unit.AttackBody);
-    //    buttonLArm.onClick.AddListener(unit.AttackLeftArm);
-    //    buttonRArm.onClick.AddListener(unit.AttackRightArm);
-    //    buttonLegs.onClick.AddListener(unit.AttackLegs);
-    //}
 
     public void CanSelectEnemy()
     {

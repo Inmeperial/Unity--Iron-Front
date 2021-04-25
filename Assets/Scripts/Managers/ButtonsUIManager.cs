@@ -13,7 +13,8 @@ public class ButtonsUIManager : MonoBehaviour
     public Button buttonEndTurn;
 
     public KeyCode deselectKey;
-
+    public KeyCode selectLGunKey;
+    public KeyCode selectRGunKey;
 
 
     #region Buttons
@@ -92,42 +93,19 @@ public class ButtonsUIManager : MonoBehaviour
 
     private void Update()
     {
-        if (_selectedChar != null && _selectedChar.IsMoving() == false && Input.GetKeyDown(deselectKey))
+        if ((_selectedChar != null && _selectedChar.IsMoving() == false) || _selectedEnemy != null && Input.GetKeyDown(deselectKey))
             DeselectUnit();
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(selectLGunKey))
             UnitSwapToLeftGun();
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(selectRGunKey))
             UnitSwapToRightGun();
     }
 
     #region ButtonsActions
-    public void ActivateMoveButton()
-    {
-        moveContainer.SetActive(true);
-        buttonMove.interactable = true;
-        buttonUndo.interactable = true;
-        DeactivateEndTurnButton();
-    }
 
-    public void DeactivateMoveButton()
-    {
-        moveContainer.SetActive(false);
-        buttonMove.interactable = false;
-        buttonUndo.interactable = false;
-        //buttonEndTurn.gameObject.SetActive(true);
-    }
-
-    public void ActivateExecuteAttackButton()
-    {
-        buttonExecuteAttack.interactable = true;
-    }
-
-    public void DeactivateExecuteAttackButton()
-    {
-        buttonExecuteAttack.interactable = false;
-    }
+   
 
     void SetCharacterMovementButtons()
     {
@@ -137,9 +115,10 @@ public class ButtonsUIManager : MonoBehaviour
             buttonMove.onClick.AddListener(_selectedChar.Move);
             buttonUndo.onClick.RemoveAllListeners();
             buttonUndo.onClick.AddListener(_selectedChar.pathCreator.UndoLastWaypoint);
-            ActivateMoveButton();
+            ActivateMoveContainer();
+            DeactivateMoveButton();
         }
-        else DeactivateMoveButton();
+        else DeactivateMoveContainer();
     }
     
 
@@ -446,7 +425,7 @@ public class ButtonsUIManager : MonoBehaviour
         {
             _selectedChar.ResetInRangeLists();
             _charSelection.CantSelectEnemy();
-            DeactivateMoveButton();
+            DeactivateMoveContainer();
             DeactivateBodyPartsContainer();
             buttonExecuteAttack.interactable = false;
         }
@@ -467,7 +446,7 @@ public class ButtonsUIManager : MonoBehaviour
             _turnManager.EndTurn();
             DeactivateEnemyHUD();
             DeactivatePlayerHUD();
-            DeactivateMoveButton();
+            DeactivateMoveContainer();
             ResetBodyParts();
         }
     }
@@ -709,8 +688,6 @@ public class ButtonsUIManager : MonoBehaviour
     #region HUD Text
     public void SetPlayerUI()
     {
-        if (_selectedEnemy != null)
-            _selectedChar.SetEnemy(_selectedEnemy);
         SetCharacterMovementButtons();
 
         ShowHUDSliders(_selectedChar, playerBodySlider, playerLeftArmSlider, playerRightArmSlider, playerLegsSlider);
@@ -719,7 +696,6 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_selectedChar.CanAttack() && _selectedChar.HasEnemiesInRange() && _selectedEnemy != null)
             ActivateBodyPartsContainer();
-        //else DeactivateBodyPartsContainer();
 
         playerHudContainer.SetActive(true);
         DeactivateEndTurnButton();
@@ -728,7 +704,7 @@ public class ButtonsUIManager : MonoBehaviour
     public void DeactivatePlayerHUD()
     {
         playerHudContainer.SetActive(false);
-        DeactivateMoveButton();
+        DeactivateMoveContainer();
     }
 
     public void SetEnemyUI()
@@ -742,6 +718,7 @@ public class ButtonsUIManager : MonoBehaviour
         ShowHUDSliders(_selectedEnemy, enemyBodySlider, enemyLeftArmSlider, enemyRightArmSlider, enemyLegsSlider);
         ShowUnitHudText(enemyBodyCurrHP, enemyBodySlider, enemyLeftArmCurrHP, enemyLeftArmSlider, enemyRightArmCurrHP, enemyRightArmSlider, enemyLegsCurrHP, enemyLegsSlider);
         enemyHudContainer.SetActive(true);
+        DeactivateEndTurnButton();
     }
 
 
@@ -900,6 +877,46 @@ public class ButtonsUIManager : MonoBehaviour
     public void DeactivateBodyPartsContainer()
     {
         bodyPartsButtonsContainer.SetActive(false);
+    }
+
+    public void ActivateUndo()
+    {
+        buttonUndo.interactable = true;
+    }
+
+    public void DeactivateUndo()
+    {
+        buttonUndo.interactable = false;
+    }
+
+    public void ActivateMoveContainer()
+    {
+        moveContainer.SetActive(true);
+        DeactivateEndTurnButton();
+    }
+
+    public void DeactivateMoveContainer()
+    {
+        moveContainer.SetActive(false);
+    }
+    public void ActivateMoveButton()
+    {
+        buttonMove.interactable = true;
+    }
+
+    public void DeactivateMoveButton()
+    {
+        buttonMove.interactable = false;
+    }
+
+    public void ActivateExecuteAttackButton()
+    {
+        buttonExecuteAttack.interactable = true;
+    }
+
+    public void DeactivateExecuteAttackButton()
+    {
+        buttonExecuteAttack.interactable = false;
     }
     #endregion
 }

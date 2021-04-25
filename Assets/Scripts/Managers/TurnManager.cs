@@ -31,13 +31,12 @@ public class TurnManager : Teams
     public void UnitIsMoving()
     {
         _charSelect.ActivateCharacterSelection(false);
-        DeactivateMoveButton();
     }
 
     public void UnitStoppedMoving()
     {
         _charSelect.ActivateCharacterSelection(true);
-        _buttonsManager.DeactivateMoveButton();
+        _buttonsManager.DeactivateMoveContainer();
     }
 
     void SeparateByTeam(Character[] units)
@@ -93,26 +92,6 @@ public class TurnManager : Teams
         return _activeTeam;
     }
 
-    public void ActivateMoveButton()
-    {
-        _buttonsManager.ActivateMoveButton();
-    }
-
-    public void DeactivateMoveButton()
-    {
-        _buttonsManager.DeactivateMoveButton();
-    }
-
-    public void ActivateAttackButton()
-    {
-        _buttonsManager.ActivateExecuteAttackButton();
-    }
-
-    public void DeactivateAttackButton()
-    {
-        _buttonsManager.DeactivateExecuteAttackButton();
-    }
-
     public void UnitCanBeAttacked(Character unit)
     {
         unit.MakeAttackable();
@@ -127,9 +106,4 @@ public class TurnManager : Teams
     {
         return unit.GetTileBelow();
     }
-
-    //public void DamageEnemy(Character unit, int damage)
-    //{
-    //    unit.TakeDamage(damage);
-    //}
 }
