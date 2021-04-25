@@ -31,26 +31,41 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         _agent.finit = end;
         var temp = _agent.PathFindingAstar();
 
-        temp.RemoveAt(0);
-        if (temp.Count <= distance)
+        if (_fullMovePath.Count > 0)
         {
-            foreach (var item in temp)
+            temp.RemoveAt(0);
+            if (temp.Count <= distance)
             {
-                _fullMovePath.Add(item);
+                foreach (var item in temp)
+                {
+                    _fullMovePath.Add(item);
+                }
+                    _char.ReduceAvailableSteps(temp.Count);
             }
-            _char.ReduceAvailableSteps(temp.Count);
-            _partialPaths.Push(temp);
-        }        
+        }
+        else
+        {
+            if (temp.Count-1 <= distance)
+            {
+                foreach (var item in temp)
+                {
+                    _fullMovePath.Add(item);
+                }
+                _char.ReduceAvailableSteps(temp.Count-1);
+            }
+        }
+        _partialPaths.Push(temp);
     }
 
     public List<Tile> GetPath()
     {
+        Debug.Log("full move path " + _fullMovePath.Count);
         return _fullMovePath;
     }
 
     public int GetDistance()
     {
-        return _fullMovePath.Count;
+        return _fullMovePath.Count-1;
     }
 
     public void UndoLastWaypoint()
@@ -66,7 +81,8 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
                 foreach (var tile in removed)
                 {
                     tile.ResetColor();
-                    _char.IncreaseAvailableSteps(1);
+                    if (tile != _char.GetActualTilePosition())
+                        _char.IncreaseAvailableSteps(1);
                 }
 
 
@@ -101,7 +117,7 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         }
     }
 
-    public void Reset()
+    public void ResetPath()
     {
         _fullMovePath.Clear();
         _partialPaths.Clear();

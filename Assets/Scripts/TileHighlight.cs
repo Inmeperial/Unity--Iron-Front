@@ -10,12 +10,10 @@ public class TileHighlight : MonoBehaviour
     public LayerMask tileMask;
     List<Tile> _previewPath = new List<Tile>();
     public bool characterMoving;
-    CharacterSelection _charSelector;
     private Stack<List<Tile>> _inMoveRangeTiles = new Stack<List<Tile>>();
     private LineRenderer _lineRenderer;
     private void Start()
     {
-        _charSelector = GetComponent<CharacterSelection>();
         _lineRenderer = GetComponent<LineRenderer>();
     }
 
@@ -50,10 +48,6 @@ public class TileHighlight : MonoBehaviour
     {
         tile.MouseOverColor();
         previousTile = tile.transform;
-        //if (_character != null && _character.IsSelected() && !characterMoving)
-        //{
-        //    PathPreview(_charSelector.GetActualChar());
-        //}
     }
 
     public void MouseExitsTile()
@@ -134,7 +128,6 @@ public class TileHighlight : MonoBehaviour
 
     public void CreatePathLines(List<Tile> path)
     {
-        Debug.Log("path size: " + path.Count);
         _lineRenderer.positionCount = path.Count;
         if (path.Count > 0)
         {

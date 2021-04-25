@@ -10,5 +10,5 @@ public interface IPathCreator
     int GetDistance();
 
     void UndoLastWaypoint();
-    void Reset();
+    void ResetPath();
 }

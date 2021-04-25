@@ -23,12 +23,9 @@ public class ButtonsManagerInspector : Editor
     public override void OnInspectorGUI()
     {
         _selection.moveContainer = (GameObject)EditorGUILayout.ObjectField("Move Container Container", _selection.moveContainer, typeof(GameObject), true);
-        _selection.actionMenu = (GameObject)EditorGUILayout.ObjectField("Action Menu Container", _selection.actionMenu, typeof(GameObject), true);
 
         _selection.buttonMove = (Button)EditorGUILayout.ObjectField("Button Move", _selection.buttonMove, typeof(Button), true);
         _selection.buttonUndo = (Button)EditorGUILayout.ObjectField("Button Undo", _selection.buttonUndo, typeof(Button), true);
-        _selection.buttonSelectEnemy = (Button)EditorGUILayout.ObjectField("Button Attack", _selection.buttonSelectEnemy, typeof(Button), true);
-        _selection.buttonDeselectUnit = (Button)EditorGUILayout.ObjectField("Button Deselect", _selection.buttonDeselectUnit, typeof(Button), true);
         _selection.buttonExecuteAttack = (Button)EditorGUILayout.ObjectField("Button Execute Attack", _selection.buttonExecuteAttack, typeof(Button), true);
         _selection.buttonEndTurn = (Button)EditorGUILayout.ObjectField("Button End Turn", _selection.buttonEndTurn, typeof(Button), true);
         _selection.deselectKey = (KeyCode)EditorGUILayout.EnumPopup("Deselect Key", _selection.deselectKey);

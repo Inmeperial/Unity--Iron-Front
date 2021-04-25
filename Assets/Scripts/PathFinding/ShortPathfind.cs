@@ -24,7 +24,7 @@ public class ShortPathfind : MonoBehaviour, IPathCreator
         return _path;
     }
 
-    public void Reset()
+    public void ResetPath()
     {
         _path.Clear();
     }

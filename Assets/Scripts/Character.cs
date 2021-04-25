@@ -43,7 +43,7 @@ public class Character : Teams
     private List<Tile> _tilesInMoveRange = new List<Tile>();
     private Tile _myPositionTile;
     private Tile _targetTile;
-    private List<Tile> _path = new List<Tile>();
+    [SerializeField] private List<Tile> _path = new List<Tile>();
 
     //FLAGS
     private bool _selected;
@@ -100,15 +100,6 @@ public class Character : Teams
         {
             GetTargetToMove();
         }
-
-        //if (_selected && Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    if (_path.Count > 0)
-        //    {
-        //        PaintTilesInAttackRange(_path[_path.Count-1].allNeighbours, 0);
-        //    }
-        //    else PaintTilesInAttackRange(_myPositionTile.allNeighbours, 0);
-        //}
     }
 
     void PaintTilesInAttackRange(List<Tile> neighbours, int count)
@@ -161,7 +152,7 @@ public class Character : Teams
         if (_moving == false && _path != null && _path.Count > 0)
         {
             _moving = true;
-            _buttonsManager.DeactivateActionsMenu();
+            _buttonsManager.DeactivateBodyPartsContainer();
             _turnManager.UnitIsMoving();
             _highlight.characterMoving = true;
             _highlight.ClearTilesInRange(_tilesInMoveRange);
@@ -279,7 +270,6 @@ public class Character : Teams
                         PaintTilesInAttackRange(_path[_path.Count - 1].allNeighbours, 0);
                         PaintTilesInMoveRange(_path[_path.Count - 1].neighboursForMove, 0);
                         AddTilesInMoveRange();
-                        //CheckCloseEnemies();
                     }
                 }
             }
@@ -354,7 +344,7 @@ public class Character : Teams
 
     public List<Tile> GetPath()
     {
-        pathCreator.GetPath();
+        _path = pathCreator.GetPath();
         return _path;
     }
 
@@ -372,20 +362,16 @@ public class Character : Teams
     #endregion
 
     #region Utilities
-
-    
-
     
     public void Undo()
     {
-        //_highlight.ClearTilesInRange(_tilesInAttackRange);
-        //_tilesInAttackRange.Clear();
         foreach (var item in _enemiesInRange)
         {
             _turnManager.UnitCantBeAttacked(item);
         }
         ResetInRangeLists();
         GetPath();
+        Debug.Log("path count: " + _path.Count);
         if (_path.Count > 0)
         {
             PaintTilesInMoveRange(_path[_path.Count - 1].neighboursForMove, 0);
@@ -409,7 +395,7 @@ public class Character : Teams
         }
         _tilesInAttackRange.Clear();
         _enemiesInRange.Clear();
-        _path.Clear();
+        
     }
     public void NewTurn()
     {
@@ -420,7 +406,7 @@ public class Character : Teams
         _currentSteps = _canMove ? _MaxSteps : 0;
         _enemiesInRange.Clear();
         MakeNotAttackable();
-        pathCreator.Reset();
+        pathCreator.ResetPath();
     }
 
     public void ClearTargetTile()
@@ -440,13 +426,9 @@ public class Character : Teams
         _myPositionTile.SetUnitAbove(this);
         _targetTile = null;
         _turnManager.UnitStoppedMoving();
-        pathCreator.Reset();
+        pathCreator.ResetPath();
 
         CheckEnemiesInAttackRange();
-        if (_enemiesInRange.Count > 0)
-            _buttonsManager.ActivateSelectEnemyButton();
-
-        _buttonsManager.ActivateActionsMenu();
     }
 
     public void ActivateMoveButton()
@@ -477,6 +459,7 @@ public class Character : Teams
 
         _selected = true;
         ResetInRangeLists();
+        _path.Clear();
         _highlight.PathLinesClear();
         Debug.Log("can move: " + _canMove);
         if (_canAttack)
@@ -487,6 +470,7 @@ public class Character : Teams
         if (_canMove)
         {
             _currentSteps = _MaxSteps;
+            AddTilesInMoveRange();
             PaintTilesInMoveRange(_myPositionTile.neighboursForMove, 0);
         }
     }
@@ -506,6 +490,7 @@ public class Character : Teams
         if (_canMove)
             _currentSteps = _MaxSteps;
         ResetInRangeLists();
+        _path.Clear();
         _highlight.PathLinesClear();
     }
 
