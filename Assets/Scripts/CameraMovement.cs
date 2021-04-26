@@ -5,14 +5,16 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public float speed;
-    public float angle;
     public float rotationSpeed;
     private bool _cameraLocked;
     private Vector3 _initialPos;
     private Quaternion _initialRot;
 
+    private Rigidbody _rb;
+
     private void Start()
     {
+        _rb = GetComponent<Rigidbody>();
         _initialPos = transform.position;
         _initialRot = transform.rotation;
     }
@@ -25,7 +27,7 @@ public class CameraMovement : MonoBehaviour
             float z = Input.GetAxis("Vertical");
 
             var dir = transform.right * x + transform.forward * z;
-            transform.position += dir.normalized * speed * Time.deltaTime;
+            _rb.velocity = dir * speed;
 
 
             if (Input.GetKey(KeyCode.E))
@@ -44,5 +46,14 @@ public class CameraMovement : MonoBehaviour
     {
         transform.position = _initialPos;
         transform.rotation = _initialRot;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Limit"))
+        {
+            _rb.velocity = Vector3.zero;
+        }
+
     }
 }
