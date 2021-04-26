@@ -498,6 +498,10 @@ public class ButtonsUIManager : MonoBehaviour
             LegsClear();
             _selectedChar.SelectLeftGun();
             ShowPlayerHudText(playerBodyCurrHP, playerBodySlider, playerLeftArmCurrHP, playerLeftArmSlider, playerRightArmCurrHP, playerRightArmSlider, playerLegsCurrHP, playerLegsSlider);
+
+            if (_selectedChar.HasEnemiesInRange())
+                ActivateBodyPartsContainer();
+            else DeactivateBodyPartsContainer();
         }
     }
 
@@ -511,6 +515,10 @@ public class ButtonsUIManager : MonoBehaviour
             LegsClear();
             _selectedChar.SelectRightGun();
             ShowPlayerHudText(playerBodyCurrHP, playerBodySlider, playerLeftArmCurrHP, playerLeftArmSlider, playerRightArmCurrHP, playerRightArmSlider, playerLegsCurrHP, playerLegsSlider);
+
+            if (_selectedChar.HasEnemiesInRange())
+                ActivateBodyPartsContainer();
+            else DeactivateBodyPartsContainer();
         }
     }
 
@@ -856,59 +864,62 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void ActivateBodyPartsContainer()
     {
-        if (_selectedEnemy.GetBodyHP() > 0)
+        if (_selectedEnemy != null)
         {
-            buttonBody.interactable = true;
-            buttonBodyMinus.interactable = true;
-            buttonBodyX.interactable = true;
-        }
-        else
-        {
-            buttonBody.interactable = false;
-            buttonBodyMinus.interactable = false;
-            buttonBodyX.interactable = false;
-        }
-        
-        if (_selectedEnemy.GetLeftArmHP() > 0)
-        {
-            buttonLArm.interactable = true;
-            buttonLArmMinus.interactable = true;
-            buttonLArmX.interactable = true;
-        }
-        else
-        {
-            buttonLArm.interactable = false;
-            buttonLArmMinus.interactable = false;
-            buttonLArmX.interactable = false;
-        }
+            if (_selectedEnemy.GetBodyHP() > 0)
+            {
+                buttonBody.interactable = true;
+                buttonBodyMinus.interactable = true;
+                buttonBodyX.interactable = true;
+            }
+            else
+            {
+                buttonBody.interactable = false;
+                buttonBodyMinus.interactable = false;
+                buttonBodyX.interactable = false;
+            }
 
-        if (_selectedEnemy.GetRightArmHP() > 0)
-        {
-            buttonRArm.interactable = true;
-            buttonRArmMinus.interactable = true;
-            buttonRArmX.interactable = true;
-        }
-        else
-        {
-            buttonRArm.interactable = false;
-            buttonRArmMinus.interactable = false;
-            buttonRArmX.interactable = false;
-        }
-        
+            if (_selectedEnemy.GetLeftArmHP() > 0)
+            {
+                buttonLArm.interactable = true;
+                buttonLArmMinus.interactable = true;
+                buttonLArmX.interactable = true;
+            }
+            else
+            {
+                buttonLArm.interactable = false;
+                buttonLArmMinus.interactable = false;
+                buttonLArmX.interactable = false;
+            }
 
-        if (_selectedEnemy.GetLegsHP() > 0)
-        {
-            buttonLegs.interactable = true;
-            buttonLegsMinus.interactable = true;
-            buttonLegsX.interactable = true;
+            if (_selectedEnemy.GetRightArmHP() > 0)
+            {
+                buttonRArm.interactable = true;
+                buttonRArmMinus.interactable = true;
+                buttonRArmX.interactable = true;
+            }
+            else
+            {
+                buttonRArm.interactable = false;
+                buttonRArmMinus.interactable = false;
+                buttonRArmX.interactable = false;
+            }
+
+
+            if (_selectedEnemy.GetLegsHP() > 0)
+            {
+                buttonLegs.interactable = true;
+                buttonLegsMinus.interactable = true;
+                buttonLegsX.interactable = true;
+            }
+            else
+            {
+                buttonLegs.interactable = false;
+                buttonLegsMinus.interactable = false;
+                buttonLegsX.interactable = false;
+            }
+            bodyPartsButtonsContainer.SetActive(true);
         }
-        else
-        {
-            buttonLegs.interactable = false;
-            buttonLegsMinus.interactable = false;
-            buttonLegsX.interactable = false;
-        }
-        bodyPartsButtonsContainer.SetActive(true);
     }
 
     public void DeactivateBodyPartsContainer()
