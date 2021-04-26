@@ -93,7 +93,7 @@ public class ButtonsUIManager : MonoBehaviour
 
     private void Update()
     {
-        if ((_selectedChar != null && _selectedChar.IsMoving() == false) || _selectedEnemy != null && Input.GetKeyDown(deselectKey))
+        if (((_selectedChar != null && _selectedChar.IsMoving() == false) || _selectedEnemy != null) && Input.GetKeyDown(deselectKey))
             DeselectUnit();
 
         if (Input.GetKeyDown(selectLGunKey))
@@ -856,21 +856,58 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void ActivateBodyPartsContainer()
     {
-        buttonBody.interactable = true;
-        buttonBodyMinus.interactable = true;
-        buttonBodyX.interactable = true;
+        if (_selectedEnemy.GetBodyHP() > 0)
+        {
+            buttonBody.interactable = true;
+            buttonBodyMinus.interactable = true;
+            buttonBodyX.interactable = true;
+        }
+        else
+        {
+            buttonBody.interactable = false;
+            buttonBodyMinus.interactable = false;
+            buttonBodyX.interactable = false;
+        }
+        
+        if (_selectedEnemy.GetLeftArmHP() > 0)
+        {
+            buttonLArm.interactable = true;
+            buttonLArmMinus.interactable = true;
+            buttonLArmX.interactable = true;
+        }
+        else
+        {
+            buttonLArm.interactable = false;
+            buttonLArmMinus.interactable = false;
+            buttonLArmX.interactable = false;
+        }
 
-        buttonLArm.interactable = true;
-        buttonLArmMinus.interactable = true;
-        buttonLArmX.interactable = true;
+        if (_selectedEnemy.GetRightArmHP() > 0)
+        {
+            buttonRArm.interactable = true;
+            buttonRArmMinus.interactable = true;
+            buttonRArmX.interactable = true;
+        }
+        else
+        {
+            buttonRArm.interactable = false;
+            buttonRArmMinus.interactable = false;
+            buttonRArmX.interactable = false;
+        }
+        
 
-        buttonRArm.interactable = true;
-        buttonRArmMinus.interactable = true;
-        buttonRArmX.interactable = true;
-
-        buttonLegs.interactable = true;
-        buttonLegsMinus.interactable = true;
-        buttonLegsX.interactable = true;
+        if (_selectedEnemy.GetLegsHP() > 0)
+        {
+            buttonLegs.interactable = true;
+            buttonLegsMinus.interactable = true;
+            buttonLegsX.interactable = true;
+        }
+        else
+        {
+            buttonLegs.interactable = false;
+            buttonLegsMinus.interactable = false;
+            buttonLegsX.interactable = false;
+        }
         bodyPartsButtonsContainer.SetActive(true);
     }
 

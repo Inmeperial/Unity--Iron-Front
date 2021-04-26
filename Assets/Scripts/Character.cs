@@ -102,28 +102,72 @@ public class Character : Teams
 
     void PaintTilesInAttackRange(List<Tile> neighbours, int count)
     {
-        if (count >= _selectedGun.GetAttackRange())
-            return;
 
-        foreach (var tile in neighbours)
+        var a = Physics.OverlapSphere(_myPositionTile.transform.position, _selectedGun.GetAttackRange() * _myPositionTile.transform.localScale.z);
+
+        foreach (var item in a)
         {
-            if (!_tilesInAttackRange.Contains(tile))
+            var t = item.GetComponent<Tile>();
+            if (t)
             {
-                if (!tile.HasTileAbove() && tile.IsWalkable())
+                if (!t.HasTileAbove() && t.IsWalkable())
                 {
-                    _tilesInAttackRange.Add(tile);
-                    _highlight.PaintTilesInAttackRange(tile);
+                    _tilesInAttackRange.Add(t);
+                    _highlight.PaintTilesInAttackRange(t);
                 }
-               
             }
-            
-            PaintTilesInAttackRange(tile.allNeighbours, count + 1);
         }
+        //if (count >= _selectedGun.GetAttackRange())
+        //{
+        //    Debug.Log("termine");
+        //    return;
+        //}
+        //var list = CheckIfContains(neighbours);
+        //foreach (var tile in list)
+        //{
+        //    if (!_tilesInAttackRange.Contains(tile))
+        //    {
+        //        if (!tile.HasTileAbove() && tile.IsWalkable())
+        //        {
+        //            _tilesInAttackRange.Add(tile);
+        //            _highlight.PaintTilesInAttackRange(tile);
+        //        }
+               
+        //    }
+            
+        //    PaintTilesInAttackRange(tile.allNeighbours, count + 1);
+        //}
  
+    }
+
+    List<Tile> CheckIfContains(List<Tile> list)
+    {
+        var temp = new List<Tile>();
+        foreach (var item in list)
+        {
+            if (_tilesInAttackRange.Contains(item))
+                continue;
+            temp.Add(item);
+        }
+        return temp;
     }
 
     public void PaintTilesInMoveRange(List<Tile> neighbours, int count)
     {
+        //var a = Physics.OverlapSphere(_myPositionTile.transform.position, _currentSteps * _myPositionTile.transform.localScale.z);
+
+        //foreach (var item in a)
+        //{
+        //    var t = item.GetComponent<Tile>();
+        //    if (t)
+        //    {
+        //        if (!t.HasTileAbove() && t.IsWalkable())
+        //        {
+        //            _tilesInMoveRange.Add(t);
+        //            _highlight.PaintTilesInMoveRange(t);
+        //        }
+        //    }
+        //}
         if (count >= _currentSteps)
             return;
 
