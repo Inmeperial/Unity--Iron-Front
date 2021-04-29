@@ -79,7 +79,7 @@ public class GridGenerator : EditorWindow
         {
             pos.x = i * tiles.transform.localScale.x;
 
-            //j = y coordinate
+            //j = z coordinate
             for (int j = 0; j < length; j++)
             {
                 pos.z = j * tiles.transform.localScale.z;
@@ -92,6 +92,7 @@ public class GridGenerator : EditorWindow
                 {
                     obj = Instantiate(tiles, pos, Quaternion.identity);
                 }
+                obj.name = "X: " + i + "- Y: 1 - Z: " + j;
                 obj.GetComponent<Tile>().MakeWalkableColor();
             }
         }
