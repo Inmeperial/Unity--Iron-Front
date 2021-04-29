@@ -95,7 +95,15 @@ public class TileHighlight : MonoBehaviour
         _inMoveRangeTiles.Push(tiles);
     }
 
-    public void ClearTilesInRange(List<Tile> tiles)
+    public void ClearTilesInAttackRange(HashSet<Tile> tiles)
+    {
+        foreach (var item in tiles)
+        {
+            item.ResetColor();
+        }
+    }
+
+    public void ClearTilesInMoveRange(List<Tile> tiles)
     {
         foreach (var item in tiles)
         {

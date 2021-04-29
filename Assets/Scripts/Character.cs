@@ -55,7 +55,9 @@ public class Character : Teams
     [SerializeField] private bool _canBeAttacked = false;
 
     //OTHERS
-    private List<Tile> _tilesInAttackRange = new List<Tile>();
+    private HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
+    private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
+    private Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();
     private List<Character> _enemiesInRange = new List<Character>();
     private MeshRenderer _render;
 
@@ -100,85 +102,43 @@ public class Character : Teams
         }
     }
 
-    void PaintTilesInAttackRange(Vector3 pos, List<Tile> neighbours, int count)
+    void PaintTilesInAttackRange(Tile currentTile, int count)
     {
-
-        var a = Physics.OverlapSphere(pos, _selectedGun.GetAttackRange() * _myPositionTile.transform.localScale.z);
-
-        foreach (var item in a)
-        {
-            var t = item.GetComponent<Tile>();
-            if (t)
-            {
-                if (!t.HasTileAbove() && t.IsWalkable())
-                {
-                    _tilesInAttackRange.Add(t);
-                    _highlight.PaintTilesInAttackRange(t);
-                }
-            }
-        }
-        //if (count >= _selectedGun.GetAttackRange())
-        //{
-        //    Debug.Log("termine");
-        //    return;
-        //}
-        //var list = CheckIfContains(neighbours);
-        //foreach (var tile in list)
-        //{
-        //    if (!_tilesInAttackRange.Contains(tile))
-        //    {
-        //        if (!tile.HasTileAbove() && tile.IsWalkable())
-        //        {
-        //            _tilesInAttackRange.Add(tile);
-        //            _highlight.PaintTilesInAttackRange(tile);
-        //        }
-               
-        //    }
-            
-        //    PaintTilesInAttackRange(tile.allNeighbours, count + 1);
-        //}
- 
-    }
-
-    List<Tile> CheckIfContains(List<Tile> list)
-    {
-        var temp = new List<Tile>();
-        foreach (var item in list)
-        {
-            if (_tilesInAttackRange.Contains(item))
-                continue;
-            temp.Add(item);
-        }
-        return temp;
-    }
-
-    public void PaintTilesInMoveRange(List<Tile> neighbours, int count)
-    {
-        //var a = Physics.OverlapSphere(_myPositionTile.transform.position, _currentSteps * _myPositionTile.transform.localScale.z);
-
-        //foreach (var item in a)
-        //{
-        //    var t = item.GetComponent<Tile>();
-        //    if (t)
-        //    {
-        //        if (!t.HasTileAbove() && t.IsWalkable())
-        //        {
-        //            _tilesInMoveRange.Add(t);
-        //            _highlight.PaintTilesInMoveRange(t);
-        //        }
-        //    }
-        //}
-        if (count >= _currentSteps)
+        if (count >= _selectedGun.GetAttackRange() || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
             return;
 
-        foreach (var tile in neighbours)
+        _tilesForAttackChecked[currentTile] = count;
+
+        foreach (var tile in currentTile.allNeighbours)
+        {
+            if (!_tilesInAttackRange.Contains(tile))
+            {
+                if (!tile.HasTileAbove() && tile.IsWalkable())
+                {
+                    _tilesInAttackRange.Add(tile);
+                    _highlight.PaintTilesInAttackRange(tile);
+                }
+
+            }
+            PaintTilesInAttackRange(tile, count + 1);
+        }
+    }
+
+    public void PaintTilesInMoveRange(Tile currentTile, int count)
+    {
+        if (count >= _currentSteps || (_tilesForMoveChecked.ContainsKey(currentTile) && _tilesForMoveChecked[currentTile] <= count))
+            return;
+
+        _tilesForMoveChecked[currentTile] = count;
+
+        foreach (var tile in currentTile.neighboursForMove)
         {
             if (!_tilesInMoveRange.Contains(tile))
             {
                 _tilesInMoveRange.Add(tile);
                 _highlight.PaintTilesInMoveRange(tile);
             }
-            PaintTilesInMoveRange(tile.neighboursForMove, count + 1);
+            PaintTilesInMoveRange(tile, count + 1);
         }
     }
 
@@ -198,7 +158,7 @@ public class Character : Teams
             _buttonsManager.DeactivateMoveContainer();
             _turnManager.UnitIsMoving();
             _highlight.characterMoving = true;
-            _highlight.ClearTilesInRange(_tilesInMoveRange);
+            _highlight.ClearTilesInMoveRange(_tilesInMoveRange);
             _move.StartMovement(_path, _speed);
         }
     }
@@ -294,8 +254,8 @@ public class Character : Teams
         _selectedGun = leftGun;
         ResetTilesInAttackRange();
         if (_path.Count == 0)
-            PaintTilesInAttackRange(_myPositionTile.transform.position, _myPositionTile.allNeighbours, 0);
-        else PaintTilesInAttackRange(_path[_path.Count - 1].transform.position, _path[_path.Count - 1].allNeighbours, 0);
+            PaintTilesInAttackRange(_myPositionTile, 0);
+        else PaintTilesInAttackRange(_path[_path.Count - 1], 0);
         CheckEnemiesInAttackRange();
     }
 
@@ -304,8 +264,8 @@ public class Character : Teams
         _selectedGun = rightGun;
         ResetTilesInAttackRange();
         if (_path.Count == 0)
-            PaintTilesInAttackRange(_myPositionTile.transform.position, _myPositionTile.allNeighbours, 0);
-        else PaintTilesInAttackRange(_path[_path.Count - 1].transform.position, _path[_path.Count - 1].allNeighbours, 0);
+            PaintTilesInAttackRange(_myPositionTile, 0);
+        else PaintTilesInAttackRange(_path[_path.Count - 1], 0);
         CheckEnemiesInAttackRange();
     }
 
@@ -316,6 +276,7 @@ public class Character : Teams
             item.ResetColor();
         }
         _tilesInAttackRange.Clear();
+        _tilesForAttackChecked.Clear();
     }
     #endregion
 
@@ -340,13 +301,13 @@ public class Character : Teams
                         _highlight.PathPreview(_path);
                         _buttonsManager.ActivateMoveButton();
                         _buttonsManager.ActivateUndo();
-                        _highlight.ClearTilesInRange(_tilesInAttackRange);
-                        _highlight.ClearTilesInRange(_tilesInMoveRange);
+                        _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
+                        _highlight.ClearTilesInMoveRange(_tilesInMoveRange);
                         _highlight.CreatePathLines(_path);
                         ResetTilesInAttackRange();
                         _tilesInMoveRange.Clear();
-                        PaintTilesInAttackRange(_path[_path.Count - 1].transform.position, _path[_path.Count - 1].allNeighbours, 0);
-                        PaintTilesInMoveRange(_path[_path.Count - 1].neighboursForMove, 0);
+                        PaintTilesInAttackRange(_path[_path.Count - 1], 0);
+                        PaintTilesInMoveRange(_path[_path.Count - 1], 0);
                         AddTilesInMoveRange();
                     }
                 }
@@ -458,12 +419,12 @@ public class Character : Teams
         if (_path.Count > 0)
         {
             _buttonsManager.ActivateUndo();
-            PaintTilesInMoveRange(_path[_path.Count - 1].neighboursForMove, 0);
+            PaintTilesInMoveRange(_path[_path.Count - 1], 0);
         }
         else
         {
             _buttonsManager.DeactivateUndo();
-            PaintTilesInMoveRange(_myPositionTile.neighboursForMove, 0);
+            PaintTilesInMoveRange(_myPositionTile, 0);
         }
 
     }
@@ -488,7 +449,8 @@ public class Character : Teams
         _tilesInMoveRange.Clear();
         _tilesInAttackRange.Clear();
         _enemiesInRange.Clear();
-        
+        _tilesForAttackChecked.Clear();
+        _tilesForMoveChecked.Clear();
     }
     public void NewTurn()
     {
@@ -548,14 +510,14 @@ public class Character : Teams
         _highlight.PathLinesClear();
         if (_canAttack)
         {
-            PaintTilesInAttackRange(_myPositionTile.transform.position, _myPositionTile.allNeighbours, 0);
+            PaintTilesInAttackRange(_myPositionTile, 0);
             CheckEnemiesInAttackRange();
         }
         if (_canMove)
         {
             _currentSteps = _maxSteps;
             AddTilesInMoveRange();
-            PaintTilesInMoveRange(_myPositionTile.neighboursForMove, 0);
+            PaintTilesInMoveRange(_myPositionTile, 0);
         }
     }
 
