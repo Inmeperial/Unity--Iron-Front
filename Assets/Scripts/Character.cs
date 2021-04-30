@@ -550,6 +550,7 @@ public class Character : Teams
         ResetInRangeLists();
         _path.Clear();
         highlight.PathLinesClear();
+        _myPositionTile = GetTileBelow();
         if (CanAttack())
         {
             if (_rightArmAlive)
