@@ -164,7 +164,7 @@ public class Tile : MonoBehaviour
     {
         _planeForMoveMat.color = colorForMove;
 
-        _planeForMoveRender.sharedMaterial = _planeForMoveMat;
+        _planeForMoveRender.material = _planeForMoveMat;
         painted = true;
     }
 
@@ -173,8 +173,8 @@ public class Tile : MonoBehaviour
     {
         _planeForMoveMat.color = colorDefaultClear;
         _planeForAttackMat.color = colorDefaultClear;
-        _planeForMoveRender.sharedMaterial = _planeForMoveMat;
-        _planeForAttackRender.sharedMaterial = _planeForAttackMat;
+        _planeForMoveRender.material = _planeForMoveMat;
+        _planeForAttackRender.material = _planeForAttackMat;
         painted = false;
     }
 
@@ -182,9 +182,10 @@ public class Tile : MonoBehaviour
     {
         if (painted == false)
         {
+            Debug.Log("pinto mouse");
             _planeForMouseMat.color = colorForMouse;
 
-            _planeForMouseRender.sharedMaterial = _planeForMouseMat;
+            _planeForMouseRender.material = _planeForMouseMat;
         }
         
     }
@@ -193,9 +194,10 @@ public class Tile : MonoBehaviour
     {
         if (painted == false)
         {
+            Debug.Log("despinto mouse");
             _planeForMouseMat.color = colorDefaultClear;
 
-            _planeForMouseRender.sharedMaterial = _planeForMouseMat;
+            _planeForMouseRender.material = _planeForMouseMat;
         }
         
     }
@@ -207,7 +209,7 @@ public class Tile : MonoBehaviour
             painted = true;
             _planeForMoveMat.color = colorForMove;
 
-            _planeForMoveRender.sharedMaterial = _planeForMoveMat;
+            _planeForMoveRender.material = _planeForMoveMat;
         }
 
     }
@@ -217,7 +219,7 @@ public class Tile : MonoBehaviour
         painted = true;
         _planeForAttackMat.color = colorForAttack;
 
-        _planeForAttackRender.sharedMaterial = _planeForAttackMat;
+        _planeForAttackRender.material = _planeForAttackMat;
     }
     #endregion
 
