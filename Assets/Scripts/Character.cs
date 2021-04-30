@@ -52,10 +52,10 @@ public class Character : Teams
     private bool _selected;
     private bool _moving = false;
     private bool _canMove = true;
-    private bool _canAttack = true;
+    [SerializeField] private bool _canAttack = true;
     [SerializeField] private bool _leftArmAlive;
     [SerializeField] private bool _rightArmAlive;
-    [SerializeField] private bool _canBeAttacked = false;
+    private bool _canBeAttacked = false;
 
     //OTHERS
     private HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
@@ -84,7 +84,7 @@ public class Character : Teams
         _canMove = _legsHP > 0 ? true : false;
         _currentSteps = _canMove ? _maxSteps : 0;
         _selected = false;
-        _canAttack = true;
+        
         _move = GetComponent<GridMovement>();
         _render = GetComponent<MeshRenderer>();
         _myPositionTile = GetTileBelow();
@@ -96,10 +96,20 @@ public class Character : Teams
         pathCreator = GetComponent<IPathCreator>();
 
         if (_rightArmAlive)
+        {
             _selectedGun = rightGun;
+            _canAttack = true;
+        }
         else if (_leftArmAlive)
+        {
             _selectedGun = leftGun;
-        else _selectedGun = null;
+            _canAttack = true;
+        }
+        else
+        {
+            _selectedGun = null;
+            _canAttack = false;
+        }
 
         if (_bodyHP <= 0)
             NotSelectable();
@@ -216,6 +226,7 @@ public class Character : Teams
                 _leftArmAlive = _leftArmHP > 0 ? true : false;
             }
         }
+        CheckArms();
         buttonsManager.UpdateLeftArmHUD(_leftArmHP, false);
         MakeNotAttackable();
     }
@@ -235,6 +246,7 @@ public class Character : Teams
                 _rightArmAlive = _rightArmHP > 0 ? true : false;
             }
         }
+        CheckArms();
         buttonsManager.UpdateRightArmHUD(_rightArmHP, false);
         MakeNotAttackable();
     }
@@ -271,20 +283,28 @@ public class Character : Teams
     {
         _selectedGun = leftGun;
         ResetTilesInAttackRange();
-        if (_path.Count == 0)
-            PaintTilesInAttackRange(_myPositionTile, 0);
-        else PaintTilesInAttackRange(_path[_path.Count - 1], 0);
-        CheckEnemiesInAttackRange();
+
+        if (CanAttack())
+        {
+            if (_path.Count == 0)
+                PaintTilesInAttackRange(_myPositionTile, 0);
+            else PaintTilesInAttackRange(_path[_path.Count - 1], 0);
+            CheckEnemiesInAttackRange();
+        }
     }
 
     public void SelectRightGun()
     {
         _selectedGun = rightGun;
         ResetTilesInAttackRange();
-        if (_path.Count == 0)
-            PaintTilesInAttackRange(_myPositionTile, 0);
-        else PaintTilesInAttackRange(_path[_path.Count - 1], 0);
-        CheckEnemiesInAttackRange();
+
+        if (CanAttack())
+        {
+            if (_path.Count == 0)
+                PaintTilesInAttackRange(_myPositionTile, 0);
+            else PaintTilesInAttackRange(_path[_path.Count - 1], 0);
+            CheckEnemiesInAttackRange();
+        }
     }
 
     public void ResetTilesInAttackRange()
@@ -659,10 +679,13 @@ public class Character : Teams
 
     public bool CanAttack()
     {
-        if (_leftArmAlive || _rightArmAlive)
-            _canAttack = true;
-        else _canAttack = false;
         return _canAttack;
+    }
+
+    public void CheckArms()
+    {
+        if (!_leftArmAlive && !_rightArmAlive)
+            _canAttack = false;
     }
 
     public bool LeftArmAlive()
