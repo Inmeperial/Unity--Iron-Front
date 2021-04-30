@@ -490,7 +490,7 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void UnitSwapToLeftGun()
     {
-        if (_selectedChar != null)
+        if (_selectedChar != null && _selectedChar.LeftArmAlive())
         {
             BodyClear();
             LeftArmClear();
@@ -503,11 +503,12 @@ public class ButtonsUIManager : MonoBehaviour
                 ActivateBodyPartsContainer();
             else DeactivateBodyPartsContainer();
         }
+        else Debug.Log("left arm broken");
     }
 
     public void UnitSwapToRightGun()
     {
-        if (_selectedChar != null)
+        if (_selectedChar != null && _selectedChar.RightArmAlive())
         {
             BodyClear();
             LeftArmClear();
@@ -520,6 +521,7 @@ public class ButtonsUIManager : MonoBehaviour
                 ActivateBodyPartsContainer();
             else DeactivateBodyPartsContainer();
         }
+        else Debug.Log("right arm broken");
     }
 
     #endregion
@@ -702,8 +704,11 @@ public class ButtonsUIManager : MonoBehaviour
 
         ShowPlayerHudText(playerBodyCurrHP, playerBodySlider, playerLeftArmCurrHP, playerLeftArmSlider, playerRightArmCurrHP, playerRightArmSlider, playerLegsCurrHP, playerLegsSlider);
 
-        if (_selectedChar.CanAttack() && _selectedChar.HasEnemiesInRange() && _selectedEnemy != null)
-            ActivateBodyPartsContainer();
+        if (_selectedChar.CanAttack())
+        {
+           if (_selectedChar.HasEnemiesInRange() && _selectedEnemy != null)
+            ActivateBodyPartsContainer(); 
+        }
 
         playerHudContainer.SetActive(true);
         DeactivateEndTurnButton();
@@ -742,22 +747,35 @@ public class ButtonsUIManager : MonoBehaviour
 
         var gun = _selectedChar.GetSelectedGun();
 
-        gunTypeText.text = gun.GetGunTypeString();
+        if (gun == null)
+        {
+            gunTypeText.text = "No guns - Arms destroyed";
+            damageText.text = "";
+            rangeText.text = "";
+            critText.text = "";
+            hitChanceText.text = "";
+        }
+        else
+        {
+            gunTypeText.text = gun.GetGunTypeString();
 
-        var dmg = gun.GetBulletDamage().ToString();
-        var b = gun.GetAvailableBullets();
-        damageText.text = "DMG " + dmg + " x " + b + " hits";
+            var dmg = gun.GetBulletDamage().ToString();
+            var b = gun.GetAvailableBullets();
+            damageText.text = "DMG " + dmg + " x " + b + " hits";
 
-        var r = gun.GetAttackRange().ToString();
-        rangeText.text = "Range " + r;
+            var r = gun.GetAttackRange().ToString();
+            rangeText.text = "Range " + r;
 
-        var cc = gun.GetCritChance().ToString();
-        var cd = gun.GetCritMultiplier().ToString();
+            var cc = gun.GetCritChance().ToString();
+            var cd = gun.GetCritMultiplier().ToString();
 
-        critText.text = "Crit % " + cc + " | " + "Crit Dmg x" + cd;
+            critText.text = "Crit % " + cc + " | " + "Crit Dmg x" + cd;
 
-        var h = gun.GetHitChance().ToString();
-        hitChanceText.text = "Hit % " + h;
+            var h = gun.GetHitChance().ToString();
+            hitChanceText.text = "Hit % " + h;
+        }
+
+        
     }
 
     void ShowHUDSliders(Character unit, Slider body, Slider lArm, Slider rArm, Slider legs)
