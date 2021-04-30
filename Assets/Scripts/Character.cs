@@ -477,9 +477,9 @@ public class Character : Teams
     {
         foreach (var item in _enemiesInRange)
         {
-            item.MakeNotAttackable();
+            turnManager.UnitCantBeAttacked(item);
         }
-
+        highlight.PathLinesClear();
         highlight.ClearTilesInMoveRange(_tilesInMoveRange);
         highlight.ClearTilesInAttackRange(_tilesInAttackRange);
         highlight.Undo();
@@ -705,6 +705,9 @@ public class Character : Teams
     }
     public void DeactivateAttack()
     {
+        highlight.ClearTilesInAttackRange(_tilesInAttackRange);
+        highlight.ClearTilesInMoveRange(_tilesInMoveRange);
+        highlight.PathLinesClear();
         _canAttack = false;
         _canMove = false;
     }

@@ -476,8 +476,6 @@ public class ButtonsUIManager : MonoBehaviour
 
         DeactivateEnemyHUD();
 
-        ActivateEndTurnButton();
-
         _selectedChar = null;
         _selectedEnemy = null;
     }
@@ -711,7 +709,6 @@ public class ButtonsUIManager : MonoBehaviour
         }
 
         playerHudContainer.SetActive(true);
-        DeactivateEndTurnButton();
     }
 
     public void DeactivatePlayerHUD()
@@ -731,7 +728,6 @@ public class ButtonsUIManager : MonoBehaviour
         ShowHUDSliders(_selectedEnemy, enemyBodySlider, enemyLeftArmSlider, enemyRightArmSlider, enemyLegsSlider);
         ShowUnitHudText(enemyBodyCurrHP, enemyBodySlider, enemyLeftArmCurrHP, enemyLeftArmSlider, enemyRightArmCurrHP, enemyRightArmSlider, enemyLegsCurrHP, enemyLegsSlider);
         enemyHudContainer.SetActive(true);
-        DeactivateEndTurnButton();
     }
 
 
@@ -958,7 +954,6 @@ public class ButtonsUIManager : MonoBehaviour
     public void ActivateMoveContainer()
     {
         moveContainer.SetActive(true);
-        DeactivateEndTurnButton();
     }
 
     public void DeactivateMoveContainer()
