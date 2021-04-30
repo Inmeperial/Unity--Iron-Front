@@ -24,7 +24,7 @@ public class GridMovement : MonoBehaviour
         {
             var newPos = _tilesList[tilesIndex].transform.position;
             newPos.y += transform.position.y;
-            if ((newPos - transform.position).magnitude <= 0.1f)
+            if ((newPos - transform.position).magnitude <= 1.25f)
             {
                 transform.position = newPos;
                 tilesIndex++;
