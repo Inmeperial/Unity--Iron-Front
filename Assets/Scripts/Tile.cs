@@ -19,6 +19,22 @@ public class Tile : MonoBehaviour
     private bool _hasTileAbove;
 
     private Character _unitAbove;
+
+    public Color colorForMouse;
+    public Color colorForMove;
+    public Color colorForAttack;
+    public Color colorDefaultClear;
+
+
+    public GameObject planeForMove;
+    private Material _planeForMoveMat;
+    private MeshRenderer _planeForMoveRender;
+    public GameObject planeForAttack;
+    private Material _planeForAttackMat;
+    private MeshRenderer _planeForAttackRender;
+    public GameObject planeForMouse;
+    private Material _planeForMouseMat;
+    private MeshRenderer _planeForMouseRender;
     private void Awake()
     {
         _isFree = true;
@@ -26,6 +42,12 @@ public class Tile : MonoBehaviour
     private void Start()
     {
         _mat = new Material(render.sharedMaterial);
+        _planeForMoveRender = planeForMove.GetComponent<MeshRenderer>();
+        _planeForMoveMat = new Material(_planeForMoveRender.sharedMaterial);
+        _planeForAttackRender = planeForAttack.GetComponent<MeshRenderer>();
+        _planeForAttackMat = new Material(_planeForAttackRender.sharedMaterial);
+        _planeForMouseRender = planeForMouse.GetComponent<MeshRenderer>();
+        _planeForMouseMat = new Material(_planeForMouseRender.sharedMaterial);
     }
 
     public void GetNeighbours()
@@ -140,20 +162,19 @@ public class Tile : MonoBehaviour
     //Change tile color for pathfinding preview.
     public void PathFindingPreviewColor()
     {
-        _mat.color = Color.blue;
+        _planeForMoveMat.color = colorForMove;
 
-        render.sharedMaterial = _mat;
+        _planeForMoveRender.sharedMaterial = _planeForMoveMat;
         painted = true;
     }
 
     //Revert tile color when pathfinding preview ends.
     public void ResetColor()
     {
-        if (isWalkable)
-            _mat.color = Color.green;
-        else _mat.color = Color.red;
-
-        render.sharedMaterial = _mat;
+        _planeForMoveMat.color = colorDefaultClear;
+        _planeForAttackMat.color = colorDefaultClear;
+        _planeForMoveRender.sharedMaterial = _planeForMoveMat;
+        _planeForAttackRender.sharedMaterial = _planeForAttackMat;
         painted = false;
     }
 
@@ -161,9 +182,9 @@ public class Tile : MonoBehaviour
     {
         if (painted == false)
         {
-            _mat.color = Color.yellow;
+            _planeForMouseMat.color = colorForMouse;
 
-            render.sharedMaterial = _mat;
+            _planeForMouseRender.sharedMaterial = _planeForMouseMat;
         }
         
     }
@@ -172,9 +193,9 @@ public class Tile : MonoBehaviour
     {
         if (painted == false)
         {
-            _mat.color = Color.green;
+            _planeForMouseMat.color = colorDefaultClear;
 
-            render.sharedMaterial = _mat;
+            _planeForMouseRender.sharedMaterial = _planeForMouseMat;
         }
         
     }
@@ -184,9 +205,9 @@ public class Tile : MonoBehaviour
         if (painted == false)
         {
             painted = true;
-            _mat.color = Color.white;
+            _planeForMoveMat.color = colorForMove;
 
-            render.sharedMaterial = _mat;
+            _planeForMoveRender.sharedMaterial = _planeForMoveMat;
         }
 
     }
@@ -194,9 +215,9 @@ public class Tile : MonoBehaviour
     public void CanBeAttackedColor()
     {
         painted = true;
-        _mat.color = Color.blue;
+        _planeForAttackMat.color = colorForAttack;
 
-        render.sharedMaterial = _mat;
+        _planeForAttackRender.sharedMaterial = _planeForAttackMat;
     }
     #endregion
 
