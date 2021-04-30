@@ -63,7 +63,7 @@ public class TileHighlight : MonoBehaviour
         {
             foreach (var item in _previewPath)
             {
-                item.ResetColor();
+                item.EndInMoveRangeColor();
             }
             _previewPath.Clear();
             _lineRenderer.positionCount = 0;
@@ -76,7 +76,7 @@ public class TileHighlight : MonoBehaviour
         {
             var tile = path[i];
             if (tile.IsWalkable() && tile.IsFree())
-                tile.PathFindingPreviewColor();
+                tile.InMoveRangeColor();
         }
     }
 
@@ -87,7 +87,7 @@ public class TileHighlight : MonoBehaviour
 
     public void PaintTilesInMoveRange(Tile tile)
     {
-        tile.InRangeColor();
+        tile.InMoveRangeColor();
     }
 
     public void AddTilesInMoveRange(List<Tile> tiles)
@@ -99,7 +99,7 @@ public class TileHighlight : MonoBehaviour
     {
         foreach (var item in tiles)
         {
-            item.ResetColor();
+            item.EndCanBeAttackedColor();
         }
     }
 
@@ -107,7 +107,7 @@ public class TileHighlight : MonoBehaviour
     {
         foreach (var item in tiles)
         {
-            item.ResetColor();
+            item.EndInMoveRangeColor();
         }
     }
     #endregion
@@ -122,10 +122,7 @@ public class TileHighlight : MonoBehaviour
         if (_inMoveRangeTiles.Count > 0)
         {
             var removed = _inMoveRangeTiles.Pop();
-            foreach (var tile in removed)
-            {
-                tile.ResetColor();
-            }
+            ClearTilesInMoveRange(removed);
 
             var path = _character.GetPath();
 

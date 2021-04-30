@@ -12,7 +12,6 @@ public class Tile : MonoBehaviour
     public LayerMask obstacle;
     public LayerMask character;
     [SerializeField] private bool _isFree = true;
-    public bool painted;
     Material _mat;
     public bool showLineGizmo = true;
 
@@ -165,12 +164,18 @@ public class Tile : MonoBehaviour
     }
 
     //Change tile color for pathfinding preview.
-    public void PathFindingPreviewColor()
+    public void InMoveRangeColor()
     {
         _planeForMoveMat.color = colorForMove;
 
         _planeForMoveRender.material = _planeForMoveMat;
-        painted = true;
+    }
+
+    public void EndInMoveRangeColor()
+    {
+        _planeForMoveMat.color = colorDefaultClear;
+
+        _planeForMoveRender.material = _planeForMoveMat;
     }
 
     //Revert tile color when pathfinding preview ends.
@@ -180,49 +185,32 @@ public class Tile : MonoBehaviour
         _planeForAttackMat.color = colorDefaultClear;
         _planeForMoveRender.material = _planeForMoveMat;
         _planeForAttackRender.material = _planeForAttackMat;
-        painted = false;
     }
 
     public void MouseOverColor()
     {
-        if (painted == false)
-        {
-            Debug.Log("pinto mouse");
-            _planeForMouseMat.color = colorForMouse;
+        _planeForMouseMat.color = colorForMouse;
 
-            _planeForMouseRender.material = _planeForMouseMat;
-        }
-        
+        _planeForMouseRender.material = _planeForMouseMat;
     }
 
     public void NotSelectedColor()
     {
-        if (painted == false)
-        {
-            Debug.Log("despinto mouse");
-            _planeForMouseMat.color = colorDefaultClear;
+        _planeForMouseMat.color = colorDefaultClear;
 
-            _planeForMouseRender.material = _planeForMouseMat;
-        }
-        
-    }
-
-    public void InRangeColor()
-    {
-        if (painted == false)
-        {
-            painted = true;
-            _planeForMoveMat.color = colorForMove;
-
-            _planeForMoveRender.material = _planeForMoveMat;
-        }
-
+        _planeForMouseRender.material = _planeForMouseMat;
     }
 
     public void CanBeAttackedColor()
     {
-        painted = true;
         _planeForAttackMat.color = colorForAttack;
+
+        _planeForAttackRender.material = _planeForAttackMat;
+    }
+
+    public void EndCanBeAttackedColor()
+    {
+        _planeForAttackMat.color = colorDefaultClear;
 
         _planeForAttackRender.material = _planeForAttackMat;
     }

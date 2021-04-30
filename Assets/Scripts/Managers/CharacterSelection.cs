@@ -54,35 +54,39 @@ public class CharacterSelection : MonoBehaviour
         if (character != null && character.CompareTag("Character"))
         {
             var c = character.GetComponent<Character>();
-            if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
+            if (c.CanBeSelected())
             {
-                _buttonsManager.DeselectActions();
-                if (_selection != null)
-                    _selection.DeselectThisUnit();
-                if (_enemySelection != null)
+                if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
                 {
-                    _enemySelection.DeselectThisUnit();
-                    _enemySelection = null;
+                    _buttonsManager.DeselectActions();
+                    if (_selection != null)
+                        _selection.DeselectThisUnit();
+                    if (_enemySelection != null)
+                    {
+                        _enemySelection.DeselectThisUnit();
+                        _enemySelection = null;
+                    }
+                    _selection = c;
+                    _selection.SelectThisUnit();
+                    _highlight.ChangeActiveCharacter(_selection);
+                    _buttonsManager.DeactivateUndo();
+                    _buttonsManager.SetPlayerCharacter(_selection);
+                    _buttonsManager.SetPlayerUI();
+                    stepsCounter.text = _selection.GetSteps().ToString();
                 }
-                _selection = c;
-                _selection.SelectThisUnit();
-                _highlight.ChangeActiveCharacter(_selection);
-                _buttonsManager.DeactivateUndo();
-                _buttonsManager.SetPlayerCharacter(_selection);
-                _buttonsManager.SetPlayerUI();
-                stepsCounter.text = _selection.GetSteps().ToString();
-            }
-            else
-            {
-                if (_enemySelection != null)
+                else
                 {
-                    _enemySelection.DeselectThisUnit();
+                    if (_enemySelection != null)
+                    {
+                        _enemySelection.DeselectThisUnit();
+                    }
+                    _enemySelection = c;
+                    _enemySelection.SelectedAsEnemy();
+                    _buttonsManager.SetEnemy(_enemySelection);
+                    _buttonsManager.SetEnemyUI();
                 }
-                _enemySelection = c;
-                _enemySelection.SelectedAsEnemy();
-                _buttonsManager.SetEnemy(_enemySelection);
-                _buttonsManager.SetEnemyUI();
             }
+            
         }
     }
 

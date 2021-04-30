@@ -79,10 +79,10 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
                 var removed = _partialPaths.Pop();
                 foreach (var tile in removed)
                 {
-                    tile.ResetColor();
                     if (tile != _char.GetActualTilePosition())
                         _char.IncreaseAvailableSteps(1);
                 }
+                _char.highlight.ClearTilesInMoveRange(removed);
 
 
                 var tempStack = new Stack<List<Tile>>();
