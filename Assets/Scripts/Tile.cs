@@ -41,13 +41,18 @@ public class Tile : MonoBehaviour
     }
     private void Start()
     {
-        _mat = new Material(render.sharedMaterial);
+		//Materiales & Renders
+	    _mat = new Material(render.sharedMaterial);
         _planeForMoveRender = planeForMove.GetComponent<MeshRenderer>();
-        _planeForMoveMat = new Material(_planeForMoveRender.sharedMaterial);
+        _planeForMoveMat = _planeForMoveRender.material;
         _planeForAttackRender = planeForAttack.GetComponent<MeshRenderer>();
-        _planeForAttackMat = new Material(_planeForAttackRender.sharedMaterial);
+        _planeForAttackMat = _planeForAttackRender.material;
         _planeForMouseRender = planeForMouse.GetComponent<MeshRenderer>();
-        _planeForMouseMat = new Material(_planeForMouseRender.sharedMaterial);
+        _planeForMouseMat = _planeForMouseRender.material;
+		//Color
+		_planeForAttackRender.material.color = colorDefaultClear;
+		_planeForMoveRender.material.color = colorDefaultClear;
+		_planeForMouseRender.material.color = colorDefaultClear;
     }
 
     public void GetNeighbours()
