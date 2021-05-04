@@ -169,6 +169,7 @@ public class Tile : MonoBehaviour
         _planeForMoveMat.color = colorForMove;
 
         _planeForMoveRender.material = _planeForMoveMat;
+        _planeForAttackRender.enabled = true;
     }
 
     public void EndInMoveRangeColor()
@@ -176,6 +177,7 @@ public class Tile : MonoBehaviour
         _planeForMoveMat.color = colorDefaultClear;
 
         _planeForMoveRender.material = _planeForMoveMat;
+        _planeForAttackRender.enabled = false;
     }
 
     //Revert tile color when pathfinding preview ends.
@@ -192,6 +194,7 @@ public class Tile : MonoBehaviour
         _planeForMouseMat.color = colorForMouse;
 
         _planeForMouseRender.material = _planeForMouseMat;
+        _planeForMouseRender.enabled = true;
     }
 
     public void NotSelectedColor()
@@ -199,6 +202,7 @@ public class Tile : MonoBehaviour
         _planeForMouseMat.color = colorDefaultClear;
 
         _planeForMouseRender.material = _planeForMouseMat;
+        _planeForMouseRender.enabled = false;
     }
 
     public void CanBeAttackedColor()
@@ -206,6 +210,7 @@ public class Tile : MonoBehaviour
         _planeForAttackMat.color = colorForAttack;
 
         _planeForAttackRender.material = _planeForAttackMat;
+        _planeForAttackRender.enabled = true;
     }
 
     public void EndCanBeAttackedColor()
@@ -213,6 +218,7 @@ public class Tile : MonoBehaviour
         _planeForAttackMat.color = colorDefaultClear;
 
         _planeForAttackRender.material = _planeForAttackMat;
+        _planeForAttackRender.enabled = false;
     }
     #endregion
 
