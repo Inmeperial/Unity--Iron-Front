@@ -63,6 +63,7 @@ public class Character : Teams
     private Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();
     private List<Character> _enemiesInRange = new List<Character>();
     private MeshRenderer _render;
+    private WorldUI _myUI;
 
     [Header("DON'T SET")]
     public TurnManager turnManager;
@@ -94,6 +95,10 @@ public class Character : Teams
         highlight = FindObjectOfType<TileHighlight>();
         buttonsManager = FindObjectOfType<ButtonsUIManager>();
         pathCreator = GetComponent<IPathCreator>();
+        _myUI = GetComponent<WorldUI>();
+
+        if (_myUI)
+            _myUI.SetLimits(_bodyMaxHP, _rightArmMaxHP, _leftArmMaxHP, _legsMaxHP);
 
         if (_rightArmAlive)
         {
@@ -442,6 +447,15 @@ public class Character : Teams
         return _selectedGun;
     }
 
+    public Gun GetLeftGun()
+    {
+        return leftGun;
+    }
+
+    public Gun GetRightGun()
+    {
+        return rightGun;
+    }
 
     #endregion
 
@@ -718,5 +732,23 @@ public class Character : Teams
     }
     #endregion
 
+    private void OnMouseOver()
+    {
+        ShowWorldUI();
+    }
 
+    private void OnMouseExit()
+    {
+        HideWorldUI();
+    }
+
+    void ShowWorldUI()
+    {
+        _myUI.ActivateWorldUI(GetBodyHP(), GetRightArmHP(), GetLeftArmHP(), GetLegsHP(), ThisUnitCanMove(), CanAttack());
+    }
+
+    void HideWorldUI()
+    {
+        _myUI.DeactivateWorldUI();
+    }
 }

@@ -20,7 +20,7 @@ public class CharacterSelection : MonoBehaviour
     public event Action OnCharacterSelect = delegate { };
     public event Action OnCharacterDeselect = delegate { };
 
-    private bool _selectingEnemy;
+    //private bool _selectingEnemy;
 
 
     private void Start()
@@ -112,7 +112,7 @@ public class CharacterSelection : MonoBehaviour
     public void ResetSelector()
     {
         DeselectUnit();
-        _selectingEnemy = false;
+        //_selectingEnemy = false;
         _buttonsManager.DeactivateCharacterButtons();
     }
 
@@ -132,13 +132,13 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
-    public void CanSelectEnemy()
-    {
-        _selectingEnemy = true;
-    }
+    //public void CanSelectEnemy()
+    //{
+    //    _selectingEnemy = true;
+    //}
 
-    public void CantSelectEnemy()
-    {
-        _selectingEnemy = false;
-    }
+    //public void CantSelectEnemy()
+    //{
+    //    _selectingEnemy = false;
+    //}
 }
