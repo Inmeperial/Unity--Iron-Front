@@ -71,8 +71,6 @@ public class ButtonsUIManager : MonoBehaviour
     [SerializeField] private Character _selectedEnemy;
     private TurnManager _turnManager;
     private int _partsSelected;
-
-    private bool _showUI;
     private void Start()
     {
         enemyHudContainer.SetActive(false);
