@@ -69,11 +69,15 @@ public class ButtonsManagerInspector : Editor
             _selection.leftWeaponCircle = (GameObject)EditorGUILayout.ObjectField("Left Weapon Circle", _selection.leftWeaponCircle, typeof(GameObject), true);
             _selection.rightWeaponCircle = (GameObject)EditorGUILayout.ObjectField("Right Weapon Circle", _selection.rightWeaponCircle, typeof(GameObject), true);
 
-            _selection.gunTypeText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Gun Type Text", _selection.gunTypeText, typeof(TextMeshProUGUI), true);
-            _selection.damageText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Damage Text", _selection.damageText, typeof(TextMeshProUGUI), true);
-            _selection.rangeText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Range Text", _selection.rangeText, typeof(TextMeshProUGUI), true);
-            _selection.critText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Crit Text", _selection.critText, typeof(TextMeshProUGUI), true);
-            _selection.hitChanceText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Hit Text", _selection.hitChanceText, typeof(TextMeshProUGUI), true);
+            _selection.leftGunTypeText = (TextMeshProUGUI)EditorGUILayout.ObjectField("L Gun Type Text", _selection.leftGunTypeText, typeof(TextMeshProUGUI), true);
+            _selection.leftGunDamageText = (TextMeshProUGUI)EditorGUILayout.ObjectField("L GunDamage Text", _selection.leftGunDamageText, typeof(TextMeshProUGUI), true);
+            _selection.leftGunHitsText = (TextMeshProUGUI)EditorGUILayout.ObjectField("L Gun Hits Text", _selection.leftGunHitsText, typeof(TextMeshProUGUI), true);
+            _selection.leftGunHitChanceText = (TextMeshProUGUI)EditorGUILayout.ObjectField("L Gun HitChance Text", _selection.leftGunHitChanceText, typeof(TextMeshProUGUI), true);
+
+            _selection.rightGunTypeText = (TextMeshProUGUI)EditorGUILayout.ObjectField("R Gun Type Text", _selection.rightGunTypeText, typeof(TextMeshProUGUI), true);
+            _selection.rightGunDamageText = (TextMeshProUGUI)EditorGUILayout.ObjectField("R GunDamage Text", _selection.rightGunDamageText, typeof(TextMeshProUGUI), true);
+            _selection.rightGunHitsText = (TextMeshProUGUI)EditorGUILayout.ObjectField("R Gun Hits Text", _selection.rightGunHitsText, typeof(TextMeshProUGUI), true);
+            _selection.rightGunHitChanceText = (TextMeshProUGUI)EditorGUILayout.ObjectField("R Gun HitChance Text", _selection.rightGunHitChanceText, typeof(TextMeshProUGUI), true);
 
             _selection.playerBodyCurrHP = (TextMeshProUGUI)EditorGUILayout.ObjectField("Body HP Text", _selection.playerBodyCurrHP, typeof(TextMeshProUGUI), true);
 

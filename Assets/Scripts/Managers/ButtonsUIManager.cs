@@ -45,11 +45,16 @@ public class ButtonsUIManager : MonoBehaviour
     #region HUD
     //Player
     public GameObject playerHudContainer;
-    public TextMeshProUGUI gunTypeText;
-    public TextMeshProUGUI damageText;
-    public TextMeshProUGUI rangeText;
-    public TextMeshProUGUI critText;
-    public TextMeshProUGUI hitChanceText;
+    public TextMeshProUGUI leftGunTypeText;
+    public TextMeshProUGUI leftGunDamageText;
+    public TextMeshProUGUI leftGunHitsText;
+    public TextMeshProUGUI leftGunHitChanceText;
+    //public TextMeshProUGUI rangeText;
+    //public TextMeshProUGUI critText;
+    public TextMeshProUGUI rightGunTypeText;
+    public TextMeshProUGUI rightGunDamageText;
+    public TextMeshProUGUI rightGunHitsText;
+    public TextMeshProUGUI rightGunHitChanceText;
     public TextMeshProUGUI playerBodyCurrHP;
     public TextMeshProUGUI playerLeftArmCurrHP;
     public TextMeshProUGUI playerRightArmCurrHP;
@@ -737,37 +742,76 @@ public class ButtonsUIManager : MonoBehaviour
     {
         ShowUnitHudText(bodyHpText, bodyValue, lArmHpText, lArmValue, rArmHpText, rArmValue, legsHpText, legsValue);
 
-        var gun = _selectedChar.GetSelectedGun();
-
-        if (gun == null)
+        leftWeaponCircle.SetActive(true);
+        rightWeaponCircle.SetActive(false);
+        
+        if (_selectedChar.LeftArmAlive())
         {
-            gunTypeText.text = "No guns - Arms destroyed";
-            damageText.text = "";
-            rangeText.text = "";
-            critText.text = "";
-            hitChanceText.text = "";
+            var left = _selectedChar.GetLeftGun();
+            leftGunTypeText.text = left.GetGunTypeString();
+
+            var b = left.GetAvailableBullets().ToString();
+            leftGunHitsText.text = b;
+
+            var dmg = left.GetBulletDamage().ToString();
+            leftGunDamageText.text = dmg;
+
+            //var r = left.GetAttackRange().ToString();
+            //rangeText.text = "Range " + r;
+
+            //var cc = left.GetCritChance().ToString();
+            //var cd = left.GetCritMultiplier().ToString();
+
+            //critText.text = "Crit % " + cc + " | " + "Crit Dmg x" + cd;
+
+            var h = left.GetHitChance().ToString();
+            leftGunHitChanceText.text =h + "%";
         }
         else
         {
-            gunTypeText.text = gun.GetGunTypeString();
-
-            var dmg = gun.GetBulletDamage().ToString();
-            var b = gun.GetAvailableBullets();
-            damageText.text = "DMG " + dmg + " x " + b + " hits";
-
-            var r = gun.GetAttackRange().ToString();
-            rangeText.text = "Range " + r;
-
-            var cc = gun.GetCritChance().ToString();
-            var cd = gun.GetCritMultiplier().ToString();
-
-            critText.text = "Crit % " + cc + " | " + "Crit Dmg x" + cd;
-
-            var h = gun.GetHitChance().ToString();
-            hitChanceText.text = "Hit % " + h;
+            
+            leftGunTypeText.text = "No guns - Arms destroyed";
+            leftGunDamageText.text = "";
+            //rangeText.text = "";
+            //critText.text = "";
+            leftGunHitChanceText.text = "";
         }
 
-        
+        if (_selectedChar.RightArmAlive())
+        {
+            var right = _selectedChar.GetRightGun();
+
+            rightGunTypeText.text = right.GetGunTypeString();
+
+            var b = right.GetAvailableBullets().ToString();
+            rightGunHitsText.text = b;
+
+            var dmg = right.GetBulletDamage().ToString();
+            rightGunDamageText.text = dmg;
+
+            //var r = right.GetAttackRange().ToString();
+            //rangeText.text = "Range " + r;
+
+            //var cc = right.GetCritChance().ToString();
+            //var cd = right.GetCritMultiplier().ToString();
+
+            //critText.text = "Crit % " + cc + " | " + "Crit Dmg x" + cd;
+
+            var h = right.GetHitChance().ToString();
+            rightGunHitChanceText.text = h + "%";
+
+        }
+        else
+        {
+            
+            leftGunTypeText.text = "No guns - Arms destroyed";
+            leftGunDamageText.text = "";
+            //rangeText.text = "";
+            //critText.text = "";
+            leftGunHitChanceText.text = "";
+        }
+
+
     }
 
     //void ShowHUDSliders(Character unit, Slider body, Slider lArm, Slider rArm, Slider legs)

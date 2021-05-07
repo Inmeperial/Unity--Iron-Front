@@ -348,11 +348,8 @@ MonoBehaviour:
   _leftArmSlider: {fileID: 1510093082}
   _rightArmSlider: {fileID: 1844157385}
   _legsSlider: {fileID: 816655646}
-  actionIconA: {fileID: 0}
-  actionIconB: {fileID: 0}
-  mask:
-    serializedVersion: 2
-    m_Bits: 512
+  _moveActionIcon: {fileID: 0}
+  _attackActionIcon: {fileID: 0}
 --- !u!114 &816655646 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5433373889465007745, guid: ff9422d8de6215642999bc7c283e305c,
@@ -594,6 +591,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CANVAS Y MANAGERS V.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964717483214973234, guid: 1d637d60983bca44797670748998bc50,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964717484453459102, guid: 1d637d60983bca44797670748998bc50,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6617787762069987166, guid: 1d637d60983bca44797670748998bc50,
         type: 3}

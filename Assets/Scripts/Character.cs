@@ -447,6 +447,15 @@ public class Character : Teams
         return _selectedGun;
     }
 
+    public Gun GetLeftGun()
+    {
+        return leftGun;
+    }
+
+    public Gun GetRightGun()
+    {
+        return rightGun;
+    }
 
     #endregion
 
