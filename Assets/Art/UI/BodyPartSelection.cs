@@ -9,14 +9,15 @@ public class BodyPartSelection : MonoBehaviour
 	public Image counterUI;
 	public int count = 0;
 	List<Image> myCounters = new List<Image>();
+	public GameObject bulletFillArea;
 
 	public void GenerateCounter()
 	{
 		
-		var myButton = EventSystem.current.currentSelectedGameObject.transform;
+		//var myButton = EventSystem.current.currentSelectedGameObject.transform;
 		var tempCounterUI = Instantiate(counterUI);
 		myCounters.Add(tempCounterUI);
-		tempCounterUI.transform.SetParent(myButton, false);
+		tempCounterUI.transform.SetParent(bulletFillArea.transform, false);
 		if(count <= 0)
 			tempCounterUI.rectTransform.anchorMin = new Vector2(0, 0);
 		else
@@ -24,8 +25,10 @@ public class BodyPartSelection : MonoBehaviour
 
 		count++;
 
-		tempCounterUI.rectTransform.anchorMax = new Vector2(0.1f * count, 0.15f);
-		
+		tempCounterUI.rectTransform.anchorMax = new Vector2(0.1f * count, 1f);
+		//tempCounterUI.rectTransform.right += Vector3.right * 2;
+
+
 	}
 
 	public void RemoveCounter()
