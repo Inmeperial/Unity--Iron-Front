@@ -6,6 +6,7 @@ using TMPro;
 
 public class ButtonsUIManager : MonoBehaviour
 {
+    public LayerMask charMask;
     public GameObject moveContainer;
     public Button buttonMove;
     public Button buttonUndo;
@@ -76,6 +77,8 @@ public class ButtonsUIManager : MonoBehaviour
     [SerializeField] private Character _selectedEnemy;
     private TurnManager _turnManager;
     private int _partsSelected;
+
+    private bool _showUI;
     private void Start()
     {
         enemyHudContainer.SetActive(false);
@@ -424,7 +427,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedChar.CanAttack() == false)
         {
             _selectedChar.ResetInRangeLists();
-            _charSelection.CantSelectEnemy();
+            //_charSelection.CantSelectEnemy();
             DeactivateMoveContainer();
             DeactivateBodyPartsContainer();
             buttonExecuteAttack.interactable = false;
@@ -433,11 +436,11 @@ public class ButtonsUIManager : MonoBehaviour
 
 
 
-    public void SelectEnemy()
-    {
-        if (_selectedChar != null && _selectedChar.CanAttack())
-            _charSelection.CanSelectEnemy();
-    }
+    //public void SelectEnemy()
+    //{
+    //    if (_selectedChar != null && _selectedChar.CanAttack())
+    //        _charSelection.CanSelectEnemy();
+    //}
 
     public void EndTurn()
     {
