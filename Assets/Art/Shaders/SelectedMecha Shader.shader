@@ -122,7 +122,7 @@ Shader "SelectedMecha"
 }
 /*ASEBEGIN
 Version=17800
-0;73;791;938;1187.124;852.4802;2.189013;False;False
+0;73;923;938;736.2997;1408.974;2.249483;True;False
 Node;AmplifyShaderEditor.RangedFloatNode;6;-947.0164,-9.510975;Inherit;False;Constant;_Scale;Scale;3;0;Create;True;0;0;False;0;1;2;0;10;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;5;-944.6307,142.909;Inherit;False;Constant;_PowerFresnel;PowerFresnel;2;0;Create;True;0;0;False;0;3;2;0;10;0;1;FLOAT;0
 Node;AmplifyShaderEditor.FresnelNode;4;-562.0911,6.794535;Inherit;False;Standard;WorldNormal;ViewDir;False;False;5;0;FLOAT3;0,0,1;False;4;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;5;False;1;FLOAT;0
@@ -135,7 +135,7 @@ Node;AmplifyShaderEditor.RangedFloatNode;11;-46.42164,-397.8801;Inherit;False;Co
 Node;AmplifyShaderEditor.SinOpNode;12;280.8724,-583.2432;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;13;-61.88819,-269.609;Inherit;False;Constant;_Float2;Float 2;5;0;Create;True;0;0;False;0;0.7;0;0;2;0;1;FLOAT;0
 Node;AmplifyShaderEditor.ClampOpNode;14;491.2334,-391.755;Inherit;True;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;47.8764,-40.11266;Float;False;True;-1;2;ASEMaterialInspector;0;0;Standard;SelectedMecha;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Opaque;0.5;True;True;0;False;Opaque;;Geometry;All;14;all;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;0;0;False;-1;0;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;694.3411,586.5911;Float;False;True;-1;2;ASEMaterialInspector;0;0;Standard;SelectedMecha;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Opaque;0.5;True;True;0;False;Opaque;;Geometry;All;14;all;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;0;0;False;-1;0;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;4;2;6;0
 WireConnection;4;3;5;0
 WireConnection;8;0;4;0
@@ -148,4 +148,4 @@ WireConnection;14;2;13;0
 WireConnection;0;0;2;0
 WireConnection;0;2;8;0
 ASEEND*/
-//CHKSM=967143C80E4EA792BEFF86F0C48D8E16C82CD69F
+//CHKSM=734AF5EC6422B162F2A219D87CC88A751EC3F088
