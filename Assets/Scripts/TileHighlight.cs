@@ -151,7 +151,6 @@ public class TileHighlight : MonoBehaviour
 
     public void PathLinesClear()
     {
-        Debug.Log("limpio lineas");
         _lineRenderer.positionCount = 0;
     }
 }

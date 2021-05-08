@@ -29,8 +29,8 @@ public class ButtonsManagerInspector : Editor
         _selection.buttonExecuteAttack = (Button)EditorGUILayout.ObjectField("Button Execute Attack", _selection.buttonExecuteAttack, typeof(Button), true);
         _selection.buttonEndTurn = (Button)EditorGUILayout.ObjectField("Button End Turn", _selection.buttonEndTurn, typeof(Button), true);
         _selection.deselectKey = (KeyCode)EditorGUILayout.EnumPopup("Deselect Key", _selection.deselectKey);
-        _selection.selectLGunKey = (KeyCode)EditorGUILayout.EnumPopup("Select LGun Key", _selection.selectLGunKey);
         _selection.selectRGunKey = (KeyCode)EditorGUILayout.EnumPopup("Select RGun Key", _selection.selectRGunKey);
+        _selection.selectLGunKey = (KeyCode)EditorGUILayout.EnumPopup("Select LGun Key", _selection.selectLGunKey);
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Buttons", _importantStyle);

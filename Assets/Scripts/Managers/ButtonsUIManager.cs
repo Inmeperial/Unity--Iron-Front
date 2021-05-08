@@ -515,8 +515,8 @@ public class ButtonsUIManager : MonoBehaviour
             RightArmClear();
             LegsClear();
             _selectedChar.SelectRightGun();
-            leftWeaponCircle.SetActive(false);
             rightWeaponCircle.SetActive(true);
+            leftWeaponCircle.SetActive(false);
             ShowPlayerHudText(playerBodyCurrHP, _selectedChar.GetBodyHP(), playerLeftArmCurrHP, _selectedChar.GetLeftArmHP(), playerRightArmCurrHP, _selectedChar.GetRightArmHP(), playerLegsCurrHP, _selectedChar.GetLegsHP());
 
             if (_selectedChar.HasEnemiesInRange())
@@ -704,6 +704,22 @@ public class ButtonsUIManager : MonoBehaviour
 
         ShowPlayerHudText(playerBodyCurrHP, _selectedChar.GetBodyHP(), playerLeftArmCurrHP, _selectedChar.GetLeftArmHP(), playerRightArmCurrHP, _selectedChar.GetRightArmHP(), playerLegsCurrHP, _selectedChar.GetLegsHP());
 
+        if (_selectedChar.RightArmAlive())
+        {
+            rightWeaponCircle.SetActive(true);
+            leftWeaponCircle.SetActive(false);
+        }
+        else if (_selectedChar.LeftArmAlive())
+        {
+            rightWeaponCircle.SetActive(false);
+            leftWeaponCircle.SetActive(true);
+        }
+        else
+        {
+            rightWeaponCircle.SetActive(false);
+            leftWeaponCircle.SetActive(false);
+        }
+
         if (_selectedChar.CanAttack())
         {
            if (_selectedChar.HasEnemiesInRange() && _selectedEnemy != null)
@@ -742,8 +758,8 @@ public class ButtonsUIManager : MonoBehaviour
     {
         ShowUnitHudText(bodyHpText, bodyValue, lArmHpText, lArmValue, rArmHpText, rArmValue, legsHpText, legsValue);
 
-        leftWeaponCircle.SetActive(true);
-        rightWeaponCircle.SetActive(false);
+        //leftWeaponCircle.SetActive(true);
+        //rightWeaponCircle.SetActive(false);
         
         if (_selectedChar.LeftArmAlive())
         {
