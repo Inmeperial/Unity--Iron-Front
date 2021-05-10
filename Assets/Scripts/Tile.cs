@@ -25,16 +25,6 @@ public class Tile : MonoBehaviour
     public Color colorDefaultClear;
 
 
-    public GameObject planeForMove;
-    private Material _planeForMoveMat;
-    private MeshRenderer _planeForMoveRender;
-    public GameObject planeForAttack;
-    private Material _planeForAttackMat;
-    private MeshRenderer _planeForAttackRender;
-    public GameObject planeForMouse;
-    private Material _planeForMouseMat;
-    private MeshRenderer _planeForMouseRender;
-
     private TileMaterialhandler _materialHandler;
 
     public bool inMoveRange;
@@ -46,15 +36,6 @@ public class Tile : MonoBehaviour
     }
     private void Start()
     {
-        //Materiales & Renders
-        _mat = new Material(render.sharedMaterial);
-        _planeForMoveRender = planeForMove.GetComponent<MeshRenderer>();
-        _planeForMoveMat = _planeForMoveRender.material;
-        _planeForAttackRender = planeForAttack.GetComponent<MeshRenderer>();
-        _planeForAttackMat = _planeForAttackRender.material;
-        _planeForMouseRender = planeForMouse.GetComponent<MeshRenderer>();
-        _planeForMouseMat = _planeForMouseRender.material;
-
         _materialHandler = GetComponent<TileMaterialhandler>();
 
         inMoveRange = false;
@@ -191,14 +172,7 @@ public class Tile : MonoBehaviour
         _materialHandler.DiseableAndEnableStatus(false);
     }
 
-    //Revert tile color when pathfinding preview ends.
-    public void ResetColor()
-    {
-        _planeForMoveMat.color = colorDefaultClear;
-        _planeForAttackMat.color = colorDefaultClear;
-        _planeForMoveRender.material = _planeForMoveMat;
-        _planeForAttackRender.material = _planeForAttackMat;
-    }
+  
 
     public void MouseOverColor()
     {
