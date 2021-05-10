@@ -36,6 +36,9 @@ public class TileMaterialhandler : MonoBehaviour
         {
             Debug.Log("Cant Find PlaneForMouse child in Node");
         }
+
+        DiseableAndEnableSelectedNode(false);
+        DiseableAndEnableStatus(false);
     }
     
     void Update()
