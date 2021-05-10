@@ -610,9 +610,6 @@ public class Character : Teams
     public void NotSelectable()
     {
         _canBeSelected = false;
-        Material mat = new Material(_render.sharedMaterial);
-        mat.color = Color.black;
-        _render.sharedMaterial = mat;
     }
     public void SelectedAsEnemy()
     {
