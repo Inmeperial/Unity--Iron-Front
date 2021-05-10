@@ -34,25 +34,32 @@ public class Tile : MonoBehaviour
     public GameObject planeForMouse;
     private Material _planeForMouseMat;
     private MeshRenderer _planeForMouseRender;
+
+    private TileMaterialhandler _materialHandler;
+
+    public bool inMoveRange;
+    public bool inAttackRange;
+
     private void Awake()
     {
         _isFree = true;
     }
     private void Start()
     {
-		//Materiales & Renders
-	 //   _mat = new Material(render.sharedMaterial);
-  //      _planeForMoveRender = planeForMove.GetComponent<MeshRenderer>();
-  //      _planeForMoveMat = _planeForMoveRender.material;
-  //      _planeForAttackRender = planeForAttack.GetComponent<MeshRenderer>();
-  //      _planeForAttackMat = _planeForAttackRender.material;
-  //      _planeForMouseRender = planeForMouse.GetComponent<MeshRenderer>();
-  //      _planeForMouseMat = _planeForMouseRender.material;
-		////Color
-		//_planeForAttackRender.material.color = colorDefaultClear;
-		//_planeForMoveRender.material.color = colorDefaultClear;
-		//_planeForMouseRender.material.color = colorDefaultClear;
-    }
+        //Materiales & Renders
+        _mat = new Material(render.sharedMaterial);
+        _planeForMoveRender = planeForMove.GetComponent<MeshRenderer>();
+        _planeForMoveMat = _planeForMoveRender.material;
+        _planeForAttackRender = planeForAttack.GetComponent<MeshRenderer>();
+        _planeForAttackMat = _planeForAttackRender.material;
+        _planeForMouseRender = planeForMouse.GetComponent<MeshRenderer>();
+        _planeForMouseMat = _planeForMouseRender.material;
+
+        _materialHandler = GetComponent<TileMaterialhandler>();
+
+        inMoveRange = false;
+        inAttackRange = false;
+}
 
     public void GetNeighbours()
     {
@@ -166,18 +173,22 @@ public class Tile : MonoBehaviour
     //Change tile color for pathfinding preview.
     public void InMoveRangeColor()
     {
-        _planeForMoveMat.color = colorForMove;
+        //_planeForMoveMat.color = colorForMove;
 
-        _planeForMoveRender.material = _planeForMoveMat;
-        _planeForAttackRender.enabled = true;
+        //_planeForMoveRender.material = _planeForMoveMat;
+        //_planeForAttackRender.enabled = true;
+
+        _materialHandler.StatusToMove();
+        _materialHandler.DiseableAndEnableStatus(true);
     }
 
     public void EndInMoveRangeColor()
     {
-        _planeForMoveMat.color = colorDefaultClear;
+        //_planeForMoveMat.color = colorDefaultClear;
 
-        _planeForMoveRender.material = _planeForMoveMat;
-        _planeForAttackRender.enabled = false;
+        //_planeForMoveRender.material = _planeForMoveMat;
+        //_planeForAttackRender.enabled = false;
+        _materialHandler.DiseableAndEnableStatus(false);
     }
 
     //Revert tile color when pathfinding preview ends.
@@ -191,34 +202,50 @@ public class Tile : MonoBehaviour
 
     public void MouseOverColor()
     {
-        _planeForMouseMat.color = colorForMouse;
+        //_planeForMouseMat.color = colorForMouse;
 
-        _planeForMouseRender.material = _planeForMouseMat;
-        _planeForMouseRender.enabled = true;
+        //_planeForMouseRender.material = _planeForMouseMat;
+        //_planeForMouseRender.enabled = true;
+        _materialHandler.DiseableAndEnableSelectedNode(true);
     }
 
-    public void NotSelectedColor()
+    public void EndMouseOverColor()
     {
-        _planeForMouseMat.color = colorDefaultClear;
+        //_planeForMouseMat.color = colorDefaultClear;
 
-        _planeForMouseRender.material = _planeForMouseMat;
-        _planeForMouseRender.enabled = false;
+        //_planeForMouseRender.material = _planeForMouseMat;
+        //_planeForMouseRender.enabled = false;
+        inMoveRange = false;
+        _materialHandler.DiseableAndEnableSelectedNode(false);
     }
 
     public void CanBeAttackedColor()
     {
-        _planeForAttackMat.color = colorForAttack;
+        //_planeForAttackMat.color = colorForAttack;
 
-        _planeForAttackRender.material = _planeForAttackMat;
-        _planeForAttackRender.enabled = true;
+        //_planeForAttackRender.material = _planeForAttackMat;
+        //_planeForAttackRender.enabled = true;
+        _materialHandler.StatusToAttack();
+        _materialHandler.DiseableAndEnableSelectedNode(true);
     }
 
     public void EndCanBeAttackedColor()
     {
-        _planeForAttackMat.color = colorDefaultClear;
+        inAttackRange = false;
+        _materialHandler.DiseableAndEnableSelectedNode(false);
+    }
 
-        _planeForAttackRender.material = _planeForAttackMat;
-        _planeForAttackRender.enabled = false;
+    public void CanMoveAndAttackColor()
+    {
+        _materialHandler.StatusToAttackAndMove();
+        _materialHandler.DiseableAndEnableSelectedNode(true);
+    }
+
+    public void EndCanMoveAndAttackColor()
+    {
+        inMoveRange = false;
+        inAttackRange = false;
+        _materialHandler.DiseableAndEnableSelectedNode(false);
     }
     #endregion
 

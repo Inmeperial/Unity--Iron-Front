@@ -33,7 +33,8 @@ public class Character : Teams
     [Header("Movement")]
     [SerializeField] private int _maxSteps;
     [SerializeField] private int _currentSteps;
-    [SerializeField] private float _speed;
+    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _rotationSpeed;
     #endregion
 
     private Gun _selectedGun;
@@ -62,7 +63,6 @@ public class Character : Teams
     private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
     private Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();
     private List<Character> _enemiesInRange = new List<Character>();
-    private MeshRenderer _render;
     private WorldUI _myUI;
 
     [Header("DON'T SET")]
@@ -87,7 +87,8 @@ public class Character : Teams
         _selected = false;
         
         _move = GetComponent<GridMovement>();
-        _render = GetComponent<MeshRenderer>();
+        _move.moveSpeed = _moveSpeed;
+        _move.rotationSpeed = _rotationSpeed;
         _myPositionTile = GetTileBelow();
         _myPositionTile.MakeTileOccupied();
         _myPositionTile.SetUnitAbove(this);
@@ -143,7 +144,12 @@ public class Character : Teams
                 if (!tile.HasTileAbove() && tile.IsWalkable())
                 {
                     _tilesInAttackRange.Add(tile);
-                    highlight.PaintTilesInAttackRange(tile);
+                    tile.inAttackRange = true;
+                    if (tile.inMoveRange)
+                    {
+                        highlight.PaintTilesInMoveAndAttackRange(tile);
+                    }
+                    else highlight.PaintTilesInAttackRange(tile);
                 }
 
             }
@@ -165,7 +171,12 @@ public class Character : Teams
                 if (tile.IsWalkable() && tile.IsFree())
                 {
                     _tilesInMoveRange.Add(tile);
-                    highlight.PaintTilesInMoveRange(tile);
+                    tile.inMoveRange = true;
+                    if (tile.inAttackRange)
+                    {
+                        highlight.PaintTilesInMoveAndAttackRange(tile);
+                    }
+                    else highlight.PaintTilesInMoveRange(tile);
                 }
                 
             }
@@ -189,8 +200,8 @@ public class Character : Teams
             buttonsManager.DeactivateMoveContainer();
             turnManager.UnitIsMoving();
             highlight.characterMoving = true;
-            highlight.ClearTilesInMoveRange(_tilesInMoveRange);
-            _move.StartMovement(_path, _speed);
+            ResetTilesInMoveRange();
+            _move.StartMovement(_path);
         }
     }
 
@@ -318,6 +329,14 @@ public class Character : Teams
         _tilesInAttackRange.Clear();
         _tilesForAttackChecked.Clear();
     }
+
+    public void ResetTilesInMoveRange()
+    {
+        highlight.ClearTilesInMoveRange(_tilesInMoveRange);
+        _tilesInMoveRange.Clear();
+        _tilesForMoveChecked.Clear();
+    }
+
     #endregion
 
     #region Getters
@@ -341,11 +360,9 @@ public class Character : Teams
                         highlight.PathPreview(_path);
                         buttonsManager.ActivateMoveButton();
                         buttonsManager.ActivateUndo();
-                        highlight.ClearTilesInAttackRange(_tilesInAttackRange);
-                        highlight.ClearTilesInMoveRange(_tilesInMoveRange);
-                        highlight.CreatePathLines(_path);
+                        ResetTilesInMoveRange();
                         ResetTilesInAttackRange();
-                        _tilesInMoveRange.Clear();
+                        highlight.CreatePathLines(_path);
                         
                         if (CanAttack())
                             PaintTilesInAttackRange(_path[_path.Count - 1], 0);
@@ -494,14 +511,10 @@ public class Character : Teams
             turnManager.UnitCantBeAttacked(item);
         }
         highlight.PathLinesClear();
-        highlight.ClearTilesInMoveRange(_tilesInMoveRange);
-        highlight.ClearTilesInAttackRange(_tilesInAttackRange);
+        ResetTilesInMoveRange();
+        ResetTilesInAttackRange();
         highlight.Undo();
-        _tilesInMoveRange.Clear();
-        _tilesInAttackRange.Clear();
         _enemiesInRange.Clear();
-        _tilesForAttackChecked.Clear();
-        _tilesForMoveChecked.Clear();
     }
     public void NewTurn()
     {
@@ -556,10 +569,6 @@ public class Character : Teams
 
     public void SelectThisUnit()
     {
-        Material mat = new Material(_render.sharedMaterial);
-        mat.color = Color.blue;
-        _render.sharedMaterial = mat;
-
         _selected = true;
         ResetInRangeLists();
         _path.Clear();
@@ -584,10 +593,6 @@ public class Character : Teams
 
     public void DeselectThisUnit()
     {
-        Material mat = new Material(_render.sharedMaterial);
-        mat.color = Color.white;
-
-        _render.sharedMaterial = mat;
         _selected = false;
         foreach (var item in _enemiesInRange)
         {
@@ -611,10 +616,7 @@ public class Character : Teams
     }
     public void SelectedAsEnemy()
     {
-        Material mat = new Material(_render.sharedMaterial);
-        mat.color = Color.red;
-
-        _render.sharedMaterial = mat;
+        Debug.Log("selected as enemy");
     }
 
     //Check if selected object is a tile.
@@ -719,8 +721,8 @@ public class Character : Teams
     }
     public void DeactivateAttack()
     {
-        highlight.ClearTilesInAttackRange(_tilesInAttackRange);
-        highlight.ClearTilesInMoveRange(_tilesInMoveRange);
+        ResetTilesInAttackRange();
+        ResetTilesInMoveRange();
         highlight.PathLinesClear();
         _canAttack = false;
         _canMove = false;

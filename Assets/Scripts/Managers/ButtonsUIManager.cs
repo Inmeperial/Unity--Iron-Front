@@ -700,6 +700,7 @@ public class ButtonsUIManager : MonoBehaviour
     #region HUD Text
     public void SetPlayerUI()
     {
+        Debug.Log("activo ui");
         SetCharacterMovementButtons();
 
         ShowPlayerHudText(playerBodyCurrHP, _selectedChar.GetBodyHP(), playerLeftArmCurrHP, _selectedChar.GetLeftArmHP(), playerRightArmCurrHP, _selectedChar.GetRightArmHP(), playerLegsCurrHP, _selectedChar.GetLegsHP());
@@ -756,6 +757,7 @@ public class ButtonsUIManager : MonoBehaviour
     }
     void ShowPlayerHudText(TextMeshProUGUI bodyHpText, float bodyValue, TextMeshProUGUI lArmHpText, float lArmValue, TextMeshProUGUI rArmHpText, float rArmValue, TextMeshProUGUI legsHpText, float legsValue)
     {
+        Debug.Log("activo el hud");
         ShowUnitHudText(bodyHpText, bodyValue, lArmHpText, lArmValue, rArmHpText, rArmValue, legsHpText, legsValue);
 
         //leftWeaponCircle.SetActive(true);
@@ -911,6 +913,7 @@ public class ButtonsUIManager : MonoBehaviour
     public void SetPlayerCharacter(Character character)
     {
         _selectedChar = character;
+        Debug.Log("asigno selected char: " + _selectedChar.name);
     }
 
     #region Activators

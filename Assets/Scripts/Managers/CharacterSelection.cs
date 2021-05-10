@@ -29,6 +29,9 @@ public class CharacterSelection : MonoBehaviour
         _highlight = GetComponent<TileHighlight>();
         _turnManager = FindObjectOfType<TurnManager>();
         _buttonsManager = FindObjectOfType<ButtonsUIManager>();
+
+        if (_buttonsManager == null)
+            Debug.Log("buttons nul");
     }
 
     // Update is called once per frame
@@ -56,6 +59,7 @@ public class CharacterSelection : MonoBehaviour
             var c = character.GetComponent<Character>();
             if (c.CanBeSelected())
             {
+                
                 if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
                 {
                     _buttonsManager.DeselectActions();
@@ -66,6 +70,7 @@ public class CharacterSelection : MonoBehaviour
                         _enemySelection.DeselectThisUnit();
                         _enemySelection = null;
                     }
+                    Debug.Log("selecciono");
                     _selection = c;
                     _selection.SelectThisUnit();
                     _highlight.ChangeActiveCharacter(_selection);

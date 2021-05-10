@@ -53,7 +53,7 @@ public class TileHighlight : MonoBehaviour
     public void MouseExitsTile()
     {
         Tile tile = previousTile.gameObject.GetComponent<Tile>();
-        tile.NotSelectedColor();
+        tile.EndMouseOverColor();
     }
 
     public void EndPreview()
@@ -88,6 +88,11 @@ public class TileHighlight : MonoBehaviour
     public void PaintTilesInMoveRange(Tile tile)
     {
         tile.InMoveRangeColor();
+    }
+
+    public void PaintTilesInMoveAndAttackRange(Tile tile)
+    {
+        tile.CanMoveAndAttackColor();
     }
 
     public void AddTilesInMoveRange(List<Tile> tiles)
