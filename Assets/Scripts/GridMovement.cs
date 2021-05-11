@@ -14,6 +14,7 @@ public class GridMovement : MonoBehaviour
     private bool _rotate;
     private int _index;
     private float _yPosition;
+    private Vector3 _posToRotate;
     private void Start()
     {
         _character = GetComponent<Character>();
@@ -22,11 +23,11 @@ public class GridMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_rotate)
-        {
-            Rotation();
-            return;
-        }
+        // if (_rotate)
+        // {
+        //     Rotation();
+        //     return;
+        // }
         if (_move)
             Movement();
     }
@@ -53,6 +54,11 @@ public class GridMovement : MonoBehaviour
             var newPos = _tilesList[_tilesIndex].transform.position;
             newPos.y = _yPosition;
             if (!CheckIfFacing(newPos))
+            {
+                _rotate = true;
+                _posToRotate = newPos;
+                //return;
+            }
             Vector3 targetDir = newPos - transform.position;
             Debug.Log("pos2: " + targetDir.normalized);
             if ((newPos - transform.position).magnitude <= 1.25f)
@@ -75,7 +81,16 @@ public class GridMovement : MonoBehaviour
     
     private void Rotation()
     {
+        if (CheckIfFacing(_posToRotate))
+        {
+            _rotate = false;
+            _posToRotate = Vector3.zero;
+            return;
+        }
+        float step = rotationSpeed * Time.deltaTime;
         
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, _posToRotate, step, 0f);
+        transform.rotation = Quaternion.LookRotation(newDir);
     }
 
     private bool CheckIfFacing(Vector3 pos)
