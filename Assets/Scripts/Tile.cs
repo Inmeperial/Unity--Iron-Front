@@ -212,14 +212,14 @@ public class Tile : MonoBehaviour
     public void CanMoveAndAttackColor()
     {
         _materialHandler.StatusToAttackAndMove();
-        _materialHandler.DiseableAndEnableSelectedNode(true);
+        _materialHandler.DiseableAndEnableStatus(true);
     }
 
     public void EndCanMoveAndAttackColor()
     {
         inMoveRange = false;
         inAttackRange = false;
-        _materialHandler.DiseableAndEnableSelectedNode(false);
+        _materialHandler.DiseableAndEnableStatus(false);
     }
     #endregion
 
