@@ -774,7 +774,7 @@ public class ButtonsUIManager : MonoBehaviour
             leftGunDamageText.text = dmg;
 
             var h = left.GetHitChance().ToString();
-            leftGunHitChanceText.text =h + "%";
+            leftGunHitChanceText.text = h + "%";
         }
         else
         {
@@ -803,9 +803,9 @@ public class ButtonsUIManager : MonoBehaviour
         else
         {
             
-            leftGunTypeText.text = "No gun - Arm destroyed";
-            leftGunDamageText.text = "";
-            leftGunHitChanceText.text = "";
+            rightGunTypeText.text = "No gun - Arm destroyed";
+			rightGunDamageText.text = "";
+			rightGunHitChanceText.text = "";
         }
 
 
@@ -813,10 +813,10 @@ public class ButtonsUIManager : MonoBehaviour
 
     void ShowUnitHudText(TextMeshProUGUI bodyHpText, float bodyValue, TextMeshProUGUI lArmHpText, float lArmValue, TextMeshProUGUI rArmHpText, float rArmValue, TextMeshProUGUI legsHpText, float legsValue)
     {
-        bodyHpText.text = "Body " + bodyValue.ToString();
-        lArmHpText.text = "L Arm " + lArmValue.ToString();
-        rArmHpText.text = "R Arm " + rArmValue.ToString();
-        legsHpText.text = "Legs " + legsValue.ToString();
+        bodyHpText.text = bodyValue.ToString() + " HP";
+        lArmHpText.text = lArmValue.ToString() + " HP";
+        rArmHpText.text = rArmValue.ToString() + " HP";
+        legsHpText.text = legsValue.ToString() + " HP";
     }
 
     public void UpdateBodyHUD(int value, bool isPlayer)
