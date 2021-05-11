@@ -70,7 +70,6 @@ public class CharacterSelection : MonoBehaviour
                         _enemySelection.DeselectThisUnit();
                         _enemySelection = null;
                     }
-                    Debug.Log("selecciono");
                     _selection = c;
                     _selection.SelectThisUnit();
                     _highlight.ChangeActiveCharacter(_selection);
