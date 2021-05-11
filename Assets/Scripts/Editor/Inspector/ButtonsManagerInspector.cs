@@ -79,13 +79,13 @@ public class ButtonsManagerInspector : Editor
             _selection.rightGunHitsText = (TextMeshProUGUI)EditorGUILayout.ObjectField("R Gun Hits Text", _selection.rightGunHitsText, typeof(TextMeshProUGUI), true);
             _selection.rightGunHitChanceText = (TextMeshProUGUI)EditorGUILayout.ObjectField("R Gun HitChance Text", _selection.rightGunHitChanceText, typeof(TextMeshProUGUI), true);
 
-            _selection.playerBodyCurrHP = (TextMeshProUGUI)EditorGUILayout.ObjectField("Body HP Text", _selection.playerBodyCurrHP, typeof(TextMeshProUGUI), true);
+            _selection.playerBodyCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("Body HP Text", _selection.playerBodyCurrHp, typeof(TextMeshProUGUI), true);
 
-            _selection.playerLeftArmCurrHP = (TextMeshProUGUI)EditorGUILayout.ObjectField("LArm HP Text", _selection.playerLeftArmCurrHP, typeof(TextMeshProUGUI), true);
+            _selection.playerLeftArmCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("LArm HP Text", _selection.playerLeftArmCurrHp, typeof(TextMeshProUGUI), true);
 
-            _selection.playerRightArmCurrHP = (TextMeshProUGUI)EditorGUILayout.ObjectField("RArm HP Text", _selection.playerRightArmCurrHP, typeof(TextMeshProUGUI), true);
+            _selection.playerRightArmCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("RArm HP Text", _selection.playerRightArmCurrHp, typeof(TextMeshProUGUI), true);
 
-            _selection.playerLegsCurrHP = (TextMeshProUGUI)EditorGUILayout.ObjectField("Legs HP Text", _selection.playerLegsCurrHP, typeof(TextMeshProUGUI), true);
+            _selection.playerLegsCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("Legs HP Text", _selection.playerLegsCurrHp, typeof(TextMeshProUGUI), true);
         }
 
         EditorGUILayout.BeginHorizontal();
@@ -97,13 +97,17 @@ public class ButtonsManagerInspector : Editor
         {
             _selection.enemyHudContainer = (GameObject)EditorGUILayout.ObjectField("Player HUD Container", _selection.enemyHudContainer, typeof(GameObject), true);
 
-            _selection.enemyBodyCurrHP = (TextMeshProUGUI)EditorGUILayout.ObjectField("Body HP Text", _selection.enemyBodyCurrHP, typeof(TextMeshProUGUI), true);
-
-            _selection.enemyLeftArmCurrHP = (TextMeshProUGUI)EditorGUILayout.ObjectField("LArm HP Text", _selection.enemyLeftArmCurrHP, typeof(TextMeshProUGUI), true);
-
-            _selection.enemyRightArmCurrHP = (TextMeshProUGUI)EditorGUILayout.ObjectField("RArm HP Text", _selection.enemyRightArmCurrHP, typeof(TextMeshProUGUI), true);
-
-            _selection.enemyLegsCurrHP = (TextMeshProUGUI)EditorGUILayout.ObjectField("Legs HP Text", _selection.enemyLegsCurrHP, typeof(TextMeshProUGUI), true);
+            _selection.enemyBodyCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("Body HP Text", _selection.enemyBodyCurrHp, typeof(TextMeshProUGUI), true);
+            _selection.bulletsForBodyText = (TextMeshProUGUI) EditorGUILayout.ObjectField("Body Bullets Text", _selection.bulletsForBodyText, typeof(TextMeshProUGUI), true);
+            
+            _selection.enemyLeftArmCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("LArm HP Text", _selection.enemyLeftArmCurrHp, typeof(TextMeshProUGUI), true);
+            _selection.bulletsForLArmText = (TextMeshProUGUI) EditorGUILayout.ObjectField("LArm Bullets Text", _selection.bulletsForLArmText, typeof(TextMeshProUGUI), true);
+            
+            _selection.enemyRightArmCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("RArm HP Text", _selection.enemyRightArmCurrHp, typeof(TextMeshProUGUI), true);
+            _selection.bulletsForRArmText = (TextMeshProUGUI) EditorGUILayout.ObjectField("RArm Bullets Text", _selection.bulletsForRArmText, typeof(TextMeshProUGUI), true);
+            
+            _selection.enemyLegsCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("Legs HP Text", _selection.enemyLegsCurrHp, typeof(TextMeshProUGUI), true);
+            _selection.bulletsForLegsText = (TextMeshProUGUI) EditorGUILayout.ObjectField("Legs Bullets Text", _selection.bulletsForLegsText, typeof(TextMeshProUGUI), true);
         }
 
     }

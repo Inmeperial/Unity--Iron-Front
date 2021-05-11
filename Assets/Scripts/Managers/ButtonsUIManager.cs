@@ -23,22 +23,22 @@ public class ButtonsUIManager : MonoBehaviour
     public Button buttonBody;
     public Button buttonBodyMinus;
     public Button buttonBodyX;
-    public bool _buttonBodySelected;
+    private bool _buttonBodySelected;
     private int _bulletsForBody;
     public Button buttonLArm;
     public Button buttonLArmMinus;
     public Button buttonLArmX;
-    public bool _buttonLArmSelected;
+    private bool _buttonLArmSelected;
     private int _bulletsForLArm;
     public Button buttonRArm;
     public Button buttonRArmMinus;
     public Button buttonRArmX;
-    public bool _buttonRArmSelected;
+    private bool _buttonRArmSelected;
     private int _bulletsForRArm;
     public Button buttonLegs;
     public Button buttonLegsMinus;
     public Button buttonLegsX;
-    public bool _buttonLegsSelected;
+    private bool _buttonLegsSelected;
     private int _bulletsForLegs;
     #endregion
 
@@ -49,25 +49,27 @@ public class ButtonsUIManager : MonoBehaviour
     public TextMeshProUGUI leftGunDamageText;
     public TextMeshProUGUI leftGunHitsText;
     public TextMeshProUGUI leftGunHitChanceText;
-    //public TextMeshProUGUI rangeText;
-    //public TextMeshProUGUI critText;
     public TextMeshProUGUI rightGunTypeText;
     public TextMeshProUGUI rightGunDamageText;
     public TextMeshProUGUI rightGunHitsText;
     public TextMeshProUGUI rightGunHitChanceText;
-    public TextMeshProUGUI playerBodyCurrHP;
-    public TextMeshProUGUI playerLeftArmCurrHP;
-    public TextMeshProUGUI playerRightArmCurrHP;
-    public TextMeshProUGUI playerLegsCurrHP;
+    public TextMeshProUGUI playerBodyCurrHp;
+    public TextMeshProUGUI playerLeftArmCurrHp;
+    public TextMeshProUGUI playerRightArmCurrHp;
+    public TextMeshProUGUI playerLegsCurrHp;
     public GameObject leftWeaponCircle;
     public GameObject rightWeaponCircle;
 
     //Enemy
     public GameObject enemyHudContainer;
-    public TextMeshProUGUI enemyBodyCurrHP;
-    public TextMeshProUGUI enemyLeftArmCurrHP;
-    public TextMeshProUGUI enemyRightArmCurrHP;
-    public TextMeshProUGUI enemyLegsCurrHP;
+    public TextMeshProUGUI enemyBodyCurrHp;
+    public TextMeshProUGUI bulletsForBodyText;
+    public TextMeshProUGUI enemyLeftArmCurrHp;
+    public TextMeshProUGUI bulletsForLArmText;
+    public TextMeshProUGUI enemyRightArmCurrHp;
+    public TextMeshProUGUI bulletsForRArmText;
+    public TextMeshProUGUI enemyLegsCurrHp;
+    public TextMeshProUGUI bulletsForLegsText;
     #endregion
 
     //OTHERS
@@ -144,7 +146,7 @@ public class ButtonsUIManager : MonoBehaviour
                 _bulletsForBody += gun.BulletsPerClick();
 
                 CreateBulletInUI(buttonBody, _bulletsForBody);
-
+                bulletsForBodyText.text = "x " + _bulletsForBody;
                 gun.ReduceAvailableBullets();
 
                 buttonExecuteAttack.interactable = true;
@@ -165,6 +167,7 @@ public class ButtonsUIManager : MonoBehaviour
             gun.IncreaseAvailableBullets();
             _bulletsForBody = _bulletsForBody > 0 ? (_bulletsForBody - gun.BulletsPerClick()) : 0;
             DeleteBulletInUI(buttonBody, gun.BulletsPerClick());
+            bulletsForBodyText.text = "x " + _bulletsForBody;
             CheckIfCanExecuteAttack();
             if (_bulletsForBody == 0)
             {
@@ -183,6 +186,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets(_bulletsForBody);
             _bulletsForBody = 0;
+            bulletsForBodyText.text = "x " + _bulletsForBody;
             _buttonBodySelected = false;
             ClearBulletsInUI(buttonBody);
             if (_partsSelected > 0)
@@ -204,7 +208,7 @@ public class ButtonsUIManager : MonoBehaviour
                     _partsSelected++;
                 }
                 _bulletsForLArm += gun.BulletsPerClick();
-
+                bulletsForLArmText.text = "x " + _bulletsForLArm;
                 CreateBulletInUI(buttonLArm, _bulletsForLArm);
 
                 gun.ReduceAvailableBullets();
@@ -224,6 +228,7 @@ public class ButtonsUIManager : MonoBehaviour
             gun.IncreaseAvailableBullets();
             _bulletsForLArm = _bulletsForLArm > 0 ? (_bulletsForLArm - gun.BulletsPerClick()) : 0;
             DeleteBulletInUI(buttonLArm, gun.BulletsPerClick());
+            bulletsForLArmText.text = "x " + _bulletsForLArm;
             CheckIfCanExecuteAttack();
             if (_bulletsForLArm == 0)
             {
@@ -242,6 +247,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets(_bulletsForLArm);
             _bulletsForLArm = 0;
+            bulletsForLArmText.text = "x " + _bulletsForLArm;
             _buttonLArmSelected = false;
             ClearBulletsInUI(buttonLArm);
             if (_partsSelected > 0)
@@ -263,6 +269,7 @@ public class ButtonsUIManager : MonoBehaviour
                     _partsSelected++;
                 }
                 _bulletsForRArm += gun.BulletsPerClick();
+                bulletsForRArmText.text = "x " + _bulletsForRArm;
                 CreateBulletInUI(buttonRArm, _bulletsForRArm);
                 gun.ReduceAvailableBullets();
                 buttonExecuteAttack.interactable = true;
@@ -280,6 +287,7 @@ public class ButtonsUIManager : MonoBehaviour
             gun.IncreaseAvailableBullets();
             _bulletsForRArm = _bulletsForRArm > 0 ? (_bulletsForRArm - gun.BulletsPerClick()) : 0;
             DeleteBulletInUI(buttonRArm, gun.BulletsPerClick());
+            bulletsForRArmText.text = "x " + _bulletsForRArm;
             CheckIfCanExecuteAttack();
             if (_bulletsForRArm == 0)
             {
@@ -298,6 +306,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets(_bulletsForRArm);
             _bulletsForRArm = 0;
+            bulletsForRArmText.text = "x " + _bulletsForRArm;
             _buttonRArmSelected = false;
             ClearBulletsInUI(buttonRArm);
             if (_partsSelected > 0)
@@ -319,6 +328,7 @@ public class ButtonsUIManager : MonoBehaviour
                     _partsSelected++;
                 }
                 _bulletsForLegs += gun.BulletsPerClick();
+                bulletsForLegsText.text = "x " + _bulletsForLegs;
                 CreateBulletInUI(buttonLegs, _bulletsForLegs);
                 gun.ReduceAvailableBullets();
                 buttonExecuteAttack.interactable = true;
@@ -336,6 +346,7 @@ public class ButtonsUIManager : MonoBehaviour
             gun.IncreaseAvailableBullets();
             _bulletsForLegs = _bulletsForLegs > 0 ? (_bulletsForLegs - gun.BulletsPerClick()) : 0;
             DeleteBulletInUI(buttonLegs, gun.BulletsPerClick());
+            bulletsForLegsText.text = "x " + _bulletsForLegs;
             CheckIfCanExecuteAttack();
             if (_bulletsForLegs == 0)
             {
@@ -354,6 +365,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets(_bulletsForLegs);
             _bulletsForLegs = 0;
+            bulletsForLegsText.text = "x " + _bulletsForLegs;
             _buttonLegsSelected = false;
             ClearBulletsInUI(buttonLegs);
             if (_partsSelected > 0)
@@ -431,14 +443,6 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
-
-
-    //public void SelectEnemy()
-    //{
-    //    if (_selectedChar != null && _selectedChar.CanAttack())
-    //        _charSelection.CanSelectEnemy();
-    //}
-
     public void EndTurn()
     {
         if (_selectedChar == null || _selectedChar.IsMoving() == false)
@@ -497,7 +501,7 @@ public class ButtonsUIManager : MonoBehaviour
             _selectedChar.SelectLeftGun();
             leftWeaponCircle.SetActive(true);
             rightWeaponCircle.SetActive(false);
-            ShowPlayerHudText(playerBodyCurrHP, _selectedChar.GetBodyHP(), playerLeftArmCurrHP, _selectedChar.GetLeftArmHP(), playerRightArmCurrHP, _selectedChar.GetRightArmHP(), playerLegsCurrHP, _selectedChar.GetLegsHP());
+            ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.GetLegsHP());
 
             if (_selectedChar.HasEnemiesInRange())
                 ActivateBodyPartsContainer();
@@ -517,7 +521,7 @@ public class ButtonsUIManager : MonoBehaviour
             _selectedChar.SelectRightGun();
             rightWeaponCircle.SetActive(true);
             leftWeaponCircle.SetActive(false);
-            ShowPlayerHudText(playerBodyCurrHP, _selectedChar.GetBodyHP(), playerLeftArmCurrHP, _selectedChar.GetLeftArmHP(), playerRightArmCurrHP, _selectedChar.GetRightArmHP(), playerLegsCurrHP, _selectedChar.GetLegsHP());
+            ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.GetLegsHP());
 
             if (_selectedChar.HasEnemiesInRange())
                 ActivateBodyPartsContainer();
@@ -702,7 +706,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         SetCharacterMovementButtons();
 
-        ShowPlayerHudText(playerBodyCurrHP, _selectedChar.GetBodyHP(), playerLeftArmCurrHP, _selectedChar.GetLeftArmHP(), playerRightArmCurrHP, _selectedChar.GetRightArmHP(), playerLegsCurrHP, _selectedChar.GetLegsHP());
+        ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.GetLegsHP());
 
         if (_selectedChar.RightArmAlive())
         {
@@ -743,7 +747,7 @@ public class ButtonsUIManager : MonoBehaviour
                 ActivateBodyPartsContainer();
             else DeactivateBodyPartsContainer();
         }
-        ShowUnitHudText(enemyBodyCurrHP, _selectedEnemy.GetBodyHP(), enemyLeftArmCurrHP, _selectedEnemy.GetLeftArmHP(), enemyRightArmCurrHP, _selectedEnemy.GetRightArmHP(), enemyLegsCurrHP, _selectedEnemy.GetLegsHP());
+        ShowUnitHudText(enemyBodyCurrHp, _selectedEnemy.GetBodyHP(), enemyLeftArmCurrHp, _selectedEnemy.GetLeftArmHP(), enemyRightArmCurrHp, _selectedEnemy.GetRightArmHP(), enemyLegsCurrHp, _selectedEnemy.GetLegsHP());
         enemyHudContainer.SetActive(true);
     }
 
@@ -758,9 +762,6 @@ public class ButtonsUIManager : MonoBehaviour
     {
         ShowUnitHudText(bodyHpText, bodyValue, lArmHpText, lArmValue, rArmHpText, rArmValue, legsHpText, legsValue);
 
-        //leftWeaponCircle.SetActive(true);
-        //rightWeaponCircle.SetActive(false);
-        
         if (_selectedChar.LeftArmAlive())
         {
             var left = _selectedChar.GetLeftGun();
@@ -772,24 +773,14 @@ public class ButtonsUIManager : MonoBehaviour
             var dmg = left.GetBulletDamage().ToString();
             leftGunDamageText.text = dmg;
 
-            //var r = left.GetAttackRange().ToString();
-            //rangeText.text = "Range " + r;
-
-            //var cc = left.GetCritChance().ToString();
-            //var cd = left.GetCritMultiplier().ToString();
-
-            //critText.text = "Crit % " + cc + " | " + "Crit Dmg x" + cd;
-
             var h = left.GetHitChance().ToString();
             leftGunHitChanceText.text =h + "%";
         }
         else
         {
             
-            leftGunTypeText.text = "No guns - Arms destroyed";
+            leftGunTypeText.text = "No gun - Arm destroyed";
             leftGunDamageText.text = "";
-            //rangeText.text = "";
-            //critText.text = "";
             leftGunHitChanceText.text = "";
         }
 
@@ -805,14 +796,6 @@ public class ButtonsUIManager : MonoBehaviour
             var dmg = right.GetBulletDamage().ToString();
             rightGunDamageText.text = dmg;
 
-            //var r = right.GetAttackRange().ToString();
-            //rangeText.text = "Range " + r;
-
-            //var cc = right.GetCritChance().ToString();
-            //var cd = right.GetCritMultiplier().ToString();
-
-            //critText.text = "Crit % " + cc + " | " + "Crit Dmg x" + cd;
-
             var h = right.GetHitChance().ToString();
             rightGunHitChanceText.text = h + "%";
 
@@ -820,48 +803,31 @@ public class ButtonsUIManager : MonoBehaviour
         else
         {
             
-            leftGunTypeText.text = "No guns - Arms destroyed";
+            leftGunTypeText.text = "No gun - Arm destroyed";
             leftGunDamageText.text = "";
-            //rangeText.text = "";
-            //critText.text = "";
             leftGunHitChanceText.text = "";
         }
 
 
     }
 
-    //void ShowHUDSliders(Character unit, Slider body, Slider lArm, Slider rArm, Slider legs)
-    //{
-    //    body.maxValue = unit.GetBodyMaxHP();
-    //    body.value = unit.GetBodyHP() > 0 ? unit.GetBodyHP() : 0;
-
-    //    lArm.maxValue = unit.GetLeftArmMaxHP();
-    //    lArm.value = unit.GetLeftArmHP() > 0 ? unit.GetLeftArmHP() : 0;
-
-    //    rArm.maxValue = unit.GetRightArmMaxHP();
-    //    rArm.value = unit.GetRightArmHP() > 0 ? unit.GetRightArmHP() : 0;
-
-    //    legs.maxValue = unit.GetLegsMaxHP();
-    //    legs.value = unit.GetLegsHP() > 0 ? unit.GetLegsHP() : 0;
-    //}
-
     void ShowUnitHudText(TextMeshProUGUI bodyHpText, float bodyValue, TextMeshProUGUI lArmHpText, float lArmValue, TextMeshProUGUI rArmHpText, float rArmValue, TextMeshProUGUI legsHpText, float legsValue)
     {
-        bodyHpText.text = bodyValue.ToString();
-        lArmHpText.text = lArmValue.ToString();
-        rArmHpText.text = rArmValue.ToString();
-        legsHpText.text = legsValue.ToString();
+        bodyHpText.text = "Body " + bodyValue.ToString();
+        lArmHpText.text = "L Arm " + lArmValue.ToString();
+        rArmHpText.text = "R Arm " + rArmValue.ToString();
+        legsHpText.text = "Legs " + legsValue.ToString();
     }
 
     public void UpdateBodyHUD(int value, bool isPlayer)
     {
         if (isPlayer)
         {
-            playerBodyCurrHP.text = value.ToString();
+            playerBodyCurrHp.text = value.ToString();
         }
         else
         {
-            enemyBodyCurrHP.text = value.ToString();
+            enemyBodyCurrHp.text = value.ToString();
         }
         
     }
@@ -870,11 +836,11 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (isPlayer)
         {
-            playerLeftArmCurrHP.text = value.ToString();
+            playerLeftArmCurrHp.text = value.ToString();
         }
         else
         {
-            enemyLeftArmCurrHP.text = value.ToString();
+            enemyLeftArmCurrHp.text = value.ToString();
         }
         
     }
@@ -883,22 +849,22 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (isPlayer)
         {
-            playerRightArmCurrHP.text = value.ToString();
+            playerRightArmCurrHp.text = value.ToString();
         }
         else
         {
-            enemyRightArmCurrHP.text = value.ToString();
+            enemyRightArmCurrHp.text = value.ToString();
         }
     }
     public void UpdateLegsHUD(int value, bool isPlayer)
     {
         if (isPlayer)
         {
-            playerLegsCurrHP.text = value.ToString();
+            playerLegsCurrHp.text = value.ToString();
         }
         else
         {
-            enemyLegsCurrHP.text = value.ToString();
+            enemyLegsCurrHp.text = value.ToString();
         }
     }
 

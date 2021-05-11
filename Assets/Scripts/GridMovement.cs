@@ -8,8 +8,8 @@ public class GridMovement : MonoBehaviour
     List<Tile> _tilesList;
     int _tilesIndex;
     Character _character;
-    public float moveSpeed;
-    public float rotationSpeed;
+    private float _moveSpeed;
+    private float _rotationSpeed;
     private bool _move;
     private bool _rotate;
     private int _index;
@@ -63,7 +63,7 @@ public class GridMovement : MonoBehaviour
             }
             else
             {
-                transform.position += targetDir.normalized * moveSpeed * Time.deltaTime;
+                transform.position += targetDir.normalized * _moveSpeed * Time.deltaTime;
             }
         }
         else
@@ -82,7 +82,7 @@ public class GridMovement : MonoBehaviour
             _posToRotate = Vector3.zero;
             return;
         }
-        float step = rotationSpeed * Time.deltaTime;
+        float step = _rotationSpeed * Time.deltaTime;
         Vector3 dir = (_posToRotate - transform.position).normalized;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, dir, step, 0f);
         transform.rotation = Quaternion.LookRotation(newDir);
@@ -156,4 +156,14 @@ public class GridMovement : MonoBehaviour
     //         }
     //     }
     // }
+
+    public void SetMoveSpeed(float speed)
+    {
+        _moveSpeed = speed;
+    }
+
+    public void SetRotationSpeed(float speed)
+    {
+        _rotationSpeed = speed;
+    }
 }

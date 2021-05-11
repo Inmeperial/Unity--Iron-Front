@@ -87,8 +87,8 @@ public class Character : Teams
         _selected = false;
         
         _move = GetComponent<GridMovement>();
-        _move.moveSpeed = _moveSpeed;
-        _move.rotationSpeed = _rotationSpeed;
+        _move.SetMoveSpeed(_moveSpeed);
+        _move.SetRotationSpeed(_rotationSpeed);
         _myPositionTile = GetTileBelow();
         _myPositionTile.MakeTileOccupied();
         _myPositionTile.SetUnitAbove(this);
