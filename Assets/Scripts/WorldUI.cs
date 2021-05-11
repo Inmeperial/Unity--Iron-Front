@@ -13,18 +13,20 @@ public class WorldUI : MonoBehaviour
     [SerializeField] private Slider _legsSlider;
     [SerializeField] private GameObject _moveActionIcon;
     [SerializeField] private GameObject _attackActionIcon;
+    private Camera _camera;
 
     // Start is called before the first frame update
     void Start()
     {
         _container.SetActive(false);
+        _camera = Camera.main;
     }
 
     private void Update()
     {
         if (_container.activeInHierarchy)
         {
-            _container.transform.LookAt(transform.position + Camera.main.transform.forward);
+            _container.transform.LookAt(transform.position + _camera.transform.forward);
         }
     }
 

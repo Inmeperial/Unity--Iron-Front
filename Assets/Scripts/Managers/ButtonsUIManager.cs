@@ -679,19 +679,15 @@ public class ButtonsUIManager : MonoBehaviour
     {
         _buttonBodySelected = false;
         _bulletsForBody = 0;
-        buttonBody.GetComponent<BodyPartSelection>().ClearCounters();
 
         _buttonLArmSelected = false;
         _bulletsForLArm = 0;
-        buttonLArm.GetComponent<BodyPartSelection>().ClearCounters();
 
         _buttonRArmSelected = false;
         _bulletsForRArm = 0;
-        buttonRArm.GetComponent<BodyPartSelection>().ClearCounters();
 
         _buttonLegsSelected = false;
         _bulletsForLegs = 0;
-        buttonLegs.GetComponent<BodyPartSelection>().ClearCounters();
 
         _partsSelected = 0;
 
