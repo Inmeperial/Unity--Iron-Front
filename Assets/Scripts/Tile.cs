@@ -200,13 +200,13 @@ public class Tile : MonoBehaviour
         //_planeForAttackRender.material = _planeForAttackMat;
         //_planeForAttackRender.enabled = true;
         _materialHandler.StatusToAttack();
-        _materialHandler.DiseableAndEnableSelectedNode(true);
+        _materialHandler.DiseableAndEnableStatus(true);
     }
 
     public void EndCanBeAttackedColor()
     {
         inAttackRange = false;
-        _materialHandler.DiseableAndEnableSelectedNode(false);
+        _materialHandler.DiseableAndEnableStatus(false);
     }
 
     public void CanMoveAndAttackColor()
