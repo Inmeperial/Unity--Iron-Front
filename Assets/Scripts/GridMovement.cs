@@ -23,11 +23,11 @@ public class GridMovement : MonoBehaviour
 
     private void Update()
     {
-        // if (_rotate)
-        // {
-        //     Rotation();
-        //     return;
-        // }
+        if (_rotate)
+        {
+            Rotation();
+            return;
+        }
         if (_move)
             Movement();
     }
@@ -42,11 +42,6 @@ public class GridMovement : MonoBehaviour
         _move = true;
     }
 
-    public void StartRotation()
-    {
-        //StartCoroutine(Rotate());
-    }
-
     void Movement()
     {
         if(_tilesIndex != _tilesList.Count)
@@ -57,7 +52,7 @@ public class GridMovement : MonoBehaviour
             {
                 _rotate = true;
                 _posToRotate = newPos;
-                //return;
+                return;
             }
             Vector3 targetDir = newPos - transform.position;
             Debug.Log("pos2: " + targetDir.normalized);
@@ -88,8 +83,8 @@ public class GridMovement : MonoBehaviour
             return;
         }
         float step = rotationSpeed * Time.deltaTime;
-        
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, _posToRotate, step, 0f);
+        Vector3 dir = (_posToRotate - transform.position).normalized;
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, dir, step, 0f);
         transform.rotation = Quaternion.LookRotation(newDir);
     }
 
@@ -100,65 +95,65 @@ public class GridMovement : MonoBehaviour
             return true;
         else return false;
     }
-    IEnumerator Rotate(Vector3 pos)
-    {
-        // var targetDir = (pos - transform.position).normalized;
-        // Debug.Log(targetDir);
-        // float interpolation = 1;
-        // Debug.Log("Angle: " + Vector3.SignedAngle(transform.forward, pos - transform.position, transform.forward));
-        // while(transform.forward != targetDir)
-        // {
-        //     interpolation -= Time.deltaTime / rotationSpeed;
-        //     if (interpolation <= 0)
-        //     {
-        //         transform.forward = targetDir;
-        //         break;
-        //     }
-        //     Vector3 newRot = Vector3.Lerp(targetDir, transform.forward, interpolation);
-        //     //transform.Rotate(0, 1 * rotationSpeed, 0);
-        //     transform.Rotate(0,1,0);
-        //     yield return new WaitForEndOfFrame();
-        // }
-        Vector3 targetDir = pos - transform.position;
-        while (transform.forward != targetDir.normalized)
-        {
-            float step = rotationSpeed * Time.deltaTime;
-        
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0f);
-            transform.rotation = Quaternion.LookRotation(newDir);
+    // IEnumerator Rotate(Vector3 pos)
+    // {
+    //     // var targetDir = (pos - transform.position).normalized;
+    //     // Debug.Log(targetDir);
+    //     // float interpolation = 1;
+    //     // Debug.Log("Angle: " + Vector3.SignedAngle(transform.forward, pos - transform.position, transform.forward));
+    //     // while(transform.forward != targetDir)
+    //     // {
+    //     //     interpolation -= Time.deltaTime / rotationSpeed;
+    //     //     if (interpolation <= 0)
+    //     //     {
+    //     //         transform.forward = targetDir;
+    //     //         break;
+    //     //     }
+    //     //     Vector3 newRot = Vector3.Lerp(targetDir, transform.forward, interpolation);
+    //     //     //transform.Rotate(0, 1 * rotationSpeed, 0);
+    //     //     transform.Rotate(0,1,0);
+    //     //     yield return new WaitForEndOfFrame();
+    //     // }
+    //     Vector3 targetDir = pos - transform.position;
+    //     while (transform.forward != targetDir.normalized)
+    //     {
+    //         float step = rotationSpeed * Time.deltaTime;
+    //     
+    //         Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0f);
+    //         transform.rotation = Quaternion.LookRotation(newDir);
+    //
+    //         yield return new WaitForEndOfFrame();
+    //     }
+    //     yield return null;
+    // }
 
-            yield return new WaitForEndOfFrame();
-        }
-        yield return null;
-    }
-
-    IEnumerator Move(int tilesIndex)
-    {
-        if(transform.position != _tilesList[_tilesList.Count-1].transform.position)
-        {
-            var newPos = _tilesList[tilesIndex].transform.position;
-            newPos.y += transform.position.y;
-            Vector3 targetDir = newPos - transform.position;
-            if (transform.forward != targetDir.normalized)
-                yield return StartCoroutine(Rotate(newPos));
-            if ((newPos - transform.position).magnitude <= 1.25f)
-            {
-                transform.position = newPos;
-                tilesIndex++;
-            }
-            else
-            {
-                var dir = (newPos - transform.position).normalized;
-                transform.position += dir * moveSpeed * Time.deltaTime;
-            }
-            yield return new WaitForEndOfFrame();
-
-            if (tilesIndex < _tilesList.Count)
-                StartCoroutine(Move(tilesIndex));
-            else 
-            {
-                _character.ReachedEnd();
-            }
-        }
-    }
+    // IEnumerator Move(int tilesIndex)
+    // {
+    //     if(transform.position != _tilesList[_tilesList.Count-1].transform.position)
+    //     {
+    //         var newPos = _tilesList[tilesIndex].transform.position;
+    //         newPos.y += transform.position.y;
+    //         Vector3 targetDir = newPos - transform.position;
+    //         if (transform.forward != targetDir.normalized)
+    //             yield return StartCoroutine(Rotate(newPos));
+    //         if ((newPos - transform.position).magnitude <= 1.25f)
+    //         {
+    //             transform.position = newPos;
+    //             tilesIndex++;
+    //         }
+    //         else
+    //         {
+    //             var dir = (newPos - transform.position).normalized;
+    //             transform.position += dir * moveSpeed * Time.deltaTime;
+    //         }
+    //         yield return new WaitForEndOfFrame();
+    //
+    //         if (tilesIndex < _tilesList.Count)
+    //             StartCoroutine(Move(tilesIndex));
+    //         else 
+    //         {
+    //             _character.ReachedEnd();
+    //         }
+    //     }
+    // }
 }
