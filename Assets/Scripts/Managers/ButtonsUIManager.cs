@@ -145,7 +145,7 @@ public class ButtonsUIManager : MonoBehaviour
                 }
                 _bulletsForBody += gun.BulletsPerClick();
 
-                CreateBulletInUI(buttonBody, _bulletsForBody);
+                //CreateBulletInUI(buttonBody, _bulletsForBody);
                 bulletsForBodyText.text = "x " + _bulletsForBody;
                 gun.ReduceAvailableBullets();
 
@@ -166,7 +166,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets();
             _bulletsForBody = _bulletsForBody > 0 ? (_bulletsForBody - gun.BulletsPerClick()) : 0;
-            DeleteBulletInUI(buttonBody, gun.BulletsPerClick());
+            //DeleteBulletInUI(buttonBody, gun.BulletsPerClick());
             bulletsForBodyText.text = "x " + _bulletsForBody;
             CheckIfCanExecuteAttack();
             if (_bulletsForBody == 0)
@@ -188,7 +188,7 @@ public class ButtonsUIManager : MonoBehaviour
             _bulletsForBody = 0;
             bulletsForBodyText.text = "x " + _bulletsForBody;
             _buttonBodySelected = false;
-            ClearBulletsInUI(buttonBody);
+            //ClearBulletsInUI(buttonBody);
             if (_partsSelected > 0)
                 _partsSelected--;
             CheckIfCanExecuteAttack();
@@ -209,7 +209,7 @@ public class ButtonsUIManager : MonoBehaviour
                 }
                 _bulletsForLArm += gun.BulletsPerClick();
                 bulletsForLArmText.text = "x " + _bulletsForLArm;
-                CreateBulletInUI(buttonLArm, _bulletsForLArm);
+                //CreateBulletInUI(buttonLArm, _bulletsForLArm);
 
                 gun.ReduceAvailableBullets();
 
@@ -227,7 +227,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets();
             _bulletsForLArm = _bulletsForLArm > 0 ? (_bulletsForLArm - gun.BulletsPerClick()) : 0;
-            DeleteBulletInUI(buttonLArm, gun.BulletsPerClick());
+            //DeleteBulletInUI(buttonLArm, gun.BulletsPerClick());
             bulletsForLArmText.text = "x " + _bulletsForLArm;
             CheckIfCanExecuteAttack();
             if (_bulletsForLArm == 0)
@@ -249,7 +249,7 @@ public class ButtonsUIManager : MonoBehaviour
             _bulletsForLArm = 0;
             bulletsForLArmText.text = "x " + _bulletsForLArm;
             _buttonLArmSelected = false;
-            ClearBulletsInUI(buttonLArm);
+            //ClearBulletsInUI(buttonLArm);
             if (_partsSelected > 0)
                 _partsSelected--;
             CheckIfCanExecuteAttack();
@@ -270,7 +270,7 @@ public class ButtonsUIManager : MonoBehaviour
                 }
                 _bulletsForRArm += gun.BulletsPerClick();
                 bulletsForRArmText.text = "x " + _bulletsForRArm;
-                CreateBulletInUI(buttonRArm, _bulletsForRArm);
+                //CreateBulletInUI(buttonRArm, _bulletsForRArm);
                 gun.ReduceAvailableBullets();
                 buttonExecuteAttack.interactable = true;
                 _buttonRArmSelected = true;
@@ -286,7 +286,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets();
             _bulletsForRArm = _bulletsForRArm > 0 ? (_bulletsForRArm - gun.BulletsPerClick()) : 0;
-            DeleteBulletInUI(buttonRArm, gun.BulletsPerClick());
+            //DeleteBulletInUI(buttonRArm, gun.BulletsPerClick());
             bulletsForRArmText.text = "x " + _bulletsForRArm;
             CheckIfCanExecuteAttack();
             if (_bulletsForRArm == 0)
@@ -308,7 +308,7 @@ public class ButtonsUIManager : MonoBehaviour
             _bulletsForRArm = 0;
             bulletsForRArmText.text = "x " + _bulletsForRArm;
             _buttonRArmSelected = false;
-            ClearBulletsInUI(buttonRArm);
+            //ClearBulletsInUI(buttonRArm);
             if (_partsSelected > 0)
                 _partsSelected--;
             CheckIfCanExecuteAttack();
@@ -329,7 +329,7 @@ public class ButtonsUIManager : MonoBehaviour
                 }
                 _bulletsForLegs += gun.BulletsPerClick();
                 bulletsForLegsText.text = "x " + _bulletsForLegs;
-                CreateBulletInUI(buttonLegs, _bulletsForLegs);
+                //CreateBulletInUI(buttonLegs, _bulletsForLegs);
                 gun.ReduceAvailableBullets();
                 buttonExecuteAttack.interactable = true;
                 _buttonLegsSelected = true;
@@ -345,7 +345,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets();
             _bulletsForLegs = _bulletsForLegs > 0 ? (_bulletsForLegs - gun.BulletsPerClick()) : 0;
-            DeleteBulletInUI(buttonLegs, gun.BulletsPerClick());
+            //DeleteBulletInUI(buttonLegs, gun.BulletsPerClick());
             bulletsForLegsText.text = "x " + _bulletsForLegs;
             CheckIfCanExecuteAttack();
             if (_bulletsForLegs == 0)
@@ -367,7 +367,7 @@ public class ButtonsUIManager : MonoBehaviour
             _bulletsForLegs = 0;
             bulletsForLegsText.text = "x " + _bulletsForLegs;
             _buttonLegsSelected = false;
-            ClearBulletsInUI(buttonLegs);
+            //ClearBulletsInUI(buttonLegs);
             if (_partsSelected > 0)
                 _partsSelected--;
             CheckIfCanExecuteAttack();
@@ -570,7 +570,7 @@ public class ButtonsUIManager : MonoBehaviour
         ExecuteAttack();
     }
 
-    void CreateBulletInUI(Button button, int quantity)
+    /*void CreateBulletInUI(Button button, int quantity)
     {
         for (int i = button.GetComponent<BodyPartSelection>().count; i < quantity; i++)
         {
@@ -589,7 +589,7 @@ public class ButtonsUIManager : MonoBehaviour
     void ClearBulletsInUI(Button button)
     {
         button.GetComponent<BodyPartSelection>().ClearCounters();
-    }
+    }*/
 
     bool CharacterHasBullets(Character c)
     {
