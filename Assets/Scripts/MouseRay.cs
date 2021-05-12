@@ -29,4 +29,10 @@ public class MouseRay : MonoBehaviour
 
         return null;
     }
+
+    public static bool CheckIfType(LayerMask mask)
+    {
+        Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        return Physics.Raycast(mouseRay, mask);
+    }
 }

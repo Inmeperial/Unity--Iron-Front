@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class CharacterSelection : MonoBehaviour
 {
     public LayerMask charMask;
+    public LayerMask gridBlockMask;
     private Character _selection;
     TileHighlight _highlight;
     TurnManager _turnManager;
@@ -39,8 +40,16 @@ public class CharacterSelection : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject() == false)
         {
-            if (Input.GetMouseButtonDown(0) && _canSelectUnit)
-                SelectCharacter(charMask);
+            if (Input.GetMouseButtonDown(0) && _canSelectUnit && MouseRay.CheckIfType(charMask))
+            {
+                SelectCharacterFromObject(charMask);
+
+            }
+            if (Input.GetMouseButtonDown(0) && _canSelectUnit && MouseRay.CheckIfType(gridBlockMask))
+            {
+                SelectCharacterFromTile(gridBlockMask);
+            }
+                
         }
         
 
@@ -50,50 +59,67 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
+    private void SelectCharacterFromTile(LayerMask layerMask)
+    {
+        var tile = MouseRay.GetTargetGameObject(layerMask);
+        Debug.Log(tile.name);
+        if (tile != null && tile.CompareTag("GridBlock"))
+        {
+            var c = tile.GetComponent<Tile>().GetCharacterAbove();
+            if (c != null)
+                SelectionOf(c);
+        }
+            
+    }
+
     //Selection of the character that will move.
-    void SelectCharacter(LayerMask charMask)
+    public void SelectCharacterFromObject(LayerMask charMask)
     {
         var character = MouseRay.GetTargetTransform(charMask);
         if (character != null && character.CompareTag("Character"))
         {
             var c = character.GetComponent<Character>();
-            if (c.CanBeSelected())
-            {
-                
-                if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
-                {
-                    _buttonsManager.DeselectActions();
-                    if (_selection != null)
-                        _selection.DeselectThisUnit();
-                    if (_enemySelection != null)
-                    {
-                        _enemySelection.DeselectThisUnit();
-                        _enemySelection = null;
-                    }
-                    _selection = c;
-                    _selection.SelectThisUnit();
-                    _highlight.ChangeActiveCharacter(_selection);
-                    _buttonsManager.DeactivateUndo();
-                    _buttonsManager.SetPlayerCharacter(_selection);
-                    _buttonsManager.SetPlayerUI();
-                    stepsCounter.text = _selection.GetSteps().ToString();
-                }
-                else
-                {
-                    if (_enemySelection != null)
-                    {
-                        _enemySelection.DeselectThisUnit();
-                    }
-                    _enemySelection = c;
-                    _enemySelection.SelectedAsEnemy();
-                    _buttonsManager.SetEnemy(_enemySelection);
-                    _buttonsManager.SetEnemyUI();
-                }
-            }
-            
+            SelectionOf(c);
         }
     }
 
+    void SelectionOf(Character c)
+    {
+        if (c.CanBeSelected())
+        {
+                
+            if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
+            {
+                _buttonsManager.DeselectActions();
+                if (_selection != null)
+                    _selection.DeselectThisUnit();
+                if (_enemySelection != null)
+                {
+                    _enemySelection.DeselectThisUnit();
+                    _enemySelection = null;
+                }
+                _selection = c;
+                _selection.SelectThisUnit(); 
+                    
+                _highlight.ChangeActiveCharacter(_selection);
+                _buttonsManager.DeactivateUndo();
+                _buttonsManager.SetPlayerCharacter(_selection);
+                _buttonsManager.SetPlayerUI();
+                stepsCounter.text = _selection.GetSteps().ToString();
+            }
+            else
+            {
+                if (_enemySelection != null)
+                {
+                    _enemySelection.DeselectThisUnit();
+                }
+                _enemySelection = c;
+                _enemySelection.SelectedAsEnemy();
+                _buttonsManager.SetEnemy(_enemySelection);
+                _buttonsManager.SetEnemyUI();
+            }
+        }
+    }
 
 
     //Returns the character that is currently selected.

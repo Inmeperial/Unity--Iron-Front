@@ -193,18 +193,14 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 256
-  character:
+  characterMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   _isFree: 0
   showLineGizmo: 1
-  colorForMouse: {r: 0.6792453, g: 0.6736032, b: 0.1954432, a: 0.4745098}
-  colorForMove: {r: 0.2270826, g: 0.7178873, b: 0.764151, a: 0.79607844}
-  colorForAttack: {r: 0.9150943, g: 0.5537025, b: 0.23740657, a: 0.7254902}
-  colorDefaultClear: {r: 0.509434, g: 0.509434, b: 0.509434, a: 0}
-  planeForMove: {fileID: 7798706065112735564}
-  planeForAttack: {fileID: 5436203385664695663}
-  planeForMouse: {fileID: 0}
+  inMoveRange: 0
+  inAttackRange: 0
+  unitAboveSelected: 0
 --- !u!114 &7341909126776857540
 MonoBehaviour:
   m_ObjectHideFlags: 0

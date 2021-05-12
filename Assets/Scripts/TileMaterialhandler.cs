@@ -15,19 +15,7 @@ public class TileMaterialhandler : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            if (transform.GetChild(i).gameObject.name == "PlaneForMove")
-            {
-                _childStatusNode = transform.GetChild(i);
-                continue;
-            }
-            if (transform.GetChild(i).gameObject.name == "PlaneForMouse")
-            {
-                _childSelectedNode = transform.GetChild(i);
-                continue;
-            }
-        }
+       GetChilds();
         if (_childStatusNode == null)
         {
             Debug.Log("Cant Find PlaneForMove child in Node");
@@ -131,6 +119,23 @@ public class TileMaterialhandler : MonoBehaviour
     }
 
     #endregion
+
+    public void GetChilds()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).gameObject.name == "PlaneForMove")
+            {
+                _childStatusNode = transform.GetChild(i);
+                continue;
+            }
+            if (transform.GetChild(i).gameObject.name == "PlaneForMouse")
+            {
+                _childSelectedNode = transform.GetChild(i);
+                continue;
+            }
+        }
+    }
 }
 
 

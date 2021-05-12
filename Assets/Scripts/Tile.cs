@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class Tile : MonoBehaviour
     public List<Tile> neighboursForMove = new List<Tile>();
     public List<Tile> allNeighbours = new List<Tile>();
     public LayerMask obstacle;
-    public LayerMask character;
+    public LayerMask characterMask;
     [SerializeField] private bool _isFree = true;
     Material _mat;
     public bool showLineGizmo = true;
@@ -19,17 +20,11 @@ public class Tile : MonoBehaviour
 
     private Character _unitAbove;
 
-    public Color colorForMouse;
-    public Color colorForMove;
-    public Color colorForAttack;
-    public Color colorDefaultClear;
-
-
     private TileMaterialhandler _materialHandler;
 
     public bool inMoveRange;
     public bool inAttackRange;
-
+    public bool unitAboveSelected;
     private void Awake()
     {
         _isFree = true;
@@ -40,7 +35,8 @@ public class Tile : MonoBehaviour
 
         inMoveRange = false;
         inAttackRange = false;
-}
+        unitAboveSelected = false;
+    }
 
     public void GetNeighbours()
     {
@@ -116,7 +112,7 @@ public class Tile : MonoBehaviour
 
     bool IsCharacterAbove()
     {
-        return Physics.Raycast(transform.position, transform.up, 1, character);
+        return Physics.Raycast(transform.position, transform.up, 1, characterMask);
     }
 
     public void RemoveMoveNeighbour(Tile tile)
@@ -169,6 +165,7 @@ public class Tile : MonoBehaviour
 
         //_planeForMoveRender.material = _planeForMoveMat;
         //_planeForAttackRender.enabled = false;
+        inMoveRange = false;
         _materialHandler.DiseableAndEnableStatus(false);
     }
 
@@ -189,8 +186,8 @@ public class Tile : MonoBehaviour
 
         //_planeForMouseRender.material = _planeForMouseMat;
         //_planeForMouseRender.enabled = false;
-        inMoveRange = false;
-        _materialHandler.DiseableAndEnableSelectedNode(false);
+        if(!unitAboveSelected)
+            _materialHandler.DiseableAndEnableSelectedNode(false);
     }
 
     public void CanBeAttackedColor()
@@ -211,6 +208,8 @@ public class Tile : MonoBehaviour
 
     public void CanMoveAndAttackColor()
     {
+        Debug.Log("can move and attack color");
+        Debug.Log("parent: " + transform.parent.name);
         _materialHandler.StatusToAttackAndMove();
         _materialHandler.DiseableAndEnableStatus(true);
     }
@@ -272,5 +271,14 @@ public class Tile : MonoBehaviour
             Gizmos.color = Color.black;
             Gizmos.DrawWireCube(transform.position, transform.localScale);
         }
+    }
+
+    public Character GetCharacterAbove()
+    {
+        RaycastHit hit;
+        Physics.Raycast(transform.position, transform.up, out hit, 3, characterMask);
+        if (hit.transform != null)
+            return hit.transform.GetComponent<Character>();
+        else return null;
     }
 }

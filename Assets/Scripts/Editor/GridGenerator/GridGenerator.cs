@@ -92,7 +92,7 @@ public class GridGenerator : EditorWindow
                 {
                     obj = Instantiate(tiles, pos, Quaternion.identity);
                 }
-                obj.name = "X: " + i + "- Y: 1 - Z: " + j;
+                obj.name = "X: " + obj.transform.position.x + "- Y: " + obj.transform.position.y +" - Z: " + obj.transform.position.z;
                 obj.GetComponent<Tile>().MakeWalkableColor();
             }
         }

@@ -44,7 +44,7 @@ public class Character : Teams
     private GridMovement _move;
     public LayerMask block;
     private List<Tile> _tilesInMoveRange = new List<Tile>();
-    private Tile _myPositionTile;
+    [SerializeField] private Tile _myPositionTile;
     private Tile _targetTile;
     [SerializeField] private List<Tile> _path = new List<Tile>();
 
@@ -134,7 +134,7 @@ public class Character : Teams
     {
         if (count >= _selectedGun.GetAttackRange() || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
             return;
-
+        
         _tilesForAttackChecked[currentTile] = count;
 
         foreach (var tile in currentTile.allNeighbours)
@@ -569,11 +569,14 @@ public class Character : Teams
 
     public void SelectThisUnit()
     {
+        Debug.Log("unit selected");
         _selected = true;
         ResetInRangeLists();
         _path.Clear();
         highlight.PathLinesClear();
         _myPositionTile = GetTileBelow();
+        _myPositionTile.unitAboveSelected = true;
+        _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
         if (CanAttack())
         {
             if (_rightArmAlive)
@@ -594,6 +597,8 @@ public class Character : Teams
     public void DeselectThisUnit()
     {
         _selected = false;
+        _myPositionTile.unitAboveSelected = false;
+        _myPositionTile.EndMouseOverColor();
         foreach (var item in _enemiesInRange)
         {
             turnManager.UnitCantBeAttacked(item);
@@ -613,7 +618,9 @@ public class Character : Teams
     }
     public void SelectedAsEnemy()
     {
-        Debug.Log("selected as enemy");
+        _myPositionTile = GetTileBelow();
+        _myPositionTile.unitAboveSelected = true;
+        _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
     }
 
     //Check if selected object is a tile.
