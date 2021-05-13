@@ -722,8 +722,11 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_selectedChar.CanAttack())
         {
-           if (_selectedChar.HasEnemiesInRange() && _selectedEnemy != null)
-            ActivateBodyPartsContainer(); 
+            if (_selectedChar.HasEnemiesInRange() && _selectedEnemy != null)
+            {
+                ActivateBodyPartsContainer();
+            }
+                
         }
 
         playerHudContainer.SetActive(true);

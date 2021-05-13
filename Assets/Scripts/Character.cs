@@ -757,4 +757,10 @@ public class Character : Teams
     {
         _myUI.DeactivateWorldUI();
     }
+
+    public void RotateTowardsEnemy(Vector3 pos)
+    {
+        _move.SetPosToRotate(pos);
+        _move.StartRotation();
+    }
 }

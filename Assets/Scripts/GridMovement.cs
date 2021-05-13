@@ -166,4 +166,14 @@ public class GridMovement : MonoBehaviour
     {
         _rotationSpeed = speed;
     }
+
+    public void SetPosToRotate(Vector3 pos)
+    {
+        _posToRotate = pos;
+    }
+
+    public void StartRotation()
+    {
+        _rotate = true;
+    }
 }

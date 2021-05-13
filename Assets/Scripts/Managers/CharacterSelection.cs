@@ -99,13 +99,16 @@ public class CharacterSelection : MonoBehaviour
                     _enemySelection = null;
                 }
                 _selection = c;
-                _selection.SelectThisUnit(); 
-                    
+                _selection.SelectThisUnit();
                 _highlight.ChangeActiveCharacter(_selection);
                 _buttonsManager.DeactivateUndo();
                 _buttonsManager.SetPlayerCharacter(_selection);
                 _buttonsManager.SetPlayerUI();
                 stepsCounter.text = _selection.GetSteps().ToString();
+                if (_enemySelection != null)
+                {
+                    _selection.RotateTowardsEnemy(_enemySelection.transform.position);
+                }
             }
             else
             {
@@ -117,6 +120,10 @@ public class CharacterSelection : MonoBehaviour
                 _enemySelection.SelectedAsEnemy();
                 _buttonsManager.SetEnemy(_enemySelection);
                 _buttonsManager.SetEnemyUI();
+                if (_selection != null)
+                {
+                    _selection.RotateTowardsEnemy(_enemySelection.transform.position);
+                }
             }
         }
     }
