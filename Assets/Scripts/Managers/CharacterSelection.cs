@@ -62,7 +62,6 @@ public class CharacterSelection : MonoBehaviour
     private void SelectCharacterFromTile(LayerMask layerMask)
     {
         var tile = MouseRay.GetTargetGameObject(layerMask);
-        Debug.Log(tile.name);
         if (tile != null && tile.CompareTag("GridBlock"))
         {
             var c = tile.GetComponent<Tile>().GetCharacterAbove();

@@ -82,19 +82,16 @@ public class TileHighlight : MonoBehaviour
 
     public void PaintTilesInAttackRange(Tile tile)
     {
-        Debug.Log("highlight paint attack");
         tile.CanBeAttackedColor();
     }
 
     public void PaintTilesInMoveRange(Tile tile)
     {
-        Debug.Log("highlight paint move");
         tile.InMoveRangeColor();
     }
 
     public void PaintTilesInMoveAndAttackRange(Tile tile)
     {
-        Debug.Log("highlight paint move attack");
         tile.CanMoveAndAttackColor();
     }
 

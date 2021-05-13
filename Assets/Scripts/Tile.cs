@@ -208,8 +208,6 @@ public class Tile : MonoBehaviour
 
     public void CanMoveAndAttackColor()
     {
-        Debug.Log("can move and attack color");
-        Debug.Log("parent: " + transform.parent.name);
         _materialHandler.StatusToAttackAndMove();
         _materialHandler.DiseableAndEnableStatus(true);
     }

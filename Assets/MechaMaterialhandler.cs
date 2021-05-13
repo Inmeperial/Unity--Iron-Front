@@ -47,7 +47,7 @@ public class MechaMaterialhandler : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             _child = transform.GetChild(i);
-            if (_child.gameObject.name != "WorldCanvas")
+            if (_child.gameObject.name != "WorldCanvas" && _child.gameObject.name != "GameObject" )
             {
                 _rend = transform.GetChild(i).gameObject.GetComponent<Renderer>();
                 _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).

@@ -8,26 +8,32 @@ public class Character : Teams
 {
     //STATS
     #region Stats
+
+    public Transform rayOrigin;
     [Header("Team")]
     [SerializeField] private Team _unitTeam;
 
     [Header("Body")]
     [SerializeField] private int _bodyMaxHP;
     [SerializeField] private int _bodyHP;
+    [SerializeField] private Transform _bodyTransform;
 
     [Header("Left Arm")]
     public Gun leftGun;
     [SerializeField] private int _leftArmMaxHP;
     [SerializeField] private int _leftArmHP;
+    [SerializeField] private Transform _lArmTransform;
 
     [Header("Right Arm")]
     public Gun rightGun;
     [SerializeField] private int _rightArmMaxHP;
     [SerializeField] private int _rightArmHP;
+    [SerializeField] private Transform _rArmTransform;
 
     [Header("Legs")]
     [SerializeField] private int _legsMaxHP;
     [SerializeField] private int _legsHP;
+    [SerializeField] private Transform _legsTransform;
 
 
     [Header("Movement")]
@@ -119,6 +125,32 @@ public class Character : Teams
 
         if (_bodyHP <= 0)
             NotSelectable();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var c = transform.GetChild(i);
+            if (c.gameObject.name == "Body")
+            {
+                _bodyTransform = c;
+                continue;
+            }
+                
+            if (c.gameObject.name == "Legs")
+            {
+                _legsTransform = c;
+                continue;
+            }
+
+            if (c.gameObject.name == "RArm")
+            {
+                _rArmTransform = c;
+                continue;
+            }
+
+            if (c.gameObject.name == "LArm")
+                _lArmTransform = c;
+
+        }
     }
 
     // Update is called once per frame
@@ -474,6 +506,23 @@ public class Character : Teams
         return rightGun;
     }
 
+    public Vector3 GetBodyPosition()
+    {
+        return _bodyTransform.GetComponent<Renderer>().bounds.center;
+    }
+    public Vector3 GetLArmPosition()
+    {
+        return _lArmTransform.GetComponent<Renderer>().bounds.center;
+    }
+    public Vector3 GetRArmPosition()
+    {
+        return _rArmTransform.GetComponent<Renderer>().bounds.center;
+    }
+    public Vector3 GetLegsPosition()
+    {
+        return _legsTransform.GetComponent<Renderer>().bounds.center;
+    }
+
     #endregion
 
     #region Utilities
@@ -569,7 +618,6 @@ public class Character : Teams
 
     public void SelectThisUnit()
     {
-        Debug.Log("unit selected");
         _selected = true;
         ResetInRangeLists();
         _path.Clear();
@@ -616,6 +664,7 @@ public class Character : Teams
     {
         _canBeSelected = false;
     }
+    
     public void SelectedAsEnemy()
     {
         _myPositionTile = GetTileBelow();
@@ -762,5 +811,24 @@ public class Character : Teams
     {
         _move.SetPosToRotate(pos);
         _move.StartRotation();
+    }
+
+    public bool RayToPartsForAttack(Vector3 pos)
+    {
+        RaycastHit hit;
+        var dir = (pos - rayOrigin.position).normalized; 
+        Physics.Raycast(rayOrigin.position, dir, out hit, 1000f);
+        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+        {
+            Debug.DrawLine(rayOrigin.position, pos, Color.red, 1000f);
+            return false;
+        }
+            
+        else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Character"))
+        {
+            Debug.DrawLine(rayOrigin.position, pos, Color.green, 1000f);
+            return true;
+        }
+        else return false;
     }
 }
