@@ -154,6 +154,7 @@ public class CharacterSelection : MonoBehaviour
 
     public void DeselectUnit()
     {
+        stepsCounter.text = "0";
         Debug.Log("entro al deselect unit del char selection");
         if (_selection)
         {

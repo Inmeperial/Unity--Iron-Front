@@ -468,7 +468,7 @@ public class ButtonsUIManager : MonoBehaviour
         DeactivatePlayerHUD();
 
         DeactivateEnemyHUD();
-
+        
         _selectedChar = null;
         _selectedEnemy = null;
     }
