@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &934901395695891281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2712022752639934885}
+  m_Layer: 9
+  m_Name: Raycast
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2712022752639934885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934901395695891281}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.05, z: 0.71}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2205329477059242927}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2205329477059242926
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,10 +65,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6620383499824541120}
-  - {fileID: 6620383498904177923}
-  - {fileID: 6620383498382871768}
   - {fileID: 6620383497941686709}
+  - {fileID: 6620383498382871768}
+  - {fileID: 6620383498904177923}
   - {fileID: 1813456207903640429}
+  - {fileID: 2712022752639934885}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -84,17 +115,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8ead686a30e3c4d98f6a1e81d8b8f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rayOrigin: {fileID: 2712022752639934885}
   _unitTeam: 0
   _bodyMaxHP: 400
   _bodyHP: 0
+  _bodyTransform: {fileID: 6620383499824541120}
   leftGun: {fileID: 0}
   _leftArmMaxHP: 200
   _leftArmHP: 0
+  _lArmTransform: {fileID: 6620383497941686709}
   rightGun: {fileID: 0}
   _rightArmMaxHP: 200
   _rightArmHP: 0
+  _rArmTransform: {fileID: 6620383498382871768}
   _legsMaxHP: 300
   _legsHP: 0
+  _legsTransform: {fileID: 6620383498904177923}
   _maxSteps: 4
   _currentSteps: 0
   _moveSpeed: 10
@@ -102,6 +138,7 @@ MonoBehaviour:
   block:
     serializedVersion: 2
     m_Bits: 256
+  _myPositionTile: {fileID: 0}
   _path: []
   _canAttack: 1
   _leftArmAlive: 0
@@ -121,8 +158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73116bb87e8c6a9429d1a63dee406f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  rotationSpeed: 10
 --- !u!114 &760854172933434926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,7 +251,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 4cb140e4fcb22464e99d3bc13402d485,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 4cb140e4fcb22464e99d3bc13402d485,
         type: 3}
@@ -403,7 +438,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 9df8557c1b1c3d642bc69a44581dcca2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9df8557c1b1c3d642bc69a44581dcca2,
         type: 3}
