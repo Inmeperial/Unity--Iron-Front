@@ -87,17 +87,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayOrigin: {fileID: 1180417172966388425}
   _unitTeam: 0
+  _myBody: {fileID: 0}
   _bodyMaxHP: 400
   _bodyHP: 0
   _bodyTransform: {fileID: 8870081129092720574}
+  _myLeftArm: {fileID: 0}
   leftGun: {fileID: 0}
   _leftArmMaxHP: 200
   _leftArmHP: 0
   _lArmTransform: {fileID: 8870081129820848073}
+  _myRightArm: {fileID: 0}
   rightGun: {fileID: 0}
   _rightArmMaxHP: 200
   _rightArmHP: 0
   _rArmTransform: {fileID: 8870081128913747944}
+  _myLegs: {fileID: 0}
   _legsMaxHP: 350
   _legsHP: 0
   _legsTransform: {fileID: 8870081131014540067}
@@ -289,6 +293,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 08d703f4a463b75458deea0439107917,
+        type: 3}
+      propertyPath: m_TagString
+      value: RArm
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08d703f4a463b75458deea0439107917, type: 3}
 --- !u!4 &8870081128913747944 stripped
@@ -379,6 +388,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 09da1ac199189aa48a9b4120a367235a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Body
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09da1ac199189aa48a9b4120a367235a, type: 3}
@@ -471,6 +485,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 0c1fe99bcb1d6c848ae5804e3f6ff02e,
+        type: 3}
+      propertyPath: m_TagString
+      value: LArm
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c1fe99bcb1d6c848ae5804e3f6ff02e, type: 3}
 --- !u!4 &8870081129820848073 stripped
@@ -561,6 +580,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 9df8557c1b1c3d642bc69a44581dcca2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Legs
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9df8557c1b1c3d642bc69a44581dcca2, type: 3}

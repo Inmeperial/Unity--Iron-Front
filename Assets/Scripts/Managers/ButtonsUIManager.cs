@@ -855,7 +855,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedEnemy != null)
         {
-            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition()) && _selectedEnemy.GetBodyHP() > 0)
+            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body") && _selectedEnemy.GetBodyHP() > 0)
             {
                 buttonBody.interactable = true;
                 buttonBodyMinus.interactable = true;
@@ -868,7 +868,7 @@ public class ButtonsUIManager : MonoBehaviour
                 buttonBodyX.interactable = false;
             }
 
-            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLArmPosition()) && _selectedEnemy.GetLeftArmHP() > 0)
+            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLArmPosition(), "LArm") && _selectedEnemy.GetLeftArmHP() > 0)
             {
                 buttonLArm.interactable = true;
                 buttonLArmMinus.interactable = true;
@@ -881,7 +881,7 @@ public class ButtonsUIManager : MonoBehaviour
                 buttonLArmX.interactable = false;
             }
 
-            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetRArmPosition()) && _selectedEnemy.GetRightArmHP() > 0)
+            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetRArmPosition(), "RArm") && _selectedEnemy.GetRightArmHP() > 0)
             {
                 buttonRArm.interactable = true;
                 buttonRArmMinus.interactable = true;
@@ -895,7 +895,7 @@ public class ButtonsUIManager : MonoBehaviour
             }
 
 
-            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition()) &&_selectedEnemy.GetLegsHP() > 0)
+            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs") &&_selectedEnemy.GetLegsHP() > 0)
             {
                 buttonLegs.interactable = true;
                 buttonLegsMinus.interactable = true;

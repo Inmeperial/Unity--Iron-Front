@@ -46,10 +46,11 @@ public class MechaMaterialhandler : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
+            _rend = null;
             _child = transform.GetChild(i);
-            if (_child.gameObject.name != "WorldCanvas" && _child.gameObject.name != "GameObject" )
+            _rend = transform.GetChild(i).gameObject.GetComponent<Renderer>();
+            if (_rend != null)
             {
-                _rend = transform.GetChild(i).gameObject.GetComponent<Renderer>();
                 _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
 
                 _sharedMaterialsCopy = _rend.sharedMaterials;
@@ -59,8 +60,9 @@ public class MechaMaterialhandler : MonoBehaviour
                     _sharedMaterialsCopy[j] = baseMaterial;
                 }
 
-                _rend.sharedMaterials = _sharedMaterialsCopy;
+                _rend.sharedMaterials = _sharedMaterialsCopy;  
             }
+                
         }
     }
 
