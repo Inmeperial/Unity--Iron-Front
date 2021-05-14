@@ -761,7 +761,6 @@ public class Character : Teams
         ResetTilesInMoveRange();
         highlight.PathLinesClear();
         _canAttack = false;
-        _canMove = false;
     }
 
     public void DeactivateMoveButton()
