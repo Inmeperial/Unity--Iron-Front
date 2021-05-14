@@ -78,6 +78,12 @@ public class ButtonsUIManager : MonoBehaviour
     [SerializeField] private Character _selectedEnemy;
     private TurnManager _turnManager;
     private int _partsSelected;
+
+
+    private bool bodyInsight;
+    private bool legsInsight;
+    private bool rArmInsigh;
+    private bool lArmInsight;
     private void Start()
     {
         enemyHudContainer.SetActive(false);
@@ -606,28 +612,28 @@ public class ButtonsUIManager : MonoBehaviour
             }
             else if (_partsSelected < _selectedChar.GetSelectedGun().GetAvailableSelections())
             {
-                if (!_buttonBodySelected)
+                if (!_buttonBodySelected && bodyInsight)
                 {
                     buttonBody.interactable = true;
                     buttonBodyMinus.interactable = true;
                     buttonBodyX.interactable = true;
                 }
 
-                if (!_buttonLArmSelected)
+                if (!_buttonLArmSelected && lArmInsight)
                 {
                     buttonLArm.interactable = true;
                     buttonLArmMinus.interactable = true;
                     buttonLArmX.interactable = true;
                 }
 
-                if (!_buttonRArmSelected)
+                if (!_buttonRArmSelected && rArmInsigh)
                 {
                     buttonRArm.interactable = true;
                     buttonRArmMinus.interactable = true;
                     buttonRArmX.interactable = true;
                 }
 
-                if (!_buttonLegsSelected)
+                if (!_buttonLegsSelected && legsInsight)
                 {
                     buttonLegs.interactable = true;
                     buttonLegsMinus.interactable = true;
@@ -864,12 +870,14 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body") && _selectedEnemy.GetBodyHP() > 0)
             {
+                bodyInsight = true;
                 buttonBody.interactable = true;
                 buttonBodyMinus.interactable = true;
                 buttonBodyX.interactable = true;
             }
             else
             {
+                bodyInsight = false;
                 buttonBody.interactable = false;
                 buttonBodyMinus.interactable = false;
                 buttonBodyX.interactable = false;
@@ -877,12 +885,14 @@ public class ButtonsUIManager : MonoBehaviour
 
             if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLArmPosition(), "LArm") && _selectedEnemy.GetLeftArmHP() > 0)
             {
+                lArmInsight = true;
                 buttonLArm.interactable = true;
                 buttonLArmMinus.interactable = true;
                 buttonLArmX.interactable = true;
             }
             else
             {
+                lArmInsight = false;
                 buttonLArm.interactable = false;
                 buttonLArmMinus.interactable = false;
                 buttonLArmX.interactable = false;
@@ -890,12 +900,14 @@ public class ButtonsUIManager : MonoBehaviour
 
             if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetRArmPosition(), "RArm") && _selectedEnemy.GetRightArmHP() > 0)
             {
+                rArmInsigh = true;
                 buttonRArm.interactable = true;
                 buttonRArmMinus.interactable = true;
                 buttonRArmX.interactable = true;
             }
             else
             {
+                rArmInsigh = false;
                 buttonRArm.interactable = false;
                 buttonRArmMinus.interactable = false;
                 buttonRArmX.interactable = false;
@@ -904,12 +916,14 @@ public class ButtonsUIManager : MonoBehaviour
 
             if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs") &&_selectedEnemy.legs.GetLegsHP() > 0)
             {
+                legsInsight = true;
                 buttonLegs.interactable = true;
                 buttonLegsMinus.interactable = true;
                 buttonLegsX.interactable = true;
             }
             else
             {
+                legsInsight = false;
                 buttonLegs.interactable = false;
                 buttonLegsMinus.interactable = false;
                 buttonLegsX.interactable = false;
