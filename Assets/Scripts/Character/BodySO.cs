@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Body", menuName = "Create Parts/ Create Body")]
-public class BodySO : ScriptableObject
+public class BodySO : PartSO
 {
     // Start is called before the first frame update
     void Start()
