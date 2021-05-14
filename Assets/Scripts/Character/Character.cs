@@ -372,7 +372,7 @@ public class Character : Teams
             {
                 _targetTile = newTile;
                 pathCreator.Calculate(this, _targetTile, _currentSteps);
-                if (pathCreator.GetDistance() <= _currentSteps)
+                if (pathCreator.GetDistance() <= legs.GetMaxSteps())
                 {
                     _path = pathCreator.GetPath();
                     if (_path.Count > 0)
