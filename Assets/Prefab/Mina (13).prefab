@@ -11,14 +11,13 @@ GameObject:
   - component: {fileID: 4750529650666728721}
   - component: {fileID: 4750529650666728732}
   - component: {fileID: 4750529650666728723}
-  - component: {fileID: 4750529650666728722}
   - component: {fileID: 8347055939503734865}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4750529650666728721
 Transform:
@@ -80,19 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &4750529650666728722
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4750529650666728720}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!108 &8347055939503734865
 Light:
   m_ObjectHideFlags: 0
@@ -172,7 +158,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4750529651639803759
 Transform:
@@ -246,8 +232,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.9848081, z: 3.9177964}
-  m_Center: {x: 0, y: 1.2059682e-14, z: 1.9588981}
+  m_Size: {x: 1, y: 0.984808, z: 0.8890041}
+  m_Center: {x: 0, y: -1.7363748e-15, z: 0.44450152}
 --- !u!114 &4750529651639803753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,4 +259,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36d6c822a243da478cc61c5630248ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEmissionOn: 0
