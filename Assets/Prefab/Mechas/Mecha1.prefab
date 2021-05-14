@@ -131,14 +131,8 @@ MonoBehaviour:
   _rightArmMaxHP: 200
   _rightArmHP: 0
   _rArmTransform: {fileID: 6620383498382871768}
-  _myLegs: {fileID: 0}
-  _legsMaxHP: 300
-  _legsHP: 0
+  legs: {fileID: 8236997677819162882}
   _legsTransform: {fileID: 6620383498904177923}
-  _maxSteps: 4
-  _currentSteps: 0
-  _moveSpeed: 10
-  _rotationSpeed: 10
   block:
     serializedVersion: 2
     m_Bits: 256
@@ -210,6 +204,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
+--- !u!114 &8236997677819162882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7906925045431959312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c478d3a0221f184fb61cd83a7fe2823, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  legsData: {fileID: 11400000, guid: ce122dd92e2b2944bafb4ca66e4fc03e, type: 2}
 --- !u!1001 &2205329476814221999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -497,6 +504,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9df8557c1b1c3d642bc69a44581dcca2, type: 3}
+--- !u!1 &7906925045431959312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 9df8557c1b1c3d642bc69a44581dcca2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2205329477793424921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6620383498904177923 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 9df8557c1b1c3d642bc69a44581dcca2,

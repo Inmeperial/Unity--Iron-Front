@@ -484,7 +484,7 @@ public class ButtonsUIManager : MonoBehaviour
             _selectedChar.SelectLeftGun();
             leftWeaponCircle.SetActive(true);
             rightWeaponCircle.SetActive(false);
-            ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.GetLegsHP());
+            ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.legs.GetLegsHP());
 
             if (_selectedChar.HasEnemiesInRange())
                 ActivateBodyPartsContainer();
@@ -504,7 +504,7 @@ public class ButtonsUIManager : MonoBehaviour
             _selectedChar.SelectRightGun();
             rightWeaponCircle.SetActive(true);
             leftWeaponCircle.SetActive(false);
-            ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.GetLegsHP());
+            ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.legs.GetLegsHP());
 
             if (_selectedChar.HasEnemiesInRange())
                 ActivateBodyPartsContainer();
@@ -664,7 +664,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         SetCharacterMovementButtons();
 
-        ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.GetLegsHP());
+        ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.legs.GetLegsHP());
 
         if (_selectedChar.RightArmAlive())
         {
@@ -705,10 +705,17 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedChar != null)
         {
             if (_selectedEnemy.CanBeAttacked())
+            {
+                bulletsForBodyText.text = "x " + 0;
+                bulletsForLegsText.text = "x " + 0;
+                bulletsForLArmText.text = "x " + 0;
+                bulletsForRArmText.text = "x " + 0;
                 ActivateBodyPartsContainer();
+            }
+                
             else DeactivateBodyPartsContainer();
         }
-        ShowUnitHudText(enemyBodyCurrHp, _selectedEnemy.GetBodyHP(), enemyLeftArmCurrHp, _selectedEnemy.GetLeftArmHP(), enemyRightArmCurrHp, _selectedEnemy.GetRightArmHP(), enemyLegsCurrHp, _selectedEnemy.GetLegsHP());
+        ShowUnitHudText(enemyBodyCurrHp, _selectedEnemy.GetBodyHP(), enemyLeftArmCurrHp, _selectedEnemy.GetLeftArmHP(), enemyRightArmCurrHp, _selectedEnemy.GetRightArmHP(), enemyLegsCurrHp, _selectedEnemy.legs.GetLegsHP());
         enemyHudContainer.SetActive(true);
     }
 
@@ -895,7 +902,7 @@ public class ButtonsUIManager : MonoBehaviour
             }
 
 
-            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs") &&_selectedEnemy.GetLegsHP() > 0)
+            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs") &&_selectedEnemy.legs.GetLegsHP() > 0)
             {
                 buttonLegs.interactable = true;
                 buttonLegsMinus.interactable = true;

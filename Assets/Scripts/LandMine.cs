@@ -8,10 +8,10 @@ public class LandMine : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var obj = other.GetComponent<Character>();
+        var obj = other.GetComponent<Legs>();
         if (obj)
         {
-            obj.TakeDamageLegs(damage);
+            obj.TakeDamageFromMine(damage);
 
             Destroy(gameObject);
         }

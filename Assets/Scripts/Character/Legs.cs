@@ -1,26 +1,82 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Legs : MonoBehaviour
 {
-    [SerializeField] private int _legsMaxHP;
-    [SerializeField] private int _legsHP;
-    [SerializeField] private Transform _legsTransform;
+    public LegsSO legsData;
+    private int _legsMaxHP;
+    private int _legsHP;
     
-    [SerializeField] private int _maxSteps;
-        [SerializeField] private int _currentSteps;
-        [SerializeField] private float _moveSpeed;
-        [SerializeField] private float _rotationSpeed;
+    private int _maxSteps;
+    
+    private float _moveSpeed;
+    private float _rotationSpeed;
+
+    private Character _myChar;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        _myChar = GetComponent<Character>();
+        _legsMaxHP = legsData.legsMaxHp;
+        _legsHP = _legsMaxHP;
+        _maxSteps = legsData.maxSteps;
+        _moveSpeed = legsData.moveSpeed;
+        _rotationSpeed = legsData.rotationSpeed;
+    }
+
     void Start()
     {
-        
+        _myChar = transform.parent.GetComponent<Character>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    
+    public int GetMaxSteps()
+    {
+        return _maxSteps;
+    }
+
+    public void UpdateHP(int newValue)
+    {
+        _legsHP = newValue;
+    }
+    
+    public int GetLegsMaxHP()
+    {
+        return _legsMaxHP;
+    }
+
+    public int GetLegsHP()
+    {
+        return _legsHP;
+    }
+    
+    public void TakeDamageFromMine(int damage)
+    {
+        var hp = _legsHP - damage;
+        _legsHP = hp > 0 ? hp : 0;
+        if (_legsHP <= 0)
+        {
+            _myChar.SetCharacterMove(false);
+        }
+        _myChar.buttonsManager.UpdateLegsHUD(_legsHP, true);
+        _myChar.MakeNotAttackable();
+    }
+
+    public float GetRotationSpeed()
+    {
+        return _rotationSpeed;
+    }
+
+    public float GetMoveSpeed()
+    {
+        return _moveSpeed;
     }
 }

@@ -34,17 +34,9 @@ public class Character : Teams
     [SerializeField] private Transform _rArmTransform;
 
     [Header("Legs")] 
-    [SerializeField] private Legs _myLegs;
-    [SerializeField] private int _legsMaxHP;
-    [SerializeField] private int _legsHP;
+    public Legs legs;
     [SerializeField] private Transform _legsTransform;
-
-
-    [Header("Movement")]
-    [SerializeField] private int _maxSteps;
-    [SerializeField] private int _currentSteps;
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _rotationSpeed;
+    private int _currentSteps;
     #endregion
 
     private Gun _selectedGun;
@@ -91,14 +83,13 @@ public class Character : Teams
         _leftArmAlive = _leftArmHP > 0 ? true : false;
         _rightArmHP = _rightArmMaxHP;
         _rightArmAlive = _rightArmHP > 0 ? true : false;
-        _legsHP = _legsMaxHP;
-        _canMove = _legsHP > 0 ? true : false;
-        _currentSteps = _canMove ? _maxSteps : 0;
+        _canMove = legs.GetLegsHP() > 0 ? true : false;
+        _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
         _selected = false;
         
         _move = GetComponent<GridMovement>();
-        _move.SetMoveSpeed(_moveSpeed);
-        _move.SetRotationSpeed(_rotationSpeed);
+        _move.SetMoveSpeed(legs.GetMoveSpeed());
+        _move.SetRotationSpeed(legs.GetRotationSpeed());
         _myPositionTile = GetTileBelow();
         _myPositionTile.MakeTileOccupied();
         _myPositionTile.SetUnitAbove(this);
@@ -109,7 +100,7 @@ public class Character : Teams
         _myUI = GetComponent<WorldUI>();
 
         if (_myUI)
-            _myUI.SetLimits(_bodyMaxHP, _rightArmMaxHP, _leftArmMaxHP, _legsMaxHP);
+            _myUI.SetLimits(_bodyMaxHP, _rightArmMaxHP, _leftArmMaxHP, legs.GetLegsMaxHP());
 
         if (_rightArmAlive)
         {
@@ -315,21 +306,12 @@ public class Character : Teams
             }
             else
             {
-                var hp = _legsHP - item;
-                _legsHP = hp > 0 ? hp : 0;
-                _canMove = _legsHP > 0 ? true : false;
+                var hp = legs.GetLegsHP() - item;
+                legs.UpdateHP(hp > 0 ? hp : 0);
+                _canMove = legs.GetLegsHP() > 0 ? true : false;
             }
         }
-        buttonsManager.UpdateLegsHUD(_legsHP, false);
-        MakeNotAttackable();
-    }
-
-    public void TakeDamageLegs(int damage)
-    {
-        var hp = _legsHP - damage;
-        _legsHP = hp > 0 ? hp : 0;
-        _canMove = _legsHP > 0 ? true : false;
-        buttonsManager.UpdateLegsHUD(_legsHP, true);
+        buttonsManager.UpdateLegsHUD(legs.GetLegsHP(), false);
         MakeNotAttackable();
     }
 
@@ -390,7 +372,7 @@ public class Character : Teams
             {
                 _targetTile = newTile;
                 pathCreator.Calculate(this, _targetTile, _currentSteps);
-                if (pathCreator.GetDistance() <= _maxSteps)
+                if (pathCreator.GetDistance() <= _currentSteps)
                 {
                     _path = pathCreator.GetPath();
                     if (_path.Count > 0)
@@ -413,6 +395,10 @@ public class Character : Teams
         }
     }
 
+    public int GetCurrentSteps()
+    {
+        return _currentSteps;
+    }
     
     public Tile GetEndTile()
     {
@@ -424,10 +410,7 @@ public class Character : Teams
         return _unitTeam;
     }
 
-    public int GetSteps()
-    {
-        return _currentSteps;
-    }
+    
 
     public int GetBodyMaxHP()
     {
@@ -459,15 +442,7 @@ public class Character : Teams
         return _rightArmHP;
     }
 
-    public int GetLegsMaxHP()
-    {
-        return _legsMaxHP;
-    }
-
-    public int GetLegsHP()
-    {
-        return _legsHP;
-    }
+   
 
     public bool IsSelected()
     {
@@ -573,11 +548,11 @@ public class Character : Teams
     }
     public void NewTurn()
     {
-        _canMove = _legsHP > 0 ? true : false;
+        _canMove = legs.GetLegsHP() > 0 ? true : false;
         _canAttack = true;
         _selectedGun.SetGun();
         _path.Clear();
-        _currentSteps = _canMove ? _maxSteps : 0;
+        _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
         _enemiesInRange.Clear();
         MakeNotAttackable();
         pathCreator.ResetPath();
@@ -621,7 +596,7 @@ public class Character : Teams
     public void IncreaseAvailableSteps(int amount)
     {
         var s = _currentSteps + amount;
-        _currentSteps = s <= _maxSteps ? s : _maxSteps;
+        _currentSteps = s <= legs.GetMaxSteps() ? s : legs.GetMaxSteps();
     }
 
     public void SelectThisUnit()
@@ -644,7 +619,7 @@ public class Character : Teams
         }
         if (_canMove)
         {
-            _currentSteps = _maxSteps;
+            _currentSteps = legs.GetMaxSteps();
             AddTilesInMoveRange();
             PaintTilesInMoveRange(_myPositionTile, 0);
         }
@@ -661,7 +636,7 @@ public class Character : Teams
         }
 
         if (_canMove)
-            _currentSteps = _maxSteps;
+            _currentSteps = legs.GetMaxSteps();
         ResetInRangeLists();
         _path.Clear();
         highlight.PathLinesClear();
@@ -807,7 +782,7 @@ public class Character : Teams
 
     void ShowWorldUI()
     {
-        _myUI.ActivateWorldUI(GetBodyHP(), GetRightArmHP(), GetLeftArmHP(), GetLegsHP(), ThisUnitCanMove(), CanAttack());
+        _myUI.ActivateWorldUI(GetBodyHP(), GetRightArmHP(), GetLeftArmHP(), legs.GetLegsHP(), ThisUnitCanMove(), CanAttack());
     }
 
     void HideWorldUI()
@@ -838,5 +813,10 @@ public class Character : Teams
             Debug.DrawRay(rayOrigin.position, dir, Color.red, 1000f);
             return false;
         }
+    }
+
+    public void SetCharacterMove(bool state)
+    {
+        _canMove = state;
     }
 }

@@ -55,7 +55,7 @@ public class CharacterSelection : MonoBehaviour
 
         if (_selection)
         {
-            stepsCounter.text = _selection.GetSteps().ToString();
+            stepsCounter.text = _selection.GetCurrentSteps().ToString();
         }
     }
 
@@ -103,7 +103,7 @@ public class CharacterSelection : MonoBehaviour
                 _buttonsManager.DeactivateUndo();
                 _buttonsManager.SetPlayerCharacter(_selection);
                 _buttonsManager.SetPlayerUI();
-                stepsCounter.text = _selection.GetSteps().ToString();
+                stepsCounter.text = _selection.legs.GetMaxSteps().ToString();
                 if (_enemySelection != null)
                 {
                     _selection.RotateTowardsEnemy(_enemySelection.transform.position);
