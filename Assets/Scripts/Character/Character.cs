@@ -46,7 +46,7 @@ public class Character : Teams
     private GridMovement _move;
     public LayerMask block;
     private List<Tile> _tilesInMoveRange = new List<Tile>();
-    [SerializeField] private Tile _myPositionTile;
+    private Tile _myPositionTile;
     private Tile _targetTile;
     [SerializeField] private List<Tile> _path = new List<Tile>();
 

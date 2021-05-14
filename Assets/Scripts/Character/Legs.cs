@@ -20,7 +20,7 @@ public class Legs : MonoBehaviour
     private void Awake()
     {
         _myChar = GetComponent<Character>();
-        _legsMaxHP = legsData.legsMaxHp;
+        _legsMaxHP = legsData.maxHP;
         _legsHP = _legsMaxHP;
         _maxSteps = legsData.maxSteps;
         _moveSpeed = legsData.moveSpeed;
