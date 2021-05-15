@@ -5,8 +5,8 @@ using UnityEngine;
 public class MechaMaterialhandler : MonoBehaviour
 {
     public Material baseMaterial;
+    public Material selectedMechaPartMaterial;
     public Material selectedMechaMaterial;
-    public Material fresnelMechaMaterial;
     //----------------------
     private Renderer _rend;
     private Transform _child;
@@ -19,11 +19,11 @@ public class MechaMaterialhandler : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.A))
+        //if (Input.GetKeyDown(KeyCode.Q))
         //{
         //    SetSelectedPartMaterialToBody(MechaParts.Body, true);
         //}
-        //if (Input.GetKeyDown(KeyCode.D))
+        //if (Input.GetKeyDown(KeyCode.W))
         //{
         //    SetSelectedPartMaterialToBody(MechaParts.Body, false);
         //}
@@ -34,6 +34,14 @@ public class MechaMaterialhandler : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.R))
         //{
         //    SetSelectedPartMaterialToBody(MechaParts.Legs, false);
+        //}
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    SetSelectedMechaMaterial(true);
+        //}
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    SetSelectedMechaMaterial(false);
         //}
     }
 
@@ -60,42 +68,36 @@ public class MechaMaterialhandler : MonoBehaviour
                     _sharedMaterialsCopy[j] = baseMaterial;
                 }
 
-                _rend.sharedMaterials = _sharedMaterialsCopy;  
+                _rend.sharedMaterials = _sharedMaterialsCopy;
             }
-                
+
         }
     }
 
     /// <summary>
-    /// Set the fresnel material to the second material, needs a part to send (Enum MechaParts)
+    /// Set the fresnel material to the second material.
     /// </summary>
-    public void SetFresnelMaterial(MechaParts part, bool isEffectOn)
+    public void SetSelectedMechaMaterial(bool isEffectOn)
     {
         for (int i = 0; i < transform.childCount; i++)
         {
             _child = transform.GetChild(i);
-            if (_child.gameObject.name == part.ToString())
+            _rend = transform.GetChild(i).gameObject.GetComponent<Renderer>();
+            if (_rend != null)
             {
                 if (isEffectOn)
                 {
-                    _rend = _child.gameObject.GetComponent<Renderer>();
                     _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
-
                     _sharedMaterialsCopy = _rend.sharedMaterials;
-                    _sharedMaterialsCopy[1] = fresnelMechaMaterial;
+                    _sharedMaterialsCopy[1] = selectedMechaMaterial;
                     _rend.sharedMaterials = _sharedMaterialsCopy;
-                    break;
                 }
                 else
                 {
-                    _rend = _child.gameObject.GetComponent<Renderer>();
                     _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
-
                     _sharedMaterialsCopy = _rend.sharedMaterials;
                     _sharedMaterialsCopy[1] = baseMaterial;
                     _rend.sharedMaterials = _sharedMaterialsCopy;
-                    break;
-
                 }
             }
         }
