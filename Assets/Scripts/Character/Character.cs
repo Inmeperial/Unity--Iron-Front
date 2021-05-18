@@ -22,6 +22,7 @@ public class Character : Teams
     [Header("Left Arm")]
     [SerializeField] LeftArm _myLeftArm;
     public Gun leftGun;
+    private bool _leftGunSelected;
     [SerializeField] private int _leftArmMaxHP;
     [SerializeField] private int _leftArmHP;
     [SerializeField] private Transform _lArmTransform;
@@ -29,6 +30,7 @@ public class Character : Teams
     [Header("Right Arm")]
     [SerializeField] RightArm _myRightArm;
     public Gun rightGun;
+    private bool _rightGunSelected;
     [SerializeField] private int _rightArmMaxHP;
     [SerializeField] private int _rightArmHP;
     [SerializeField] private Transform _rArmTransform;
@@ -41,6 +43,8 @@ public class Character : Teams
 
     private Gun _selectedGun;
 
+    
+    
     //MOVEMENT RELATED
     public IPathCreator pathCreator;
     private GridMovement _move;
@@ -48,16 +52,16 @@ public class Character : Teams
     private List<Tile> _tilesInMoveRange = new List<Tile>();
     private Tile _myPositionTile;
     private Tile _targetTile;
-    [SerializeField] private List<Tile> _path = new List<Tile>();
+    private List<Tile> _path = new List<Tile>();
 
     //FLAGS
     private bool _canBeSelected;
     private bool _selected;
     private bool _moving = false;
     private bool _canMove = true;
-    [SerializeField] private bool _canAttack = true;
-    [SerializeField] private bool _leftArmAlive;
-    [SerializeField] private bool _rightArmAlive;
+    private bool _canAttack = true;
+    private bool _leftArmAlive;
+    private bool _rightArmAlive;
     private bool _canBeAttacked = false;
 
     //OTHERS
@@ -66,6 +70,7 @@ public class Character : Teams
     private Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();
     private List<Character> _enemiesInRange = new List<Character>();
     private WorldUI _myUI;
+    public EffectsController effectsController;
 
     [Header("DON'T SET")]
     public TurnManager turnManager;
@@ -97,6 +102,7 @@ public class Character : Teams
         highlight = FindObjectOfType<TileHighlight>();
         buttonsManager = FindObjectOfType<ButtonsUIManager>();
         pathCreator = GetComponent<IPathCreator>();
+        effectsController = FindObjectOfType<EffectsController>();
         _myUI = GetComponent<WorldUI>();
 
         if (_myUI)
@@ -106,16 +112,22 @@ public class Character : Teams
         {
             _selectedGun = rightGun;
             _canAttack = true;
+            _rightGunSelected = true;
+            _leftGunSelected = false;
         }
         else if (_leftArmAlive)
         {
             _selectedGun = leftGun;
             _canAttack = true;
+            _rightGunSelected = false;
+            _leftGunSelected = true;
         }
         else
         {
             _selectedGun = null;
             _canAttack = false;
+            _rightGunSelected = false;
+            _leftGunSelected = false;
         }
 
         if (_bodyHP <= 0)
@@ -246,6 +258,7 @@ public class Character : Teams
             {
                 var hp = _bodyHP - item;
                 _bodyHP = hp > 0 ? hp : 0;
+                effectsController.PlayEffect(_bodyTransform.position, "Damage");
             }
         }
         if (_bodyHP <= 0)
@@ -269,6 +282,7 @@ public class Character : Teams
                 var hp = _leftArmHP - item;
                 _leftArmHP = hp > 0 ? hp : 0;
                 _leftArmAlive = _leftArmHP > 0 ? true : false;
+                effectsController.PlayEffect(_lArmTransform.position, "Damage");
             }
         }
         CheckArms();
@@ -289,6 +303,7 @@ public class Character : Teams
                 var hp = _rightArmHP - item;
                 _rightArmHP = hp > 0 ? hp : 0;
                 _rightArmAlive = _rightArmHP > 0 ? true : false;
+                effectsController.PlayEffect(_rArmTransform.position, "Damage");
             }
         }
         CheckArms();
@@ -309,6 +324,7 @@ public class Character : Teams
                 var hp = legs.GetLegsHP() - item;
                 legs.UpdateHP(hp > 0 ? hp : 0);
                 _canMove = legs.GetLegsHP() > 0 ? true : false;
+                effectsController.PlayEffect(_legsTransform.position, "Damage");
             }
         }
         buttonsManager.UpdateLegsHUD(legs.GetLegsHP(), false);
@@ -318,6 +334,8 @@ public class Character : Teams
     public void SelectLeftGun()
     {
         _selectedGun = leftGun;
+        _leftGunSelected = true;
+        _rightGunSelected = false;
         ResetTilesInAttackRange();
 
         if (CanAttack())
@@ -332,6 +350,8 @@ public class Character : Teams
     public void SelectRightGun()
     {
         _selectedGun = rightGun;
+        _leftGunSelected = false;
+        _rightGunSelected = true;
         ResetTilesInAttackRange();
 
         if (CanAttack())
@@ -817,5 +837,18 @@ public class Character : Teams
     public void SetCharacterMove(bool state)
     {
         _canMove = state;
+    }
+
+    public void Shoot()
+    {
+        if (_rightGunSelected)
+        {
+            effectsController.PlayEffect(_rArmTransform.position, "Attack");            
+        }
+        else if (_leftGunSelected)
+        {
+            effectsController.PlayEffect(_lArmTransform.position, "Attack");
+        }
+        
     }
 }

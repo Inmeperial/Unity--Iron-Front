@@ -150,9 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseMaterial: {fileID: 2100000, guid: b9fa7010b9867674e9d34475e55f7397, type: 2}
+  selectedMechaPartMaterial: {fileID: 0}
   selectedMechaMaterial: {fileID: 2100000, guid: e176d7c5356303a44997d4ac6e6027c1,
-    type: 2}
-  fresnelMechaMaterial: {fileID: 2100000, guid: 7d2ab7f2ecc3d35468336ea7f9671e3c,
     type: 2}
 --- !u!114 &2815282072965457823
 MonoBehaviour:
@@ -187,11 +186,7 @@ MonoBehaviour:
   block:
     serializedVersion: 2
     m_Bits: 256
-  _myPositionTile: {fileID: 0}
-  _path: []
-  _canAttack: 1
-  _leftArmAlive: 0
-  _rightArmAlive: 0
+  effectsController: {fileID: 0}
   turnManager: {fileID: 0}
   highlight: {fileID: 0}
   buttonsManager: {fileID: 0}

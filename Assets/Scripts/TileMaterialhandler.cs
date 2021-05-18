@@ -29,7 +29,7 @@ public class TileMaterialhandler : MonoBehaviour
         DiseableAndEnableStatus(false);
     }
     
-    void Update()
+    /*void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -59,7 +59,7 @@ public class TileMaterialhandler : MonoBehaviour
         {
             DiseableAndEnableSelectedNode(false);
         }
-    }
+    }*/
     #region Functions
 
     /// <summary>

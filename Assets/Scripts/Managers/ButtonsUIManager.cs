@@ -371,6 +371,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedEnemy != null)
         {
             var gun = _selectedChar.GetSelectedGun();
+            _selectedChar.Shoot();
             if (_bulletsForBody > 0)
             {
                 var d = gun.DamageCalculation(_bulletsForBody);

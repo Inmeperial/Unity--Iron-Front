@@ -85,9 +85,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseMaterial: {fileID: 2100000, guid: b9fa7010b9867674e9d34475e55f7397, type: 2}
+  selectedMechaPartMaterial: {fileID: 0}
   selectedMechaMaterial: {fileID: 2100000, guid: e176d7c5356303a44997d4ac6e6027c1,
-    type: 2}
-  fresnelMechaMaterial: {fileID: 2100000, guid: 7d2ab7f2ecc3d35468336ea7f9671e3c,
     type: 2}
 --- !u!114 &5348353690155386399
 MonoBehaviour:
@@ -122,11 +121,7 @@ MonoBehaviour:
   block:
     serializedVersion: 2
     m_Bits: 256
-  _myPositionTile: {fileID: 0}
-  _path: []
-  _canAttack: 1
-  _leftArmAlive: 0
-  _rightArmAlive: 0
+  effectsController: {fileID: 0}
   turnManager: {fileID: 0}
   highlight: {fileID: 0}
   buttonsManager: {fileID: 0}
@@ -203,19 +198,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.7980433, y: 2.2478924, z: 2.5262175}
   m_Center: {x: -0.0082473755, y: 3.9458122, z: -0.6786537}
---- !u!114 &8236997677819162882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7906925045431959312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c478d3a0221f184fb61cd83a7fe2823, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  legsData: {fileID: 11400000, guid: ce122dd92e2b2944bafb4ca66e4fc03e, type: 2}
 --- !u!65 &1751579969762477953
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -229,6 +211,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6059391, y: 2.5715868, z: 1.4530331}
   m_Center: {x: -0.013023496, y: 1.2790018, z: -0.338085}
+--- !u!114 &8236997677819162882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7906925045431959312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c478d3a0221f184fb61cd83a7fe2823, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  legsData: {fileID: 11400000, guid: ce122dd92e2b2944bafb4ca66e4fc03e, type: 2}
 --- !u!65 &8691527485979782898
 BoxCollider:
   m_ObjectHideFlags: 0

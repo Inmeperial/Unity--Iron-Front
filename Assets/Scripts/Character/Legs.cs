@@ -31,13 +31,6 @@ public class Legs : MonoBehaviour
     {
         _myChar = transform.parent.GetComponent<Character>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     public int GetMaxSteps()
     {
         return _maxSteps;
@@ -68,6 +61,7 @@ public class Legs : MonoBehaviour
         }
         _myChar.buttonsManager.UpdateLegsHUD(_legsHP, true);
         _myChar.MakeNotAttackable();
+        _myChar.effectsController.PlayEffect(transform.position, "Damage");
     }
 
     public float GetRotationSpeed()
