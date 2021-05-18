@@ -42,15 +42,6 @@ public abstract class Gun : MonoBehaviour, IGun
         StartRoulette();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Debug.Log("apreto f");
-            Ability();
-        }
-    }
-
     public int GetMaxBullets()
     {
         return _maxBullets;
