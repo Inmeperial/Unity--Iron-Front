@@ -91,7 +91,11 @@ public class GridMovement : MonoBehaviour
     private bool CheckIfFacing(Vector3 pos)
     {
         var dir = pos - transform.position;
-        if (transform.forward == dir.normalized)
+        var tresholdPlus = dir;
+        tresholdPlus = new Vector3(dir.x + 0.1f, dir.y, dir.z + 0.1f);
+        var tresholdMin = dir;
+        tresholdMin= new Vector3(dir.x - 0.1f, dir.y, dir.z - 0.1f);
+        if (transform.forward == dir.normalized || transform.forward == tresholdPlus || transform.forward == tresholdMin)
             return true;
         else return false;
     }
