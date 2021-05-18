@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class ChangeScene : MonoBehaviour
 {
     public string sceneName;
-    
+
     public void Change()
     {
         SceneManager.LoadScene(sceneName);
@@ -18,5 +18,8 @@ public class ChangeScene : MonoBehaviour
 		{
 			Change();
 		}
+
+		if (Input.GetKeyDown(KeyCode.F))
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 }
