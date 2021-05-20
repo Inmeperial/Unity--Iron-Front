@@ -49,7 +49,6 @@ public class CharacterSelection : MonoBehaviour
             {
                 SelectCharacterFromTile(gridBlockMask);
             }
-                
         }
         
 
@@ -62,20 +61,18 @@ public class CharacterSelection : MonoBehaviour
     private void SelectCharacterFromTile(LayerMask layerMask)
     {
         var tile = MouseRay.GetTargetGameObject(layerMask);
-        if (tile != null && tile.CompareTag("GridBlock"))
+        if (tile && tile.CompareTag("GridBlock"))
         {
             var c = tile.GetComponent<Tile>().GetCharacterAbove();
-            if (c != null)
-                SelectionOf(c);
+            if (c) SelectionOf(c);
         }
-            
     }
 
     //Selection of the character that will move.
     public void SelectCharacterFromObject(LayerMask charMask)
     {
         var character = MouseRay.GetTargetTransform(charMask);
-        if (character != null && character.CompareTag("Character"))
+        if (character && character.CompareTag("Character"))
         {
             var c = character.GetComponent<Character>();
             SelectionOf(c);
@@ -90,9 +87,9 @@ public class CharacterSelection : MonoBehaviour
             if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
             {
                 _buttonsManager.DeselectActions();
-                if (_selection != null)
+                if (_selection)
                     _selection.DeselectThisUnit();
-                if (_enemySelection != null)
+                if (_enemySelection)
                 {
                     _enemySelection.DeselectThisUnit();
                     _enemySelection = null;
@@ -104,14 +101,14 @@ public class CharacterSelection : MonoBehaviour
                 _buttonsManager.SetPlayerCharacter(_selection);
                 _buttonsManager.SetPlayerUI();
                 stepsCounter.text = _selection.legs.GetMaxSteps().ToString();
-                if (_enemySelection != null)
+                if (_enemySelection)
                 {
                     _selection.RotateTowardsEnemy(_enemySelection.transform.position);
                 }
             }
             else
             {
-                if (_enemySelection != null)
+                if (_enemySelection)
                 {
                     _enemySelection.DeselectThisUnit();
                 }
@@ -119,7 +116,7 @@ public class CharacterSelection : MonoBehaviour
                 _enemySelection.SelectedAsEnemy();
                 _buttonsManager.SetEnemy(_enemySelection);
                 _buttonsManager.SetEnemyUI();
-                if (_selection != null)
+                if (_selection)
                 {
                     _selection.RotateTowardsEnemy(_enemySelection.transform.position);
                 }

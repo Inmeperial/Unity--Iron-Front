@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class ButtonsUIManager : MonoBehaviour
 {
@@ -20,22 +21,22 @@ public class ButtonsUIManager : MonoBehaviour
 
     #region Buttons
     public GameObject bodyPartsButtonsContainer;
-    public Button buttonBody;
+    public CustomButton buttonBody;
     public Button buttonBodyMinus;
     public Button buttonBodyX;
     private bool _buttonBodySelected;
     private int _bulletsForBody;
-    public Button buttonLArm;
+    public CustomButton buttonLArm;
     public Button buttonLArmMinus;
     public Button buttonLArmX;
     private bool _buttonLArmSelected;
     private int _bulletsForLArm;
-    public Button buttonRArm;
+    public CustomButton buttonRArm;
     public Button buttonRArmMinus;
     public Button buttonRArmX;
     private bool _buttonRArmSelected;
     private int _bulletsForRArm;
-    public Button buttonLegs;
+    public CustomButton buttonLegs;
     public Button buttonLegsMinus;
     public Button buttonLegsX;
     private bool _buttonLegsSelected;
@@ -101,8 +102,12 @@ public class ButtonsUIManager : MonoBehaviour
 
     private void Update()
     {
-        if (((_selectedChar != null && _selectedChar.IsMoving() == false) || _selectedEnemy != null) && Input.GetKeyDown(deselectKey))
-            DeselectUnit();
+        if (EventSystem.current.IsPointerOverGameObject() == false)
+        {
+            if (((_selectedChar && _selectedChar.IsMoving() == false) || _selectedEnemy) &&
+                (Input.GetKeyDown(deselectKey) || Input.GetMouseButtonDown(1)))
+                DeselectUnit();
+        }
 
         if (Input.GetKeyDown(selectLGunKey))
             UnitSwapToLeftGun();

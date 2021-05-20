@@ -40,19 +40,19 @@ public class ButtonsManagerInspector : Editor
         {
             _selection.bodyPartsButtonsContainer = (GameObject)EditorGUILayout.ObjectField("Body Parts Button Container", _selection.bodyPartsButtonsContainer, typeof(GameObject), true);
 
-            _selection.buttonBody = (Button)EditorGUILayout.ObjectField("Button Body", _selection.buttonBody, typeof(Button), true);
+            _selection.buttonBody = (CustomButton)EditorGUILayout.ObjectField("Button Body", _selection.buttonBody, typeof(CustomButton), true);
             _selection.buttonBodyMinus = (Button)EditorGUILayout.ObjectField("Button Minus", _selection.buttonBodyMinus, typeof(Button), true);
             _selection.buttonBodyX = (Button)EditorGUILayout.ObjectField("Button Body X", _selection.buttonBodyX, typeof(Button), true);
 
-            _selection.buttonLArm = (Button)EditorGUILayout.ObjectField("Button LArm", _selection.buttonLArm, typeof(Button), true);
+            _selection.buttonLArm = (CustomButton)EditorGUILayout.ObjectField("Button LArm", _selection.buttonLArm, typeof(CustomButton), true);
             _selection.buttonLArmMinus = (Button)EditorGUILayout.ObjectField("Button LArm Minus", _selection.buttonLArmMinus, typeof(Button), true);
             _selection.buttonLArmX = (Button)EditorGUILayout.ObjectField("Button LArm X", _selection.buttonLArmX, typeof(Button), true);
 
-            _selection.buttonRArm = (Button)EditorGUILayout.ObjectField("Button RArm", _selection.buttonRArm, typeof(Button), true);
+            _selection.buttonRArm = (CustomButton)EditorGUILayout.ObjectField("Button RArm", _selection.buttonRArm, typeof(CustomButton), true);
             _selection.buttonRArmMinus = (Button)EditorGUILayout.ObjectField("Button RArm Minus", _selection.buttonRArmMinus, typeof(Button), true);
             _selection.buttonRArmX = (Button)EditorGUILayout.ObjectField("Button RArm X", _selection.buttonRArmX, typeof(Button), true);
 
-            _selection.buttonLegs = (Button)EditorGUILayout.ObjectField("Button Legs", _selection.buttonLegs, typeof(Button), true);
+            _selection.buttonLegs = (CustomButton)EditorGUILayout.ObjectField("Button Legs", _selection.buttonLegs, typeof(CustomButton), true);
             _selection.buttonLegsMinus = (Button)EditorGUILayout.ObjectField("Button Legs Minus", _selection.buttonLegsMinus, typeof(Button), true);
             _selection.buttonLegsX = (Button)EditorGUILayout.ObjectField("Button Legs X", _selection.buttonLegsX, typeof(Button), true);
         }
