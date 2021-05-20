@@ -337,13 +337,20 @@ public class Character : Teams
         _leftGunSelected = true;
         _rightGunSelected = false;
         ResetTilesInAttackRange();
-
-        if (CanAttack())
+        ResetTilesInMoveRange();
+        if (_canAttack)
         {
             if (_path.Count == 0)
                 PaintTilesInAttackRange(_myPositionTile, 0);
             else PaintTilesInAttackRange(_path[_path.Count - 1], 0);
             CheckEnemiesInAttackRange();
+        }
+
+        if (_canMove)
+        {
+            if (_path.Count == 0)
+                PaintTilesInMoveRange(_myPositionTile, 0);
+            else PaintTilesInMoveRange(_path[_path.Count - 1], 0);
         }
     }
 
@@ -353,13 +360,20 @@ public class Character : Teams
         _leftGunSelected = false;
         _rightGunSelected = true;
         ResetTilesInAttackRange();
-
-        if (CanAttack())
+        ResetTilesInMoveRange();
+        if (_canAttack)
         {
             if (_path.Count == 0)
                 PaintTilesInAttackRange(_myPositionTile, 0);
             else PaintTilesInAttackRange(_path[_path.Count - 1], 0);
             CheckEnemiesInAttackRange();
+        }
+        
+        if (_canMove)
+        {
+            if (_path.Count == 0)
+                PaintTilesInMoveRange(_myPositionTile, 0);
+            else PaintTilesInMoveRange(_path[_path.Count - 1], 0);
         }
     }
 
