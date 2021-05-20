@@ -813,12 +813,12 @@ public class Character : Teams
         HideWorldUI();
     }
 
-    void ShowWorldUI()
+    public void ShowWorldUI()
     {
         _myUI.ActivateWorldUI(GetBodyHP(), GetRightArmHP(), GetLeftArmHP(), legs.GetLegsHP(), ThisUnitCanMove(), CanAttack());
     }
 
-    void HideWorldUI()
+    public void HideWorldUI()
     {
         _myUI.DeactivateWorldUI();
     }

@@ -31,6 +31,8 @@ public class ButtonsManagerInspector : Editor
         _selection.deselectKey = (KeyCode)EditorGUILayout.EnumPopup("Deselect Key", _selection.deselectKey);
         _selection.selectRGunKey = (KeyCode)EditorGUILayout.EnumPopup("Select RGun Key", _selection.selectRGunKey);
         _selection.selectLGunKey = (KeyCode)EditorGUILayout.EnumPopup("Select LGun Key", _selection.selectLGunKey);
+        _selection.showWorldUIKey = (KeyCode)EditorGUILayout.EnumPopup("Show World UI Key", _selection.showWorldUIKey);
+        _selection.toggleWorldUIKey = (KeyCode)EditorGUILayout.EnumPopup("Toggle World UI Key", _selection.toggleWorldUIKey);
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Buttons", _importantStyle);

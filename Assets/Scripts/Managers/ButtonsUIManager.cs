@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -17,6 +18,8 @@ public class ButtonsUIManager : MonoBehaviour
     public KeyCode deselectKey;
     public KeyCode selectLGunKey;
     public KeyCode selectRGunKey;
+    public KeyCode showWorldUIKey;
+    public KeyCode toggleWorldUIKey;
 
 
     #region Buttons
@@ -85,6 +88,8 @@ public class ButtonsUIManager : MonoBehaviour
     private bool legsInsight;
     private bool rArmInsigh;
     private bool lArmInsight;
+
+    private bool _worldUIActive = false;
     private void Start()
     {
         enemyHudContainer.SetActive(false);
@@ -114,6 +119,19 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (Input.GetKeyDown(selectRGunKey))
             UnitSwapToRightGun();
+        
+        if (Input.GetKeyDown(showWorldUIKey))
+            ShowAllWorldUI();
+        
+        if (Input.GetKeyUp(showWorldUIKey))
+            HideAllWorldUI();
+            
+        if (Input.GetKeyDown(toggleWorldUIKey))
+        {
+            if(_worldUIActive)
+                HideAllWorldUI();
+            else ShowAllWorldUI();
+        }
     }
 
     #region ButtonsActions
@@ -523,6 +541,26 @@ public class ButtonsUIManager : MonoBehaviour
             else DeactivateBodyPartsContainer();
         }
         else Debug.Log("right arm broken");
+    }
+
+    public void ShowAllWorldUI()
+    {
+        _worldUIActive = true;
+        var units = _turnManager.GetEnemies(Teams.Team.Box).Concat(_turnManager.GetEnemies(Teams.Team.Capsule));
+        foreach (var unit in units)
+        {
+            unit.ShowWorldUI();
+        }
+    }
+
+    public void HideAllWorldUI()
+    {
+        _worldUIActive = false;
+        var units = _turnManager.GetEnemies(Teams.Team.Box).Concat(_turnManager.GetEnemies(Teams.Team.Capsule));
+        foreach (var unit in units)
+        {
+            unit.HideWorldUI();
+        }
     }
 
     #endregion
