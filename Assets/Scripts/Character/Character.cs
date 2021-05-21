@@ -249,20 +249,20 @@ public class Character : Teams
 
     public void TakeDamageBody(int[] damages)
     {
-        foreach (var item in damages)
+        for (int i = 0; i < damages.Length; i++)
         {
-            if (item == 0)
+            if (damages[i] == 0)
             {
-                effectsController.CreateDamageText("Miss", 0, _bodyTransform.position);
+                effectsController.CreateDamageText("Miss", 0, _bodyTransform.position, damages[i] == damages.Length-1 ? true : false);
             }
             else
             {
-                var hp = _bodyHP - item;
+                var hp = _bodyHP - damages[i];
                 _bodyHP = hp > 0 ? hp : 0;
                 effectsController.PlayParticlesEffect(_bodyTransform.position, "Damage");
-                if (item <= 45)
-                    effectsController.CreateDamageText(item.ToString(), 1, _bodyTransform.position);
-                else effectsController.CreateDamageText(item.ToString(), 2, _bodyTransform.position);
+                if (damages[i] <= 45)
+                    effectsController.CreateDamageText(damages[i].ToString(), 1, _bodyTransform.position, damages[i] == damages.Length-1 ? true : false);
+                else effectsController.CreateDamageText(damages[i].ToString(), 2, _bodyTransform.position, damages[i] == damages.Length-1 ? true : false);
             }
         }
         if (_bodyHP <= 0)
@@ -275,21 +275,25 @@ public class Character : Teams
 
     public void TakeDamageLeftArm(int[] damages)
     {
-        foreach (var item in damages)
+        for (int i = 0; i < damages.Length; i++)
         {
-            if (item == 0)
+            if (damages[i] == 0)
             {
-                effectsController.CreateDamageText("Miss", 0, _lArmTransform.position);
+                effectsController.CreateDamageText("Miss", 0, _lArmTransform.position,
+                    damages[i] == damages.Length - 1 ? true : false);
             }
             else
             {
-                var hp = _leftArmHP - item;
+                var hp = _leftArmHP - damages[i];
                 _leftArmHP = hp > 0 ? hp : 0;
                 _leftArmAlive = _leftArmHP > 0 ? true : false;
                 effectsController.PlayParticlesEffect(_lArmTransform.position, "Damage");
-                if (item <= 45)
-                    effectsController.CreateDamageText(item.ToString(), 1, _lArmTransform.position);
-                else effectsController.CreateDamageText(item.ToString(), 2, _lArmTransform.position);
+                if (damages[i] <= 45)
+                    effectsController.CreateDamageText(damages[i].ToString(), 1, _lArmTransform.position,
+                        damages[i] == damages.Length - 1 ? true : false);
+                else
+                    effectsController.CreateDamageText(damages[i].ToString(), 2, _lArmTransform.position,
+                        damages[i] == damages.Length - 1 ? true : false);
             }
         }
         CheckArms();
@@ -299,21 +303,21 @@ public class Character : Teams
 
     public void TakeDamageRightArm(int[] damages)
     {
-        foreach (var item in damages)
+        for (int i = 0; i < damages.Length; i++)
         {
-            if (item == 0)
+            if (damages[i] == 0)
             {
-                effectsController.CreateDamageText("Miss", 0, _rArmTransform.position);
+                effectsController.CreateDamageText("Miss", 0, _rArmTransform.position, damages[i] == damages.Length-1 ? true : false);
             }
             else
             {
-                var hp = _rightArmHP - item;
+                var hp = _rightArmHP - damages[i];
                 _rightArmHP = hp > 0 ? hp : 0;
                 _rightArmAlive = _rightArmHP > 0 ? true : false;
                 effectsController.PlayParticlesEffect(_rArmTransform.position, "Damage");
-                if (item <= 45)
-                    effectsController.CreateDamageText(item.ToString(), 1, _rArmTransform.position);
-                else effectsController.CreateDamageText(item.ToString(), 2, _rArmTransform.position);
+                if (damages[i] <= 45)
+                    effectsController.CreateDamageText(damages[i].ToString(), 1, _rArmTransform.position, damages[i] == damages.Length-1 ? true : false);
+                else effectsController.CreateDamageText(damages[i].ToString(), 2, _rArmTransform.position, damages[i] == damages.Length-1 ? true : false);
             }
         }
         CheckArms();
@@ -323,27 +327,26 @@ public class Character : Teams
 
     public void TakeDamageLegs(int[] damages)
     {
-        foreach (var item in damages)
+        for (int i = 0; i < damages.Length; i++)
         {
-            if (item == 0)
+            if (damages[i] == 0)
             {
-                effectsController.CreateDamageText("Miss", 0, _legsTransform.position);
+                effectsController.CreateDamageText("Miss", 0, _legsTransform.position, damages[i] == damages.Length-1 ? true : false);
             }
             else
             {
-                var hp = legs.GetLegsHP() - item;
+                var hp = legs.GetLegsHP() - damages[i];
                 legs.UpdateHP(hp > 0 ? hp : 0);
                 _canMove = legs.GetLegsHP() > 0 ? true : false;
                 effectsController.PlayParticlesEffect(_legsTransform.position, "Damage");
-                if (item <= 45)
-                    effectsController.CreateDamageText(item.ToString(), 1, _legsTransform.position);
-                else effectsController.CreateDamageText(item.ToString(), 2, _legsTransform.position);
+                if (damages[i] <= 45)
+                    effectsController.CreateDamageText(damages[i].ToString(), 1, _legsTransform.position, damages[i] == damages.Length-1 ? true : false);
+                else effectsController.CreateDamageText(damages[i].ToString(), 2, _legsTransform.position, damages[i] == damages.Length-1 ? true : false);
             }
         }
         buttonsManager.UpdateLegsHUD(legs.GetLegsHP(), false);
         MakeNotAttackable();
     }
-
     public void SelectLeftGun()
     {
         _selectedGun = leftGun;

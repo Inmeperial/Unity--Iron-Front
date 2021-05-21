@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -14,8 +16,10 @@ public class EffectsController : MonoBehaviour
     
     [SerializeField] private GameObject _damageText;
 
-    
-    
+    [SerializeField] private float _textSpacingTime;
+    private bool _canCreate;
+    private List<Tuple<string, int, Vector3>> _list = new List<Tuple<string, int, Vector3>>();
+
     /// <summary>
     /// Reproduces the Effect. type: Damage - Attack
     /// </summary>
@@ -47,12 +51,27 @@ public class EffectsController : MonoBehaviour
     /// <summary>
     /// Creates the Damage Text in world. type: 0: Miss - 1: Normal - 2: Critical
     /// </summary>
-    public void CreateDamageText(string text, int type, Vector3 position)
+    public void CreateDamageText(string text, int type, Vector3 position, bool last)
     {
-        var tObj = Instantiate(_damageText, position, Quaternion.identity);
-        var t = tObj.GetComponent<DamageText>(); 
-        t.SetText(text, type);
-        StartCoroutine(DestroyEffect(t.gameObject, t.GetDuration()));
+        var t = Tuple.Create(text, type, position);
+        _list.Add(t);
+        if (last) StartCoroutine(CreateDamageTextWithSpacing());
+    }
+
+    IEnumerator CreateDamageTextWithSpacing()
+    {
+        while (_list.Count > 0)
+        {
+            var myText = _list[0];
+            _list.RemoveAt(0);
+            var tObj = Instantiate(_damageText, myText.Item3, Quaternion.identity);
+            var t = tObj.GetComponent<DamageText>(); 
+            t.SetText(myText.Item1, myText.Item2);
+            yield return new WaitForSeconds(_textSpacingTime);
+        }
+        _list.Clear();
+        
+        //StartCoroutine(DestroyEffect(t.gameObject, t.GetDuration()));
     }
     
     IEnumerator DestroyEffect(GameObject effect, float time)
