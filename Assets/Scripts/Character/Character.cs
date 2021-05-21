@@ -253,7 +253,7 @@ public class Character : Teams
         {
             if (damages[i] == 0)
             {
-                effectsController.CreateDamageText("Miss", 0, _bodyTransform.position, damages[i] == damages.Length-1 ? true : false);
+                effectsController.CreateDamageText("Miss", 0, _bodyTransform.position, i == damages.Length - 1 ? true : false);
             }
             else
             {
@@ -261,8 +261,8 @@ public class Character : Teams
                 _bodyHP = hp > 0 ? hp : 0;
                 effectsController.PlayParticlesEffect(_bodyTransform.position, "Damage");
                 if (damages[i] <= 45)
-                    effectsController.CreateDamageText(damages[i].ToString(), 1, _bodyTransform.position, damages[i] == damages.Length-1 ? true : false);
-                else effectsController.CreateDamageText(damages[i].ToString(), 2, _bodyTransform.position, damages[i] == damages.Length-1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].ToString(), 1, _bodyTransform.position, i == damages.Length - 1 ? true : false);
+                else effectsController.CreateDamageText(damages[i].ToString(), 2, _bodyTransform.position, i == damages.Length - 1 ? true : false);
             }
         }
         if (_bodyHP <= 0)
@@ -280,7 +280,7 @@ public class Character : Teams
             if (damages[i] == 0)
             {
                 effectsController.CreateDamageText("Miss", 0, _lArmTransform.position,
-                    damages[i] == damages.Length - 1 ? true : false);
+                    i == damages.Length - 1 ? true : false);
             }
             else
             {
@@ -290,10 +290,10 @@ public class Character : Teams
                 effectsController.PlayParticlesEffect(_lArmTransform.position, "Damage");
                 if (damages[i] <= 45)
                     effectsController.CreateDamageText(damages[i].ToString(), 1, _lArmTransform.position,
-                        damages[i] == damages.Length - 1 ? true : false);
+                        i == damages.Length - 1 ? true : false);
                 else
                     effectsController.CreateDamageText(damages[i].ToString(), 2, _lArmTransform.position,
-                        damages[i] == damages.Length - 1 ? true : false);
+                        i == damages.Length - 1 ? true : false);
             }
         }
         CheckArms();
@@ -307,7 +307,7 @@ public class Character : Teams
         {
             if (damages[i] == 0)
             {
-                effectsController.CreateDamageText("Miss", 0, _rArmTransform.position, damages[i] == damages.Length-1 ? true : false);
+                effectsController.CreateDamageText("Miss", 0, _rArmTransform.position,i == damages.Length-1 ? true : false);
             }
             else
             {
@@ -316,8 +316,8 @@ public class Character : Teams
                 _rightArmAlive = _rightArmHP > 0 ? true : false;
                 effectsController.PlayParticlesEffect(_rArmTransform.position, "Damage");
                 if (damages[i] <= 45)
-                    effectsController.CreateDamageText(damages[i].ToString(), 1, _rArmTransform.position, damages[i] == damages.Length-1 ? true : false);
-                else effectsController.CreateDamageText(damages[i].ToString(), 2, _rArmTransform.position, damages[i] == damages.Length-1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].ToString(), 1, _rArmTransform.position, i == damages.Length-1 ? true : false);
+                else effectsController.CreateDamageText(damages[i].ToString(), 2, _rArmTransform.position, i == damages.Length-1 ? true : false);
             }
         }
         CheckArms();

@@ -53,17 +53,18 @@ public class EffectsController : MonoBehaviour
     /// </summary>
     public void CreateDamageText(string text, int type, Vector3 position, bool last)
     {
+        Debug.Log("add text");
         var t = Tuple.Create(text, type, position);
         _list.Add(t);
-        if (last) StartCoroutine(CreateDamageTextWithSpacing());
+        if (last == true) StartCoroutine(CreateDamageTextWithSpacing());
     }
 
     IEnumerator CreateDamageTextWithSpacing()
     {
-        while (_list.Count > 0)
+        for (int i = 0; i < _list.Count; i++)
         {
-            var myText = _list[0];
-            _list.RemoveAt(0);
+            Debug.Log("create text: " + i);
+            var myText = _list[i];
             var tObj = Instantiate(_damageText, myText.Item3, Quaternion.identity);
             var t = tObj.GetComponent<DamageText>(); 
             t.SetText(myText.Item1, myText.Item2);
