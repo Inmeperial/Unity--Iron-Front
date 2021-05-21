@@ -7,10 +7,8 @@ public class EffectsController : MonoBehaviour
 {
     [Header("Particles")]
     [SerializeField] private GameObject _attackEffect;
-
-    [SerializeField] private float _attackEffectDuration;
+    
     [SerializeField] private GameObject _damageEffect;
-    [SerializeField] private float _damageEffectDuration;
 
     [Header("Damage Text")]
     
