@@ -16,7 +16,8 @@ public class DamageText : MonoBehaviour
     [SerializeField] private float _missFontSize;
     private TextMeshPro _text;
     private Color _color;
-    
+
+    private Camera _cam;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +32,8 @@ public class DamageText : MonoBehaviour
 
     public void SetText(string text, int type)
     {
-        transform.rotation = Camera.main.transform.rotation;
+        _cam = Camera.main;
+        
         _text = gameObject.GetComponent<TextMeshPro>();
         
         _text.text = text;
@@ -57,6 +59,7 @@ public class DamageText : MonoBehaviour
 
     void MoveAndFade()
     {
+        transform.rotation = _cam.transform.rotation;
         transform.position += transform.up * (_moveSpeed * Time.deltaTime);
         _color.a -= _fadeSpeed * Time.deltaTime;
         _text.color = _color;

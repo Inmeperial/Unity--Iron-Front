@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Random = System.Random;
 
 public class Character : Teams
 {
@@ -252,13 +253,16 @@ public class Character : Teams
         {
             if (item == 0)
             {
-                Debug.Log("Bullet miss");
+                effectsController.CreateDamageText("Miss", 0, _bodyTransform.position);
             }
             else
             {
                 var hp = _bodyHP - item;
                 _bodyHP = hp > 0 ? hp : 0;
                 effectsController.PlayParticlesEffect(_bodyTransform.position, "Damage");
+                if (item <= 45)
+                    effectsController.CreateDamageText(item.ToString(), 1, _bodyTransform.position);
+                else effectsController.CreateDamageText(item.ToString(), 2, _bodyTransform.position);
             }
         }
         if (_bodyHP <= 0)
@@ -275,7 +279,7 @@ public class Character : Teams
         {
             if (item == 0)
             {
-                Debug.Log("Bullet miss");
+                effectsController.CreateDamageText("Miss", 0, _lArmTransform.position);
             }
             else
             {
@@ -283,6 +287,9 @@ public class Character : Teams
                 _leftArmHP = hp > 0 ? hp : 0;
                 _leftArmAlive = _leftArmHP > 0 ? true : false;
                 effectsController.PlayParticlesEffect(_lArmTransform.position, "Damage");
+                if (item <= 45)
+                    effectsController.CreateDamageText(item.ToString(), 1, _lArmTransform.position);
+                else effectsController.CreateDamageText(item.ToString(), 2, _lArmTransform.position);
             }
         }
         CheckArms();
@@ -296,7 +303,7 @@ public class Character : Teams
         {
             if (item == 0)
             {
-                Debug.Log("Bullet miss");
+                effectsController.CreateDamageText("Miss", 0, _rArmTransform.position);
             }
             else
             {
@@ -304,6 +311,9 @@ public class Character : Teams
                 _rightArmHP = hp > 0 ? hp : 0;
                 _rightArmAlive = _rightArmHP > 0 ? true : false;
                 effectsController.PlayParticlesEffect(_rArmTransform.position, "Damage");
+                if (item <= 45)
+                    effectsController.CreateDamageText(item.ToString(), 1, _rArmTransform.position);
+                else effectsController.CreateDamageText(item.ToString(), 2, _rArmTransform.position);
             }
         }
         CheckArms();
@@ -317,7 +327,7 @@ public class Character : Teams
         {
             if (item == 0)
             {
-                Debug.Log("Bullet miss");
+                effectsController.CreateDamageText("Miss", 0, _legsTransform.position);
             }
             else
             {
@@ -325,6 +335,9 @@ public class Character : Teams
                 legs.UpdateHP(hp > 0 ? hp : 0);
                 _canMove = legs.GetLegsHP() > 0 ? true : false;
                 effectsController.PlayParticlesEffect(_legsTransform.position, "Damage");
+                if (item <= 45)
+                    effectsController.CreateDamageText(item.ToString(), 1, _legsTransform.position);
+                else effectsController.CreateDamageText(item.ToString(), 2, _legsTransform.position);
             }
         }
         buttonsManager.UpdateLegsHUD(legs.GetLegsHP(), false);
