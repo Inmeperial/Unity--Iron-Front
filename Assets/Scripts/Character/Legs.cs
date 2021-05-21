@@ -61,7 +61,7 @@ public class Legs : MonoBehaviour
         }
         _myChar.buttonsManager.UpdateLegsHUD(_legsHP, true);
         _myChar.MakeNotAttackable();
-        _myChar.effectsController.PlayEffect(transform.position, "Damage");
+        _myChar.effectsController.PlayParticlesEffect(transform.position, "Damage");
     }
 
     public float GetRotationSpeed()

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BUTTONTEST : MonoBehaviour
 {
+    public EffectsController effects;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +14,12 @@ public class BUTTONTEST : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.A))
+            effects.CreateDamageText("Miss", 0, Camera.main.transform.forward * 10);
+        if (Input.GetKeyDown(KeyCode.S))
+            effects.CreateDamageText("100", 1, Camera.main.transform.forward * 10);
+        if (Input.GetKeyDown(KeyCode.D))
+            effects.CreateDamageText("300", 2, Camera.main.transform.forward * 10);
     }
 
     public void LeftClick()

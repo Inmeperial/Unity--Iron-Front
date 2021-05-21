@@ -258,7 +258,7 @@ public class Character : Teams
             {
                 var hp = _bodyHP - item;
                 _bodyHP = hp > 0 ? hp : 0;
-                effectsController.PlayEffect(_bodyTransform.position, "Damage");
+                effectsController.PlayParticlesEffect(_bodyTransform.position, "Damage");
             }
         }
         if (_bodyHP <= 0)
@@ -282,7 +282,7 @@ public class Character : Teams
                 var hp = _leftArmHP - item;
                 _leftArmHP = hp > 0 ? hp : 0;
                 _leftArmAlive = _leftArmHP > 0 ? true : false;
-                effectsController.PlayEffect(_lArmTransform.position, "Damage");
+                effectsController.PlayParticlesEffect(_lArmTransform.position, "Damage");
             }
         }
         CheckArms();
@@ -303,7 +303,7 @@ public class Character : Teams
                 var hp = _rightArmHP - item;
                 _rightArmHP = hp > 0 ? hp : 0;
                 _rightArmAlive = _rightArmHP > 0 ? true : false;
-                effectsController.PlayEffect(_rArmTransform.position, "Damage");
+                effectsController.PlayParticlesEffect(_rArmTransform.position, "Damage");
             }
         }
         CheckArms();
@@ -324,7 +324,7 @@ public class Character : Teams
                 var hp = legs.GetLegsHP() - item;
                 legs.UpdateHP(hp > 0 ? hp : 0);
                 _canMove = legs.GetLegsHP() > 0 ? true : false;
-                effectsController.PlayEffect(_legsTransform.position, "Damage");
+                effectsController.PlayParticlesEffect(_legsTransform.position, "Damage");
             }
         }
         buttonsManager.UpdateLegsHUD(legs.GetLegsHP(), false);
@@ -857,11 +857,11 @@ public class Character : Teams
     {
         if (_rightGunSelected)
         {
-            effectsController.PlayEffect(_rArmTransform.position, "Attack");            
+            effectsController.PlayParticlesEffect(_rArmTransform.position, "Attack");            
         }
         else if (_leftGunSelected)
         {
-            effectsController.PlayEffect(_lArmTransform.position, "Attack");
+            effectsController.PlayParticlesEffect(_lArmTransform.position, "Attack");
         }
         
     }
