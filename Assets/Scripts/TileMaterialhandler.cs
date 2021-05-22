@@ -29,37 +29,38 @@ public class TileMaterialhandler : MonoBehaviour
         DiseableAndEnableStatus(false);
     }
     
-    /*void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            DiseableAndEnableStatus(true);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            DiseableAndEnableStatus(false);
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            StatusToMove();
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            StatusToAttack();
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            StatusToAttackAndMove();
-        }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            DiseableAndEnableSelectedNode(true);
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            DiseableAndEnableSelectedNode(false);
-        }
-    }*/
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.A))
+    //    {
+    //        DiseableAndEnableStatus(true);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.S))
+    //    {
+    //        DiseableAndEnableStatus(false);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.Q))
+    //    {
+    //        StatusToMove();
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.W))
+    //    {
+    //        StatusToAttack();
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.E))
+    //    {
+    //        StatusToAttackAndMove();
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.Z))
+    //    {
+    //        DiseableAndEnableSelectedNode(true);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.X))
+    //    {
+    //        DiseableAndEnableSelectedNode(false);
+    //    }
+    //}
+
     #region Functions
 
     /// <summary>

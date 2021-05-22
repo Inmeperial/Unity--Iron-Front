@@ -17,33 +17,33 @@ public class MechaMaterialhandler : MonoBehaviour
         SetBaseAndSecondMaterial();
     }
 
-    void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    SetSelectedPartMaterialToBody(MechaParts.Body, true);
-        //}
-        //if (Input.GetKeyDown(KeyCode.W))
-        //{
-        //    SetSelectedPartMaterialToBody(MechaParts.Body, false);
-        //}
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    SetSelectedPartMaterialToBody(MechaParts.Legs, true);
-        //}
-        //if (Input.GetKeyDown(KeyCode.R))
-        //{
-        //    SetSelectedPartMaterialToBody(MechaParts.Legs, false);
-        //}
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    SetSelectedMechaMaterial(true);
-        //}
-        //if (Input.GetKeyDown(KeyCode.S))
-        //{
-        //    SetSelectedMechaMaterial(false);
-        //}
-    }
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Q))
+    //    {
+    //        SetSelectedPartMaterialToBody(MechaParts.Body, true);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.W))
+    //    {
+    //        SetSelectedPartMaterialToBody(MechaParts.Body, false);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.E))
+    //    {
+    //        SetSelectedPartMaterialToBody(MechaParts.Legs, true);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.R))
+    //    {
+    //        SetSelectedPartMaterialToBody(MechaParts.Legs, false);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.A))
+    //    {
+    //        SetSelectedMechaMaterial(true);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.S))
+    //    {
+    //        SetSelectedMechaMaterial(false);
+    //    }
+    //}
 
     #region Functions
 
@@ -57,7 +57,7 @@ public class MechaMaterialhandler : MonoBehaviour
             _rend = null;
             _child = transform.GetChild(i);
             _rend = transform.GetChild(i).gameObject.GetComponent<Renderer>();
-            if (_rend != null)
+            if (_rend != null && _child.gameObject.name != "SmokeMecha")
             {
                 _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
 
@@ -83,7 +83,7 @@ public class MechaMaterialhandler : MonoBehaviour
         {
             _child = transform.GetChild(i);
             _rend = transform.GetChild(i).gameObject.GetComponent<Renderer>();
-            if (_rend != null)
+            if (_rend != null && _child.gameObject.name != "SmokeMecha")
             {
                 if (isEffectOn)
                 {
