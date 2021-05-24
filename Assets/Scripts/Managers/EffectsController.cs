@@ -49,7 +49,7 @@ public class EffectsController : MonoBehaviour
         
     }
     /// <summary>
-    /// Creates the Damage Text in world. type: 0: Miss - 1: Normal - 2: Critical
+    /// Creates the Damage Text in world. type: Miss: 0 - Normal: 1 - Critical: 2
     /// </summary>
     public void CreateDamageText(string text, int type, Vector3 position, bool last)
     {
