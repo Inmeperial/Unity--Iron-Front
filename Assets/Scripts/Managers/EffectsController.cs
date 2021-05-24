@@ -65,9 +65,9 @@ public class EffectsController : MonoBehaviour
         {
             Debug.Log("create text: " + i);
             var myText = _list[i];
-            var tObj = Instantiate(_damageText, myText.Item3, Quaternion.identity);
+            var tObj = Instantiate(_damageText, myText.Item3 + new Vector3(0, i/2,0), Quaternion.identity);
             var t = tObj.GetComponent<DamageText>(); 
-            t.SetText(myText.Item1, myText.Item2);
+            t.SetText(myText.Item1, myText.Item2, i);
             StartCoroutine(DestroyEffect(t.gameObject, t.GetDuration()));
             yield return new WaitForSeconds(_textSpacingTime);
         }
