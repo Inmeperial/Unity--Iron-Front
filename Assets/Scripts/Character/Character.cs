@@ -460,7 +460,10 @@ public class Character : Teams
         {
             var newTile = target.GetComponent<Tile>();
             //LLAMAR A MOVE
-            if (_targetTile != null && _targetTile == newTile) return; 
+            if (_targetTile != null && _targetTile == newTile)
+            {
+                Move();
+            } 
             else
             {
                 _targetTile = newTile;
