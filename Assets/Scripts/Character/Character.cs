@@ -254,8 +254,11 @@ public class Character : Teams
 
     public void TakeDamageBody(List<Tuple<int,int>> damages)
     {
+        _myUI.SetBodySlider(_bodyHP);
+        int total = 0;
         for (int i = 0; i < damages.Count; i++)
         {
+            total += damages[i].Item1;
             var hp = _bodyHP - damages[i].Item1;
             _bodyHP = hp > 0 ? hp : 0;
             effectsController.PlayParticlesEffect(_bodyTransform.position, "Damage");
@@ -267,11 +270,11 @@ public class Character : Teams
                    break;
                    
                case _normalHit:
-                   effectsController.CreateDamageText(damages[i].ToString(), 1, _bodyTransform.position, i == damages.Count - 1 ? true : false);
+                   effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, _bodyTransform.position, i == damages.Count - 1 ? true : false);
                    break;
                
                case _criticalHit:
-                   effectsController.CreateDamageText(damages[i].ToString(), 2, _bodyTransform.position, i == damages.Count - 1 ? true : false);
+                   effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, _bodyTransform.position, i == damages.Count - 1 ? true : false);
                    break;
             }
         }
@@ -280,13 +283,18 @@ public class Character : Teams
             NotSelectable();
         }
         buttonsManager.UpdateBodyHUD(_bodyHP, false);
+        _myUI.ContainerActivation(true);
+        _myUI.UpdateBodySlider(total);
         MakeNotAttackable();
     }
 
     public void TakeDamageLeftArm(List<Tuple<int,int>> damages)
     {
+        _myUI.SetLeftArmSlider(_leftArmHP);
+        int total = 0;
         for (int i = 0; i < damages.Count; i++)
         {
+            total += damages[i].Item1;
             var hp = _leftArmHP - damages[i].Item1;
             _leftArmHP = hp > 0 ? hp : 0;
             _leftArmAlive = _leftArmHP > 0 ? true : false;
@@ -299,23 +307,28 @@ public class Character : Teams
                     break;
                    
                 case _normalHit:
-                    effectsController.CreateDamageText(damages[i].ToString(), 1, _lArmTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, _lArmTransform.position, i == damages.Count - 1 ? true : false);
                     break;
                
                 case _criticalHit:
-                    effectsController.CreateDamageText(damages[i].ToString(), 2, _lArmTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, _lArmTransform.position, i == damages.Count - 1 ? true : false);
                     break;
             }
         }
         CheckArms();
         buttonsManager.UpdateLeftArmHUD(_leftArmHP, false);
+        _myUI.ContainerActivation(true);
+        _myUI.UpdateLeftArmSlider(total);
         MakeNotAttackable();
     }
 
     public void TakeDamageRightArm(List<Tuple<int,int>> damages)
     {
+        _myUI.SetRightArmSlider(_rightArmHP);
+        int total = 0;
         for (int i = 0; i < damages.Count; i++)
         {
+            total += damages[i].Item1;
             var hp = _rightArmHP - damages[i].Item1;
             _rightArmHP = hp > 0 ? hp : 0;
             _rightArmAlive = _rightArmHP > 0 ? true : false;
@@ -329,23 +342,28 @@ public class Character : Teams
                     break;
                    
                 case _normalHit:
-                    effectsController.CreateDamageText(damages[i].ToString(), 1, _rArmTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, _rArmTransform.position, i == damages.Count - 1 ? true : false);
                     break;
                
                 case _criticalHit:
-                    effectsController.CreateDamageText(damages[i].ToString(), 2, _rArmTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, _rArmTransform.position, i == damages.Count - 1 ? true : false);
                     break;
             }
         }
         CheckArms();
         buttonsManager.UpdateRightArmHUD(_rightArmHP, false);
+        _myUI.ContainerActivation(true);
+        _myUI.UpdateRightArmSlider(total);
         MakeNotAttackable();
     }
 
     public void TakeDamageLegs(List<Tuple<int,int>> damages)
     {
+        _myUI.SetLegsSlider(legs.GetLegsHP());
+        int total = 0;
         for (int i = 0; i < damages.Count; i++)
         {
+            total += damages[i].Item1;
             var hp = legs.GetLegsHP() - damages[i].Item1;
             legs.UpdateHP(hp > 0 ? hp : 0);
             _canMove = legs.GetLegsHP() > 0 ? true : false;
@@ -358,15 +376,17 @@ public class Character : Teams
                     break;
                    
                 case _normalHit:
-                    effectsController.CreateDamageText(damages[i].ToString(), 1, _legsTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, _legsTransform.position, i == damages.Count - 1 ? true : false);
                     break;
                
                 case _criticalHit:
-                    effectsController.CreateDamageText(damages[i].ToString(), 2, _legsTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, _legsTransform.position, i == damages.Count - 1 ? true : false);
                     break;
             }
         }
         buttonsManager.UpdateLegsHUD(legs.GetLegsHP(), false);
+        _myUI.ContainerActivation(true);
+        _myUI.UpdateLegsSlider(total);
         MakeNotAttackable();
     }
     public void SelectLeftGun()
@@ -853,23 +873,8 @@ public class Character : Teams
 
     public void ShowWorldUI()
     {
-        _myUI.ActivateWorldUI(GetBodyHP(), GetRightArmHP(), GetLeftArmHP(), legs.GetLegsHP(), ThisUnitCanMove(), CanAttack());
-    }
-
-    public void UpdateWorldUI()
-    {
-        StartCoroutine(UpdateUI());
-    }
-
-    IEnumerator UpdateUI()
-    {
-        ShowWorldUI();
-        while (expression)
-        {
-            yield return new WaitForEndOfFrame();            
-        }
-        
-        HideWorldUI();
+        _myUI.SetWorldUIValues(GetBodyHP(), GetRightArmHP(), GetLeftArmHP(), legs.GetLegsHP(), ThisUnitCanMove(), CanAttack());
+        _myUI.ContainerActivation(true);
     }
 
     public void HideWorldUI()
@@ -918,5 +923,10 @@ public class Character : Teams
             effectsController.PlayParticlesEffect(_lArmTransform.position, "Attack");
         }
         
+    }
+
+    public WorldUI GetMyUI()
+    {
+        return _myUI;
     }
 }

@@ -68,11 +68,12 @@ public class EffectsController : MonoBehaviour
             var tObj = Instantiate(_damageText, myText.Item3, Quaternion.identity);
             var t = tObj.GetComponent<DamageText>(); 
             t.SetText(myText.Item1, myText.Item2);
+            StartCoroutine(DestroyEffect(t.gameObject, t.GetDuration()));
             yield return new WaitForSeconds(_textSpacingTime);
         }
         _list.Clear();
         
-        //StartCoroutine(DestroyEffect(t.gameObject, t.GetDuration()));
+        
     }
     
     IEnumerator DestroyEffect(GameObject effect, float time)

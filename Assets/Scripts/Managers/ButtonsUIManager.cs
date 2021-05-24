@@ -380,7 +380,7 @@ public class ButtonsUIManager : MonoBehaviour
             DeterminateButtonsActivation();
         }
     }
-    
+
     public void ExecuteAttack()
     {
         if (_selectedEnemy != null)

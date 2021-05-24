@@ -53,6 +53,11 @@ public class Legs : MonoBehaviour
     
     public void TakeDamageFromMine(int damage)
     {
+        var ui = _myChar.GetMyUI();
+        ui.SetLegsSlider(_legsHP);
+        ui.ContainerActivation(true);
+        ui.UpdateLegsSlider(damage);
+        ui.DeactivateWorldUIWithTimer();
         var hp = _legsHP - damage;
         _legsHP = hp > 0 ? hp : 0;
         if (_legsHP <= 0)
@@ -60,9 +65,11 @@ public class Legs : MonoBehaviour
             _myChar.SetCharacterMove(false);
         }
         _myChar.buttonsManager.UpdateLegsHUD(_legsHP, true);
-        _myChar.MakeNotAttackable();
         _myChar.effectsController.PlayParticlesEffect(transform.position, "Damage");
         _myChar.effectsController.CreateDamageText(damage.ToString(), 1, transform.position, true);
+        //_myChar.ShowWorldUI();
+        
+       
     }
 
     public float GetRotationSpeed()
