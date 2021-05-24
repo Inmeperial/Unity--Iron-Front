@@ -21,7 +21,7 @@ public class DamageText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _cam = Camera.main;
     }
 
     // Update is called once per frame
@@ -30,13 +30,12 @@ public class DamageText : MonoBehaviour
         MoveAndFade();
     }
 
-    public void SetText(string text, int type)
+    public void SetText(string text, int type, int order)
     {
-        _cam = Camera.main;
-        
         _text = gameObject.GetComponent<TextMeshPro>();
         
         _text.text = text;
+        _text.sortingOrder = order;
         switch (type)
         {
             case 0:
