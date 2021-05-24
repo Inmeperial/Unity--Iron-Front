@@ -51,10 +51,10 @@ public class Character : Teams
     public IPathCreator pathCreator;
     private GridMovement _move;
     public LayerMask block;
-    private List<Tile> _tilesInMoveRange = new List<Tile>();
-    private Tile _myPositionTile;
-    private Tile _targetTile;
-    private List<Tile> _path = new List<Tile>();
+    [SerializeField]private List<Tile> _tilesInMoveRange = new List<Tile>();
+    [SerializeField]private Tile _myPositionTile;
+    [SerializeField]private Tile _targetTile;
+    [SerializeField]private List<Tile> _path = new List<Tile>();
 
     //FLAGS
     private bool _canBeSelected;
@@ -459,7 +459,8 @@ public class Character : Teams
         if (IsValidTarget(target))
         {
             var newTile = target.GetComponent<Tile>();
-            if (_targetTile != null && _targetTile == newTile) return;
+            //LLAMAR A MOVE
+            if (_targetTile != null && _targetTile == newTile) return; 
             else
             {
                 _targetTile = newTile;
@@ -697,6 +698,7 @@ public class Character : Teams
         ResetInRangeLists();
         _path.Clear();
         highlight.PathLinesClear();
+        _targetTile = null;
         _myPositionTile = GetTileBelow();
         _myPositionTile.unitAboveSelected = true;
         _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
