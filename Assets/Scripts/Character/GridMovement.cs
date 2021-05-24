@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GridMovement : MonoBehaviour
 {
+    public float tpThreshold;
     List<Tile> _tilesList;
     int _tilesIndex;
     Character _character;
@@ -56,7 +57,7 @@ public class GridMovement : MonoBehaviour
             }
             Vector3 targetDir = newPos - transform.position;
             Debug.Log("pos2: " + targetDir.normalized);
-            if ((newPos - transform.position).magnitude <= 1.25f)
+            if ((newPos - transform.position).magnitude <= tpThreshold)
             {
                 transform.position = newPos;
                 _tilesIndex++;
