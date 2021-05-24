@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ public interface IGun
 
     int BulletsPerClick();
 
-    int[] DamageCalculation(int bullets);
+    List<Tuple<int, int>> DamageCalculation(int bullets);
 
     void Ability();
 }

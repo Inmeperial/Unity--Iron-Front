@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,6 +36,10 @@ public abstract class Gun : MonoBehaviour, IGun
     protected Dictionary<string, int> _hitRoulette = new Dictionary<string, int>();
 
     protected bool _abilityUsed;
+
+    private readonly int _missHit = 0;
+    private readonly int _normalHit = 1;
+    private readonly int _criticalHit = 2;
     // Start is called before the first frame update
     public void Start()
     {
@@ -151,15 +156,20 @@ public abstract class Gun : MonoBehaviour, IGun
     }
 
 
-    public int[] DamageCalculation(int bullets)
+    public List<Tuple<int, int>> DamageCalculation(int bullets)
     {
+        var list = new List<Tuple<int, int>>();
         var damage = new int[bullets];
 
         for (int i = 0; i < bullets; i++)
         {
+            Tuple<int, int> t = null;
             //Determines if bullet hits.
             var h = _roulette.ExecuteAction(_hitRoulette);
 
+            //MISS == 0
+            //HIT == 1
+            //CRIT == 2
             if (h == "Hit")
             {
                 //Determines if it crits or not.
@@ -169,26 +179,33 @@ public abstract class Gun : MonoBehaviour, IGun
                 {
                     if (AbilityUsed())
                     {
-                        damage[i] = (_damage * _critMultiplier) / 2;
+                        t = Tuple.Create((_damage * _critMultiplier) / 2, _criticalHit);
                     }
-                    else damage[i] = _damage * _critMultiplier;
+                    else
+                    {
+                        t = Tuple.Create(_damage * _critMultiplier, _criticalHit);
+                    }
                 }
                 else if (c == "Normal")
                 {
                     if (AbilityUsed())
                     {
-                        damage[i] = _damage / 2;
+                        t = Tuple.Create(_damage / 2, _normalHit);
                     }
-                    else damage[i] = _damage;
+                    else
+                    {
+                        t = Tuple.Create(_damage, _normalHit);
+                    }
                 }
             }
-            else if (h == "Miss")
+            else
             {
-                damage[i] = 0;
+                t = Tuple.Create(0, _missHit);
             }
+            list.Add(t);
         }
         //Returns the damage each bullet will deal.
-        return damage;
+        return list;
     }
 
     public virtual void StartRoulette()

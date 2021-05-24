@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class ButtonsUIManager : MonoBehaviour
 {
-    public LayerMask charMask;
+    public LayerMask gridBlock;
     public GameObject moveContainer;
     public Button buttonMove;
     public Button buttonUndo;
@@ -95,6 +95,7 @@ public class ButtonsUIManager : MonoBehaviour
 
         _charSelection = FindObjectOfType<CharacterSelection>();
         _turnManager = FindObjectOfType<TurnManager>();
+        gridBlock = _charSelection.gridBlockMask;
     }
 
     private void Update()
@@ -102,8 +103,16 @@ public class ButtonsUIManager : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject() == false)
         {
             if (((_selectedChar && _selectedChar.IsMoving() == false) || _selectedEnemy) &&
-                (Input.GetKeyDown(deselectKey) || Input.GetMouseButtonDown(1)))
+                (Input.GetKeyDown(deselectKey) || (Input.GetMouseButtonDown(0) && CheckIfTileNotSelected())))
                 DeselectUnit();
+
+            if ((_selectedChar && _selectedChar.IsMoving() == false) && _selectedChar.GetPath().Count > 0 &&
+                Input.GetMouseButtonDown(1))
+            {
+                Debug.Log("llamo undo");
+                _selectedChar.pathCreator.UndoLastWaypoint();
+            }
+                
         }
 
         if (Input.GetKeyDown(selectLGunKey))
@@ -126,6 +135,22 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns false if tile is selected for movement or attack.
+    /// Returns true if tile is not selected.
+    /// </summary>
+    bool CheckIfTileNotSelected()
+    {
+        var tileObj = MouseRay.GetTargetGameObject(gridBlock).GetComponent<Tile>();
+        if (tileObj)
+        {
+            if (tileObj.inMoveRange || tileObj.inAttackRange)
+                return false;
+            return true;
+        }
+
+        return true;
+    }
     #region ButtonsActions
 
    
@@ -380,7 +405,7 @@ public class ButtonsUIManager : MonoBehaviour
             DeterminateButtonsActivation();
         }
     }
-    
+
     public void ExecuteAttack()
     {
         if (_selectedEnemy != null)

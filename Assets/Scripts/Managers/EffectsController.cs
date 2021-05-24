@@ -49,7 +49,7 @@ public class EffectsController : MonoBehaviour
         
     }
     /// <summary>
-    /// Creates the Damage Text in world. type: 0: Miss - 1: Normal - 2: Critical
+    /// Creates the Damage Text in world. type: Miss: 0 - Normal: 1 - Critical: 2
     /// </summary>
     public void CreateDamageText(string text, int type, Vector3 position, bool last)
     {
@@ -68,11 +68,12 @@ public class EffectsController : MonoBehaviour
             var tObj = Instantiate(_damageText, myText.Item3, Quaternion.identity);
             var t = tObj.GetComponent<DamageText>(); 
             t.SetText(myText.Item1, myText.Item2);
+            StartCoroutine(DestroyEffect(t.gameObject, t.GetDuration()));
             yield return new WaitForSeconds(_textSpacingTime);
         }
         _list.Clear();
         
-        //StartCoroutine(DestroyEffect(t.gameObject, t.GetDuration()));
+        
     }
     
     IEnumerator DestroyEffect(GameObject effect, float time)
