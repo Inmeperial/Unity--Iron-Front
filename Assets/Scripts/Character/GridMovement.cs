@@ -16,6 +16,8 @@ public class GridMovement : MonoBehaviour
     private int _index;
     private float _yPosition;
     private Vector3 _posToRotate;
+
+    private Action _callback;
     private void Start()
     {
         _character = GetComponent<Character>();
@@ -81,6 +83,8 @@ public class GridMovement : MonoBehaviour
         {
             _rotate = false;
             _posToRotate = Vector3.zero;
+            if (_callback != null)
+                _callback();
             return;
         }
         float step = _rotationSpeed * Time.deltaTime;
@@ -119,5 +123,10 @@ public class GridMovement : MonoBehaviour
     public void StartRotation()
     {
         _rotate = true;
+    }
+    public void StartRotation(Action callback)
+    {
+        _rotate = true;
+        _callback = callback;
     }
 }

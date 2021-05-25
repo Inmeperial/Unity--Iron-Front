@@ -901,52 +901,57 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedEnemy != null)
         {
-            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body") && _selectedEnemy.GetBodyHP() > 0)
-            {
-                bodyInsight = true;
-                buttonBody.interactable = true;
-            }
-            else
-            {
-                bodyInsight = false;
-                buttonBody.interactable = false;
-            }
-
-            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLArmPosition(), "LArm") && _selectedEnemy.GetLeftArmHP() > 0)
-            {
-                lArmInsight = true;
-                buttonLArm.interactable = true;
-            }
-            else
-            {
-                lArmInsight = false;
-                buttonLArm.interactable = false;
-            }
-
-            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetRArmPosition(), "RArm") && _selectedEnemy.GetRightArmHP() > 0)
-            {
-                rArmInsigh = true;
-                buttonRArm.interactable = true;
-            }
-            else
-            {
-                rArmInsigh = false;
-                buttonRArm.interactable = false;
-            }
-
-
-            if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs") &&_selectedEnemy.legs.GetLegsHP() > 0)
-            {
-                legsInsight = true;
-                buttonLegs.interactable = true;
-            }
-            else
-            {
-                legsInsight = false;
-                buttonLegs.interactable = false;
-            }
-            bodyPartsButtonsContainer.SetActive(true);
+            _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform.position, ActivateParts);
         }
+    }
+
+    void ActivateParts()
+    {
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body") && _selectedEnemy.GetBodyHP() > 0)
+        {
+            bodyInsight = true;
+            buttonBody.interactable = true;
+        }
+        else
+        {
+            bodyInsight = false;
+            buttonBody.interactable = false;
+        }
+
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLArmPosition(), "LArm") && _selectedEnemy.GetLeftArmHP() > 0)
+        {
+            lArmInsight = true;
+            buttonLArm.interactable = true;
+        }
+        else
+        {
+            lArmInsight = false;
+            buttonLArm.interactable = false;
+        }
+
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetRArmPosition(), "RArm") && _selectedEnemy.GetRightArmHP() > 0)
+        {
+            rArmInsigh = true;
+            buttonRArm.interactable = true;
+        }
+        else
+        {
+            rArmInsigh = false;
+            buttonRArm.interactable = false;
+        }
+
+
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs") &&_selectedEnemy.legs.GetLegsHP() > 0)
+        {
+            legsInsight = true;
+            buttonLegs.interactable = true;
+        }
+        else
+        {
+            legsInsight = false;
+            buttonLegs.interactable = false;
+        }
+        bodyPartsButtonsContainer.SetActive(true);
     }
 
     public void DeactivateBodyPartsContainer()

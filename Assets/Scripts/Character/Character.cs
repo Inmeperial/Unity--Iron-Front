@@ -900,6 +900,12 @@ public class Character : Teams
         _move.SetPosToRotate(pos);
         _move.StartRotation();
     }
+    
+    public void RotateTowardsEnemy(Vector3 pos, Action callback)
+    {
+        _move.SetPosToRotate(pos);
+        _move.StartRotation(callback);
+    } 
 
     public bool RayToPartsForAttack(Vector3 pos, string tagToCheck)
     {
@@ -907,15 +913,21 @@ public class Character : Teams
         var position = rayOrigin.position;
         var dir = (pos - position).normalized; 
         Physics.Raycast(position, dir, out hit, 1000f);
+        if (hit.collider.transform.parent != null)
+        {
+            Debug.Log("parent name: " + hit.collider.transform.parent.gameObject.name);
+        }
+        else Debug.Log("parent null");
+        Debug.Log("hit name: " + hit.collider.name);
         if (hit.collider.transform.gameObject.CompareTag(tagToCheck))
         {
-            Debug.DrawRay(rayOrigin.position, dir * 20f, Color.green, 1000f);
+            Debug.DrawRay(position, dir * 20f, Color.green, 1000f);
             return true;
         }
             
         else
         {
-            Debug.DrawRay(rayOrigin.position, dir * 20f, Color.red, 1000f);
+            Debug.DrawRay(position, dir * 20f, Color.red, 1000f);
             return false;
         }
     }
