@@ -12,7 +12,6 @@ public class SmokeMechaHandler : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-
             transform.GetChild(i).gameObject.GetComponent<Renderer>();
             if (transform.GetChild(i).gameObject.name == "SmokeMecha")
             {
@@ -30,31 +29,29 @@ public class SmokeMechaHandler : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SetMachineOn(true);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SetMachineOn(false);
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.A))
+    //    {
+    //        SetMachineOn(true);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.S))
+    //    {
+    //        SetMachineOn(false);
+    //    }
+    //}
 
-    private void SetMachineOn(bool boolEffect)
+    public void SetMachineOn(bool boolEffect)
     {
         if (boolEffect)
         {
             _partSystemMain.startSize = new ParticleSystem.MinMaxCurve(2f, 4f);
             _partSystemMain.startLifetime = 4f;
-            Debug.Log("asdas");
         }
         else
         {
             _partSystemMain.startSize = new ParticleSystem.MinMaxCurve(1f, 2f);
             _partSystemMain.startLifetime = 2f;
-            Debug.Log("asdas2");
         }
     }
 }

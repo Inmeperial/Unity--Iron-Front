@@ -57,17 +57,15 @@ public class MechaMaterialhandler : MonoBehaviour
             _rend = null;
             _child = transform.GetChild(i);
             _rend = transform.GetChild(i).gameObject.GetComponent<Renderer>();
-            if (_rend != null && _child.gameObject.name != "SmokeMecha")
+            if (_rend != null && _child.gameObject.GetComponent<ParticleSystem>() == null)
             {
                 _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
-
                 _sharedMaterialsCopy = _rend.sharedMaterials;
 
                 for (int j = 0; j < _sharedMaterialsCopy.Length; j++)
                 {
                     _sharedMaterialsCopy[j] = baseMaterial;
                 }
-
                 _rend.sharedMaterials = _sharedMaterialsCopy;
             }
 
@@ -83,7 +81,7 @@ public class MechaMaterialhandler : MonoBehaviour
         {
             _child = transform.GetChild(i);
             _rend = transform.GetChild(i).gameObject.GetComponent<Renderer>();
-            if (_rend != null && _child.gameObject.name != "SmokeMecha")
+            if (_rend != null && _child.gameObject.GetComponent<ParticleSystem>() == null)
             {
                 if (isEffectOn)
                 {
@@ -121,7 +119,6 @@ public class MechaMaterialhandler : MonoBehaviour
                     _sharedMaterialsCopy = _rend.sharedMaterials;
                     _sharedMaterialsCopy[1] = selectedMechaMaterial;
                     _rend.sharedMaterials = _sharedMaterialsCopy;
-
                     break;
                 }
                 else

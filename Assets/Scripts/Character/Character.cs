@@ -50,6 +50,7 @@ public class Character : Teams
     //MOVEMENT RELATED
     public IPathCreator pathCreator;
     private GridMovement _move;
+    private SmokeMechaHandler _smokeMechaHandler;
     public LayerMask block;
     [SerializeField]private List<Tile> _tilesInMoveRange = new List<Tile>();
     [SerializeField]private Tile _myPositionTile;
@@ -72,13 +73,14 @@ public class Character : Teams
     private Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();
     private List<Character> _enemiesInRange = new List<Character>();
     private WorldUI _myUI;
+    private MechaMaterialhandler _mechaMaterlaHandler;
     public EffectsController effectsController;
     
     private const int _missHit = 0;
     private const int _normalHit = 1;
     private const int _criticalHit = 2;
 
-    [Header("DON'T SET")]
+    [HideInInspector]
     public TurnManager turnManager;
 
     public TileHighlight highlight;
@@ -97,7 +99,9 @@ public class Character : Teams
         _canMove = legs.GetLegsHP() > 0 ? true : false;
         _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
         _selected = false;
-        
+
+        _mechaMaterlaHandler = GetComponent<MechaMaterialhandler>();
+        _smokeMechaHandler = GetComponent<SmokeMechaHandler>();
         _move = GetComponent<GridMovement>();
         _move.SetMoveSpeed(legs.GetMoveSpeed());
         _move.SetRotationSpeed(legs.GetRotationSpeed());
@@ -248,6 +252,7 @@ public class Character : Teams
             _myPositionTile.unitAboveSelected = false;
             _myPositionTile.EndMouseOverColor();
             ResetTilesInMoveRange();
+            _smokeMechaHandler.SetMachineOn(true);
             _move.StartMovement(_path);
         }
     }
@@ -675,7 +680,8 @@ public class Character : Teams
         turnManager.UnitStoppedMoving();
         pathCreator.ResetPath();
         _tilesForAttackChecked.Clear();
-        
+        _smokeMechaHandler.SetMachineOn(false);
+
         if (CanAttack())
         {
             PaintTilesInAttackRange(_myPositionTile, 0);
@@ -705,6 +711,7 @@ public class Character : Teams
         _myPositionTile = GetTileBelow();
         _myPositionTile.unitAboveSelected = true;
         _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
+        _mechaMaterlaHandler.SetSelectedMechaMaterial(true);
         if (CanAttack())
         {
             if (_rightArmAlive)
@@ -727,6 +734,7 @@ public class Character : Teams
         _selected = false;
         _myPositionTile.unitAboveSelected = false;
         _myPositionTile.EndMouseOverColor();
+        _mechaMaterlaHandler.SetSelectedMechaMaterial(false);
         foreach (var item in _enemiesInRange)
         {
             turnManager.UnitCantBeAttacked(item);
