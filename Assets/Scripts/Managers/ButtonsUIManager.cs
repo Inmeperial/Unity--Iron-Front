@@ -148,8 +148,7 @@ public class ButtonsUIManager : MonoBehaviour
                 return false;
             return true;
         }
-
-        return true;
+        return false;
     }
     #region ButtonsActions
 
@@ -766,8 +765,13 @@ public class ButtonsUIManager : MonoBehaviour
                 
             else DeactivateBodyPartsContainer();
         }
+        else
+        {
+            buttonExecuteAttack.interactable = false;
+        }
         ShowUnitHudText(enemyBodyCurrHp, _selectedEnemy.GetBodyHP(), enemyLeftArmCurrHp, _selectedEnemy.GetLeftArmHP(), enemyRightArmCurrHp, _selectedEnemy.GetRightArmHP(), enemyLegsCurrHp, _selectedEnemy.legs.GetLegsHP());
         enemyHudContainer.SetActive(true);
+        
     }
 
 
