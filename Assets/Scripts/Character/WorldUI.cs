@@ -9,12 +9,17 @@ public class WorldUI : MonoBehaviour
 
     [SerializeField] private float _showDuration;
     
-    [SerializeField] private Slider _bodySlider;
-    [SerializeField] private Slider _leftArmSlider;
-    [SerializeField] private Slider _rightArmSlider;
-    [SerializeField] private Slider _legsSlider;
+    [SerializeField] private Slider _bodyHpSlider;
+    [SerializeField] private Slider _bodyDamageSlider;
+    [SerializeField] private Slider _leftArmHpSlider;
+    [SerializeField] private Slider _leftArmDamageSlider;
+    [SerializeField] private Slider _rightArmHpSlider;
+    [SerializeField] private Slider _rightArmDamageSlider;
+    [SerializeField] private Slider _legsHpSlider;
+    [SerializeField] private Slider _legsDamageSlider;
     [SerializeField] private GameObject _moveActionIcon;
     [SerializeField] private GameObject _attackActionIcon;
+    
     private Camera _camera;
 
     // Start is called before the first frame update
@@ -67,28 +72,45 @@ public class WorldUI : MonoBehaviour
     
     public void SetLimits(float bodyMax, float rArmMax, float lArmMax, float legsMax)
     {
-        _bodySlider.maxValue = bodyMax;
-        _bodySlider.minValue = 0;
+        _bodyHpSlider.maxValue = bodyMax;
+        _bodyHpSlider.minValue = 0;
+        _bodyDamageSlider.maxValue = bodyMax;
+        _bodyDamageSlider.minValue = 0;
 
-        _rightArmSlider.maxValue = rArmMax;
-        _rightArmSlider.minValue = 0;
+        _rightArmHpSlider.maxValue = rArmMax;
+        _rightArmHpSlider.minValue = 0;
+        _rightArmDamageSlider.maxValue = rArmMax;
+        _rightArmDamageSlider.minValue = 0;
 
-        _leftArmSlider.maxValue = lArmMax;
-        _leftArmSlider.minValue = 0;
+        _leftArmHpSlider.maxValue = lArmMax;
+        _leftArmHpSlider.minValue = 0;
+        _leftArmDamageSlider.maxValue = lArmMax;
+        _leftArmDamageSlider.minValue = 0;
 
-        _legsSlider.maxValue = legsMax;
-        _legsSlider.minValue = 0;
+        _legsHpSlider.maxValue = legsMax;
+        _legsHpSlider.minValue = 0;
+        _legsDamageSlider.maxValue = legsMax;
+        _legsDamageSlider.minValue = 0;
     }
     
    public void SetBodySlider(float quantity)
     {
         if (quantity < 0)
-            _bodySlider.value = 0;
-        else _bodySlider.value = quantity;
+        {
+            _bodyHpSlider.value = 0;
+            _bodyDamageSlider.value = 0;
+        }
+
+        else
+        {
+            _bodyHpSlider.value = quantity;
+            _bodyDamageSlider.value = quantity;
+        }
     }
 
-   public void UpdateBodySlider(int damage)
+   public void UpdateBodySlider(int damage, int currentHp)
    {
+       _bodyHpSlider.value = currentHp;
        StartCoroutine(UpdateBody(damage));
    }
 
@@ -96,24 +118,33 @@ public class WorldUI : MonoBehaviour
    {
        for (int i = 1; i <= damage; i++)
        {
-           _bodySlider.value -= 1;
+           _bodyDamageSlider.value -= 1;
            yield return new WaitForEndOfFrame();
        }
        
-       if (_bodySlider.value < 0)
-           _bodySlider.value = 0;
+       if (_bodyDamageSlider.value < 0)
+           _bodyDamageSlider.value = 0;
    }
    
 
    public void SetLeftArmSlider(float quantity)
     {
         if (quantity < 0)
-            _leftArmSlider.value = 0;
-        else _leftArmSlider.value = quantity;
+        {
+            _leftArmHpSlider.value = 0;
+            _leftArmDamageSlider.value = 0;
+        }
+
+        else
+        {
+            _leftArmHpSlider.value = quantity;
+            _leftArmDamageSlider.value = quantity;
+        }
     }
     
-    public void UpdateLeftArmSlider(int damage)
+    public void UpdateLeftArmSlider(int damage, int currentHp)
     {
+        _leftArmHpSlider.value = currentHp;
         StartCoroutine(UpdateLeftArm(damage));
     }
 
@@ -121,23 +152,32 @@ public class WorldUI : MonoBehaviour
     {
         for (int i = 1; i <= damage; i++)
         {
-            _leftArmSlider.value -= 1;
+            _leftArmDamageSlider.value -= 1;
             yield return new WaitForEndOfFrame();
         }
        
-        if (_leftArmSlider.value < 0)
-            _leftArmSlider.value = 0;
+        if (_leftArmDamageSlider.value < 0)
+            _leftArmDamageSlider.value = 0;
     }
 
     public void SetRightArmSlider(float quantity)
     {
         if (quantity < 0)
-            _rightArmSlider.value = 0;
-        else _rightArmSlider.value = quantity;
+        {
+            _rightArmHpSlider.value = 0;
+            _rightArmDamageSlider.value = 0;
+        }
+
+        else
+        {
+            _rightArmHpSlider.value = quantity;
+            _rightArmDamageSlider.value = quantity;
+        }
     }
     
-    public void UpdateRightArmSlider(int damage)
+    public void UpdateRightArmSlider(int damage, int currentHp)
     {
+        _rightArmHpSlider.value = currentHp;
         StartCoroutine(UpdateRightArm(damage));
     }
 
@@ -145,23 +185,32 @@ public class WorldUI : MonoBehaviour
     {
         for (int i = 1; i <= damage; i++)
         {
-            _rightArmSlider.value -= 1;
+            _rightArmDamageSlider.value -= 1;
             yield return new WaitForEndOfFrame();
         }
        
-        if (_rightArmSlider.value < 0)
-            _rightArmSlider.value = 0;
+        if (_rightArmDamageSlider.value < 0)
+            _rightArmDamageSlider.value = 0;
     }
 
     public void SetLegsSlider(float quantity)
     {
         if (quantity < 0)
-            _legsSlider.value = 0;
-        else _legsSlider.value = quantity;
+        {
+            _legsHpSlider.value = 0;
+            _legsDamageSlider.value = 0;
+        }
+
+        else
+        {
+            _legsHpSlider.value = quantity;
+            _legsDamageSlider.value = quantity;
+        }
     }
     
-    public void UpdateLegsSlider(int damage)
+    public void UpdateLegsSlider(int damage, int currentHp)
     {
+        _legsHpSlider.value = currentHp;
         StartCoroutine(UpdateLegs(damage));
     }
 
@@ -169,12 +218,12 @@ public class WorldUI : MonoBehaviour
     {
         for (int i = 1; i <= damage; i++)
         {
-            _legsSlider.value -= 1;
+            _legsDamageSlider.value -= 1;
             yield return new WaitForEndOfFrame();
         }
        
-        if (_legsSlider.value < 0)
-            _legsSlider.value = 0;
+        if (_legsDamageSlider.value < 0)
+            _legsDamageSlider.value = 0;
     }
 
     void MoveActionIcon(bool status)

@@ -289,7 +289,7 @@ public class Character : Teams
         }
         buttonsManager.UpdateBodyHUD(_bodyHP, false);
         _myUI.ContainerActivation(true);
-        _myUI.UpdateBodySlider(total);
+        _myUI.UpdateBodySlider(total, _bodyHP);
         MakeNotAttackable();
     }
 
@@ -323,7 +323,7 @@ public class Character : Teams
         CheckArms();
         buttonsManager.UpdateLeftArmHUD(_leftArmHP, false);
         _myUI.ContainerActivation(true);
-        _myUI.UpdateLeftArmSlider(total);
+        _myUI.UpdateLeftArmSlider(total, _leftArmHP);
         MakeNotAttackable();
     }
 
@@ -358,7 +358,7 @@ public class Character : Teams
         CheckArms();
         buttonsManager.UpdateRightArmHUD(_rightArmHP, false);
         _myUI.ContainerActivation(true);
-        _myUI.UpdateRightArmSlider(total);
+        _myUI.UpdateRightArmSlider(total, _rightArmHP);
         MakeNotAttackable();
     }
 
@@ -391,7 +391,7 @@ public class Character : Teams
         }
         buttonsManager.UpdateLegsHUD(legs.GetLegsHP(), false);
         _myUI.ContainerActivation(true);
-        _myUI.UpdateLegsSlider(total);
+        _myUI.UpdateLegsSlider(total, legs.GetLegsHP());
         MakeNotAttackable();
     }
     public void SelectLeftGun()
