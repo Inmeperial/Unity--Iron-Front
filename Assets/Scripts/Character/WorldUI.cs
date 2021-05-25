@@ -35,8 +35,8 @@ public class WorldUI : MonoBehaviour
     public void SetWorldUIValues(float bodyCurr, float rArmCurr, float lArmCurr, float legsCurr, bool moveStatus, bool attackStatus)
     {
         SetBodySlider(bodyCurr);
-        SetLeftArmSlider(rArmCurr);
-        SetRightArmSlider(lArmCurr);
+        SetLeftArmSlider(lArmCurr);
+        SetRightArmSlider(rArmCurr);
         SetLegsSlider(legsCurr);
         MoveActionIcon(moveStatus);
         AttackActionIcon(attackStatus);

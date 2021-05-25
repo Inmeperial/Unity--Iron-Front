@@ -909,13 +909,13 @@ public class Character : Teams
         Physics.Raycast(position, dir, out hit, 1000f);
         if (hit.collider.transform.gameObject.CompareTag(tagToCheck))
         {
-            Debug.DrawRay(rayOrigin.position, dir, Color.green, 1000f);
+            Debug.DrawRay(rayOrigin.position, dir * 20f, Color.green, 1000f);
             return true;
         }
             
         else
         {
-            Debug.DrawRay(rayOrigin.position, dir, Color.red, 1000f);
+            Debug.DrawRay(rayOrigin.position, dir * 20f, Color.red, 1000f);
             return false;
         }
     }

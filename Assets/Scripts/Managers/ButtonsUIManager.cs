@@ -103,7 +103,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject() == false)
         {
             if (((_selectedChar && _selectedChar.IsMoving() == false) || _selectedEnemy) &&
-                (Input.GetKeyDown(deselectKey) || (Input.GetMouseButtonDown(0) && CheckIfTileNotSelected())))
+                (Input.GetKeyDown(deselectKey)))
                 DeselectUnit();
 
             if ((_selectedChar && _selectedChar.IsMoving() == false) && _selectedChar.GetPath().Count > 0 &&
@@ -133,22 +133,6 @@ public class ButtonsUIManager : MonoBehaviour
                 HideAllWorldUI();
             else ShowAllWorldUI();
         }
-    }
-
-    /// <summary>
-    /// Returns false if tile is selected for movement or attack.
-    /// Returns true if tile is not selected.
-    /// </summary>
-    bool CheckIfTileNotSelected()
-    {
-        var tileObj = MouseRay.GetTargetGameObject(gridBlock).GetComponent<Tile>();
-        if (tileObj)
-        {
-            if (tileObj.inMoveRange || tileObj.inAttackRange)
-                return false;
-            return true;
-        }
-        return false;
     }
     #region ButtonsActions
 
