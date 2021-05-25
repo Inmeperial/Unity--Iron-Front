@@ -56,7 +56,7 @@ public class Legs : MonoBehaviour
         var ui = _myChar.GetMyUI();
         ui.SetLegsSlider(_legsHP);
         ui.ContainerActivation(true);
-        ui.UpdateLegsSlider(damage);
+        ui.UpdateLegsSlider(damage, _legsHP);
         ui.DeactivateWorldUIWithTimer();
         var hp = _legsHP - damage;
         _legsHP = hp > 0 ? hp : 0;
