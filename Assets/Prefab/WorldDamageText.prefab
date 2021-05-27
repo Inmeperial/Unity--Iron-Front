@@ -76,7 +76,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1668910995
-  m_SortingLayer: 0
+  m_SortingLayer: 1
   m_SortingOrder: 0
 --- !u!114 &5666721004319593896
 MonoBehaviour:
@@ -91,12 +91,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textDuration: 3
-  _moveSpeed: 2.5
+  _moveSpeed: 5
   _fadeSpeed: 0.5
   _normalHitColor: {r: 1, g: 1, b: 1, a: 1}
   _normalHitFontSize: 36
   _criticalHitColor: {r: 1, g: 0, b: 0, a: 1}
-  _criticalHitFontSize: 50
+  _criticalHitFontSize: 42
   _missColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
   _missFontSize: 20
 --- !u!33 &8971832345770526928
