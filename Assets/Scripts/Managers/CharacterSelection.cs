@@ -16,14 +16,7 @@ public class CharacterSelection : MonoBehaviour
     ButtonsUIManager _buttonsManager;
     public bool _canSelectUnit;
     private Character _enemySelection;
-
-    public TextMeshProUGUI stepsCounter;
-    public event Action OnCharacterSelect = delegate { };
-    public event Action OnCharacterDeselect = delegate { };
-
-    //private bool _selectingEnemy;
-
-
+    
     private void Start()
     {
         _canSelectUnit = true;
@@ -49,12 +42,6 @@ public class CharacterSelection : MonoBehaviour
             {
                 SelectCharacterFromTile(gridBlockMask);
             }
-        }
-        
-
-        if (_selection)
-        {
-            stepsCounter.text = _selection.GetCurrentSteps().ToString();
         }
     }
 
@@ -99,7 +86,6 @@ public class CharacterSelection : MonoBehaviour
                 _highlight.ChangeActiveCharacter(_selection);
                 _buttonsManager.SetPlayerCharacter(_selection);
                 _buttonsManager.SetPlayerUI();
-                stepsCounter.text = _selection.legs.GetMaxSteps().ToString();
                 if (_enemySelection)
                 {
                     _selection.RotateTowardsEnemy(_enemySelection.transform.position);
@@ -144,13 +130,11 @@ public class CharacterSelection : MonoBehaviour
     public void ResetSelector()
     {
         DeselectUnit();
-        //_selectingEnemy = false;
         _buttonsManager.DeactivateCharacterButtons();
     }
 
     public void DeselectUnit()
     {
-        stepsCounter.text = "0";
         Debug.Log("entro al deselect unit del char selection");
         if (_selection)
         {
@@ -164,14 +148,4 @@ public class CharacterSelection : MonoBehaviour
             _enemySelection = null;
         }
     }
-
-    //public void CanSelectEnemy()
-    //{
-    //    _selectingEnemy = true;
-    //}
-
-    //public void CantSelectEnemy()
-    //{
-    //    _selectingEnemy = false;
-    //}
 }
