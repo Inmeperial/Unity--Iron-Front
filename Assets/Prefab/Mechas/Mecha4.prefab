@@ -362,6 +362,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5599027532945324091}
     m_Modifications:
+    - target: {fileID: 149066798339825822, guid: ff9422d8de6215642999bc7c283e305c,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3971480969382240022, guid: ff9422d8de6215642999bc7c283e305c,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4060268219440367489, guid: ff9422d8de6215642999bc7c283e305c,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5433373887855558559, guid: ff9422d8de6215642999bc7c283e305c,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -526,6 +541,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WorldCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398728985654705691, guid: ff9422d8de6215642999bc7c283e305c,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff9422d8de6215642999bc7c283e305c, type: 3}
