@@ -7,8 +7,14 @@ public class CloseUpCamera : MonoBehaviour
 {
     public float speed;
 
+    public float height;
+    
     public float threshold;
-
+    
+    [Header("1 closest to player")]
+    [Header("0 closest to enemy")]
+    [Header("0 to 1 (float)")]
+    public float lerp;
     private Camera _cam;
     private Camera _mainCam;
     private void Start()
@@ -18,17 +24,19 @@ public class CloseUpCamera : MonoBehaviour
         _cam.enabled = false;
     }
 
-    public void MoveCamera(Vector3 destination, Transform targetToLook)
+    public void MoveCamera(Vector3 posToLerpA, Vector3 posToLerpB)
     {
         _cam.enabled = true;
         _mainCam.enabled = false;
-        
-        StartCoroutine(Move(destination, targetToLook));
+        posToLerpA.y = height;
+        posToLerpB.y = height;
+        var destination = Vector3.Lerp(posToLerpA, posToLerpB, lerp);
+        StartCoroutine(Move(destination, posToLerpA));
     }
 
-    IEnumerator Move(Vector3 destination, Transform targetToLook)
+    IEnumerator Move(Vector3 destination, Vector3 targetToLook)
     {
-        while ((destination - transform.position).magnitude <= threshold)
+        while ((destination - transform.position).magnitude >= threshold)
         {
             var dir = (destination - transform.position).normalized;
             transform.position += dir * (speed * Time.deltaTime);

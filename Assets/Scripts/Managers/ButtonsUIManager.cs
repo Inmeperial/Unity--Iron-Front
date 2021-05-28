@@ -157,6 +157,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (CharacterHasBullets(_selectedChar))
         {
+            Debug.Log("click en body");
             var gun = _selectedChar.GetSelectedGun();
             if (_partsSelected <= gun.GetAvailableSelections())
             {
@@ -612,7 +613,7 @@ public class ButtonsUIManager : MonoBehaviour
     //Determines which buttons will be interactable.
     void DeterminateButtonsActivation()
     {
-        if (_selectedChar != null)
+        if (_selectedChar)
         {
             var ui = _selectedEnemy.GetMyUI();
             if (_selectedChar.GetSelectedGun().GetAvailableBullets() <= 0 || _partsSelected == _selectedChar.GetSelectedGun().GetAvailableSelections())
@@ -678,8 +679,6 @@ public class ButtonsUIManager : MonoBehaviour
         _bulletsForLegs = 0;
 
         _partsSelected = 0;
-
-        DeterminateButtonsActivation();
     }
 
     
@@ -729,8 +728,7 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (_selectedEnemy.CanBeAttacked())
             {
-                var pos = Vector3.Lerp(_selectedEnemy.transform.position, _selectedChar.transform.position, 0.5f);
-                FindObjectOfType<CloseUpCamera>().MoveCamera(pos, _selectedEnemy.transform);
+                FindObjectOfType<CloseUpCamera>().MoveCamera(_selectedEnemy.transform.position, _selectedChar.transform.position);
                 bulletsForBodyText.text = "x " + 0;
                 bulletsForLegsText.text = "x " + 0;
                 bulletsForLArmText.text = "x " + 0;
@@ -890,9 +888,8 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void ActivateBodyPartsContainer()
     {
-        if (_selectedEnemy != null)
+        if (_selectedEnemy)
         {
-            
             _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform.position, ActivateParts);
         }
     }
