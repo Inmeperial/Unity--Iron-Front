@@ -286,7 +286,6 @@ public class Character : Teams
         {
             NotSelectable();
         }
-        buttonsManager.UpdateBodyHUD(_bodyHP, false);
         _myUI.ContainerActivation(true);
         _myUI.UpdateBodySlider(total, _bodyHP);
         MakeNotAttackable();
@@ -320,7 +319,6 @@ public class Character : Teams
             }
         }
         CheckArms();
-        buttonsManager.UpdateLeftArmHUD(_leftArmHP, false);
         _myUI.ContainerActivation(true);
         _myUI.UpdateLeftArmSlider(total, _leftArmHP);
         MakeNotAttackable();
@@ -355,7 +353,6 @@ public class Character : Teams
             }
         }
         CheckArms();
-        buttonsManager.UpdateRightArmHUD(_rightArmHP, false);
         _myUI.ContainerActivation(true);
         _myUI.UpdateRightArmSlider(total, _rightArmHP);
         MakeNotAttackable();
@@ -388,7 +385,6 @@ public class Character : Teams
                     break;
             }
         }
-        buttonsManager.UpdateLegsHUD(legs.GetLegsHP(), false);
         _myUI.ContainerActivation(true);
         _myUI.UpdateLegsSlider(total, legs.GetLegsHP());
         MakeNotAttackable();

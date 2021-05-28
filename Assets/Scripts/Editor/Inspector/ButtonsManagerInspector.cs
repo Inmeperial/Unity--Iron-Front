@@ -64,26 +64,5 @@ public class ButtonsManagerInspector : Editor
             _selection.playerLegsCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("Legs HP Text", _selection.playerLegsCurrHp, typeof(TextMeshProUGUI), true);
             _selection.playerLegsSlider = (Slider)EditorGUILayout.ObjectField("Legs HP Slider", _selection.playerLegsSlider, typeof(Slider), true);
         }
-
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Enemy HUD", _importantStyle);
-        showEnemyHud = EditorGUILayout.Toggle(showEnemyHud);
-        EditorGUILayout.EndHorizontal();
-
-        if (showEnemyHud)
-        {
-            _selection.enemyBodyCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("Body HP Text", _selection.enemyBodyCurrHp, typeof(TextMeshProUGUI), true);
-            _selection.bulletsForBodyText = (TextMeshProUGUI) EditorGUILayout.ObjectField("Body Bullets Text", _selection.bulletsForBodyText, typeof(TextMeshProUGUI), true);
-            
-            _selection.enemyLeftArmCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("LArm HP Text", _selection.enemyLeftArmCurrHp, typeof(TextMeshProUGUI), true);
-            _selection.bulletsForLArmText = (TextMeshProUGUI) EditorGUILayout.ObjectField("LArm Bullets Text", _selection.bulletsForLArmText, typeof(TextMeshProUGUI), true);
-            
-            _selection.enemyRightArmCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("RArm HP Text", _selection.enemyRightArmCurrHp, typeof(TextMeshProUGUI), true);
-            _selection.bulletsForRArmText = (TextMeshProUGUI) EditorGUILayout.ObjectField("RArm Bullets Text", _selection.bulletsForRArmText, typeof(TextMeshProUGUI), true);
-            
-            _selection.enemyLegsCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("Legs HP Text", _selection.enemyLegsCurrHp, typeof(TextMeshProUGUI), true);
-            _selection.bulletsForLegsText = (TextMeshProUGUI) EditorGUILayout.ObjectField("Legs Bullets Text", _selection.bulletsForLegsText, typeof(TextMeshProUGUI), true);
-        }
-
     }
 }
