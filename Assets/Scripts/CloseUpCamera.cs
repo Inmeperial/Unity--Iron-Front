@@ -15,17 +15,18 @@ public class CloseUpCamera : MonoBehaviour
     [Header("0 closest to enemy")]
     [Header("0 to 1 (float)")]
     public float lerp;
-    private Camera _cam;
-    private Camera _mainCam;
+    private  Camera _cam;
+    private  Camera _mainCam;
     private void Start()
     {
-        _mainCam = Camera.main;
+        _mainCam = transform.parent.GetComponent<Camera>();
         _cam = GetComponent<Camera>();
         _cam.enabled = false;
     }
 
     public void MoveCamera(Vector3 posToLerpA, Vector3 posToLerpB)
     {
+        FindObjectOfType<CameraMovement>().LockCamera();
         _cam.enabled = true;
         _mainCam.enabled = false;
         posToLerpA.y = height;
@@ -50,6 +51,8 @@ public class CloseUpCamera : MonoBehaviour
 
     public void ResetCamera()
     {
+        FindObjectOfType<CameraMovement>().LockCamera();
+        StopAllCoroutines();
         transform.localPosition = Vector3.zero;
         _mainCam.enabled = true;
         _cam.enabled = false;
