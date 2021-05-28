@@ -168,6 +168,7 @@ public class ButtonsUIManager : MonoBehaviour
                 gun.ReduceAvailableBullets();
 
                 buttonExecuteAttack.interactable = true;
+                buttonExecuteAttack.gameObject.SetActive(true);
                 _buttonBodySelected = true;
                 DeterminateButtonsActivation();
             }
@@ -224,6 +225,7 @@ public class ButtonsUIManager : MonoBehaviour
                 gun.ReduceAvailableBullets();
 
                 buttonExecuteAttack.interactable = true;
+                buttonExecuteAttack.gameObject.SetActive(true);
                 _buttonLArmSelected = true;
                 DeterminateButtonsActivation();
             }
@@ -277,6 +279,7 @@ public class ButtonsUIManager : MonoBehaviour
                 _bulletsForRArm += gun.BulletsPerClick();
                 gun.ReduceAvailableBullets();
                 buttonExecuteAttack.interactable = true;
+                buttonExecuteAttack.gameObject.SetActive(true);
                 _buttonRArmSelected = true;
                 DeterminateButtonsActivation();
             }
@@ -330,6 +333,7 @@ public class ButtonsUIManager : MonoBehaviour
                 _bulletsForLegs += gun.BulletsPerClick();
                 gun.ReduceAvailableBullets();
                 buttonExecuteAttack.interactable = true;
+                buttonExecuteAttack.gameObject.SetActive(true);
                 _buttonLegsSelected = true;
                 DeterminateButtonsActivation();
             }
@@ -625,6 +629,7 @@ public class ButtonsUIManager : MonoBehaviour
                     ui.LegsEnabling(false);
                 }
                 buttonExecuteAttack.interactable = true;
+                buttonExecuteAttack.gameObject.SetActive(true);
             }
             else if (_partsSelected < _selectedChar.GetSelectedGun().GetAvailableSelections())
             {
@@ -646,6 +651,11 @@ public class ButtonsUIManager : MonoBehaviour
                 if (!_buttonLegsSelected && legsInsight)
                 {
                     ui.LegsEnabling(true);
+                }
+
+                if (_partsSelected <= 0)
+                {
+                    buttonExecuteAttack.gameObject.SetActive(false);
                 }
             }
         }
