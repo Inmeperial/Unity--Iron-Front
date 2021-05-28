@@ -24,15 +24,15 @@ public class CloseUpCamera : MonoBehaviour
         _cam.enabled = false;
     }
 
-    public void MoveCamera(Vector3 posToLerpA, Vector3 posToLerpB)
+    public void MoveCamera(Vector3 enemyPosToLerp, Vector3 playerPosToLerp)
     {
-        FindObjectOfType<CameraMovement>().LockCamera();
+        FindObjectOfType<CameraMovement>().LockCamera(true);
         _cam.enabled = true;
         _mainCam.enabled = false;
-        posToLerpA.y = height;
-        posToLerpB.y = height;
-        var destination = Vector3.Lerp(posToLerpA, posToLerpB, lerp);
-        StartCoroutine(Move(destination, posToLerpA));
+        enemyPosToLerp.y = height;
+        playerPosToLerp.y = height;
+        var destination = Vector3.Lerp(enemyPosToLerp, playerPosToLerp, lerp);
+        StartCoroutine(Move(destination, enemyPosToLerp));
     }
 
     IEnumerator Move(Vector3 destination, Vector3 targetToLook)
@@ -51,10 +51,15 @@ public class CloseUpCamera : MonoBehaviour
 
     public void ResetCamera()
     {
-        FindObjectOfType<CameraMovement>().LockCamera();
+        FindObjectOfType<CameraMovement>().LockCamera(false);
         StopAllCoroutines();
         transform.localPosition = Vector3.zero;
         _mainCam.enabled = true;
         _cam.enabled = false;
+    }
+
+    public void LockCamera()
+    {
+        
     }
 }

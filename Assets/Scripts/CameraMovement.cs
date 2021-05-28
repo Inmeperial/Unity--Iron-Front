@@ -37,9 +37,9 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
-    public void LockCamera()
+    public void LockCamera(bool status)
     {
-        _cameraLocked = !_cameraLocked;
+        _cameraLocked = status;
     }
 
     public void ResetCamera()
