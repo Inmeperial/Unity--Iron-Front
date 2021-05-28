@@ -1293,7 +1293,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.692, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1342,13 +1342,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4783486097728854175}
+  - component: {fileID: 1377305680680168160}
   m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4783486097728854175
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1372,6 +1373,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1377305680680168160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2628525278667815458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df2c8149ed60794ca387ad23b9b6f49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2741964918416891131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1940,7 +1953,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df2c8149ed60794ca387ad23b9b6f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1 &3922201842990000817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2889,7 +2901,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.692, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4065,7 +4077,6 @@ GameObject:
   - component: {fileID: 5298689542284181489}
   - component: {fileID: 6320179520308336041}
   - component: {fileID: 3781089194893066911}
-  - component: {fileID: 460233063241540380}
   m_Layer: 5
   m_Name: Mecha L Arm Button
   m_TagString: Untagged
@@ -4081,7 +4092,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6179685011604074375}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 125}
+  m_LocalPosition: {x: 0, y: 0, z: 0.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2556862106748837312}
@@ -4091,7 +4102,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46148133, y: 0.44924644}
   m_AnchorMax: {x: 0.49934298, y: 0.5078896}
-  m_AnchoredPosition: {x: -119.0423, y: 11.543854}
+  m_AnchoredPosition: {x: -174.7, y: 11.543854}
   m_SizeDelta: {x: 68.90823, y: 57.470337}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5298689542284181489
@@ -4198,19 +4209,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &460233063241540380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6179685011604074375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7df2c8149ed60794ca387ad23b9b6f49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1 &6193726226290378990
 GameObject:
   m_ObjectHideFlags: 0
@@ -4334,7 +4332,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.692, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4564,7 +4562,6 @@ GameObject:
   - component: {fileID: 2537408064126549180}
   - component: {fileID: 3026733155677079657}
   - component: {fileID: 6367792690821720733}
-  - component: {fileID: 4901424652524731999}
   m_Layer: 5
   m_Name: Mecha Legs Button
   m_TagString: Untagged
@@ -4580,7 +4577,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6445025817939192585}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 64.8}
+  m_LocalPosition: {x: 0, y: 0, z: -2.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2649852797541394451}
@@ -4697,19 +4694,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4901424652524731999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6445025817939192585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7df2c8149ed60794ca387ad23b9b6f49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1 &6475973390037435437
 GameObject:
   m_ObjectHideFlags: 0
@@ -4722,7 +4706,6 @@ GameObject:
   - component: {fileID: 996582542177443377}
   - component: {fileID: 3335602538954956496}
   - component: {fileID: 3973475942361311634}
-  - component: {fileID: 4039834419804100662}
   m_Layer: 5
   m_Name: Mecha Body Button
   m_TagString: Untagged
@@ -4738,7 +4721,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6475973390037435437}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 64.8}
+  m_LocalPosition: {x: 0, y: 0, z: 0.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3220146117018923240}
@@ -4748,7 +4731,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5079051, y: 0.5054573}
   m_AnchorMax: {x: 0.5457668, y: 0.56410044}
-  m_AnchoredPosition: {x: -37.982838, y: 29.021759}
+  m_AnchoredPosition: {x: -37.982838, y: 117.2}
   m_SizeDelta: {x: 68.90823, y: 57.470276}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &996582542177443377
@@ -4855,19 +4838,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4039834419804100662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6475973390037435437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7df2c8149ed60794ca387ad23b9b6f49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1 &6638080472368635208
 GameObject:
   m_ObjectHideFlags: 0
@@ -5116,7 +5086,6 @@ GameObject:
   - component: {fileID: 8814274505626289455}
   - component: {fileID: 222582337991843527}
   - component: {fileID: 7765424832768552596}
-  - component: {fileID: 7155542993437781063}
   m_Layer: 5
   m_Name: Mecha R Arm Button
   m_TagString: Untagged
@@ -5132,7 +5101,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7270756237554528873}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 125}
+  m_LocalPosition: {x: 0, y: 0, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5368900035868521449}
@@ -5142,7 +5111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.55311656, y: 0.44934264}
   m_AnchorMax: {x: 0.59113157, y: 0.5080837}
-  m_AnchoredPosition: {x: 37.888695, y: 10.528601}
+  m_AnchoredPosition: {x: 98.3, y: 13.1}
   m_SizeDelta: {x: 69.18727, y: 57.56627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8814274505626289455
@@ -5249,19 +5218,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7155542993437781063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7270756237554528873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7df2c8149ed60794ca387ad23b9b6f49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1 &7364281416641461027
 GameObject:
   m_ObjectHideFlags: 0
@@ -5951,7 +5907,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.692, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
