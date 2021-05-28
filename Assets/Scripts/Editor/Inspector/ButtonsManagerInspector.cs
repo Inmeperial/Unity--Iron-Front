@@ -74,12 +74,16 @@ public class ButtonsManagerInspector : Editor
             _selection.rightGunHitChanceText = (TextMeshProUGUI)EditorGUILayout.ObjectField("R Gun HitChance Text", _selection.rightGunHitChanceText, typeof(TextMeshProUGUI), true);
 
             _selection.playerBodyCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("Body HP Text", _selection.playerBodyCurrHp, typeof(TextMeshProUGUI), true);
-
+            _selection.playerBodySlider = (Slider)EditorGUILayout.ObjectField("Body HP Slider", _selection.playerBodySlider, typeof(Slider), true);
+            
             _selection.playerLeftArmCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("LArm HP Text", _selection.playerLeftArmCurrHp, typeof(TextMeshProUGUI), true);
-
+            _selection.playerLeftArmSlider = (Slider)EditorGUILayout.ObjectField("LArm HP Slider", _selection.playerLeftArmSlider, typeof(Slider), true);
+            
             _selection.playerRightArmCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("RArm HP Text", _selection.playerRightArmCurrHp, typeof(TextMeshProUGUI), true);
-
+            _selection.playerRightArmSlider = (Slider)EditorGUILayout.ObjectField("RArm HP Slider", _selection.playerRightArmSlider, typeof(Slider), true);
+            
             _selection.playerLegsCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("Legs HP Text", _selection.playerLegsCurrHp, typeof(TextMeshProUGUI), true);
+            _selection.playerLegsSlider = (Slider)EditorGUILayout.ObjectField("Legs HP Slider", _selection.playerLegsSlider, typeof(Slider), true);
         }
 
         EditorGUILayout.BeginHorizontal();

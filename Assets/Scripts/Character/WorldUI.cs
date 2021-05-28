@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
+[CanEditMultipleObjects]
 public class WorldUI : MonoBehaviour
 {
-    [SerializeField] private GameObject _container;
+    [SerializeField] private GameObject _statusContainer;
+    [SerializeField] private GameObject _buttonsContainer;
 
     [SerializeField] private float _showDuration;
     
@@ -25,15 +28,15 @@ public class WorldUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _container.SetActive(false);
+        _statusContainer.SetActive(false);
         _camera = Camera.main;
     }
 
     private void Update()
     {
-        if (_container.activeInHierarchy)
+        if (_statusContainer.activeInHierarchy)
         {
-            _container.transform.LookAt(transform.position + _camera.transform.forward);
+            _statusContainer.transform.LookAt(transform.position + _camera.transform.forward);
         }
     }
 
@@ -49,7 +52,7 @@ public class WorldUI : MonoBehaviour
 
     public void DeactivateWorldUI()
     {
-        _container.SetActive(false);
+        _statusContainer.SetActive(false);
     }
     
     public void DeactivateWorldUIWithTimer()
@@ -60,12 +63,12 @@ public class WorldUI : MonoBehaviour
     IEnumerator DeactivateUI(float timer)
     {
         yield return new WaitForSeconds(timer);
-        _container.SetActive(false);
+        _statusContainer.SetActive(false);
     }
     
     public void ContainerActivation(bool status)
     {
-        _container.SetActive(status);
+        _statusContainer.SetActive(status);
     }
 
    

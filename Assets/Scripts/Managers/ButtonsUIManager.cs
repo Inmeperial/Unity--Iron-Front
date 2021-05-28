@@ -50,9 +50,13 @@ public class ButtonsUIManager : MonoBehaviour
     public TextMeshProUGUI rightGunHitsText;
     public TextMeshProUGUI rightGunHitChanceText;
     public TextMeshProUGUI playerBodyCurrHp;
+    public Slider playerBodySlider;
     public TextMeshProUGUI playerLeftArmCurrHp;
+    public Slider playerLeftArmSlider;
     public TextMeshProUGUI playerRightArmCurrHp;
+    public Slider playerRightArmSlider;
     public TextMeshProUGUI playerLegsCurrHp;
+    public Slider playerLegsSlider;
     public GameObject leftWeaponCircle;
     public GameObject rightWeaponCircle;
 
@@ -768,7 +772,11 @@ public class ButtonsUIManager : MonoBehaviour
     void ShowPlayerHudText(TextMeshProUGUI bodyHpText, float bodyValue, TextMeshProUGUI lArmHpText, float lArmValue, TextMeshProUGUI rArmHpText, float rArmValue, TextMeshProUGUI legsHpText, float legsValue)
     {
         ShowUnitHudText(bodyHpText, bodyValue, lArmHpText, lArmValue, rArmHpText, rArmValue, legsHpText, legsValue);
-
+        playerBodySlider.value = bodyValue;
+        playerLeftArmSlider.value = lArmValue;
+        playerRightArmSlider.value = rArmValue;
+        playerLegsSlider.value = legsValue;
+        
         if (_selectedChar.LeftArmAlive())
         {
             var left = _selectedChar.GetLeftGun();
@@ -809,7 +817,6 @@ public class ButtonsUIManager : MonoBehaviour
         }
         else
         {
-            
             rightGunTypeText.text = "No gun - Arm destroyed";
 			rightGunDamageText.text = "";
 			rightGunHitChanceText.text = "";
