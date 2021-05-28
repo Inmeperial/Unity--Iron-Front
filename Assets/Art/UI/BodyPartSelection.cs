@@ -17,6 +17,7 @@ public class BodyPartSelection : MonoBehaviour
 		//var myButton = EventSystem.current.currentSelectedGameObject.transform;
 		var tempCounterUI = Instantiate(counterUI);
 		myCounters.Add(tempCounterUI);
+		tempCounterUI.gameObject.SetActive(true);
 		tempCounterUI.transform.SetParent(bulletFillArea.transform, false);
 		if(count <= 0)
 			tempCounterUI.rectTransform.anchorMin = new Vector2(0, 0);

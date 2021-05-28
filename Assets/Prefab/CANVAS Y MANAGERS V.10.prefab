@@ -2906,8 +2906,8 @@ RectTransform:
   m_Father: {fileID: 7329690852221621855}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.43120667, y: 0.6896465}
-  m_AnchorMax: {x: 0.5673126, y: 0.7954445}
+  m_AnchorMin: {x: 0.41135985, y: 0.060813606}
+  m_AnchorMax: {x: 0.5474658, y: 0.16661161}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5466,7 +5466,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _canSelectUnit: 0
-  stepsCounter: {fileID: 0}
 --- !u!120 &7329690851957777066
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -5801,14 +5800,6 @@ MonoBehaviour:
   playerLegsSlider: {fileID: 5820593359116079852}
   leftWeaponCircle: {fileID: 5084210978916691934}
   rightWeaponCircle: {fileID: 9047496300790282926}
-  enemyBodyCurrHp: {fileID: 0}
-  bulletsForBodyText: {fileID: 0}
-  enemyLeftArmCurrHp: {fileID: 0}
-  bulletsForLArmText: {fileID: 0}
-  enemyRightArmCurrHp: {fileID: 0}
-  bulletsForRArmText: {fileID: 0}
-  enemyLegsCurrHp: {fileID: 0}
-  bulletsForLegsText: {fileID: 0}
   _charSelection: {fileID: 0}
   _selectedChar: {fileID: 0}
   _selectedEnemy: {fileID: 0}
