@@ -76,7 +76,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1185790630222136731}
   m_HandleRect: {fileID: 0}
@@ -2816,13 +2816,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 2512469565402604467}
-    characterCount: 0
+    characterCount: 14
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 0
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
-    lineCount: 0
-    pageCount: 0
+    lineCount: 2
+    pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -7306,7 +7306,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 4096642228032201153}
   m_HandleRect: {fileID: 0}
@@ -7775,7 +7775,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 7573325069365097524}
   m_HandleRect: {fileID: 0}
@@ -14477,7 +14477,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 6424731961478163051}
   m_HandleRect: {fileID: 0}
@@ -15134,9 +15134,6 @@ MonoBehaviour:
   gridBlock:
     serializedVersion: 2
     m_Bits: 0
-  moveContainer: {fileID: 8902160868825485367}
-  buttonMove: {fileID: 8902160868527022238}
-  buttonUndo: {fileID: 8902160868040178692}
   buttonExecuteAttack: {fileID: 2512469566899782919}
   buttonEndTurn: {fileID: 5398620110723831301}
   deselectKey: 325
@@ -15144,11 +15141,6 @@ MonoBehaviour:
   selectRGunKey: 49
   showWorldUIKey: 308
   toggleWorldUIKey: 9
-  bodyPartsButtonsContainer: {fileID: 2512469566672568913}
-  buttonBody: {fileID: 2512469566605085493}
-  buttonLArm: {fileID: 0}
-  buttonRArm: {fileID: 0}
-  buttonLegs: {fileID: 0}
   playerHudContainer: {fileID: 2512469567026324024}
   leftGunTypeText: {fileID: 7899397969884212923}
   leftGunDamageText: {fileID: 6876455116382611297}
@@ -15168,7 +15160,6 @@ MonoBehaviour:
   playerLegsSlider: {fileID: 5689304205985290381}
   leftWeaponCircle: {fileID: 1426258782120813249}
   rightWeaponCircle: {fileID: 8369703865853812019}
-  enemyHudContainer: {fileID: 2512469566672568913}
   enemyBodyCurrHp: {fileID: 2512469565177506336}
   bulletsForBodyText: {fileID: 7365687755243218142}
   enemyLeftArmCurrHp: {fileID: 3558514137250532532}
@@ -16924,7 +16915,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8902160868825485364
 RectTransform:
   m_ObjectHideFlags: 0
