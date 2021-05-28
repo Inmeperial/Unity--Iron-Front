@@ -4,7 +4,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 [CanEditMultipleObjects]
 public class WorldUI : MonoBehaviour
 {
@@ -14,15 +14,19 @@ public class WorldUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _bodyHpText;
     [SerializeField] private Slider _bodyHpSlider;
     [SerializeField] private Slider _bodyDamageSlider;
+    [SerializeField] private TextMeshProUGUI _bodyCount;
     [SerializeField] private TextMeshProUGUI _leftArmHpText;
     [SerializeField] private Slider _leftArmHpSlider;
     [SerializeField] private Slider _leftArmDamageSlider;
+    [SerializeField] private TextMeshProUGUI _leftArmCount;
     [SerializeField] private TextMeshProUGUI _rightArmHpText;
     [SerializeField] private Slider _rightArmHpSlider;
     [SerializeField] private Slider _rightArmDamageSlider;
+    [SerializeField] private TextMeshProUGUI _rightArmCount;
     [SerializeField] private TextMeshProUGUI _legsHpText;
     [SerializeField] private Slider _legsHpSlider;
     [SerializeField] private Slider _legsDamageSlider;
+    [SerializeField] private TextMeshProUGUI _legsCount;
     [SerializeField] private GameObject _moveActionIcon;
     [SerializeField] private GameObject _attackActionIcon;
     
@@ -291,5 +295,25 @@ public class WorldUI : MonoBehaviour
     public void SetLegsHpText(int hp)
     {
         _legsHpText.text = hp.ToString();
+    }
+
+    public void SetBodyCount(int count)
+    {
+        _bodyCount.text = count.ToString();
+    }
+    
+    public void SetLeftArmCount(int count)
+    {
+        _leftArmCount.text = count.ToString();
+    }
+    
+    public void SetRightArmCount(int count)
+    {
+        _rightArmCount.text = count.ToString();
+    }
+    
+    public void SetLegsCount(int count)
+    {
+        _legsCount.text = count.ToString();
     }
 }

@@ -166,7 +166,7 @@ public class ButtonsUIManager : MonoBehaviour
                 }
                 _bulletsForBody += gun.BulletsPerClick();
                 gun.ReduceAvailableBullets();
-
+                _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
                 buttonExecuteAttack.interactable = true;
                 buttonExecuteAttack.gameObject.SetActive(true);
                 _buttonBodySelected = true;
@@ -183,6 +183,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets();
             _bulletsForBody = _bulletsForBody > 0 ? (_bulletsForBody - gun.BulletsPerClick()) : 0;
+            _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
             CheckIfCanExecuteAttack();
             if (_bulletsForBody == 0)
             {
@@ -202,6 +203,7 @@ public class ButtonsUIManager : MonoBehaviour
             gun.IncreaseAvailableBullets(_bulletsForBody);
             _bulletsForBody = 0;
             _buttonBodySelected = false;
+            _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
             if (_partsSelected > 0)
                 _partsSelected--;
             CheckIfCanExecuteAttack();
@@ -221,7 +223,7 @@ public class ButtonsUIManager : MonoBehaviour
                     _partsSelected++;
                 }
                 _bulletsForLArm += gun.BulletsPerClick();
-
+                _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForLArm);
                 gun.ReduceAvailableBullets();
 
                 buttonExecuteAttack.interactable = true;
@@ -239,6 +241,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets();
             _bulletsForLArm = _bulletsForLArm > 0 ? (_bulletsForLArm - gun.BulletsPerClick()) : 0;
+            _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForLArm);
             CheckIfCanExecuteAttack();
             if (_bulletsForLArm == 0)
             {
@@ -257,6 +260,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets(_bulletsForLArm);
             _bulletsForLArm = 0;
+            _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForLArm);
             _buttonLArmSelected = false;
             if (_partsSelected > 0)
                 _partsSelected--;
@@ -277,6 +281,7 @@ public class ButtonsUIManager : MonoBehaviour
                     _partsSelected++;
                 }
                 _bulletsForRArm += gun.BulletsPerClick();
+                _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForRArm);
                 gun.ReduceAvailableBullets();
                 buttonExecuteAttack.interactable = true;
                 buttonExecuteAttack.gameObject.SetActive(true);
@@ -293,6 +298,8 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets();
             _bulletsForRArm = _bulletsForRArm > 0 ? (_bulletsForRArm - gun.BulletsPerClick()) : 0;
+            _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForRArm);
+
             CheckIfCanExecuteAttack();
             if (_bulletsForRArm == 0)
             {
@@ -311,6 +318,8 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets(_bulletsForRArm);
             _bulletsForRArm = 0;
+            _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForRArm);
+
             _buttonRArmSelected = false;
             if (_partsSelected > 0)
                 _partsSelected--;
@@ -331,6 +340,8 @@ public class ButtonsUIManager : MonoBehaviour
                     _partsSelected++;
                 }
                 _bulletsForLegs += gun.BulletsPerClick();
+                _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForLegs);
+
                 gun.ReduceAvailableBullets();
                 buttonExecuteAttack.interactable = true;
                 buttonExecuteAttack.gameObject.SetActive(true);
@@ -347,6 +358,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets();
             _bulletsForLegs = _bulletsForLegs > 0 ? (_bulletsForLegs - gun.BulletsPerClick()) : 0;
+            _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForLegs);
             CheckIfCanExecuteAttack();
             if (_bulletsForLegs == 0)
             {
@@ -365,6 +377,7 @@ public class ButtonsUIManager : MonoBehaviour
             var gun = _selectedChar.GetSelectedGun();
             gun.IncreaseAvailableBullets(_bulletsForLegs);
             _bulletsForLegs = 0;
+            _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForLegs);
             _buttonLegsSelected = false;
             if (_partsSelected > 0)
                 _partsSelected--;
