@@ -1366,7 +1366,7 @@ RectTransform:
   - {fileID: 8764248189746674764}
   - {fileID: 3768046233830201871}
   m_Father: {fileID: 5433373889854610801}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1934,7 +1934,7 @@ RectTransform:
   - {fileID: 5433373888273722685}
   - {fileID: 1178827822544342819}
   m_Father: {fileID: 5433373889854610801}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4087,7 +4087,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
-  - {fileID: 1999374642679741209}
   - {fileID: 2312461244883714069}
   - {fileID: 4783486097728854175}
   m_Father: {fileID: 0}
@@ -4376,79 +4375,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &6031412887436803424
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1999374642679741209}
-  - component: {fileID: 4158692521625982907}
-  - component: {fileID: 8317879377514772478}
-  m_Layer: 5
-  m_Name: UI Counter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1999374642679741209
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6031412887436803424}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5433373889854610801}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50, y: 50}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &4158692521625982907
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6031412887436803424}
-  m_CullTransparentMesh: 0
---- !u!114 &8317879377514772478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6031412887436803424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7f2a7e69fd9bb8e43b05990b6de0626c, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &6179685011604074375
 GameObject:
   m_ObjectHideFlags: 0
@@ -4461,7 +4387,6 @@ GameObject:
   - component: {fileID: 5298689542284181489}
   - component: {fileID: 6320179520308336041}
   - component: {fileID: 3781089194893066911}
-  - component: {fileID: 940100199251475213}
   m_Layer: 5
   m_Name: Mecha L Arm Button
   m_TagString: Untagged
@@ -4581,17 +4506,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 940100199251475213}
-        m_MethodName: GenerateCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnRightClick:
     m_PersistentCalls:
       m_Calls:
@@ -4606,32 +4520,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 940100199251475213}
-        m_MethodName: RemoveCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &940100199251475213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6179685011604074375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb0f9cd4f2a430143ad72942d5a44923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  counterUI: {fileID: 8317879377514772478}
-  count: 0
-  bulletFillArea: {fileID: 6179685011604074375}
 --- !u!1 &6193726226290378990
 GameObject:
   m_ObjectHideFlags: 0
@@ -4985,7 +4873,6 @@ GameObject:
   - component: {fileID: 2537408064126549180}
   - component: {fileID: 3026733155677079657}
   - component: {fileID: 6367792690821720733}
-  - component: {fileID: 3868843700771520881}
   m_Layer: 5
   m_Name: Mecha Legs Button
   m_TagString: Untagged
@@ -5105,17 +4992,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3868843700771520881}
-        m_MethodName: GenerateCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnRightClick:
     m_PersistentCalls:
       m_Calls:
@@ -5130,32 +5006,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3868843700771520881}
-        m_MethodName: RemoveCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &3868843700771520881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6445025817939192585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb0f9cd4f2a430143ad72942d5a44923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  counterUI: {fileID: 8317879377514772478}
-  count: 0
-  bulletFillArea: {fileID: 6445025817939192585}
 --- !u!1 &6475973390037435437
 GameObject:
   m_ObjectHideFlags: 0
@@ -5168,7 +5018,6 @@ GameObject:
   - component: {fileID: 996582542177443377}
   - component: {fileID: 3335602538954956496}
   - component: {fileID: 3973475942361311634}
-  - component: {fileID: 1956199228788460965}
   m_Layer: 5
   m_Name: Mecha Body Button
   m_TagString: Untagged
@@ -5288,17 +5137,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1956199228788460965}
-        m_MethodName: GenerateCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnRightClick:
     m_PersistentCalls:
       m_Calls:
@@ -5313,32 +5151,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1956199228788460965}
-        m_MethodName: RemoveCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1956199228788460965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6475973390037435437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb0f9cd4f2a430143ad72942d5a44923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  counterUI: {fileID: 8317879377514772478}
-  count: 0
-  bulletFillArea: {fileID: 6475973390037435437}
 --- !u!1 &6638080472368635208
 GameObject:
   m_ObjectHideFlags: 0
@@ -5587,7 +5399,6 @@ GameObject:
   - component: {fileID: 8814274505626289455}
   - component: {fileID: 222582337991843527}
   - component: {fileID: 7765424832768552596}
-  - component: {fileID: 5241819524913195714}
   m_Layer: 5
   m_Name: Mecha R Arm Button
   m_TagString: Untagged
@@ -5707,17 +5518,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5241819524913195714}
-        m_MethodName: GenerateCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnRightClick:
     m_PersistentCalls:
       m_Calls:
@@ -5732,32 +5532,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5241819524913195714}
-        m_MethodName: RemoveCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &5241819524913195714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7270756237554528873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb0f9cd4f2a430143ad72942d5a44923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  counterUI: {fileID: 8317879377514772478}
-  count: 0
-  bulletFillArea: {fileID: 7270756237554528873}
 --- !u!1 &7364281416641461027
 GameObject:
   m_ObjectHideFlags: 0
