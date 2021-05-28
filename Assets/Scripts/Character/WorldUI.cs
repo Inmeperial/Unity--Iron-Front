@@ -5,7 +5,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-[CanEditMultipleObjects]
 public class WorldUI : MonoBehaviour
 {
     [Header("Status")]
