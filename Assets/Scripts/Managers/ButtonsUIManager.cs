@@ -453,6 +453,8 @@ public class ButtonsUIManager : MonoBehaviour
             //_charSelection.CantSelectEnemy();
             DeactivateBodyPartsContainer();
             buttonExecuteAttack.interactable = false;
+            buttonExecuteAttack.gameObject.SetActive(false);
+            FindObjectOfType<CloseUpCamera>().ResetCamera();
         }
     }
 
@@ -493,7 +495,7 @@ public class ButtonsUIManager : MonoBehaviour
         DeactivatePlayerHUD();
 
         DeactivateEnemyHUD();
-        
+        buttonExecuteAttack.gameObject.SetActive(false);
         _selectedChar = null;
         _selectedEnemy = null;
     }
