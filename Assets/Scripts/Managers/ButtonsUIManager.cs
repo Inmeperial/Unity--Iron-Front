@@ -445,6 +445,7 @@ public class ButtonsUIManager : MonoBehaviour
                 }
                 _selectedChar.DeactivateAttack();
             }
+            FindObjectOfType<CloseUpCamera>().ResetCamera();
         }
 
         if (_selectedChar.CanAttack() == false)
@@ -454,7 +455,7 @@ public class ButtonsUIManager : MonoBehaviour
             DeactivateBodyPartsContainer();
             buttonExecuteAttack.interactable = false;
             buttonExecuteAttack.gameObject.SetActive(false);
-            FindObjectOfType<CloseUpCamera>().ResetCamera();
+            
         }
     }
 
