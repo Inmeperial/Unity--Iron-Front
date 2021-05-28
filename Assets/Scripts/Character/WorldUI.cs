@@ -32,14 +32,6 @@ public class WorldUI : MonoBehaviour
         _camera = Camera.main;
     }
 
-    private void Update()
-    {
-        if (_statusContainer.activeInHierarchy)
-        {
-            _statusContainer.transform.LookAt(transform.position + _camera.transform.forward);
-        }
-    }
-
     public void SetWorldUIValues(float bodyCurr, float rArmCurr, float lArmCurr, float legsCurr, bool moveStatus, bool attackStatus)
     {
         SetBodySlider(bodyCurr);
@@ -237,5 +229,10 @@ public class WorldUI : MonoBehaviour
     void AttackActionIcon(bool status)
     {
         _attackActionIcon.SetActive(status);
+    }
+
+    public void ButtonsContainerSetActive(bool status)
+    {
+        _buttonsContainer.SetActive(status);
     }
 }

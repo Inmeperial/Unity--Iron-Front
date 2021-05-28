@@ -91,7 +91,7 @@ public class ButtonsUIManager : MonoBehaviour
         enemyHudContainer.SetActive(false);
         playerHudContainer.SetActive(false);
         moveContainer.SetActive(false);
-        DeactivateBodyPartsContainer();
+        //DeactivateBodyPartsContainer();
         _buttonBodySelected = false;
         _buttonLArmSelected = false;
         _buttonRArmSelected = false;
@@ -908,6 +908,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedEnemy != null)
         {
+            _selectedEnemy.GetMyUI().ButtonsContainerSetActive(true);
             _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform.position, ActivateParts);
         }
     }
@@ -963,7 +964,9 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void DeactivateBodyPartsContainer()
     {
-        bodyPartsButtonsContainer.SetActive(false);
+        if (_selectedEnemy)
+            _selectedEnemy.GetMyUI().ButtonsContainerSetActive(false);
+        //bodyPartsButtonsContainer.SetActive(false);
     }
 
     public void ActivateUndo()
