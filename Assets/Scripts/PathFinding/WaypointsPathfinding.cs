@@ -104,7 +104,6 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
                 if (_fullMovePath == null || _fullMovePath.Count == 0)
                 {
                     _char.ClearTargetTile();
-                    _char.DeactivateMoveButton();
                 }
                 else
                 {

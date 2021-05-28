@@ -246,7 +246,6 @@ public class Character : Teams
         {
             _moving = true;
             buttonsManager.DeactivateBodyPartsContainer();
-            buttonsManager.DeactivateMoveContainer();
             turnManager.UnitIsMoving();
             highlight.characterMoving = true;
             _myPositionTile.unitAboveSelected = false;
@@ -479,8 +478,6 @@ public class Character : Teams
                     if (_path.Count > 0)
                     {
                         highlight.PathPreview(_path);
-                        buttonsManager.ActivateMoveButton();
-                        buttonsManager.ActivateUndo();
                         ResetTilesInMoveRange();
                         ResetTilesInAttackRange();
                         highlight.CreatePathLines(_path);
@@ -620,14 +617,12 @@ public class Character : Teams
         Debug.Log("path count: " + _path.Count);
         if (_path.Count > 0)
         {
-            buttonsManager.ActivateUndo();
             PaintTilesInMoveRange(_path[_path.Count - 1], 0);
             if (CanAttack())
                 PaintTilesInAttackRange(_path[_path.Count - 1], 0);
         }
         else
         {
-            buttonsManager.DeactivateUndo();
             PaintTilesInMoveRange(_myPositionTile, 0);
             if (CanAttack())
                 PaintTilesInAttackRange(_myPositionTile, 0);
@@ -868,10 +863,10 @@ public class Character : Teams
         _canAttack = false;
     }
 
-    public void DeactivateMoveButton()
-    {
-        buttonsManager.DeactivateMoveButton();
-    }
+    // public void DeactivateMoveButton()
+    // {
+    //     buttonsManager.DeactivateMoveButton();
+    // }
     #endregion
 
     private void OnMouseOver()

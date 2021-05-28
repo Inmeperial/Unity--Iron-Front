@@ -9,11 +9,11 @@ public class Billboard : MonoBehaviour
 
 	private void Start()
 	{
-		cam = Camera.main.transform;
+
 	}
 
 	void LateUpdate()
     {
-		transform.LookAt(transform.position + cam.forward);   
+		transform.LookAt(transform.position + Camera.main.transform.forward);   
     }
 }

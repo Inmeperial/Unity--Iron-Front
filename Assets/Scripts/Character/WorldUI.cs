@@ -7,11 +7,9 @@ using UnityEngine.UI;
 [CanEditMultipleObjects]
 public class WorldUI : MonoBehaviour
 {
+    [Header("Status")]
     [SerializeField] private GameObject _statusContainer;
-    [SerializeField] private GameObject _buttonsContainer;
-
     [SerializeField] private float _showDuration;
-    
     [SerializeField] private Slider _bodyHpSlider;
     [SerializeField] private Slider _bodyDamageSlider;
     [SerializeField] private Slider _leftArmHpSlider;
@@ -23,6 +21,13 @@ public class WorldUI : MonoBehaviour
     [SerializeField] private GameObject _moveActionIcon;
     [SerializeField] private GameObject _attackActionIcon;
     
+    [Header("Buttons")]
+    [SerializeField] private GameObject _buttonsContainer;
+
+    [SerializeField] private CustomButton _bodyButton;
+    [SerializeField] private CustomButton _leftArmButton;
+    [SerializeField] private CustomButton _rightArmButton;
+    [SerializeField] private CustomButton _legsButton;
     private Camera _camera;
 
     // Start is called before the first frame update
@@ -235,4 +240,32 @@ public class WorldUI : MonoBehaviour
     {
         _buttonsContainer.SetActive(status);
     }
+
+    public void ButtonsEnabling(bool body, bool leftArm, bool rightArm, bool legs)
+    {
+        _bodyButton.interactable = body;
+        _leftArmButton.interactable = leftArm;
+        _rightArmButton.interactable = rightArm;
+        _legsButton.interactable = legs;
+    }
+
+    public void BodyEnabling(bool status)
+    {
+        _bodyButton.interactable = status;
+    }
+    
+    public void LeftArmEnabling(bool status)
+    {
+        _leftArmButton.interactable = status;
+    }
+    
+    public void RightArmEnabling(bool status)
+    {
+        _rightArmButton.interactable = status;
+    }
+    public void LegsEnabling(bool status)
+    {
+        _legsButton.interactable = status;
+    }
+    
 }

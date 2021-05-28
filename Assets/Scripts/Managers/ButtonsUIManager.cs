@@ -9,9 +9,6 @@ using UnityEngine.EventSystems;
 public class ButtonsUIManager : MonoBehaviour
 {
     public LayerMask gridBlock;
-    public GameObject moveContainer;
-    public Button buttonMove;
-    public Button buttonUndo;
     public Button buttonExecuteAttack;
     public Button buttonEndTurn;
 
@@ -23,17 +20,12 @@ public class ButtonsUIManager : MonoBehaviour
 
 
     #region Buttons
-    public GameObject bodyPartsButtonsContainer;
-    public CustomButton buttonBody;
     private bool _buttonBodySelected;
     private int _bulletsForBody;
-    public CustomButton buttonLArm;
     private bool _buttonLArmSelected;
     private int _bulletsForLArm;
-    public CustomButton buttonRArm;
     private bool _buttonRArmSelected;
     private int _bulletsForRArm;
-    public CustomButton buttonLegs;
     private bool _buttonLegsSelected;
     private int _bulletsForLegs;
     #endregion
@@ -61,7 +53,6 @@ public class ButtonsUIManager : MonoBehaviour
     public GameObject rightWeaponCircle;
 
     //Enemy
-    public GameObject enemyHudContainer;
     public TextMeshProUGUI enemyBodyCurrHp;
     public TextMeshProUGUI bulletsForBodyText;
     public TextMeshProUGUI enemyLeftArmCurrHp;
@@ -82,16 +73,13 @@ public class ButtonsUIManager : MonoBehaviour
 
     private bool bodyInsight;
     private bool legsInsight;
-    private bool rArmInsigh;
+    private bool rArmInsight;
     private bool lArmInsight;
 
     private bool _worldUIActive = false;
     private void Start()
     {
-        enemyHudContainer.SetActive(false);
         playerHudContainer.SetActive(false);
-        moveContainer.SetActive(false);
-        //DeactivateBodyPartsContainer();
         _buttonBodySelected = false;
         _buttonLArmSelected = false;
         _buttonRArmSelected = false;
@@ -142,27 +130,27 @@ public class ButtonsUIManager : MonoBehaviour
 
    
 
-    void SetCharacterMovementButtons()
-    {
-        if (_selectedChar.ThisUnitCanMove())
-        {
-            buttonMove.onClick.RemoveAllListeners();
-            buttonMove.onClick.AddListener(_selectedChar.Move);
-            buttonUndo.onClick.RemoveAllListeners();
-            buttonUndo.onClick.AddListener(_selectedChar.pathCreator.UndoLastWaypoint);
-            ActivateMoveContainer();
-            DeactivateMoveButton();
-        }
-        else DeactivateMoveContainer();
-    }
+    // void SetCharacterMovementButtons()
+    // {
+    //     if (_selectedChar.ThisUnitCanMove())
+    //     {
+    //         buttonMove.onClick.RemoveAllListeners();
+    //         buttonMove.onClick.AddListener(_selectedChar.Move);
+    //         buttonUndo.onClick.RemoveAllListeners();
+    //         buttonUndo.onClick.AddListener(_selectedChar.pathCreator.UndoLastWaypoint);
+    //         ActivateMoveContainer();
+    //         DeactivateMoveButton();
+    //     }
+    //     else DeactivateMoveContainer();
+    // }
     
 
     public void DeactivateCharacterButtons()
     {
         buttonExecuteAttack.interactable = false;
-        buttonMove.interactable = false;
-        buttonUndo.interactable = false;
-        _selectedEnemy = null;
+        // buttonMove.interactable = false;
+        // buttonUndo.interactable = false;
+        // _selectedEnemy = null;
     }
 
     public void BodySelection()
@@ -454,7 +442,6 @@ public class ButtonsUIManager : MonoBehaviour
         {
             _selectedChar.ResetInRangeLists();
             //_charSelection.CantSelectEnemy();
-            DeactivateMoveContainer();
             DeactivateBodyPartsContainer();
             buttonExecuteAttack.interactable = false;
         }
@@ -467,14 +454,13 @@ public class ButtonsUIManager : MonoBehaviour
             _turnManager.EndTurn();
             DeactivateEnemyHUD();
             DeactivatePlayerHUD();
-            DeactivateMoveContainer();
             ResetBodyParts();
         }
     }
 
     public void DeselectActions()
     {
-        if (_selectedChar != null)
+        if (_selectedChar)
         {
             var gun = _selectedChar.GetSelectedGun();
 
@@ -492,7 +478,9 @@ public class ButtonsUIManager : MonoBehaviour
             
             ResetBodyParts();
         }
-
+        
+        FindObjectOfType<CloseUpCamera>().ResetCamera();
+        
         DeactivatePlayerHUD();
 
         DeactivateEnemyHUD();
@@ -626,50 +614,50 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedChar != null)
         {
+            var ui = _selectedEnemy.GetMyUI();
             if (_selectedChar.GetSelectedGun().GetAvailableBullets() <= 0 || _partsSelected == _selectedChar.GetSelectedGun().GetAvailableSelections())
             {
                 if (_buttonBodySelected == false)
                 {
-                    buttonBody.interactable = false;
+                    ui.BodyEnabling(false);
                 }
 
                 if (_buttonLArmSelected == false)
                 {
-                    buttonLArm.interactable = false;
+                    ui.LeftArmEnabling(false);
                 }
 
                 if (_buttonRArmSelected == false)
                 {
-                    buttonRArm.interactable = false;
+                    ui.RightArmEnabling(false);
                 }
 
                 if (_buttonLegsSelected == false)
                 {
-                    buttonLegs.interactable = false;
+                    ui.LegsEnabling(false);
                 }
-
                 buttonExecuteAttack.interactable = true;
             }
             else if (_partsSelected < _selectedChar.GetSelectedGun().GetAvailableSelections())
             {
                 if (!_buttonBodySelected && bodyInsight)
                 {
-                    buttonBody.interactable = true;
+                    ui.BodyEnabling(true);
                 }
 
                 if (!_buttonLArmSelected && lArmInsight)
                 {
-                    buttonLArm.interactable = true;
+                    ui.LeftArmEnabling(true);
                 }
 
-                if (!_buttonRArmSelected && rArmInsigh)
+                if (!_buttonRArmSelected && rArmInsight)
                 {
-                    buttonRArm.interactable = true;
+                    ui.RightArmEnabling(true);
                 }
 
                 if (!_buttonLegsSelected && legsInsight)
                 {
-                    buttonLegs.interactable = true;
+                    ui.LegsEnabling(true);
                 }
             }
         }
@@ -700,8 +688,6 @@ public class ButtonsUIManager : MonoBehaviour
     #region HUD Text
     public void SetPlayerUI()
     {
-        SetCharacterMovementButtons();
-
         ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.legs.GetLegsHP());
 
         if (_selectedChar.RightArmAlive())
@@ -740,10 +726,12 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void SetEnemyUI()
     {
-        if (_selectedChar != null)
+        if (_selectedChar)
         {
             if (_selectedEnemy.CanBeAttacked())
             {
+                var pos = Vector3.Lerp(_selectedEnemy.transform.position, _selectedChar.transform.position, 0.5f);
+                FindObjectOfType<CloseUpCamera>().MoveCamera(pos, _selectedEnemy.transform);
                 bulletsForBodyText.text = "x " + 0;
                 bulletsForLegsText.text = "x " + 0;
                 bulletsForLArmText.text = "x " + 0;
@@ -758,8 +746,6 @@ public class ButtonsUIManager : MonoBehaviour
             buttonExecuteAttack.interactable = false;
         }
         ShowUnitHudText(enemyBodyCurrHp, _selectedEnemy.GetBodyHP(), enemyLeftArmCurrHp, _selectedEnemy.GetLeftArmHP(), enemyRightArmCurrHp, _selectedEnemy.GetRightArmHP(), enemyLegsCurrHp, _selectedEnemy.legs.GetLegsHP());
-        enemyHudContainer.SetActive(true);
-        
     }
 
 
@@ -767,7 +753,6 @@ public class ButtonsUIManager : MonoBehaviour
     public void DeactivateEnemyHUD()
     {
         DeactivateBodyPartsContainer();
-        enemyHudContainer.SetActive(false);
     }
     void ShowPlayerHudText(TextMeshProUGUI bodyHpText, float bodyValue, TextMeshProUGUI lArmHpText, float lArmValue, TextMeshProUGUI rArmHpText, float rArmValue, TextMeshProUGUI legsHpText, float legsValue)
     {
@@ -908,7 +893,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedEnemy != null)
         {
-            _selectedEnemy.GetMyUI().ButtonsContainerSetActive(true);
+            
             _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform.position, ActivateParts);
         }
     }
@@ -918,85 +903,78 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body") && _selectedEnemy.GetBodyHP() > 0)
         {
             bodyInsight = true;
-            buttonBody.interactable = true;
         }
         else
         {
             bodyInsight = false;
-            buttonBody.interactable = false;
         }
 
         if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLArmPosition(), "LArm") && _selectedEnemy.GetLeftArmHP() > 0)
         {
             lArmInsight = true;
-            buttonLArm.interactable = true;
         }
         else
         {
             lArmInsight = false;
-            buttonLArm.interactable = false;
         }
 
         if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetRArmPosition(), "RArm") && _selectedEnemy.GetRightArmHP() > 0)
         {
-            rArmInsigh = true;
-            buttonRArm.interactable = true;
+            rArmInsight = true;
         }
         else
         {
-            rArmInsigh = false;
-            buttonRArm.interactable = false;
+            rArmInsight = false;
         }
 
 
         if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs") &&_selectedEnemy.legs.GetLegsHP() > 0)
         {
             legsInsight = true;
-            buttonLegs.interactable = true;
         }
         else
         {
             legsInsight = false;
-            buttonLegs.interactable = false;
         }
-        bodyPartsButtonsContainer.SetActive(true);
+        var ui = _selectedEnemy.GetMyUI();
+        ui.ButtonsEnabling(bodyInsight, lArmInsight, rArmInsight, legsInsight);
+        ui.ButtonsContainerSetActive(true);
     }
 
     public void DeactivateBodyPartsContainer()
     {
         if (_selectedEnemy)
             _selectedEnemy.GetMyUI().ButtonsContainerSetActive(false);
-        //bodyPartsButtonsContainer.SetActive(false);
     }
 
-    public void ActivateUndo()
-    {
-        buttonUndo.interactable = true;
-    }
+    // public void ActivateUndo()
+    // {
+    //     buttonUndo.interactable = true;
+    // }
+    //
+    // public void DeactivateUndo()
+    // {
+    //     buttonUndo.interactable = false;
+    // }
 
-    public void DeactivateUndo()
-    {
-        buttonUndo.interactable = false;
-    }
-
-    public void ActivateMoveContainer()
-    {
-        moveContainer.SetActive(true);
-    }
-
-    public void DeactivateMoveContainer()
-    {
-        moveContainer.SetActive(false);
-    }
-    public void ActivateMoveButton()
-    {
-        buttonMove.interactable = true;
-    }
-
-    public void DeactivateMoveButton()
-    {
-        buttonMove.interactable = false;
-    }
+    // public void ActivateMoveContainer()
+    // {
+    //     moveContainer.SetActive(true);
+    // }
+    //
+    // public void DeactivateMoveContainer()
+    // {
+    //     moveContainer.SetActive(false);
+    // }
+    // public void ActivateMoveButton()
+    // {
+    //     buttonMove.interactable = true;
+    // }
+    //
+    // public void DeactivateMoveButton()
+    // {
+    //     buttonMove.interactable = false;
+    // }
 
     public void ActivateExecuteAttackButton()
     {
