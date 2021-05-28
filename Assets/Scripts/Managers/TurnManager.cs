@@ -36,7 +36,6 @@ public class TurnManager : Teams
     public void UnitStoppedMoving()
     {
         _charSelect.ActivateCharacterSelection(true);
-        _buttonsManager.DeactivateMoveContainer();
     }
 
     void SeparateByTeam(Character[] units)

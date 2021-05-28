@@ -22,10 +22,6 @@ public class ButtonsManagerInspector : Editor
 
     public override void OnInspectorGUI()
     {
-        _selection.moveContainer = (GameObject)EditorGUILayout.ObjectField("Move Container Container", _selection.moveContainer, typeof(GameObject), true);
-
-        _selection.buttonMove = (Button)EditorGUILayout.ObjectField("Button Move", _selection.buttonMove, typeof(Button), true);
-        _selection.buttonUndo = (Button)EditorGUILayout.ObjectField("Button Undo", _selection.buttonUndo, typeof(Button), true);
         _selection.buttonExecuteAttack = (Button)EditorGUILayout.ObjectField("Button Execute Attack", _selection.buttonExecuteAttack, typeof(Button), true);
         _selection.buttonEndTurn = (Button)EditorGUILayout.ObjectField("Button End Turn", _selection.buttonEndTurn, typeof(Button), true);
         _selection.deselectKey = (KeyCode)EditorGUILayout.EnumPopup("Deselect Key", _selection.deselectKey);
@@ -33,23 +29,6 @@ public class ButtonsManagerInspector : Editor
         _selection.selectLGunKey = (KeyCode)EditorGUILayout.EnumPopup("Select LGun Key", _selection.selectLGunKey);
         _selection.showWorldUIKey = (KeyCode)EditorGUILayout.EnumPopup("Show World UI Key", _selection.showWorldUIKey);
         _selection.toggleWorldUIKey = (KeyCode)EditorGUILayout.EnumPopup("Toggle World UI Key", _selection.toggleWorldUIKey);
-
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Buttons", _importantStyle);
-        showButtons = EditorGUILayout.Toggle(showButtons);
-        EditorGUILayout.EndHorizontal();
-        if (showButtons)
-        {
-            _selection.bodyPartsButtonsContainer = (GameObject)EditorGUILayout.ObjectField("Body Parts Button Container", _selection.bodyPartsButtonsContainer, typeof(GameObject), true);
-
-            _selection.buttonBody = (CustomButton)EditorGUILayout.ObjectField("Button Body", _selection.buttonBody, typeof(CustomButton), true);
-
-            _selection.buttonLArm = (CustomButton)EditorGUILayout.ObjectField("Button LArm", _selection.buttonLArm, typeof(CustomButton), true);
-
-            _selection.buttonRArm = (CustomButton)EditorGUILayout.ObjectField("Button RArm", _selection.buttonRArm, typeof(CustomButton), true);
-
-            _selection.buttonLegs = (CustomButton)EditorGUILayout.ObjectField("Button Legs", _selection.buttonLegs, typeof(CustomButton), true);
-        }
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Player HUD", _importantStyle);
@@ -93,8 +72,6 @@ public class ButtonsManagerInspector : Editor
 
         if (showEnemyHud)
         {
-            _selection.enemyHudContainer = (GameObject)EditorGUILayout.ObjectField("Player HUD Container", _selection.enemyHudContainer, typeof(GameObject), true);
-
             _selection.enemyBodyCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("Body HP Text", _selection.enemyBodyCurrHp, typeof(TextMeshProUGUI), true);
             _selection.bulletsForBodyText = (TextMeshProUGUI) EditorGUILayout.ObjectField("Body Bullets Text", _selection.bulletsForBodyText, typeof(TextMeshProUGUI), true);
             

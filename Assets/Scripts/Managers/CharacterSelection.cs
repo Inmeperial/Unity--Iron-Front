@@ -97,7 +97,6 @@ public class CharacterSelection : MonoBehaviour
                 _selection = c;
                 _selection.SelectThisUnit();
                 _highlight.ChangeActiveCharacter(_selection);
-                _buttonsManager.DeactivateUndo();
                 _buttonsManager.SetPlayerCharacter(_selection);
                 _buttonsManager.SetPlayerUI();
                 stepsCounter.text = _selection.legs.GetMaxSteps().ToString();
