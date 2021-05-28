@@ -742,7 +742,6 @@ public class ButtonsUIManager : MonoBehaviour
         {
             buttonExecuteAttack.interactable = false;
         }
-        ShowUnitHudText(enemyBodyCurrHp, _selectedEnemy.GetBodyHP(), enemyLeftArmCurrHp, _selectedEnemy.GetLeftArmHP(), enemyRightArmCurrHp, _selectedEnemy.GetRightArmHP(), enemyLegsCurrHp, _selectedEnemy.legs.GetLegsHP());
     }
 
 
@@ -934,6 +933,10 @@ public class ButtonsUIManager : MonoBehaviour
         }
         var ui = _selectedEnemy.GetMyUI();
         ui.ButtonsEnabling(bodyInsight, lArmInsight, rArmInsight, legsInsight);
+        ui.SetBodyHpText(_selectedEnemy.GetBodyHP());
+        ui.SetLeftArmHpText(_selectedEnemy.GetLeftArmHP());
+        ui.SetRightArmHpText(_selectedEnemy.GetRightArmHP());
+        ui.SetLegsHpText(_selectedEnemy.legs.GetLegsHP());
         ui.ButtonsContainerSetActive(true);
     }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,12 +11,16 @@ public class WorldUI : MonoBehaviour
     [Header("Status")]
     [SerializeField] private GameObject _statusContainer;
     [SerializeField] private float _showDuration;
+    [SerializeField] private TextMeshProUGUI _bodyHpText;
     [SerializeField] private Slider _bodyHpSlider;
     [SerializeField] private Slider _bodyDamageSlider;
+    [SerializeField] private TextMeshProUGUI _leftArmHpText;
     [SerializeField] private Slider _leftArmHpSlider;
     [SerializeField] private Slider _leftArmDamageSlider;
+    [SerializeField] private TextMeshProUGUI _rightArmHpText;
     [SerializeField] private Slider _rightArmHpSlider;
     [SerializeField] private Slider _rightArmDamageSlider;
+    [SerializeField] private TextMeshProUGUI _legsHpText;
     [SerializeField] private Slider _legsHpSlider;
     [SerializeField] private Slider _legsDamageSlider;
     [SerializeField] private GameObject _moveActionIcon;
@@ -267,5 +272,24 @@ public class WorldUI : MonoBehaviour
     {
         _legsButton.interactable = status;
     }
+
+    public void SetBodyHpText(int hp)
+    {
+        _bodyHpText.text = hp.ToString();
+    }
     
+    public void SetLeftArmHpText(int hp)
+    {
+        _leftArmHpText.text = hp.ToString();
+    }
+    
+    public void SetRightArmHpText(int hp)
+    {
+        _rightArmHpText.text = hp.ToString();
+    }
+    
+    public void SetLegsHpText(int hp)
+    {
+        _legsHpText.text = hp.ToString();
+    }
 }
