@@ -66,6 +66,7 @@ public class Character : Teams
     private bool _leftArmAlive;
     private bool _rightArmAlive;
     private bool _canBeAttacked = false;
+    public bool selectedForAttack;
 
     //OTHERS
     private HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
@@ -867,7 +868,8 @@ public class Character : Teams
 
     private void OnMouseOver()
     {
-        ShowWorldUI();
+        if (!selectedForAttack)
+            ShowWorldUI();
     }
 
     private void OnMouseExit()

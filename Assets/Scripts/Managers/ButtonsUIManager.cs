@@ -106,11 +106,15 @@ public class ButtonsUIManager : MonoBehaviour
                 
         }
 
-        if (Input.GetKeyDown(selectLGunKey))
-            UnitSwapToLeftGun();
+        if (_selectedChar && _selectedEnemy && _selectedEnemy.selectedForAttack == false)
+        {
+            if (Input.GetKeyDown(selectLGunKey))
+                UnitSwapToLeftGun();
 
-        if (Input.GetKeyDown(selectRGunKey))
-            UnitSwapToRightGun();
+            if (Input.GetKeyDown(selectRGunKey))
+                UnitSwapToRightGun();
+        }
+        
         
         if (Input.GetKeyDown(showWorldUIKey))
             ShowAllWorldUI();
@@ -392,70 +396,74 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void ExecuteAttack()
     {
-        if (_selectedEnemy != null)
+        if (_selectedEnemy)
         {
-            var gun = _selectedChar.GetSelectedGun();
-            _selectedChar.Shoot();
-            if (_bulletsForBody > 0)
-            {
-                var d = gun.DamageCalculation(_bulletsForBody);
-                _selectedEnemy.TakeDamageBody(d);
-                _bulletsForBody = 0;
-                if (gun.AbilityUsed() == false)
-                {
-                    gun.Ability();
-                }
-                _selectedChar.DeactivateAttack();
-            }
-
-
-            if (_bulletsForLArm > 0)
-            {
-                var d = gun.DamageCalculation(_bulletsForLArm);
-                _selectedEnemy.TakeDamageLeftArm(d);
-                _bulletsForLArm = 0;
-                
-                if (gun.AbilityUsed() == false)
-                {
-                    gun.Ability();
-                }
-                _selectedChar.DeactivateAttack();
-            }
-
-            if (_bulletsForRArm > 0)
-            {
-                var d = gun.DamageCalculation(_bulletsForRArm);
-                _selectedEnemy.TakeDamageRightArm(d);
-                _bulletsForRArm = 0;
-                if (gun.AbilityUsed() == false)
-                {
-                    gun.Ability();
-                }
-                _selectedChar.DeactivateAttack();
-            }
-
-            if (_bulletsForLegs > 0)
-            {
-                var d = gun.DamageCalculation(_bulletsForLegs);
-                _selectedEnemy.TakeDamageLegs(d);
-                _bulletsForLegs = 0;
-                if (gun.AbilityUsed() == false)
-                {
-                    gun.Ability();
-                }
-                _selectedChar.DeactivateAttack();
-            }
-            FindObjectOfType<CloseUpCamera>().ResetCamera();
+            var cam = FindObjectOfType<CloseUpCamera>();
+            cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, Attack);
         }
 
         if (_selectedChar.CanAttack() == false)
         {
             _selectedChar.ResetInRangeLists();
-            //_charSelection.CantSelectEnemy();
             DeactivateBodyPartsContainer();
             buttonExecuteAttack.interactable = false;
             buttonExecuteAttack.gameObject.SetActive(false);
             
+        }
+    }
+
+    void Attack()
+    {
+        var gun = _selectedChar.GetSelectedGun();
+        _selectedChar.Shoot();
+        if (_bulletsForBody > 0)
+        {
+            var d = gun.DamageCalculation(_bulletsForBody);
+            _selectedEnemy.TakeDamageBody(d);
+            _bulletsForBody = 0;
+            if (gun.AbilityUsed() == false)
+            {
+                gun.Ability();
+            }
+            _selectedChar.DeactivateAttack();
+        }
+
+
+        if (_bulletsForLArm > 0)
+        {
+            var d = gun.DamageCalculation(_bulletsForLArm);
+            _selectedEnemy.TakeDamageLeftArm(d);
+            _bulletsForLArm = 0;
+                
+            if (gun.AbilityUsed() == false)
+            {
+                gun.Ability();
+            }
+            _selectedChar.DeactivateAttack();
+        }
+
+        if (_bulletsForRArm > 0)
+        {
+            var d = gun.DamageCalculation(_bulletsForRArm);
+            _selectedEnemy.TakeDamageRightArm(d);
+            _bulletsForRArm = 0;
+            if (gun.AbilityUsed() == false)
+            {
+                gun.Ability();
+            }
+            _selectedChar.DeactivateAttack();
+        }
+
+        if (_bulletsForLegs > 0)
+        {
+            var d = gun.DamageCalculation(_bulletsForLegs);
+            _selectedEnemy.TakeDamageLegs(d);
+            _bulletsForLegs = 0;
+            if (gun.AbilityUsed() == false)
+            {
+                gun.Ability();
+            }
+            _selectedChar.DeactivateAttack();
         }
     }
 
@@ -474,6 +482,12 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedChar)
         {
+            if (_selectedEnemy)
+            {
+                var cam = FindObjectOfType<CloseUpCamera>();
+                cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position);
+
+            }
             var gun = _selectedChar.GetSelectedGun();
 
             if (_bulletsForBody > 0)
@@ -490,9 +504,12 @@ public class ButtonsUIManager : MonoBehaviour
             
             ResetBodyParts();
         }
-        
-        FindObjectOfType<CloseUpCamera>().ResetCamera();
-        
+
+        if (_selectedEnemy)
+        {
+            _selectedEnemy.selectedForAttack = false;
+        }
+
         DeactivatePlayerHUD();
 
         DeactivateEnemyHUD();
@@ -553,7 +570,8 @@ public class ButtonsUIManager : MonoBehaviour
         var units = _turnManager.GetEnemies(Teams.Team.Box).Concat(_turnManager.GetEnemies(Teams.Team.Capsule));
         foreach (var unit in units)
         {
-            unit.ShowWorldUI();
+            if (unit.selectedForAttack == false)
+                unit.ShowWorldUI();
         }
     }
 
@@ -745,7 +763,8 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (_selectedEnemy.CanBeAttacked())
             {
-                FindObjectOfType<CloseUpCamera>().MoveCamera(_selectedEnemy.transform.position, _selectedChar.transform.position);
+                _selectedEnemy.selectedForAttack = true;
+                FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position);
                 ActivateBodyPartsContainer();
             }
                 

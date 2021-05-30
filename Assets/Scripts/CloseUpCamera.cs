@@ -24,7 +24,7 @@ public class CloseUpCamera : MonoBehaviour
         _cam.enabled = false;
     }
 
-    public void MoveCamera(Vector3 enemyPosToLerp, Vector3 playerPosToLerp)
+    public void MoveCameraWithLerp(Vector3 enemyPosToLerp, Vector3 playerPosToLerp)
     {
         FindObjectOfType<CameraMovement>().LockCamera(true);
         _cam.enabled = true;
@@ -35,7 +35,12 @@ public class CloseUpCamera : MonoBehaviour
         StartCoroutine(Move(destination, enemyPosToLerp));
     }
 
-    IEnumerator Move(Vector3 destination, Vector3 targetToLook)
+    public void MoveCameraToParent(Vector3 destination, Vector3 targetToLook, Action callback = null)
+    {
+        StartCoroutine(MoveToParent(destination, targetToLook, callback));
+    }
+
+    IEnumerator Move(Vector3 destination, Vector3 targetToLook, Action callback = null)
     {
         while ((destination - transform.position).magnitude >= threshold)
         {
@@ -44,9 +49,33 @@ public class CloseUpCamera : MonoBehaviour
             transform.LookAt(targetToLook);
             yield return new WaitForEndOfFrame();
         }
-
         transform.position = destination;
-        transform.LookAt(targetToLook);
+        if (callback != null)
+        {
+            callback();
+            transform.localRotation = Quaternion.identity;
+        }
+        else
+        {
+            transform.LookAt(targetToLook);    
+        }
+    }
+    IEnumerator MoveToParent(Vector3 destination, Vector3 targetToLook, Action callback = null)
+    {
+        while ((destination - transform.position).magnitude >= threshold)
+        {
+            var dir = (destination - transform.position).normalized;
+            transform.position += dir * (speed * Time.deltaTime);
+            transform.LookAt(targetToLook);
+            yield return new WaitForEndOfFrame();
+        }
+        transform.position = destination;
+        transform.localRotation = Quaternion.identity;
+        
+        if (callback != null)
+        {
+            callback();
+        }
     }
 
     public void ResetCamera()
@@ -56,10 +85,5 @@ public class CloseUpCamera : MonoBehaviour
         transform.localPosition = Vector3.zero;
         _mainCam.enabled = true;
         _cam.enabled = false;
-    }
-
-    public void LockCamera()
-    {
-        
     }
 }
