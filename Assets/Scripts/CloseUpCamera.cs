@@ -24,7 +24,7 @@ public class CloseUpCamera : MonoBehaviour
         _cam.enabled = false;
     }
 
-    public void MoveCameraWithLerp(Vector3 enemyPosToLerp, Vector3 playerPosToLerp)
+    public void MoveCameraWithLerp(Vector3 enemyPosToLerp, Vector3 playerPosToLerp, Action callback = null)
     {
         FindObjectOfType<CameraMovement>().LockCamera(true);
         _cam.enabled = true;
@@ -32,7 +32,7 @@ public class CloseUpCamera : MonoBehaviour
         enemyPosToLerp.y = height;
         playerPosToLerp.y = height;
         var destination = Vector3.Lerp(enemyPosToLerp, playerPosToLerp, lerp);
-        StartCoroutine(Move(destination, enemyPosToLerp));
+        StartCoroutine(Move(destination, enemyPosToLerp, callback));
     }
 
     public void MoveCameraToParent(Vector3 destination, Vector3 targetToLook, Action callback = null)
@@ -53,12 +53,8 @@ public class CloseUpCamera : MonoBehaviour
         if (callback != null)
         {
             callback();
-            transform.localRotation = Quaternion.identity;
         }
-        else
-        {
-            transform.LookAt(targetToLook);    
-        }
+        transform.LookAt(targetToLook);
     }
     IEnumerator MoveToParent(Vector3 destination, Vector3 targetToLook, Action callback = null)
     {

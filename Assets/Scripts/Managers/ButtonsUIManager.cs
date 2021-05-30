@@ -485,7 +485,7 @@ public class ButtonsUIManager : MonoBehaviour
             if (_selectedEnemy)
             {
                 var cam = FindObjectOfType<CloseUpCamera>();
-                cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position);
+                cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, cam.ResetCamera);
 
             }
             var gun = _selectedChar.GetSelectedGun();
@@ -764,8 +764,8 @@ public class ButtonsUIManager : MonoBehaviour
             if (_selectedEnemy.CanBeAttacked())
             {
                 _selectedEnemy.selectedForAttack = true;
-                FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position);
-                ActivateBodyPartsContainer();
+                FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position, ActivateBodyPartsContainer);
+                playerHudContainer.SetActive(false);
             }
                 
             else DeactivateBodyPartsContainer();

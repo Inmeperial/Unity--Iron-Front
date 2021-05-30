@@ -251,28 +251,32 @@ public class WorldUI : MonoBehaviour
 
     public void ButtonsEnabling(bool body, bool leftArm, bool rightArm, bool legs)
     {
-        _bodyButton.interactable = body;
-        _leftArmButton.interactable = leftArm;
-        _rightArmButton.interactable = rightArm;
-        _legsButton.interactable = legs;
+        BodyEnabling(body);
+        LeftArmEnabling(leftArm);
+        RightArmEnabling(rightArm);
+        LegsEnabling(legs);
     }
 
     public void BodyEnabling(bool status)
     {
+        _bodyButton.gameObject.SetActive(status);
         _bodyButton.interactable = status;
     }
     
     public void LeftArmEnabling(bool status)
     {
+        _leftArmButton.gameObject.SetActive(status);
         _leftArmButton.interactable = status;
     }
     
     public void RightArmEnabling(bool status)
     {
+        _rightArmButton.gameObject.SetActive(status);
         _rightArmButton.interactable = status;
     }
     public void LegsEnabling(bool status)
     {
+        _legsButton.gameObject.SetActive(status);
         _legsButton.interactable = status;
     }
 
