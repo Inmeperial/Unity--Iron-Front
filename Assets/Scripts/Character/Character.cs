@@ -724,8 +724,12 @@ public class Character : Teams
     public void DeselectThisUnit()
     {
         _selected = false;
-        _myPositionTile.unitAboveSelected = false;
-        _myPositionTile.EndMouseOverColor();
+        if (_myPositionTile != null)
+        {
+            _myPositionTile.unitAboveSelected = false;
+            _myPositionTile.EndMouseOverColor();
+        }
+        
         _mechaMaterlaHandler.SetSelectedMechaMaterial(false);
         foreach (var item in _enemiesInRange)
         {
