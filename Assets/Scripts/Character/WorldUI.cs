@@ -10,22 +10,32 @@ public class WorldUI : MonoBehaviour
     [Header("Status")]
     [SerializeField] private GameObject _statusContainer;
     [SerializeField] private float _showDuration;
+    
+    [Header("Body")]
     [SerializeField] private TextMeshProUGUI _bodyHpText;
     [SerializeField] private Slider _bodyHpSlider;
     [SerializeField] private Slider _bodyDamageSlider;
     [SerializeField] private TextMeshProUGUI _bodyCount;
+    
+    [Header("Left Arm")]
     [SerializeField] private TextMeshProUGUI _leftArmHpText;
     [SerializeField] private Slider _leftArmHpSlider;
     [SerializeField] private Slider _leftArmDamageSlider;
     [SerializeField] private TextMeshProUGUI _leftArmCount;
+    
+    [Header("Right Arm")]
     [SerializeField] private TextMeshProUGUI _rightArmHpText;
     [SerializeField] private Slider _rightArmHpSlider;
     [SerializeField] private Slider _rightArmDamageSlider;
     [SerializeField] private TextMeshProUGUI _rightArmCount;
+    
+    [Header("Legs")]
     [SerializeField] private TextMeshProUGUI _legsHpText;
     [SerializeField] private Slider _legsHpSlider;
     [SerializeField] private Slider _legsDamageSlider;
     [SerializeField] private TextMeshProUGUI _legsCount;
+    
+    [Header("Actions")]
     [SerializeField] private GameObject _moveActionIcon;
     [SerializeField] private GameObject _attackActionIcon;
     

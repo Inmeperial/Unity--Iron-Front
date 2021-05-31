@@ -399,16 +399,9 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedEnemy)
         {
             var cam = FindObjectOfType<CloseUpCamera>();
+            var ui = _selectedEnemy.GetMyUI();
+            ui.SetLimits(_selectedEnemy.GetBodyMaxHP(), _selectedEnemy.GetRightArmMaxHP(), _selectedEnemy.GetLeftArmMaxHP(), _selectedEnemy.legs.GetLegsMaxHP());
             cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, Attack);
-        }
-
-        if (_selectedChar.CanAttack() == false)
-        {
-            _selectedChar.ResetInRangeLists();
-            DeactivateBodyPartsContainer();
-            buttonExecuteAttack.interactable = false;
-            buttonExecuteAttack.gameObject.SetActive(false);
-            
         }
     }
 
@@ -465,6 +458,11 @@ public class ButtonsUIManager : MonoBehaviour
             }
             _selectedChar.DeactivateAttack();
         }
+        
+        buttonExecuteAttack.interactable = false;
+        buttonExecuteAttack.gameObject.SetActive(false);
+        _selectedChar.ResetInRangeLists();
+        DeactivateBodyPartsContainer();
     }
 
     public void EndTurn()
@@ -595,7 +593,7 @@ public class ButtonsUIManager : MonoBehaviour
         _bulletsForLArm = 0;
         _bulletsForRArm = 0;
         _bulletsForLegs = 0;
-        ExecuteAttack();
+        Attack();
     }
 
     public void AddBulletsToLArm(int quantity)
@@ -604,7 +602,7 @@ public class ButtonsUIManager : MonoBehaviour
         _bulletsForLArm = quantity;
         _bulletsForRArm = 0;
         _bulletsForLegs = 0;
-        ExecuteAttack();
+        Attack();
     }
 
     public void AddBulletsToRArm(int quantity)
@@ -613,7 +611,7 @@ public class ButtonsUIManager : MonoBehaviour
         _bulletsForLArm = 0;
         _bulletsForRArm = quantity;
         _bulletsForLegs = 0;
-        ExecuteAttack();
+        Attack();
     }
 
     public void AddBulletsToLegs(int quantity)
@@ -622,7 +620,7 @@ public class ButtonsUIManager : MonoBehaviour
         _bulletsForLArm = 0;
         _bulletsForRArm = 0;
         _bulletsForLegs = quantity;
-        ExecuteAttack();
+        Attack();
     }
 
     bool CharacterHasBullets(Character c)
