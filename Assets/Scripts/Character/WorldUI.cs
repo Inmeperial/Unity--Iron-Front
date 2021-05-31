@@ -33,9 +33,13 @@ public class WorldUI : MonoBehaviour
     [SerializeField] private GameObject _buttonsContainer;
 
     [SerializeField] private CustomButton _bodyButton;
+    [SerializeField] private Slider _bodyButtonSlider;
     [SerializeField] private CustomButton _leftArmButton;
+    [SerializeField] private Slider _leftArmButtonSlider;
     [SerializeField] private CustomButton _rightArmButton;
+    [SerializeField] private Slider _rightArmButtonSlider;
     [SerializeField] private CustomButton _legsButton;
+    [SerializeField] private Slider _legsButtonSlider;
     private Camera _camera;
 
     // Start is called before the first frame update
@@ -84,23 +88,32 @@ public class WorldUI : MonoBehaviour
         _bodyHpSlider.minValue = 0;
         _bodyDamageSlider.maxValue = bodyMax;
         _bodyDamageSlider.minValue = 0;
+        _bodyButtonSlider.maxValue = bodyMax;
+        _bodyButtonSlider.minValue = 0;
 
         _rightArmHpSlider.maxValue = rArmMax;
         _rightArmHpSlider.minValue = 0;
         _rightArmDamageSlider.maxValue = rArmMax;
         _rightArmDamageSlider.minValue = 0;
+        _rightArmButtonSlider.maxValue = rArmMax;
+        _rightArmButtonSlider.minValue = 0;
 
         _leftArmHpSlider.maxValue = lArmMax;
         _leftArmHpSlider.minValue = 0;
         _leftArmDamageSlider.maxValue = lArmMax;
         _leftArmDamageSlider.minValue = 0;
+        _leftArmButtonSlider.maxValue = lArmMax;
+        _leftArmButtonSlider.minValue = 0;
 
         _legsHpSlider.maxValue = legsMax;
         _legsHpSlider.minValue = 0;
         _legsDamageSlider.maxValue = legsMax;
         _legsDamageSlider.minValue = 0;
+        _legsButtonSlider.maxValue = legsMax;
+        _legsButtonSlider.minValue = 0;
     }
     
+    #region WorldCanvas
    public void SetBodySlider(float quantity)
     {
         if (quantity < 0)
@@ -243,7 +256,9 @@ public class WorldUI : MonoBehaviour
     {
         _attackActionIcon.SetActive(status);
     }
+#endregion
 
+#region WorldButtons
     public void ButtonsContainerSetActive(bool status)
     {
         _buttonsContainer.SetActive(status);
@@ -282,22 +297,30 @@ public class WorldUI : MonoBehaviour
 
     public void SetBodyHpText(int hp)
     {
-        _bodyHpText.text = hp.ToString();
+        var h = hp > 0 ? hp : 0;
+        _bodyHpText.text = h.ToString();
+        _bodyButtonSlider.value = h;
     }
     
     public void SetLeftArmHpText(int hp)
     {
+        var h = hp > 0 ? hp : 0;
         _leftArmHpText.text = hp.ToString();
+        _leftArmButtonSlider.value = h;
     }
     
     public void SetRightArmHpText(int hp)
     {
+        var h = hp > 0 ? hp : 0;
         _rightArmHpText.text = hp.ToString();
+        _rightArmButtonSlider.value = h;
     }
     
     public void SetLegsHpText(int hp)
     {
+        var h = hp > 0 ? hp : 0;
         _legsHpText.text = hp.ToString();
+        _legsButtonSlider.value = h;
     }
 
     public void SetBodyCount(int count)
@@ -319,4 +342,6 @@ public class WorldUI : MonoBehaviour
     {
         _legsCount.text = count.ToString();
     }
+    
+    #endregion
 }

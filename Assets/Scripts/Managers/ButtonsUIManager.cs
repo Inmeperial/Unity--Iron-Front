@@ -766,6 +766,8 @@ public class ButtonsUIManager : MonoBehaviour
                 _selectedEnemy.selectedForAttack = true;
                 FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position, ActivateBodyPartsContainer);
                 playerHudContainer.SetActive(false);
+                _selectedChar.ResetTilesInAttackRange();
+                _selectedChar.ResetTilesInMoveRange();
             }
                 
             else DeactivateBodyPartsContainer();
@@ -947,10 +949,16 @@ public class ButtonsUIManager : MonoBehaviour
         }
         var ui = _selectedEnemy.GetMyUI();
         ui.ButtonsEnabling(bodyInsight, lArmInsight, rArmInsight, legsInsight);
+        
+        
         ui.SetBodyHpText(_selectedEnemy.GetBodyHP());
+
         ui.SetLeftArmHpText(_selectedEnemy.GetLeftArmHP());
+
         ui.SetRightArmHpText(_selectedEnemy.GetRightArmHP());
+
         ui.SetLegsHpText(_selectedEnemy.legs.GetLegsHP());
+
         ui.ButtonsContainerSetActive(true);
     }
 
