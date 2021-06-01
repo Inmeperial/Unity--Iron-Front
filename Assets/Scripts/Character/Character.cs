@@ -483,7 +483,7 @@ public class Character : Teams
         {
             var newTile = target.GetComponent<Tile>();
             //LLAMAR A MOVE
-            if (_targetTile != null && _targetTile == newTile)
+            if (_targetTile && _targetTile == newTile)
             {
                 Move();
             } 

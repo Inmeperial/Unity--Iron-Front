@@ -68,6 +68,7 @@ public class EffectsController : MonoBehaviour
             StartCoroutine(DestroyEffect(t.gameObject, t.GetDuration()));
             yield return new WaitForSeconds(_textSpacingTime);
         }
+        FindObjectOfType<CloseUpCamera>().ResetCamera();
         _list.Clear();
         
         

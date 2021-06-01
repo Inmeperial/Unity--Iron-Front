@@ -457,7 +457,6 @@ public class ButtonsUIManager : MonoBehaviour
             }
             _selectedChar.DeactivateAttack();
         }
-        
         buttonExecuteAttack.interactable = false;
         buttonExecuteAttack.gameObject.SetActive(false);
         _selectedChar.ResetInRangeLists();
