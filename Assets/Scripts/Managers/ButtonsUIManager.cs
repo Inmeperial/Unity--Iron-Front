@@ -100,7 +100,6 @@ public class ButtonsUIManager : MonoBehaviour
             if ((_selectedChar && _selectedChar.IsMoving() == false) && _selectedChar.GetPath().Count > 0 &&
                 Input.GetMouseButtonDown(1))
             {
-                Debug.Log("llamo undo");
                 _selectedChar.pathCreator.UndoLastWaypoint();
             }
                 

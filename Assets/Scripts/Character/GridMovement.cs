@@ -8,6 +8,7 @@ public class GridMovement : MonoBehaviour
     public float tpThreshold;
     public float rotationWatchdog;
     private float _watchdogCounter;
+    private bool _forcedForward;
     List<Tile> _tilesList;
     int _tilesIndex;
     Character _character;
@@ -20,6 +21,7 @@ public class GridMovement : MonoBehaviour
     private Vector3 _posToRotate;
 
     private Action _callback;
+    private Vector3 _nextPos;
     private void Start()
     {
         _character = GetComponent<Character>();
@@ -41,6 +43,7 @@ public class GridMovement : MonoBehaviour
 
     public void StartMovement(List<Tile> tilesList)
     {
+        _forcedForward = false;
         _tilesList = tilesList;
         _tilesIndex = 1;
         _move = true;
@@ -52,15 +55,21 @@ public class GridMovement : MonoBehaviour
         {
             var newPos = _tilesList[_tilesIndex].transform.position;
             newPos.y = _yPosition;
-            if (!CheckIfFacing(newPos))
+            if (_forcedForward == false)
             {
-                _rotate = true;
-                _posToRotate = newPos;
-                return;
+                if (!CheckIfFacing(newPos))
+                {
+                    _rotate = true;
+                    _posToRotate = newPos;
+                    Debug.Log("empiezo a rotar");
+                    return;
+                }  
             }
+            
             Vector3 targetDir = newPos - transform.position;
             if ((newPos - transform.position).magnitude <= tpThreshold)
             {
+                _forcedForward = false;
                 transform.position = newPos;
                 _tilesIndex++;
             }
@@ -79,10 +88,10 @@ public class GridMovement : MonoBehaviour
     
     private void Rotation()
     {
-        
         _watchdogCounter += 1;
         if (CheckIfFacing(_posToRotate) || _watchdogCounter >= rotationWatchdog)
         {
+            _forcedForward = true;
             _watchdogCounter = 0;
             _rotate = false;
             _posToRotate = Vector3.zero;
@@ -96,7 +105,7 @@ public class GridMovement : MonoBehaviour
         Vector3 newDir = Vector3.RotateTowards(transform.forward, dir, step, 0f);
         transform.rotation = Quaternion.LookRotation(newDir);
 
-        }
+    }
 
     private bool CheckIfFacing(Vector3 pos)
     {

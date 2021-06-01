@@ -633,7 +633,6 @@ public class Character : Teams
         }
         ResetInRangeLists();
         GetPath();
-        Debug.Log("path count: " + _path.Count);
         if (_path.Count > 0)
         {
             PaintTilesInMoveRange(_path[_path.Count - 1], 0);
