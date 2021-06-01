@@ -755,13 +755,14 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedChar)
         {
-            if (_selectedEnemy.CanBeAttacked())
+            if (_selectedChar.CanAttack() && _selectedEnemy.CanBeAttacked())
             {
                 _selectedEnemy.selectedForAttack = true;
                 FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position, ActivateBodyPartsContainer);
                 playerHudContainer.SetActive(false);
                 _selectedChar.ResetTilesInAttackRange();
                 _selectedChar.ResetTilesInMoveRange();
+                _selectedChar.selectingEnemy = true;
             }
                 
             else DeactivateBodyPartsContainer();

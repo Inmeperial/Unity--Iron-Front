@@ -62,10 +62,11 @@ public class Character : Teams
     private bool _selected;
     private bool _moving = false;
     private bool _canMove = true;
-    private bool _canAttack = true;
+    public bool _canAttack = true;
     private bool _leftArmAlive;
     private bool _rightArmAlive;
     private bool _canBeAttacked = false;
+    public bool selectingEnemy = false;
     public bool selectedForAttack;
 
     //OTHERS
@@ -192,7 +193,7 @@ public class Character : Teams
     // Update is called once per frame
     void Update()
     {
-        if (_selected && !_moving && _canMove && Input.GetMouseButtonDown(0))
+        if (_selected && !_moving && _canMove && !selectingEnemy && Input.GetMouseButtonDown(0))
         {
             GetTargetToMove();
         }
@@ -752,6 +753,7 @@ public class Character : Teams
     public void DeselectThisUnit()
     {
         _selected = false;
+        selectingEnemy = false;
         if (_myPositionTile)
         {
             _myPositionTile.unitAboveSelected = false;

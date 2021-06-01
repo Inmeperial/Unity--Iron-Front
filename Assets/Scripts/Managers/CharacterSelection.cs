@@ -98,7 +98,7 @@ public class CharacterSelection : MonoBehaviour
                 _enemySelection.SelectedAsEnemy();
                 _buttonsManager.SetEnemy(_enemySelection);
                 _buttonsManager.SetEnemyUI();
-                if (_selection)
+                if (_selection && _selection.CanAttack())
                 {
                     _selection.RotateTowardsEnemy(_enemySelection.transform.position);
                 }
