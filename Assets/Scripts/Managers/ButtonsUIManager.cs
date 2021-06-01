@@ -909,6 +909,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body") && _selectedEnemy.GetBodyHP() > 0)
         {
             bodyInsight = true;
+            
         }
         else
         {

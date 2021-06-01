@@ -286,23 +286,27 @@ public class WorldUI : MonoBehaviour
     {
         _bodyButton.gameObject.SetActive(status);
         _bodyButton.interactable = status;
+        _bodyCount.text = "0";
     }
     
     public void LeftArmEnabling(bool status)
     {
         _leftArmButton.gameObject.SetActive(status);
         _leftArmButton.interactable = status;
+        _leftArmCount.text = "0";
     }
     
     public void RightArmEnabling(bool status)
     {
         _rightArmButton.gameObject.SetActive(status);
         _rightArmButton.interactable = status;
+        _rightArmCount.text = "0";
     }
     public void LegsEnabling(bool status)
     {
         _legsButton.gameObject.SetActive(status);
         _legsButton.interactable = status;
+        _legsCount.text = "0";
     }
 
     public void SetBodyHpText(int hp)
