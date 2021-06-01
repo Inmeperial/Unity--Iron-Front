@@ -106,7 +106,7 @@ public class ButtonsUIManager : MonoBehaviour
                 
         }
 
-        if (_selectedChar && _selectedEnemy && _selectedEnemy.selectedForAttack == false)
+        if (_selectedChar || (_selectedChar && _selectedEnemy && _selectedEnemy.selectedForAttack == false))
         {
             if (Input.GetKeyDown(selectLGunKey))
                 UnitSwapToLeftGun();
