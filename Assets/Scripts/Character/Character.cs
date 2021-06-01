@@ -249,8 +249,12 @@ public class Character : Teams
             buttonsManager.DeactivateBodyPartsContainer();
             turnManager.UnitIsMoving();
             highlight.characterMoving = true;
-            _myPositionTile.unitAboveSelected = false;
-            _myPositionTile.EndMouseOverColor();
+            if (_myPositionTile)
+            {
+                _myPositionTile.unitAboveSelected = false;
+                _myPositionTile.EndMouseOverColor();
+            }
+            
             ResetTilesInMoveRange();
             _smokeMechaHandler.SetMachineOn(true);
             _move.StartMovement(_path);
@@ -662,7 +666,10 @@ public class Character : Teams
         highlight.characterMoving = false;
         highlight.EndPreview();
         _moving = false;
-        _myPositionTile.MakeTileFree();
+        if (_myPositionTile)
+        {
+            _myPositionTile.MakeTileFree();
+        }
         _myPositionTile = _targetTile;
         _myPositionTile.MakeTileOccupied();
         _myPositionTile.SetUnitAbove(this);
@@ -701,8 +708,12 @@ public class Character : Teams
         highlight.PathLinesClear();
         _targetTile = null;
         _myPositionTile = GetTileBelow();
-        _myPositionTile.unitAboveSelected = true;
-        _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
+        if (_myPositionTile)
+        {
+            _myPositionTile.unitAboveSelected = true;
+            _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
+        }
+        
         _mechaMaterlaHandler.SetSelectedMechaMaterial(true);
         if (CanAttack())
         {
@@ -724,7 +735,7 @@ public class Character : Teams
     public void DeselectThisUnit()
     {
         _selected = false;
-        if (_myPositionTile != null)
+        if (_myPositionTile)
         {
             _myPositionTile.unitAboveSelected = false;
             _myPositionTile.EndMouseOverColor();
@@ -752,8 +763,11 @@ public class Character : Teams
     public void SelectedAsEnemy()
     {
         _myPositionTile = GetTileBelow();
-        _myPositionTile.unitAboveSelected = true;
-        _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
+        if (_myPositionTile)
+        {
+            _myPositionTile.unitAboveSelected = true;
+            _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
+        }
     }
 
     //Check if selected object is a tile.
@@ -761,12 +775,12 @@ public class Character : Teams
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return false;
-        if (target != null)
+        if (target)
         {
             if (target.gameObject.layer == LayerMask.NameToLayer("GridBlock"))
             {
                 var tile = target.gameObject.GetComponent<Tile>();
-                if (tile != null && tile.IsWalkable() && tile.IsFree())
+                if (tile && tile.IsWalkable() && tile.IsFree())
                 {
                     return true;
                 }
@@ -910,12 +924,6 @@ public class Character : Teams
         var position = rayOrigin.position;
         var dir = (pos - position).normalized; 
         Physics.Raycast(position, dir, out hit, 1000f);
-        if (hit.collider.transform.parent != null)
-        {
-            Debug.Log("parent name: " + hit.collider.transform.parent.gameObject.name);
-        }
-        else Debug.Log("parent null");
-        Debug.Log("hit name: " + hit.collider.name);
         if (hit.collider.transform.gameObject.CompareTag(tagToCheck))
         {
             Debug.DrawRay(position, dir * 20f, Color.green, 1000f);
