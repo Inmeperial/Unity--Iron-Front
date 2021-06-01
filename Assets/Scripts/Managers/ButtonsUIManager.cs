@@ -400,6 +400,10 @@ public class ButtonsUIManager : MonoBehaviour
             var cam = FindObjectOfType<CloseUpCamera>();
             var ui = _selectedEnemy.GetMyUI();
             ui.SetLimits(_selectedEnemy.GetBodyMaxHP(), _selectedEnemy.GetRightArmMaxHP(), _selectedEnemy.GetLeftArmMaxHP(), _selectedEnemy.legs.GetLegsMaxHP());
+            buttonExecuteAttack.interactable = false;
+            buttonExecuteAttack.gameObject.SetActive(false);
+            _selectedChar.ResetInRangeLists();
+            DeactivateBodyPartsContainer();
             cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, Attack);
         }
     }
@@ -457,10 +461,6 @@ public class ButtonsUIManager : MonoBehaviour
             }
             _selectedChar.DeactivateAttack();
         }
-        buttonExecuteAttack.interactable = false;
-        buttonExecuteAttack.gameObject.SetActive(false);
-        _selectedChar.ResetInRangeLists();
-        DeactivateBodyPartsContainer();
     }
 
     public void EndTurn()
@@ -909,7 +909,6 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body") && _selectedEnemy.GetBodyHP() > 0)
         {
             bodyInsight = true;
-            
         }
         else
         {
