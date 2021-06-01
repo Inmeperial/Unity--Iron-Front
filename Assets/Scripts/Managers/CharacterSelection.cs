@@ -23,9 +23,6 @@ public class CharacterSelection : MonoBehaviour
         _highlight = GetComponent<TileHighlight>();
         _turnManager = FindObjectOfType<TurnManager>();
         _buttonsManager = FindObjectOfType<ButtonsUIManager>();
-
-        if (_buttonsManager == null)
-            Debug.Log("buttons nul");
     }
 
     // Update is called once per frame
@@ -135,7 +132,6 @@ public class CharacterSelection : MonoBehaviour
 
     public void DeselectUnit()
     {
-        Debug.Log("entro al deselect unit del char selection");
         if (_selection)
         {
             _selection.DeselectThisUnit();
@@ -143,7 +139,6 @@ public class CharacterSelection : MonoBehaviour
         }
         if (_enemySelection)
         {
-            Debug.Log("deselect enemy");
             _enemySelection.DeselectThisUnit();
             _enemySelection = null;
         }

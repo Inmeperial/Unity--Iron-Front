@@ -43,7 +43,6 @@ public class GridMovement : MonoBehaviour
     {
         _tilesList = tilesList;
         _tilesIndex = 1;
-        //StartCoroutine(Move(_tilesIndex));
         _move = true;
     }
 

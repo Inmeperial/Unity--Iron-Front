@@ -35,7 +35,6 @@ public class EffectsController : MonoBehaviour
                 particle.time = 0f;
                 particle.Play();
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
-                Debug.Log("damage effect");
                 break;
             
             case "Attack":
@@ -53,7 +52,6 @@ public class EffectsController : MonoBehaviour
     /// </summary>
     public void CreateDamageText(string text, int type, Vector3 position, bool last)
     {
-        Debug.Log("add text");
         var t = Tuple.Create(text, type, position);
         _list.Add(t);
         if (last == true) StartCoroutine(CreateDamageTextWithSpacing());
@@ -63,7 +61,6 @@ public class EffectsController : MonoBehaviour
     {
         for (int i = 0; i < _list.Count; i++)
         {
-            Debug.Log("create text: " + i);
             var myText = _list[i];
             var tObj = Instantiate(_damageText, myText.Item3 + new Vector3(0, i/2,0), Quaternion.identity);
             var t = tObj.GetComponent<DamageText>(); 

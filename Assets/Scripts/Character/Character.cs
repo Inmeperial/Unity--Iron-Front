@@ -93,10 +93,28 @@ public class Character : Teams
     {
         _canBeSelected = true;
         _bodyHP = _bodyMaxHP;
-        _leftArmHP = _leftArmMaxHP;
-        _leftArmAlive = _leftArmHP > 0 ? true : false;
-        _rightArmHP = _rightArmMaxHP;
-        _rightArmAlive = _rightArmHP > 0 ? true : false;
+        if (leftGun)
+        {
+            _leftArmHP = _leftArmMaxHP;
+            _leftArmAlive = _leftArmHP > 0 ? true : false;
+        }
+        else
+        {
+            _leftArmHP = 0;
+            _leftArmAlive = false;
+        }
+        
+        if (rightGun)
+        {
+            _rightArmHP = _rightArmMaxHP;
+            _rightArmAlive = _rightArmHP > 0 ? true : false;
+        }
+        else
+        {
+            _rightArmHP = 0;
+            _rightArmAlive = false;
+        }
+        
         _canMove = legs.GetLegsHP() > 0 ? true : false;
         _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
         _selected = false;
