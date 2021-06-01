@@ -6,6 +6,8 @@ using UnityEngine;
 public class GridMovement : MonoBehaviour
 {
     public float tpThreshold;
+    public float rotationWatchdog;
+    private float _watchdogCounter;
     List<Tile> _tilesList;
     int _tilesIndex;
     Character _character;
@@ -58,7 +60,6 @@ public class GridMovement : MonoBehaviour
                 return;
             }
             Vector3 targetDir = newPos - transform.position;
-            Debug.Log("pos2: " + targetDir.normalized);
             if ((newPos - transform.position).magnitude <= tpThreshold)
             {
                 transform.position = newPos;
@@ -79,19 +80,24 @@ public class GridMovement : MonoBehaviour
     
     private void Rotation()
     {
-        if (CheckIfFacing(_posToRotate))
+        
+        _watchdogCounter += 1;
+        if (CheckIfFacing(_posToRotate) || _watchdogCounter >= rotationWatchdog)
         {
+            _watchdogCounter = 0;
             _rotate = false;
             _posToRotate = Vector3.zero;
             if (_callback != null)
                 _callback();
             return;
         }
+        
         float step = _rotationSpeed * Time.deltaTime;
         Vector3 dir = (_posToRotate - transform.position).normalized;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, dir, step, 0f);
         transform.rotation = Quaternion.LookRotation(newDir);
-    }
+
+        }
 
     private bool CheckIfFacing(Vector3 pos)
     {

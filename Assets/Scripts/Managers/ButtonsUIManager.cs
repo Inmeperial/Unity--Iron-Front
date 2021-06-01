@@ -524,7 +524,7 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void UnitSwapToLeftGun()
     {
-        if (_selectedChar != null && _selectedChar.LeftArmAlive())
+        if (_selectedChar && _selectedChar.LeftArmAlive())
         {
             BodyClear();
             LeftArmClear();
@@ -539,12 +539,11 @@ public class ButtonsUIManager : MonoBehaviour
                 ActivateBodyPartsContainer();
             else DeactivateBodyPartsContainer();
         }
-        else Debug.Log("left arm broken");
     }
 
     public void UnitSwapToRightGun()
     {
-        if (_selectedChar != null && _selectedChar.RightArmAlive())
+        if (_selectedChar && _selectedChar.RightArmAlive())
         {
             BodyClear();
             LeftArmClear();
@@ -559,7 +558,6 @@ public class ButtonsUIManager : MonoBehaviour
                 ActivateBodyPartsContainer();
             else DeactivateBodyPartsContainer();
         }
-        else Debug.Log("right arm broken");
     }
 
     public void ShowAllWorldUI()
