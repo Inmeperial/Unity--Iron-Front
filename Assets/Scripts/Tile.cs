@@ -77,7 +77,7 @@ public class Tile : MonoBehaviour
         if (Physics.Raycast(transform.position, dir, out hit, d))
         {
             var neighbour = hit.collider.GetComponent<Tile>();
-            if (neighbour != null && neighbour.isWalkable)
+            if (neighbour && neighbour.isWalkable)
                 if (!neighboursForMove.Contains(neighbour))
                     neighboursForMove.Add(neighbour);
         }
@@ -93,7 +93,7 @@ public class Tile : MonoBehaviour
         if (Physics.Raycast(transform.position, dir, out hit, d))
         {
             var neighbour = hit.collider.GetComponent<Tile>();
-            if (neighbour != null)
+            if (neighbour)
                 if (!allNeighbours.Contains(neighbour) && !_hasTileAbove)
                     allNeighbours.Add(neighbour);
         }
