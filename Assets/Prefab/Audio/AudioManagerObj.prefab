@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5397392927978874571
+--- !u!1 &196955068879980004
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5397392927978874568}
-  - component: {fileID: 5397392927978874569}
+  - component: {fileID: 196955068441256135}
+  - component: {fileID: 196955068879980011}
   m_Layer: 0
   m_Name: AudioManagerObj
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5397392927978874568
+--- !u!4 &196955068441256135
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5397392927978874571}
+  m_GameObject: {fileID: 196955068879980004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.12292099, y: -3.6005573, z: 2.1521263}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,13 +31,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5397392927978874569
+--- !u!114 &196955068879980011
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5397392927978874571}
+  m_GameObject: {fileID: 196955068879980004}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c635a64964c10a4fbbda29a9f8d5963, type: 3}
@@ -60,6 +60,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 14971f7d9e4423e4d9e324ce74b5d8a2, type: 3}
     loop: 1
     volume: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 173185af4c6172c4a9beeab9d4856faa, type: 3}
+    loop: 0
+    volume: 0.6
   _environmentalSounds:
   - source: {fileID: 0}
     clip: {fileID: 8300000, guid: c84148cbee0efc745bceac992c617748, type: 3}
