@@ -735,6 +735,7 @@ public class Character : Teams
         if (_myPositionTile)
         {
             _myPositionTile.unitAboveSelected = true;
+            _myPositionTile.MakeTileFree();
             _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
         }
         
@@ -760,8 +761,10 @@ public class Character : Teams
     {
         _selected = false;
         selectingEnemy = false;
+        _myPositionTile = GetTileBelow();
         if (_myPositionTile)
         {
+            _myPositionTile.MakeTileOccupied();
             _myPositionTile.unitAboveSelected = false;
             _myPositionTile.EndMouseOverColor();
         }
@@ -805,7 +808,7 @@ public class Character : Teams
             if (target.gameObject.layer == LayerMask.NameToLayer("GridBlock"))
             {
                 var tile = target.gameObject.GetComponent<Tile>();
-                if (tile && tile.IsWalkable() && tile.IsFree())
+                if ((tile && tile.IsWalkable() && tile.IsFree() && tile.inMoveRange) || tile == _targetTile)
                 {
                     return true;
                 }
