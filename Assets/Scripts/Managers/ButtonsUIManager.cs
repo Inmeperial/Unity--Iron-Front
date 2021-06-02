@@ -68,7 +68,7 @@ public class ButtonsUIManager : MonoBehaviour
     [SerializeField] private Character _selectedEnemy;
     private TurnManager _turnManager;
     private int _partsSelected;
-
+    private SoundsMenu _soundsMenuManager;
 
     private bool bodyInsight;
     private bool legsInsight;
@@ -85,6 +85,7 @@ public class ButtonsUIManager : MonoBehaviour
         _buttonLegsSelected = false;
 
         _charSelection = FindObjectOfType<CharacterSelection>();
+        _soundsMenuManager = FindObjectOfType<SoundsMenu>();
         _turnManager = FindObjectOfType<TurnManager>();
         gridBlock = _charSelection.gridBlockMask;
     }
@@ -524,6 +525,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedChar && _selectedChar.LeftArmAlive())
         {
+            AudioManager.audioManagerInstance.PlaySound(_soundsMenuManager.GetClickSound(), _soundsMenuManager.GetObjectToAddAudioSource());
             BodyClear();
             LeftArmClear();
             RightArmClear();
@@ -543,6 +545,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedChar && _selectedChar.RightArmAlive())
         {
+            AudioManager.audioManagerInstance.PlaySound(_soundsMenuManager.GetClickSound(), _soundsMenuManager.GetObjectToAddAudioSource());
             BodyClear();
             LeftArmClear();
             RightArmClear();

@@ -50,7 +50,6 @@ public class Character : Teams
     //MOVEMENT RELATED
     public IPathCreator pathCreator;
     private GridMovement _move;
-    private SmokeMechaHandler _smokeMechaHandler;
     public LayerMask block;
     [SerializeField]private List<Tile> _tilesInMoveRange = new List<Tile>();
     [SerializeField]private Tile _myPositionTile;
@@ -76,8 +75,11 @@ public class Character : Teams
     private List<Character> _enemiesInRange = new List<Character>();
     private WorldUI _myUI;
     private MechaMaterialhandler _mechaMaterlaHandler;
+    private SmokeMechaHandler _smokeMechaHandler;
     public EffectsController effectsController;
-    
+    public AudioClip soundMotorStart;
+    public AudioClip soundWalk;
+
     private const int _missHit = 0;
     private const int _normalHit = 1;
     private const int _criticalHit = 2;
@@ -275,6 +277,8 @@ public class Character : Teams
             }
             
             ResetTilesInMoveRange();
+            AudioManager.audioManagerInstance.PlaySound(soundMotorStart, this.gameObject);
+            AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
             _smokeMechaHandler.SetMachineOn(true);
             _move.StartMovement(_path);
         }
@@ -697,6 +701,8 @@ public class Character : Teams
         turnManager.UnitStoppedMoving();
         pathCreator.ResetPath();
         _tilesForAttackChecked.Clear();
+        AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,this.gameObject);
+        AudioManager.audioManagerInstance.StopSound(soundWalk,this.gameObject);
         _smokeMechaHandler.SetMachineOn(false);
 
         if (CanAttack())

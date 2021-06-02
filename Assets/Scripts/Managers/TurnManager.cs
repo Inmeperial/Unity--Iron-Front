@@ -13,8 +13,10 @@ public class TurnManager : Teams
     [SerializeField] TileHighlight _highlight;
     ButtonsUIManager _buttonsManager;
     public TextMeshProUGUI teamText;
-    public string _CapsuleTeamText = "Capsule Team Turn.";
-    public string _BoxTeamText = "Box Team Turn.";
+    //public string _CapsuleTeamText = "Capsule Team Turn.";
+    //public string _BoxTeamText = "Box Team Turn.";
+    public GameObject flag1;
+    public GameObject flag2;
     
     public Team _activeTeam;
     void Start()
@@ -25,7 +27,18 @@ public class TurnManager : Teams
         _highlight = FindObjectOfType<TileHighlight>();
         _buttonsManager = FindObjectOfType<ButtonsUIManager>();
         _activeTeam = Team.Capsule;
-        teamText.text = _CapsuleTeamText;
+        //teamText.text = _CapsuleTeamText;
+        if (_activeTeam == Team.Capsule)
+        {
+            flag1.SetActive(true);
+            flag2.SetActive(false);
+        }
+        else
+        {
+            flag1.SetActive(false);
+            flag2.SetActive(true);
+        }
+      
     }
 
     public void UnitIsMoving()
@@ -64,13 +77,17 @@ public class TurnManager : Teams
             if (_activeTeam == Team.Capsule)
             {
                 _activeTeam = Team.Box;
-                teamText.text = _BoxTeamText;
+                //teamText.text = _BoxTeamText;
+                flag2.SetActive(true);
+                flag1.SetActive(false);
                 ResetTurn(_boxTeam);
             }
             else
             {
                 _activeTeam = Team.Capsule;
-                teamText.text = _CapsuleTeamText;
+                //teamText.text = _CapsuleTeamText;
+                flag1.SetActive(true);
+                flag2.SetActive(false);
                 ResetTurn(_capsuleTeam);
             }
         }

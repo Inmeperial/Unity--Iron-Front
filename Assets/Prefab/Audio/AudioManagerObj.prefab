@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5397392927978874571
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5397392927978874568}
+  - component: {fileID: 5397392927978874569}
+  m_Layer: 0
+  m_Name: AudioManagerObj
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5397392927978874568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5397392927978874571}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.12292099, y: -3.6005573, z: 2.1521263}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5397392927978874569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5397392927978874571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c635a64964c10a4fbbda29a9f8d5963, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sounds:
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: f6927dd45633d5b4880085b77efda8fc, type: 3}
+    loop: 0
+    volume: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: b59f13be2472d514ca0bf84fe935c5f2, type: 3}
+    loop: 0
+    volume: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 2edd383291de62941af11fff69e0908b, type: 3}
+    loop: 0
+    volume: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 14971f7d9e4423e4d9e324ce74b5d8a2, type: 3}
+    loop: 1
+    volume: 1
+  _environmentalSounds:
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: c84148cbee0efc745bceac992c617748, type: 3}
+    loop: 0
+    volume: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 04eb68a1d9881844ca89f72b189d6996, type: 3}
+    loop: 0
+    volume: 1
+  _environmentalFXSounds:
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: b4f8a0b2abed813409d573a01505157a, type: 3}
+    loop: 0
+    volume: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 4b05bbfc90b2204488c046d4443a14fb, type: 3}
+    loop: 0
+    volume: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 7a8e59a1f01f53f429c21edd83601bcc, type: 3}
+    loop: 0
+    volume: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 26fd7f7e8d2e80c40ac7cc5abef7f201, type: 3}
+    loop: 0
+    volume: 0.2
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 897a9c7ec4a40f9428430afeefb768bb, type: 3}
+    loop: 0
+    volume: 0.2
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 2ba9f6087c1763146a400a99f4816adb, type: 3}
+    loop: 0
+    volume: 0.2
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 0c9b8215f68516d4bbb05ee8eb85b21d, type: 3}
+    loop: 0
+    volume: 0.7
