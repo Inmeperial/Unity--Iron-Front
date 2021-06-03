@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class CloseUpCamera : MonoBehaviour
 {
-    public float speed;
+    public float speed = 25f;
 
-    public float height;
-    
-    public float threshold;
+	public float minHeight = 5f;
+	public float maxHeight = 8f;
+    public float threshold = 15f;
     
     [Header("1 closest to player")]
     [Header("0 closest to enemy")]
     [Header("0 to 1 (float)")]
-    public float lerp;
+    public float lerp = .9f;
     private  Camera _cam;
     private  Camera _mainCam;
     private void Start()
@@ -29,8 +29,12 @@ public class CloseUpCamera : MonoBehaviour
         FindObjectOfType<CameraMovement>().LockCamera(true);
         _cam.enabled = true;
         _mainCam.enabled = false;
-        enemyPosToLerp.y = height;
-        playerPosToLerp.y = height;
+		//Calcular el height según la distancia de las dos unidades y, clampearla en un min y max
+		var distanceHeight = Vector3.Distance(enemyPosToLerp, playerPosToLerp);
+		var clampedHeight = Mathf.Clamp(distanceHeight, minHeight, maxHeight);
+		enemyPosToLerp.y = clampedHeight;
+		playerPosToLerp.y = clampedHeight;
+		
         var destination = Vector3.Lerp(enemyPosToLerp, playerPosToLerp, lerp);
         StartCoroutine(Move(destination, enemyPosToLerp, callback));
     }
