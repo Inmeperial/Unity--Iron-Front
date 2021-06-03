@@ -46,6 +46,7 @@ public class Mortar : MonoBehaviour, IObserver
         _actionsDic.Add("EndTurn", ExecuteAttack);
         _actionsDic.Add("Deselect", Deselect);
         GetTilesInActivationRange();
+        GetTilesInAttackRange(_myPositionTile, 0);
     }
 
     // Update is called once per frame
@@ -58,7 +59,11 @@ public class Mortar : MonoBehaviour, IObserver
             {
                 _selected = true;
                 _highlight.PaintTilesInActivationRange(_tilesInActivationRange);
-                PaintTilesInAttackRange(_myPositionTile, 0);
+                foreach (var tiles in _tilesInAttackRange)
+                {
+                    tiles.inAttackRange = true;
+                    _highlight.PaintTilesInAttackRange(tiles);
+                }
             }
         }
 
@@ -77,9 +82,17 @@ public class Mortar : MonoBehaviour, IObserver
                     Debug.Log("character list reset");
                     _activationCharacter.ResetInRangeLists();
                 }
+                
                 _highlight.PaintTilesInActivationRange(_tilesInActivationRange);
-                PaintTilesInAttackRange(_myPositionTile, 0);
+                
+                foreach (var tiles in _tilesInAttackRange)
+                {
+                    tiles.inAttackRange = true;
+                    _highlight.PaintTilesInAttackRange(tiles);
+                }
+                
                 var tile = target.GetComponent<Tile>();
+                
                 if (_last == null || tile != _last)
                 {
                     _last = tile;
@@ -111,7 +124,7 @@ public class Mortar : MonoBehaviour, IObserver
         return false;
     }
 
-    private void PaintTilesInAttackRange(Tile currentTile, int count)
+    private void GetTilesInAttackRange(Tile currentTile, int count)
     {
         if (count >= _shootRange || (_tilesForAttackChecked.ContainsKey(currentTile) &&
                                      _tilesForAttackChecked[currentTile] <= count))
@@ -126,12 +139,9 @@ public class Mortar : MonoBehaviour, IObserver
                 if (!tile.HasTileAbove() && tile.IsWalkable())
                 {
                     _tilesInAttackRange.Add(tile);
-                    tile.inAttackRange = true;
-                    _highlight.PaintTilesInAttackRange(tile);
                 }
             }
-
-            PaintTilesInAttackRange(tile, count + 1);
+            GetTilesInAttackRange(tile, count + 1);
         }
     }
 
@@ -200,7 +210,6 @@ public class Mortar : MonoBehaviour, IObserver
             _tilesInActivationRange.Add(tile.transform.GetComponent<Tile>());
         }
     }
-
     private void OnDrawGizmos()
     {
         if (drawGizmo)
