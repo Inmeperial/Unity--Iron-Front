@@ -83,7 +83,7 @@ public class Mortar : MonoBehaviour, IObserver
                     _activationCharacter.ResetInRangeLists();
                 }
                 
-                _highlight.PaintTilesInActivationRange(_tilesInActivationRange);
+                //_highlight.PaintTilesInActivationRange(_tilesInActivationRange);
                 
                 foreach (var tiles in _tilesInAttackRange)
                 {
@@ -92,6 +92,8 @@ public class Mortar : MonoBehaviour, IObserver
                 }
                 
                 var tile = target.GetComponent<Tile>();
+                
+                if (tile == _myPositionTile) return;
                 
                 if (_last == null || tile != _last)
                 {
