@@ -44,6 +44,7 @@ public class Mortar : MonoBehaviour, IObserver
         _myPositionTile = GetTileBelow();
         _selected = false;
         _actionsDic.Add("EndTurn", ExecuteAttack);
+        _actionsDic.Add("Deselect", Deselect);
         GetTilesInActivationRange();
     }
 
@@ -63,15 +64,7 @@ public class Mortar : MonoBehaviour, IObserver
 
         if (Input.GetKeyDown(_deselectKey))
         {
-            _selected = false;
-            _highlight.ClearTilesInActivationRange(_tilesInActivationRange);
-            _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
-            _highlight.ClearTilesInPreview(_tilesInPreviewRange);
-            _tilesInAttackRange.Clear();
-            _tilesForAttackChecked.Clear();
-            _tilesInPreviewRange.Clear();
-            _tilesForPreviewChecked.Clear();
-            _last = null;
+            Deselect();
         }
 
         if (!_attackPending && _selected && SelectedPlayerAbove() && Input.GetMouseButtonDown(0))
@@ -243,6 +236,18 @@ public class Mortar : MonoBehaviour, IObserver
             }
         }
         _tilesToAttack.Clear();
+    }
 
+    private void Deselect()
+    {
+        _selected = false;
+        _highlight.ClearTilesInActivationRange(_tilesInActivationRange);
+        _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
+        _highlight.ClearTilesInPreview(_tilesInPreviewRange);
+        _tilesInAttackRange.Clear();
+        _tilesForAttackChecked.Clear();
+        _tilesInPreviewRange.Clear();
+        _tilesForPreviewChecked.Clear();
+        _last = null;
     }
 }

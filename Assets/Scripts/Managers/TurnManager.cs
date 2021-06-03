@@ -97,6 +97,7 @@ public class TurnManager : Teams, IObservable
             }
             
             NotifyObserver("EndTurn");
+            NotifyObserver("Deselect");
         }
     }
 
