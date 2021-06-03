@@ -31,7 +31,7 @@ public class Mortar : MonoBehaviour, IObserver
     private Tile _last;
 
     private HashSet<Tile> _tilesInActivationRange = new HashSet<Tile>();
-    
+    private Character _activationCharacter;
     delegate void Execute();
     Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
     private bool _attackPending = false;
@@ -72,6 +72,12 @@ public class Mortar : MonoBehaviour, IObserver
             var target = MouseRay.GetTargetTransform(_gridBlock);
             if (IsValidTarget(target))
             {
+                if (_activationCharacter)
+                {
+                    Debug.Log("character list reset");
+                    _activationCharacter.ResetInRangeLists();
+                }
+                _highlight.PaintTilesInActivationRange(_tilesInActivationRange);
                 PaintTilesInAttackRange(_myPositionTile, 0);
                 var tile = target.GetComponent<Tile>();
                 if (_last == null || tile != _last)
@@ -88,7 +94,6 @@ public class Mortar : MonoBehaviour, IObserver
                 }
             }
         }
-        else Debug.Log("no puedo atacar");
     }
 
     private bool SelectedPlayerAbove()
@@ -98,7 +103,10 @@ public class Mortar : MonoBehaviour, IObserver
         {
             var character = tile.GetUnitAbove();
             if (PlayerIsSelected(character, selector))
+            {
+                _activationCharacter = character;
                 return true;
+            }
         }
         return false;
     }
@@ -119,11 +127,7 @@ public class Mortar : MonoBehaviour, IObserver
                 {
                     _tilesInAttackRange.Add(tile);
                     tile.inAttackRange = true;
-                    if (tile.inMoveRange)
-                    {
-                        _highlight.PaintTilesInMoveAndAttackRange(tile);
-                    }
-                    else _highlight.PaintTilesInAttackRange(tile);
+                    _highlight.PaintTilesInAttackRange(tile);
                 }
             }
 
