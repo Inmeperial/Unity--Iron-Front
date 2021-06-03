@@ -150,6 +150,7 @@ public class CharacterSelection : MonoBehaviour
 
     public bool PlayerIsSelected(Character character)
     {
-        return character == _selection;
+        if (_selection) return character == _selection;
+        return false;
     }
 }

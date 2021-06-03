@@ -200,6 +200,8 @@ public class Mortar : MonoBehaviour, IObserver
         _tilesToAttack = _tilesInPreviewRange;
         _attackPending = true;
         _turnCount = 0;
+        _activationCharacter.DeactivateAttack();
+        _activationCharacter = null;
         Debug.Log("PREPARING ATTACK");
     }
 
