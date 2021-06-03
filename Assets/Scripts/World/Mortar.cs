@@ -101,6 +101,7 @@ public class Mortar : MonoBehaviour, IObserver
                     _highlight.ClearTilesInPreview(_tilesInPreviewRange);
                     _tilesInPreviewRange.Clear();
                     _tilesForPreviewChecked.Clear();
+                    _tilesToAttack.Clear();
                     PaintTilesInPreviewRange(_last, 0);
                 }
                 else if (tile == _last)
@@ -162,6 +163,7 @@ public class Mortar : MonoBehaviour, IObserver
                 if (!tile.HasTileAbove() && tile.IsWalkable())
                 {
                     _tilesInPreviewRange.Add(tile);
+                    _tilesToAttack.Add(tile);
                     tile.inPreviewRange = true;
                     _highlight.PaintTilesInPreviewRange(tile);
                 }
@@ -197,7 +199,8 @@ public class Mortar : MonoBehaviour, IObserver
 
     private void PrepareAttack()
     {
-        _tilesToAttack = _tilesInPreviewRange;
+        //_tilesToAttack = _tilesInPreviewRange;
+        Debug.Log("to attack: " + _tilesToAttack.Count);
         _attackPending = true;
         _turnCount = 0;
         _activationCharacter.DeactivateAttack();
@@ -236,11 +239,9 @@ public class Mortar : MonoBehaviour, IObserver
         _turnCount++;
         Debug.Log("turn count: " + _turnCount);
         if (_turnCount < 2) return;
-        
         Debug.Log("ATTACK PUM PUM");
-        _attackPending = false;
-        _turnCount = 0;
-
+        
+        Debug.Log("to attack: " + _tilesToAttack.Count);
         foreach (var tile in _tilesToAttack)
         {
             var unit = tile.GetCharacterAbove();
@@ -253,6 +254,8 @@ public class Mortar : MonoBehaviour, IObserver
             }
         }
         _tilesToAttack.Clear();
+        _attackPending = false;
+        _turnCount = 0;
     }
 
     private void Deselect()
