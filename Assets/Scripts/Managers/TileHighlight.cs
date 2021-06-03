@@ -173,4 +173,20 @@ public class TileHighlight : MonoBehaviour
     {
         _lineRenderer.positionCount = 0;
     }
+
+    public void PaintTilesInActivationRange(HashSet<Tile> tiles)
+    {
+        foreach (var tile in tiles)
+        {
+            tile.ActivationRangeColor();
+        }
+    }
+
+    public void ClearTilesInActivationRange(HashSet<Tile> tiles)
+    {
+        foreach (var tile in tiles)
+        {
+            tile.EndActivationRangeColor();
+        }
+    }
 }

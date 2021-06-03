@@ -19,7 +19,7 @@ public class GizmoWindow : EditorWindow
 
     private void OnGUI()
     {
-        if (GUILayout.Button("Gizmo On/Off"))
+        if (GUILayout.Button("Tiles Gizmo On/Off"))
         {
             var tiles = FindObjectsOfType<Tile>();
             foreach (var tile in tiles)

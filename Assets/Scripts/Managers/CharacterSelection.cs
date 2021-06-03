@@ -16,7 +16,8 @@ public class CharacterSelection : MonoBehaviour
     ButtonsUIManager _buttonsManager;
     public bool _canSelectUnit;
     private Character _enemySelection;
-    
+
+    public bool playerSelected;
     private void Start()
     {
         _canSelectUnit = true;
@@ -142,5 +143,10 @@ public class CharacterSelection : MonoBehaviour
             _enemySelection.DeselectThisUnit();
             _enemySelection = null;
         }
+    }
+
+    public bool PlayerIsSelected()
+    {
+        return playerSelected;
     }
 }

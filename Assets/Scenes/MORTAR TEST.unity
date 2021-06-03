@@ -1740,6 +1740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f16f8006e5e5d04280460e30a3325d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activationTilesDetectionRange: 9.57
   _mortarMask:
     serializedVersion: 2
     m_Bits: 8192
@@ -1751,7 +1752,7 @@ MonoBehaviour:
   _aoe: 3
   _damage: 0
   _selected: 0
-  _selectingCharacter: 0
+  drawGizmo: 1
 --- !u!136 &26822457
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13140,6 +13141,8 @@ GameObject:
   m_Component:
   - component: {fileID: 254303126}
   - component: {fileID: 254303125}
+  - component: {fileID: 254303128}
+  - component: {fileID: 254303127}
   m_Layer: 0
   m_Name: highlight
   m_TagString: Untagged
@@ -13178,6 +13181,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &254303127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254303124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd14718fc209a45429ae8aaf76f40349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _capsuleTeam: []
+  _boxTeam: []
+  _charSelect: {fileID: 0}
+  _highlight: {fileID: 0}
+  teamText: {fileID: 0}
+  flag1: {fileID: 0}
+  flag2: {fileID: 0}
+  _activeTeam: 0
+--- !u!114 &254303128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254303124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac614e5475dc0f14081507464d25a795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charMask:
+    serializedVersion: 2
+    m_Bits: 0
+  gridBlockMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _canSelectUnit: 0
+  playerSelected: 0
 --- !u!1 &262900817
 GameObject:
   m_ObjectHideFlags: 0

@@ -132,39 +132,22 @@ public class Tile : MonoBehaviour
     {
         isWalkable = true;
         _hasTileAbove = false;
-        // var mat = new Material(render.sharedMaterial);
-        // mat.color = Color.green;
-        //
-        // render.sharedMaterial = mat;
     }
     //Make this tile not walkable.
     public void MakeNotWalkableColor()
     {
         isWalkable = false;
-        // var mat = new Material(render.sharedMaterial);
-        // mat.color = Color.red;
-        //
-        // render.sharedMaterial = mat;
     }
 
     //Change tile color for pathfinding preview.
     public void InMoveRangeColor()
     {
-        //_planeForMoveMat.color = colorForMove;
-
-        //_planeForMoveRender.material = _planeForMoveMat;
-        //_planeForAttackRender.enabled = true;
-
         _materialHandler.StatusToMove();
         _materialHandler.DiseableAndEnableStatus(true);
     }
 
     public void EndInMoveRangeColor()
     {
-        //_planeForMoveMat.color = colorDefaultClear;
-
-        //_planeForMoveRender.material = _planeForMoveMat;
-        //_planeForAttackRender.enabled = false;
         inMoveRange = false;
         _materialHandler.DiseableAndEnableStatus(false);
     }
@@ -173,29 +156,17 @@ public class Tile : MonoBehaviour
 
     public void MouseOverColor()
     {
-        //_planeForMouseMat.color = colorForMouse;
-
-        //_planeForMouseRender.material = _planeForMouseMat;
-        //_planeForMouseRender.enabled = true;
         _materialHandler.DiseableAndEnableSelectedNode(true);
     }
 
     public void EndMouseOverColor()
     {
-        //_planeForMouseMat.color = colorDefaultClear;
-
-        //_planeForMouseRender.material = _planeForMouseMat;
-        //_planeForMouseRender.enabled = false;
         if(!unitAboveSelected)
             _materialHandler.DiseableAndEnableSelectedNode(false);
     }
 
     public void CanBeAttackedColor()
     {
-        //_planeForAttackMat.color = colorForAttack;
-
-        //_planeForAttackRender.material = _planeForAttackMat;
-        //_planeForAttackRender.enabled = true;
         _materialHandler.StatusToAttack();
         _materialHandler.DiseableAndEnableStatus(true);
     }
@@ -230,6 +201,18 @@ public class Tile : MonoBehaviour
     {
         inPreviewRange = false;
         EndMouseOverColor();
+    }
+    
+    //CAMBIAR CUANDO ESTE EL SHADER
+    public void ActivationRangeColor()
+    {
+        Debug.Log("ACTIVATION RANGE");
+    }
+
+    //CAMBIAR CUANDO ESTE EL SHADER
+    public void EndActivationRangeColor()
+    {
+        Debug.Log("END ACTIVATION RANGE");
     }
     #endregion
 

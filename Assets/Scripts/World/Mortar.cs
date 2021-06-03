@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Security.Policy;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Mortar : MonoBehaviour
 {
+    public float activationTilesDetectionRange;
     [SerializeField] private LayerMask _mortarMask;
     [SerializeField] private LayerMask _gridBlock;
     [SerializeField] private KeyCode _deselectKey;
@@ -22,18 +25,21 @@ public class Mortar : MonoBehaviour
 
     [SerializeField] private bool _selected;
 
-    [SerializeField] private bool _selectingCharacter;
-
     private Tile _myPositionTile;
 
     private Tile _last;
+
+    private HashSet<Tile> _tilesInActivationRange = new HashSet<Tile>();
+
+    public bool drawGizmo;
     // Start is called before the first frame update
     private void Start()
     {
         _highlight = FindObjectOfType<TileHighlight>();
         _myPositionTile = GetTileBelow();
         _selected = false;
-        _selectingCharacter = false;
+        
+        GetTilesInActivationRange();
     }
 
     // Update is called once per frame
@@ -41,19 +47,19 @@ public class Mortar : MonoBehaviour
     {
         if (!_selected && Input.GetMouseButtonDown(0))
         {
-            
+
             if (MouseRay.GetTargetGameObject(_mortarMask))
             {
                 _selected = true;
+                _highlight.PaintTilesInActivationRange(_tilesInActivationRange);
                 PaintTilesInAttackRange(_myPositionTile, 0);
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) _selectingCharacter = !_selectingCharacter;
-
         if (Input.GetKeyDown(_deselectKey))
         {
             _selected = false;
+            _highlight.ClearTilesInActivationRange(_tilesInActivationRange);
             _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
             _highlight.ClearTilesInPreview(_tilesInPreviewRange);
             _tilesInAttackRange.Clear();
@@ -63,7 +69,7 @@ public class Mortar : MonoBehaviour
             _last = null;
         }
 
-        if (_selected && _selectingCharacter && Input.GetMouseButtonDown(0))
+        if (_selected && PlayerIsSelected() && Input.GetMouseButtonDown(0))
         {
             var target = MouseRay.GetTargetTransform(_gridBlock);
             if (IsValidTarget(target))
@@ -88,9 +94,10 @@ public class Mortar : MonoBehaviour
 
     private void PaintTilesInAttackRange(Tile currentTile, int count)
     {
-        if (count >= _shootRange || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
+        if (count >= _shootRange || (_tilesForAttackChecked.ContainsKey(currentTile) &&
+                                     _tilesForAttackChecked[currentTile] <= count))
             return;
-        
+
         _tilesForAttackChecked[currentTile] = count;
 
         foreach (var tile in currentTile.allNeighbours)
@@ -108,15 +115,17 @@ public class Mortar : MonoBehaviour
                     else _highlight.PaintTilesInAttackRange(tile);
                 }
             }
+
             PaintTilesInAttackRange(tile, count + 1);
         }
     }
-    
+
     private void PaintTilesInPreviewRange(Tile currentTile, int count)
     {
-        if (count >= _aoe || (_tilesForPreviewChecked.ContainsKey(currentTile) && _tilesForPreviewChecked[currentTile] <= count))
+        if (count >= _aoe || (_tilesForPreviewChecked.ContainsKey(currentTile) &&
+                              _tilesForPreviewChecked[currentTile] <= count))
             return;
-        
+
         _tilesForPreviewChecked[currentTile] = count;
 
         foreach (var tile in currentTile.allNeighbours)
@@ -130,10 +139,11 @@ public class Mortar : MonoBehaviour
                     _highlight.PaintTilesInPreviewRange(tile);
                 }
             }
+
             PaintTilesInPreviewRange(tile, count + 1);
         }
     }
-    
+
     public Tile GetTileBelow()
     {
         RaycastHit hit;
@@ -144,17 +154,43 @@ public class Mortar : MonoBehaviour
     private bool IsValidTarget(Transform target)
     {
         if (EventSystem.current.IsPointerOverGameObject()) return false;
-        
+
         if (!target) return false;
-        
+
         if (target.gameObject.layer != LayerMask.NameToLayer("GridBlock")) return false;
-        
+
         var tile = target.gameObject.GetComponent<Tile>();
         return tile && tile.inAttackRange;
+    }
+
+    private bool PlayerIsSelected()
+    {
+        var selector = FindObjectOfType<CharacterSelection>();
+        return selector.PlayerIsSelected();
     }
 
     private void Attack()
     {
         Debug.Log("PUM PUM PUM");
+    }
+
+    public void GetTilesInActivationRange()
+    {
+        var tiles = Physics.OverlapSphere(transform.position, activationTilesDetectionRange, _gridBlock);
+
+        foreach (var tile in tiles)
+        {
+            _tilesInActivationRange.Add(tile.transform.GetComponent<Tile>());
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (drawGizmo)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, activationTilesDetectionRange);
+        }
+            
     }
 }
