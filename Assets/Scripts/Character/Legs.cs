@@ -51,6 +51,23 @@ public class Legs : MonoBehaviour
         return _legsHP;
     }
     
+    public void TakeDamageLegs(int damage)
+    {
+        var ui = _myChar.GetMyUI();
+        ui.SetRightArmSlider(_legsHP);
+        var hp = _legsHP - damage;
+        _legsHP = hp > 0 ? hp : 0;
+        if (_legsHP <= 0)
+        {
+            _myChar.SetCharacterMove(false);
+        }
+        _myChar.effectsController.PlayParticlesEffect(transform.position, "Damage");
+        _myChar.effectsController.CreateDamageText(damage.ToString(), 1, transform.position, true);
+        ui.ContainerActivation(true);
+        ui.UpdateLeftArmSlider(damage, _legsHP);
+        _myChar.MakeNotAttackable();
+    }
+    
     public void TakeDamageFromMine(int damage)
     {
         var ui = _myChar.GetMyUI();
@@ -68,8 +85,6 @@ public class Legs : MonoBehaviour
         _myChar.effectsController.PlayParticlesEffect(transform.position, "Damage");
         _myChar.effectsController.CreateDamageText(damage.ToString(), 1, transform.position, true);
         //_myChar.ShowWorldUI();
-        
-       
     }
 
     public float GetRotationSpeed()

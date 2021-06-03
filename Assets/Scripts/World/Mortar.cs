@@ -21,9 +21,10 @@ public class Mortar : MonoBehaviour, IObserver
     private HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
     private HashSet<Tile> _tilesInPreviewRange = new HashSet<Tile>();
 
+    private HashSet<Tile> _tilesToAttack = new HashSet<Tile>();
     private TileHighlight _highlight;
 
-    [SerializeField] private bool _selected = false;
+    private bool _selected = false;
 
     private Tile _myPositionTile;
 
@@ -187,6 +188,7 @@ public class Mortar : MonoBehaviour, IObserver
 
     private void PrepareAttack()
     {
+        _tilesToAttack = _tilesInPreviewRange;
         _attackPending = true;
         _turnCount = 0;
         Debug.Log("PREPARING ATTACK");
@@ -228,6 +230,19 @@ public class Mortar : MonoBehaviour, IObserver
         Debug.Log("ATTACK PUM PUM");
         _attackPending = false;
         _turnCount = 0;
+
+        foreach (var tile in _tilesToAttack)
+        {
+            var unit = tile.GetCharacterAbove();
+            if (unit)
+            {
+                unit.TakeDamageBody(_damage);
+                unit.TakeDamageLeftArm(_damage);
+                unit.TakeDamageRightArm(_damage);
+                unit.legs.TakeDamageLegs(_damage);
+            }
+        }
+        _tilesToAttack.Clear();
 
     }
 }

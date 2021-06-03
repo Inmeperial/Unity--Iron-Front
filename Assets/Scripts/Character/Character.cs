@@ -318,6 +318,22 @@ public class Character : Teams
         _myUI.UpdateBodySlider(total, _bodyHP);
         MakeNotAttackable();
     }
+    
+    public void TakeDamageBody(int damage)
+    {
+        _myUI.SetBodySlider(_bodyHP);
+        var hp = _bodyHP - damage;
+        _bodyHP = hp > 0 ? hp : 0;
+        if (_bodyHP <= 0)
+        {
+            NotSelectable();
+        }
+        effectsController.PlayParticlesEffect(_bodyTransform.position, "Damage");
+        effectsController.CreateDamageText(damage.ToString(), 1, _bodyTransform.position, true);
+        _myUI.ContainerActivation(true);
+        _myUI.UpdateBodySlider(damage, _bodyHP);
+        MakeNotAttackable();
+    }
 
     public void TakeDamageLeftArm(List<Tuple<int,int>> damages)
     {
@@ -349,6 +365,19 @@ public class Character : Teams
         CheckArms();
         _myUI.ContainerActivation(true);
         _myUI.UpdateLeftArmSlider(total, _leftArmHP);
+        MakeNotAttackable();
+    }
+    
+    public void TakeDamageLeftArm(int damage)
+    {
+        _myUI.SetLeftArmSlider(_leftArmHP);
+        var hp = _leftArmHP - damage;
+        _leftArmHP = hp > 0 ? hp : 0;
+        _leftArmAlive = _leftArmHP > 0 ? true : false;
+        effectsController.PlayParticlesEffect(_lArmTransform.position, "Damage");
+        effectsController.CreateDamageText(damage.ToString(), 1, _lArmTransform.position, true);
+        _myUI.ContainerActivation(true);
+        _myUI.UpdateLeftArmSlider(damage, _leftArmHP);
         MakeNotAttackable();
     }
 
@@ -383,6 +412,19 @@ public class Character : Teams
         CheckArms();
         _myUI.ContainerActivation(true);
         _myUI.UpdateRightArmSlider(total, _rightArmHP);
+        MakeNotAttackable();
+    }
+    
+    public void TakeDamageRightArm(int damage)
+    {
+        _myUI.SetRightArmSlider(_rightArmHP);
+        var hp = _rightArmHP - damage;
+        _rightArmHP = hp > 0 ? hp : 0;
+        _rightArmAlive = _rightArmHP > 0 ? true : false;
+        effectsController.PlayParticlesEffect(_rArmTransform.position, "Damage");
+        effectsController.CreateDamageText(damage.ToString(), 1, _rArmTransform.position, true);
+        _myUI.ContainerActivation(true);
+        _myUI.UpdateLeftArmSlider(damage, _rightArmHP);
         MakeNotAttackable();
     }
 

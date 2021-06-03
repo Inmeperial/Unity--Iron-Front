@@ -398,6 +398,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedEnemy)
         {
+            buttonEndTurn.gameObject.SetActive(false);
             var cam = FindObjectOfType<CloseUpCamera>();
             var ui = _selectedEnemy.GetMyUI();
             ui.SetLimits(_selectedEnemy.GetBodyMaxHP(), _selectedEnemy.GetRightArmMaxHP(), _selectedEnemy.GetLeftArmMaxHP(), _selectedEnemy.legs.GetLegsMaxHP());
@@ -461,6 +462,7 @@ public class ButtonsUIManager : MonoBehaviour
                 gun.Ability();
             }
             _selectedChar.DeactivateAttack();
+            buttonEndTurn.gameObject.SetActive(true);
         }
     }
 

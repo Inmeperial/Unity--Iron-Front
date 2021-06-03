@@ -271,7 +271,7 @@ public class Tile : MonoBehaviour
     {
         RaycastHit hit;
         Physics.Raycast(transform.position, transform.up, out hit, 3, characterMask);
-        if (hit.transform != null)
+        if (hit.transform)
             return hit.transform.GetComponent<Character>();
         else return null;
     }
