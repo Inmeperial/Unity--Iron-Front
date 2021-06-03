@@ -799,24 +799,17 @@ public class Character : Teams
     }
 
     //Check if selected object is a tile.
-    bool IsValidTarget(Transform target)
+    private bool IsValidTarget(Transform target)
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-            return false;
-        if (target)
-        {
-            if (target.gameObject.layer == LayerMask.NameToLayer("GridBlock"))
-            {
-                var tile = target.gameObject.GetComponent<Tile>();
-                if ((tile && tile.IsWalkable() && tile.IsFree() && tile.inMoveRange) || tile == _targetTile)
-                {
-                    return true;
-                }
-                else return false;
-            }
-            return false;
-        }
-        else return false;
+        if (EventSystem.current.IsPointerOverGameObject()) return false;
+        
+        if (!target) return false;
+        
+        if (target.gameObject.layer != LayerMask.NameToLayer("GridBlock")) return false;
+        
+        var tile = target.gameObject.GetComponent<Tile>();
+        
+        return (tile && tile.IsWalkable() && tile.IsFree() && tile.inMoveRange) || tile == _targetTile;
     }
 
     void CheckEnemiesInAttackRange()

@@ -33,7 +33,7 @@ public class TileHighlight : MonoBehaviour
     void RayToTile()
     {
         var obj = MouseRay.GetTargetTransform(tileMask);
-        if (obj != null && obj.CompareTag("GridBlock"))
+        if (obj && obj.CompareTag("GridBlock"))
         {
             var tile = obj.gameObject.GetComponent<Tile>();
             if (tile.IsWalkable())
@@ -95,6 +95,11 @@ public class TileHighlight : MonoBehaviour
         tile.CanMoveAndAttackColor();
     }
 
+    public void PaintTilesInPreviewRange(Tile tile)
+    {
+        tile.InAttackPreviewColor();
+    }
+
     public void AddTilesInMoveRange(List<Tile> tiles)
     {
         _inMoveRangeTiles.Push(tiles);
@@ -115,6 +120,14 @@ public class TileHighlight : MonoBehaviour
         {
             item.EndInMoveRangeColor();
             item.EndCanMoveAndAttackColor();
+        }
+    }
+
+    public void ClearTilesInPreview(HashSet<Tile> tiles)
+    {
+        foreach (var tile in tiles)
+        {
+            tile.EndAttackPreviewColor();
         }
     }
     #endregion

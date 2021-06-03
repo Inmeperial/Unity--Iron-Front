@@ -11,7 +11,7 @@ public class MouseRay : MonoBehaviour
     {
         RaycastHit hit;
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(mouseRay, out hit, mask))
+        if (Physics.Raycast(mouseRay, out hit, Mathf.Infinity, mask))
             return hit.transform;
 
         return null;
@@ -24,7 +24,7 @@ public class MouseRay : MonoBehaviour
     {
         RaycastHit hit;
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(mouseRay, out hit, mask))
+        if (Physics.Raycast(mouseRay, out hit, Mathf.Infinity, mask))
             return hit.transform.gameObject;
 
         return null;

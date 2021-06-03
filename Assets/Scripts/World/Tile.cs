@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.VFX.Utility;
 
 
 public class Tile : MonoBehaviour
@@ -24,17 +25,16 @@ public class Tile : MonoBehaviour
 
     public bool inMoveRange;
     public bool inAttackRange;
+    public bool inPreviewRange;
     public bool unitAboveSelected;
     private void Awake()
     {
         _isFree = true;
-    }
-    private void Start()
-    {
         _materialHandler = GetComponent<TileMaterialhandler>();
 
         inMoveRange = false;
         inAttackRange = false;
+        inPreviewRange = false;
         unitAboveSelected = false;
     }
 
@@ -132,19 +132,19 @@ public class Tile : MonoBehaviour
     {
         isWalkable = true;
         _hasTileAbove = false;
-        var mat = new Material(render.sharedMaterial);
-        mat.color = Color.green;
-
-        render.sharedMaterial = mat;
+        // var mat = new Material(render.sharedMaterial);
+        // mat.color = Color.green;
+        //
+        // render.sharedMaterial = mat;
     }
     //Make this tile not walkable.
     public void MakeNotWalkableColor()
     {
         isWalkable = false;
-        var mat = new Material(render.sharedMaterial);
-        mat.color = Color.red;
-
-        render.sharedMaterial = mat;
+        // var mat = new Material(render.sharedMaterial);
+        // mat.color = Color.red;
+        //
+        // render.sharedMaterial = mat;
     }
 
     //Change tile color for pathfinding preview.
@@ -218,6 +218,19 @@ public class Tile : MonoBehaviour
         inAttackRange = false;
         _materialHandler.DiseableAndEnableStatus(false);
     }
+    
+    //CAMBIAR CUANDO ESTE EL SHADER
+    public void InAttackPreviewColor()
+    {
+        MouseOverColor();
+    }
+
+    //CAMBIAR CUANDO ESTE EL SHADER
+    public void EndAttackPreviewColor()
+    {
+        inPreviewRange = false;
+        EndMouseOverColor();
+    }
     #endregion
 
     public bool IsFree()
@@ -279,4 +292,6 @@ public class Tile : MonoBehaviour
             return hit.transform.GetComponent<Character>();
         else return null;
     }
+
+    
 }
