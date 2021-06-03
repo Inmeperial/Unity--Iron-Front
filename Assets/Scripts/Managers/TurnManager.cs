@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-public class TurnManager : Teams
+public class TurnManager : Teams, IObservable
 {
     [SerializeField] List<Character> _capsuleTeam = new List<Character>();
     [SerializeField] List<Character> _boxTeam = new List<Character>();
@@ -13,12 +13,12 @@ public class TurnManager : Teams
     [SerializeField] TileHighlight _highlight;
     ButtonsUIManager _buttonsManager;
     public TextMeshProUGUI teamText;
-    //public string _CapsuleTeamText = "Capsule Team Turn.";
-    //public string _BoxTeamText = "Box Team Turn.";
     public GameObject flag1;
     public GameObject flag2;
     
-    public Team _activeTeam;
+    private Team _activeTeam;
+    
+    private List<IObserver> _observers = new List<IObserver>();
     void Start()
     {
         var units = FindObjectsOfType<Character>();
@@ -38,7 +38,12 @@ public class TurnManager : Teams
             flag1.SetActive(false);
             flag2.SetActive(true);
         }
-      
+
+        var mortars = FindObjectsOfType<Mortar>();
+        foreach (var mortar in mortars)
+        {
+            Subscribe(mortar);
+        }
     }
 
     public void UnitIsMoving()
@@ -90,6 +95,8 @@ public class TurnManager : Teams
                 flag2.SetActive(false);
                 ResetTurn(_capsuleTeam);
             }
+            
+            NotifyObserver("EndTurn");
         }
     }
 
@@ -121,5 +128,25 @@ public class TurnManager : Teams
     public Tile GetUnitTile(Character unit)
     {
         return unit.GetTileBelow();
+    }
+
+    public void Subscribe(IObserver observer)
+    {
+        if (_observers.Contains(observer) == false)
+            _observers.Add(observer);
+    }
+
+    public void Unsuscribe(IObserver observer)
+    {
+        if (_observers.Contains(observer))
+            _observers.Remove(observer);
+    }
+
+    public void NotifyObserver(string action)
+    {
+        for (int i = _observers.Count - 1; i >= 0; i--)
+        {
+            _observers[i].Notify(action);
+        }
     }
 }

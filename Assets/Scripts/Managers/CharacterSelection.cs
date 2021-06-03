@@ -79,6 +79,8 @@ public class CharacterSelection : MonoBehaviour
                     _enemySelection.DeselectThisUnit();
                     _enemySelection = null;
                 }
+
+                playerSelected = true;
                 _selection = c;
                 _selection.SelectThisUnit();
                 _highlight.ChangeActiveCharacter(_selection);
@@ -135,6 +137,7 @@ public class CharacterSelection : MonoBehaviour
     {
         if (_selection)
         {
+            playerSelected = false;
             _selection.DeselectThisUnit();
             _selection = null;
         }
@@ -145,8 +148,8 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
-    public bool PlayerIsSelected()
+    public bool PlayerIsSelected(Character character)
     {
-        return playerSelected;
+        return character == _selection;
     }
 }

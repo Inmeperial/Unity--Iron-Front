@@ -5,7 +5,7 @@ using System.Security.Policy;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Mortar : MonoBehaviour
+public class Mortar : MonoBehaviour, IObserver
 {
     public float activationTilesDetectionRange;
     [SerializeField] private LayerMask _mortarMask;
@@ -23,14 +23,18 @@ public class Mortar : MonoBehaviour
 
     private TileHighlight _highlight;
 
-    [SerializeField] private bool _selected;
+    [SerializeField] private bool _selected = false;
 
     private Tile _myPositionTile;
 
     private Tile _last;
 
     private HashSet<Tile> _tilesInActivationRange = new HashSet<Tile>();
-
+    
+    delegate void Execute();
+    Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
+    private bool _attackPending = false;
+    private int _turnCount = 0;
     public bool drawGizmo;
     // Start is called before the first frame update
     private void Start()
@@ -38,7 +42,7 @@ public class Mortar : MonoBehaviour
         _highlight = FindObjectOfType<TileHighlight>();
         _myPositionTile = GetTileBelow();
         _selected = false;
-        
+        _actionsDic.Add("EndTurn", ExecuteAttack);
         GetTilesInActivationRange();
     }
 
@@ -69,7 +73,7 @@ public class Mortar : MonoBehaviour
             _last = null;
         }
 
-        if (_selected && PlayerIsSelected() && Input.GetMouseButtonDown(0))
+        if (!_attackPending && _selected && SelectedPlayerAbove() && Input.GetMouseButtonDown(0))
         {
             var target = MouseRay.GetTargetTransform(_gridBlock);
             if (IsValidTarget(target))
@@ -86,10 +90,23 @@ public class Mortar : MonoBehaviour
                 }
                 else if (tile == _last)
                 {
-                    Attack();
+                    PrepareAttack();
                 }
             }
         }
+        else Debug.Log("no puedo atacar");
+    }
+
+    private bool SelectedPlayerAbove()
+    {
+        var selector = FindObjectOfType<CharacterSelection>();
+        foreach (var tile in _tilesInActivationRange)
+        {
+            var character = tile.GetUnitAbove();
+            if (PlayerIsSelected(character, selector))
+                return true;
+        }
+        return false;
     }
 
     private void PaintTilesInAttackRange(Tile currentTile, int count)
@@ -163,18 +180,19 @@ public class Mortar : MonoBehaviour
         return tile && tile.inAttackRange;
     }
 
-    private bool PlayerIsSelected()
+    private bool PlayerIsSelected(Character character, CharacterSelection selector)
     {
-        var selector = FindObjectOfType<CharacterSelection>();
-        return selector.PlayerIsSelected();
+        return selector.PlayerIsSelected(character);
     }
 
-    private void Attack()
+    private void PrepareAttack()
     {
-        Debug.Log("PUM PUM PUM");
+        _attackPending = true;
+        _turnCount = 0;
+        Debug.Log("PREPARING ATTACK");
     }
 
-    public void GetTilesInActivationRange()
+    private void GetTilesInActivationRange()
     {
         var tiles = Physics.OverlapSphere(transform.position, activationTilesDetectionRange, _gridBlock);
 
@@ -192,5 +210,24 @@ public class Mortar : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, activationTilesDetectionRange);
         }
             
+    }
+
+    public void Notify(string action)
+    {
+        _actionsDic[action]();
+    }
+
+    private void ExecuteAttack()
+    {
+        if (!_attackPending) return;
+
+        _turnCount++;
+        Debug.Log("turn count: " + _turnCount);
+        if (_turnCount < 2) return;
+        
+        Debug.Log("ATTACK PUM PUM");
+        _attackPending = false;
+        _turnCount = 0;
+
     }
 }
