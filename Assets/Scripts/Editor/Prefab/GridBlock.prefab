@@ -211,7 +211,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5613293744069766106}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -299,10 +299,8 @@ MonoBehaviour:
   AttackMaterial: {fileID: 2100000, guid: 2529b5e9d10bf6541a8a82b6ea7bb78e, type: 2}
   AttackAndMoveMaterial: {fileID: 2100000, guid: 6d08a60b7aa3ead4f926f1fc48ed3152,
     type: 2}
-  shaderMortarAoEAttack: {fileID: 2100000, guid: 194f9162a912e9c40bc6e80a61004d92,
-    type: 2}
-  shaderMortarBulletToAoEAttack: {fileID: 2100000, guid: 0eee7c4caca71a3468ea2a1cab344ec4,
-    type: 2}
+  shaderMortarAoeAttack: {fileID: 0}
+  shaderMortarBulletToAoeAttack: {fileID: 0}
 --- !u!1 &6662823064708721208
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +318,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7716025411525887186
 Transform:
   m_ObjectHideFlags: 0
