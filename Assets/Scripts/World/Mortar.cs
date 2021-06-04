@@ -221,6 +221,7 @@ public class Mortar : MonoBehaviour, IObserver
         _turnCount = 0;
         _activationCharacter.DeactivateAttack();
         _activationCharacter = null;
+        Deselect();
         Debug.Log("PREPARING ATTACK");
     }
 
