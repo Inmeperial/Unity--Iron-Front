@@ -51,9 +51,9 @@ public class Character : Teams
     public IPathCreator pathCreator;
     private GridMovement _move;
     public LayerMask block;
-    [SerializeField]private List<Tile> _tilesInMoveRange = new List<Tile>();
-    [SerializeField]private Tile _myPositionTile;
-    [SerializeField]private Tile _targetTile;
+    private List<Tile> _tilesInMoveRange = new List<Tile>();
+    private Tile _myPositionTile;
+    private Tile _targetTile;
     [SerializeField]private List<Tile> _path = new List<Tile>();
 
     //FLAGS
@@ -79,9 +79,6 @@ public class Character : Teams
     public EffectsController effectsController;
     public AudioClip soundMotorStart;
     public AudioClip soundWalk;
-    public AudioClip soundShotShootGun;
-    public AudioClip soundShotRifle;
-    public AudioClip soundShotAssalutRiffle;
 
     private const int _missHit = 0;
     private const int _normalHit = 1;
@@ -533,7 +530,7 @@ public class Character : Teams
         {
             var newTile = target.GetComponent<Tile>();
             //LLAMAR A MOVE
-            if (_targetTile && _targetTile == newTile)
+            if (_targetTile && _targetTile == newTile && _path.Count > 0)
             {
                 Move();
             } 
@@ -677,20 +674,20 @@ public class Character : Teams
     
     public void Undo()
     {
-        foreach (var item in _enemiesInRange)
-        {
-            turnManager.UnitCantBeAttacked(item);
-        }
         ResetInRangeLists();
         GetPath();
-        if (_path.Count > 0)
+        
+        if (_path.Count > 1)
         {
+            _targetTile = _path[_path.Count - 1];
             PaintTilesInMoveRange(_path[_path.Count - 1], 0);
             if (CanAttack())
                 PaintTilesInAttackRange(_path[_path.Count - 1], 0);
         }
         else
         {
+            _targetTile = null;
+            pathCreator.ResetPath();
             PaintTilesInMoveRange(_myPositionTile, 0);
             if (CanAttack())
                 PaintTilesInAttackRange(_myPositionTile, 0);
@@ -1015,23 +1012,6 @@ public class Character : Teams
         if (_rightGunSelected)
         {
             effectsController.PlayParticlesEffect(_rArmTransform.position, "Attack");
-            if (rightGun.GetGunType() == Gun.GunType.Shotgun)
-            {
-                AudioManager.audioManagerInstance.PlaySound(soundShotShootGun, this.gameObject);
-                return;
-            }
-            if (rightGun.GetGunType() == Gun.GunType.Rifle)
-            {
-                AudioManager.audioManagerInstance.PlaySound(soundShotRifle, this.gameObject);
-                return;
-            }
-            if (rightGun.GetGunType() == Gun.GunType.AssaultRifle)
-            {
-                AudioManager.audioManagerInstance.PlaySound(soundShotAssalutRiffle, this.gameObject);
-                return;
-            }
-
-
         }
         else if (_leftGunSelected)
         {
@@ -1045,10 +1025,3 @@ public class Character : Teams
         return _myUI;
     }
 }
-//public enum GunType
-//{
-//    AssaultRifle,
-//    Melee,
-//    Rifle,
-//    Shotgun
-//}

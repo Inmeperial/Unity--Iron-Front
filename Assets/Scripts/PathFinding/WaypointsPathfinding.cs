@@ -5,7 +5,7 @@ using UnityEngine;
 public class WaypointsPathfinding : MonoBehaviour, IPathCreator
 {
     [SerializeField] private AStarAgent _agent;
-    private List<Tile> _fullMovePath = new List<Tile>();
+    [SerializeField] private List<Tile> _fullMovePath = new List<Tile>();
     private Stack<List<Tile>> _partialPaths = new Stack<List<Tile>>();
     private Character _char;
     void Start()
@@ -99,16 +99,15 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
                 foreach (var item in tempStack)
                 {
                     _fullMovePath.AddRange(item);
-
                 }
                 if (_fullMovePath == null || _fullMovePath.Count == 0)
                 {
                     _char.ClearTargetTile();
                 }
-                else
-                {
-                    _char.SetTargetTile(_fullMovePath[_fullMovePath.Count - 1]);
-                }
+                // else
+                // {
+                //     _char.SetTargetTile(_fullMovePath[_fullMovePath.Count - 1]);
+                // }
 
                 _char.Undo();
             }
