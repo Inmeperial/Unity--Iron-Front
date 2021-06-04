@@ -3,7 +3,22 @@ guid: f87c23ccb0b6cbc4aa8129dfa78b4734
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Armadura
+    second: {fileID: 2100000, guid: e38f1a930a18d7946a59db7630baae73, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Articulaciones y Detalles
+    second: {fileID: 2100000, guid: 91bb8fea70f092c438c691db1e521817, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cuerpo
+    second: {fileID: 2100000, guid: 5baf3cb152032bb4fb04472eecb928f3, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
