@@ -52,63 +52,79 @@ public class Mortar : MonoBehaviour, IObserver
     // Update is called once per frame
     private void Update()
     {
-        if (!_selected && Input.GetMouseButtonDown(0))
-        {
-
-            if (MouseRay.GetTargetGameObject(_mortarMask))
-            {
-                _selected = true;
-                _highlight.PaintTilesInActivationRange(_tilesInActivationRange);
-                foreach (var tiles in _tilesInAttackRange)
-                {
-                    tiles.inAttackRange = true;
-                    _highlight.PaintTilesInAttackRange(tiles);
-                }
-            }
-        }
-
         if (Input.GetKeyDown(_deselectKey))
         {
             Deselect();
         }
 
-        if (!_attackPending && _selected && SelectedPlayerAbove() && Input.GetMouseButtonDown(0))
+        if (!_attackPending && Input.GetMouseButtonDown(0))
         {
-            var target = MouseRay.GetTargetTransform(_gridBlock);
-            if (IsValidTarget(target))
+            if (MouseRay.GetTargetGameObject(_mortarMask))
             {
-                if (_activationCharacter)
+                _selected = true;
+                if (SelectedPlayerAbove())
                 {
+                    Debug.Log("hago la seleccion con mecha");
                     Debug.Log("character list reset");
                     _activationCharacter.ResetInRangeLists();
                 }
-                
-                //_highlight.PaintTilesInActivationRange(_tilesInActivationRange);
-                
+                else
+                {
+                    _highlight.PaintTilesInActivationRange(_tilesInActivationRange);                    
+                }
                 foreach (var tiles in _tilesInAttackRange)
                 {
                     tiles.inAttackRange = true;
                     _highlight.PaintTilesInAttackRange(tiles);
                 }
-                
-                var tile = target.GetComponent<Tile>();
-                
-                if (tile == _myPositionTile) return;
-                
-                if (_last == null || tile != _last)
+            }
+            else if (_selected)
+            {
+                var target = MouseRay.GetTargetTransform(_gridBlock);
+                if (IsValidTarget(target))
                 {
-                    _last = tile;
-                    _highlight.ClearTilesInPreview(_tilesInPreviewRange);
-                    _tilesInPreviewRange.Clear();
-                    _tilesForPreviewChecked.Clear();
-                    _tilesToAttack.Clear();
-                    PaintTilesInPreviewRange(_last, 0);
-                }
-                else if (tile == _last)
-                {
-                    PrepareAttack();
+                    Debug.Log("selecciono tile");
+                    if (_activationCharacter)
+                    {
+                        Debug.Log("character list reset");
+                        _activationCharacter.ResetInRangeLists();
+                    }
+
+                    //_highlight.PaintTilesInActivationRange(_tilesInActivationRange);
+
+                    foreach (var tiles in _tilesInAttackRange)
+                    {
+                        Debug.Log("pinto tiles en rango de ataque");
+                        tiles.inAttackRange = true;
+                        _highlight.PaintTilesInAttackRange(tiles);
+                    }
+
+                    var tile = target.GetComponent<Tile>();
+
+                    if (tile == _myPositionTile)
+                    {
+                        Debug.Log("es mi tile");
+                        return;
+                    }
+
+                    if (_last == null || tile != _last)
+                    {
+                        Debug.Log("pinto tiles en preview de ataque");
+                        _last = tile;
+                        _highlight.ClearTilesInPreview(_tilesInPreviewRange);
+                        _tilesInPreviewRange.Clear();
+                        _tilesForPreviewChecked.Clear();
+                        _tilesToAttack.Clear();
+                        PaintTilesInPreviewRange(_last, 0);
+                    }
+                    else if (tile == _last && SelectedPlayerAbove())
+                    {
+                        Debug.Log("preparo el ataque");
+                        PrepareAttack();
+                    }
                 }
             }
+            
         }
     }
 
@@ -256,6 +272,7 @@ public class Mortar : MonoBehaviour, IObserver
         _tilesToAttack.Clear();
         _attackPending = false;
         _turnCount = 0;
+        Deselect();
     }
 
     private void Deselect()
@@ -264,8 +281,6 @@ public class Mortar : MonoBehaviour, IObserver
         _highlight.ClearTilesInActivationRange(_tilesInActivationRange);
         _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
         _highlight.ClearTilesInPreview(_tilesInPreviewRange);
-        _tilesInAttackRange.Clear();
-        _tilesForAttackChecked.Clear();
         _tilesInPreviewRange.Clear();
         _tilesForPreviewChecked.Clear();
         _last = null;
