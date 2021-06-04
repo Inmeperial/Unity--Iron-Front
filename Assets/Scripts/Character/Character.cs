@@ -530,7 +530,7 @@ public class Character : Teams
         {
             var newTile = target.GetComponent<Tile>();
             //LLAMAR A MOVE
-            if (_targetTile && _targetTile == newTile)
+            if (_targetTile && _targetTile == newTile && _path.Count > 0)
             {
                 Move();
             } 
@@ -680,14 +680,17 @@ public class Character : Teams
         }
         ResetInRangeLists();
         GetPath();
+        
         if (_path.Count > 0)
         {
+            _targetTile = _path[_path.Count - 1];
             PaintTilesInMoveRange(_path[_path.Count - 1], 0);
             if (CanAttack())
                 PaintTilesInAttackRange(_path[_path.Count - 1], 0);
         }
         else
         {
+            _targetTile = null;
             PaintTilesInMoveRange(_myPositionTile, 0);
             if (CanAttack())
                 PaintTilesInAttackRange(_myPositionTile, 0);
@@ -1011,7 +1014,7 @@ public class Character : Teams
     {
         if (_rightGunSelected)
         {
-            effectsController.PlayParticlesEffect(_rArmTransform.position, "Attack");            
+            effectsController.PlayParticlesEffect(_rArmTransform.position, "Attack");
         }
         else if (_leftGunSelected)
         {
