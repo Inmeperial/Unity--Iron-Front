@@ -38,8 +38,9 @@ public class WorldUI : MonoBehaviour
     [Header("Actions")]
     [SerializeField] private GameObject _moveActionIcon;
     [SerializeField] private GameObject _attackActionIcon;
-    
-    [Header("Buttons")]
+
+    [Header("Buttons")] 
+    [SerializeField] private float _forwardMultiplier;
     [SerializeField] private GameObject _buttonsContainer;
 
     [SerializeField] private CustomButton _bodyButton;
@@ -284,6 +285,7 @@ public class WorldUI : MonoBehaviour
 
     public void BodyEnabling(bool status)
     {
+        _bodyButton.transform.position += -_bodyButton.transform.forward * _forwardMultiplier; 
         _bodyButton.gameObject.SetActive(status);
         _bodyButton.interactable = status;
         _bodyCount.text = "0";
@@ -291,6 +293,7 @@ public class WorldUI : MonoBehaviour
     
     public void LeftArmEnabling(bool status)
     {
+        _leftArmButton.transform.position += -_leftArmButton.transform.forward * _forwardMultiplier;
         _leftArmButton.gameObject.SetActive(status);
         _leftArmButton.interactable = status;
         _leftArmCount.text = "0";
@@ -298,12 +301,14 @@ public class WorldUI : MonoBehaviour
     
     public void RightArmEnabling(bool status)
     {
+        _rightArmButton.transform.position += -_rightArmButton.transform.forward * _forwardMultiplier;
         _rightArmButton.gameObject.SetActive(status);
         _rightArmButton.interactable = status;
         _rightArmCount.text = "0";
     }
     public void LegsEnabling(bool status)
     {
+        _legsButton.transform.position += -_legsButton.transform.forward * _forwardMultiplier;
         _legsButton.gameObject.SetActive(status);
         _legsButton.interactable = status;
         _legsCount.text = "0";
