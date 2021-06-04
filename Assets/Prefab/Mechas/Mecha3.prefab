@@ -98,6 +98,8 @@ MonoBehaviour:
   _myPositionTile: {fileID: 0}
   _targetTile: {fileID: 0}
   _path: []
+  _canAttack: 1
+  selectingEnemy: 0
   selectedForAttack: 0
   effectsController: {fileID: 0}
   soundMotorStart: {fileID: 8300000, guid: 2edd383291de62941af11fff69e0908b, type: 3}
@@ -164,6 +166,7 @@ MonoBehaviour:
   _legsCount: {fileID: 3041002498136629851}
   _moveActionIcon: {fileID: 5289546547695918865}
   _attackActionIcon: {fileID: 645418161891798775}
+  _forwardMultiplier: -1
   _buttonsContainer: {fileID: 2771230670437877773}
   _bodyButton: {fileID: 3831324262073801661}
   _bodyButtonSlider: {fileID: 8603928986292913}
