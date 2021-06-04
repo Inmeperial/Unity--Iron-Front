@@ -7,6 +7,8 @@ public class TileMaterialhandler : MonoBehaviour
     public Material MoveMaterial;
     public Material AttackMaterial;
     public Material AttackAndMoveMaterial;
+    public Material shaderMortarAoeAttack;
+    public Material shaderMortarBulletToAoeAttack;
     //----------------------
     private Renderer _rend;
     private Transform _childStatusNode;
@@ -116,6 +118,26 @@ public class TileMaterialhandler : MonoBehaviour
 
         _sharedMaterialCopy = _rend.sharedMaterial;
         _sharedMaterialCopy = AttackAndMoveMaterial;
+        _rend.sharedMaterial = _sharedMaterialCopy;
+    }
+
+    public void StatusMortarAoEOfAttack()
+    {
+        _rend = _childStatusNode.gameObject.GetComponent<Renderer>();
+        _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
+
+        _sharedMaterialCopy = _rend.sharedMaterial;
+        _sharedMaterialCopy = shaderMortarAoeAttack;
+        _rend.sharedMaterial = _sharedMaterialCopy;
+    }
+
+    public void StatusMortarBulletAoEOfAttack()
+    {
+        _rend = _childStatusNode.gameObject.GetComponent<Renderer>();
+        _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
+
+        _sharedMaterialCopy = _rend.sharedMaterial;
+        _sharedMaterialCopy = shaderMortarBulletToAoeAttack;
         _rend.sharedMaterial = _sharedMaterialCopy;
     }
 

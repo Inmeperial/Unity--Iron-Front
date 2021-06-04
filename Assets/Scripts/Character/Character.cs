@@ -51,9 +51,9 @@ public class Character : Teams
     public IPathCreator pathCreator;
     private GridMovement _move;
     public LayerMask block;
-    [SerializeField]private List<Tile> _tilesInMoveRange = new List<Tile>();
-    [SerializeField]private Tile _myPositionTile;
-    [SerializeField]private Tile _targetTile;
+    private List<Tile> _tilesInMoveRange = new List<Tile>();
+    private Tile _myPositionTile;
+    private Tile _targetTile;
     [SerializeField]private List<Tile> _path = new List<Tile>();
 
     //FLAGS
@@ -674,14 +674,10 @@ public class Character : Teams
     
     public void Undo()
     {
-        foreach (var item in _enemiesInRange)
-        {
-            turnManager.UnitCantBeAttacked(item);
-        }
         ResetInRangeLists();
         GetPath();
         
-        if (_path.Count > 0)
+        if (_path.Count > 1)
         {
             _targetTile = _path[_path.Count - 1];
             PaintTilesInMoveRange(_path[_path.Count - 1], 0);
@@ -691,6 +687,7 @@ public class Character : Teams
         else
         {
             _targetTile = null;
+            pathCreator.ResetPath();
             PaintTilesInMoveRange(_myPositionTile, 0);
             if (CanAttack())
                 PaintTilesInAttackRange(_myPositionTile, 0);

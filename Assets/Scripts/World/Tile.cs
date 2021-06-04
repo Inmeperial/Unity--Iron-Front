@@ -27,6 +27,7 @@ public class Tile : MonoBehaviour
     public bool inAttackRange;
     public bool inPreviewRange;
     public bool unitAboveSelected;
+    
     private void Awake()
     {
         _isFree = true;
@@ -193,6 +194,8 @@ public class Tile : MonoBehaviour
     //CAMBIAR CUANDO ESTE EL SHADER
     public void InAttackPreviewColor()
     {
+        _materialHandler.DiseableAndEnableStatus(true);
+        _materialHandler.StatusMortarBulletAoEOfAttack();
         MouseOverColor();
     }
 
@@ -200,12 +203,15 @@ public class Tile : MonoBehaviour
     public void EndAttackPreviewColor()
     {
         inPreviewRange = false;
+        _materialHandler.DiseableAndEnableStatus(true);
         EndMouseOverColor();
     }
     
     //CAMBIAR CUANDO ESTE EL SHADER
     public void ActivationRangeColor()
     {
+        _materialHandler.DiseableAndEnableStatus(true);
+        _materialHandler.StatusMortarAoEOfAttack();
         Debug.Log("ACTIVATION RANGE");
     }
 
