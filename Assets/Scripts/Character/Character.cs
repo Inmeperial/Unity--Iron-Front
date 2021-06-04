@@ -735,11 +735,7 @@ public class Character : Teams
             _myPositionTile.MakeTileFree();
         }
         _myPositionTile = _targetTile;
-        _myPositionTile.MakeTileOccupied();
-        _myPositionTile.SetUnitAbove(this);
-        _myPositionTile.unitAboveSelected = true;
-        _myPositionTile.MouseOverColor();
-        _targetTile = null;
+        
         turnManager.UnitStoppedMoving();
         pathCreator.ResetPath();
         _tilesForAttackChecked.Clear();
@@ -752,6 +748,11 @@ public class Character : Teams
             PaintTilesInAttackRange(_myPositionTile, 0);
             CheckEnemiesInAttackRange();
         }
+        _myPositionTile.MakeTileOccupied();
+        _myPositionTile.SetUnitAbove(this);
+        _myPositionTile.unitAboveSelected = true;
+        _myPositionTile.MouseOverColor();
+        _targetTile = null;
     }
 
     public void ReduceAvailableSteps(int amount)
