@@ -79,6 +79,9 @@ public class Character : Teams
     public EffectsController effectsController;
     public AudioClip soundMotorStart;
     public AudioClip soundWalk;
+    public AudioClip soundShotShootGun;
+    public AudioClip soundShotRifle;
+    public AudioClip soundShotAssalutRiffle;
 
     private const int _missHit = 0;
     private const int _normalHit = 1;
@@ -1011,7 +1014,24 @@ public class Character : Teams
     {
         if (_rightGunSelected)
         {
-            effectsController.PlayParticlesEffect(_rArmTransform.position, "Attack");            
+            effectsController.PlayParticlesEffect(_rArmTransform.position, "Attack");
+            if (rightGun.GetGunType() == Gun.GunType.Shotgun)
+            {
+                AudioManager.audioManagerInstance.PlaySound(soundShotShootGun, this.gameObject);
+                return;
+            }
+            if (rightGun.GetGunType() == Gun.GunType.Rifle)
+            {
+                AudioManager.audioManagerInstance.PlaySound(soundShotRifle, this.gameObject);
+                return;
+            }
+            if (rightGun.GetGunType() == Gun.GunType.AssaultRifle)
+            {
+                AudioManager.audioManagerInstance.PlaySound(soundShotAssalutRiffle, this.gameObject);
+                return;
+            }
+
+
         }
         else if (_leftGunSelected)
         {
@@ -1025,3 +1045,10 @@ public class Character : Teams
         return _myUI;
     }
 }
+//public enum GunType
+//{
+//    AssaultRifle,
+//    Melee,
+//    Rifle,
+//    Shotgun
+//}
