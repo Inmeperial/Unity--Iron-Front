@@ -739,6 +739,7 @@ public class Character : Teams
         turnManager.UnitStoppedMoving();
         pathCreator.ResetPath();
         _tilesForAttackChecked.Clear();
+        _tilesInAttackRange.Clear();
         AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,this.gameObject);
         AudioManager.audioManagerInstance.StopSound(soundWalk,this.gameObject);
         _smokeMechaHandler.SetMachineOn(false);
