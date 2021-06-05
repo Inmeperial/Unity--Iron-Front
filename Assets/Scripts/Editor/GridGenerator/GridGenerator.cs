@@ -40,7 +40,7 @@ public class GridGenerator : EditorWindow
             //Load GridBlock prefab for use.
             GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(files[0], typeof(GameObject));
 
-            tiles = prefab;
+            //tiles = prefab;
         }
     }
 
@@ -54,6 +54,7 @@ public class GridGenerator : EditorWindow
         _width = EditorGUILayout.IntField("Width", _width);
         _length = EditorGUILayout.IntField("Length", _length);
         _container = (Transform)EditorGUILayout.ObjectField("Container", _container, typeof(Transform), true);
+        tiles = (GameObject)EditorGUILayout.ObjectField("Tile", tiles, typeof(GameObject), true);
 
         if (GUILayout.Button("Create Grid"))
         {
@@ -83,14 +84,19 @@ public class GridGenerator : EditorWindow
             for (int j = 0; j < length; j++)
             {
                 pos.z = j * tiles.transform.localScale.z;
-                GameObject obj;
+                GameObject obj = null;
                 if (container)
                 {
-                    obj = Instantiate(tiles, pos, container.transform.rotation, container);
+                    obj = (GameObject) PrefabUtility.InstantiatePrefab(tiles);
+                    obj.transform.parent = container;
+                    obj.transform.position = new Vector3(pos.x, pos.y, pos.z);
+                    //obj = Instantiate(tiles, pos, container.transform.rotation, container);
                 }
                 else
                 {
-                    obj = Instantiate(tiles, pos, Quaternion.identity);
+                    //obj = Instantiate(tiles, pos, Quaternion.identity);
+                    obj = (GameObject) PrefabUtility.InstantiatePrefab(tiles);
+                    obj.transform.position = new Vector3(pos.x, pos.y, pos.z);
                 }
                 obj.name = "X: " + obj.transform.position.x + "- Y: " + obj.transform.position.y +" - Z: " + obj.transform.position.z;
                 obj.GetComponent<Tile>().MakeWalkableColor();
