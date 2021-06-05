@@ -40,7 +40,7 @@ public class GridGenerator : EditorWindow
             //Load GridBlock prefab for use.
             GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(files[0], typeof(GameObject));
 
-            //tiles = prefab;
+            tiles = prefab;
         }
     }
 
@@ -54,7 +54,6 @@ public class GridGenerator : EditorWindow
         _width = EditorGUILayout.IntField("Width", _width);
         _length = EditorGUILayout.IntField("Length", _length);
         _container = (Transform)EditorGUILayout.ObjectField("Container", _container, typeof(Transform), true);
-        tiles = (GameObject)EditorGUILayout.ObjectField("Tile", tiles, typeof(GameObject), true);
 
         if (GUILayout.Button("Create Grid"))
         {
@@ -90,11 +89,9 @@ public class GridGenerator : EditorWindow
                     obj = (GameObject) PrefabUtility.InstantiatePrefab(tiles);
                     obj.transform.parent = container;
                     obj.transform.position = new Vector3(pos.x, pos.y, pos.z);
-                    //obj = Instantiate(tiles, pos, container.transform.rotation, container);
                 }
                 else
                 {
-                    //obj = Instantiate(tiles, pos, Quaternion.identity);
                     obj = (GameObject) PrefabUtility.InstantiatePrefab(tiles);
                     obj.transform.position = new Vector3(pos.x, pos.y, pos.z);
                 }
