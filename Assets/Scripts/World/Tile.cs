@@ -140,50 +140,55 @@ public class Tile : MonoBehaviour
         isWalkable = false;
     }
 
-    //Change tile color for pathfinding preview.
+    //Pinta el tile en rango de movimiento
     public void InMoveRangeColor()
     {
         _materialHandler.StatusToMove();
         _materialHandler.DiseableAndEnableStatus(true);
     }
 
+    //Despinta el tile en rango de movimiento
     public void EndInMoveRangeColor()
     {
         inMoveRange = false;
         _materialHandler.DiseableAndEnableStatus(false);
     }
-
-  
-
+    
+    //Pinta el tile cuando el mouse esta encima
     public void MouseOverColor()
     {
         _materialHandler.DiseableAndEnableSelectedNode(true);
     }
 
+    //Despinta el tile cuando el mouse esta encima
     public void EndMouseOverColor()
     {
         if(!unitAboveSelected)
             _materialHandler.DiseableAndEnableSelectedNode(false);
     }
 
+    //Pinta el tile en rango de ataque
     public void CanBeAttackedColor()
     {
         _materialHandler.StatusToAttack();
         _materialHandler.DiseableAndEnableStatus(true);
     }
 
+    //Despinta el tile en rango de ataque
     public void EndCanBeAttackedColor()
     {
         inAttackRange = false;
         _materialHandler.DiseableAndEnableStatus(false);
     }
 
+    //Pinta el tile en rango de ataque y movimiento
     public void CanMoveAndAttackColor()
     {
         _materialHandler.StatusToAttackAndMove();
         _materialHandler.DiseableAndEnableStatus(true);
     }
 
+    //Despinta el tile en rango de ataque y movimiento
     public void EndCanMoveAndAttackColor()
     {
         inMoveRange = false;
@@ -191,6 +196,7 @@ public class Tile : MonoBehaviour
         _materialHandler.DiseableAndEnableStatus(false);
     }
     
+    //Pinta el tile para el preview de ataque
     //CAMBIAR CUANDO ESTE EL SHADER
     public void InAttackPreviewColor()
     {
@@ -199,6 +205,7 @@ public class Tile : MonoBehaviour
         MouseOverColor();
     }
 
+    //Despinta el tile para el preview de ataque
     //CAMBIAR CUANDO ESTE EL SHADER
     public void EndAttackPreviewColor()
     {
@@ -207,6 +214,7 @@ public class Tile : MonoBehaviour
         EndMouseOverColor();
     }
     
+    //Pinta el tile para el rango en el que se puede activar el mortero
     //CAMBIAR CUANDO ESTE EL SHADER
     public void ActivationRangeColor()
     {
@@ -215,6 +223,7 @@ public class Tile : MonoBehaviour
         Debug.Log("ACTIVATION RANGE");
     }
 
+    //Despinta el tile para el rango en el que se puede activar el mortero
     //CAMBIAR CUANDO ESTE EL SHADER
     public void EndActivationRangeColor()
     {

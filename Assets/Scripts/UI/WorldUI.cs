@@ -70,11 +70,13 @@ public class WorldUI : MonoBehaviour
         AttackActionIcon(attackStatus);
     }
 
+    //Desactiva el contenedor de estado
     public void DeactivateWorldUI()
     {
         _statusContainer.SetActive(false);
     }
     
+    //Desactiva el contenedor de estado luego de cierto tiempo
     public void DeactivateWorldUIWithTimer()
     {
         StartCoroutine(DeactivateUI(_showDuration));
@@ -86,6 +88,7 @@ public class WorldUI : MonoBehaviour
         _statusContainer.SetActive(false);
     }
     
+    //Activa el contenedor de estado
     public void ContainerActivation(bool status)
     {
         _statusContainer.SetActive(status);
@@ -140,6 +143,8 @@ public class WorldUI : MonoBehaviour
         }
     }
 
+   
+   //Actualiza la barra de vida en cada frame en base al daño recibido
    public void UpdateBodySlider(int damage, int currentHp)
    {
        _bodyHpSlider.value = currentHp;
@@ -174,6 +179,7 @@ public class WorldUI : MonoBehaviour
         }
     }
     
+   //Actualiza la barra de vida en cada frame en base al daño recibido
     public void UpdateLeftArmSlider(int damage, int currentHp)
     {
         _leftArmHpSlider.value = currentHp;
@@ -207,6 +213,7 @@ public class WorldUI : MonoBehaviour
         }
     }
     
+    //Actualiza la barra de vida en cada frame en base al daño recibido
     public void UpdateRightArmSlider(int damage, int currentHp)
     {
         _rightArmHpSlider.value = currentHp;
@@ -240,6 +247,7 @@ public class WorldUI : MonoBehaviour
         }
     }
     
+    //Actualiza la barra de vida en cada frame en base al daño recibido
     public void UpdateLegsSlider(int damage, int currentHp)
     {
         _legsHpSlider.value = currentHp;
@@ -258,11 +266,13 @@ public class WorldUI : MonoBehaviour
             _legsDamageSlider.value = 0;
     }
 
+    //Estado del icono de mover
     void MoveActionIcon(bool status)
     {
         _moveActionIcon.SetActive(status);
     }
-
+    
+    //Estado del icono de atacar
     void AttackActionIcon(bool status)
     {
         _attackActionIcon.SetActive(status);
@@ -270,11 +280,14 @@ public class WorldUI : MonoBehaviour
 #endregion
 
 #region WorldButtons
+
+    //Activa el contenedor de los botones
     public void ButtonsContainerSetActive(bool status)
     {
         _buttonsContainer.SetActive(status);
     }
 
+    //Activa el objeto de los botones y su interaccion
     public void ButtonsEnabling(bool body, bool leftArm, bool rightArm, bool legs)
     {
         BodyEnabling(body);
@@ -283,6 +296,7 @@ public class WorldUI : MonoBehaviour
         LegsEnabling(legs);
     }
 
+    
     public void BodyEnabling(bool status)
     {
         //_bodyButton.transform.position += -_bodyButton.transform.forward * _forwardMultiplier; 

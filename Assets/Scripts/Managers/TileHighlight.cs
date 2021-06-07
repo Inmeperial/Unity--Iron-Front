@@ -44,31 +44,35 @@ public class TileHighlight : MonoBehaviour
     }
 
     #region Change tile color methods.
+    
+    //Pinta los tiles cuando el mouse está encima
     public void MouseOverTile(Tile tile)
     {
         tile.MouseOverColor();
         previousTile = tile.transform;
     }
 
+    
+    //Despinta los tiles cuando el mouse no está encima
     public void MouseExitsTile()
     {
         Tile tile = previousTile.gameObject.GetComponent<Tile>();
         tile.EndMouseOverColor();
     }
 
+    //Despinta los tiles de movimiento y deshace las lineas del camino
     public void EndPreview()
     {
         previousTile = null;
         if (_previewPath.Count > 0)
         {
-            foreach (var item in _previewPath)
-            {
-                item.EndInMoveRangeColor();
-            }
+           ClearTilesInMoveRange(_previewPath);
             _previewPath.Clear();
             _lineRenderer.positionCount = 0;
         }
     }
+    
+    //Pinta los tiles del path
     public void PathPreview(List<Tile> path)
     {
         _previewPath = path;
@@ -80,21 +84,25 @@ public class TileHighlight : MonoBehaviour
         }
     }
 
+    //Pinta los tiles en rango de ataque
     public void PaintTilesInAttackRange(Tile tile)
     {
         tile.CanBeAttackedColor();
     }
 
+    //Pinta los tiles en rango de movimiento
     public void PaintTilesInMoveRange(Tile tile)
     {
         tile.InMoveRangeColor();
     }
 
+    //Pinta los tiles en rango de ataque y movimiento
     public void PaintTilesInMoveAndAttackRange(Tile tile)
     {
         tile.CanMoveAndAttackColor();
     }
 
+    //Pinta los tiles en la preview de ataque
     public void PaintTilesInPreviewRange(Tile tile)
     {
         tile.InAttackPreviewColor();
@@ -105,6 +113,7 @@ public class TileHighlight : MonoBehaviour
         _inMoveRangeTiles.Push(tiles);
     }
 
+    //Despinta los tiles en rango de ataque
     public void ClearTilesInAttackRange(HashSet<Tile> tiles)
     {
         foreach (var item in tiles)
@@ -114,6 +123,7 @@ public class TileHighlight : MonoBehaviour
         }
     }
 
+    //Despinta los tiles en rango de movimiento
     public void ClearTilesInMoveRange(List<Tile> tiles)
     {
         foreach (var item in tiles)
@@ -123,6 +133,8 @@ public class TileHighlight : MonoBehaviour
         }
     }
 
+    
+    //Despinta los tiles en preview de ataque
     public void ClearTilesInPreview(HashSet<Tile> tiles)
     {
         foreach (var tile in tiles)
@@ -151,6 +163,7 @@ public class TileHighlight : MonoBehaviour
         
     }
 
+    //Crea las lineas del path
     public void CreatePathLines(List<Tile> path)
     {
         _lineRenderer.positionCount = path.Count;
@@ -169,11 +182,14 @@ public class TileHighlight : MonoBehaviour
         }
     }
 
+    //Deshace las lineas del path
     public void PathLinesClear()
     {
         _lineRenderer.positionCount = 0;
     }
 
+    
+    //Pinta los tiles del rango de activacion del mortero
     public void PaintTilesInActivationRange(HashSet<Tile> tiles)
     {
         foreach (var tile in tiles)
@@ -182,6 +198,7 @@ public class TileHighlight : MonoBehaviour
         }
     }
 
+    //Despinta los tiles del rango de activacion del mortero
     public void ClearTilesInActivationRange(HashSet<Tile> tiles)
     {
         foreach (var tile in tiles)

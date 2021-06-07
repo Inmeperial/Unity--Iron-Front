@@ -21,7 +21,7 @@ public class EffectsController : MonoBehaviour
     private List<Tuple<string, int, Vector3>> _list = new List<Tuple<string, int, Vector3>>();
 
     /// <summary>
-    /// Reproduces the Effect. type: Damage - Attack
+    /// Reproduces the particle effect. type: Damage - Attack
     /// </summary>
     public void PlayParticlesEffect(Vector3 pos, string type)
     {
@@ -57,6 +57,7 @@ public class EffectsController : MonoBehaviour
         if (last == true) StartCoroutine(CreateDamageTextWithSpacing());
     }
 
+    //Retrasa la creación de los textos para que no salgan pegados
     IEnumerator CreateDamageTextWithSpacing()
     {
         for (int i = 0; i < _list.Count; i++)
@@ -74,6 +75,7 @@ public class EffectsController : MonoBehaviour
         
     }
     
+    //Destruye los efectos para que no queden siempre activos
     IEnumerator DestroyEffect(GameObject effect, float time)
     {
         if (effect)

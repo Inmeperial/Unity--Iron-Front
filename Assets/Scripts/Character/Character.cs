@@ -201,6 +201,7 @@ public class Character : Teams
         }
     }
 
+    //Se pintan los tiles dentro del rango de ataque
     void PaintTilesInAttackRange(Tile currentTile, int count)
     {
         if (count >= _selectedGun.GetAttackRange() || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
@@ -228,6 +229,7 @@ public class Character : Teams
         }
     }
 
+    //Se pintan los tiles dentro del rango de movimiento
     public void PaintTilesInMoveRange(Tile currentTile, int count)
     {
         if (count >= _currentSteps || (_tilesForMoveChecked.ContainsKey(currentTile) && _tilesForMoveChecked[currentTile] <= count))
@@ -261,7 +263,6 @@ public class Character : Teams
     }
 
     #region Actions
-    //This method is called from UI Button "Move".
     public void Move()
     {
         if (_moving == false && _path != null && _path.Count > 0)
@@ -284,29 +285,31 @@ public class Character : Teams
         }
     }
 
+    //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public void TakeDamageBody(List<Tuple<int,int>> damages)
     {
         _myUI.SetBodySlider(_bodyHP);
         int total = 0;
+        var bodyPos = GetBodyPosition();
         for (int i = 0; i < damages.Count; i++)
         {
             total += damages[i].Item1;
             var hp = _bodyHP - damages[i].Item1;
             _bodyHP = hp > 0 ? hp : 0;
-            effectsController.PlayParticlesEffect(_bodyTransform.position, "Damage");
+            effectsController.PlayParticlesEffect(bodyPos, "Damage");
             var item = damages[i].Item2;
             switch (item)
             {
                case _missHit:
-                   effectsController.CreateDamageText("Miss", 0, _bodyTransform.position, i == damages.Count - 1 ? true : false);
+                   effectsController.CreateDamageText("Miss", 0, bodyPos, i == damages.Count - 1 ? true : false);
                    break;
                    
                case _normalHit:
-                   effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, _bodyTransform.position, i == damages.Count - 1 ? true : false);
+                   effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, bodyPos, i == damages.Count - 1 ? true : false);
                    break;
                
                case _criticalHit:
-                   effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, _bodyTransform.position, i == damages.Count - 1 ? true : false);
+                   effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, bodyPos, i == damages.Count - 1 ? true : false);
                    break;
             }
         }
@@ -319,6 +322,7 @@ public class Character : Teams
         MakeNotAttackable();
     }
     
+    //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public void TakeDamageBody(int damage)
     {
         _myUI.SetBodySlider(_bodyHP);
@@ -328,37 +332,41 @@ public class Character : Teams
         {
             NotSelectable();
         }
-        effectsController.PlayParticlesEffect(_bodyTransform.position, "Damage");
-        effectsController.CreateDamageText(damage.ToString(), 1, _bodyTransform.position, true);
+
+        var bodyPos = GetBodyPosition();
+        effectsController.PlayParticlesEffect(bodyPos, "Damage");
+        effectsController.CreateDamageText(damage.ToString(), 1, bodyPos, true);
         _myUI.ContainerActivation(true);
         _myUI.UpdateBodySlider(damage, _bodyHP);
         MakeNotAttackable();
     }
 
+    //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public void TakeDamageLeftArm(List<Tuple<int,int>> damages)
     {
         _myUI.SetLeftArmSlider(_leftArmHP);
         int total = 0;
+        var leftArmPos = GetLArmPosition();
         for (int i = 0; i < damages.Count; i++)
         {
             total += damages[i].Item1;
             var hp = _leftArmHP - damages[i].Item1;
             _leftArmHP = hp > 0 ? hp : 0;
             _leftArmAlive = _leftArmHP > 0 ? true : false;
-            effectsController.PlayParticlesEffect(_lArmTransform.position, "Damage");
+            effectsController.PlayParticlesEffect(leftArmPos, "Damage");
             var item = damages[i].Item2;
             switch (item)
             {
                 case _missHit:
-                    effectsController.CreateDamageText("Miss", 0, _lArmTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText("Miss", 0, leftArmPos, i == damages.Count - 1 ? true : false);
                     break;
                    
                 case _normalHit:
-                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, _lArmTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, leftArmPos, i == damages.Count - 1 ? true : false);
                     break;
                
                 case _criticalHit:
-                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, _lArmTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, leftArmPos, i == damages.Count - 1 ? true : false);
                     break;
             }
         }
@@ -368,44 +376,48 @@ public class Character : Teams
         MakeNotAttackable();
     }
     
+    //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public void TakeDamageLeftArm(int damage)
     {
         _myUI.SetLeftArmSlider(_leftArmHP);
         var hp = _leftArmHP - damage;
         _leftArmHP = hp > 0 ? hp : 0;
         _leftArmAlive = _leftArmHP > 0 ? true : false;
-        effectsController.PlayParticlesEffect(_lArmTransform.position, "Damage");
-        effectsController.CreateDamageText(damage.ToString(), 1, _lArmTransform.position, true);
+        var leftArmPos = GetLArmPosition();
+        effectsController.PlayParticlesEffect(leftArmPos, "Damage");
+        effectsController.CreateDamageText(damage.ToString(), 1, leftArmPos, true);
         _myUI.ContainerActivation(true);
         _myUI.UpdateLeftArmSlider(damage, _leftArmHP);
         MakeNotAttackable();
     }
 
+    //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public void TakeDamageRightArm(List<Tuple<int,int>> damages)
     {
         _myUI.SetRightArmSlider(_rightArmHP);
         int total = 0;
+        var rightArmPos = GetRArmPosition();
         for (int i = 0; i < damages.Count; i++)
         {
             total += damages[i].Item1;
             var hp = _rightArmHP - damages[i].Item1;
             _rightArmHP = hp > 0 ? hp : 0;
             _rightArmAlive = _rightArmHP > 0 ? true : false;
-            effectsController.PlayParticlesEffect(_rArmTransform.position, "Damage");
+            effectsController.PlayParticlesEffect(rightArmPos, "Damage");
 
             var item = damages[i].Item2;
             switch (item)
             {
                 case _missHit:
-                    effectsController.CreateDamageText("Miss", 0, _rArmTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText("Miss", 0, rightArmPos, i == damages.Count - 1 ? true : false);
                     break;
                    
                 case _normalHit:
-                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, _rArmTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, rightArmPos, i == damages.Count - 1 ? true : false);
                     break;
                
                 case _criticalHit:
-                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, _rArmTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, rightArmPos, i == damages.Count - 1 ? true : false);
                     break;
             }
         }
@@ -415,43 +427,47 @@ public class Character : Teams
         MakeNotAttackable();
     }
     
+    //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public void TakeDamageRightArm(int damage)
     {
         _myUI.SetRightArmSlider(_rightArmHP);
         var hp = _rightArmHP - damage;
         _rightArmHP = hp > 0 ? hp : 0;
         _rightArmAlive = _rightArmHP > 0 ? true : false;
-        effectsController.PlayParticlesEffect(_rArmTransform.position, "Damage");
-        effectsController.CreateDamageText(damage.ToString(), 1, _rArmTransform.position, true);
+        var rightArmPos = GetRArmPosition();
+        effectsController.PlayParticlesEffect(rightArmPos, "Damage");
+        effectsController.CreateDamageText(damage.ToString(), 1, rightArmPos, true);
         _myUI.ContainerActivation(true);
         _myUI.UpdateLeftArmSlider(damage, _rightArmHP);
         MakeNotAttackable();
     }
 
+    //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public void TakeDamageLegs(List<Tuple<int,int>> damages)
     {
         _myUI.SetLegsSlider(legs.GetLegsHP());
         int total = 0;
+        var legsPos = GetLegsPosition();
         for (int i = 0; i < damages.Count; i++)
         {
             total += damages[i].Item1;
             var hp = legs.GetLegsHP() - damages[i].Item1;
             legs.UpdateHP(hp > 0 ? hp : 0);
             _canMove = legs.GetLegsHP() > 0 ? true : false;
-            effectsController.PlayParticlesEffect(_legsTransform.position, "Damage");
+            effectsController.PlayParticlesEffect(legsPos, "Damage");
             var item = damages[i].Item2;
             switch (item)
             {
                 case _missHit:
-                    effectsController.CreateDamageText("Miss", 0, _legsTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText("Miss", 0, legsPos, i == damages.Count - 1 ? true : false);
                     break;
                    
                 case _normalHit:
-                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, _legsTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, legsPos, i == damages.Count - 1 ? true : false);
                     break;
                
                 case _criticalHit:
-                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, _legsTransform.position, i == damages.Count - 1 ? true : false);
+                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, legsPos, i == damages.Count - 1 ? true : false);
                     break;
             }
         }
@@ -459,6 +475,7 @@ public class Character : Teams
         _myUI.UpdateLegsSlider(total, legs.GetLegsHP());
         MakeNotAttackable();
     }
+    
     public void SelectLeftGun()
     {
         _selectedGun = leftGun;
@@ -505,6 +522,7 @@ public class Character : Teams
         }
     }
 
+    //Despinta las tiles en rango de ataque
     public void ResetTilesInAttackRange()
     {
         highlight.ClearTilesInAttackRange(_tilesInAttackRange);
@@ -512,6 +530,7 @@ public class Character : Teams
         _tilesForAttackChecked.Clear();
     }
 
+    //Despinta las tiles en rango de movimiento
     public void ResetTilesInMoveRange()
     {
         highlight.ClearTilesInMoveRange(_tilesInMoveRange);
@@ -942,11 +961,6 @@ public class Character : Teams
         highlight.PathLinesClear();
         _canAttack = false;
     }
-
-    // public void DeactivateMoveButton()
-    // {
-    //     buttonsManager.DeactivateMoveButton();
-    // }
     #endregion
 
     private void OnMouseOver()
@@ -1007,6 +1021,7 @@ public class Character : Teams
         _canMove = state;
     }
 
+    //Lo llama el ButtonsUIManager, activa el efecto de ataque
     public void Shoot()
     {
         if (_rightGunSelected)

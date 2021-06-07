@@ -156,6 +156,7 @@ public class ButtonsUIManager : MonoBehaviour
         // _selectedEnemy = null;
     }
 
+    //Se ejecuta cuando se hace click izquierdo en el boton de body
     public void BodySelection()
     {
         if (CharacterHasBullets(_selectedChar))
@@ -180,6 +181,7 @@ public class ButtonsUIManager : MonoBehaviour
 
     }
 
+    //Se ejecuta cuando se hace click derecho en el boton de body
     public void BodyMinus()
     {
         if (_bulletsForBody > 0)
@@ -198,7 +200,8 @@ public class ButtonsUIManager : MonoBehaviour
             DeterminateButtonsActivation();
         }
     }
-
+    
+    //Se ejecuta al cambiar de arma
     public void BodyClear()
     {
         if (_bulletsForBody > 0)
@@ -216,6 +219,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    //Se ejecuta cuando se hace click izquierdo en el boton de left arm
     public void LeftArmSelection()
     {
         if (CharacterHasBullets(_selectedChar))
@@ -239,6 +243,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    //Se ejecuta cuando se hace click derecho en el boton de left arm
     public void LeftArmMinus()
     {
         if (_bulletsForLArm > 0)
@@ -257,7 +262,8 @@ public class ButtonsUIManager : MonoBehaviour
             DeterminateButtonsActivation();
         }
     }
-
+    
+    //Se ejecuta al cambiar de arma
     public void LeftArmClear()
     {
         if (_bulletsForLArm > 0)
@@ -275,6 +281,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    //Se ejecuta cuando se hace click izquierdo en el boton de right arm
     public void RightArmSelection()
     {
         if (CharacterHasBullets(_selectedChar))
@@ -297,6 +304,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    //Se ejecuta cuando se hace click derecho en el boton de right arm
     public void RightArmMinus()
     {
         if (_bulletsForRArm > 0)
@@ -317,6 +325,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    //Se ejecuta al cambiar de arma
     public void RightArmClear()
     {
         if (_bulletsForRArm > 0)
@@ -335,6 +344,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    //Se ejecuta cuando se hace click izquierdo en el boton de legs
     public void LegsSelection()
     {
         if (CharacterHasBullets(_selectedChar))
@@ -357,7 +367,8 @@ public class ButtonsUIManager : MonoBehaviour
             }
         }
     }
-
+    
+    //Se ejecuta cuando se hace click derecho en el boton de legs
     public void LegsMinus()
     {
         if (_bulletsForLegs > 0)
@@ -377,6 +388,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    //Se ejecuta al cambiar de arma
     public void LegsClear()
     {
         if (_bulletsForLegs > 0)
@@ -394,6 +406,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    //Se ejecuta al hacer click izquierdo en el boton Fire
     public void ExecuteAttack()
     {
         if (_selectedEnemy)
@@ -410,6 +423,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    //Se ejecuta cuando la camara termina de moverse a su posicion original
     void Attack()
     {
         var gun = _selectedChar.GetSelectedGun();
@@ -523,6 +537,7 @@ public class ButtonsUIManager : MonoBehaviour
         _charSelection.DeselectUnit();
     }
 
+    //Cambio al arma izquierda al apretar el boton en el UI o con la tecla
     public void UnitSwapToLeftGun()
     {
         if (_selectedChar && _selectedChar.LeftArmAlive())
@@ -543,6 +558,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    //Cambio al arma derecha al apretar el boton en el UI o con la tecla
     public void UnitSwapToRightGun()
     {
         if (_selectedChar && _selectedChar.RightArmAlive())
@@ -563,6 +579,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    //Muestro el WorldCanvas de todas las unidades
     public void ShowAllWorldUI()
     {
         _worldUIActive = true;
@@ -574,6 +591,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
+    //Oculto el WorldCanvas de todas las unidades
     public void HideAllWorldUI()
     {
         _worldUIActive = false;

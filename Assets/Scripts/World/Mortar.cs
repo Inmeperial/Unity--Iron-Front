@@ -127,6 +127,7 @@ public class Mortar : MonoBehaviour, IObserver
         }
     }
 
+    //Determina si hay alguna unidad sobre las tiles de activacion
     private bool SelectedPlayerAbove()
     {
         var selector = FindObjectOfType<CharacterSelection>();
@@ -142,6 +143,7 @@ public class Mortar : MonoBehaviour, IObserver
         return false;
     }
 
+    //Obtiene los tiles dentro del rango de ataque (se usa solo en el start porque son siempre las mismas)
     private void GetTilesInAttackRange(Tile currentTile, int count)
     {
         if (count >= _shootRange || (_tilesForAttackChecked.ContainsKey(currentTile) &&
@@ -163,6 +165,7 @@ public class Mortar : MonoBehaviour, IObserver
         }
     }
 
+    //Pinta los tiles del preview del ataque
     private void PaintTilesInPreviewRange(Tile currentTile, int count)
     {
         if (count >= _aoe || (_tilesForPreviewChecked.ContainsKey(currentTile) &&
@@ -233,6 +236,8 @@ public class Mortar : MonoBehaviour, IObserver
             _tilesInActivationRange.Add(tile.transform.GetComponent<Tile>());
         }
     }
+    
+    
     private void OnDrawGizmos()
     {
         if (drawGizmo)

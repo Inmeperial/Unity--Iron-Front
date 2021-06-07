@@ -30,6 +30,7 @@ public class DamageText : MonoBehaviour
         MoveAndFade();
     }
 
+    //Setea el texto que se va a mostrar, el tipo de texto y el orden de la layer (que tan arriba se muestra)
     public void SetText(string text, int type, int order)
     {
         _text = gameObject.GetComponent<TextMeshPro>();
@@ -56,6 +57,7 @@ public class DamageText : MonoBehaviour
         _color = _text.color;
     }
 
+    //Mueve el texto hacia arriba y lo va haciendo transparente
     void MoveAndFade()
     {
         transform.rotation = _cam.transform.rotation;
