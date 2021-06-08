@@ -100,6 +100,7 @@ public class TurnManager : Teams, IObservable
             //
             // _actualCharacter = _currentTurnOrder[_turnCounter]; 
             // _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
+            //_activeTeam = _actualCharacter.GetUnitTeam();
             
             if (_activeTeam == Team.Capsule)
             {
