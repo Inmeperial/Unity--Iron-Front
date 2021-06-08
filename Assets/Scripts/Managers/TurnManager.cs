@@ -19,7 +19,7 @@ public class TurnManager : Teams, IObservable
     
     private Team _activeTeam;
 
-    private List<Character> _currentTurnOrder;
+    private List<Character> _currentTurnOrder = new List<Character>();
     
     private List<IObserver> _observers = new List<IObserver>();
 
