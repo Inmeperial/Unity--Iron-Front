@@ -74,6 +74,7 @@ public class Mortar : MonoBehaviour, IObserver
                 foreach (var tiles in _tilesInAttackRange)
                 {
                     tiles.inAttackRange = true;
+                    //shader de aoe mortero
                     _highlight.PaintTilesInAttackRange(tiles);
                 }
             }
@@ -95,6 +96,7 @@ public class Mortar : MonoBehaviour, IObserver
                     {
                         Debug.Log("pinto tiles en rango de ataque");
                         tiles.inAttackRange = true;
+                        // shader aoe bala mortero
                         _highlight.PaintTilesInAttackRange(tiles);
                     }
 
