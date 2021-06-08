@@ -47,11 +47,11 @@ public class TurnManager : Teams, IObservable
             flag2.SetActive(true);
         }
 
-        var mortars = FindObjectsOfType<Mortar>();
+       /* var mortars = FindObjectsOfType<Mortar>();
         foreach (var mortar in mortars)
         {
             Subscribe(mortar);
-        }
+        }*/
         CalculateTurnOrder();
     }
 
