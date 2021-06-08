@@ -476,8 +476,8 @@ public class ButtonsUIManager : MonoBehaviour
                 gun.Ability();
             }
             _selectedChar.DeactivateAttack();
-            buttonEndTurn.gameObject.SetActive(true);
         }
+        buttonEndTurn.gameObject.SetActive(true);
     }
 
     public void EndTurn()

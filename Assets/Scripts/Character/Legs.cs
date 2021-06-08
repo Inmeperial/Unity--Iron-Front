@@ -15,6 +15,12 @@ public class Legs : MonoBehaviour
     private float _rotationSpeed;
 
     private Character _myChar;
+
+    private int _speed;
+
+    private int _weight;
+    
+    
     // Start is called before the first frame update
 
     private void Awake()
@@ -25,6 +31,8 @@ public class Legs : MonoBehaviour
         _maxSteps = legsData.maxSteps;
         _moveSpeed = legsData.moveSpeed;
         _rotationSpeed = legsData.rotationSpeed;
+        _speed = legsData.speed;
+        _weight = legsData.weight;
     }
 
     void Start()
@@ -49,6 +57,16 @@ public class Legs : MonoBehaviour
     public int GetLegsHP()
     {
         return _legsHP;
+    }
+
+    public int GetLegsSpeed()
+    {
+        return _speed;
+    }
+
+    public int GetLegsWeight()
+    {
+        return _weight;
     }
     
     public void TakeDamageLegs(int damage)

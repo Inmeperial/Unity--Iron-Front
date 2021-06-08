@@ -8,4 +8,6 @@ public class LegsSO : PartSO
     public int maxSteps;
     public float moveSpeed;
     public float rotationSpeed;
+    public int speed;
+    public int weight;
 }

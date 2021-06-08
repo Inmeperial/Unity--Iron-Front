@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    public float fixationThreshold;
     public float speed;
     public float rotationSpeed;
     private bool _cameraLocked;
@@ -12,11 +14,14 @@ public class CameraMovement : MonoBehaviour
 
     private Rigidbody _rb;
 
+    private float _yPos;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _initialPos = transform.position;
         _initialRot = transform.rotation;
+        _yPos = transform.position.y;
     }
     // Update is called once per frame
     void Update()
@@ -55,5 +60,27 @@ public class CameraMovement : MonoBehaviour
             _rb.velocity = Vector3.zero;
         }
 
+    }
+
+    public void MoveTo(Vector3 pos, Action callback = null)
+    {
+        pos.y = _yPos;
+        StartCoroutine(Move(pos, callback));
+    }
+
+    IEnumerator Move(Vector3 pos, Action callback = null)
+    {
+        while ((pos - transform.position).magnitude >= fixationThreshold)
+        {
+            var dir = (pos - transform.position).normalized;
+
+            transform.position += dir * (speed * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+
+        transform.position = pos;
+
+        if (callback != null)
+            callback();
     }
 }

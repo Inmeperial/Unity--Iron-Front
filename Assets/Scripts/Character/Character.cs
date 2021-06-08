@@ -67,6 +67,7 @@ public class Character : Teams
     private bool _canBeAttacked = false;
     public bool selectingEnemy = false;
     public bool selectedForAttack;
+    public bool myTurn = false;
 
     //OTHERS
     private HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
@@ -728,6 +729,7 @@ public class Character : Teams
     }
     public void NewTurn()
     {
+        myTurn = false;
         _canMove = legs.GetLegsHP() > 0 ? true : false;
         _canAttack = true;
         _selectedGun.SetGun();
@@ -950,9 +952,10 @@ public class Character : Teams
         return _rightArmAlive;
     }
 
+    //DESCOMENTAR CUANDO SE IMPLEMENTE
     public bool CanBeSelected()
     {
-        return _canBeSelected;
+        return _canBeSelected /*&& myTurn*/;
     }
     public void DeactivateAttack()
     {
@@ -960,6 +963,11 @@ public class Character : Teams
         ResetTilesInMoveRange();
         highlight.PathLinesClear();
         _canAttack = false;
+    }
+
+    public int CalculateInitiative()
+    {
+        return legs.GetLegsHP() + legs.GetLegsSpeed() - legs.GetLegsWeight();
     }
     #endregion
 

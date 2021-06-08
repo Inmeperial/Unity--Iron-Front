@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Linq;
 
 public class TurnManager : Teams, IObservable
 {
@@ -17,10 +18,17 @@ public class TurnManager : Teams, IObservable
     public GameObject flag2;
     
     private Team _activeTeam;
+
+    private List<Character> _currentTurnOrder;
     
     private List<IObserver> _observers = new List<IObserver>();
+
+    private int _turnCounter;
+    private Character _actualCharacter;
+    private CameraMovement _cameraMovement;
     void Start()
     {
+        _cameraMovement = FindObjectOfType<CameraMovement>();
         var units = FindObjectsOfType<Character>();
         SeparateByTeam(units);
         _charSelect = FindObjectOfType<CharacterSelection>();
@@ -44,6 +52,7 @@ public class TurnManager : Teams, IObservable
         {
             Subscribe(mortar);
         }
+        CalculateTurnOrder();
     }
 
     public void UnitIsMoving()
@@ -79,6 +88,19 @@ public class TurnManager : Teams, IObservable
         var character = _charSelect.GetActualChar();
         if (character ==null || character.IsMoving() == false)
         {
+            // _buttonsManager.DeactivateEndTurnButton();
+            //
+            // ResetTurn(_actualCharacter);
+            //
+            // if (_turnCounter >= _currentTurnOrder.Count) 
+            //     CalculateTurnOrder(); 
+            //
+            // if (_turnCounter != 0)
+            //     _turnCounter++;
+            //
+            // _actualCharacter = _currentTurnOrder[_turnCounter]; 
+            // _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
+            
             if (_activeTeam == Team.Capsule)
             {
                 _activeTeam = Team.Box;
@@ -99,6 +121,8 @@ public class TurnManager : Teams, IObservable
             NotifyObserver("EndTurn");
             NotifyObserver("Deselect");
         }
+
+        
     }
 
     void ResetTurn(List<Character> team)
@@ -109,6 +133,13 @@ public class TurnManager : Teams, IObservable
         {
             unit.NewTurn();
         }
+    }
+    
+    void ResetTurn(Character unit)
+    {
+        _charSelect.ResetSelector();
+        _highlight.EndPreview();
+        unit.NewTurn();
     }
 
     public Team GetActiveTeam()
@@ -129,6 +160,32 @@ public class TurnManager : Teams, IObservable
     public Tile GetUnitTile(Character unit)
     {
         return unit.GetTileBelow();
+    }
+
+    public void CalculateTurnOrder()
+    {
+        _turnCounter = 0;
+        var unitsList = new List<Tuple<Character, int>>();
+
+        //Pick all characters
+        var units = _boxTeam.Concat(_capsuleTeam);
+
+        //Adds them to a collection with their initiative
+        foreach (var character in units)
+        {
+            var t = Tuple.Create(character, character.CalculateInitiative());
+            unitsList.Add(t);
+        }
+
+        //Orders them with the highest initiative first
+        unitsList.OrderByDescending(x => x.Item2);
+
+        foreach (var character in unitsList)
+        {
+            character.Item1.myTurn = false;
+            _currentTurnOrder.Add(character.Item1);
+        }
+        
     }
 
     public void Subscribe(IObserver observer)
