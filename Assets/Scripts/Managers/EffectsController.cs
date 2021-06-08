@@ -14,6 +14,11 @@ public class EffectsController : MonoBehaviour
     
     [SerializeField] private GameObject _mineExplosionEffect;
 
+    [SerializeField] private GameObject _shootGunEffect;
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip _shootGunSound;
+
     [Header("Damage Text")]
     
     [SerializeField] private GameObject _damageText;
@@ -52,6 +57,15 @@ public class EffectsController : MonoBehaviour
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
+                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                break;
+
+            case "ShootGun":
+                effect = Instantiate(_shootGunEffect, pos, transform.rotation, transform);
+                particle = effect.GetComponent<ParticleSystem>();
+                particle.time = 0f;
+                particle.Play();
+                AudioManager.audioManagerInstance.PlaySound(_shootGunSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
         }

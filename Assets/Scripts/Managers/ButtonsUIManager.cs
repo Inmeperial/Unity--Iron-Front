@@ -69,6 +69,7 @@ public class ButtonsUIManager : MonoBehaviour
     private TurnManager _turnManager;
     private int _partsSelected;
     private SoundsMenu _soundsMenuManager;
+    private EffectsController _effectsController;
 
     private bool bodyInsight;
     private bool legsInsight;
@@ -78,6 +79,7 @@ public class ButtonsUIManager : MonoBehaviour
     private bool _worldUIActive = false;
     private void Start()
     {
+        _effectsController = FindObjectOfType<EffectsController>();
         playerHudContainer.SetActive(false);
         _buttonBodySelected = false;
         _buttonLArmSelected = false;
@@ -427,6 +429,7 @@ public class ButtonsUIManager : MonoBehaviour
     void Attack()
     {
         var gun = _selectedChar.GetSelectedGun();
+        _effectsController.PlayParticlesEffect(_selectedChar.transform.position + new Vector3(2, 2.5f, 3), "ShootGun");
         _selectedChar.Shoot();
         if (_bulletsForBody > 0)
         {

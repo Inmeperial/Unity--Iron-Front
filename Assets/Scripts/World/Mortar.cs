@@ -75,7 +75,8 @@ public class Mortar : MonoBehaviour, IObserver
                 {
                     tiles.inAttackRange = true;
                     //shader de aoe mortero
-                    _highlight.PaintTilesInAttackRange(tiles);
+                    //_highlight.PaintTilesInAttackRange(tiles);
+                    _highlight.PaintTilesInPreviewRange(tiles);
                 }
             }
             else if (_selected)
@@ -116,7 +117,7 @@ public class Mortar : MonoBehaviour, IObserver
                         _tilesInPreviewRange.Clear();
                         _tilesForPreviewChecked.Clear();
                         _tilesToAttack.Clear();
-                        PaintTilesInPreviewRange(_last, 0);
+                        //PaintTilesInPreviewRange(_last, 0);
                     }
                     else if (tile == _last && SelectedPlayerAbove())
                     {

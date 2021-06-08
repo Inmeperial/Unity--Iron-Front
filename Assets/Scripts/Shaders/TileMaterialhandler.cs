@@ -7,8 +7,8 @@ public class TileMaterialhandler : MonoBehaviour
     public Material MoveMaterial;
     public Material AttackMaterial;
     public Material AttackAndMoveMaterial;
-    public Material shaderMortarAoeAttack;
-    public Material shaderMortarBulletToAoeAttack;
+    public Material MortarAoeAttackMaterial;
+    public Material MechaToAttackInAnimationTileMaterial;
     //----------------------
     private Renderer _rend;
     private Transform _childStatusNode;
@@ -17,7 +17,7 @@ public class TileMaterialhandler : MonoBehaviour
 
     void Start()
     {
-       GetChilds();
+        GetChilds();
         if (_childStatusNode == null)
         {
             Debug.Log("Cant Find PlaneForMove child in Node");
@@ -30,56 +30,24 @@ public class TileMaterialhandler : MonoBehaviour
         DiseableAndEnableSelectedNode(false);
         DiseableAndEnableStatus(false);
     }
-    
-    //void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.A))
-    //    {
-    //        DiseableAndEnableStatus(true);
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.S))
-    //    {
-    //        DiseableAndEnableStatus(false);
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.Q))
-    //    {
-    //        StatusToMove();
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.W))
-    //    {
-    //        StatusToAttack();
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.E))
-    //    {
-    //        StatusToAttackAndMove();
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.Z))
-    //    {
-    //        DiseableAndEnableSelectedNode(true);
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.X))
-    //    {
-    //        DiseableAndEnableSelectedNode(false);
-    //    }
-    //}
 
     #region Functions
 
     /// <summary>
     /// Diseable and Enable selected material node.
     /// </summary>
-    public void DiseableAndEnableSelectedNode(bool status)
+    public void DiseableAndEnableSelectedNode(bool isStatusOn)
     {
-        _childSelectedNode.gameObject.SetActive(status);
+        _childSelectedNode.gameObject.SetActive(isStatusOn);
     }
 
     /// <summary>
     /// Diseable and Enable status of the node.
     /// </summary>
-    /// <param name="status"></param>
-    public void DiseableAndEnableStatus(bool status)
+    /// <param name="isStatusOn"></param>
+    public void DiseableAndEnableStatus(bool isStatusOn)
     {
-        _childStatusNode.gameObject.SetActive(status);
+        _childStatusNode.gameObject.SetActive(isStatusOn);
     }
 
     /// <summary>
@@ -127,17 +95,28 @@ public class TileMaterialhandler : MonoBehaviour
         _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
 
         _sharedMaterialCopy = _rend.sharedMaterial;
-        _sharedMaterialCopy = shaderMortarAoeAttack;
+        _sharedMaterialCopy = MortarAoeAttackMaterial;
         _rend.sharedMaterial = _sharedMaterialCopy;
     }
 
-    public void StatusMortarBulletAoEOfAttack()
+    public void StatusMortarBulletAoEOfAttack(bool isStatusOn)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).gameObject.name == "MortarBullet")
+            {
+                transform.GetChild(i).gameObject.SetActive(isStatusOn);
+            }
+        }
+    }
+
+    public void StatusMechaToAttackTile()
     {
         _rend = _childStatusNode.gameObject.GetComponent<Renderer>();
         _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
 
         _sharedMaterialCopy = _rend.sharedMaterial;
-        _sharedMaterialCopy = shaderMortarBulletToAoeAttack;
+        _sharedMaterialCopy = MechaToAttackInAnimationTileMaterial;
         _rend.sharedMaterial = _sharedMaterialCopy;
     }
 
