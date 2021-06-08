@@ -11,6 +11,8 @@ public class EffectsController : MonoBehaviour
     [SerializeField] private GameObject _attackEffect;
     
     [SerializeField] private GameObject _damageEffect;
+    
+    [SerializeField] private GameObject _mineExplosionEffect;
 
     [Header("Damage Text")]
     
@@ -21,7 +23,7 @@ public class EffectsController : MonoBehaviour
     private List<Tuple<string, int, Vector3>> _list = new List<Tuple<string, int, Vector3>>();
 
     /// <summary>
-    /// Reproduces the particle effect. type: Damage - Attack
+    /// Reproduces the particle effect. type: Damage - Attack - Mine
     /// </summary>
     public void PlayParticlesEffect(Vector3 pos, string type)
     {
@@ -39,6 +41,14 @@ public class EffectsController : MonoBehaviour
             
             case "Attack":
                 effect = Instantiate(_attackEffect, pos, transform.rotation, transform);
+                particle = effect.GetComponent<ParticleSystem>();
+                particle.time = 0f;
+                particle.Play();
+                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                break;
+            
+            case "Mine":
+                effect = Instantiate(_mineExplosionEffect, pos, transform.rotation, transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();

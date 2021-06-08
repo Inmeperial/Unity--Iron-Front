@@ -12,7 +12,7 @@ public class LandMine : MonoBehaviour
         if (obj)
         {
             obj.TakeDamageFromMine(damage);
-
+            FindObjectOfType<EffectsController>().PlayParticlesEffect(transform.position, "Mine");
             Destroy(gameObject);
         }
     }
