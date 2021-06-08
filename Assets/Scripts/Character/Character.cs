@@ -77,7 +77,6 @@ public class Character : Teams
     private WorldUI _myUI;
     private MechaMaterialhandler _mechaMaterlaHandler;
     private SmokeMechaHandler _smokeMechaHandler;
-    public EffectsController effectsController;
     public AudioClip soundMotorStart;
     public AudioClip soundWalk;
 
@@ -85,12 +84,14 @@ public class Character : Teams
     private const int _normalHit = 1;
     private const int _criticalHit = 2;
 
+	[HideInInspector]
+	public EffectsController effectsController;
     [HideInInspector]
     public TurnManager turnManager;
-
-    public TileHighlight highlight;
-
-    public ButtonsUIManager buttonsManager;
+	[HideInInspector]
+	public TileHighlight highlight;
+	[HideInInspector]
+	public ButtonsUIManager buttonsManager;
 
     // Start is called before the first frame update
     void Start()
@@ -804,7 +805,7 @@ public class Character : Teams
             _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
         }
         
-        _mechaMaterlaHandler.SetSelectedMechaMaterial(true);
+        //_mechaMaterlaHandler.SetSelectedMechaMaterial(true);
         if (CanAttack())
         {
             if (_rightArmAlive)
@@ -834,7 +835,7 @@ public class Character : Teams
             _myPositionTile.EndMouseOverColor();
         }
         
-        _mechaMaterlaHandler.SetSelectedMechaMaterial(false);
+        //_mechaMaterlaHandler.SetSelectedMechaMaterial(false);
         foreach (var item in _enemiesInRange)
         {
             turnManager.UnitCantBeAttacked(item);
