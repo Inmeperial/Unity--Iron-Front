@@ -124,9 +124,6 @@ MonoBehaviour:
   block:
     serializedVersion: 2
     m_Bits: 256
-  _tilesInMoveRange: []
-  _myPositionTile: {fileID: 0}
-  _targetTile: {fileID: 0}
   _path: []
   _canAttack: 1
   selectingEnemy: 0
@@ -164,6 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: 0}
+  _fullMovePath: []
 --- !u!114 &4399575283840226062
 MonoBehaviour:
   m_ObjectHideFlags: 0
