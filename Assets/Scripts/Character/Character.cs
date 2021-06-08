@@ -967,7 +967,7 @@ public class Character : Teams
 
     public int CalculateInitiative()
     {
-        return legs.GetLegsHP() + legs.GetLegsSpeed() - legs.GetLegsWeight();
+        return (legs.GetLegsHP() / legs.GetLegsMaxHP() * 100) + legs.GetLegsInitiative();
     }
     #endregion
 
