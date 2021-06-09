@@ -956,7 +956,7 @@ public class Character : Teams
     //DESCOMENTAR CUANDO SE IMPLEMENTE
     public bool CanBeSelected()
     {
-        return _canBeSelected /*&& myTurn*/;
+        return _canBeSelected && myTurn;
     }
     public void DeactivateAttack()
     {

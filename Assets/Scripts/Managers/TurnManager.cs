@@ -47,11 +47,11 @@ public class TurnManager : Teams, IObservable
             flag2.SetActive(true);
         }
 
-       /* var mortars = FindObjectsOfType<Mortar>();
+        var mortars = FindObjectsOfType<Mortar>();
         foreach (var mortar in mortars)
         {
             Subscribe(mortar);
-        }*/
+        }
         CalculateTurnOrder();
     }
 
@@ -88,36 +88,36 @@ public class TurnManager : Teams, IObservable
         var character = _charSelect.GetActualChar();
         if (character ==null || character.IsMoving() == false)
         {
-            // _buttonsManager.DeactivateEndTurnButton();
-            //
-            // ResetTurn(_actualCharacter);
-            //
-            // if (_turnCounter >= _currentTurnOrder.Count) 
-            //     CalculateTurnOrder(); 
-            //
-            // if (_turnCounter != 0)
-            //     _turnCounter++;
-            //
-            // _actualCharacter = _currentTurnOrder[_turnCounter]; 
-            // _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
-            //_activeTeam = _actualCharacter.GetUnitTeam();
+             _buttonsManager.DeactivateEndTurnButton();
             
-            if (_activeTeam == Team.Capsule)
-            {
-                _activeTeam = Team.Box;
-                //teamText.text = _BoxTeamText;
-                flag2.SetActive(true);
-                flag1.SetActive(false);
-                ResetTurn(_boxTeam);
-            }
-            else
-            {
-                _activeTeam = Team.Capsule;
-                //teamText.text = _CapsuleTeamText;
-                flag1.SetActive(true);
-                flag2.SetActive(false);
-                ResetTurn(_capsuleTeam);
-            }
+             ResetTurn(_actualCharacter);
+            
+             if (_turnCounter >= _currentTurnOrder.Count) 
+                 CalculateTurnOrder(); 
+            
+             if (_turnCounter != 0)
+                 _turnCounter++;
+            
+             _actualCharacter = _currentTurnOrder[_turnCounter]; 
+             _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
+            _activeTeam = _actualCharacter.GetUnitTeam();
+            
+            // if (_activeTeam == Team.Capsule)
+            // {
+            //     _activeTeam = Team.Box;
+            //     //teamText.text = _BoxTeamText;
+            //     flag2.SetActive(true);
+            //     flag1.SetActive(false);
+            //     ResetTurn(_boxTeam);
+            // }
+            // else
+            // {
+            //     _activeTeam = Team.Capsule;
+            //     //teamText.text = _CapsuleTeamText;
+            //     flag1.SetActive(true);
+            //     flag2.SetActive(false);
+            //     ResetTurn(_capsuleTeam);
+            // }
             
             NotifyObserver("EndTurn");
             NotifyObserver("Deselect");

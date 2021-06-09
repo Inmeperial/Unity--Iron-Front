@@ -68,7 +68,29 @@ public class CharacterSelection : MonoBehaviour
     {
         if (c.CanBeSelected())
         {
-            // if (c.myTurn)
+            if (c.myTurn)
+            {
+                _buttonsManager.DeselectActions();
+                if (_selection)
+                    _selection.DeselectThisUnit();
+                if (_enemySelection)
+                {
+                    _enemySelection.DeselectThisUnit();
+                    _enemySelection = null;
+                }
+            
+                playerSelected = true;
+                _selection = c;
+                _selection.SelectThisUnit();
+                _highlight.ChangeActiveCharacter(_selection);
+                _buttonsManager.SetPlayerCharacter(_selection);
+                _buttonsManager.SetPlayerUI();
+                if (_enemySelection)
+                {
+                    _selection.RotateTowardsEnemy(_enemySelection.transform.position);
+                }
+            }
+            // if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
             // {
             //     _buttonsManager.DeselectActions();
             //     if (_selection)
@@ -90,30 +112,8 @@ public class CharacterSelection : MonoBehaviour
             //         _selection.RotateTowardsEnemy(_enemySelection.transform.position);
             //     }
             // }
-            if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
-            {
-                _buttonsManager.DeselectActions();
-                if (_selection)
-                    _selection.DeselectThisUnit();
-                if (_enemySelection)
-                {
-                    _enemySelection.DeselectThisUnit();
-                    _enemySelection = null;
-                }
-
-                playerSelected = true;
-                _selection = c;
-                _selection.SelectThisUnit();
-                _highlight.ChangeActiveCharacter(_selection);
-                _buttonsManager.SetPlayerCharacter(_selection);
-                _buttonsManager.SetPlayerUI();
-                if (_enemySelection)
-                {
-                    _selection.RotateTowardsEnemy(_enemySelection.transform.position);
-                }
-            }
-            else
-            // else if (c.GetUnitTeam() != _turnManager.GetActiveTeam())
+            //else
+            else if (c.GetUnitTeam() != _turnManager.GetActiveTeam())
             {
                 if (_enemySelection)
                 {

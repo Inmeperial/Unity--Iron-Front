@@ -18,6 +18,7 @@ public class Legs : MonoBehaviour
 
     private int _initiative;
 
+    private bool _brokenLegs = false;
 
     // Start is called before the first frame update
 
@@ -67,9 +68,10 @@ public class Legs : MonoBehaviour
         ui.SetRightArmSlider(_legsHP);
         var hp = _legsHP - damage;
         _legsHP = hp > 0 ? hp : 0;
-        if (_legsHP <= 0)
+        if (_legsHP <= 0 && !_brokenLegs)
         {
-            _myChar.SetCharacterMove(false);
+            HalfSteps();
+            //_myChar.SetCharacterMove(false);
         }
         _myChar.effectsController.PlayParticlesEffect(transform.position, "Damage");
         _myChar.effectsController.CreateDamageText(damage.ToString(), 1, transform.position, true);
@@ -87,9 +89,10 @@ public class Legs : MonoBehaviour
         ui.DeactivateWorldUIWithTimer();
         var hp = _legsHP - damage;
         _legsHP = hp > 0 ? hp : 0;
-        if (_legsHP <= 0)
+        if (_legsHP <= 0 && !_brokenLegs)
         {
-            _myChar.SetCharacterMove(false);
+            //_myChar.SetCharacterMove(false);
+            HalfSteps();
         }
         _myChar.buttonsManager.UpdateLegsHUD(_legsHP, true);
         _myChar.effectsController.PlayParticlesEffect(transform.position, "Damage");
@@ -105,5 +108,11 @@ public class Legs : MonoBehaviour
     public float GetMoveSpeed()
     {
         return _moveSpeed;
+    }
+
+    void HalfSteps()
+    {
+        _maxSteps /= 2;
+        _brokenLegs = true;
     }
 }
