@@ -15,17 +15,17 @@ public class Arm : Parts
         _armHP = _armMaxHP;
     }
 
-    public void UpdateHP(int newValue)
+    public override void UpdateHP(float newValue)
     {
         _armHP = newValue;
     }
     
-    public float GetArmHPMaxHP()
+    public override float GetMaxHP()
     {
         return _armMaxHP;
     }
     
-    public float GetArmHP()
+    public override float GetCurrentHP()
     {
         return _armHP;
     }
