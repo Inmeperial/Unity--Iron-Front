@@ -271,9 +271,9 @@ public class Mortar : MonoBehaviour, IObserver
             var unit = tile.GetCharacterAbove();
             if (unit)
             {
-                unit.myBody.TakeDamageBody(_damage);
-                unit.TakeDamageLeftArm(_damage);
-                unit.TakeDamageRightArm(_damage);
+                unit.body.TakeDamageBody(_damage);
+                unit.leftArm.TakeDamageArm(_damage);
+                unit.rightArm.TakeDamageArm(_damage);
                 unit.legs.TakeDamageLegs(_damage);
             }
         }

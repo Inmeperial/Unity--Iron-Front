@@ -11,7 +11,7 @@ public class LandMine : MonoBehaviour
         var obj = other.GetComponent<Legs>();
         if (obj)
         {
-            obj.TakeDamageFromMine(damage);
+            obj.TakeDamageLegs(damage);
             FindObjectOfType<EffectsController>().PlayParticlesEffect(transform.position, "Mine");
             Destroy(gameObject);
         }

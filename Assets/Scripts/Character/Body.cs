@@ -14,11 +14,6 @@ public class Body : Parts
         _bodyMaxHP = bodyData.maxHP;
         _bodyHP = _bodyMaxHP;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        _myChar = transform.parent.GetComponent<Character>();
-    }
 
     public void UpdateHP(int newValue)
     {

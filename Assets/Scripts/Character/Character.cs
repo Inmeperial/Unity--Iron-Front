@@ -16,23 +16,19 @@ public class Character : Teams
     [SerializeField] private Team _unitTeam;
 
     [Header("Body")] 
-    public Body myBody;
+    public Body body;
     [SerializeField] private Transform _bodyTransform;
 
     [Header("Left Arm")]
-    [SerializeField] LeftArm _myLeftArm;
-    public Gun leftGun;
+    public Arm leftArm;
+    [SerializeField] private Gun _leftGun;
     private bool _leftGunSelected;
-    [SerializeField] private int _leftArmMaxHP;
-    [SerializeField] private int _leftArmHP;
     [SerializeField] private Transform _lArmTransform;
 
     [Header("Right Arm")]
-    [SerializeField] RightArm _myRightArm;
-    public Gun rightGun;
+    public Arm rightArm;
+    [SerializeField] private Gun _rightGun;
     private bool _rightGunSelected;
-    [SerializeField] private int _rightArmMaxHP;
-    [SerializeField] private int _rightArmHP;
     [SerializeField] private Transform _rArmTransform;
 
     [Header("Legs")] 
@@ -78,11 +74,7 @@ public class Character : Teams
     public AudioClip soundMotorStart;
     public AudioClip soundWalk;
 
-    private const int _missHit = 0;
-    private const int _normalHit = 1;
-    private const int _criticalHit = 2;
-
-	[HideInInspector]
+    [HideInInspector]
 	public EffectsController effectsController;
     [HideInInspector]
     public TurnManager turnManager;
@@ -95,28 +87,19 @@ public class Character : Teams
     void Start()
     {
         _canBeSelected = true;
-        if (leftGun)
+        if (_leftGun)
         {
-            _leftArmHP = _leftArmMaxHP;
-            _leftArmAlive = _leftArmHP > 0 ? true : false;
+            
+            _leftArmAlive = leftArm.GetArmHP() > 0 ? true : false;
         }
-        else
+
+        if (_rightGun)
         {
-            _leftArmHP = 0;
-            _leftArmAlive = false;
+            _rightArmAlive = rightArm.GetArmHP() > 0 ? true : false;
         }
-        
-        if (rightGun)
-        {
-            _rightArmHP = _rightArmMaxHP;
-            _rightArmAlive = _rightArmHP > 0 ? true : false;
-        }
-        else
-        {
-            _rightArmHP = 0;
-            _rightArmAlive = false;
-        }
-        
+        leftArm.SetRightOrLeft("Left");
+        rightArm.SetRightOrLeft("Right");
+
         _canMove = legs.GetLegsHP() > 0 ? true : false;
         _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
         _selected = false;
@@ -137,18 +120,18 @@ public class Character : Teams
         _myUI = GetComponent<WorldUI>();
 
         if (_myUI)
-            _myUI.SetLimits(myBody.GetBodyMaxHP(), _rightArmMaxHP, _leftArmMaxHP, legs.GetLegsMaxHP());
+            _myUI.SetLimits(body.GetBodyMaxHP(), rightArm.GetArmHPMaxHP(), leftArm.GetArmHPMaxHP(), legs.GetLegsMaxHP());
 
         if (_rightArmAlive)
         {
-            _selectedGun = rightGun;
+            _selectedGun = _rightGun;
             _canAttack = true;
             _rightGunSelected = true;
             _leftGunSelected = false;
         }
         else if (_leftArmAlive)
         {
-            _selectedGun = leftGun;
+            _selectedGun = _leftGun;
             _canAttack = true;
             _rightGunSelected = false;
             _leftGunSelected = true;
@@ -161,7 +144,7 @@ public class Character : Teams
             _leftGunSelected = false;
         }
 
-        if (myBody.GetBodyHP() <= 0)
+        if (body.GetBodyHP() <= 0)
             NotSelectable();
 
         for (int i = 0; i < transform.childCount; i++)
@@ -283,150 +266,10 @@ public class Character : Teams
             _move.StartMovement(_path);
         }
     }
-
-    
-    
-    
-    
-
-    //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamageLeftArm(List<Tuple<int,int>> damages)
-    {
-        _myUI.SetLeftArmSlider(_leftArmHP);
-        int total = 0;
-        var leftArmPos = GetLArmPosition();
-        for (int i = 0; i < damages.Count; i++)
-        {
-            total += damages[i].Item1;
-            var hp = _leftArmHP - damages[i].Item1;
-            _leftArmHP = hp > 0 ? hp : 0;
-            _leftArmAlive = _leftArmHP > 0 ? true : false;
-            effectsController.PlayParticlesEffect(leftArmPos, "Damage");
-            var item = damages[i].Item2;
-            switch (item)
-            {
-                case _missHit:
-                    effectsController.CreateDamageText("Miss", 0, leftArmPos, i == damages.Count - 1 ? true : false);
-                    break;
-                   
-                case _normalHit:
-                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, leftArmPos, i == damages.Count - 1 ? true : false);
-                    break;
-               
-                case _criticalHit:
-                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, leftArmPos, i == damages.Count - 1 ? true : false);
-                    break;
-            }
-        }
-        CheckArms();
-        _myUI.ContainerActivation(true);
-        _myUI.UpdateLeftArmSlider(total, _leftArmHP);
-        MakeNotAttackable();
-    }
-    
-    //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamageLeftArm(int damage)
-    {
-        _myUI.SetLeftArmSlider(_leftArmHP);
-        var hp = _leftArmHP - damage;
-        _leftArmHP = hp > 0 ? hp : 0;
-        _leftArmAlive = _leftArmHP > 0 ? true : false;
-        var leftArmPos = GetLArmPosition();
-        effectsController.PlayParticlesEffect(leftArmPos, "Damage");
-        effectsController.CreateDamageText(damage.ToString(), 1, leftArmPos, true);
-        _myUI.ContainerActivation(true);
-        _myUI.UpdateLeftArmSlider(damage, _leftArmHP);
-        MakeNotAttackable();
-    }
-
-    //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamageRightArm(List<Tuple<int,int>> damages)
-    {
-        _myUI.SetRightArmSlider(_rightArmHP);
-        int total = 0;
-        var rightArmPos = GetRArmPosition();
-        for (int i = 0; i < damages.Count; i++)
-        {
-            total += damages[i].Item1;
-            var hp = _rightArmHP - damages[i].Item1;
-            _rightArmHP = hp > 0 ? hp : 0;
-            _rightArmAlive = _rightArmHP > 0 ? true : false;
-            effectsController.PlayParticlesEffect(rightArmPos, "Damage");
-
-            var item = damages[i].Item2;
-            switch (item)
-            {
-                case _missHit:
-                    effectsController.CreateDamageText("Miss", 0, rightArmPos, i == damages.Count - 1 ? true : false);
-                    break;
-                   
-                case _normalHit:
-                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, rightArmPos, i == damages.Count - 1 ? true : false);
-                    break;
-               
-                case _criticalHit:
-                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, rightArmPos, i == damages.Count - 1 ? true : false);
-                    break;
-            }
-        }
-        CheckArms();
-        _myUI.ContainerActivation(true);
-        _myUI.UpdateRightArmSlider(total, _rightArmHP);
-        MakeNotAttackable();
-    }
-    
-    //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamageRightArm(int damage)
-    {
-        _myUI.SetRightArmSlider(_rightArmHP);
-        var hp = _rightArmHP - damage;
-        _rightArmHP = hp > 0 ? hp : 0;
-        _rightArmAlive = _rightArmHP > 0 ? true : false;
-        var rightArmPos = GetRArmPosition();
-        effectsController.PlayParticlesEffect(rightArmPos, "Damage");
-        effectsController.CreateDamageText(damage.ToString(), 1, rightArmPos, true);
-        _myUI.ContainerActivation(true);
-        _myUI.UpdateLeftArmSlider(damage, _rightArmHP);
-        MakeNotAttackable();
-    }
-
-    //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamageLegs(List<Tuple<int,int>> damages)
-    {
-        _myUI.SetLegsSlider(legs.GetLegsHP());
-        int total = 0;
-        var legsPos = GetLegsPosition();
-        for (int i = 0; i < damages.Count; i++)
-        {
-            total += damages[i].Item1;
-            var hp = legs.GetLegsHP() - damages[i].Item1;
-            legs.UpdateHP((int)(hp > 0 ? hp : 0));
-            _canMove = legs.GetLegsHP() > 0 ? true : false;
-            effectsController.PlayParticlesEffect(legsPos, "Damage");
-            var item = damages[i].Item2;
-            switch (item)
-            {
-                case _missHit:
-                    effectsController.CreateDamageText("Miss", 0, legsPos, i == damages.Count - 1 ? true : false);
-                    break;
-                   
-                case _normalHit:
-                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, legsPos, i == damages.Count - 1 ? true : false);
-                    break;
-               
-                case _criticalHit:
-                    effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, legsPos, i == damages.Count - 1 ? true : false);
-                    break;
-            }
-        }
-        _myUI.ContainerActivation(true);
-        _myUI.UpdateLegsSlider(total, (int)legs.GetLegsHP());
-        MakeNotAttackable();
-    }
     
     public void SelectLeftGun()
     {
-        _selectedGun = leftGun;
+        _selectedGun = _leftGun;
         _leftGunSelected = true;
         _rightGunSelected = false;
         ResetTilesInAttackRange();
@@ -449,7 +292,7 @@ public class Character : Teams
 
     public void SelectRightGun()
     {
-        _selectedGun = rightGun;
+        _selectedGun = _rightGun;
         _leftGunSelected = false;
         _rightGunSelected = true;
         ResetTilesInAttackRange();
@@ -541,28 +384,6 @@ public class Character : Teams
         return _unitTeam;
     }
 
-    public int GetLeftArmMaxHP()
-    {
-        return _leftArmMaxHP;
-    }
-
-    public int GetLeftArmHP()
-    {
-        return _leftArmHP;
-    }
-
-    public int GetRightArmMaxHP()
-    {
-        return _rightArmMaxHP;
-    }
-
-    public int GetRightArmHP()
-    {
-        return _rightArmHP;
-    }
-
-   
-
     public bool IsSelected()
     {
         return _selected;
@@ -598,12 +419,12 @@ public class Character : Teams
 
     public Gun GetLeftGun()
     {
-        return leftGun;
+        return _leftGun;
     }
 
     public Gun GetRightGun()
     {
-        return rightGun;
+        return _rightGun;
     }
 
     public Vector3 GetBodyPosition()
@@ -671,7 +492,7 @@ public class Character : Teams
         _path.Clear();
         _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
         _enemiesInRange.Clear();
-        MakeNotAttackable();
+        _canBeAttacked = false;
         pathCreator.ResetPath();
     }
 
@@ -714,14 +535,14 @@ public class Character : Teams
 
     public void ReduceAvailableSteps(int amount)
     {
-        var s = _currentSteps - amount;
-        _currentSteps = s >= 0 ? s : 0;
+        var steps = _currentSteps - amount;
+        _currentSteps = steps >= 0 ? steps : 0;
     }
 
     public void IncreaseAvailableSteps(int amount)
     {
-        var s = _currentSteps + amount;
-        _currentSteps = s <= legs.GetMaxSteps() ? s : legs.GetMaxSteps();
+        var steps = _currentSteps + amount;
+        _currentSteps = steps <= legs.GetMaxSteps() ? steps : legs.GetMaxSteps();
     }
 
     public void SelectThisUnit()
@@ -743,9 +564,9 @@ public class Character : Teams
         if (CanAttack())
         {
             if (_rightArmAlive)
-                _selectedGun = rightGun;
+                _selectedGun = _rightGun;
             else if (_leftArmAlive)
-                _selectedGun = leftGun;
+                _selectedGun = _leftGun;
             PaintTilesInAttackRange(_myPositionTile, 0);
             CheckEnemiesInAttackRange();
         }
@@ -873,17 +694,19 @@ public class Character : Teams
 
     public void CheckArms()
     {
-        if (!_leftArmAlive && !_rightArmAlive)
+        if (!LeftArmAlive() && !RightArmAlive())
             _canAttack = false;
     }
-
+    
     public bool LeftArmAlive()
     {
+        _leftArmAlive = leftArm.GetArmHP() > 0 ? true : false;
         return _leftArmAlive;
     }
-
+    
     public bool RightArmAlive()
     {
+        _rightArmAlive = rightArm.GetArmHP() > 0 ? true : false;
         return _rightArmAlive;
     }
 
@@ -919,7 +742,7 @@ public class Character : Teams
 
     public void ShowWorldUI()
     {
-        _myUI.SetWorldUIValues(myBody.GetBodyHP(), GetRightArmHP(), GetLeftArmHP(), legs.GetLegsHP(), ThisUnitCanMove(), CanAttack());
+        _myUI.SetWorldUIValues(body.GetBodyHP(), rightArm.GetArmHP(), leftArm.GetArmHP(), legs.GetLegsHP(), _canMove, _canAttack);
         _myUI.ContainerActivation(true);
     }
 
@@ -951,12 +774,9 @@ public class Character : Teams
             Debug.DrawRay(position, dir * 20f, Color.green, 1000f);
             return true;
         }
-            
-        else
-        {
-            Debug.DrawRay(position, dir * 20f, Color.red, 1000f);
-            return false;
-        }
+        
+        Debug.DrawRay(position, dir * 20f, Color.red, 1000f);
+        return false;
     }
 
     public void SetCharacterMove(bool state)

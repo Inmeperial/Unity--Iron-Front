@@ -10,7 +10,7 @@ public class Parts : MonoBehaviour
     protected const int _criticalHit = 2;
     protected Character _myChar;
 
-    private void Start()
+    protected virtual void Start()
     {
         _myChar = transform.parent.GetComponent<Character>();
     }

@@ -145,13 +145,13 @@ public class WorldUI : MonoBehaviour
 
    
    //Actualiza la barra de vida en cada frame en base al daño recibido
-   public void UpdateBodySlider(int damage, int currentHp)
+   public void UpdateBodySlider(float damage, float currentHp)
    {
        _bodyHpSlider.value = currentHp;
        StartCoroutine(UpdateBody(damage));
    }
 
-   IEnumerator UpdateBody(int damage)
+   IEnumerator UpdateBody(float damage)
    {
        for (int i = 1; i <= damage; i++)
        {
@@ -180,13 +180,13 @@ public class WorldUI : MonoBehaviour
     }
     
    //Actualiza la barra de vida en cada frame en base al daño recibido
-    public void UpdateLeftArmSlider(int damage, int currentHp)
+    public void UpdateLeftArmSlider(float damage, float currentHp)
     {
         _leftArmHpSlider.value = currentHp;
         StartCoroutine(UpdateLeftArm(damage));
     }
 
-    IEnumerator UpdateLeftArm(int damage)
+    IEnumerator UpdateLeftArm(float damage)
     {
         for (int i = 1; i <= damage; i++)
         {
@@ -214,13 +214,13 @@ public class WorldUI : MonoBehaviour
     }
     
     //Actualiza la barra de vida en cada frame en base al daño recibido
-    public void UpdateRightArmSlider(int damage, int currentHp)
+    public void UpdateRightArmSlider(float damage, float currentHp)
     {
         _rightArmHpSlider.value = currentHp;
         StartCoroutine(UpdateRightArm(damage));
     }
 
-    IEnumerator UpdateRightArm(int damage)
+    IEnumerator UpdateRightArm(float damage)
     {
         for (int i = 1; i <= damage; i++)
         {
@@ -248,13 +248,13 @@ public class WorldUI : MonoBehaviour
     }
     
     //Actualiza la barra de vida en cada frame en base al daño recibido
-    public void UpdateLegsSlider(int damage, int currentHp)
+    public void UpdateLegsSlider(float damage, float currentHp)
     {
         _legsHpSlider.value = currentHp;
         StartCoroutine(UpdateLegs(damage));
     }
 
-    IEnumerator UpdateLegs(int damage)
+    IEnumerator UpdateLegs(float damage)
     {
         for (int i = 1; i <= damage; i++)
         {
@@ -328,30 +328,30 @@ public class WorldUI : MonoBehaviour
         _legsCount.text = "0";
     }
 
-    public void SetBodyHpText(int hp)
+    public void SetBodyHpText(float hp)
     {
-        var h = hp > 0 ? hp : 0;
+        var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
         _bodyHpText.text = h.ToString();
         _bodyButtonSlider.value = h;
     }
     
-    public void SetLeftArmHpText(int hp)
+    public void SetLeftArmHpText(float hp)
     {
-        var h = hp > 0 ? hp : 0;
+        var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
         _leftArmHpText.text = hp.ToString();
         _leftArmButtonSlider.value = h;
     }
     
-    public void SetRightArmHpText(int hp)
+    public void SetRightArmHpText(float hp)
     {
-        var h = hp > 0 ? hp : 0;
+        var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
         _rightArmHpText.text = hp.ToString();
         _rightArmButtonSlider.value = h;
     }
     
-    public void SetLegsHpText(int hp)
+    public void SetLegsHpText(float hp)
     {
-        var h = hp > 0 ? hp : 0;
+        var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
         _legsHpText.text = hp.ToString();
         _legsButtonSlider.value = h;
     }
