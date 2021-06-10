@@ -54,6 +54,9 @@ public class TurnManager : Teams, IObservable
             Subscribe(mortar);
         }
         CalculateTurnOrder();
+
+        _actualCharacter = _currentTurnOrder[0];
+        _actualCharacter.myTurn = true;
     }
 
     public void UnitIsMoving()
@@ -89,19 +92,23 @@ public class TurnManager : Teams, IObservable
         var character = _charSelect.GetActualChar();
         if (character ==null || character.IsMoving() == false)
         {
-             _buttonsManager.DeactivateEndTurnButton();
+            _buttonsManager.DeactivateEndTurnButton();
             
-             ResetTurn(_actualCharacter);
+            ResetTurn(_actualCharacter);
+
+            if (_turnCounter >= _currentTurnOrder.Count-1)
+            {
+                CalculateTurnOrder();
+                _actualCharacter = _currentTurnOrder[0];
+            }
+            else
+            {
+                _turnCounter++;
+                _actualCharacter = _currentTurnOrder[_turnCounter];
+            }
             
-             if (_turnCounter >= _currentTurnOrder.Count) 
-                 CalculateTurnOrder(); 
-            
-             if (_turnCounter != 0)
-                 _turnCounter++;
-            
-             _actualCharacter = _currentTurnOrder[_turnCounter];
-			_actualCharacter.myTurn = true;
-             _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
+            _actualCharacter.myTurn = true;
+            _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
             _activeTeam = _actualCharacter.GetUnitTeam();
             
             // if (_activeTeam == Team.Capsule)
@@ -124,8 +131,6 @@ public class TurnManager : Teams, IObservable
             NotifyObserver("EndTurn");
             NotifyObserver("Deselect");
         }
-
-        
     }
 
     void ResetTurn(List<Character> team)
