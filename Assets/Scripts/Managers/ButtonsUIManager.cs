@@ -857,8 +857,6 @@ public class ButtonsUIManager : MonoBehaviour
 			rightGunDamageText.text = "";
 			rightGunHitChanceText.text = "";
         }
-
-
     }
 
     void ShowUnitHudText(TextMeshProUGUI bodyHpText, float bodyValue, TextMeshProUGUI lArmHpText, float lArmValue, TextMeshProUGUI rArmHpText, float rArmValue, TextMeshProUGUI legsHpText, float legsValue)
@@ -896,7 +894,8 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (isPlayer)
         {
-            playerLegsCurrHp.text = value.ToString();
+            playerLegsCurrHp.text = value.ToString() + "HP";
+            playerLegsSlider.value = value;
         }
     }
 
