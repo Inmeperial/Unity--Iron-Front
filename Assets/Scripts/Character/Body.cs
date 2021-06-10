@@ -14,18 +14,17 @@ public class Body : Parts
         _bodyMaxHP = bodyData.maxHP;
         _bodyHP = _bodyMaxHP;
     }
-
-    public void UpdateHP(int newValue)
+    public override void UpdateHP(float newValue)
     {
         _bodyHP = newValue;
     }
     
-    public float GetBodyMaxHP()
+    public override float GetMaxHP()
     {
         return _bodyMaxHP;
     }
 
-    public float GetBodyHP()
+    public override float GetCurrentHP()
     {
         return _bodyHP;
     }
@@ -87,4 +86,6 @@ public class Body : Parts
         ui.UpdateBodySlider(damage, (int)_bodyHP);
         _myChar.MakeNotAttackable();
     }
+
+    
 }

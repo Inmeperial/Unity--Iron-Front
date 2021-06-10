@@ -33,17 +33,17 @@ public class Legs : Parts
         return _maxSteps;
     }
 
-    public void UpdateHP(float newValue)
+    public override void UpdateHP(float newValue)
     {
         _legsHP = newValue;
     }
     
-    public float GetLegsMaxHP()
+    public override float GetMaxHP()
     {
         return _legsMaxHP;
     }
 
-    public float GetLegsHP()
+    public override float GetCurrentHP()
     {
         return _legsHP;
     }

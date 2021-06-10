@@ -90,17 +90,17 @@ public class Character : Teams
         if (_leftGun)
         {
             
-            _leftArmAlive = leftArm.GetArmHP() > 0 ? true : false;
+            _leftArmAlive = leftArm.GetCurrentHP() > 0 ? true : false;
         }
 
         if (_rightGun)
         {
-            _rightArmAlive = rightArm.GetArmHP() > 0 ? true : false;
+            _rightArmAlive = rightArm.GetCurrentHP() > 0 ? true : false;
         }
         leftArm.SetRightOrLeft("Left");
         rightArm.SetRightOrLeft("Right");
 
-        _canMove = legs.GetLegsHP() > 0 ? true : false;
+        _canMove = legs.GetCurrentHP() > 0 ? true : false;
         _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
         _selected = false;
 
@@ -120,7 +120,7 @@ public class Character : Teams
         _myUI = GetComponent<WorldUI>();
 
         if (_myUI)
-            _myUI.SetLimits(body.GetBodyMaxHP(), rightArm.GetArmHPMaxHP(), leftArm.GetArmHPMaxHP(), legs.GetLegsMaxHP());
+            _myUI.SetLimits(body.GetMaxHP(), rightArm.GetMaxHP(), leftArm.GetMaxHP(), legs.GetMaxHP());
 
         if (_rightArmAlive)
         {
@@ -144,7 +144,7 @@ public class Character : Teams
             _leftGunSelected = false;
         }
 
-        if (body.GetBodyHP() <= 0)
+        if (body.GetCurrentHP() <= 0)
             NotSelectable();
 
         for (int i = 0; i < transform.childCount; i++)
@@ -486,7 +486,7 @@ public class Character : Teams
     public void NewTurn()
     {
         myTurn = false;
-        _canMove = legs.GetLegsHP() > 0 ? true : false;
+        _canMove = legs.GetCurrentHP() > 0 ? true : false;
         _canAttack = true;
         _selectedGun.SetGun();
         _path.Clear();
@@ -700,13 +700,13 @@ public class Character : Teams
     
     public bool LeftArmAlive()
     {
-        _leftArmAlive = leftArm.GetArmHP() > 0 ? true : false;
+        _leftArmAlive = leftArm.GetCurrentHP() > 0 ? true : false;
         return _leftArmAlive;
     }
     
     public bool RightArmAlive()
     {
-        _rightArmAlive = rightArm.GetArmHP() > 0 ? true : false;
+        _rightArmAlive = rightArm.GetCurrentHP() > 0 ? true : false;
         return _rightArmAlive;
     }
 
@@ -725,7 +725,7 @@ public class Character : Teams
 
     public float CalculateInitiative()
     {
-        return legs.GetLegsHP() / legs.GetLegsMaxHP() * 100 + legs.GetLegsInitiative();
+        return legs.GetCurrentHP() / legs.GetMaxHP() * 100 + legs.GetLegsInitiative();
     }
     #endregion
 
@@ -742,7 +742,7 @@ public class Character : Teams
 
     public void ShowWorldUI()
     {
-        _myUI.SetWorldUIValues(body.GetBodyHP(), rightArm.GetArmHP(), leftArm.GetArmHP(), legs.GetLegsHP(), _canMove, _canAttack);
+        _myUI.SetWorldUIValues(body.GetCurrentHP(), rightArm.GetCurrentHP(), leftArm.GetCurrentHP(), legs.GetCurrentHP(), _canMove, _canAttack);
         _myUI.ContainerActivation(true);
     }
 
