@@ -1929,19 +1929,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayOrigin: {fileID: 241361046412072002}
   _unitTeam: 0
-  _myBody: {fileID: 0}
-  _bodyMaxHP: 500
-  _bodyHP: 0
+  body: {fileID: 0}
   _bodyTransform: {fileID: 711353802003468873}
-  _myLeftArm: {fileID: 0}
-  leftGun: {fileID: 0}
-  _leftArmMaxHP: 275
-  _leftArmHP: 0
+  leftArm: {fileID: 0}
+  _leftGun: {fileID: 0}
   _lArmTransform: {fileID: 1448905461976191177}
-  _myRightArm: {fileID: 0}
-  rightGun: {fileID: 0}
-  _rightArmMaxHP: 200
-  _rightArmHP: 0
+  rightArm: {fileID: 0}
+  _rightGun: {fileID: 0}
   _rArmTransform: {fileID: 5371178429520502670}
   legs: {fileID: 7550885667231917338}
   _legsTransform: {fileID: 4121052401946620787}
@@ -15762,6 +15756,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7889596404051525483, guid: ed9cedb2149a17344af9b1c0035ddb4c,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed9cedb2149a17344af9b1c0035ddb4c, type: 3}
