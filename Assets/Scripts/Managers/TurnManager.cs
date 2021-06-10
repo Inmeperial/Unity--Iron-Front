@@ -19,6 +19,7 @@ public class TurnManager : Teams, IObservable
     
     private Team _activeTeam;
 
+	[SerializeField]
     private List<Character> _currentTurnOrder = new List<Character>();
     
     private List<IObserver> _observers = new List<IObserver>();
@@ -98,7 +99,8 @@ public class TurnManager : Teams, IObservable
              if (_turnCounter != 0)
                  _turnCounter++;
             
-             _actualCharacter = _currentTurnOrder[_turnCounter]; 
+             _actualCharacter = _currentTurnOrder[_turnCounter];
+			_actualCharacter.myTurn = true;
              _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
             _activeTeam = _actualCharacter.GetUnitTeam();
             
