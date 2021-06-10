@@ -26,6 +26,12 @@ public class EffectsController : MonoBehaviour
     [SerializeField] private float _textSpacingTime;
     private bool _canCreate;
     private List<Tuple<string, int, Vector3>> _list = new List<Tuple<string, int, Vector3>>();
+    private Camera _cam;
+
+    private void Start()
+    {
+        _cam = Camera.main;
+    }
 
     /// <summary>
     /// Reproduces the particle effect. type: Damage - Attack - Mine
@@ -87,7 +93,14 @@ public class EffectsController : MonoBehaviour
         for (int i = 0; i < _list.Count; i++)
         {
             var myText = _list[i];
-            var tObj = Instantiate(_damageText, myText.Item3 + new Vector3(0, i/2,0), Quaternion.identity);
+            Debug.Log("pos: " + myText.Item3);
+            
+            //Creo un objeto vacio que mire a la camara en la posicion donde va a crearse el texto 
+            var rot = Instantiate(new GameObject(), myText.Item3, Quaternion.identity);
+            rot.transform.LookAt(rot.transform.position + _cam.transform.forward);
+            
+            //Uso la rotacion del objeto vacio para que el texto se instancie con esa rotacion
+            var tObj = Instantiate(_damageText, myText.Item3 + new Vector3(0, 0,0), rot.transform.rotation);
             var t = tObj.GetComponent<DamageText>(); 
             t.SetText(myText.Item1, myText.Item2, i);
             StartCoroutine(DestroyEffect(t.gameObject, t.GetDuration()));
