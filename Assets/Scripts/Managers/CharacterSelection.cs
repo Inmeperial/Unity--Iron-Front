@@ -66,67 +66,64 @@ public class CharacterSelection : MonoBehaviour
 
     void SelectionOf(Character c)
     {
-        if (c.CanBeSelected())
+        if (c.myTurn)
         {
-            if (c.myTurn)
+            _buttonsManager.DeselectActions();
+            if (_selection)
+                _selection.DeselectThisUnit();
+            if (_enemySelection)
             {
-                _buttonsManager.DeselectActions();
-                if (_selection)
-                    _selection.DeselectThisUnit();
-                if (_enemySelection)
-                {
-                    _enemySelection.DeselectThisUnit();
-                    _enemySelection = null;
-                }
-            
-                playerSelected = true;
-                _selection = c;
-                _selection.SelectThisUnit();
-                _highlight.ChangeActiveCharacter(_selection);
-                _buttonsManager.SetPlayerCharacter(_selection);
-                _buttonsManager.SetPlayerUI();
-                if (_enemySelection)
-                {
-                    _selection.RotateTowardsEnemy(_enemySelection.transform.position);
-                }
+                _enemySelection.DeselectThisUnit();
+                _enemySelection = null;
             }
-            // if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
-            // {
-            //     _buttonsManager.DeselectActions();
-            //     if (_selection)
-            //         _selection.DeselectThisUnit();
-            //     if (_enemySelection)
-            //     {
-            //         _enemySelection.DeselectThisUnit();
-            //         _enemySelection = null;
-            //     }
-            //
-            //     playerSelected = true;
-            //     _selection = c;
-            //     _selection.SelectThisUnit();
-            //     _highlight.ChangeActiveCharacter(_selection);
-            //     _buttonsManager.SetPlayerCharacter(_selection);
-            //     _buttonsManager.SetPlayerUI();
-            //     if (_enemySelection)
-            //     {
-            //         _selection.RotateTowardsEnemy(_enemySelection.transform.position);
-            //     }
-            // }
-            //else
-            else if (c.GetUnitTeam() != _turnManager.GetActiveTeam())
+        
+            playerSelected = true;
+            _selection = c;
+            _selection.SelectThisUnit();
+            _highlight.ChangeActiveCharacter(_selection);
+            _buttonsManager.SetPlayerCharacter(_selection);
+            _buttonsManager.SetPlayerUI();
+            if (_enemySelection)
             {
-                if (_enemySelection)
-                {
-                    _enemySelection.DeselectThisUnit();
-                }
-                _enemySelection = c;
-                _enemySelection.SelectedAsEnemy();
-                _buttonsManager.SetEnemy(_enemySelection);
-                _buttonsManager.SetEnemyUI();
-                if (_selection && _selection.CanAttack())
-                {
-                    _selection.RotateTowardsEnemy(_enemySelection.transform.position);
-                }
+                _selection.RotateTowardsEnemy(_enemySelection.transform.position);
+            }
+        }
+        // if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
+        // {
+        //     _buttonsManager.DeselectActions();
+        //     if (_selection)
+        //         _selection.DeselectThisUnit();
+        //     if (_enemySelection)
+        //     {
+        //         _enemySelection.DeselectThisUnit();
+        //         _enemySelection = null;
+        //     }
+        //
+        //     playerSelected = true;
+        //     _selection = c;
+        //     _selection.SelectThisUnit();
+        //     _highlight.ChangeActiveCharacter(_selection);
+        //     _buttonsManager.SetPlayerCharacter(_selection);
+        //     _buttonsManager.SetPlayerUI();
+        //     if (_enemySelection)
+        //     {
+        //         _selection.RotateTowardsEnemy(_enemySelection.transform.position);
+        //     }
+        // }
+        //else
+        else if (c.GetUnitTeam() != _turnManager.GetActiveTeam())
+        {
+            if (_enemySelection)
+            {
+                _enemySelection.DeselectThisUnit();
+            }
+            _enemySelection = c;
+            _enemySelection.SelectedAsEnemy();
+            _buttonsManager.SetEnemy(_enemySelection);
+            _buttonsManager.SetEnemyUI();
+            if (_selection && _selection.CanAttack())
+            {
+                _selection.RotateTowardsEnemy(_enemySelection.transform.position);
             }
         }
     }

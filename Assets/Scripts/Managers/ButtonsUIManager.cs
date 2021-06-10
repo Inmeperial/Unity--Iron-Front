@@ -978,7 +978,7 @@ public class ButtonsUIManager : MonoBehaviour
 
         ui.SetRightArmHpText(_selectedEnemy.GetRightArmHP());
 
-        ui.SetLegsHpText(_selectedEnemy.legs.GetLegsHP());
+        ui.SetLegsHpText((int)_selectedEnemy.legs.GetLegsHP());
 
         ui.ButtonsContainerSetActive(true);
     }

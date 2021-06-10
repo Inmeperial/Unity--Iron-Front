@@ -454,7 +454,7 @@ public class Character : Teams
         {
             total += damages[i].Item1;
             var hp = legs.GetLegsHP() - damages[i].Item1;
-            legs.UpdateHP(hp > 0 ? hp : 0);
+            legs.UpdateHP((int)(hp > 0 ? hp : 0));
             _canMove = legs.GetLegsHP() > 0 ? true : false;
             effectsController.PlayParticlesEffect(legsPos, "Damage");
             var item = damages[i].Item2;
@@ -474,7 +474,7 @@ public class Character : Teams
             }
         }
         _myUI.ContainerActivation(true);
-        _myUI.UpdateLegsSlider(total, legs.GetLegsHP());
+        _myUI.UpdateLegsSlider(total, (int)legs.GetLegsHP());
         MakeNotAttackable();
     }
     
@@ -966,9 +966,9 @@ public class Character : Teams
         _canAttack = false;
     }
 
-    public int CalculateInitiative()
+    public float CalculateInitiative()
     {
-        return (legs.GetLegsHP() / legs.GetLegsMaxHP() * 100) + legs.GetLegsInitiative();
+        return legs.GetLegsHP() / legs.GetLegsMaxHP() * 100 + legs.GetLegsInitiative();
     }
     #endregion
 

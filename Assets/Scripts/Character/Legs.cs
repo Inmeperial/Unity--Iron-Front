@@ -6,8 +6,8 @@ using UnityEngine;
 public class Legs : MonoBehaviour
 {
     public LegsSO legsData;
-    private int _legsMaxHP;
-    private int _legsHP;
+    private float _legsMaxHP;
+    private float _legsHP;
     
     private int _maxSteps;
     
@@ -47,12 +47,12 @@ public class Legs : MonoBehaviour
         _legsHP = newValue;
     }
     
-    public int GetLegsMaxHP()
+    public float GetLegsMaxHP()
     {
         return _legsMaxHP;
     }
 
-    public int GetLegsHP()
+    public float GetLegsHP()
     {
         return _legsHP;
     }
@@ -76,7 +76,7 @@ public class Legs : MonoBehaviour
         _myChar.effectsController.PlayParticlesEffect(transform.position, "Damage");
         _myChar.effectsController.CreateDamageText(damage.ToString(), 1, transform.position, true);
         ui.ContainerActivation(true);
-        ui.UpdateLeftArmSlider(damage, _legsHP);
+        ui.UpdateLegsSlider(damage, (int)_legsHP);
         _myChar.MakeNotAttackable();
     }
     
@@ -85,7 +85,7 @@ public class Legs : MonoBehaviour
         var ui = _myChar.GetMyUI();
         ui.SetLegsSlider(_legsHP);
         ui.ContainerActivation(true);
-        ui.UpdateLegsSlider(damage, _legsHP);
+        ui.UpdateLegsSlider(damage, (int)_legsHP);
         ui.DeactivateWorldUIWithTimer();
         var hp = _legsHP - damage;
         _legsHP = hp > 0 ? hp : 0;
@@ -94,7 +94,7 @@ public class Legs : MonoBehaviour
             //_myChar.SetCharacterMove(false);
             HalfSteps();
         }
-        _myChar.buttonsManager.UpdateLegsHUD(_legsHP, true);
+        _myChar.buttonsManager.UpdateLegsHUD((int)_legsHP, true);
         _myChar.effectsController.PlayParticlesEffect(transform.position, "Damage");
         _myChar.effectsController.CreateDamageText(damage.ToString(), 1, transform.position, true);
         //_myChar.ShowWorldUI();

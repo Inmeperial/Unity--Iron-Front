@@ -16,7 +16,7 @@ public class CameraMovement : MonoBehaviour
 
     private float _yPos;
 
-    private void Start()
+    private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _initialPos = transform.position;

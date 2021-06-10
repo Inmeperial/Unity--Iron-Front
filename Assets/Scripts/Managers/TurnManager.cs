@@ -10,6 +10,7 @@ public class TurnManager : Teams, IObservable
 {
     [SerializeField] List<Character> _capsuleTeam = new List<Character>();
     [SerializeField] List<Character> _boxTeam = new List<Character>();
+    private Character[] _allUnits;
     [SerializeField] CharacterSelection _charSelect;
     [SerializeField] TileHighlight _highlight;
     ButtonsUIManager _buttonsManager;
@@ -24,14 +25,22 @@ public class TurnManager : Teams, IObservable
     
     private List<IObserver> _observers = new List<IObserver>();
 
-    private int _turnCounter;
+    public int _turnCounter;
     private Character _actualCharacter;
     private CameraMovement _cameraMovement;
-    void Start()
+
+    private void Awake()
     {
         _cameraMovement = FindObjectOfType<CameraMovement>();
         var units = FindObjectsOfType<Character>();
-        SeparateByTeam(units);
+        _allUnits = new Character[units.Length];
+        _allUnits = units;
+        
+    }
+
+    void Start()
+    {
+        SeparateByTeam(_allUnits);
         _charSelect = FindObjectOfType<CharacterSelection>();
         _highlight = FindObjectOfType<TileHighlight>();
         _buttonsManager = FindObjectOfType<ButtonsUIManager>();
@@ -57,6 +66,7 @@ public class TurnManager : Teams, IObservable
 
         _actualCharacter = _currentTurnOrder[0];
         _actualCharacter.myTurn = true;
+        _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
     }
 
     public void UnitIsMoving()
@@ -98,6 +108,7 @@ public class TurnManager : Teams, IObservable
 
             if (_turnCounter >= _currentTurnOrder.Count-1)
             {
+                Debug.Log("calculate");
                 CalculateTurnOrder();
                 _actualCharacter = _currentTurnOrder[0];
             }
@@ -173,23 +184,22 @@ public class TurnManager : Teams, IObservable
     public void CalculateTurnOrder()
     {
         _turnCounter = 0;
-        var unitsList = new List<Tuple<Character, int>>();
-
-        //Pick all characters
-        var units = _boxTeam.Concat(_capsuleTeam);
-
+        _currentTurnOrder.Clear();
+        var unitsList = new List<Tuple<Character, float>>();
+        
         //Adds them to a collection with their initiative
-        foreach (var character in units)
+        foreach (var character in _allUnits)
         {
             var t = Tuple.Create(character, character.CalculateInitiative());
             unitsList.Add(t);
         }
 
         //Orders them with the highest initiative first
-        unitsList.OrderByDescending(x => x.Item2);
+        var ordered = unitsList.OrderByDescending(x => x.Item2);
 
-        foreach (var character in unitsList)
+        foreach (var character in ordered)
         {
+            Debug.Log("name: " + character.Item1.gameObject.name);
             character.Item1.myTurn = false;
             _currentTurnOrder.Add(character.Item1);
         }
