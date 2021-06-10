@@ -416,7 +416,7 @@ public class ButtonsUIManager : MonoBehaviour
             buttonEndTurn.gameObject.SetActive(false);
             var cam = FindObjectOfType<CloseUpCamera>();
             var ui = _selectedEnemy.GetMyUI();
-            ui.SetLimits(_selectedEnemy.GetBodyMaxHP(), _selectedEnemy.GetRightArmMaxHP(), _selectedEnemy.GetLeftArmMaxHP(), _selectedEnemy.legs.GetLegsMaxHP());
+            ui.SetLimits(_selectedEnemy.myBody.GetBodyMaxHP(), _selectedEnemy.GetRightArmMaxHP(), _selectedEnemy.GetLeftArmMaxHP(), _selectedEnemy.legs.GetLegsMaxHP());
             buttonExecuteAttack.interactable = false;
             buttonExecuteAttack.gameObject.SetActive(false);
             _selectedChar.ResetInRangeLists();
@@ -434,7 +434,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_bulletsForBody > 0)
         {
             var d = gun.DamageCalculation(_bulletsForBody);
-            _selectedEnemy.TakeDamageBody(d);
+            _selectedEnemy.myBody.TakeDamageBody(d);
             _bulletsForBody = 0;
             if (gun.AbilityUsed() == false)
             {
@@ -553,7 +553,7 @@ public class ButtonsUIManager : MonoBehaviour
             _selectedChar.SelectLeftGun();
             leftWeaponCircle.SetActive(true);
             rightWeaponCircle.SetActive(false);
-            ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.legs.GetLegsHP());
+            ShowPlayerHudText(playerBodyCurrHp, _selectedChar.myBody.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.legs.GetLegsHP());
 
             if (_selectedChar.HasEnemiesInRange())
                 ActivateBodyPartsContainer();
@@ -574,7 +574,7 @@ public class ButtonsUIManager : MonoBehaviour
             _selectedChar.SelectRightGun();
             rightWeaponCircle.SetActive(true);
             leftWeaponCircle.SetActive(false);
-            ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.legs.GetLegsHP());
+            ShowPlayerHudText(playerBodyCurrHp, _selectedChar.myBody.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.legs.GetLegsHP());
 
             if (_selectedChar.HasEnemiesInRange())
                 ActivateBodyPartsContainer();
@@ -742,7 +742,7 @@ public class ButtonsUIManager : MonoBehaviour
     #region HUD Text
     public void SetPlayerUI()
     {
-        ShowPlayerHudText(playerBodyCurrHp, _selectedChar.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.legs.GetLegsHP());
+        ShowPlayerHudText(playerBodyCurrHp, _selectedChar.myBody.GetBodyHP(), playerLeftArmCurrHp, _selectedChar.GetLeftArmHP(), playerRightArmCurrHp, _selectedChar.GetRightArmHP(), playerLegsCurrHp, _selectedChar.legs.GetLegsHP());
 
         if (_selectedChar.RightArmAlive())
         {
@@ -931,7 +931,7 @@ public class ButtonsUIManager : MonoBehaviour
 
     void ActivateParts()
     {
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body") && _selectedEnemy.GetBodyHP() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body") && _selectedEnemy.myBody.GetBodyHP() > 0)
         {
             bodyInsight = true;
         }
@@ -971,7 +971,7 @@ public class ButtonsUIManager : MonoBehaviour
         ui.ButtonsEnabling(bodyInsight, lArmInsight, rArmInsight, legsInsight);
         
         
-        ui.SetBodyHpText(_selectedEnemy.GetBodyHP());
+        ui.SetBodyHpText((int)_selectedEnemy.myBody.GetBodyHP());
 
         ui.SetLeftArmHpText(_selectedEnemy.GetLeftArmHP());
 

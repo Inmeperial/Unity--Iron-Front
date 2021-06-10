@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Legs : MonoBehaviour
+public class Legs : Parts
 {
     public LegsSO legsData;
     private float _legsMaxHP;
@@ -14,8 +14,6 @@ public class Legs : MonoBehaviour
     private float _moveSpeed;
     private float _rotationSpeed;
 
-    private Character _myChar;
-
     private int _initiative;
 
     private bool _brokenLegs = false;
@@ -24,7 +22,6 @@ public class Legs : MonoBehaviour
 
     private void Awake()
     {
-        _myChar = GetComponent<Character>();
         _legsMaxHP = legsData.maxHP;
         _legsHP = _legsMaxHP;
         _maxSteps = legsData.maxSteps;
@@ -32,11 +29,7 @@ public class Legs : MonoBehaviour
         _rotationSpeed = legsData.rotationSpeed;
         _initiative = legsData.initiative;
     }
-
-    void Start()
-    {
-        _myChar = transform.parent.GetComponent<Character>();
-    }
+    
     public int GetMaxSteps()
     {
         return _maxSteps;

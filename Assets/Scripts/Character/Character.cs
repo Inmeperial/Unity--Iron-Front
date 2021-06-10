@@ -16,9 +16,7 @@ public class Character : Teams
     [SerializeField] private Team _unitTeam;
 
     [Header("Body")] 
-    [SerializeField] private Body _myBody;
-    [SerializeField] private int _bodyMaxHP;
-    [SerializeField] private int _bodyHP;
+    public Body myBody;
     [SerializeField] private Transform _bodyTransform;
 
     [Header("Left Arm")]
@@ -97,7 +95,6 @@ public class Character : Teams
     void Start()
     {
         _canBeSelected = true;
-        _bodyHP = _bodyMaxHP;
         if (leftGun)
         {
             _leftArmHP = _leftArmMaxHP;
@@ -140,7 +137,7 @@ public class Character : Teams
         _myUI = GetComponent<WorldUI>();
 
         if (_myUI)
-            _myUI.SetLimits(_bodyMaxHP, _rightArmMaxHP, _leftArmMaxHP, legs.GetLegsMaxHP());
+            _myUI.SetLimits(myBody.GetBodyMaxHP(), _rightArmMaxHP, _leftArmMaxHP, legs.GetLegsMaxHP());
 
         if (_rightArmAlive)
         {
@@ -164,7 +161,7 @@ public class Character : Teams
             _leftGunSelected = false;
         }
 
-        if (_bodyHP <= 0)
+        if (myBody.GetBodyHP() <= 0)
             NotSelectable();
 
         for (int i = 0; i < transform.childCount; i++)
@@ -287,61 +284,10 @@ public class Character : Teams
         }
     }
 
-    //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamageBody(List<Tuple<int,int>> damages)
-    {
-        _myUI.SetBodySlider(_bodyHP);
-        int total = 0;
-        var bodyPos = GetBodyPosition();
-        for (int i = 0; i < damages.Count; i++)
-        {
-            total += damages[i].Item1;
-            var hp = _bodyHP - damages[i].Item1;
-            _bodyHP = hp > 0 ? hp : 0;
-            effectsController.PlayParticlesEffect(bodyPos, "Damage");
-            var item = damages[i].Item2;
-            switch (item)
-            {
-               case _missHit:
-                   effectsController.CreateDamageText("Miss", 0, bodyPos, i == damages.Count - 1 ? true : false);
-                   break;
-                   
-               case _normalHit:
-                   effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, bodyPos, i == damages.Count - 1 ? true : false);
-                   break;
-               
-               case _criticalHit:
-                   effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, bodyPos, i == damages.Count - 1 ? true : false);
-                   break;
-            }
-        }
-        if (_bodyHP <= 0)
-        {
-            NotSelectable();
-        }
-        _myUI.ContainerActivation(true);
-        _myUI.UpdateBodySlider(total, _bodyHP);
-        MakeNotAttackable();
-    }
     
-    //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamageBody(int damage)
-    {
-        _myUI.SetBodySlider(_bodyHP);
-        var hp = _bodyHP - damage;
-        _bodyHP = hp > 0 ? hp : 0;
-        if (_bodyHP <= 0)
-        {
-            NotSelectable();
-        }
-
-        var bodyPos = GetBodyPosition();
-        effectsController.PlayParticlesEffect(bodyPos, "Damage");
-        effectsController.CreateDamageText(damage.ToString(), 1, bodyPos, true);
-        _myUI.ContainerActivation(true);
-        _myUI.UpdateBodySlider(damage, _bodyHP);
-        MakeNotAttackable();
-    }
+    
+    
+    
 
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public void TakeDamageLeftArm(List<Tuple<int,int>> damages)
@@ -593,18 +539,6 @@ public class Character : Teams
     public Team GetUnitTeam()
     {
         return _unitTeam;
-    }
-
-    
-
-    public int GetBodyMaxHP()
-    {
-        return _bodyMaxHP;
-    }
-
-    public int GetBodyHP()
-    {
-        return _bodyHP;
     }
 
     public int GetLeftArmMaxHP()
@@ -985,7 +919,7 @@ public class Character : Teams
 
     public void ShowWorldUI()
     {
-        _myUI.SetWorldUIValues(GetBodyHP(), GetRightArmHP(), GetLeftArmHP(), legs.GetLegsHP(), ThisUnitCanMove(), CanAttack());
+        _myUI.SetWorldUIValues(myBody.GetBodyHP(), GetRightArmHP(), GetLeftArmHP(), legs.GetLegsHP(), ThisUnitCanMove(), CanAttack());
         _myUI.ContainerActivation(true);
     }
 
