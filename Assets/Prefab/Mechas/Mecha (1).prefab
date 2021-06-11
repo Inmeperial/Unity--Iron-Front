@@ -556,6 +556,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.178963, y: 3.7941446, z: 5.5801144}
   m_Center: {x: -0.37430927, y: 1.1248059, z: -1.1541541}
+--- !u!114 &520692892726327455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934631535374279702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b5fc78737f13e4f87752b4212dbd35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armData: {fileID: 11400000, guid: 59b4863260c2b3d4d9ebda170e3d28a7, type: 2}
 --- !u!1 &1210263626984595850
 GameObject:
   m_ObjectHideFlags: 0
@@ -1083,6 +1096,7 @@ GameObject:
   - component: {fileID: 6601962859635308291}
   - component: {fileID: 4012556624184613378}
   - component: {fileID: 5000244823184990928}
+  - component: {fileID: 1787537505204164773}
   m_Layer: 9
   m_Name: Body GO
   m_TagString: Body
@@ -1155,6 +1169,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1787537505204164773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592232569296101251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2896a82aa6845104d8cc00213613f842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyData: {fileID: 11400000, guid: 718a2a5068504a244b1a9f23eabbe4f2, type: 2}
 --- !u!1 &1667036774064307562
 GameObject:
   m_ObjectHideFlags: 0
@@ -13244,6 +13271,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.46053535, y: 4.5443397, z: 0.66007304}
   m_Center: {x: 0.0000002682209, y: -1.8454888, z: -0.10922401}
+--- !u!114 &5255647883268080876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4256558956753085051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b5fc78737f13e4f87752b4212dbd35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armData: {fileID: 11400000, guid: 880bed7d902b76347832d0bc80047676, type: 2}
 --- !u!1 &4289539311386035626
 GameObject:
   m_ObjectHideFlags: 0
@@ -14781,6 +14821,7 @@ GameObject:
   - component: {fileID: 5990267072812635655}
   - component: {fileID: 4927061528812070230}
   - component: {fileID: 1331862125299139999}
+  - component: {fileID: 455703732147965040}
   m_Layer: 9
   m_Name: Mecha (1)
   m_TagString: Character
@@ -14827,19 +14868,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayOrigin: {fileID: 5843598816190279944}
   _unitTeam: 0
-  _myBody: {fileID: 0}
-  _bodyMaxHP: 500
-  _bodyHP: 0
+  body: {fileID: 1787537505204164773}
   _bodyTransform: {fileID: 6601962859635308291}
-  _myLeftArm: {fileID: 0}
-  leftGun: {fileID: 0}
-  _leftArmMaxHP: 200
-  _leftArmHP: 0
+  leftArm: {fileID: 520692892726327455}
+  _leftGun: {fileID: 0}
   _lArmTransform: {fileID: 4225260136140789253}
-  _myRightArm: {fileID: 0}
-  rightGun: {fileID: 0}
-  _rightArmMaxHP: 200
-  _rightArmHP: 0
+  rightArm: {fileID: 5255647883268080876}
+  _rightGun: {fileID: 0}
   _rArmTransform: {fileID: 957309629817196648}
   legs: {fileID: 4218742812270280784}
   _legsTransform: {fileID: 7742028527190693433}
@@ -14955,6 +14990,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d3afb8cfb796e541a0dedc5da323bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &455703732147965040
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7444140773653621672}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 72b9f2fafb6fab947ae08ee9f3c4141b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7674671027443085006
 GameObject:
   m_ObjectHideFlags: 0
