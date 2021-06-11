@@ -73,6 +73,7 @@ public class Character : Teams
     private SmokeMechaHandler _smokeMechaHandler;
     public AudioClip soundMotorStart;
     public AudioClip soundWalk;
+    private Animator _animator;
 
     [HideInInspector]
 	public EffectsController effectsController;
@@ -118,6 +119,7 @@ public class Character : Teams
         pathCreator = GetComponent<IPathCreator>();
         effectsController = FindObjectOfType<EffectsController>();
         _myUI = GetComponent<WorldUI>();
+        _animator = GetComponent<Animator>();
 
         if (_myUI)
             _myUI.SetLimits(body.GetMaxHP(), rightArm.GetMaxHP(), leftArm.GetMaxHP(), legs.GetMaxHP());
@@ -260,6 +262,7 @@ public class Character : Teams
             }
             
             ResetTilesInMoveRange();
+            _animator.SetBool("isWalkingAnimator", true);
             AudioManager.audioManagerInstance.PlaySound(soundMotorStart, this.gameObject);
             AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
             _smokeMechaHandler.SetMachineOn(true);
@@ -517,6 +520,7 @@ public class Character : Teams
         pathCreator.ResetPath();
         _tilesForAttackChecked.Clear();
         _tilesInAttackRange.Clear();
+        _animator.SetBool("isWalkingAnimator", false);
         AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,this.gameObject);
         AudioManager.audioManagerInstance.StopSound(soundWalk,this.gameObject);
         _smokeMechaHandler.SetMachineOn(false);
@@ -797,6 +801,11 @@ public class Character : Teams
             effectsController.PlayParticlesEffect(_lArmTransform.position, "Attack");
         }
         
+    }
+
+    public void SetHurtAnimation()
+    {
+        _animator.SetTrigger("isReciveDamageAnimator");
     }
 
     public WorldUI GetMyUI()

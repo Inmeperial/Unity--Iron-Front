@@ -431,6 +431,7 @@ public class ButtonsUIManager : MonoBehaviour
         var gun = _selectedChar.GetSelectedGun();
         _effectsController.PlayParticlesEffect(_selectedChar.transform.position + new Vector3(2, 2.5f, 3), "ShootGun");
         _selectedChar.Shoot();
+        _selectedEnemy.SetHurtAnimation();
         if (_bulletsForBody > 0)
         {
             var d = gun.DamageCalculation(_bulletsForBody);
