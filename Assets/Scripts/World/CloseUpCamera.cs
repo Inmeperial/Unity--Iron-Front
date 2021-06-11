@@ -10,13 +10,14 @@ public class CloseUpCamera : MonoBehaviour
 	public float minHeight = 5f;
 	public float maxHeight = 8f;
     public float threshold = 15f;
-    
+    [SerializeField] private Camera _uiCam;
     [Header("1 closest to player")]
     [Header("0 closest to enemy")]
     [Header("0 to 1 (float)")]
     public float lerp = .9f;
     private  Camera _cam;
     private  Camera _mainCam;
+    
     private void Start()
     {
         _mainCam = transform.parent.GetComponent<Camera>();
@@ -27,6 +28,7 @@ public class CloseUpCamera : MonoBehaviour
     public void MoveCameraWithLerp(Vector3 enemyPosToLerp, Vector3 playerPosToLerp, Action callback = null)
     {
         FindObjectOfType<CameraMovement>().LockCamera(true);
+        _uiCam.enabled = true;
         _cam.enabled = true;
         _mainCam.enabled = false;
 		//Calcular el height según la distancia de las dos unidades y, clampearla en un min y max
@@ -85,5 +87,6 @@ public class CloseUpCamera : MonoBehaviour
         transform.localPosition = Vector3.zero;
         _mainCam.enabled = true;
         _cam.enabled = false;
+        _uiCam.enabled = false;
     }
 }

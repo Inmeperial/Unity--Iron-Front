@@ -765,6 +765,7 @@ public class Character : Teams
 
     public bool RayToPartsForAttack(Vector3 pos, string tagToCheck)
     {
+        Debug.Log("check " + tagToCheck);
         RaycastHit hit;
         var position = rayOrigin.position;
         var dir = (pos - position).normalized; 

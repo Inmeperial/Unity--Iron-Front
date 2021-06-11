@@ -46,6 +46,9 @@ public class Arm : Parts
             total += damages[i].Item1;
             var hp = _armHP - damages[i].Item1;
             _armHP = hp > 0 ? hp : 0;
+            if (_myChar)
+                Debug.Log("tengo char");
+            else Debug.Log("no tengo char");
             _myChar.effectsController.PlayParticlesEffect(pos, "Damage");
 
             var item = damages[i].Item2;
