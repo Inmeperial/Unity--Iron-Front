@@ -8,11 +8,11 @@ public abstract class Parts : MonoBehaviour
     protected const int _missHit = 0;
     protected const int _normalHit = 1;
     protected const int _criticalHit = 2;
-    protected Character _myChar;
+    public Character _myChar;
 
     protected virtual void Start()
     {
-        _myChar = transform.parent.GetComponent<Character>();
+        //_myChar = transform.parent.GetComponent<Character>();
     }
 
     public abstract float GetMaxHP();
