@@ -65,6 +65,7 @@ public class CameraMovement : MonoBehaviour
     public void MoveTo(Vector3 pos, Action callback = null)
     {
         pos.y = _yPos;
+        _cameraLocked = true;
         StartCoroutine(Move(pos, callback));
     }
 
@@ -79,7 +80,8 @@ public class CameraMovement : MonoBehaviour
         }
 
         transform.position = pos;
-
+        _cameraLocked = false;
+        
         if (callback != null)
             callback();
     }
