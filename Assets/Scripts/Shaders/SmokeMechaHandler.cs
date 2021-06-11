@@ -9,7 +9,7 @@ public class SmokeMechaHandler : MonoBehaviour
     //private bool _isEffectOn = false;
 
     //Add for para el partSystem y que todos activen o desActiven.
-    void Start()
+   /* void Start()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -19,8 +19,8 @@ public class SmokeMechaHandler : MonoBehaviour
                 smokeObj = transform.GetChild(i).gameObject;
             }
         }
-
-        if (smokeObj != null)
+		
+		if (smokeObj != null)
         {
             _partSystemMain = smokeObj.GetComponent<ParticleSystem>().main;
         }
@@ -40,11 +40,11 @@ public class SmokeMechaHandler : MonoBehaviour
     //    {
     //        SetMachineOn(false);
     //    }
-    //}
+    //}*/
 
     public void SetMachineOn(bool boolEffect)
     {
-        if (boolEffect)
+        /*if (boolEffect)
         {
             _partSystemMain.startSize = new ParticleSystem.MinMaxCurve(2f, 4f);
             _partSystemMain.startLifetime = 4f;
@@ -53,6 +53,6 @@ public class SmokeMechaHandler : MonoBehaviour
         {
             _partSystemMain.startSize = new ParticleSystem.MinMaxCurve(1f, 2f);
             _partSystemMain.startLifetime = 2f;
-        }
+        }*/
     }
 }
