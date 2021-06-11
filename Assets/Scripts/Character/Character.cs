@@ -742,6 +742,9 @@ public class Character : Teams
 
     public void ShowWorldUI()
     {
+        Debug.Log("name: " + gameObject.name);
+        Debug.Log(turnManager.GetMyTurn(this));
+        _myUI.SetTurnOrder(turnManager.GetMyTurn(this));
         _myUI.SetWorldUIValues(body.GetCurrentHP(), rightArm.GetCurrentHP(), leftArm.GetCurrentHP(), legs.GetCurrentHP(), _canMove, _canAttack);
         _myUI.ContainerActivation(true);
     }

@@ -203,7 +203,17 @@ public class TurnManager : Teams, IObservable
             character.Item1.myTurn = false;
             _currentTurnOrder.Add(character.Item1);
         }
-        
+    }
+
+    public int GetMyTurn(Character unit)
+    {
+        for (int i = 0; i < _currentTurnOrder.Count; i++)
+        {
+            if (_currentTurnOrder[i] == unit)
+                return i + 1;
+        }
+
+        return -1;
     }
 
     public void Subscribe(IObserver observer)

@@ -10,6 +10,7 @@ public class WorldUI : MonoBehaviour
     [Header("Status")]
     [SerializeField] private GameObject _statusContainer;
     [SerializeField] private float _showDuration;
+    [SerializeField] private TextMeshProUGUI _turnOrderText;
     
     [Header("Body")]
     [SerializeField] private TextMeshProUGUI _bodyHpText;
@@ -276,6 +277,11 @@ public class WorldUI : MonoBehaviour
     void AttackActionIcon(bool status)
     {
         _attackActionIcon.SetActive(status);
+    }
+
+    public void SetTurnOrder(int number)
+    {
+        _turnOrderText.text = number.ToString();
     }
 #endregion
 
