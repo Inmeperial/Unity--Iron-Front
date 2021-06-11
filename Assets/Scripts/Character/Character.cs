@@ -432,20 +432,24 @@ public class Character : Teams
 
     public Vector3 GetBodyPosition()
     {
-        return _bodyTransform.GetComponent<Renderer>().bounds.center;
-    }
+		return _bodyTransform.position;
+        //return _bodyTransform.GetComponent<Renderer>().bounds.center;
+	}
     public Vector3 GetLArmPosition()
     {
-        return _lArmTransform.GetComponent<Renderer>().bounds.center;
-    }
+		//return _lArmTransform.GetComponent<Renderer>().bounds.center;
+		return _lArmTransform.position;
+	}
     public Vector3 GetRArmPosition()
     {
-        return _rArmTransform.GetComponent<Renderer>().bounds.center;
+		//return _rArmTransform.GetComponent<MeshRenderer>().bounds.center;
+		return _rArmTransform.position;
     }
     public Vector3 GetLegsPosition()
     {
-        return _legsTransform.GetComponent<Renderer>().bounds.center;
-    }
+		return _legsTransform.position;
+        //return _legsTransform.GetComponent<Renderer>().bounds.center;
+	}
 
     #endregion
 
