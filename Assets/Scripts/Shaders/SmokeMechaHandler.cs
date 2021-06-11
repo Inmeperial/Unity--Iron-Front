@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class SmokeMechaHandler : MonoBehaviour
 {
-    private ParticleSystem.MainModule _partSystemMain;
+    private ParticleSystem.MainModule[] _partSystemMain;
     private GameObject smokeObj;
     //private bool _isEffectOn = false;
 
+    //Add for para el partSystem y que todos activen o desActiven.
     void Start()
     {
         for (int i = 0; i < transform.childCount; i++)
