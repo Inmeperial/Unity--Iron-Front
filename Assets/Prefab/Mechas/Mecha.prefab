@@ -15502,7 +15502,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8229946981922933568}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: e16b53fa451185d458a4d4538ab85355, type: 3}
   m_Controller: {fileID: 9100000, guid: 72b9f2fafb6fab947ae08ee9f3c4141b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -15817,6 +15817,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ametralladora
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: dc1b851534b50b848bbbb2753b6fd624,
+        type: 3}
+      propertyPath: m_TagString
+      value: RArm
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: dc1b851534b50b848bbbb2753b6fd624,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc1b851534b50b848bbbb2753b6fd624, type: 3}
 --- !u!4 &4800739051979773220 stripped
@@ -15897,6 +15907,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Martillo
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 63e76db267f01c840b9f77270eb746ff,
+        type: 3}
+      propertyPath: m_TagString
+      value: LArm
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 63e76db267f01c840b9f77270eb746ff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63e76db267f01c840b9f77270eb746ff, type: 3}

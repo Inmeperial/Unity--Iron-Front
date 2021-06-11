@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SmokeMechaHandler : MonoBehaviour
 {
-    private ParticleSystem.MainModule[] _partSystemMain;
+    private ParticleSystem.MainModule _partSystemMain;
     private GameObject smokeObj;
     //private bool _isEffectOn = false;
 

@@ -25,7 +25,7 @@ public abstract class Gun : MonoBehaviour, IGun
     [SerializeField] protected int _bulletsPerClick;
     [SerializeField] protected int _damage;
     [SerializeField] protected int _critChance;
-    [SerializeField] protected int _critMultiplier;
+    [SerializeField] protected float _critMultiplier;
     [SerializeField] protected int _hitChance;
     [SerializeField] protected int _chanceToHitOtherParts;
     [SerializeField] protected int _attackRange;
@@ -72,7 +72,7 @@ public abstract class Gun : MonoBehaviour, IGun
         return _critChance;
     }
 
-    public int GetCritMultiplier()
+    public float GetCritMultiplier()
     {
         return _critMultiplier;
     }
@@ -179,11 +179,11 @@ public abstract class Gun : MonoBehaviour, IGun
                 {
                     if (AbilityUsed())
                     {
-                        t = Tuple.Create((_damage * _critMultiplier) / 2, _criticalHit);
+                        t = Tuple.Create((int)(_damage * _critMultiplier) / 2, _criticalHit);
                     }
                     else
                     {
-                        t = Tuple.Create(_damage * _critMultiplier, _criticalHit);
+                        t = Tuple.Create((int)(_damage * _critMultiplier), _criticalHit);
                     }
                 }
                 else if (c == "Normal")
