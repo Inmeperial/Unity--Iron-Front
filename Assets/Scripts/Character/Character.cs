@@ -24,13 +24,15 @@ public class Character : Teams
     [SerializeField] private Gun _leftGun;
     private bool _leftGunSelected;
     [SerializeField] private Transform _lArmTransform;
+    [SerializeField] private Transform _leftGunSpawn;
 
     [Header("Right Arm")]
     public Arm rightArm;
     [SerializeField] private Gun _rightGun;
     private bool _rightGunSelected;
     [SerializeField] private Transform _rArmTransform;
-
+    [SerializeField] private Transform _rightGunSpawn;
+    
     [Header("Legs")] 
     public Legs legs;
     [SerializeField] private Transform _legsTransform;
