@@ -46,16 +46,16 @@ public class TurnManager : Teams, IObservable
         _buttonsManager = FindObjectOfType<ButtonsUIManager>();
         _activeTeam = Team.Capsule;
         //teamText.text = _CapsuleTeamText;
-        if (_activeTeam == Team.Capsule)
-        {
-            flag1.SetActive(true);
-            flag2.SetActive(false);
-        }
-        else
-        {
-            flag1.SetActive(false);
-            flag2.SetActive(true);
-        }
+        //if (_activeTeam == Team.Capsule)
+        //{
+        //    flag1.SetActive(true);
+        //    flag2.SetActive(false);
+        //}
+        //else
+        //{
+        //    flag1.SetActive(false);
+        //    flag2.SetActive(true);
+        //}
 
         var mortars = FindObjectsOfType<Mortar>();
         foreach (var mortar in mortars)
