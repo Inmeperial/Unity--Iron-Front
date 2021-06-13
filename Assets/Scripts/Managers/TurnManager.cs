@@ -200,8 +200,11 @@ public class TurnManager : EnumsClass, IObservable
         //Adds them to a collection with their initiative
         foreach (var character in _allUnits)
         {
-            var t = Tuple.Create(character, character.CalculateInitiative());
-            unitsList.Add(t);
+            if (character.body.GetCurrentHP() > 0)
+            {
+                var t = Tuple.Create(character, character.CalculateInitiative());
+                unitsList.Add(t); 
+            }
         }
 
         //Orders them with the highest initiative first

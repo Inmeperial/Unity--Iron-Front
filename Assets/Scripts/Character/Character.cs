@@ -342,25 +342,27 @@ public class Character : EnumsClass
             } 
             else
             {
+                
+                pathCreator.Calculate(this, newTile, _currentSteps);
+                
+                if (pathCreator.GetDistance() > legs.GetMaxSteps()) return;
+                
                 _targetTile = newTile;
-                pathCreator.Calculate(this, _targetTile, _currentSteps);
-                if (pathCreator.GetDistance() <= legs.GetMaxSteps())
-                {
-                    _path = pathCreator.GetPath();
-                    if (_path.Count > 0)
-                    {
-                        highlight.PathPreview(_path);
-                        ResetTilesInMoveRange();
-                        ResetTilesInAttackRange();
-                        highlight.CreatePathLines(_path);
-                        
-                        if (CanAttack())
-                            PaintTilesInAttackRange(_path[_path.Count - 1], 0);
+                _path = pathCreator.GetPath();
+                
+                if (_path.Count <= 0) return;
+                
+                highlight.PathPreview(_path);
+                ResetTilesInMoveRange();
+                ResetTilesInAttackRange();
+                highlight.CreatePathLines(_path);
+                highlight.PaintLastTileInPath(_targetTile);
+                
+                if (CanAttack())
+                    PaintTilesInAttackRange(_targetTile, 0);
 
-                        PaintTilesInMoveRange(_path[_path.Count - 1], 0);
-                        AddTilesInMoveRange();
-                    }
-                }
+                PaintTilesInMoveRange(_targetTile, 0);
+                AddTilesInMoveRange();
             }
         }
     }
@@ -484,9 +486,10 @@ public class Character : EnumsClass
         if (_path.Count > 1)
         {
             _targetTile = _path[_path.Count - 1];
-            PaintTilesInMoveRange(_path[_path.Count - 1], 0);
+            PaintTilesInMoveRange(_targetTile, 0);
+            highlight.PaintLastTileInPath(_targetTile);
             if (CanAttack())
-                PaintTilesInAttackRange(_path[_path.Count - 1], 0);
+                PaintTilesInAttackRange(_targetTile, 0);
         }
         else
         {
@@ -506,6 +509,8 @@ public class Character : EnumsClass
             turnManager.UnitCantBeAttacked(item);
         }
         highlight.PathLinesClear();
+        if (_path.Count > 0)
+            highlight.EndLastTileInPath(_path[_path.Count-1]);
         ResetTilesInMoveRange();
         ResetTilesInAttackRange();
         highlight.Undo();

@@ -206,4 +206,14 @@ public class TileHighlight : MonoBehaviour
             tile.EndActivationRangeColor();
         }
     }
+
+    public void PaintLastTileInPath(Tile tile)
+    {
+        tile.LastInPathColor();
+    }
+
+    public void EndLastTileInPath(Tile tile)
+    {
+        tile.EndLastInPathColor();
+    }
 }

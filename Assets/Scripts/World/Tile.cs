@@ -197,7 +197,6 @@ public class Tile : MonoBehaviour
     }
     
     //Pinta el tile para el preview de ataque
-    //CAMBIAR CUANDO ESTE EL SHADER
     public void InAttackPreviewColor()
     {
         _materialHandler.DiseableAndEnableStatus(true);
@@ -207,7 +206,6 @@ public class Tile : MonoBehaviour
     }
 
     //Despinta el tile para el preview de ataque
-    //CAMBIAR CUANDO ESTE EL SHADER
     public void EndAttackPreviewColor()
     {
         inPreviewRange = false;
@@ -229,6 +227,20 @@ public class Tile : MonoBehaviour
     public void EndActivationRangeColor()
     {
         Debug.Log("END ACTIVATION RANGE");
+    }
+
+    //Pinta el ultimo tile del path
+    //CAMBIAR
+    public void LastInPathColor()
+    {
+        Debug.Log("ultimo on");
+    }
+    
+    //Despinta el ultimo tile del path
+    //CAMBIAR
+    public void EndLastInPathColor()
+    {
+        Debug.Log("ultimo off");
     }
     #endregion
 
