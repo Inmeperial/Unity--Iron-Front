@@ -22,6 +22,7 @@ public class GridMovement : MonoBehaviour
 
     private Action _callback;
     private Vector3 _nextPos;
+    private Vector3 _lastForward;
     private void Start()
     {
         _character = GetComponent<Character>();
@@ -69,6 +70,7 @@ public class GridMovement : MonoBehaviour
             Vector3 targetDir = newPos - transform.position;
             if ((newPos - transform.position).magnitude <= tpThreshold)
             {
+                _lastForward = targetDir.normalized;
                 _forcedForward = false;
                 transform.position = newPos;
                 _tilesIndex++;
@@ -80,6 +82,7 @@ public class GridMovement : MonoBehaviour
         }
         else
         {
+            transform.LookAt(transform.position + _lastForward);
             _character.ReachedEnd();
             _move = false;
             _tilesIndex = 0;
