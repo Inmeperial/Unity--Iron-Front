@@ -103,6 +103,7 @@ public class Character : EnumsClass
         {
             _leftGun.gameObject.tag = "LArm";
             _leftGun.SetGun();
+            _leftGun.StartRoulette();
         }
             
         
@@ -112,6 +113,7 @@ public class Character : EnumsClass
         {
             _rightGun.gameObject.tag = "RArm";
             _rightGun.SetGun();
+            _rightGun.StartRoulette();
         }
             
         
@@ -629,6 +631,11 @@ public class Character : EnumsClass
         _path.Clear();
         highlight.PathLinesClear();
         pathCreator.ResetPath();
+
+        _rayForBody.positionCount = 0;
+        _rayForLegs.positionCount = 0;
+        _rayForLeftArm.positionCount = 0;
+        _rayForRightArm.positionCount = 0;
     }
 
     public void NotSelectable()

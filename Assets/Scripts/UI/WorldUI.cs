@@ -59,6 +59,11 @@ public class WorldUI : MonoBehaviour
     {
         _statusContainer.SetActive(false);
         _camera = Camera.main;
+        _bodyButton.SetListeners();
+        _leftArmButton.SetListeners();
+        _rightArmButton.SetListeners();
+        _legsButton.SetListeners();
+        _buttonsContainer.SetActive(false);
     }
 
     public void SetWorldUIValues(float bodyCurr, float rArmCurr, float lArmCurr, float legsCurr, bool moveStatus, bool attackStatus)

@@ -66,6 +66,7 @@ public class TurnManager : EnumsClass, IObservable
 
         _actualCharacter = _currentTurnOrder[0];
         _actualCharacter.SetTurn(true);
+        _activeTeam = _actualCharacter.GetUnitTeam();
         _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
     }
 
@@ -119,9 +120,9 @@ public class TurnManager : EnumsClass, IObservable
             }
             
             _actualCharacter.SetTurn(true);
-            _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
             _activeTeam = _actualCharacter.GetUnitTeam();
-            
+            _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
+
             // if (_activeTeam == Team.Capsule)
             // {
             //     _activeTeam = Team.Box;

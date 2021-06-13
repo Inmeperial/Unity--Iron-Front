@@ -118,7 +118,6 @@ public abstract class Gun : MonoBehaviour, IGun
                 _gun = "Shotgun";
                 break;
         }
-        StartRoulette();
     }
 
     public void ReloadGun()

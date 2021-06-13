@@ -113,6 +113,7 @@ public class CharacterSelection : MonoBehaviour
         //else
         else if (c.GetUnitTeam() != _turnManager.GetActiveTeam())
         {
+            Debug.Log("clickeo enemigo");
             if (_enemySelection)
             {
                 _enemySelection.DeselectThisUnit();
