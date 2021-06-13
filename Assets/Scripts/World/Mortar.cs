@@ -58,75 +58,88 @@ public class Mortar : MonoBehaviour, IObserver
 
         if (!_attackPending && Input.GetMouseButtonDown(0))
         {
-            if (MouseRay.GetTargetGameObject(_mortarMask))
+            Selection();
+        }
+    }
+
+    private void Selection()
+    {
+        if (MouseRay.GetTargetGameObject(_mortarMask))
+        {
+            _selected = true;
+            if (SelectedPlayerAbove())
             {
-                _selected = true;
-                if (SelectedPlayerAbove())
-                {
-                    Debug.Log("hago la seleccion con mecha");
-                    Debug.Log("character list reset");
-                    _activationCharacter.ResetInRangeLists();
-                }
-                else
-                {
-                    _highlight.PaintTilesInActivationRange(_tilesInActivationRange);                    
-                }
+                Debug.Log("hago la seleccion con mecha");
+                Debug.Log("character list reset");
+                _activationCharacter.ResetInRangeLists();
                 foreach (var tiles in _tilesInAttackRange)
                 {
                     tiles.inAttackRange = true;
                     //shader de aoe mortero
-                    //_highlight.PaintTilesInAttackRange(tiles);
-                    _highlight.PaintTilesInPreviewRange(tiles);
+                    _highlight.PaintTilesInAttackRange(tiles);
+                    //_highlight.PaintTilesInPreviewRange(tiles);
                 }
             }
-            else if (_selected)
+            else
             {
-                var target = MouseRay.GetTargetTransform(_gridBlock);
-                if (IsValidTarget(target))
+                foreach (var tiles in _tilesInAttackRange)
                 {
-                    Debug.Log("selecciono tile");
-                    if (_activationCharacter)
-                    {
-                        Debug.Log("character list reset");
-                        _activationCharacter.ResetInRangeLists();
-                    }
-
-                    //_highlight.PaintTilesInActivationRange(_tilesInActivationRange);
-
-                    foreach (var tiles in _tilesInAttackRange)
-                    {
-                        Debug.Log("pinto tiles en rango de ataque");
-                        tiles.inAttackRange = true;
-                        // shader aoe bala mortero
-                        _highlight.PaintTilesInAttackRange(tiles);
-                    }
-
-                    var tile = target.GetComponent<Tile>();
-
-                    if (tile == _myPositionTile)
-                    {
-                        Debug.Log("es mi tile");
-                        return;
-                    }
-
-                    if (_last == null || tile != _last)
-                    {
-                        Debug.Log("pinto tiles en preview de ataque");
-                        _last = tile;
-                        _highlight.ClearTilesInPreview(_tilesInPreviewRange);
-                        _tilesInPreviewRange.Clear();
-                        _tilesForPreviewChecked.Clear();
-                        _tilesToAttack.Clear();
-                        //PaintTilesInPreviewRange(_last, 0);
-                    }
-                    else if (tile == _last && SelectedPlayerAbove())
-                    {
-                        Debug.Log("preparo el ataque");
-                        PrepareAttack();
-                    }
+                    tiles.inAttackRange = true;
+                    //shader de aoe mortero
+                    _highlight.PaintTilesInAttackRange(tiles);
+                    //_highlight.PaintTilesInPreviewRange(tiles);
                 }
+                _highlight.PaintTilesInActivationRange(_tilesInActivationRange);                    
             }
             
+        }
+        else if (_selected)
+        {
+            var target = MouseRay.GetTargetTransform(_gridBlock);
+            if (!IsValidTarget(target)) return;
+            
+            Debug.Log("selecciono tile");
+            
+            if (_activationCharacter)
+            {
+                Debug.Log("character list reset");
+                _activationCharacter.ResetInRangeLists();
+            }
+
+            //_highlight.PaintTilesInActivationRange(_tilesInActivationRange);
+
+            foreach (var tiles in _tilesInAttackRange)
+            {
+                Debug.Log("pinto tiles en rango de ataque");
+                tiles.inAttackRange = true;
+                // shader aoe bala mortero
+                _highlight.PaintTilesInAttackRange(tiles);
+            }
+
+            var tile = target.GetComponent<Tile>();
+
+            if (tile == _myPositionTile)
+            {
+                Debug.Log("es mi tile");
+                return;
+            }
+
+            if (_last == null || tile != _last)
+            {
+                Debug.Log("pinto tiles en preview de ataque");
+                _last = tile;
+                _highlight.ClearTilesInPreview(_tilesInPreviewRange);
+                _highlight.ClearTilesInPreview(_tilesToAttack);
+                _tilesInPreviewRange.Clear();
+                _tilesForPreviewChecked.Clear();
+                _tilesToAttack.Clear();
+                PaintTilesInPreviewRange(_last, 0);
+            }
+            else if (tile == _last && SelectedPlayerAbove())
+            {
+                Debug.Log("preparo el ataque");
+                PrepareAttack();
+            }
         }
     }
 
@@ -289,8 +302,10 @@ public class Mortar : MonoBehaviour, IObserver
         _highlight.ClearTilesInActivationRange(_tilesInActivationRange);
         _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
         _highlight.ClearTilesInPreview(_tilesInPreviewRange);
+        _highlight.ClearTilesInPreview(_tilesToAttack);
         _tilesInPreviewRange.Clear();
         _tilesForPreviewChecked.Clear();
+        _tilesToAttack.Clear();
         _last = null;
     }
 }
