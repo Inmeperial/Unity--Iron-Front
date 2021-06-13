@@ -530,6 +530,7 @@ public class ButtonsUIManager : MonoBehaviour
         DeactivatePlayerHUD();
 
         DeactivateEnemyHUD();
+        buttonEndTurn.gameObject.SetActive(true);
         buttonExecuteAttack.gameObject.SetActive(false);
         _selectedChar = null;
         _selectedEnemy = null;
@@ -785,6 +786,7 @@ public class ButtonsUIManager : MonoBehaviour
             if (_selectedChar.CanAttack() && _selectedEnemy.CanBeAttacked())
             {
                 _selectedEnemy.SetSelectedForAttack(true);
+                buttonEndTurn.gameObject.SetActive(false);
                 FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position, ActivateBodyPartsContainer);
                 playerHudContainer.SetActive(false);
                 _selectedChar.ResetTilesInAttackRange();

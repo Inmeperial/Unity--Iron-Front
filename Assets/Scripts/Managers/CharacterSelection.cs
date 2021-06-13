@@ -64,10 +64,12 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
-    void SelectionOf(Character c)
+    public void SelectionOf(Character c)
     {
+        Debug.Log("llamo selection");
         if (c.IsMyTurn())
         {
+            Debug.Log("selecciono");
             _buttonsManager.DeselectActions();
             if (_selection)
                 _selection.DeselectThisUnit();
