@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6511842345388835907}
   m_Layer: 9
   m_Name: Martillo
-  m_TagString: LArm
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,15 +120,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77d8c3b51790c043ac04da1473255c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data: {fileID: 11400000, guid: f59c4b3a26e546146be5cdcc049749e7, type: 2}
-  _gunType: 0
-  _maxBullets: 0
-  _availableBullets: 0
-  _bulletsPerClick: 0
-  _damage: 0
-  _critChance: 0
-  _critMultiplier: 0
-  _hitChance: 0
-  _chanceToHitOtherParts: 0
-  _attackRange: 0
-  _bodyPartsSelectionQuantity: 0
+  _weaponData: {fileID: 11400000, guid: f59c4b3a26e546146be5cdcc049749e7, type: 2}

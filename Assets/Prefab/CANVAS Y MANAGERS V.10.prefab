@@ -699,7 +699,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 29.6
+  m_fontSize: 26.5
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1226,7 +1226,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 44.2
+  m_fontSize: 39.5
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1381,7 +1381,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 32.45
+  m_fontSize: 29
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1538,7 +1538,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 32.45
+  m_fontSize: 29
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1825,7 +1825,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 32.45
+  m_fontSize: 29
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2137,7 +2137,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 30.85
+  m_fontSize: 27.6
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4919,7 +4919,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.37600002, y: 0.085}
   m_AnchorMax: {x: 0.8817759, y: 0.3689374}
-  m_AnchoredPosition: {x: 0, y: 0.23108292}
+  m_AnchoredPosition: {x: 0, y: 0.2310791}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5820593359116079852
@@ -5724,6 +5724,7 @@ Transform:
   - {fileID: 7329690850739277894}
   - {fileID: 7329690852612999344}
   - {fileID: 8649923015380930944}
+  - {fileID: 2167133781245377382}
   m_Father: {fileID: 2584408468748608957}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6058,6 +6059,56 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8134368375977802711
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2167133781245377382}
+  - component: {fileID: 4849794602689706115}
+  m_Layer: 0
+  m_Name: GunsSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2167133781245377382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8134368375977802711}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7329690852374642578}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4849794602689706115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8134368375977802711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e5a63a86f25024e91846cd51dd0bd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _assaultRifle: {fileID: 8405644841352696338, guid: ace1b7485b3ea164b97c416bb3d7f266,
+    type: 3}
+  _melee: {fileID: 6511842345388835907, guid: 82a58511e693b8a499a2a9673c0e76be, type: 3}
+  _rifle: {fileID: 2867378892104860643, guid: fffec7e8b06f71b4f84f2f573ba8d44f, type: 3}
+  _shield: {fileID: 8410676310378795655, guid: 53ffad7ace7febe468309ecace2cc203, type: 3}
+  _shotgun: {fileID: 8974839597958927679, guid: 0c8d5880b93bf2d49a9456e753db2a11,
+    type: 3}
 --- !u!1 &8219143049754426733
 GameObject:
   m_ObjectHideFlags: 0

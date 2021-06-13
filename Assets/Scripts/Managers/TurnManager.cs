@@ -6,7 +6,7 @@ using TMPro;
 using System;
 using System.Linq;
 
-public class TurnManager : Teams, IObservable
+public class TurnManager : EnumsClass, IObservable
 {
     [SerializeField] List<Character> _capsuleTeam = new List<Character>();
     [SerializeField] List<Character> _boxTeam = new List<Character>();
@@ -65,7 +65,7 @@ public class TurnManager : Teams, IObservable
         CalculateTurnOrder();
 
         _actualCharacter = _currentTurnOrder[0];
-        _actualCharacter.myTurn = true;
+        _actualCharacter.SetTurn(true);
         _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
     }
 
@@ -83,13 +83,13 @@ public class TurnManager : Teams, IObservable
     {
         foreach (var item in units)
         {
-            if (item.GetUnitTeam() == Teams.Team.Capsule)
+            if (item.GetUnitTeam() == EnumsClass.Team.Capsule)
                 _capsuleTeam.Add(item);
             else _boxTeam.Add(item);
         }
     }
 
-    public List<Character> GetEnemies(Teams.Team myTeam)
+    public List<Character> GetEnemies(EnumsClass.Team myTeam)
     {
         if (myTeam == Team.Capsule)
             return _boxTeam;
@@ -118,7 +118,7 @@ public class TurnManager : Teams, IObservable
                 _actualCharacter = _currentTurnOrder[_turnCounter];
             }
             
-            _actualCharacter.myTurn = true;
+            _actualCharacter.SetTurn(true);
             _cameraMovement.MoveTo(_actualCharacter.transform.position, _buttonsManager.ActivateEndTurnButton);
             _activeTeam = _actualCharacter.GetUnitTeam();
             
@@ -200,7 +200,7 @@ public class TurnManager : Teams, IObservable
         foreach (var character in ordered)
         {
             Debug.Log("name: " + character.Item1.gameObject.name);
-            character.Item1.myTurn = false;
+            character.Item1.SetTurn(false);
             _currentTurnOrder.Add(character.Item1);
         }
     }

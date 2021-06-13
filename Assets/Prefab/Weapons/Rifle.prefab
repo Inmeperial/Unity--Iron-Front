@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 5422778118563289245}
   - component: {fileID: 1531827297477630714}
   - component: {fileID: 2867378892104860643}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,18 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56871d98712449040bce62e65f803673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data: {fileID: 11400000, guid: 922e7b88b21b28b4ea6c8fcb896cdd74, type: 2}
-  _gunType: 0
-  _maxBullets: 0
-  _availableBullets: 0
-  _bulletsPerClick: 0
-  _damage: 0
-  _critChance: 0
-  _critMultiplier: 0
-  _hitChance: 0
-  _chanceToHitOtherParts: 0
-  _attackRange: 0
-  _bodyPartsSelectionQuantity: 0
+  _weaponData: {fileID: 11400000, guid: 922e7b88b21b28b4ea6c8fcb896cdd74, type: 2}
 --- !u!1 &6802157846513249451
 GameObject:
   m_ObjectHideFlags: 0

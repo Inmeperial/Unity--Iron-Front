@@ -66,7 +66,7 @@ public class CharacterSelection : MonoBehaviour
 
     void SelectionOf(Character c)
     {
-        if (c.myTurn)
+        if (c.IsMyTurn())
         {
             _buttonsManager.DeselectActions();
             if (_selection)

@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 1134054939330214273}
   - component: {fileID: 1801380627326253616}
   - component: {fileID: 8974839597958927679}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Escopeta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,15 +230,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607a6d60e7757684cab501bc2d2e6ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data: {fileID: 11400000, guid: e6168ea85089e684f9343cc6c847adbd, type: 2}
-  _gunType: 0
-  _maxBullets: 0
-  _availableBullets: 0
-  _bulletsPerClick: 0
-  _damage: 0
-  _critChance: 0
-  _critMultiplier: 0
-  _hitChance: 0
-  _chanceToHitOtherParts: 0
-  _attackRange: 0
-  _bodyPartsSelectionQuantity: 0
+  _weaponData: {fileID: 11400000, guid: e6168ea85089e684f9343cc6c847adbd, type: 2}

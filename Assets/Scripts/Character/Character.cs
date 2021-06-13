@@ -6,14 +6,20 @@ using UnityEngine.EventSystems;
 using UnityStandardAssets.Effects;
 using Random = System.Random;
 
-public class Character : Teams
+public class Character : EnumsClass
 {
     //STATS
     #region Stats
-
-    public Transform rayOrigin;
+    
     [Header("Team")]
     [SerializeField] private Team _unitTeam;
+
+    [SerializeField] private LineRenderer _rayForBody;
+    [SerializeField] private LineRenderer _rayForLeftArm;
+    [SerializeField] private LineRenderer _rayForRightArm;
+    [SerializeField] private LineRenderer _rayForLegs;
+    [SerializeField] private Material _rayHitMaterial;
+    [SerializeField] private Material _rayMissMaterial;
 
     [Header("Body")] 
     public Body body;
@@ -21,16 +27,16 @@ public class Character : Teams
 
     [Header("Left Arm")]
     public Arm leftArm;
-    [SerializeField] private Gun _leftGun;
+    private Gun _leftGun;
     private bool _leftGunSelected;
-    [SerializeField] private Transform _lArmTransform;
+    [SerializeField] private GunsType _leftGunType;
     [SerializeField] private Transform _leftGunSpawn;
 
     [Header("Right Arm")]
     public Arm rightArm;
-    [SerializeField] private Gun _rightGun;
+    private Gun _rightGun;
     private bool _rightGunSelected;
-    [SerializeField] private Transform _rArmTransform;
+    [SerializeField] private GunsType _rightGunType;
     [SerializeField] private Transform _rightGunSpawn;
     
     [Header("Legs")] 
@@ -57,13 +63,13 @@ public class Character : Teams
     private bool _selected;
     private bool _moving = false;
     private bool _canMove = true;
-    public bool _canAttack = true;
+    private bool _canAttack = true;
     private bool _leftArmAlive;
     private bool _rightArmAlive;
     private bool _canBeAttacked = false;
-    public bool selectingEnemy = false;
-    public bool selectedForAttack;
-    public bool myTurn = false;
+    private bool _selectingEnemy = false;
+    private bool _selectedForAttack;
+    private bool _myTurn = false;
 
     //OTHERS
     private HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
@@ -90,16 +96,25 @@ public class Character : Teams
     void Start()
     {
         _canBeSelected = true;
+        var gunSpawn = FindObjectOfType<GunsSpawner>();
+        _leftArmAlive = leftArm.GetCurrentHP() > 0 ? true : false;
+        _leftGun = gunSpawn.SpawnGun(_leftGunType, Vector3.zero, _leftGunSpawn);
         if (_leftGun)
         {
-            
-            _leftArmAlive = leftArm.GetCurrentHP() > 0 ? true : false;
+            _leftGun.gameObject.tag = "LArm";
+            _leftGun.SetGun();
         }
-
+            
+        
+        _rightArmAlive = rightArm.GetCurrentHP() > 0 ? true : false;
+        _rightGun = gunSpawn.SpawnGun(_rightGunType, Vector3.zero, _rightGunSpawn);
         if (_rightGun)
         {
-            _rightArmAlive = rightArm.GetCurrentHP() > 0 ? true : false;
+            _rightGun.gameObject.tag = "RArm";
+            _rightGun.SetGun();
         }
+            
+        
         leftArm.SetRightOrLeft("Left");
         rightArm.SetRightOrLeft("Right");
 
@@ -150,38 +165,12 @@ public class Character : Teams
 
         if (body.GetCurrentHP() <= 0)
             NotSelectable();
-
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            var c = transform.GetChild(i);
-            if (c.gameObject.name == "Body")
-            {
-                _bodyTransform = c;
-                continue;
-            }
-                
-            if (c.gameObject.name == "Legs")
-            {
-                _legsTransform = c;
-                continue;
-            }
-
-            if (c.gameObject.name == "RArm")
-            {
-                _rArmTransform = c;
-                continue;
-            }
-
-            if (c.gameObject.name == "LArm")
-                _lArmTransform = c;
-
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_selected && !_moving && _canMove && !selectingEnemy && Input.GetMouseButtonDown(0))
+        if (_selected && !_moving && _canMove && !_selectingEnemy && Input.GetMouseButtonDown(0))
         {
             GetTargetToMove();
         }
@@ -440,12 +429,12 @@ public class Character : Teams
     public Vector3 GetLArmPosition()
     {
 		//return _lArmTransform.GetComponent<Renderer>().bounds.center;
-		return _lArmTransform.position;
+		return _leftGun.gameObject.transform.position;
 	}
     public Vector3 GetRArmPosition()
     {
 		//return _rArmTransform.GetComponent<MeshRenderer>().bounds.center;
-		return _rArmTransform.position;
+		return _rightGun.gameObject.transform.position;
     }
     public Vector3 GetLegsPosition()
     {
@@ -453,8 +442,36 @@ public class Character : Teams
         //return _legsTransform.GetComponent<Renderer>().bounds.center;
 	}
 
+    public bool IsMyTurn()
+    {
+        return _myTurn;
+    }
+
+    public bool IsSelectedForAttack()
+    {
+        return _selectedForAttack;
+    }
+
+    public bool IsSelectingEnemy()
+    {
+        return _selectingEnemy;
+    }
     #endregion
 
+    public void SetTurn(bool state)
+    {
+        _myTurn = state;
+    }
+
+    public void SetSelectedForAttack(bool state)
+    {
+        _selectedForAttack = state;
+    }
+
+    public void SetSelectingEnemy(bool state)
+    {
+        _selectingEnemy = state;
+    }
     #region Utilities
     
     public void Undo()
@@ -494,7 +511,7 @@ public class Character : Teams
     }
     public void NewTurn()
     {
-        myTurn = false;
+        _myTurn = false;
         _canMove = legs.GetCurrentHP() > 0 ? true : false;
         _canAttack = true;
         _selectedGun.SetGun();
@@ -591,7 +608,7 @@ public class Character : Teams
     public void DeselectThisUnit()
     {
         _selected = false;
-        selectingEnemy = false;
+        _selectingEnemy = false;
         _myPositionTile = GetTileBelow();
         if (_myPositionTile)
         {
@@ -723,7 +740,7 @@ public class Character : Teams
     //DESCOMENTAR CUANDO SE IMPLEMENTE
     public bool CanBeSelected()
     {
-        return _canBeSelected && myTurn;
+        return _canBeSelected && _myTurn;
     }
     public void DeactivateAttack()
     {
@@ -741,7 +758,7 @@ public class Character : Teams
 
     private void OnMouseOver()
     {
-        if (!selectedForAttack)
+        if (!_selectedForAttack)
             ShowWorldUI();
     }
 
@@ -776,21 +793,51 @@ public class Character : Teams
         _move.StartRotation(callback);
     } 
 
-    public bool RayToPartsForAttack(Vector3 pos, string tagToCheck)
+    public bool RayToPartsForAttack(Vector3 partPosition, string tagToCheck)
     {
         Debug.Log("check " + tagToCheck);
         RaycastHit hit;
-        var position = rayOrigin.position;
-        var dir = (pos - position).normalized; 
+        var position = _rayForBody.gameObject.transform.position;
+        var dir = (partPosition - position).normalized; 
+        
         Physics.Raycast(position, dir, out hit, 1000f);
-        if (hit.collider.transform.gameObject.CompareTag(tagToCheck))
+        bool goodHit = hit.collider.transform.gameObject.CompareTag(tagToCheck);
+
+        LineRenderer renderer = null;
+        switch (tagToCheck)
         {
+            case "Body":
+                renderer = _rayForBody;
+                break;
+
+            case "Legs":
+                renderer = _rayForLegs;
+                break;
+            
+            case "RArm":
+                renderer = _rayForRightArm;
+                break;
+            
+            case "LArm":
+                renderer = _rayForLeftArm;
+                break;
+        }
+        
+        renderer.positionCount = 2;
+        renderer.SetPosition(0, position);
+        renderer.SetPosition(1, partPosition);
+        
+        if (goodHit)
+        {
+            renderer.material = _rayHitMaterial;
             Debug.DrawRay(position, dir * 20f, Color.green, 1000f);
             return true;
         }
         
+        renderer.material = _rayMissMaterial;
         Debug.DrawRay(position, dir * 20f, Color.red, 1000f);
         return false;
+        
     }
 
     public void SetCharacterMove(bool state)
@@ -803,11 +850,11 @@ public class Character : Teams
     {
         if (_rightGunSelected)
         {
-            effectsController.PlayParticlesEffect(_rArmTransform.position, "Attack");
+            effectsController.PlayParticlesEffect(_leftGun.gameObject.transform.position, "Attack");
         }
         else if (_leftGunSelected)
         {
-            effectsController.PlayParticlesEffect(_lArmTransform.position, "Attack");
+            effectsController.PlayParticlesEffect(_rightGun.gameObject.transform.position, "Attack");
         }
         
     }

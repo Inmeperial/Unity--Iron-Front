@@ -13,23 +13,21 @@ public abstract class Gun : MonoBehaviour, IGun
         Rifle,
         Shotgun
     };
-
-    [Header("Weapon")]
-    [SerializeField] protected GunSO _data;
-
-    [Header("DON'T MODIFY BELOW THIS")]
-    [SerializeField] protected GunType _gunType;
+    
+    [SerializeField] protected GunSO _weaponData;
+    
+    protected GunType _gunType;
     protected string _gun;
-    [SerializeField] protected int _maxBullets;
-    [SerializeField] protected int _availableBullets;
-    [SerializeField] protected int _bulletsPerClick;
-    [SerializeField] protected int _damage;
-    [SerializeField] protected int _critChance;
-    [SerializeField] protected float _critMultiplier;
-    [SerializeField] protected int _hitChance;
-    [SerializeField] protected int _chanceToHitOtherParts;
-    [SerializeField] protected int _attackRange;
-    [SerializeField] protected int _bodyPartsSelectionQuantity;
+    protected int _maxBullets;
+    protected int _availableBullets;
+    protected int _bulletsPerClick;
+    protected int _damage;
+    protected int _critChance;
+    protected float _critMultiplier;
+    protected int _hitChance;
+    protected int _chanceToHitOtherParts;
+    protected int _attackRange;
+    protected int _bodyPartsSelectionQuantity;
 
     protected RouletteWheel _roulette;
     protected Dictionary<string, int> _critRoulette = new Dictionary<string, int>();
@@ -40,12 +38,6 @@ public abstract class Gun : MonoBehaviour, IGun
     private readonly int _missHit = 0;
     private readonly int _normalHit = 1;
     private readonly int _criticalHit = 2;
-    // Start is called before the first frame update
-    public void Start()
-    {
-        SetGun();
-        StartRoulette();
-    }
 
     public int GetMaxBullets()
     {
@@ -98,17 +90,17 @@ public abstract class Gun : MonoBehaviour, IGun
     }
     public void SetGun()
     {
-        _gunType = (GunType)_data.gunType;
-        _maxBullets = _data.maxBullets;
+        _gunType = (GunType)_weaponData.gunType;
+        _maxBullets = _weaponData.maxBullets;
         _availableBullets = _maxBullets;
-        _bulletsPerClick = _data.bulletsPerClick;
-        _damage = _data.damage;
-        _critChance = _data.critChance;
-        _critMultiplier = _data.critMultiplier;
-        _hitChance = _data.hitChance;
-        _chanceToHitOtherParts = _data.chanceToHitOtherParts;
-        _attackRange = _data.attackRange;
-        _bodyPartsSelectionQuantity = _data.bodyPartsSelectionQuantity;
+        _bulletsPerClick = _weaponData.bulletsPerClick;
+        _damage = _weaponData.damage;
+        _critChance = _weaponData.critChance;
+        _critMultiplier = _weaponData.critMultiplier;
+        _hitChance = _weaponData.hitChance;
+        _chanceToHitOtherParts = _weaponData.chanceToHitOtherParts;
+        _attackRange = _weaponData.attackRange;
+        _bodyPartsSelectionQuantity = _weaponData.bodyPartsSelectionQuantity;
         _abilityUsed = false;
 
         switch (_gunType)
@@ -126,6 +118,7 @@ public abstract class Gun : MonoBehaviour, IGun
                 _gun = "Shotgun";
                 break;
         }
+        StartRoulette();
     }
 
     public void ReloadGun()

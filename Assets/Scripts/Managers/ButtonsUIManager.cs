@@ -108,7 +108,7 @@ public class ButtonsUIManager : MonoBehaviour
                 
         }
 
-        if (_selectedChar || (_selectedChar && _selectedEnemy && _selectedEnemy.selectedForAttack == false))
+        if (_selectedChar || (_selectedChar && _selectedEnemy && _selectedEnemy.IsSelectedForAttack() == false))
         {
             if (Input.GetKeyDown(selectLGunKey))
                 UnitSwapToLeftGun();
@@ -524,7 +524,7 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_selectedEnemy)
         {
-            _selectedEnemy.selectedForAttack = false;
+            _selectedEnemy.SetSelectedForAttack(false);
         }
 
         DeactivatePlayerHUD();
@@ -587,10 +587,10 @@ public class ButtonsUIManager : MonoBehaviour
     public void ShowAllWorldUI()
     {
         _worldUIActive = true;
-        var units = _turnManager.GetEnemies(Teams.Team.Box).Concat(_turnManager.GetEnemies(Teams.Team.Capsule));
+        var units = _turnManager.GetEnemies(EnumsClass.Team.Box).Concat(_turnManager.GetEnemies(EnumsClass.Team.Capsule));
         foreach (var unit in units)
         {
-            if (unit.selectedForAttack == false)
+            if (!unit.IsSelectedForAttack())
                 unit.ShowWorldUI();
         }
     }
@@ -599,7 +599,7 @@ public class ButtonsUIManager : MonoBehaviour
     public void HideAllWorldUI()
     {
         _worldUIActive = false;
-        var units = _turnManager.GetEnemies(Teams.Team.Box).Concat(_turnManager.GetEnemies(Teams.Team.Capsule));
+        var units = _turnManager.GetEnemies(EnumsClass.Team.Box).Concat(_turnManager.GetEnemies(EnumsClass.Team.Capsule));
         foreach (var unit in units)
         {
             unit.HideWorldUI();
@@ -784,12 +784,12 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (_selectedChar.CanAttack() && _selectedEnemy.CanBeAttacked())
             {
-                _selectedEnemy.selectedForAttack = true;
+                _selectedEnemy.SetSelectedForAttack(true);
                 FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position, ActivateBodyPartsContainer);
                 playerHudContainer.SetActive(false);
                 _selectedChar.ResetTilesInAttackRange();
                 _selectedChar.ResetTilesInMoveRange();
-                _selectedChar.selectingEnemy = true;
+                _selectedChar.SetSelectingEnemy(true);
             }
                 
             else DeactivateBodyPartsContainer();
