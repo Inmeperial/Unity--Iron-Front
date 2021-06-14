@@ -722,7 +722,7 @@ public class Character : EnumsClass
     //Se pintan los tiles dentro del rango de ataque
     private void PaintTilesInAttackRange(Tile currentTile, int count)
     {
-        if (count >= _selectedGun.GetAttackRange() || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
+        if (_selectedGun == null || count >= _selectedGun.GetAttackRange() || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
             return;
         
         _tilesForAttackChecked[currentTile] = count;

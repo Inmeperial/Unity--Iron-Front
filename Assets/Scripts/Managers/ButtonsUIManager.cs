@@ -790,16 +790,18 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedChar.LeftArmAlive())
         {
             var left = _selectedChar.GetLeftGun();
-            leftGunTypeText.text = left.GetGunTypeString();
+            if (left)
+            {
+                leftGunTypeText.text = left.GetGunTypeString();
+                var b = left.GetAvailableBullets().ToString();
+                leftGunHitsText.text = b;
 
-            var b = left.GetAvailableBullets().ToString();
-            leftGunHitsText.text = b;
+                var dmg = left.GetBulletDamage().ToString();
+                leftGunDamageText.text = dmg;
 
-            var dmg = left.GetBulletDamage().ToString();
-            leftGunDamageText.text = dmg;
-
-            var h = left.GetHitChance().ToString();
-            leftGunHitChanceText.text = h + "%";
+                var h = left.GetHitChance().ToString();
+                leftGunHitChanceText.text = h + "%";
+            }
         }
         else
         {
@@ -811,17 +813,19 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedChar.RightArmAlive())
         {
             var right = _selectedChar.GetRightGun();
+            if (right)
+            {
+                rightGunTypeText.text = right.GetGunTypeString();
 
-            rightGunTypeText.text = right.GetGunTypeString();
+                var b = right.GetAvailableBullets().ToString();
+                rightGunHitsText.text = b;
 
-            var b = right.GetAvailableBullets().ToString();
-            rightGunHitsText.text = b;
+                var dmg = right.GetBulletDamage().ToString();
+                rightGunDamageText.text = dmg;
 
-            var dmg = right.GetBulletDamage().ToString();
-            rightGunDamageText.text = dmg;
-
-            var h = right.GetHitChance().ToString();
-            rightGunHitChanceText.text = h + "%";
+                var h = right.GetHitChance().ToString();
+                rightGunHitChanceText.text = h + "%"; 
+            }
         }
         else
         {
