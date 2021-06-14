@@ -161,6 +161,7 @@ public class ButtonsUIManager : MonoBehaviour
     //Se ejecuta cuando se hace click izquierdo en el boton de body
     public void BodySelection()
     {
+        Debug.Log("click body");
         if (CharacterHasBullets(_selectedChar))
         {
             Debug.Log("click en body");
@@ -652,7 +653,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (c.GetSelectedGun().GetAvailableBullets() > 0)
             return true;
-        else return false;
+        return false;
     }
 
     //Checks if player can attack en enemy.
@@ -696,22 +697,22 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 if (!_buttonBodySelected && bodyInsight)
                 {
-                    ui.BodyEnabling(true);
+                    ui.BodyEnabling(true, this);
                 }
 
                 if (!_buttonLArmSelected && lArmInsight)
                 {
-                    ui.LeftArmEnabling(true);
+                    ui.LeftArmEnabling(true, this);
                 }
 
                 if (!_buttonRArmSelected && rArmInsight)
                 {
-                    ui.RightArmEnabling(true);
+                    ui.RightArmEnabling(true, this);
                 }
 
                 if (!_buttonLegsSelected && legsInsight)
                 {
-                    ui.LegsEnabling(true);
+                    ui.LegsEnabling(true, this);
                 }
 
                 if (_partsSelected <= 0)
@@ -972,7 +973,7 @@ public class ButtonsUIManager : MonoBehaviour
             legsInsight = false;
         }
         var ui = _selectedEnemy.GetMyUI();
-        ui.ButtonsEnabling(bodyInsight, lArmInsight, rArmInsight, legsInsight);
+        ui.ButtonsEnabling(bodyInsight, lArmInsight, rArmInsight, legsInsight, this);
         
         
         ui.SetBodyHpText(_selectedEnemy.body.GetCurrentHP());

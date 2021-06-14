@@ -9,46 +9,9 @@ using UnityEngine.UI;
 
 public class CustomButton : Selectable, IPointerClickHandler
 {
-    public enum ButtonPart
-    {
-        Body,
-        Legs,
-        RightArm,
-        LeftArm
-    };
-    
     public PointerEventData.InputButton button { get; set; }
-    public ButtonPart buttonPart;
     public UnityEvent OnLeftClick;
     public UnityEvent OnRightClick;
-
-    public void SetListeners()
-    {
-        var mng = FindObjectOfType<ButtonsUIManager>();
-
-        switch (buttonPart)
-        {
-            case ButtonPart.Body:
-                OnRightClick.AddListener(mng.BodySelection);
-                OnLeftClick.AddListener(mng.BodyMinus);
-                break;
-            
-            case ButtonPart.Legs:
-                OnRightClick.AddListener(mng.LegsSelection);
-                OnLeftClick.AddListener(mng.LegsMinus);
-                break;
-            
-            case ButtonPart.LeftArm:
-                OnRightClick.AddListener(mng.LeftArmSelection);
-                OnLeftClick.AddListener(mng.LeftArmMinus);
-                break;
-            
-            case ButtonPart.RightArm:
-                OnRightClick.AddListener(mng.RightArmSelection);
-                OnLeftClick.AddListener(mng.RightArmMinus);
-                break;
-        }
-    }
 
     public void OnPointerClick(PointerEventData eventData)
     {

@@ -59,10 +59,6 @@ public class WorldUI : MonoBehaviour
     {
         _statusContainer.SetActive(false);
         _camera = Camera.main;
-        _bodyButton.SetListeners();
-        _leftArmButton.SetListeners();
-        _rightArmButton.SetListeners();
-        _legsButton.SetListeners();
         _buttonsContainer.SetActive(false);
     }
 
@@ -299,43 +295,76 @@ public class WorldUI : MonoBehaviour
     }
 
     //Activa el objeto de los botones y su interaccion
-    public void ButtonsEnabling(bool body, bool leftArm, bool rightArm, bool legs)
+    public void ButtonsEnabling(bool body, bool leftArm, bool rightArm, bool legs, ButtonsUIManager mng = null)
     {
-        BodyEnabling(body);
-        LeftArmEnabling(leftArm);
-        RightArmEnabling(rightArm);
-        LegsEnabling(legs);
+        BodyEnabling(body, mng);
+        LeftArmEnabling(leftArm, mng);
+        RightArmEnabling(rightArm, mng);
+        LegsEnabling(legs, mng);
     }
 
     
-    public void BodyEnabling(bool status)
+    public void BodyEnabling(bool status, ButtonsUIManager mng = null)
     {
         //_bodyButton.transform.position += -_bodyButton.transform.forward * _forwardMultiplier; 
         _bodyButton.gameObject.SetActive(status);
         _bodyButton.interactable = status;
+        if (mng)
+        {
+            _bodyButton.OnRightClick.RemoveAllListeners();
+            _bodyButton.OnLeftClick.RemoveAllListeners();
+            _bodyButton.OnRightClick.AddListener(mng.BodyMinus);
+            _bodyButton.OnLeftClick.AddListener(mng.BodySelection); 
+        }
+        
         _bodyCount.text = "0";
     }
     
-    public void LeftArmEnabling(bool status)
+    public void LeftArmEnabling(bool status, ButtonsUIManager mng = null)
     {
         //_leftArmButton.transform.position += -_leftArmButton.transform.forward * _forwardMultiplier;
         _leftArmButton.gameObject.SetActive(status);
         _leftArmButton.interactable = status;
+        if (mng)
+        {
+            _leftArmButton.OnRightClick.RemoveAllListeners();
+            _leftArmButton.OnLeftClick.RemoveAllListeners();
+            _leftArmButton.OnRightClick.AddListener(mng.LeftArmMinus);
+            _leftArmButton.OnLeftClick.AddListener(mng.LeftArmSelection);
+        }
+
         _leftArmCount.text = "0";
     }
     
-    public void RightArmEnabling(bool status)
+    public void RightArmEnabling(bool status, ButtonsUIManager mng = null)
     {
         //_rightArmButton.transform.position += -_rightArmButton.transform.forward * _forwardMultiplier;
         _rightArmButton.gameObject.SetActive(status);
         _rightArmButton.interactable = status;
+        
+        if (mng)
+        {
+            _rightArmButton.OnRightClick.RemoveAllListeners();
+            _rightArmButton.OnLeftClick.RemoveAllListeners();
+            _rightArmButton.OnRightClick.AddListener(mng.RightArmMinus);
+            _rightArmButton.OnLeftClick.AddListener(mng.RightArmSelection);
+        }
+
         _rightArmCount.text = "0";
     }
-    public void LegsEnabling(bool status)
+    public void LegsEnabling(bool status, ButtonsUIManager mng = null)
     {
         //_legsButton.transform.position += -_legsButton.transform.forward * _forwardMultiplier;
         _legsButton.gameObject.SetActive(status);
         _legsButton.interactable = status;
+        if (mng)
+        {
+            _legsButton.OnRightClick.RemoveAllListeners();
+            _legsButton.OnLeftClick.RemoveAllListeners();
+            _legsButton.OnRightClick.AddListener(mng.LegsMinus);
+            _legsButton.OnLeftClick.AddListener(mng.LegsSelection);
+        }
+        
         _legsCount.text = "0";
     }
 
