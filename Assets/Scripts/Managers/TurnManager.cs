@@ -13,11 +13,8 @@ public class TurnManager : EnumsClass, IObservable
     private Character[] _allUnits;
     [SerializeField] CharacterSelection _charSelect;
     [SerializeField] TileHighlight _highlight;
-    ButtonsUIManager _buttonsManager;
-    public TextMeshProUGUI teamText;
-    public GameObject flag1;
-    public GameObject flag2;
-    
+    private ButtonsUIManager _buttonsManager;
+
     private Team _activeTeam;
 
 	[SerializeField]
@@ -38,24 +35,13 @@ public class TurnManager : EnumsClass, IObservable
         
     }
 
-    void Start()
+    private void Start()
     {
         SeparateByTeam(_allUnits);
         _charSelect = FindObjectOfType<CharacterSelection>();
         _highlight = FindObjectOfType<TileHighlight>();
         _buttonsManager = FindObjectOfType<ButtonsUIManager>();
         _activeTeam = Team.Capsule;
-        //teamText.text = _CapsuleTeamText;
-        //if (_activeTeam == Team.Capsule)
-        //{
-        //    flag1.SetActive(true);
-        //    flag2.SetActive(false);
-        //}
-        //else
-        //{
-        //    flag1.SetActive(false);
-        //    flag2.SetActive(true);
-        //}
 
         var mortars = FindObjectsOfType<Mortar>();
         foreach (var mortar in mortars)
@@ -70,7 +56,7 @@ public class TurnManager : EnumsClass, IObservable
         Action toDo = () =>
         {
             _buttonsManager.ActivateEndTurnButton();
-            _charSelect.SelectionOf(_actualCharacter);
+            _charSelect.Selection(_actualCharacter);
         };
         _cameraMovement.MoveTo(_actualCharacter.transform.position, toDo);
     }
@@ -85,7 +71,7 @@ public class TurnManager : EnumsClass, IObservable
         _charSelect.ActivateCharacterSelection(true);
     }
 
-    void SeparateByTeam(Character[] units)
+    private void SeparateByTeam(Character[] units)
     {
         foreach (var item in units)
         {
@@ -95,66 +81,46 @@ public class TurnManager : EnumsClass, IObservable
         }
     }
 
-    public List<Character> GetEnemies(EnumsClass.Team myTeam)
+    public List<Character> GetEnemies(Team myTeam)
     {
-        if (myTeam == Team.Capsule)
-            return _boxTeam;
-
-        else return _capsuleTeam;
+        return myTeam == Team.Capsule ? _boxTeam : _capsuleTeam;
     }
 
     public void EndTurn()
     {
-        var character = _charSelect.GetActualChar();
-        if (character ==null || character.IsMoving() == false)
-        {
-            _buttonsManager.DeactivateEndTurnButton();
+        var character = _charSelect.GetSelectedCharacter();
+        if (character != null && character.IsMoving() != false) return;
+        
+        _buttonsManager.DeactivateEndTurnButton();
             
-            ResetTurn(_actualCharacter);
+        ResetTurn(_actualCharacter);
 
-            if (_turnCounter >= _currentTurnOrder.Count-1)
-            {
-                Debug.Log("calculate");
-                CalculateTurnOrder();
-                _actualCharacter = _currentTurnOrder[0];
-            }
-            else
-            {
-                _turnCounter++;
-                _actualCharacter = _currentTurnOrder[_turnCounter];
-            }
-            
-            _actualCharacter.SetTurn(true);
-            _activeTeam = _actualCharacter.GetUnitTeam();
-            Action toDo = () =>
-            {
-                _buttonsManager.ActivateEndTurnButton();
-                _charSelect.SelectionOf(_actualCharacter);
-            };
-            _cameraMovement.MoveTo(_actualCharacter.transform.position, toDo);
-            // if (_activeTeam == Team.Capsule)
-            // {
-            //     _activeTeam = Team.Box;
-            //     //teamText.text = _BoxTeamText;
-            //     flag2.SetActive(true);
-            //     flag1.SetActive(false);
-            //     ResetTurn(_boxTeam);
-            // }
-            // else
-            // {
-            //     _activeTeam = Team.Capsule;
-            //     //teamText.text = _CapsuleTeamText;
-            //     flag1.SetActive(true);
-            //     flag2.SetActive(false);
-            //     ResetTurn(_capsuleTeam);
-            // }
-            
-            NotifyObserver("EndTurn");
-            NotifyObserver("Deselect");
+        if (_turnCounter >= _currentTurnOrder.Count-1)
+        {
+            Debug.Log("calculate");
+            CalculateTurnOrder();
+            _actualCharacter = _currentTurnOrder[0];
         }
+        else
+        {
+            _turnCounter++;
+            _actualCharacter = _currentTurnOrder[_turnCounter];
+        }
+            
+        _actualCharacter.SetTurn(true);
+        _activeTeam = _actualCharacter.GetUnitTeam();
+        Action toDo = () =>
+        {
+            _buttonsManager.ActivateEndTurnButton();
+            _charSelect.Selection(_actualCharacter);
+        };
+        _cameraMovement.MoveTo(_actualCharacter.transform.position, toDo);
+
+        NotifyObserver("EndTurn");
+        NotifyObserver("Deselect");
     }
 
-    void ResetTurn(List<Character> team)
+    private void ResetTurn(List<Character> team)
     {
         _charSelect.ResetSelector();
         _highlight.EndPreview();
@@ -163,8 +129,11 @@ public class TurnManager : EnumsClass, IObservable
             unit.NewTurn();
         }
     }
-    
-    void ResetTurn(Character unit)
+
+    /// <summary>
+    /// Reset stats for new turn of the given unit.
+    /// </summary>
+    private void ResetTurn(Character unit)
     {
         _charSelect.ResetSelector();
         _highlight.EndPreview();
@@ -200,11 +169,10 @@ public class TurnManager : EnumsClass, IObservable
         //Adds them to a collection with their initiative
         foreach (var character in _allUnits)
         {
-            if (character.body.GetCurrentHP() > 0)
-            {
-                var t = Tuple.Create(character, character.CalculateInitiative());
-                unitsList.Add(t); 
-            }
+            if (!(character.body.GetCurrentHp() > 0)) continue;
+            
+            var t = Tuple.Create(character, character.GetCharacterInitiative());
+            unitsList.Add(t);
         }
 
         //Orders them with the highest initiative first
@@ -212,7 +180,6 @@ public class TurnManager : EnumsClass, IObservable
 
         foreach (var character in ordered)
         {
-            Debug.Log("name: " + character.Item1.gameObject.name);
             character.Item1.SetTurn(false);
             _currentTurnOrder.Add(character.Item1);
         }
@@ -235,7 +202,7 @@ public class TurnManager : EnumsClass, IObservable
             _observers.Add(observer);
     }
 
-    public void Unsuscribe(IObserver observer)
+    public void Unsubscribe(IObserver observer)
     {
         if (_observers.Contains(observer))
             _observers.Remove(observer);

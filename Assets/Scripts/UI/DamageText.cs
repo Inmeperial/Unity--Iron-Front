@@ -19,18 +19,23 @@ public class DamageText : MonoBehaviour
 
     private Camera _cam;
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         _cam = Camera.main;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         MoveAndFade();
     }
-
-    //Setea el texto que se va a mostrar, el tipo de texto y el orden de la layer (que tan arriba se muestra)
+    
+    /// <summary>
+    /// Set text that will be shown.
+    /// </summary>
+    /// <param name="text">Text to show.</param>
+    /// <param name="type">Miss: 0 - Normal: 1 - Critical: 2.</param>
+    /// <param name="order">Order in layer.</param>
     public void SetText(string text, int type, int order)
     {
         _text = gameObject.GetComponent<TextMeshPro>();
@@ -56,9 +61,8 @@ public class DamageText : MonoBehaviour
         }
         _color = _text.color;
     }
-
-    //Mueve el texto hacia arriba y lo va haciendo transparente
-    void MoveAndFade()
+    
+    private void MoveAndFade()
     {
         transform.rotation = _cam.transform.rotation;
         transform.position += transform.up * (_moveSpeed * Time.deltaTime);

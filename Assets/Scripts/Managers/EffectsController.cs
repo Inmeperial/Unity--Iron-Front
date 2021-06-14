@@ -34,8 +34,10 @@ public class EffectsController : MonoBehaviour
     }
 
     /// <summary>
-    /// Reproduces the particle effect. type: Damage - Attack - Mine
+    /// Spawn and reproduce the particle effect.
     /// </summary>
+    /// <param name="pos">Position the particle will spawn.</param>
+    /// <param name="type">Damage - Attack - Mine - Shotgun</param>
     public void PlayParticlesEffect(Vector3 pos, string type)
     {
         GameObject effect;
@@ -66,7 +68,7 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
-            case "ShootGun":
+            case "ShotGun":
                 effect = Instantiate(_shootGunEffect, pos, transform.rotation, transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
@@ -77,14 +79,19 @@ public class EffectsController : MonoBehaviour
         }
         
     }
+    
     /// <summary>
-    /// Creates the Damage Text in world. type: Miss: 0 - Normal: 1 - Critical: 2
+    /// Creates the Damage Text in world. type: 
     /// </summary>
+    /// <param name="text">Text that will be shown.</param>
+    /// <param name="type">Miss: 0 - Normal: 1 - Critical: 2.</param>
+    /// <param name="position">The position it will spawn.</param>
+    /// <param name="last">Is the last text to spawn?</param>
     public void CreateDamageText(string text, int type, Vector3 position, bool last)
     {
         var t = Tuple.Create(text, type, position);
         _list.Add(t);
-        if (last == true) StartCoroutine(CreateDamageTextWithSpacing());
+        if (last) StartCoroutine(CreateDamageTextWithSpacing());
     }
 
     //Retrasa la creación de los textos para que no salgan pegados
@@ -93,8 +100,7 @@ public class EffectsController : MonoBehaviour
         for (int i = 0; i < _list.Count; i++)
         {
             var myText = _list[i];
-            Debug.Log("pos: " + myText.Item3);
-            
+
             //Creo un objeto vacio que mire a la camara en la posicion donde va a crearse el texto 
             var rot = Instantiate(new GameObject(), myText.Item3, Quaternion.identity);
             rot.transform.LookAt(rot.transform.position + _cam.transform.forward);
@@ -108,8 +114,6 @@ public class EffectsController : MonoBehaviour
         }
         FindObjectOfType<CloseUpCamera>().ResetCamera();
         _list.Clear();
-        
-        
     }
     
     //Destruye los efectos para que no queden siempre activos

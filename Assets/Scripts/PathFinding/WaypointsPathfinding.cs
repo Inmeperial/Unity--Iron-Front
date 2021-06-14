@@ -8,7 +8,8 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
     [SerializeField] private List<Tile> _fullMovePath = new List<Tile>();
     private Stack<List<Tile>> _partialPaths = new Stack<List<Tile>>();
     private Character _char;
-    void Start()
+
+    public void Start()
     {
         _agent = FindObjectOfType<AStarAgent>();
         _char = GetComponent<Character>();
@@ -20,7 +21,7 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         if (_fullMovePath == null || _fullMovePath.Count == 0)
         {
             _fullMovePath = new List<Tile>();
-            _agent.init = character.GetActualTilePosition();
+            _agent.init = character.GetMyPositionTile();
         }
         //If list is not empty, pathfinding starts with last tile of the list.
         else if (_fullMovePath.Count > 1)
@@ -40,7 +41,7 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
                 {
                     _fullMovePath.Add(item);
                 }
-                    _char.ReduceAvailableSteps(temp.Count);
+                _char.ReduceAvailableSteps(temp.Count);
             }
         }
         else
@@ -70,48 +71,42 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
     public void UndoLastWaypoint()
     {
         //Prevents path from breaking during movement.
-        if (_char.IsMoving() == false)
+        if (_char.IsMoving()) return;
+        
+        //Check if there is a path.
+        if (_partialPaths.Count <= 0) return;
+        
+        //Get the partial path and return tiles to their normal color.
+        var removed = _partialPaths.Pop();
+        foreach (var tile in removed)
         {
-            //Check if there is a path.
-            if (_partialPaths.Count > 0)
-            {
-                //Get the partial path and return tiles to their normal color.
-                var removed = _partialPaths.Pop();
-                foreach (var tile in removed)
-                {
-                    if (tile != _char.GetActualTilePosition())
-                        _char.IncreaseAvailableSteps(1);
-                }
-                _char.highlight.ClearTilesInMoveRange(removed);
-
-
-                var tempStack = new Stack<List<Tile>>();
-
-                //Invert the stack so tiles are added in the correct order.
-                foreach (var partialList in _partialPaths)
-                {
-                    tempStack.Push(partialList);
-                }
-
-                _fullMovePath.Clear();
-
-                //Recreate the path.
-                foreach (var item in tempStack)
-                {
-                    _fullMovePath.AddRange(item);
-                }
-                if (_fullMovePath == null || _fullMovePath.Count == 0)
-                {
-                    _char.ClearTargetTile();
-                }
-                // else
-                // {
-                //     _char.SetTargetTile(_fullMovePath[_fullMovePath.Count - 1]);
-                // }
-
-                _char.Undo();
-            }
+            if (tile != _char.GetMyPositionTile())
+                _char.IncreaseAvailableSteps(1);
         }
+        _char.highlight.ClearTilesInMoveRange(removed);
+
+
+        var tempStack = new Stack<List<Tile>>();
+
+        //Invert the stack so tiles are added in the correct order.
+        foreach (var partialList in _partialPaths)
+        {
+            tempStack.Push(partialList);
+        }
+
+        _fullMovePath.Clear();
+
+        //Recreate the path.
+        foreach (var item in tempStack)
+        {
+            _fullMovePath.AddRange(item);
+        }
+        if (_fullMovePath == null || _fullMovePath.Count == 0)
+        {
+            _char.ClearTargetTile();
+        }
+        
+        _char.Undo();
     }
 
     public void ResetPath()

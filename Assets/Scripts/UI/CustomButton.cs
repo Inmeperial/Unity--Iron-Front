@@ -15,14 +15,14 @@ public class CustomButton : Selectable, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right)
+        switch (eventData.button)
         {
-            PressRight();
-        }
-
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            PressLeft();
+            case PointerEventData.InputButton.Right:
+                PressRight();
+                break;
+            case PointerEventData.InputButton.Left:
+                PressLeft();
+                break;
         }
     }
 

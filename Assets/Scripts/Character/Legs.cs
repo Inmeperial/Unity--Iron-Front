@@ -33,17 +33,17 @@ public class Legs : Parts
         return _maxSteps;
     }
 
-    public override void UpdateHP(float newValue)
+    public override void UpdateHp(float newValue)
     {
         _legsHP = newValue;
     }
     
-    public override float GetMaxHP()
+    public override float GetMaxHp()
     {
         return _legsMaxHP;
     }
 
-    public override float GetCurrentHP()
+    public override float GetCurrentHp()
     {
         return _legsHP;
     }
@@ -64,21 +64,21 @@ public class Legs : Parts
         {
             total += damages[i].Item1;
             var hp = _legsHP - damages[i].Item1;
-            UpdateHP(hp > 0 ? hp : 0);
+            UpdateHp(hp > 0 ? hp : 0);
             _myChar.SetCharacterMove(_legsHP > 0 ? true : false);
             _myChar.effectsController.PlayParticlesEffect(legsPos, "Damage");
             var item = damages[i].Item2;
             switch (item)
             {
-                case _missHit:
+                case MissHit:
                     _myChar.effectsController.CreateDamageText("Miss", 0, legsPos, i == damages.Count - 1 ? true : false);
                     break;
                    
-                case _normalHit:
+                case NormalHit:
                     _myChar.effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, legsPos, i == damages.Count - 1 ? true : false);
                     break;
                
-                case _criticalHit:
+                case CriticalHit:
                     _myChar.effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, legsPos, i == damages.Count - 1 ? true : false);
                     break;
             }

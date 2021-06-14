@@ -35,10 +35,11 @@ public abstract class Gun : MonoBehaviour, IGun
 
     protected bool _abilityUsed;
 
-    private readonly int _missHit = 0;
-    private readonly int _normalHit = 1;
-    private readonly int _criticalHit = 2;
-
+    private const int MissHit = 0;
+    private const int NormalHit = 1;
+    private const int CriticalHit = 2;
+    
+    # region Getters
     public int GetMaxBullets()
     {
         return _maxBullets;
@@ -88,6 +89,16 @@ public abstract class Gun : MonoBehaviour, IGun
     {
         return _bodyPartsSelectionQuantity;
     }
+    
+    public int GetBulletsPerClick()
+    {
+        return _bulletsPerClick;
+    }
+    #endregion
+    
+    /// <summary>
+    /// Set Gun stats from given scriptable object.
+    /// </summary>
     public void SetGun()
     {
         _gunType = (GunType)_weaponData.gunType;
@@ -126,28 +137,37 @@ public abstract class Gun : MonoBehaviour, IGun
         _abilityUsed = false;
     }
 
-    public int BulletsPerClick()
-    {
-        return _bulletsPerClick;
-    }
+    
+    /// <summary>
+    /// Reduce this gun available bullets by the amount of this gun bullets per click.  
+    /// </summary>
     public void ReduceAvailableBullets()
     {
         if (_availableBullets > 0)
-            _availableBullets -= BulletsPerClick();
+            _availableBullets -= GetBulletsPerClick();
     }
 
+    /// <summary>
+    /// Increase this gun available bullets by the amount of this gun bullets per click.  
+    /// </summary>
     public void IncreaseAvailableBullets()
     {
         if (_availableBullets < _maxBullets)
-            _availableBullets += BulletsPerClick();
+            _availableBullets += GetBulletsPerClick();
     }
+    
+    /// <summary>
+    /// Increase this gun available bullets by the given quantity.
+    /// </summary>
     public void IncreaseAvailableBullets(int quantity)
     {
         if (_availableBullets < _maxBullets)
             _availableBullets += quantity;
     }
 
-
+    /// <summary>
+    /// Returns a collection of the damage each bullet does and if it miss, hits or crit.
+    /// </summary>
     public List<Tuple<int, int>> DamageCalculation(int bullets)
     {
         var list = new List<Tuple<int, int>>();
@@ -167,36 +187,28 @@ public abstract class Gun : MonoBehaviour, IGun
                 //Determines if it crits or not.
                 var c = _roulette.ExecuteAction(_critRoulette);
 
-                if (c == "Crit")
+                switch (c)
                 {
-                    if (AbilityUsed())
-                    {
-                        t = Tuple.Create((int)(_damage * _critMultiplier) / 2, _criticalHit);
-                    }
-                    else
-                    {
-                        t = Tuple.Create((int)(_damage * _critMultiplier), _criticalHit);
-                    }
-                }
-                else if (c == "Normal")
-                {
-                    if (AbilityUsed())
-                    {
-                        t = Tuple.Create(_damage / 2, _normalHit);
-                    }
-                    else
-                    {
-                        t = Tuple.Create(_damage, _normalHit);
-                    }
+                    case "Crit" when _abilityUsed:
+                        t = Tuple.Create((int)(_damage * _critMultiplier) / 2, CriticalHit);
+                        break;
+                    case "Crit":
+                        t = Tuple.Create((int)(_damage * _critMultiplier), CriticalHit);
+                        break;
+                    case "Normal" when _abilityUsed:
+                        t = Tuple.Create(_damage / 2, NormalHit);
+                        break;
+                    case "Normal":
+                        t = Tuple.Create(_damage, NormalHit);
+                        break;
                 }
             }
             else
             {
-                t = Tuple.Create(0, _missHit);
+                t = Tuple.Create(0, MissHit);
             }
             list.Add(t);
         }
-        //Returns the damage each bullet will deal.
         return list;
     }
 
@@ -214,6 +226,9 @@ public abstract class Gun : MonoBehaviour, IGun
 
     public abstract void Ability();
 
+    /// <summary>
+    /// Return true if the Gun ability was used, false if not.
+    /// </summary>
     public bool AbilityUsed()
     {
         return _abilityUsed;

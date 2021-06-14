@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 public class WorldUI : MonoBehaviour
 {
+    #region Fields
     [Header("Status")]
     [SerializeField] private GameObject _statusContainer;
     [SerializeField] private float _showDuration;
@@ -52,10 +53,11 @@ public class WorldUI : MonoBehaviour
     [SerializeField] private Slider _rightArmButtonSlider;
     [SerializeField] private CustomButton _legsButton;
     [SerializeField] private Slider _legsButtonSlider;
+    #endregion
     private Camera _camera;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _statusContainer.SetActive(false);
         _camera = Camera.main;
@@ -71,14 +73,12 @@ public class WorldUI : MonoBehaviour
         MoveActionIcon(moveStatus);
         AttackActionIcon(attackStatus);
     }
-
-    //Desactiva el contenedor de estado
+    
     public void DeactivateWorldUI()
     {
         _statusContainer.SetActive(false);
     }
     
-    //Desactiva el contenedor de estado luego de cierto tiempo
     public void DeactivateWorldUIWithTimer()
     {
         StartCoroutine(DeactivateUI(_showDuration));
@@ -90,13 +90,10 @@ public class WorldUI : MonoBehaviour
         _statusContainer.SetActive(false);
     }
     
-    //Activa el contenedor de estado
     public void ContainerActivation(bool status)
     {
         _statusContainer.SetActive(status);
     }
-
-   
     
     public void SetLimits(float bodyMax, float rArmMax, float lArmMax, float legsMax)
     {
@@ -137,16 +134,13 @@ public class WorldUI : MonoBehaviour
             _bodyHpSlider.value = 0;
             _bodyDamageSlider.value = 0;
         }
-
         else
         {
             _bodyHpSlider.value = quantity;
             _bodyDamageSlider.value = quantity;
         }
     }
-
    
-   //Actualiza la barra de vida en cada frame en base al daño recibido
    public void UpdateBodySlider(float damage, float currentHp)
    {
        _bodyHpSlider.value = currentHp;
@@ -165,7 +159,6 @@ public class WorldUI : MonoBehaviour
            _bodyDamageSlider.value = 0;
    }
    
-
    public void SetLeftArmSlider(float quantity)
     {
         if (quantity < 0)
@@ -173,15 +166,13 @@ public class WorldUI : MonoBehaviour
             _leftArmHpSlider.value = 0;
             _leftArmDamageSlider.value = 0;
         }
-
         else
         {
             _leftArmHpSlider.value = quantity;
             _leftArmDamageSlider.value = quantity;
         }
     }
-    
-   //Actualiza la barra de vida en cada frame en base al daño recibido
+   
     public void UpdateLeftArmSlider(float damage, float currentHp)
     {
         _leftArmHpSlider.value = currentHp;
@@ -207,7 +198,6 @@ public class WorldUI : MonoBehaviour
             _rightArmHpSlider.value = 0;
             _rightArmDamageSlider.value = 0;
         }
-
         else
         {
             _rightArmHpSlider.value = quantity;
@@ -215,7 +205,6 @@ public class WorldUI : MonoBehaviour
         }
     }
     
-    //Actualiza la barra de vida en cada frame en base al daño recibido
     public void UpdateRightArmSlider(float damage, float currentHp)
     {
         _rightArmHpSlider.value = currentHp;
@@ -241,7 +230,6 @@ public class WorldUI : MonoBehaviour
             _legsHpSlider.value = 0;
             _legsDamageSlider.value = 0;
         }
-
         else
         {
             _legsHpSlider.value = quantity;
@@ -249,7 +237,6 @@ public class WorldUI : MonoBehaviour
         }
     }
     
-    //Actualiza la barra de vida en cada frame en base al daño recibido
     public void UpdateLegsSlider(float damage, float currentHp)
     {
         _legsHpSlider.value = currentHp;
@@ -268,14 +255,12 @@ public class WorldUI : MonoBehaviour
             _legsDamageSlider.value = 0;
     }
 
-    //Estado del icono de mover
-    void MoveActionIcon(bool status)
+    private void MoveActionIcon(bool status)
     {
         _moveActionIcon.SetActive(status);
     }
-    
-    //Estado del icono de atacar
-    void AttackActionIcon(bool status)
+
+    private void AttackActionIcon(bool status)
     {
         _attackActionIcon.SetActive(status);
     }
@@ -286,7 +271,7 @@ public class WorldUI : MonoBehaviour
     }
 #endregion
 
-#region WorldButtons
+    #region WorldButtons
 
     //Activa el contenedor de los botones
     public void ButtonsContainerSetActive(bool status)
@@ -302,7 +287,6 @@ public class WorldUI : MonoBehaviour
         RightArmEnabling(rightArm, mng);
         LegsEnabling(legs, mng);
     }
-
     
     public void BodyEnabling(bool status, ButtonsUIManager mng = null)
     {
@@ -378,21 +362,21 @@ public class WorldUI : MonoBehaviour
     public void SetLeftArmHpText(float hp)
     {
         var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
-        _leftArmHpText.text = hp.ToString();
+        _leftArmHpText.text = h.ToString();
         _leftArmButtonSlider.value = h;
     }
     
     public void SetRightArmHpText(float hp)
     {
         var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
-        _rightArmHpText.text = hp.ToString();
+        _rightArmHpText.text = h.ToString();
         _rightArmButtonSlider.value = h;
     }
     
     public void SetLegsHpText(float hp)
     {
         var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
-        _legsHpText.text = hp.ToString();
+        _legsHpText.text = h.ToString();
         _legsButtonSlider.value = h;
     }
 

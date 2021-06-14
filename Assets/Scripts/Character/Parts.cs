@@ -5,19 +5,19 @@ using UnityEngine;
 
 public abstract class Parts : MonoBehaviour
 {
-    protected const int _missHit = 0;
-    protected const int _normalHit = 1;
-    protected const int _criticalHit = 2;
-    public Character _myChar;
+    protected const int MissHit = 0;
+    protected const int NormalHit = 1;
+    protected const int CriticalHit = 2;
+    protected Character _myChar;
 
     protected virtual void Start()
     {
-        //_myChar = transform.parent.GetComponent<Character>();
+        _myChar = transform.parent.GetComponent<Character>();
     }
 
-    public abstract float GetMaxHP();
+    public abstract float GetMaxHp();
 
-    public abstract float GetCurrentHP();
+    public abstract float GetCurrentHp();
 
-    public abstract void UpdateHP(float value);
+    public abstract void UpdateHp(float value);
 }

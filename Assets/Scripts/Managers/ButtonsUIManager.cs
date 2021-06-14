@@ -71,10 +71,10 @@ public class ButtonsUIManager : MonoBehaviour
     private SoundsMenu _soundsMenuManager;
     private EffectsController _effectsController;
 
-    private bool bodyInsight;
-    private bool legsInsight;
-    private bool rArmInsight;
-    private bool lArmInsight;
+    private bool _bodyInsight;
+    private bool _legsInsight;
+    private bool _rArmInsight;
+    private bool _lArmInsight;
 
     private bool _worldUIActive = false;
     private void Start()
@@ -133,304 +133,271 @@ public class ButtonsUIManager : MonoBehaviour
     }
     #region ButtonsActions
 
-   
-
-    // void SetCharacterMovementButtons()
-    // {
-    //     if (_selectedChar.ThisUnitCanMove())
-    //     {
-    //         buttonMove.onClick.RemoveAllListeners();
-    //         buttonMove.onClick.AddListener(_selectedChar.Move);
-    //         buttonUndo.onClick.RemoveAllListeners();
-    //         buttonUndo.onClick.AddListener(_selectedChar.pathCreator.UndoLastWaypoint);
-    //         ActivateMoveContainer();
-    //         DeactivateMoveButton();
-    //     }
-    //     else DeactivateMoveContainer();
-    // }
     
-
-    public void DeactivateCharacterButtons()
-    {
-        buttonExecuteAttack.interactable = false;
-        // buttonMove.interactable = false;
-        // buttonUndo.interactable = false;
-        // _selectedEnemy = null;
-    }
-
     //Se ejecuta cuando se hace click izquierdo en el boton de body
     public void BodySelection()
     {
-        Debug.Log("click body");
-        if (CharacterHasBullets(_selectedChar))
+        if (!CharacterHasBullets(_selectedChar)) return;
+        
+        var gun = _selectedChar.GetSelectedGun();
+        
+        if (_partsSelected > gun.GetAvailableSelections()) return;
+        
+        if (_bulletsForBody == 0)
         {
-            Debug.Log("click en body");
-            var gun = _selectedChar.GetSelectedGun();
-            if (_partsSelected <= gun.GetAvailableSelections())
-            {
-                if (_bulletsForBody == 0)
-                {
-                    _partsSelected++;
-                }
-                _bulletsForBody += gun.BulletsPerClick();
-                gun.ReduceAvailableBullets();
-                _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
-                buttonExecuteAttack.interactable = true;
-                buttonExecuteAttack.gameObject.SetActive(true);
-                _buttonBodySelected = true;
-                DeterminateButtonsActivation();
-            }
+            _partsSelected++;
         }
+        _bulletsForBody += gun.GetBulletsPerClick();
+        gun.ReduceAvailableBullets();
+        _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
+        buttonExecuteAttack.interactable = true;
+        buttonExecuteAttack.gameObject.SetActive(true);
+        _buttonBodySelected = true;
+        DeterminateButtonsActivation();
 
     }
 
     //Se ejecuta cuando se hace click derecho en el boton de body
     public void BodyMinus()
     {
-        if (_bulletsForBody > 0)
+        if (_bulletsForBody <= 0) return;
+        
+        var gun = _selectedChar.GetSelectedGun();
+        gun.IncreaseAvailableBullets();
+        _bulletsForBody = _bulletsForBody > 0 ? (_bulletsForBody - gun.GetBulletsPerClick()) : 0;
+        _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
+        CheckIfCanExecuteAttack();
+        
+        if (_bulletsForBody == 0)
         {
-            var gun = _selectedChar.GetSelectedGun();
-            gun.IncreaseAvailableBullets();
-            _bulletsForBody = _bulletsForBody > 0 ? (_bulletsForBody - gun.BulletsPerClick()) : 0;
-            _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
-            CheckIfCanExecuteAttack();
-            if (_bulletsForBody == 0)
-            {
-                if (_partsSelected > 0)
-                    _partsSelected--;
-                _buttonBodySelected = false;
-            }
-            DeterminateButtonsActivation();
+            if (_partsSelected > 0)
+                _partsSelected--;
+            _buttonBodySelected = false;
         }
+        DeterminateButtonsActivation();
     }
     
     //Se ejecuta al cambiar de arma
-    public void BodyClear()
+    private void BodyClear()
     {
-        if (_bulletsForBody > 0)
-        {
-            var gun = _selectedChar.GetSelectedGun();
-            gun.IncreaseAvailableBullets(_bulletsForBody);
-            _bulletsForBody = 0;
-            _buttonBodySelected = false;
-            if (_selectedEnemy)
-                _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
-            if (_partsSelected > 0)
-                _partsSelected--;
-            CheckIfCanExecuteAttack();
-            DeterminateButtonsActivation();
-        }
+        if (_bulletsForBody <= 0) return;
+        
+        var gun = _selectedChar.GetSelectedGun();
+        gun.IncreaseAvailableBullets(_bulletsForBody);
+        _bulletsForBody = 0;
+        _buttonBodySelected = false;
+        if (_selectedEnemy)
+            _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
+        if (_partsSelected > 0)
+            _partsSelected--;
+        CheckIfCanExecuteAttack();
+        DeterminateButtonsActivation();
     }
 
     //Se ejecuta cuando se hace click izquierdo en el boton de left arm
     public void LeftArmSelection()
     {
-        if (CharacterHasBullets(_selectedChar))
+        if (!CharacterHasBullets(_selectedChar)) return;
+        
+        var gun = _selectedChar.GetSelectedGun();
+        
+        if (_partsSelected > gun.GetAvailableSelections()) return;
+        
+        if (_bulletsForLArm == 0)
         {
-            var gun = _selectedChar.GetSelectedGun();
-            if (_partsSelected <= gun.GetAvailableSelections())
-            {
-                if (_bulletsForLArm == 0)
-                {
-                    _partsSelected++;
-                }
-                _bulletsForLArm += gun.BulletsPerClick();
-                _selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLArm);
-                gun.ReduceAvailableBullets();
-
-                buttonExecuteAttack.interactable = true;
-                buttonExecuteAttack.gameObject.SetActive(true);
-                _buttonLArmSelected = true;
-                DeterminateButtonsActivation();
-            }
+            _partsSelected++;
         }
+        _bulletsForLArm += gun.GetBulletsPerClick();
+        _selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLArm);
+        gun.ReduceAvailableBullets();
+
+        buttonExecuteAttack.interactable = true;
+        buttonExecuteAttack.gameObject.SetActive(true);
+        _buttonLArmSelected = true;
+        DeterminateButtonsActivation();
     }
 
     //Se ejecuta cuando se hace click derecho en el boton de left arm
     public void LeftArmMinus()
     {
-        if (_bulletsForLArm > 0)
+        if (_bulletsForLArm <= 0) return;
+        
+        var gun = _selectedChar.GetSelectedGun();
+        gun.IncreaseAvailableBullets();
+        _bulletsForLArm = _bulletsForLArm > 0 ? (_bulletsForLArm - gun.GetBulletsPerClick()) : 0;
+        _selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLArm);
+        CheckIfCanExecuteAttack();
+        if (_bulletsForLArm == 0)
         {
-            var gun = _selectedChar.GetSelectedGun();
-            gun.IncreaseAvailableBullets();
-            _bulletsForLArm = _bulletsForLArm > 0 ? (_bulletsForLArm - gun.BulletsPerClick()) : 0;
-            _selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLArm);
-            CheckIfCanExecuteAttack();
-            if (_bulletsForLArm == 0)
-            {
-                if (_partsSelected > 0)
-                    _partsSelected--;
-                _buttonLArmSelected = false;
-            }
-            DeterminateButtonsActivation();
+            if (_partsSelected > 0)
+                _partsSelected--;
+            _buttonLArmSelected = false;
         }
+        DeterminateButtonsActivation();
     }
     
     //Se ejecuta al cambiar de arma
-    public void LeftArmClear()
+    private void LeftArmClear()
     {
-        if (_bulletsForLArm > 0)
-        {
-            var gun = _selectedChar.GetSelectedGun();
-            gun.IncreaseAvailableBullets(_bulletsForLArm);
-            _bulletsForLArm = 0;
-            if (_selectedEnemy)
-                _selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLArm);
-            _buttonLArmSelected = false;
-            if (_partsSelected > 0)
-                _partsSelected--;
-            CheckIfCanExecuteAttack();
-            DeterminateButtonsActivation();
-        }
+        if (_bulletsForLArm <= 0) return;
+        
+        var gun = _selectedChar.GetSelectedGun();
+        gun.IncreaseAvailableBullets(_bulletsForLArm);
+        _bulletsForLArm = 0;
+        if (_selectedEnemy)
+            _selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLArm);
+        _buttonLArmSelected = false;
+        if (_partsSelected > 0)
+            _partsSelected--;
+        CheckIfCanExecuteAttack();
+        DeterminateButtonsActivation();
     }
 
     //Se ejecuta cuando se hace click izquierdo en el boton de right arm
     public void RightArmSelection()
     {
-        if (CharacterHasBullets(_selectedChar))
+        if (!CharacterHasBullets(_selectedChar)) return;
+        
+        var gun = _selectedChar.GetSelectedGun();
+
+        if (_partsSelected > gun.GetAvailableSelections()) return;
+        
+        if (_bulletsForRArm == 0)
         {
-            var gun = _selectedChar.GetSelectedGun();
-            if (_partsSelected <= gun.GetAvailableSelections())
-            {
-                if (_bulletsForRArm == 0)
-                {
-                    _partsSelected++;
-                }
-                _bulletsForRArm += gun.BulletsPerClick();
-                _selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRArm);
-                gun.ReduceAvailableBullets();
-                buttonExecuteAttack.interactable = true;
-                buttonExecuteAttack.gameObject.SetActive(true);
-                _buttonRArmSelected = true;
-                DeterminateButtonsActivation();
-            }
+            _partsSelected++;
         }
+        _bulletsForRArm += gun.GetBulletsPerClick();
+        _selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRArm);
+        gun.ReduceAvailableBullets();
+        buttonExecuteAttack.interactable = true;
+        buttonExecuteAttack.gameObject.SetActive(true);
+        _buttonRArmSelected = true;
+        DeterminateButtonsActivation();
     }
 
     //Se ejecuta cuando se hace click derecho en el boton de right arm
     public void RightArmMinus()
     {
-        if (_bulletsForRArm > 0)
-        {
-            var gun = _selectedChar.GetSelectedGun();
-            gun.IncreaseAvailableBullets();
-            _bulletsForRArm = _bulletsForRArm > 0 ? (_bulletsForRArm - gun.BulletsPerClick()) : 0;
-            _selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRArm);
+        if (_bulletsForRArm <= 0) return;
+        
+        var gun = _selectedChar.GetSelectedGun();
+        gun.IncreaseAvailableBullets();
+        _bulletsForRArm = _bulletsForRArm > 0 ? (_bulletsForRArm - gun.GetBulletsPerClick()) : 0;
+        _selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRArm);
 
-            CheckIfCanExecuteAttack();
-            if (_bulletsForRArm == 0)
-            {
-                if (_partsSelected > 0)
-                    _partsSelected--;
-                _buttonRArmSelected = false;
-            }
-            DeterminateButtonsActivation();
+        CheckIfCanExecuteAttack();
+        if (_bulletsForRArm == 0)
+        {
+            if (_partsSelected > 0)
+                _partsSelected--;
+            _buttonRArmSelected = false;
         }
+        DeterminateButtonsActivation();
     }
 
     //Se ejecuta al cambiar de arma
-    public void RightArmClear()
+    private void RightArmClear()
     {
-        if (_bulletsForRArm > 0)
-        {
-            var gun = _selectedChar.GetSelectedGun();
-            gun.IncreaseAvailableBullets(_bulletsForRArm);
-            _bulletsForRArm = 0;
-            if (_selectedEnemy)
-                _selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRArm);
+        if (_bulletsForRArm <= 0) return;
+        
+        var gun = _selectedChar.GetSelectedGun();
+        gun.IncreaseAvailableBullets(_bulletsForRArm);
+        _bulletsForRArm = 0;
+        if (_selectedEnemy)
+            _selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRArm);
 
-            _buttonRArmSelected = false;
-            if (_partsSelected > 0)
-                _partsSelected--;
-            CheckIfCanExecuteAttack();
-            DeterminateButtonsActivation();
-        }
+        _buttonRArmSelected = false;
+        if (_partsSelected > 0)
+            _partsSelected--;
+        CheckIfCanExecuteAttack();
+        DeterminateButtonsActivation();
     }
 
     //Se ejecuta cuando se hace click izquierdo en el boton de legs
     public void LegsSelection()
     {
-        if (CharacterHasBullets(_selectedChar))
-        {
-            var gun = _selectedChar.GetSelectedGun();
-            if (_partsSelected <= gun.GetAvailableSelections())
-            {
-                if (_bulletsForLegs == 0)
-                {
-                    _partsSelected++;
-                }
-                _bulletsForLegs += gun.BulletsPerClick();
-                _selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
+        if (!CharacterHasBullets(_selectedChar)) return;
+        
+        var gun = _selectedChar.GetSelectedGun();
 
-                gun.ReduceAvailableBullets();
-                buttonExecuteAttack.interactable = true;
-                buttonExecuteAttack.gameObject.SetActive(true);
-                _buttonLegsSelected = true;
-                DeterminateButtonsActivation();
-            }
+        if (_partsSelected > gun.GetAvailableSelections()) return;
+        
+        if (_bulletsForLegs == 0)
+        {
+            _partsSelected++;
         }
+        _bulletsForLegs += gun.GetBulletsPerClick();
+        _selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
+
+        gun.ReduceAvailableBullets();
+        buttonExecuteAttack.interactable = true;
+        buttonExecuteAttack.gameObject.SetActive(true);
+        _buttonLegsSelected = true;
+        DeterminateButtonsActivation();
     }
     
     //Se ejecuta cuando se hace click derecho en el boton de legs
     public void LegsMinus()
     {
-        if (_bulletsForLegs > 0)
+        if (_bulletsForLegs <= 0) return;
+        
+        var gun = _selectedChar.GetSelectedGun();
+        gun.IncreaseAvailableBullets();
+        _bulletsForLegs = _bulletsForLegs > 0 ? (_bulletsForLegs - gun.GetBulletsPerClick()) : 0;
+        _selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
+        CheckIfCanExecuteAttack();
+        if (_bulletsForLegs == 0)
         {
-            var gun = _selectedChar.GetSelectedGun();
-            gun.IncreaseAvailableBullets();
-            _bulletsForLegs = _bulletsForLegs > 0 ? (_bulletsForLegs - gun.BulletsPerClick()) : 0;
-            _selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
-            CheckIfCanExecuteAttack();
-            if (_bulletsForLegs == 0)
-            {
-                if (_partsSelected > 0)
-                    _partsSelected--;
-                _buttonLegsSelected = false;
-            }
-            DeterminateButtonsActivation();
+            if (_partsSelected > 0)
+                _partsSelected--;
+            _buttonLegsSelected = false;
         }
+        DeterminateButtonsActivation();
     }
 
     //Se ejecuta al cambiar de arma
-    public void LegsClear()
+    private void LegsClear()
     {
-        if (_bulletsForLegs > 0)
-        {
-            var gun = _selectedChar.GetSelectedGun();
-            gun.IncreaseAvailableBullets(_bulletsForLegs);
-            _bulletsForLegs = 0;
-            if (_selectedEnemy)
-                _selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
-            _buttonLegsSelected = false;
-            if (_partsSelected > 0)
-                _partsSelected--;
-            CheckIfCanExecuteAttack();
-            DeterminateButtonsActivation();
-        }
+        if (_bulletsForLegs <= 0) return;
+        
+        var gun = _selectedChar.GetSelectedGun();
+        gun.IncreaseAvailableBullets(_bulletsForLegs);
+        _bulletsForLegs = 0;
+        if (_selectedEnemy)
+            _selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
+        _buttonLegsSelected = false;
+        if (_partsSelected > 0)
+            _partsSelected--;
+        CheckIfCanExecuteAttack();
+        DeterminateButtonsActivation();
     }
-
-    //Se ejecuta al hacer click izquierdo en el boton Fire
+    
+    
+    /// <summary>
+    /// Executed when left-clicking Fire button.
+    /// </summary>
     public void ExecuteAttack()
     {
-        if (_selectedEnemy)
-        {
-            buttonEndTurn.gameObject.SetActive(false);
-            var cam = FindObjectOfType<CloseUpCamera>();
-            var ui = _selectedEnemy.GetMyUI();
-            ui.SetLimits(_selectedEnemy.body.GetMaxHP(), _selectedEnemy.rightArm.GetCurrentHP(), _selectedEnemy.leftArm.GetCurrentHP(), _selectedEnemy.legs.GetMaxHP());
-            buttonExecuteAttack.interactable = false;
-            buttonExecuteAttack.gameObject.SetActive(false);
-            _selectedChar.ResetInRangeLists();
-            DeactivateBodyPartsContainer();
-            cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, Attack);
-        }
+        if (!_selectedEnemy) return;
+        
+        buttonEndTurn.gameObject.SetActive(false);
+        var cam = FindObjectOfType<CloseUpCamera>();
+        var ui = _selectedEnemy.GetMyUI();
+        ui.SetLimits(_selectedEnemy.body.GetMaxHp(), _selectedEnemy.rightArm.GetCurrentHp(), _selectedEnemy.leftArm.GetCurrentHp(), _selectedEnemy.legs.GetMaxHp());
+        buttonExecuteAttack.interactable = false;
+        buttonExecuteAttack.gameObject.SetActive(false);
+        _selectedChar.ResetInRangeLists();
+        DeactivateBodyPartsContainer();
+        cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, Attack);
     }
 
-    //Se ejecuta cuando la camara termina de moverse a su posicion original
-    void Attack()
+    /// <summary>
+    /// Executed when CloseUp Camera returns to it's original position.
+    /// </summary>
+    private void Attack()
     {
         var gun = _selectedChar.GetSelectedGun();
-        _effectsController.PlayParticlesEffect(_selectedChar.transform.position + new Vector3(2, 2.5f, 3), "ShootGun");
+        _effectsController.PlayParticlesEffect(_selectedChar.transform.position + new Vector3(2, 2.5f, 3), "ShotGun");
         _selectedChar.Shoot();
         _selectedEnemy.SetHurtAnimation();
         if (_bulletsForBody > 0)
@@ -488,15 +455,20 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void EndTurn()
     {
-        if (_selectedChar == null || _selectedChar.IsMoving() == false)
-        {
-            _turnManager.EndTurn();
-            DeactivateEnemyHUD();
-            DeactivatePlayerHUD();
-            ResetBodyParts();
-        }
+        if (_selectedChar != null && _selectedChar.IsMoving()) return;
+        
+        _turnManager.EndTurn();
+        DeactivateEnemyHUD();
+        DeactivatePlayerHUD();
+        ResetBodyParts();
     }
 
+    private void DeselectUnit()
+    {
+        DeselectActions();
+        _charSelection.DeselectUnit();
+    }
+    
     public void DeselectActions()
     {
         if (_selectedChar)
@@ -538,56 +510,52 @@ public class ButtonsUIManager : MonoBehaviour
         _selectedEnemy = null;
     }
 
-    public void DeselectUnit()
-    {
-        DeselectActions();
-        _charSelection.DeselectUnit();
-    }
-
-    //Cambio al arma izquierda al apretar el boton en el UI o con la tecla
+    /// <summary>
+    /// Change to Left Gun of selected Character when pressig on UI or key.
+    /// </summary>
     public void UnitSwapToLeftGun()
     {
-        if (_selectedChar && _selectedChar.LeftArmAlive())
-        {
-            AudioManager.audioManagerInstance.PlaySound(_soundsMenuManager.GetClickSound(), _soundsMenuManager.GetObjectToAddAudioSource());
-            BodyClear();
-            LeftArmClear();
-            RightArmClear();
-            LegsClear();
-            _selectedChar.SelectLeftGun();
-            leftWeaponCircle.SetActive(true);
-            rightWeaponCircle.SetActive(false);
-            ShowPlayerHudText(playerBodyCurrHp, _selectedChar.body.GetCurrentHP(), playerLeftArmCurrHp, _selectedChar.leftArm.GetCurrentHP(), playerRightArmCurrHp, _selectedChar.rightArm.GetCurrentHP(), playerLegsCurrHp, _selectedChar.legs.GetCurrentHP());
+        if (!_selectedChar || !_selectedChar.LeftArmAlive()) return;
+        
+        AudioManager.audioManagerInstance.PlaySound(_soundsMenuManager.GetClickSound(), _soundsMenuManager.GetObjectToAddAudioSource());
+        BodyClear();
+        LeftArmClear();
+        RightArmClear();
+        LegsClear();
+        _selectedChar.SelectLeftGun();
+        leftWeaponCircle.SetActive(true);
+        rightWeaponCircle.SetActive(false);
+        ShowPlayerHudText(playerBodyCurrHp, _selectedChar.body.GetCurrentHp(), playerLeftArmCurrHp, _selectedChar.leftArm.GetCurrentHp(), playerRightArmCurrHp, _selectedChar.rightArm.GetCurrentHp(), playerLegsCurrHp, _selectedChar.legs.GetCurrentHp());
 
-            if (_selectedChar.HasEnemiesInRange())
-                ActivateBodyPartsContainer();
-            else DeactivateBodyPartsContainer();
-        }
+        if (_selectedChar.HasEnemiesInRange())
+            ActivateBodyPartsContainer();
+        else DeactivateBodyPartsContainer();
     }
 
-    //Cambio al arma derecha al apretar el boton en el UI o con la tecla
+    /// <summary>
+    /// Change to Right Gun of selected Character when pressig on UI or key.
+    /// </summary>
     public void UnitSwapToRightGun()
     {
-        if (_selectedChar && _selectedChar.RightArmAlive())
-        {
-            AudioManager.audioManagerInstance.PlaySound(_soundsMenuManager.GetClickSound(), _soundsMenuManager.GetObjectToAddAudioSource());
-            BodyClear();
-            LeftArmClear();
-            RightArmClear();
-            LegsClear();
-            _selectedChar.SelectRightGun();
-            rightWeaponCircle.SetActive(true);
-            leftWeaponCircle.SetActive(false);
-            ShowPlayerHudText(playerBodyCurrHp, _selectedChar.body.GetCurrentHP(), playerLeftArmCurrHp, _selectedChar.leftArm.GetCurrentHP(), playerRightArmCurrHp, _selectedChar.rightArm.GetCurrentHP(), playerLegsCurrHp, _selectedChar.legs.GetCurrentHP());
+        if (!_selectedChar || !_selectedChar.RightArmAlive()) return;
+        
+        AudioManager.audioManagerInstance.PlaySound(_soundsMenuManager.GetClickSound(), _soundsMenuManager.GetObjectToAddAudioSource());
+        BodyClear();
+        LeftArmClear();
+        RightArmClear();
+        LegsClear();
+        _selectedChar.SelectRightGun();
+        rightWeaponCircle.SetActive(true);
+        leftWeaponCircle.SetActive(false);
+        ShowPlayerHudText(playerBodyCurrHp, _selectedChar.body.GetCurrentHp(), playerLeftArmCurrHp, _selectedChar.leftArm.GetCurrentHp(), playerRightArmCurrHp, _selectedChar.rightArm.GetCurrentHp(), playerLegsCurrHp, _selectedChar.legs.GetCurrentHp());
 
-            if (_selectedChar.HasEnemiesInRange())
-                ActivateBodyPartsContainer();
-            else DeactivateBodyPartsContainer();
-        }
+        if (_selectedChar.HasEnemiesInRange())
+            ActivateBodyPartsContainer();
+        else DeactivateBodyPartsContainer();
     }
 
     //Muestro el WorldCanvas de todas las unidades
-    public void ShowAllWorldUI()
+    private void ShowAllWorldUI()
     {
         _worldUIActive = true;
         var units = _turnManager.GetEnemies(EnumsClass.Team.Box).Concat(_turnManager.GetEnemies(EnumsClass.Team.Capsule));
@@ -599,7 +567,7 @@ public class ButtonsUIManager : MonoBehaviour
     }
 
     //Oculto el WorldCanvas de todas las unidades
-    public void HideAllWorldUI()
+    private void HideAllWorldUI()
     {
         _worldUIActive = false;
         var units = _turnManager.GetEnemies(EnumsClass.Team.Box).Concat(_turnManager.GetEnemies(EnumsClass.Team.Capsule));
@@ -649,81 +617,78 @@ public class ButtonsUIManager : MonoBehaviour
         Attack();
     }
 
-    bool CharacterHasBullets(Character c)
+    private bool CharacterHasBullets(Character c)
     {
-        if (c.GetSelectedGun().GetAvailableBullets() > 0)
-            return true;
-        return false;
+        return c.GetSelectedGun().GetAvailableBullets() > 0;
     }
 
     //Checks if player can attack en enemy.
-    void CheckIfCanExecuteAttack()
+    private void CheckIfCanExecuteAttack()
     {
         if (_bulletsForBody == 0 && _bulletsForLArm == 0 && _bulletsForLegs == 0 && _bulletsForRArm == 0)
             buttonExecuteAttack.interactable = false;
     }
 
     //Determines which buttons will be interactable.
-    void DeterminateButtonsActivation()
+    private void DeterminateButtonsActivation()
     {
-        if (_selectedChar)
+        if (!_selectedChar) return;
+        
+        var ui = _selectedEnemy.GetMyUI();
+        if (_selectedChar.GetSelectedGun().GetAvailableBullets() <= 0 || _partsSelected == _selectedChar.GetSelectedGun().GetAvailableSelections())
         {
-            var ui = _selectedEnemy.GetMyUI();
-            if (_selectedChar.GetSelectedGun().GetAvailableBullets() <= 0 || _partsSelected == _selectedChar.GetSelectedGun().GetAvailableSelections())
+            if (_buttonBodySelected == false)
             {
-                if (_buttonBodySelected == false)
-                {
-                    ui.BodyEnabling(false);
-                }
-
-                if (_buttonLArmSelected == false)
-                {
-                    ui.LeftArmEnabling(false);
-                }
-
-                if (_buttonRArmSelected == false)
-                {
-                    ui.RightArmEnabling(false);
-                }
-
-                if (_buttonLegsSelected == false)
-                {
-                    ui.LegsEnabling(false);
-                }
-                buttonExecuteAttack.interactable = true;
-                buttonExecuteAttack.gameObject.SetActive(true);
+                ui.BodyEnabling(false);
             }
-            else if (_partsSelected < _selectedChar.GetSelectedGun().GetAvailableSelections())
+
+            if (_buttonLArmSelected == false)
             {
-                if (!_buttonBodySelected && bodyInsight)
-                {
-                    ui.BodyEnabling(true, this);
-                }
+                ui.LeftArmEnabling(false);
+            }
 
-                if (!_buttonLArmSelected && lArmInsight)
-                {
-                    ui.LeftArmEnabling(true, this);
-                }
+            if (_buttonRArmSelected == false)
+            {
+                ui.RightArmEnabling(false);
+            }
 
-                if (!_buttonRArmSelected && rArmInsight)
-                {
-                    ui.RightArmEnabling(true, this);
-                }
+            if (_buttonLegsSelected == false)
+            {
+                ui.LegsEnabling(false);
+            }
+            buttonExecuteAttack.interactable = true;
+            buttonExecuteAttack.gameObject.SetActive(true);
+        }
+        else if (_partsSelected < _selectedChar.GetSelectedGun().GetAvailableSelections())
+        {
+            if (!_buttonBodySelected && _bodyInsight)
+            {
+                ui.BodyEnabling(true, this);
+            }
 
-                if (!_buttonLegsSelected && legsInsight)
-                {
-                    ui.LegsEnabling(true, this);
-                }
+            if (!_buttonLArmSelected && _lArmInsight)
+            {
+                ui.LeftArmEnabling(true, this);
+            }
 
-                if (_partsSelected <= 0)
-                {
-                    buttonExecuteAttack.gameObject.SetActive(false);
-                }
+            if (!_buttonRArmSelected && _rArmInsight)
+            {
+                ui.RightArmEnabling(true, this);
+            }
+
+            if (!_buttonLegsSelected && _legsInsight)
+            {
+                ui.LegsEnabling(true, this);
+            }
+
+            if (_partsSelected <= 0)
+            {
+                buttonExecuteAttack.gameObject.SetActive(false);
             }
         }
     }
 
-    void ResetBodyParts()
+    private void ResetBodyParts()
     {
         _buttonBodySelected = false;
         _bulletsForBody = 0;
@@ -744,9 +709,12 @@ public class ButtonsUIManager : MonoBehaviour
     #endregion
 
     #region HUD Text
+    /// <summary>
+    /// Set actual Player Character UI.
+    /// </summary>
     public void SetPlayerUI()
     {
-        ShowPlayerHudText(playerBodyCurrHp, _selectedChar.body.GetCurrentHP(), playerLeftArmCurrHp, _selectedChar.leftArm.GetCurrentHP(), playerRightArmCurrHp, _selectedChar.rightArm.GetCurrentHP(), playerLegsCurrHp, _selectedChar.legs.GetCurrentHP());
+        ShowPlayerHudText(playerBodyCurrHp, _selectedChar.body.GetCurrentHp(), playerLeftArmCurrHp, _selectedChar.leftArm.GetCurrentHp(), playerRightArmCurrHp, _selectedChar.rightArm.GetCurrentHp(), playerLegsCurrHp, _selectedChar.legs.GetCurrentHp());
 
         if (_selectedChar.RightArmAlive())
         {
@@ -770,17 +738,18 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 ActivateBodyPartsContainer();
             }
-                
         }
-
         playerHudContainer.SetActive(true);
     }
 
-    public void DeactivatePlayerHUD()
+    private void DeactivatePlayerHUD()
     {
         playerHudContainer.SetActive(false);
     }
 
+    /// <summary>
+    /// Set actual Enemy Character UI.
+    /// </summary>
     public void SetEnemyUI()
     {
         if (_selectedChar)
@@ -804,13 +773,13 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
-
-
-    public void DeactivateEnemyHUD()
+    private void DeactivateEnemyHUD()
     {
         DeactivateBodyPartsContainer();
     }
-    void ShowPlayerHudText(TextMeshProUGUI bodyHpText, float bodyValue, TextMeshProUGUI lArmHpText, float lArmValue, TextMeshProUGUI rArmHpText, float rArmValue, TextMeshProUGUI legsHpText, float legsValue)
+
+    
+    private void ShowPlayerHudText(TextMeshProUGUI bodyHpText, float bodyValue, TextMeshProUGUI lArmHpText, float lArmValue, TextMeshProUGUI rArmHpText, float rArmValue, TextMeshProUGUI legsHpText, float legsValue)
     {
         ShowUnitHudText(bodyHpText, bodyValue, lArmHpText, lArmValue, rArmHpText, rArmValue, legsHpText, legsValue);
         playerBodySlider.value = bodyValue;
@@ -834,7 +803,6 @@ public class ButtonsUIManager : MonoBehaviour
         }
         else
         {
-            
             leftGunTypeText.text = "No gun - Arm destroyed";
             leftGunDamageText.text = "";
             leftGunHitChanceText.text = "";
@@ -854,7 +822,6 @@ public class ButtonsUIManager : MonoBehaviour
 
             var h = right.GetHitChance().ToString();
             rightGunHitChanceText.text = h + "%";
-
         }
         else
         {
@@ -866,45 +833,22 @@ public class ButtonsUIManager : MonoBehaviour
 
     void ShowUnitHudText(TextMeshProUGUI bodyHpText, float bodyValue, TextMeshProUGUI lArmHpText, float lArmValue, TextMeshProUGUI rArmHpText, float rArmValue, TextMeshProUGUI legsHpText, float legsValue)
     {
-        bodyHpText.text = bodyValue.ToString() + " HP";
-        lArmHpText.text = lArmValue.ToString() + " HP";
-        rArmHpText.text = rArmValue.ToString() + " HP";
-        legsHpText.text = legsValue.ToString() + " HP";
+        bodyHpText.text = bodyValue + " HP";
+        lArmHpText.text = lArmValue + " HP";
+        rArmHpText.text = rArmValue + " HP";
+        legsHpText.text = legsValue + " HP";
     }
-
-    // public void UpdateBodyHUD(int value, bool isPlayer)
-    // {
-    //     if (isPlayer)
-    //     {
-    //         playerBodyCurrHp.text = value.ToString();
-    //     }
-    // }
-    //
-    // public void UpdateLeftArmHUD(int value, bool isPlayer)
-    // {
-    //     if (isPlayer)
-    //     {
-    //         playerLeftArmCurrHp.text = value.ToString();
-    //     }
-    // }
-    //
-    // public void UpdateRightArmHUD(int value, bool isPlayer)
-    // {
-    //     if (isPlayer)
-    //     {
-    //         playerRightArmCurrHp.text = value.ToString();
-    //     }
-    // }
+    
     public void UpdateLegsHUD(float value, bool isPlayer)
     {
-        if (isPlayer)
-        {
-            playerLegsCurrHp.text = value + "HP";
-            playerLegsSlider.value = value;
-        }
+        if (!isPlayer) return;
+        
+        playerLegsCurrHp.text = value + "HP";
+        playerLegsSlider.value = value;
     }
 
     #endregion
+    
     public void SetEnemy(Character enemy)
     {
         _selectedEnemy = enemy;
@@ -916,6 +860,7 @@ public class ButtonsUIManager : MonoBehaviour
     }
 
     #region Activators
+    
     public void ActivateEndTurnButton()
     {
         buttonEndTurn.gameObject.SetActive(true);
@@ -926,7 +871,7 @@ public class ButtonsUIManager : MonoBehaviour
         buttonEndTurn.gameObject.SetActive(false);
     }
 
-    public void ActivateBodyPartsContainer()
+    private void ActivateBodyPartsContainer()
     {
         if (_selectedEnemy)
         {
@@ -934,55 +879,55 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
-    void ActivateParts()
+    private void ActivateParts()
     {
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body") && _selectedEnemy.body.GetCurrentHP() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body") && _selectedEnemy.body.GetCurrentHp() > 0)
         {
-            bodyInsight = true;
+            _bodyInsight = true;
         }
         else
         {
-            bodyInsight = false;
+            _bodyInsight = false;
         }
 
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLArmPosition(), "LArm") && _selectedEnemy.leftArm.GetCurrentHP() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLArmPosition(), "LArm") && _selectedEnemy.leftArm.GetCurrentHp() > 0)
         {
-            lArmInsight = true;
+            _lArmInsight = true;
         }
         else
         {
-            lArmInsight = false;
+            _lArmInsight = false;
         }
 
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetRArmPosition(), "RArm") && _selectedEnemy.rightArm.GetCurrentHP() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetRArmPosition(), "RArm") && _selectedEnemy.rightArm.GetCurrentHp() > 0)
         {
-            rArmInsight = true;
+            _rArmInsight = true;
         }
         else
         {
-            rArmInsight = false;
+            _rArmInsight = false;
         }
 
 
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs") &&_selectedEnemy.legs.GetCurrentHP() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs") &&_selectedEnemy.legs.GetCurrentHp() > 0)
         {
-            legsInsight = true;
+            _legsInsight = true;
         }
         else
         {
-            legsInsight = false;
+            _legsInsight = false;
         }
         var ui = _selectedEnemy.GetMyUI();
-        ui.ButtonsEnabling(bodyInsight, lArmInsight, rArmInsight, legsInsight, this);
+        ui.ButtonsEnabling(_bodyInsight, _lArmInsight, _rArmInsight, _legsInsight, this);
         
         
-        ui.SetBodyHpText(_selectedEnemy.body.GetCurrentHP());
+        ui.SetBodyHpText(_selectedEnemy.body.GetCurrentHp());
 
-        ui.SetLeftArmHpText(_selectedEnemy.leftArm.GetCurrentHP());
+        ui.SetLeftArmHpText(_selectedEnemy.leftArm.GetCurrentHp());
 
-        ui.SetRightArmHpText(_selectedEnemy.rightArm.GetCurrentHP());
+        ui.SetRightArmHpText(_selectedEnemy.rightArm.GetCurrentHp());
 
-        ui.SetLegsHpText(_selectedEnemy.legs.GetCurrentHP());
+        ui.SetLegsHpText(_selectedEnemy.legs.GetCurrentHp());
 
         ui.ButtonsContainerSetActive(true);
     }
@@ -992,35 +937,6 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedEnemy)
             _selectedEnemy.GetMyUI().ButtonsContainerSetActive(false);
     }
-
-    // public void ActivateUndo()
-    // {
-    //     buttonUndo.interactable = true;
-    // }
-    //
-    // public void DeactivateUndo()
-    // {
-    //     buttonUndo.interactable = false;
-    // }
-
-    // public void ActivateMoveContainer()
-    // {
-    //     moveContainer.SetActive(true);
-    // }
-    //
-    // public void DeactivateMoveContainer()
-    // {
-    //     moveContainer.SetActive(false);
-    // }
-    // public void ActivateMoveButton()
-    // {
-    //     buttonMove.interactable = true;
-    // }
-    //
-    // public void DeactivateMoveButton()
-    // {
-    //     buttonMove.interactable = false;
-    // }
 
     public void ActivateExecuteAttackButton()
     {

@@ -24,22 +24,21 @@ public class CameraMovement : MonoBehaviour
         _yPos = transform.position.y;
     }
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        if (!_cameraLocked)
-        {
-            float x = Input.GetAxis("Horizontal");
-            float z = Input.GetAxis("Vertical");
+        if (_cameraLocked) return;
+        
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
-            var dir = transform.right * x + transform.forward * z;
-            _rb.velocity = dir * speed;
+        var dir = transform.right * x + transform.forward * z;
+        _rb.velocity = dir * speed;
 
 
-            if (Input.GetKey(KeyCode.E))
-                transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
-            if (Input.GetKey(KeyCode.Q))
-                transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
-        }
+        if (Input.GetKey(KeyCode.E))
+            transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
+        if (Input.GetKey(KeyCode.Q))
+            transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
     }
 
     public void LockCamera(bool status)

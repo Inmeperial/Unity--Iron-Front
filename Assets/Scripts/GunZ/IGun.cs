@@ -22,7 +22,7 @@ public interface IGun
 
     int GetAvailableSelections();
 
-    int BulletsPerClick();
+    int GetBulletsPerClick();
 
     List<Tuple<int, int>> DamageCalculation(int bullets);
 

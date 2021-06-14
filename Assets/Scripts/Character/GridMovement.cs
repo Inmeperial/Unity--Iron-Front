@@ -42,6 +42,9 @@ public class GridMovement : MonoBehaviour
 
     
 
+    /// <summary>
+    /// Set tiles for Character to move and start the movement.
+    /// </summary>
     public void StartMovement(List<Tile> tilesList)
     {
         _forcedForward = false;
@@ -50,7 +53,8 @@ public class GridMovement : MonoBehaviour
         _move = true;
     }
 
-    void Movement()
+    
+    private void Movement()
     {
         if(_tilesIndex != _tilesList.Count)
         {
@@ -62,7 +66,6 @@ public class GridMovement : MonoBehaviour
                 {
                     _rotate = true;
                     _posToRotate = newPos;
-                    Debug.Log("empiezo a rotar");
                     return;
                 }  
             }
@@ -113,13 +116,9 @@ public class GridMovement : MonoBehaviour
     private bool CheckIfFacing(Vector3 pos)
     {
         var dir = pos - transform.position;
-        var tresholdPlus = dir;
-        tresholdPlus = new Vector3(dir.x + 0.1f, dir.y, dir.z + 0.1f);
-        var tresholdMin = dir;
-        tresholdMin= new Vector3(dir.x - 0.1f, dir.y, dir.z - 0.1f);
-        if (transform.forward == dir.normalized || transform.forward == tresholdPlus || transform.forward == tresholdMin)
-            return true;
-        else return false;
+        var thresholdPlus = new Vector3(dir.x + 0.1f, dir.y, dir.z + 0.1f);
+        var thresholdMin = new Vector3(dir.x - 0.1f, dir.y, dir.z - 0.1f);
+        return transform.forward == dir.normalized || transform.forward == thresholdPlus || transform.forward == thresholdMin;
     }
 
     public void SetMoveSpeed(float speed)

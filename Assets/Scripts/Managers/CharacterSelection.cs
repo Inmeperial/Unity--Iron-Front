@@ -27,7 +27,7 @@ public class CharacterSelection : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (EventSystem.current.IsPointerOverGameObject() == false)
         {
@@ -46,30 +46,29 @@ public class CharacterSelection : MonoBehaviour
     private void SelectCharacterFromTile(LayerMask layerMask)
     {
         var tile = MouseRay.GetTargetGameObject(layerMask);
-        if (tile && tile.CompareTag("GridBlock"))
-        {
-            var c = tile.GetComponent<Tile>().GetCharacterAbove();
-            if (c) SelectionOf(c);
-        }
+        if (!tile || !tile.CompareTag("GridBlock")) return;
+        
+        var c = tile.GetComponent<Tile>().GetCharacterAbove();
+        if (c) Selection(c);
+    }
+    
+    private void SelectCharacterFromObject(LayerMask mask)
+    {
+        var character = MouseRay.GetTargetTransform(mask);
+        
+        if (!character || !character.CompareTag("Character")) return;
+        var c = character.GetComponent<Character>();
+        Selection(c);
     }
 
-    //Selection of the character that will move.
-    public void SelectCharacterFromObject(LayerMask charMask)
+    /// <summary>
+    /// Select a Character.
+    /// </summary>
+    /// <param name="c">The Character to select.</param>
+    public void Selection(Character c)
     {
-        var character = MouseRay.GetTargetTransform(charMask);
-        if (character && character.CompareTag("Character"))
-        {
-            var c = character.GetComponent<Character>();
-            SelectionOf(c);
-        }
-    }
-
-    public void SelectionOf(Character c)
-    {
-        Debug.Log("llamo selection");
         if (c.IsMyTurn())
         {
-            Debug.Log("selecciono");
             _buttonsManager.DeselectActions();
             if (_selection)
                 _selection.DeselectThisUnit();
@@ -90,32 +89,8 @@ public class CharacterSelection : MonoBehaviour
                 _selection.RotateTowardsEnemy(_enemySelection.transform.position);
             }
         }
-        // if (c.GetUnitTeam() == _turnManager.GetActiveTeam())
-        // {
-        //     _buttonsManager.DeselectActions();
-        //     if (_selection)
-        //         _selection.DeselectThisUnit();
-        //     if (_enemySelection)
-        //     {
-        //         _enemySelection.DeselectThisUnit();
-        //         _enemySelection = null;
-        //     }
-        //
-        //     playerSelected = true;
-        //     _selection = c;
-        //     _selection.SelectThisUnit();
-        //     _highlight.ChangeActiveCharacter(_selection);
-        //     _buttonsManager.SetPlayerCharacter(_selection);
-        //     _buttonsManager.SetPlayerUI();
-        //     if (_enemySelection)
-        //     {
-        //         _selection.RotateTowardsEnemy(_enemySelection.transform.position);
-        //     }
-        // }
-        //else
         else if (c.GetUnitTeam() != _turnManager.GetActiveTeam())
         {
-            Debug.Log("clickeo enemigo");
             if (_enemySelection)
             {
                 _enemySelection.DeselectThisUnit();
@@ -130,15 +105,12 @@ public class CharacterSelection : MonoBehaviour
             }
         }
     }
-
-
-    //Returns the character that is currently selected.
-    public Character GetActualChar()
+    
+    public Character GetSelectedCharacter()
     {
         return _selection;
     }
-
-    //Returns the enemy that is currently selected.
+    
     public Character GetSelectedEnemy()
     {
         return _enemySelection;
@@ -152,7 +124,7 @@ public class CharacterSelection : MonoBehaviour
     public void ResetSelector()
     {
         DeselectUnit();
-        _buttonsManager.DeactivateCharacterButtons();
+        _buttonsManager.DeactivateExecuteAttackButton();
     }
 
     public void DeselectUnit()
@@ -163,11 +135,11 @@ public class CharacterSelection : MonoBehaviour
             _selection.DeselectThisUnit();
             _selection = null;
         }
-        if (_enemySelection)
-        {
-            _enemySelection.DeselectThisUnit();
-            _enemySelection = null;
-        }
+
+        if (!_enemySelection) return;
+        
+        _enemySelection.DeselectThisUnit();
+        _enemySelection = null;
     }
 
     public bool PlayerIsSelected(Character character)

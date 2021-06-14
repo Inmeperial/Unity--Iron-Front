@@ -9,12 +9,8 @@ public class MouseRay : MonoBehaviour
     /// </summary>
     public static Transform GetTargetTransform(LayerMask mask)
     {
-        RaycastHit hit;
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(mouseRay, out hit, Mathf.Infinity, mask))
-            return hit.transform;
-
-        return null;
+        return Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, mask) ? hit.transform : null;
     }
 
     /// <summary>
@@ -22,12 +18,8 @@ public class MouseRay : MonoBehaviour
     /// </summary>
     public static GameObject GetTargetGameObject(LayerMask mask)
     {
-        RaycastHit hit;
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(mouseRay, out hit, Mathf.Infinity, mask))
-            return hit.transform.gameObject;
-
-        return null;
+        return Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, mask) ? hit.transform.gameObject : null;
     }
 
     public static bool CheckIfType(LayerMask mask)

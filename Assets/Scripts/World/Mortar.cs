@@ -14,8 +14,8 @@ public class Mortar : MonoBehaviour, IObserver
     [SerializeField] private int _aoe;
     [SerializeField] private int _damage;
 
-    [SerializeField] private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
-    [SerializeField] private Dictionary<Tile, int> _tilesForPreviewChecked = new Dictionary<Tile, int>();
+    private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
+    private Dictionary<Tile, int> _tilesForPreviewChecked = new Dictionary<Tile, int>();
 
     private HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
     private HashSet<Tile> _tilesInPreviewRange = new HashSet<Tile>();
@@ -31,7 +31,8 @@ public class Mortar : MonoBehaviour, IObserver
 
     private HashSet<Tile> _tilesInActivationRange = new HashSet<Tile>();
     private Character _activationCharacter;
-    delegate void Execute();
+
+    private delegate void Execute();
     Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
     private bool _attackPending = false;
     private int _turnCount = 0;
@@ -207,7 +208,7 @@ public class Mortar : MonoBehaviour, IObserver
         }
     }
 
-    public Tile GetTileBelow()
+    private Tile GetTileBelow()
     {
         RaycastHit hit;
         Physics.Raycast(transform.position, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
@@ -234,13 +235,11 @@ public class Mortar : MonoBehaviour, IObserver
     private void PrepareAttack()
     {
         //_tilesToAttack = _tilesInPreviewRange;
-        Debug.Log("to attack: " + _tilesToAttack.Count);
         _attackPending = true;
         _turnCount = 0;
         _activationCharacter.DeactivateAttack();
         _activationCharacter = null;
         Deselect();
-        Debug.Log("PREPARING ATTACK");
     }
 
     private void GetTilesInActivationRange()
@@ -256,12 +255,11 @@ public class Mortar : MonoBehaviour, IObserver
     
     private void OnDrawGizmos()
     {
-        if (drawGizmo)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, activationTilesDetectionRange);
-        }
-            
+        if (!drawGizmo) return;
+        
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, activationTilesDetectionRange);
+
     }
 
     public void Notify(string action)
@@ -274,11 +272,8 @@ public class Mortar : MonoBehaviour, IObserver
         if (!_attackPending) return;
 
         _turnCount++;
-        Debug.Log("turn count: " + _turnCount);
         if (_turnCount < 2) return;
-        Debug.Log("ATTACK PUM PUM");
         
-        Debug.Log("to attack: " + _tilesToAttack.Count);
         foreach (var tile in _tilesToAttack)
         {
             var unit = tile.GetCharacterAbove();

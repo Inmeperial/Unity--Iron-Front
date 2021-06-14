@@ -10,6 +10,13 @@ public class GunsSpawner : EnumsClass
     [SerializeField] private Shield _shield;
     [SerializeField] private Shotgun _shotgun;
 
+    /// <summary>
+    /// Spawn a gun of the given type.
+    /// </summary>
+    /// <param name="type">Type of gun.</param>
+    /// <param name="position">Position to spawn.</param>
+    /// <param name="parent">Parent object, null if empty.</param>
+    /// <returns></returns>
     public Gun SpawnGun(GunsType type, Vector3 position, Transform parent = null)
     {
         Gun gun = null;

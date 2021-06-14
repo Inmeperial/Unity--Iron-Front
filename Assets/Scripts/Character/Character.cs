@@ -95,9 +95,24 @@ public class Character : EnumsClass
     // Start is called before the first frame update
     void Start()
     {
-        _canBeSelected = true;
+        #region GetComponents
+        _mechaMaterlaHandler = GetComponent<MechaMaterialhandler>();
+        _smokeMechaHandler = GetComponent<SmokeMechaHandler>();
+        _move = GetComponent<GridMovement>();
+        pathCreator = GetComponent<IPathCreator>();
+        _myUI = GetComponent<WorldUI>();
+        _animator = GetComponent<Animator>();
+        #endregion
+        #region FindObject
+        turnManager = FindObjectOfType<TurnManager>();
+        highlight = FindObjectOfType<TileHighlight>();
+        buttonsManager = FindObjectOfType<ButtonsUIManager>();
+        effectsController = FindObjectOfType<EffectsController>();
+        
+        #endregion
+        #region GunsAndArms
         var gunSpawn = FindObjectOfType<GunsSpawner>();
-        _leftArmAlive = leftArm.GetCurrentHP() > 0 ? true : false;
+        _leftArmAlive = leftArm.GetCurrentHp() > 0 ? true : false;
         _leftGun = gunSpawn.SpawnGun(_leftGunType, Vector3.zero, _leftGunSpawn);
         if (_leftGun)
         {
@@ -105,9 +120,8 @@ public class Character : EnumsClass
             _leftGun.SetGun();
             _leftGun.StartRoulette();
         }
-            
         
-        _rightArmAlive = rightArm.GetCurrentHP() > 0 ? true : false;
+        _rightArmAlive = rightArm.GetCurrentHp() > 0 ? true : false;
         _rightGun = gunSpawn.SpawnGun(_rightGunType, Vector3.zero, _rightGunSpawn);
         if (_rightGun)
         {
@@ -115,34 +129,10 @@ public class Character : EnumsClass
             _rightGun.SetGun();
             _rightGun.StartRoulette();
         }
-            
         
         leftArm.SetRightOrLeft("Left");
         rightArm.SetRightOrLeft("Right");
-
-        _canMove = legs.GetCurrentHP() > 0 ? true : false;
-        _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
-        _selected = false;
-
-        _mechaMaterlaHandler = GetComponent<MechaMaterialhandler>();
-        _smokeMechaHandler = GetComponent<SmokeMechaHandler>();
-        _move = GetComponent<GridMovement>();
-        _move.SetMoveSpeed(legs.GetMoveSpeed());
-        _move.SetRotationSpeed(legs.GetRotationSpeed());
-        _myPositionTile = GetTileBelow();
-        _myPositionTile.MakeTileOccupied();
-        _myPositionTile.SetUnitAbove(this);
-        turnManager = FindObjectOfType<TurnManager>();
-        highlight = FindObjectOfType<TileHighlight>();
-        buttonsManager = FindObjectOfType<ButtonsUIManager>();
-        pathCreator = GetComponent<IPathCreator>();
-        effectsController = FindObjectOfType<EffectsController>();
-        _myUI = GetComponent<WorldUI>();
-        _animator = GetComponent<Animator>();
-
-        if (_myUI)
-            _myUI.SetLimits(body.GetMaxHP(), rightArm.GetMaxHP(), leftArm.GetMaxHP(), legs.GetMaxHP());
-
+        
         if (_rightArmAlive)
         {
             _selectedGun = _rightGun;
@@ -164,9 +154,22 @@ public class Character : EnumsClass
             _rightGunSelected = false;
             _leftGunSelected = false;
         }
+        #endregion
+        
+        _canMove = legs.GetCurrentHp() > 0;
+        _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
+        
+        _myPositionTile = GetTileBelow();
+        _myPositionTile.MakeTileOccupied();
+        _myPositionTile.SetUnitAbove(this);
+        _move.SetMoveSpeed(legs.GetMoveSpeed());
+        _move.SetRotationSpeed(legs.GetRotationSpeed());
+        
+        if (_myUI)
+            _myUI.SetLimits(body.GetMaxHp(), rightArm.GetMaxHp(), leftArm.GetMaxHp(), legs.GetMaxHp());
 
-        if (body.GetCurrentHP() <= 0)
-            NotSelectable();
+        _selected = false;
+        _canBeSelected = body.GetCurrentHp() > 0;
     }
 
     // Update is called once per frame
@@ -177,92 +180,50 @@ public class Character : EnumsClass
             GetTargetToMove();
         }
     }
-
-    //Se pintan los tiles dentro del rango de ataque
-    void PaintTilesInAttackRange(Tile currentTile, int count)
-    {
-        if (count >= _selectedGun.GetAttackRange() || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
-            return;
-        
-        _tilesForAttackChecked[currentTile] = count;
-
-        foreach (var tile in currentTile.allNeighbours)
-        {
-            if (!_tilesInAttackRange.Contains(tile))
-            {
-                if (!tile.HasTileAbove() && tile.IsWalkable())
-                {
-                    _tilesInAttackRange.Add(tile);
-                    tile.inAttackRange = true;
-                    if (tile.inMoveRange)
-                    {
-                        highlight.PaintTilesInMoveAndAttackRange(tile);
-                    }
-                    else highlight.PaintTilesInAttackRange(tile);
-                }
-
-            }
-            PaintTilesInAttackRange(tile, count + 1);
-        }
-    }
-
-    //Se pintan los tiles dentro del rango de movimiento
-    public void PaintTilesInMoveRange(Tile currentTile, int count)
-    {
-        if (count >= _currentSteps || (_tilesForMoveChecked.ContainsKey(currentTile) && _tilesForMoveChecked[currentTile] <= count))
-            return;
-
-        _tilesForMoveChecked[currentTile] = count;
-
-        foreach (var tile in currentTile.neighboursForMove)
-        {
-            if (!_tilesInMoveRange.Contains(tile))
-            {
-                if (tile.IsWalkable() && tile.IsFree())
-                {
-                    _tilesInMoveRange.Add(tile);
-                    tile.inMoveRange = true;
-                    if (tile.inAttackRange)
-                    {
-                        highlight.PaintTilesInMoveAndAttackRange(tile);
-                    }
-                    else highlight.PaintTilesInMoveRange(tile);
-                }
-                
-            }
-            PaintTilesInMoveRange(tile, count + 1);
-        }
-    }
-
-    public void AddTilesInMoveRange()
-    {
-        highlight.AddTilesInMoveRange(_tilesInMoveRange);
-    }
+    
 
     #region Actions
-    public void Move()
+
+    private void Move()
     {
-        if (_moving == false && _path != null && _path.Count > 0)
+        if (_moving != false || _path == null || _path.Count <= 0) return;
+        
+        _moving = true;
+        buttonsManager.DeactivateBodyPartsContainer();
+        turnManager.UnitIsMoving();
+        highlight.characterMoving = true;
+        if (_myPositionTile)
         {
-            _moving = true;
-            buttonsManager.DeactivateBodyPartsContainer();
-            turnManager.UnitIsMoving();
-            highlight.characterMoving = true;
-            if (_myPositionTile)
-            {
-                _myPositionTile.unitAboveSelected = false;
-                _myPositionTile.EndMouseOverColor();
-            }
+            _myPositionTile.unitAboveSelected = false;
+            _myPositionTile.EndMouseOverColor();
+        }
             
-            ResetTilesInMoveRange();
-            _animator.SetBool("isWalkingAnimator", true);
-            AudioManager.audioManagerInstance.PlaySound(soundMotorStart, this.gameObject);
-            AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
-            _smokeMechaHandler.SetMachineOn(true);
-            _move.StartMovement(_path);
+        ResetTilesInMoveRange();
+        _animator.SetBool("isWalkingAnimator", true);
+        AudioManager.audioManagerInstance.PlaySound(soundMotorStart, this.gameObject);
+        AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
+        _smokeMechaHandler.SetMachineOn(true);
+        _move.StartMovement(_path);
+    }
+    
+    /// <summary>
+    /// Creates shoot particle at selected gun position.
+    /// </summary>
+    public void Shoot()
+    {
+        if (_rightGunSelected)
+        {
+            effectsController.PlayParticlesEffect(_leftGun.gameObject.transform.position, "Attack");
+        }
+        else if (_leftGunSelected)
+        {
+            effectsController.PlayParticlesEffect(_rightGun.gameObject.transform.position, "Attack");
         }
     }
     
+    /// <summary>
+    /// Select Left Gun and repaint tiles.
+    /// </summary>
     public void SelectLeftGun()
     {
         _selectedGun = _leftGun;
@@ -286,6 +247,9 @@ public class Character : EnumsClass
         }
     }
 
+    /// <summary>
+    /// Select Right Gun and repaint tiles.
+    /// </summary>
     public void SelectRightGun()
     {
         _selectedGun = _rightGun;
@@ -308,175 +272,6 @@ public class Character : EnumsClass
             else PaintTilesInMoveRange(_path[_path.Count - 1], 0);
         }
     }
-
-    //Despinta las tiles en rango de ataque
-    public void ResetTilesInAttackRange()
-    {
-        highlight.ClearTilesInAttackRange(_tilesInAttackRange);
-        _tilesInAttackRange.Clear();
-        _tilesForAttackChecked.Clear();
-    }
-
-    //Despinta las tiles en rango de movimiento
-    public void ResetTilesInMoveRange()
-    {
-        highlight.ClearTilesInMoveRange(_tilesInMoveRange);
-        _tilesInMoveRange.Clear();
-        _tilesForMoveChecked.Clear();
-    }
-
-    #endregion
-
-    #region Getters
-    public void GetTargetToMove()
-    {
-        Transform target = MouseRay.GetTargetTransform(block);
-        
-        if (IsValidTarget(target))
-        {
-            var newTile = target.GetComponent<Tile>();
-            //LLAMAR A MOVE
-            if (_targetTile && _targetTile == newTile && _path.Count > 0)
-            {
-                Move();
-            } 
-            else
-            {
-                
-                pathCreator.Calculate(this, newTile, _currentSteps);
-                
-                if (pathCreator.GetDistance() > legs.GetMaxSteps()) return;
-                
-                _targetTile = newTile;
-                _path = pathCreator.GetPath();
-                
-                if (_path.Count <= 0) return;
-                
-                highlight.PathPreview(_path);
-                ResetTilesInMoveRange();
-                ResetTilesInAttackRange();
-                highlight.CreatePathLines(_path);
-                highlight.PaintLastTileInPath(_targetTile);
-                
-                if (CanAttack())
-                    PaintTilesInAttackRange(_targetTile, 0);
-
-                PaintTilesInMoveRange(_targetTile, 0);
-                AddTilesInMoveRange();
-            }
-        }
-    }
-
-    public int GetCurrentSteps()
-    {
-        return _currentSteps;
-    }
-    
-    public Tile GetEndTile()
-    {
-        return _targetTile;
-    }
-
-    public Team GetUnitTeam()
-    {
-        return _unitTeam;
-    }
-
-    public bool IsSelected()
-    {
-        return _selected;
-    }
-
-    public Tile GetActualTilePosition()
-    {
-        return _myPositionTile;
-    }
-
-    public List<Tile> GetPath()
-    {
-        _path = pathCreator.GetPath();
-        return _path;
-    }
-
-    public Tile GetTileBelow()
-    {
-        RaycastHit hit;
-        Physics.Raycast(transform.position, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
-        return hit.transform.gameObject.GetComponent<Tile>();
-    }
-    
-    public bool HasEnemiesInRange()
-    {
-        return _enemiesInRange.Count > 0 ? true : false;
-    }
-
-    public Gun GetSelectedGun()
-    {
-        return _selectedGun;
-    }
-
-    public Gun GetLeftGun()
-    {
-        return _leftGun;
-    }
-
-    public Gun GetRightGun()
-    {
-        return _rightGun;
-    }
-
-    public Vector3 GetBodyPosition()
-    {
-		return _bodyTransform.position;
-        //return _bodyTransform.GetComponent<Renderer>().bounds.center;
-	}
-    public Vector3 GetLArmPosition()
-    {
-		//return _lArmTransform.GetComponent<Renderer>().bounds.center;
-		return _leftGun.gameObject.transform.position;
-	}
-    public Vector3 GetRArmPosition()
-    {
-		//return _rArmTransform.GetComponent<MeshRenderer>().bounds.center;
-		return _rightGun.gameObject.transform.position;
-    }
-    public Vector3 GetLegsPosition()
-    {
-		return _legsTransform.position;
-        //return _legsTransform.GetComponent<Renderer>().bounds.center;
-	}
-
-    public bool IsMyTurn()
-    {
-        return _myTurn;
-    }
-
-    public bool IsSelectedForAttack()
-    {
-        return _selectedForAttack;
-    }
-
-    public bool IsSelectingEnemy()
-    {
-        return _selectingEnemy;
-    }
-    #endregion
-
-    public void SetTurn(bool state)
-    {
-        _myTurn = state;
-    }
-
-    public void SetSelectedForAttack(bool state)
-    {
-        _selectedForAttack = state;
-    }
-
-    public void SetSelectingEnemy(bool state)
-    {
-        _selectingEnemy = state;
-    }
-    #region Utilities
     
     public void Undo()
     {
@@ -499,86 +294,11 @@ public class Character : EnumsClass
             if (CanAttack())
                 PaintTilesInAttackRange(_myPositionTile, 0);
         }
-        
     }
-
-    public void ResetInRangeLists()
-    {
-        foreach (var item in _enemiesInRange)
-        {
-            turnManager.UnitCantBeAttacked(item);
-        }
-        highlight.PathLinesClear();
-        if (_path.Count > 0)
-            highlight.EndLastTileInPath(_path[_path.Count-1]);
-        ResetTilesInMoveRange();
-        ResetTilesInAttackRange();
-        highlight.Undo();
-        _enemiesInRange.Clear();
-    }
-    public void NewTurn()
-    {
-        _myTurn = false;
-        _canMove = legs.GetCurrentHP() > 0 ? true : false;
-        _canAttack = true;
-        _selectedGun.SetGun();
-        _path.Clear();
-        _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
-        _enemiesInRange.Clear();
-        _canBeAttacked = false;
-        pathCreator.ResetPath();
-    }
-
-    public void ClearTargetTile()
-    {
-        _targetTile = null;
-    }
-
-    public void ReachedEnd()
-    {
-        _canMove = false;
-        highlight.characterMoving = false;
-        highlight.EndPreview();
-        _moving = false;
-        if (_myPositionTile)
-        {
-            _myPositionTile.MakeTileFree();
-        }
-        _myPositionTile = _targetTile;
-        
-        turnManager.UnitStoppedMoving();
-        pathCreator.ResetPath();
-        _tilesForAttackChecked.Clear();
-        _tilesInAttackRange.Clear();
-        _animator.SetBool("isWalkingAnimator", false);
-        AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,this.gameObject);
-        AudioManager.audioManagerInstance.StopSound(soundWalk,this.gameObject);
-        _smokeMechaHandler.SetMachineOn(false);
-
-        if (CanAttack())
-        {
-            PaintTilesInAttackRange(_myPositionTile, 0);
-            CheckEnemiesInAttackRange();
-        }
-        _myPositionTile.MakeTileOccupied();
-        _myPositionTile.SetUnitAbove(this);
-        _myPositionTile.unitAboveSelected = true;
-        _myPositionTile.MouseOverColor();
-        _targetTile = null;
-    }
-
-    public void ReduceAvailableSteps(int amount)
-    {
-        var steps = _currentSteps - amount;
-        _currentSteps = steps >= 0 ? steps : 0;
-    }
-
-    public void IncreaseAvailableSteps(int amount)
-    {
-        var steps = _currentSteps + amount;
-        _currentSteps = steps <= legs.GetMaxSteps() ? steps : legs.GetMaxSteps();
-    }
-
+    
+    /// <summary>
+    /// Select Character and paint tiles.
+    /// </summary>
     public void SelectThisUnit()
     {
         _selected = true;
@@ -611,7 +331,10 @@ public class Character : EnumsClass
             PaintTilesInMoveRange(_myPositionTile, 0);
         }
     }
-
+    
+    /// <summary>
+    /// Deselect Character and clear tiles.
+    /// </summary>
     public void DeselectThisUnit()
     {
         _selected = false;
@@ -643,177 +366,34 @@ public class Character : EnumsClass
         _rayForRightArm.positionCount = 0;
     }
 
-    public void NotSelectable()
-    {
-        _canBeSelected = false;
-    }
-    
-    public void SelectedAsEnemy()
-    {
-        _myPositionTile = GetTileBelow();
-        if (_myPositionTile)
-        {
-            _myPositionTile.unitAboveSelected = true;
-            _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
-        }
-    }
-
-    //Check if selected object is a tile.
-    private bool IsValidTarget(Transform target)
-    {
-        if (EventSystem.current.IsPointerOverGameObject()) return false;
-        
-        if (!target) return false;
-        
-        if (target.gameObject.layer != LayerMask.NameToLayer("GridBlock")) return false;
-        
-        var tile = target.gameObject.GetComponent<Tile>();
-        
-        return (tile && tile.IsWalkable() && tile.IsFree() && tile.inMoveRange) || tile == _targetTile;
-    }
-
-    void CheckEnemiesInAttackRange()
-    {
-        if (_tilesInAttackRange != null && _tilesInAttackRange.Count > 0)
-        {
-            foreach (var unit in _enemiesInRange)
-            {
-                turnManager.UnitCantBeAttacked(unit);
-            }
-            _enemiesInRange.Clear();
-            foreach (var item in _tilesInAttackRange)
-            {
-                if (item.IsFree() == false)
-                {
-                    var unit = item.GetUnitAbove();
-                    if (unit.GetUnitTeam() != _unitTeam)
-                    {
-                        turnManager.UnitCanBeAttacked(unit);
-                        _enemiesInRange.Add(unit);
-                    }
-                }
-            }
-        }
-    }
-    
-    public bool ThisUnitCanMove()
-    {
-        return _canMove;
-    }
-
-    public bool IsMoving()
-    {
-        return _moving;
-    }
-
-    public void SetTargetTile(Tile target)
-    {
-        _targetTile = target;
-    }
-
-    public void MakeAttackable()
-    {
-        _canBeAttacked = true;
-    }
-
-    public void MakeNotAttackable()
-    {
-        _canBeAttacked = false;
-    }
-
-    public bool CanBeAttacked()
-    {
-        return _canBeAttacked;
-    }
-
-    public bool CanAttack()
-    {
-        return _canAttack;
-    }
-
-    public void CheckArms()
-    {
-        if (!LeftArmAlive() && !RightArmAlive())
-            _canAttack = false;
-    }
-    
-    public bool LeftArmAlive()
-    {
-        _leftArmAlive = leftArm.GetCurrentHP() > 0 ? true : false;
-        return _leftArmAlive;
-    }
-    
-    public bool RightArmAlive()
-    {
-        _rightArmAlive = rightArm.GetCurrentHP() > 0 ? true : false;
-        return _rightArmAlive;
-    }
-
-    //DESCOMENTAR CUANDO SE IMPLEMENTE
-    public bool CanBeSelected()
-    {
-        return _canBeSelected && _myTurn;
-    }
-    public void DeactivateAttack()
-    {
-        ResetTilesInAttackRange();
-        ResetTilesInMoveRange();
-        highlight.PathLinesClear();
-        _canAttack = false;
-    }
-
-    public float CalculateInitiative()
-    {
-        return legs.GetCurrentHP() / legs.GetMaxHP() * 100 + legs.GetLegsInitiative();
-    }
-    #endregion
-
-    private void OnMouseOver()
-    {
-        if (!_selectedForAttack)
-            ShowWorldUI();
-    }
-
-    private void OnMouseExit()
-    {
-        HideWorldUI();
-    }
-
-    public void ShowWorldUI()
-    {
-        Debug.Log("name: " + gameObject.name);
-        Debug.Log(turnManager.GetMyTurn(this));
-        _myUI.SetTurnOrder(turnManager.GetMyTurn(this));
-        _myUI.SetWorldUIValues(body.GetCurrentHP(), rightArm.GetCurrentHP(), leftArm.GetCurrentHP(), legs.GetCurrentHP(), _canMove, _canAttack);
-        _myUI.ContainerActivation(true);
-    }
-
-    public void HideWorldUI()
-    {
-        _myUI.DeactivateWorldUI();
-    }
-
+    /// <summary>
+    /// Rotate Character towards enemy.
+    /// </summary>
     public void RotateTowardsEnemy(Vector3 pos)
     {
         _move.SetPosToRotate(pos);
         _move.StartRotation();
     }
     
+    /// <summary>
+    /// Rotate Character towards enemy and execute callback when finished.
+    /// </summary>
     public void RotateTowardsEnemy(Vector3 pos, Action callback)
     {
         _move.SetPosToRotate(pos);
         _move.StartRotation(callback);
     } 
 
+    /// <summary>
+    /// Cast a ray to given position. Returns true if collided tag is the same as given tag, false if not.
+    /// </summary>
     public bool RayToPartsForAttack(Vector3 partPosition, string tagToCheck)
     {
-        Debug.Log("check " + tagToCheck);
-        RaycastHit hit;
         var position = _rayForBody.gameObject.transform.position;
         var dir = (partPosition - position).normalized; 
         
-        Physics.Raycast(position, dir, out hit, 1000f);
-        bool goodHit = hit.collider.transform.gameObject.CompareTag(tagToCheck);
+        Physics.Raycast(position, dir, out var hit, 1000f);
+        var goodHit = hit.collider.transform.gameObject.CompareTag(tagToCheck);
 
         LineRenderer renderer = null;
         switch (tagToCheck)
@@ -851,33 +431,600 @@ public class Character : EnumsClass
         return false;
         
     }
+    
+    
+    #endregion
 
+    #region Getters
+
+    private void GetTargetToMove()
+    {
+        Transform target = MouseRay.GetTargetTransform(block);
+        
+        if (IsValidBlock(target))
+        {
+            var newTile = target.GetComponent<Tile>();
+            //LLAMAR A MOVE
+            if (_targetTile && _targetTile == newTile && _path.Count > 0)
+            {
+                Move();
+            } 
+            else
+            {
+                
+                pathCreator.Calculate(this, newTile, _currentSteps);
+                
+                if (pathCreator.GetDistance() > legs.GetMaxSteps()) return;
+                
+                _targetTile = newTile;
+                _path = pathCreator.GetPath();
+                
+                if (_path.Count <= 0) return;
+                
+                highlight.PathPreview(_path);
+                ResetTilesInMoveRange();
+                ResetTilesInAttackRange();
+                highlight.CreatePathLines(_path);
+                highlight.PaintLastTileInPath(_targetTile);
+                
+                if (CanAttack())
+                    PaintTilesInAttackRange(_targetTile, 0);
+
+                PaintTilesInMoveRange(_targetTile, 0);
+                AddTilesInMoveRange();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Return Character World UI.
+    /// </summary>
+    public WorldUI GetMyUI()
+    {
+        return _myUI;
+    }
+    
+    public int GetCurrentSteps()
+    {
+        return _currentSteps;
+    }
+    
+    public Tile GetEndTile()
+    {
+        return _targetTile;
+    }
+    
+    public Team GetUnitTeam()
+    {
+        return _unitTeam;
+    }
+
+    public bool IsSelected()
+    {
+        return _selected;
+    }
+
+    /// <summary>
+    /// Return the Tile below the Character.
+    /// </summary>
+    public Tile GetMyPositionTile()
+    {
+        return _myPositionTile;
+    }
+
+    /// <summary>
+    /// Return the current path.
+    /// </summary>
+    public List<Tile> GetPath()
+    {
+        _path = pathCreator.GetPath();
+        return _path;
+    }
+
+    /// <summary>
+    /// Return the Tile below the Character.
+    /// </summary>
+    public Tile GetTileBelow()
+    {
+        RaycastHit hit;
+        Physics.Raycast(transform.position, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
+        return hit.transform.gameObject.GetComponent<Tile>();
+    }
+    
+    /// <summary>
+    /// Return true if Character has Enemy Units in attack range.
+    /// </summary>
+    public bool HasEnemiesInRange()
+    {
+        return _enemiesInRange.Count > 0 ? true : false;
+    }
+
+    /// <summary>
+    /// Return the selected gun.
+    /// </summary>
+    public Gun GetSelectedGun()
+    {
+        return _selectedGun;
+    }
+
+    /// <summary>
+    /// Return the Left Gun.
+    /// </summary>
+    public Gun GetLeftGun()
+    {
+        return _leftGun;
+    }
+
+    /// <summary>
+    /// Return the Right Gun.
+    /// </summary>
+    public Gun GetRightGun()
+    {
+        return _rightGun;
+    }
+
+    /// <summary>
+    /// Return Body world position.
+    /// </summary>
+    public Vector3 GetBodyPosition()
+    {
+		return _bodyTransform.position;
+    }
+    
+    /// <summary>
+    /// Return Left Arm world position.
+    /// </summary>
+    public Vector3 GetLArmPosition()
+    {
+        return _leftGun.gameObject.transform.position;
+	}
+    
+    /// <summary>
+    /// Return Right Arm world position.
+    /// </summary>
+    public Vector3 GetRArmPosition()
+    {
+        return _rightGun.gameObject.transform.position;
+    }
+    
+    /// <summary>
+    /// Return Legs world position.
+    /// </summary>
+    public Vector3 GetLegsPosition()
+    {
+		return _legsTransform.position;
+    }
+
+    /// <summary>
+    /// Return true if it's Character turn.
+    /// </summary>
+    public bool IsMyTurn()
+    {
+        return _myTurn;
+    }
+
+    /// <summary>
+    /// Return true if Character is selected for an attack.
+    /// </summary>
+    public bool IsSelectedForAttack()
+    {
+        return _selectedForAttack;
+    }
+
+    public bool IsSelectingEnemy()
+    {
+        return _selectingEnemy;
+    }
+    
+    /// <summary>
+    /// Return true if Character can be attacked.
+    /// </summary>
+    public bool CanBeAttacked()
+    {
+        return _canBeAttacked;
+    }
+
+    /// <summary>
+    /// Return true if Character can attack.
+    /// </summary>
+    public bool CanAttack()
+    {
+        return _canAttack;
+    }
+    
+    /// <summary>
+    /// Return true if Character is moving.
+    /// </summary>
+    public bool IsMoving()
+    {
+        return _moving;
+    }
+    
+    /// <summary>
+    /// Return true if Character Left Arm has more than 0 HP.
+    /// </summary>
+    public bool LeftArmAlive()
+    {
+        _leftArmAlive = leftArm.GetCurrentHp() > 0 ? true : false;
+        return _leftArmAlive;
+    }
+    
+    /// <summary>
+    /// Return true if Character Right Arm has more than 0 HP.
+    /// </summary>
+    public bool RightArmAlive()
+    {
+        _rightArmAlive = rightArm.GetCurrentHp() > 0 ? true : false;
+        return _rightArmAlive;
+    }
+    
+    public bool ThisUnitCanMove()
+    {
+        return _canMove;
+    }
+    
+    public bool CanBeSelected()
+    {
+        return _canBeSelected && _myTurn;
+    }
+    
+    /// <summary>
+    /// Return the Character initiative.
+    /// </summary>
+    public float GetCharacterInitiative()
+    {
+        return legs.GetCurrentHp() / legs.GetMaxHp() * 100 + legs.GetLegsInitiative();
+    }
+    #endregion
+
+    #region Setters
+    
+    /// <summary>
+    /// Set if it's Character turn.
+    /// </summary>
+    public void SetTurn(bool state)
+    {
+        _myTurn = state;
+    }
+
+    /// <summary>
+    /// Set if Character is selected for an Attack.
+    /// </summary>
+    public void SetSelectedForAttack(bool state)
+    {
+        _selectedForAttack = state;
+    }
+
+    /// <summary>
+    /// Set if Character is selecting an enemy.
+    /// </summary>
+    public void SetSelectingEnemy(bool state)
+    {
+        _selectingEnemy = state;
+    }
+    
+    public void SetTargetTile(Tile target)
+    {
+        _targetTile = target;
+    }
+
+    /// <summary>
+    /// Set if Character can move.
+    /// </summary>
     public void SetCharacterMove(bool state)
     {
         _canMove = state;
     }
-
-    //Lo llama el ButtonsUIManager, activa el efecto de ataque
-    public void Shoot()
+    #endregion
+    
+    #region Utilities
+    
+    //Se pintan los tiles dentro del rango de ataque
+    private void PaintTilesInAttackRange(Tile currentTile, int count)
     {
-        if (_rightGunSelected)
-        {
-            effectsController.PlayParticlesEffect(_leftGun.gameObject.transform.position, "Attack");
-        }
-        else if (_leftGunSelected)
-        {
-            effectsController.PlayParticlesEffect(_rightGun.gameObject.transform.position, "Attack");
-        }
+        if (count >= _selectedGun.GetAttackRange() || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
+            return;
         
+        _tilesForAttackChecked[currentTile] = count;
+
+        foreach (var tile in currentTile.allNeighbours)
+        {
+            if (!_tilesInAttackRange.Contains(tile))
+            {
+                if (!tile.HasTileAbove() && tile.IsWalkable())
+                {
+                    _tilesInAttackRange.Add(tile);
+                    tile.inAttackRange = true;
+                    if (tile.inMoveRange)
+                    {
+                        highlight.PaintTilesInMoveAndAttackRange(tile);
+                    }
+                    else highlight.PaintTilesInAttackRange(tile);
+                }
+
+            }
+            PaintTilesInAttackRange(tile, count + 1);
+        }
     }
+
+    //Se pintan los tiles dentro del rango de movimiento
+    private void PaintTilesInMoveRange(Tile currentTile, int count)
+    {
+        if (count >= _currentSteps || (_tilesForMoveChecked.ContainsKey(currentTile) && _tilesForMoveChecked[currentTile] <= count))
+            return;
+
+        _tilesForMoveChecked[currentTile] = count;
+
+        foreach (var tile in currentTile.neighboursForMove)
+        {
+            if (!_tilesInMoveRange.Contains(tile))
+            {
+                if (tile.IsWalkable() && tile.IsUnitFree())
+                {
+                    _tilesInMoveRange.Add(tile);
+                    tile.inMoveRange = true;
+                    if (tile.inAttackRange)
+                    {
+                        highlight.PaintTilesInMoveAndAttackRange(tile);
+                    }
+                    else highlight.PaintTilesInMoveRange(tile);
+                }
+                
+            }
+            PaintTilesInMoveRange(tile, count + 1);
+        }
+    }
+    
+    
+    /// <summary>
+    /// Unpaint Tiles in Character attack range.
+    /// </summary>
+    public void ResetTilesInAttackRange()
+    {
+        highlight.ClearTilesInAttackRange(_tilesInAttackRange);
+        _tilesInAttackRange.Clear();
+        _tilesForAttackChecked.Clear();
+    }
+
+    /// <summary>
+    /// Unpaint Tiles in Character move range.
+    /// </summary>
+    public void ResetTilesInMoveRange()
+    {
+        highlight.ClearTilesInMoveRange(_tilesInMoveRange);
+        _tilesInMoveRange.Clear();
+        _tilesForMoveChecked.Clear();
+    }
+    
+    /// <summary>
+    /// Clear  lists of enemies in attack range, tiles in move and attack range. 
+    /// </summary>
+    public void ResetInRangeLists()
+    {
+        foreach (var item in _enemiesInRange)
+        {
+            turnManager.UnitCantBeAttacked(item);
+        }
+        highlight.PathLinesClear();
+        if (_path.Count > 0)
+            highlight.EndLastTileInPath(_path[_path.Count-1]);
+        ResetTilesInMoveRange();
+        ResetTilesInAttackRange();
+        highlight.Undo();
+        _enemiesInRange.Clear();
+    }
+
+    private void AddTilesInMoveRange()
+    {
+        highlight.AddTilesInMoveRange(_tilesInMoveRange);
+    }
+
+    /// <summary>
+    /// Reset Character for new turn.
+    /// </summary>
+    public void NewTurn()
+    {
+        _myTurn = false;
+        _canMove = legs.GetCurrentHp() > 0 ? true : false;
+        _canAttack = true;
+        _selectedGun.SetGun();
+        _path.Clear();
+        _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
+        _enemiesInRange.Clear();
+        _canBeAttacked = false;
+        pathCreator.ResetPath();
+    }
+
+    public void ClearTargetTile()
+    {
+        _targetTile = null;
+    }
+
+    /// <summary>
+    /// Executed when Character reached the end of the path.
+    /// </summary>
+    public void ReachedEnd()
+    {
+        _canMove = false;
+        highlight.characterMoving = false;
+        highlight.EndPreview();
+        _moving = false;
+        if (_myPositionTile)
+        {
+            _myPositionTile.MakeTileFree();
+        }
+        _myPositionTile = _targetTile;
+        
+        turnManager.UnitStoppedMoving();
+        pathCreator.ResetPath();
+        _tilesForAttackChecked.Clear();
+        _tilesInAttackRange.Clear();
+        _animator.SetBool("isWalkingAnimator", false);
+        AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,this.gameObject);
+        AudioManager.audioManagerInstance.StopSound(soundWalk,this.gameObject);
+        _smokeMechaHandler.SetMachineOn(false);
+
+        if (CanAttack())
+        {
+            PaintTilesInAttackRange(_myPositionTile, 0);
+            CheckEnemiesInAttackRange();
+        }
+        _myPositionTile.MakeTileOccupied();
+        _myPositionTile.SetUnitAbove(this);
+        _myPositionTile.unitAboveSelected = true;
+        _myPositionTile.MouseOverColor();
+        _targetTile = null;
+    }
+
+    /// <summary>
+    /// Reduce Character steps in the given amount.
+    /// </summary>
+    public void ReduceAvailableSteps(int amount)
+    {
+        var steps = _currentSteps - amount;
+        _currentSteps = steps >= 0 ? steps : 0;
+    }
+
+    /// <summary>
+    /// Increase Character steps in the given amount.
+    /// </summary>
+    public void IncreaseAvailableSteps(int amount)
+    {
+        var steps = _currentSteps + amount;
+        _currentSteps = steps <= legs.GetMaxSteps() ? steps : legs.GetMaxSteps();
+    }
+    
+    /// <summary>
+    /// Make Character not selectable.
+    /// </summary>
+    public void NotSelectable()
+    {
+        _canBeSelected = false;
+    }
+    
+    /// <summary>
+    /// Make Character selected as an enemy.
+    /// </summary>
+    public void SelectedAsEnemy()
+    {
+        _myPositionTile = GetTileBelow();
+        if (!_myPositionTile) return;
+        
+        _myPositionTile.unitAboveSelected = true;
+        _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
+    }
+
+    /// <summary>
+    /// Check if given Target is a valid GridBlock to move.
+    /// </summary>
+    private bool IsValidBlock(Transform target)
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return false;
+        
+        if (!target) return false;
+        
+        if (target.gameObject.layer != LayerMask.NameToLayer("GridBlock")) return false;
+        
+        var tile = target.gameObject.GetComponent<Tile>();
+        
+        return (tile && tile.IsWalkable() && tile.IsUnitFree() && tile.inMoveRange) || tile == _targetTile;
+    }
+
+    
+    private void CheckEnemiesInAttackRange()
+    {
+        if (_tilesInAttackRange == null || _tilesInAttackRange.Count <= 0) return;
+        
+        foreach (var unit in _enemiesInRange)
+        {
+            turnManager.UnitCantBeAttacked(unit);
+        }
+        _enemiesInRange.Clear();
+        foreach (var item in _tilesInAttackRange)
+        {
+            if (item.IsUnitFree()) continue;
+            
+            var unit = item.GetUnitAbove();
+            
+            if (unit.GetUnitTeam() == _unitTeam) continue;
+            
+            turnManager.UnitCanBeAttacked(unit);
+            _enemiesInRange.Add(unit);
+        }
+    }
+    
+    /// <summary>
+    /// Make Character attackable.
+    /// </summary>
+    public void MakeAttackable()
+    {
+        _canBeAttacked = true;
+    }
+
+    /// <summary>
+    /// Make Character not attackable.
+    /// </summary>
+    public void MakeNotAttackable()
+    {
+        _canBeAttacked = false;
+    }
+    
+    /// <summary>
+    /// Check if Left and Right arm have more than 0 HP and determines if Character can attack.
+    /// </summary>
+    public void CheckArms()
+    {
+        if (!LeftArmAlive() && !RightArmAlive())
+            _canAttack = false;
+    }
+    
+    /// <summary>
+    /// Deactivates Character Attack Action.
+    /// </summary>
+    public void DeactivateAttack()
+    {
+        ResetTilesInAttackRange();
+        ResetTilesInMoveRange();
+        highlight.PathLinesClear();
+        _canAttack = false;
+    }
+    
+    private void OnMouseOver()
+    {
+        if (!_selectedForAttack)
+            ShowWorldUI();
+    }
+
+    private void OnMouseExit()
+    {
+        HideWorldUI();
+    }
+
+    /// <summary>
+    /// Activates Character World UI.
+    /// </summary>
+    public void ShowWorldUI()
+    {
+        _myUI.SetTurnOrder(turnManager.GetMyTurn(this));
+        _myUI.SetWorldUIValues(body.GetCurrentHp(), rightArm.GetCurrentHp(), leftArm.GetCurrentHp(), legs.GetCurrentHp(), _canMove, _canAttack);
+        _myUI.ContainerActivation(true);
+    }
+
+    /// <summary>
+    /// Deactivates Character World UI.
+    /// </summary>
+    public void HideWorldUI()
+    {
+        _myUI.DeactivateWorldUI();
+    }
+
+
+    #endregion
 
     public void SetHurtAnimation()
     {
         _animator.SetTrigger("isReciveDamageAnimator");
     }
 
-    public WorldUI GetMyUI()
-    {
-        return _myUI;
-    }
+
 }

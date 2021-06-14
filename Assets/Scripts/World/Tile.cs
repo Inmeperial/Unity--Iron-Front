@@ -13,8 +13,8 @@ public class Tile : MonoBehaviour
     public List<Tile> allNeighbours = new List<Tile>();
     public LayerMask obstacle;
     public LayerMask characterMask;
-    [SerializeField] private bool _isFree = true;
-    Material _mat;
+    private bool _isFree = true;
+    private Material _mat;
     public bool showLineGizmo = true;
 
     private bool _hasTileAbove;
@@ -68,7 +68,7 @@ public class Tile : MonoBehaviour
     }
 
     //Cast a ray to neighbouring tiles and check if they are walkable.
-    void RayForMoveNeighbours(Vector3 dir)
+    private void RayForMoveNeighbours(Vector3 dir)
     {
         float d;
         if (transform.localScale.x >= transform.localScale.z)
@@ -84,7 +84,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    void RayToAllNeighbours(Vector3 dir)
+    private void RayToAllNeighbours(Vector3 dir)
     {
         RaycastHit hit;
         float d;
@@ -111,18 +111,18 @@ public class Tile : MonoBehaviour
         return _hasTileAbove;
     }
 
-    bool IsCharacterAbove()
+    private bool IsCharacterAbove()
     {
         return Physics.Raycast(transform.position, transform.up, 1, characterMask);
     }
 
-    public void RemoveMoveNeighbour(Tile tile)
+    private void RemoveMoveNeighbour(Tile tile)
     {
         if (neighboursForMove.Contains(tile))
             neighboursForMove.Remove(tile);
     }
 
-    public void AddMoveNeighbour(Tile tile)
+    private void AddMoveNeighbour(Tile tile)
     {
         neighboursForMove.Add(tile);
     }
@@ -153,7 +153,18 @@ public class Tile : MonoBehaviour
         inMoveRange = false;
         _materialHandler.DiseableAndEnableStatus(false);
     }
-    
+
+
+    private void OnMouseOver()
+    {
+        MouseOverColor();
+    }
+
+    private void OnMouseExit()
+    {
+        EndMouseOverColor();
+    }
+
     //Pinta el tile cuando el mouse esta encima
     public void MouseOverColor()
     {
@@ -244,7 +255,7 @@ public class Tile : MonoBehaviour
     }
     #endregion
 
-    public bool IsFree()
+    public bool IsUnitFree()
     {
         return _isFree;
     }

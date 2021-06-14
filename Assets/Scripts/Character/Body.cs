@@ -14,17 +14,17 @@ public class Body : Parts
         _bodyMaxHP = bodyData.maxHP;
         _bodyHP = _bodyMaxHP;
     }
-    public override void UpdateHP(float newValue)
+    public override void UpdateHp(float newValue)
     {
         _bodyHP = newValue;
     }
     
-    public override float GetMaxHP()
+    public override float GetMaxHp()
     {
         return _bodyMaxHP;
     }
 
-    public override float GetCurrentHP()
+    public override float GetCurrentHp()
     {
         return _bodyHP;
     }
@@ -45,15 +45,15 @@ public class Body : Parts
             var item = damages[i].Item2;
             switch (item)
             {
-                case _missHit:
+                case MissHit:
                     _myChar.effectsController.CreateDamageText("Miss", 0, bodyPos, i == damages.Count - 1 ? true : false);
                     break;
                    
-                case _normalHit:
+                case NormalHit:
                     _myChar.effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, bodyPos, i == damages.Count - 1 ? true : false);
                     break;
                
-                case _criticalHit:
+                case CriticalHit:
                     _myChar.effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, bodyPos, i == damages.Count - 1 ? true : false);
                     break;
             }
