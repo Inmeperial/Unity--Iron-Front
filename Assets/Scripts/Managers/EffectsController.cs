@@ -101,17 +101,18 @@ public class EffectsController : MonoBehaviour
         {
             var myText = _list[i];
 
+            var obj = new GameObject();
             //Creo un objeto vacio que mire a la camara en la posicion donde va a crearse el texto 
-            var rot = Instantiate(new GameObject(), myText.Item3, Quaternion.identity);
+            var rot = Instantiate(obj, myText.Item3, Quaternion.identity);
+            Destroy(obj);
             rot.transform.LookAt(rot.transform.position + _cam.transform.forward);
             rot.name = "name: " + i;
             //Uso la rotacion del objeto vacio para que el texto se instancie con esa rotacion
             var tObj = Instantiate(_damageText, myText.Item3 + new Vector3(0, 0,0), rot.transform.rotation);
-
             var t = tObj.GetComponent<DamageText>(); 
             t.SetText(myText.Item1, myText.Item2, i);
             Destroy(rot);
-            StartCoroutine(DestroyEffect(t.gameObject, t.GetDuration()));
+            StartCoroutine(DestroyEffect(tObj, t.GetDuration()));
             yield return new WaitForSeconds(_textSpacingTime);
         }
         FindObjectOfType<CloseUpCamera>().ResetCamera();
