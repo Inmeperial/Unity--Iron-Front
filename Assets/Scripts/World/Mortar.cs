@@ -13,6 +13,7 @@ public class Mortar : MonoBehaviour, IObserver
     [SerializeField] private int _shootRange;
     [SerializeField] private int _aoe;
     [SerializeField] private int _damage;
+    [SerializeField] private int _turnsToAttack;
 
     private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
     private Dictionary<Tile, int> _tilesForPreviewChecked = new Dictionary<Tile, int>();
@@ -274,7 +275,7 @@ public class Mortar : MonoBehaviour, IObserver
         if (!_attackPending) return;
 
         _turnCount++;
-        if (_turnCount < 2) return;
+        if (_turnCount < _turnsToAttack) return;
         
         foreach (var tile in _tilesToAttack)
         {
