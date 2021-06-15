@@ -215,10 +215,48 @@ public class Character : EnumsClass
         if (_rightGunSelected)
         {
             effectsController.PlayParticlesEffect(_leftGun.gameObject.transform.position, "Attack");
+            switch (_rightGunType)
+            {
+                case GunsType.None:
+                    break;
+                case GunsType.AssaultRifle:
+                    _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
+                    break;
+                case GunsType.Melee:
+                    _animationMechaHandler.SetIsHammerkAttackRightAnimatorTrue();
+                    break;
+                case GunsType.Rifle:
+                    _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
+                    break;
+                case GunsType.Shield:
+                    break;
+                case GunsType.Shotgun:
+                    _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
+                    break;
+            }
         }
         else if (_leftGunSelected)
         {
             effectsController.PlayParticlesEffect(_rightGun.gameObject.transform.position, "Attack");
+            switch (_leftGunType)
+            {
+                case GunsType.None:
+                    break;
+                case GunsType.AssaultRifle:
+                    _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
+                    break;
+                case GunsType.Melee:
+                    _animationMechaHandler.SetIsHammerkAttackLeftAnimatorTrue();
+                    break;
+                case GunsType.Rifle:
+                    _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
+                    break;
+                case GunsType.Shield:
+                    break;
+                case GunsType.Shotgun:
+                    _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
+                    break;
+            }
         }
     }
     
