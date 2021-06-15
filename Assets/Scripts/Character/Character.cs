@@ -409,18 +409,18 @@ public class Character : EnumsClass
                 break;
         }
         
-        renderer.positionCount = 2;
-        renderer.SetPosition(0, position);
-        renderer.SetPosition(1, partPosition);
+        // renderer.positionCount = 2;
+        // renderer.SetPosition(0, position);
+        // renderer.SetPosition(1, partPosition);
         
         if (goodHit)
         {
-            renderer.material = _rayHitMaterial;
+            //renderer.material = _rayHitMaterial;
             Debug.DrawRay(position, dir * 20f, Color.green, 1000f);
             return true;
         }
         
-        renderer.material = _rayMissMaterial;
+        //renderer.material = _rayMissMaterial;
         Debug.DrawRay(position, dir * 20f, Color.red, 1000f);
         return false;
         
