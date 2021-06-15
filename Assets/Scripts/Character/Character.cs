@@ -233,17 +233,13 @@ public class Character : EnumsClass
         ResetTilesInMoveRange();
         if (_canAttack)
         {
-            if (_path.Count == 0)
-                PaintTilesInAttackRange(_myPositionTile, 0);
-            else PaintTilesInAttackRange(_path[_path.Count - 1], 0);
+            PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
             CheckEnemiesInAttackRange();
         }
 
         if (_canMove)
         {
-            if (_path.Count == 0)
-                PaintTilesInMoveRange(_myPositionTile, 0);
-            else PaintTilesInMoveRange(_path[_path.Count - 1], 0);
+            PaintTilesInMoveRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
         }
     }
 
@@ -259,17 +255,13 @@ public class Character : EnumsClass
         ResetTilesInMoveRange();
         if (_canAttack)
         {
-            if (_path.Count == 0)
-                PaintTilesInAttackRange(_myPositionTile, 0);
-            else PaintTilesInAttackRange(_path[_path.Count - 1], 0);
+            PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
             CheckEnemiesInAttackRange();
         }
         
         if (_canMove)
         {
-            if (_path.Count == 0)
-                PaintTilesInMoveRange(_myPositionTile, 0);
-            else PaintTilesInMoveRange(_path[_path.Count - 1], 0);
+            PaintTilesInMoveRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
         }
     }
     

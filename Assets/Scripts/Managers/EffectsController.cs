@@ -37,7 +37,7 @@ public class EffectsController : MonoBehaviour
     /// Spawn and reproduce the particle effect.
     /// </summary>
     /// <param name="pos">Position the particle will spawn.</param>
-    /// <param name="type">Damage - Attack - Mine - Shotgun</param>
+    /// <param name="type">Damage - Attack - Mine - Shootgun</param>
     public void PlayParticlesEffect(Vector3 pos, string type)
     {
         GameObject effect;
@@ -68,7 +68,7 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
-            case "ShotGun":
+            case "ShootGun":
                 effect = Instantiate(_shootGunEffect, pos, transform.rotation, transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
@@ -104,11 +104,13 @@ public class EffectsController : MonoBehaviour
             //Creo un objeto vacio que mire a la camara en la posicion donde va a crearse el texto 
             var rot = Instantiate(new GameObject(), myText.Item3, Quaternion.identity);
             rot.transform.LookAt(rot.transform.position + _cam.transform.forward);
-            
+            rot.name = "name: " + i;
             //Uso la rotacion del objeto vacio para que el texto se instancie con esa rotacion
             var tObj = Instantiate(_damageText, myText.Item3 + new Vector3(0, 0,0), rot.transform.rotation);
+
             var t = tObj.GetComponent<DamageText>(); 
             t.SetText(myText.Item1, myText.Item2, i);
+            Destroy(rot);
             StartCoroutine(DestroyEffect(t.gameObject, t.GetDuration()));
             yield return new WaitForSeconds(_textSpacingTime);
         }
@@ -119,12 +121,7 @@ public class EffectsController : MonoBehaviour
     //Destruye los efectos para que no queden siempre activos
     IEnumerator DestroyEffect(GameObject effect, float time)
     {
-        if (effect)
-        {
-            yield return new WaitForSeconds(time);
-            Destroy(effect);
-        }
-        else yield return null;
-
+        yield return new WaitForSeconds(time);
+        Destroy(effect);
     }
 }
