@@ -78,6 +78,11 @@ public class TileHighlight : MonoBehaviour
     {
         tile.CanBeAttackedColor();
     }
+    
+    public void MortarPaintTilesInAttackRange(Tile tile)
+    {
+        tile.MortarCanBeAttackedColor();
+    }
 
     /// <summary>
     /// Paint the given tile with movement range color.
@@ -116,9 +121,9 @@ public class TileHighlight : MonoBehaviour
         tile.InAttackPreviewColor();
     }
 
-    public void PaintTilesInActivationRageMorter(Tile tile)
+    public void MortarPaintTilesInActivationRange(Tile tile)
     {
-        tile.ActivationRangeMorter();
+        tile.MortarActivationRange();
     }
 
     public void AddTilesInMoveRange(List<Tile> tiles)
@@ -135,6 +140,14 @@ public class TileHighlight : MonoBehaviour
         {
             item.EndCanBeAttackedColor();
             item.EndCanMoveAndAttackColor();
+        }
+    }
+    
+    public void MortarClearTilesInAttackRange(HashSet<Tile> tiles)
+    {
+        foreach (var item in tiles)
+        {
+            item.MortarEndCanBeAttackedColor();
         }
     }
 
