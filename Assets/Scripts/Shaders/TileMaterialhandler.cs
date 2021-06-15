@@ -8,11 +8,12 @@ public class TileMaterialhandler : MonoBehaviour
     public Material AttackMaterial;
     public Material AttackAndMoveMaterial;
     public Material MortarAoeAttackMaterial;
-    public Material ActivationAoeForMorter;
+    public Material ActivationAoeForMortar;
     public Material MechaToAttackInAnimationTileMaterial;
     //----------------------
     private Renderer _rend;
     private Transform _childStatusNode;
+    private Transform _childStatusMortar;
     private Transform _childSelectedNode;
     private Material _sharedMaterialCopy;
 
@@ -40,6 +41,11 @@ public class TileMaterialhandler : MonoBehaviour
     public void DiseableAndEnableSelectedNode(bool isStatusOn)
     {
         _childSelectedNode.gameObject.SetActive(isStatusOn);
+    }
+
+    public void DiseableAndEnableSelectedNodeForMortar(bool isStatusOn)
+    {
+        _childStatusMortar.gameObject.SetActive(isStatusOn);
     }
 
     /// <summary>
@@ -90,9 +96,9 @@ public class TileMaterialhandler : MonoBehaviour
         _rend.sharedMaterial = _sharedMaterialCopy;
     }
 
-    public void StatusMortarAoEOfAttack()
+    public void StatusAoEOfAttackForMortar()
     {
-        _rend = _childStatusNode.gameObject.GetComponent<Renderer>();
+        _rend = _childStatusMortar.gameObject.GetComponent<Renderer>();
         _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
 
         _sharedMaterialCopy = _rend.sharedMaterial;
@@ -100,7 +106,7 @@ public class TileMaterialhandler : MonoBehaviour
         _rend.sharedMaterial = _sharedMaterialCopy;
     }
 
-    public void StatusMortarBulletAoEOfAttack(bool isStatusOn)
+    public void StatusBulletAoEOfAttackForMortar(bool isStatusOn)
     {
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -111,13 +117,13 @@ public class TileMaterialhandler : MonoBehaviour
         }
     }
 
-    public void StatusTileActivationRageForMorter()
+    public void StatusActivationRageForMortar()
     {
-        _rend = _childStatusNode.gameObject.GetComponent<Renderer>();
+        _rend = _childStatusMortar.gameObject.GetComponent<Renderer>();
         _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
 
         _sharedMaterialCopy = _rend.sharedMaterial;
-        _sharedMaterialCopy = ActivationAoeForMorter;
+        _sharedMaterialCopy = ActivationAoeForMortar;
         _rend.sharedMaterial = _sharedMaterialCopy;
     }
 
@@ -145,6 +151,11 @@ public class TileMaterialhandler : MonoBehaviour
             if (transform.GetChild(i).gameObject.name == "PlaneForMouse")
             {
                 _childSelectedNode = transform.GetChild(i);
+                continue;
+            }
+            if (transform.GetChild(i).gameObject.name == "PlaneForMortar")
+            {
+                _childStatusMortar = transform.GetChild(i);
                 continue;
             }
         }
