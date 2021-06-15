@@ -178,10 +178,10 @@ public class TileHighlight : MonoBehaviour
     /// <summary>
     /// Paint given tiles with activation range color for mortar.
     /// </summary>
-    public void PaintTilesInActivationRange(Tile tile)
-    {
-        tile.ActivationRangeColor();
-    }
+    // public void PaintTilesInActivationRange(Tile tile)
+    // {
+    //     tile.ActivationRangeColor();
+    // }
 
     /// <summary>
     /// Clear activation range color of the given tiles.

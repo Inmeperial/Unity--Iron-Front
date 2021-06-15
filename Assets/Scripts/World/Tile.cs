@@ -244,17 +244,7 @@ public class Tile : MonoBehaviour
         EndMouseOverColor();
     }
     
-    //Pinta el tile para el rango en el que se puede activar el mortero
-    //CAMBIAR CUANDO ESTE EL SHADER
-    public void ActivationRangeColor()
-    {
-        _materialHandler.DiseableAndEnableStatus(true);
-        _materialHandler.StatusAoEOfAttackForMortar();
-        Debug.Log("ACTIVATION RANGE");
-    }
-
-    //Despinta el tile para el rango en el que se puede activar el mortero
-    //CAMBIAR CUANDO ESTE EL SHADER
+    // //CAMBIAR CUANDO ESTE EL SHADER
     public void EndActivationRangeColor()
     {
         Debug.Log("END ACTIVATION RANGE");
@@ -265,6 +255,8 @@ public class Tile : MonoBehaviour
     public void LastInPathColor()
     {
         Debug.Log("ultimo on");
+        _materialHandler.DiseableAndEnableStatus(true);
+        _materialHandler.StatusTileToMoveToLastTileSelected();
     }
     
     //Despinta el ultimo tile del path
