@@ -13,6 +13,7 @@ public class Mortar : MonoBehaviour, IObserver
     [SerializeField] private int _shootRange;
     [SerializeField] private int _aoe;
     [SerializeField] private int _damage;
+    [SerializeField] private int _turnsToAttack;
 
     private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
     private Dictionary<Tile, int> _tilesForPreviewChecked = new Dictionary<Tile, int>();
@@ -65,72 +66,75 @@ public class Mortar : MonoBehaviour, IObserver
 
     private void Selection()
     {
+        //Chequeo si hago click en el mortero o no
         if (MouseRay.GetTargetGameObject(_mortarMask))
         {
             _selected = true;
             if (SelectedPlayerAbove())
             {
-                Debug.Log("hago la seleccion con mecha");
-                Debug.Log("character list reset");
                 _activationCharacter.ResetInRangeLists();
-                foreach (var tiles in _tilesInAttackRange)
-                {
-                    tiles.inAttackRange = true;
-                    //_highlight.PaintTilesInAttackRange(tiles);
-                    //_highlight.PaintTilesInPreviewRange(tiles);
-                    _highlight.PaintTilesInActivationRange(tiles);
-                }
+                // foreach (var tiles in _tilesInAttackRange)
+                // {
+                //     tiles.inAttackRange = true;
+                //     _highlight.PaintTilesInAttackRange(tiles);
+                //     //_highlight.PaintTilesInPreviewRange(tiles);
+                //     //_highlight.PaintTilesInActivationRange(tiles);
+                // }
             }
-            else
+            foreach (var tiles in _tilesInAttackRange)
             {
-                foreach (var tiles in _tilesInAttackRange)
-                {
-                    tiles.inAttackRange = true;
-                    //_highlight.PaintTilesInAttackRange(tiles);
-                    //_highlight.PaintTilesInPreviewRange(tiles);
-                    //_highlight.PaintTilesInActivationRange(tiles);
-                    _highlight.PaintTilesInActivationRageMorter(tiles);
-                }
+                tiles.inAttackRange = true;
+                _highlight.MortarPaintTilesInAttackRange(tiles);
+            }
+            
+            foreach (var tiles in _tilesInActivationRange)
+            {
+                _highlight.MortarPaintTilesInActivationRange(tiles);
             }
         }
+        //Si no hago click en el mortero (hago click en un tile), pero ya estaba seleccionado
         else if (_selected)
         {
             var target = MouseRay.GetTargetTransform(_gridBlock);
+            
             if (!IsValidTarget(target)) return;
             
-            Debug.Log("selecciono tile");
-            
-            if (_activationCharacter)
+            if (SelectedPlayerAbove())
             {
-                Debug.Log("character list reset");
                 _activationCharacter.ResetInRangeLists();
             }
-
-            //_highlight.PaintTilesInActivationRange(_tilesInActivationRange);
-
+            
             foreach (var tiles in _tilesInAttackRange)
             {
-                Debug.Log("pinto tiles en rango de ataque");
                 tiles.inAttackRange = true;
-                _highlight.PaintTilesInActivationRange(tiles);
+                _highlight.MortarPaintTilesInAttackRange(tiles);
+            }
+
+            foreach (var tiles in _tilesInActivationRange)
+            {
+                _highlight.MortarPaintTilesInActivationRange(tiles);
             }
 
             var tile = target.GetComponent<Tile>();
 
             if (tile == _myPositionTile)
             {
-                Debug.Log("es mi tile");
                 return;
             }
 
             if (_last == null || tile != _last)
             {
-                Debug.Log("pinto tiles en preview de ataque");
                 _last = tile;
                 _highlight.ClearTilesInPreview(_tilesInPreviewRange);
-                _highlight.ClearTilesInPreview(_tilesToAttack);
                 _tilesInPreviewRange.Clear();
                 _tilesForPreviewChecked.Clear();
+                
+                foreach (var tiles in _tilesInAttackRange)
+                {
+                    tiles.inAttackRange = true;
+                    _highlight.MortarPaintTilesInAttackRange(tiles);
+                }
+                
                 _tilesToAttack.Clear();
                 PaintTilesInPreviewRange(_last, 0);
             }
@@ -208,8 +212,7 @@ public class Mortar : MonoBehaviour, IObserver
 
     private Tile GetTileBelow()
     {
-        RaycastHit hit;
-        Physics.Raycast(transform.position, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
+        Physics.Raycast(transform.position, Vector3.down, out var hit, LayerMask.NameToLayer("GridBlock"));
         return hit.transform.gameObject.GetComponent<Tile>();
     }
 
@@ -246,7 +249,9 @@ public class Mortar : MonoBehaviour, IObserver
 
         foreach (var tile in tiles)
         {
-            _tilesInActivationRange.Add(tile.transform.GetComponent<Tile>());
+            var t = tile.transform.GetComponent<Tile>();
+            
+            if (t.IsWalkable()) _tilesInActivationRange.Add(t);
         }
     }
     
@@ -270,7 +275,7 @@ public class Mortar : MonoBehaviour, IObserver
         if (!_attackPending) return;
 
         _turnCount++;
-        if (_turnCount < 2) return;
+        if (_turnCount < _turnsToAttack) return;
         
         foreach (var tile in _tilesToAttack)
         {
@@ -293,7 +298,7 @@ public class Mortar : MonoBehaviour, IObserver
     {
         _selected = false;
         _highlight.ClearTilesInActivationRange(_tilesInActivationRange);
-        _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
+        _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
         _highlight.ClearTilesInPreview(_tilesInPreviewRange);
         _highlight.ClearTilesInPreview(_tilesToAttack);
         _tilesInPreviewRange.Clear();

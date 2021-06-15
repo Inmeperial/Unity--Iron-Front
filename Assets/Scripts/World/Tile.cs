@@ -191,6 +191,19 @@ public class Tile : MonoBehaviour
         inAttackRange = false;
         _materialHandler.DiseableAndEnableStatus(false);
     }
+    
+    public void MortarCanBeAttackedColor()
+    {
+        _materialHandler.StatusAoEOfAttackForMortar();
+        _materialHandler.DiseableAndEnableSelectedNodeForMortar(true);
+    }
+
+    //Despinta el tile en rango de ataque
+    public void MortarEndCanBeAttackedColor()
+    {
+        inAttackRange = false;
+        _materialHandler.DiseableAndEnableSelectedNodeForMortar(false);
+    }
 
     //Pinta el tile en rango de ataque y movimiento
     public void CanMoveAndAttackColor()
@@ -216,32 +229,22 @@ public class Tile : MonoBehaviour
         //MouseOverColor();
     }
 
-    public void ActivationRangeMorter()
+    public void MortarActivationRange()
     {
         _materialHandler.StatusActivationRageForMortar();
-        _materialHandler.DiseableAndEnableStatus(true);
     }
 
 
-//Despinta el tile para el preview de ataque
-public void EndAttackPreviewColor()
+    //Despinta el tile para el preview de ataque
+    public void EndAttackPreviewColor()
     {
         inPreviewRange = false;
-        _materialHandler.DiseableAndEnableStatus(true);
+        _materialHandler.StatusBulletAoEOfAttackForMortar(false);
+        _materialHandler.DiseableAndEnableStatus(false);
         EndMouseOverColor();
     }
     
-    //Pinta el tile para el rango en el que se puede activar el mortero
-    //CAMBIAR CUANDO ESTE EL SHADER
-    public void ActivationRangeColor()
-    {
-        _materialHandler.DiseableAndEnableStatus(true);
-        _materialHandler.StatusAoEOfAttackForMortar();
-        Debug.Log("ACTIVATION RANGE");
-    }
-
-    //Despinta el tile para el rango en el que se puede activar el mortero
-    //CAMBIAR CUANDO ESTE EL SHADER
+    // //CAMBIAR CUANDO ESTE EL SHADER
     public void EndActivationRangeColor()
     {
         Debug.Log("END ACTIVATION RANGE");
@@ -252,6 +255,8 @@ public void EndAttackPreviewColor()
     public void LastInPathColor()
     {
         Debug.Log("ultimo on");
+        _materialHandler.DiseableAndEnableStatus(true);
+        _materialHandler.StatusTileToMoveToLastTileSelected();
     }
     
     //Despinta el ultimo tile del path

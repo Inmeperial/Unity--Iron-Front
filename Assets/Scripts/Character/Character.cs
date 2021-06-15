@@ -278,6 +278,7 @@ public class Character : EnumsClass
             highlight.PaintLastTileInPath(_targetTile);
             if (CanAttack())
                 PaintTilesInAttackRange(_targetTile, 0);
+            highlight.PaintLastTileInPath(_targetTile);
         }
         else
         {
@@ -408,18 +409,18 @@ public class Character : EnumsClass
                 break;
         }
         
-        renderer.positionCount = 2;
-        renderer.SetPosition(0, position);
-        renderer.SetPosition(1, partPosition);
+        // renderer.positionCount = 2;
+        // renderer.SetPosition(0, position);
+        // renderer.SetPosition(1, partPosition);
         
         if (goodHit)
         {
-            renderer.material = _rayHitMaterial;
+            //renderer.material = _rayHitMaterial;
             Debug.DrawRay(position, dir * 20f, Color.green, 1000f);
             return true;
         }
         
-        renderer.material = _rayMissMaterial;
+        //renderer.material = _rayMissMaterial;
         Debug.DrawRay(position, dir * 20f, Color.red, 1000f);
         return false;
         
@@ -433,39 +434,41 @@ public class Character : EnumsClass
     private void GetTargetToMove()
     {
         Transform target = MouseRay.GetTargetTransform(block);
-        
-        if (IsValidBlock(target))
-        {
-            var newTile = target.GetComponent<Tile>();
-            //LLAMAR A MOVE
-            if (_targetTile && _targetTile == newTile && _path.Count > 0)
-            {
-                Move();
-            } 
-            else
-            {
-                
-                pathCreator.Calculate(this, newTile, _currentSteps);
-                
-                if (pathCreator.GetDistance() > legs.GetMaxSteps()) return;
-                
-                _targetTile = newTile;
-                _path = pathCreator.GetPath();
-                
-                if (_path.Count <= 0) return;
-                
-                highlight.PathPreview(_path);
-                ResetTilesInMoveRange();
-                ResetTilesInAttackRange();
-                highlight.CreatePathLines(_path);
-                highlight.PaintLastTileInPath(_targetTile);
-                
-                if (CanAttack())
-                    PaintTilesInAttackRange(_targetTile, 0);
 
-                PaintTilesInMoveRange(_targetTile, 0);
-                AddTilesInMoveRange();
-            }
+        if (!IsValidBlock(target)) return;
+        
+        var newTile = target.GetComponent<Tile>();
+        //LLAMAR A MOVE
+        if (_targetTile && _targetTile == newTile && _path.Count > 0)
+        {
+            Move();
+        } 
+        else
+        {
+                
+            pathCreator.Calculate(this, newTile, _currentSteps);
+                
+            if (pathCreator.GetDistance() > legs.GetMaxSteps()) return;
+                
+            if (_targetTile) highlight.EndLastTileInPath(_targetTile);
+            
+            _targetTile = newTile;
+            _path = pathCreator.GetPath();
+                
+            if (_path.Count <= 0) return;
+                
+            highlight.PathPreview(_path);
+            ResetTilesInMoveRange();
+            ResetTilesInAttackRange();
+            highlight.CreatePathLines(_path);
+            
+
+            if (CanAttack())
+                PaintTilesInAttackRange(_targetTile, 0);
+
+            PaintTilesInMoveRange(_targetTile, 0);
+            AddTilesInMoveRange();
+            highlight.PaintLastTileInPath(_targetTile);
         }
     }
 
