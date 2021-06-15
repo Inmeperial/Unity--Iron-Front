@@ -116,6 +116,11 @@ public class TileHighlight : MonoBehaviour
         tile.InAttackPreviewColor();
     }
 
+    public void PaintTilesInActivationRageMorter(Tile tile)
+    {
+        tile.ActivationRangeMorter();
+    }
+
     public void AddTilesInMoveRange(List<Tile> tiles)
     {
         _inMoveRangeTiles.Push(tiles);
@@ -160,12 +165,9 @@ public class TileHighlight : MonoBehaviour
     /// <summary>
     /// Paint given tiles with activation range color for mortar.
     /// </summary>
-    public void PaintTilesInActivationRange(HashSet<Tile> tiles)
+    public void PaintTilesInActivationRange(Tile tile)
     {
-        foreach (var tile in tiles)
-        {
-            tile.ActivationRangeColor();
-        }
+        tile.ActivationRangeColor();
     }
 
     /// <summary>

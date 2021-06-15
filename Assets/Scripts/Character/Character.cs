@@ -81,7 +81,7 @@ public class Character : EnumsClass
     private SmokeMechaHandler _smokeMechaHandler;
     public AudioClip soundMotorStart;
     public AudioClip soundWalk;
-    private Animator _animator;
+    private AnimationMechaHandler _animationMechaHandler;
 
     [HideInInspector]
 	public EffectsController effectsController;
@@ -95,13 +95,14 @@ public class Character : EnumsClass
     // Start is called before the first frame update
     void Start()
     {
+        this.transform.position = new Vector3(this.transform.position.x, 2.4f, this.transform.position.z);
         #region GetComponents
         _mechaMaterlaHandler = GetComponent<MechaMaterialhandler>();
         _smokeMechaHandler = GetComponent<SmokeMechaHandler>();
         _move = GetComponent<GridMovement>();
         pathCreator = GetComponent<IPathCreator>();
         _myUI = GetComponent<WorldUI>();
-        _animator = GetComponent<Animator>();
+        _animationMechaHandler = GetComponent<AnimationMechaHandler>();
         #endregion
         #region FindObject
         turnManager = FindObjectOfType<TurnManager>();
@@ -199,7 +200,7 @@ public class Character : EnumsClass
         }
             
         ResetTilesInMoveRange();
-        _animator.SetBool("isWalkingAnimator", true);
+        _animationMechaHandler.SetIsWalkingAnimatorTrue();
         AudioManager.audioManagerInstance.PlaySound(soundMotorStart, this.gameObject);
         AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
         _smokeMechaHandler.SetMachineOn(true);
@@ -851,7 +852,7 @@ public class Character : EnumsClass
         pathCreator.ResetPath();
         _tilesForAttackChecked.Clear();
         _tilesInAttackRange.Clear();
-        _animator.SetBool("isWalkingAnimator", false);
+        _animationMechaHandler.SetIsWalkingAnimatorFalse();
         AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,this.gameObject);
         AudioManager.audioManagerInstance.StopSound(soundWalk,this.gameObject);
         _smokeMechaHandler.SetMachineOn(false);
@@ -1015,7 +1016,7 @@ public class Character : EnumsClass
 
     public void SetHurtAnimation()
     {
-        _animator.SetTrigger("isReciveDamageAnimator");
+        _animationMechaHandler.SetIsReciveDamageAnimatorTrue();
     }
 
 

@@ -197,7 +197,6 @@ MonoBehaviour:
   characterMask:
     serializedVersion: 2
     m_Bits: 512
-  _isFree: 0
   showLineGizmo: 1
   inMoveRange: 0
   inAttackRange: 0
@@ -220,6 +219,8 @@ MonoBehaviour:
   AttackAndMoveMaterial: {fileID: 2100000, guid: 6d08a60b7aa3ead4f926f1fc48ed3152,
     type: 2}
   MortarAoeAttackMaterial: {fileID: 2100000, guid: 194f9162a912e9c40bc6e80a61004d92,
+    type: 2}
+  ActivationAoeForMorter: {fileID: 2100000, guid: c13c25e638c302149bd5a4135df5e940,
     type: 2}
   MechaToAttackInAnimationTileMaterial: {fileID: 2100000, guid: a534113c7edc5f14aaa3a41d37fad9d4,
     type: 2}

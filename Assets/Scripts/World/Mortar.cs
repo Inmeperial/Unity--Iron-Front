@@ -76,9 +76,9 @@ public class Mortar : MonoBehaviour, IObserver
                 foreach (var tiles in _tilesInAttackRange)
                 {
                     tiles.inAttackRange = true;
-                    //shader de aoe mortero
-                    _highlight.PaintTilesInAttackRange(tiles);
+                    //_highlight.PaintTilesInAttackRange(tiles);
                     //_highlight.PaintTilesInPreviewRange(tiles);
+                    _highlight.PaintTilesInActivationRange(tiles);
                 }
             }
             else
@@ -86,13 +86,12 @@ public class Mortar : MonoBehaviour, IObserver
                 foreach (var tiles in _tilesInAttackRange)
                 {
                     tiles.inAttackRange = true;
-                    //shader de aoe mortero
-                    _highlight.PaintTilesInAttackRange(tiles);
+                    //_highlight.PaintTilesInAttackRange(tiles);
                     //_highlight.PaintTilesInPreviewRange(tiles);
+                    //_highlight.PaintTilesInActivationRange(tiles);
+                    _highlight.PaintTilesInActivationRageMorter(tiles);
                 }
-                _highlight.PaintTilesInActivationRange(_tilesInActivationRange);                    
             }
-            
         }
         else if (_selected)
         {
@@ -113,8 +112,7 @@ public class Mortar : MonoBehaviour, IObserver
             {
                 Debug.Log("pinto tiles en rango de ataque");
                 tiles.inAttackRange = true;
-                // shader aoe bala mortero
-                _highlight.PaintTilesInAttackRange(tiles);
+                _highlight.PaintTilesInActivationRange(tiles);
             }
 
             var tile = target.GetComponent<Tile>();

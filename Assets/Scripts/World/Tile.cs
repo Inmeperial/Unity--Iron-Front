@@ -211,13 +211,20 @@ public class Tile : MonoBehaviour
     public void InAttackPreviewColor()
     {
         _materialHandler.DiseableAndEnableStatus(true);
-        _materialHandler.StatusMortarAoEOfAttack();
-        //_materialHandler.StatusMortarBulletAoEOfAttack(true);
+        //_materialHandler.StatusMortarAoEOfAttack();
+        _materialHandler.StatusMortarBulletAoEOfAttack(true);
         //MouseOverColor();
     }
 
-    //Despinta el tile para el preview de ataque
-    public void EndAttackPreviewColor()
+    public void ActivationRangeMorter()
+    {
+        _materialHandler.StatusTileActivationRageForMorter();
+        _materialHandler.DiseableAndEnableStatus(true);
+    }
+
+
+//Despinta el tile para el preview de ataque
+public void EndAttackPreviewColor()
     {
         inPreviewRange = false;
         _materialHandler.DiseableAndEnableStatus(true);
@@ -229,7 +236,7 @@ public class Tile : MonoBehaviour
     public void ActivationRangeColor()
     {
         _materialHandler.DiseableAndEnableStatus(true);
-        //_materialHandler.StatusMortarAoEOfAttack();
+        _materialHandler.StatusMortarAoEOfAttack();
         Debug.Log("ACTIVATION RANGE");
     }
 

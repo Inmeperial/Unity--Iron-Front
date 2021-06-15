@@ -8,6 +8,7 @@ public class TileMaterialhandler : MonoBehaviour
     public Material AttackMaterial;
     public Material AttackAndMoveMaterial;
     public Material MortarAoeAttackMaterial;
+    public Material ActivationAoeForMorter;
     public Material MechaToAttackInAnimationTileMaterial;
     //----------------------
     private Renderer _rend;
@@ -110,7 +111,17 @@ public class TileMaterialhandler : MonoBehaviour
         }
     }
 
-    public void StatusMechaToAttackTile()
+    public void StatusTileActivationRageForMorter()
+    {
+        _rend = _childStatusNode.gameObject.GetComponent<Renderer>();
+        _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
+
+        _sharedMaterialCopy = _rend.sharedMaterial;
+        _sharedMaterialCopy = ActivationAoeForMorter;
+        _rend.sharedMaterial = _sharedMaterialCopy;
+    }
+
+    public void StatusTileToMoveToLastTileSelected()
     {
         _rend = _childStatusNode.gameObject.GetComponent<Renderer>();
         _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
