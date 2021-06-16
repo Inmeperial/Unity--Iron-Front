@@ -5,15 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Gun", menuName = "Create Gun")]
 public class GunSO : ScriptableObject
 {
-    public enum GunType
+    public enum GunsType
     {
+        None,
         AssaultRifle,
         Melee,
         Rifle,
+        Shield,
         Shotgun
     };
 
-    public GunType gunType;
+    public GunsType gunType;
     public int maxBullets;
     public int availableBullets;
     public int bulletsPerClick;

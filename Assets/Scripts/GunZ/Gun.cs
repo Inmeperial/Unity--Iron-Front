@@ -4,19 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class Gun : MonoBehaviour, IGun
+public abstract class Gun : EnumsClass, IGun
 {
-    public enum GunType
-    {
-        AssaultRifle,
-        Melee,
-        Rifle,
-        Shotgun
-    };
-    
     [SerializeField] protected GunSO _weaponData;
     
-    protected GunType _gunType;
+    protected GunsType _gunType;
     protected string _gun;
     protected int _maxBullets;
     protected int _availableBullets;
@@ -75,7 +67,7 @@ public abstract class Gun : MonoBehaviour, IGun
         return _hitChance;
     }
 
-    public GunType GetGunType()
+    public GunsType GetGunType()
     {
         return _gunType;
     }
@@ -99,9 +91,9 @@ public abstract class Gun : MonoBehaviour, IGun
     /// <summary>
     /// Set Gun stats from given scriptable object.
     /// </summary>
-    public void SetGun()
+    public virtual void SetGun()
     {
-        _gunType = (GunType)_weaponData.gunType;
+        _gunType = (GunsType)_weaponData.gunType;
         _maxBullets = _weaponData.maxBullets;
         _availableBullets = _maxBullets;
         _bulletsPerClick = _weaponData.bulletsPerClick;
@@ -116,17 +108,22 @@ public abstract class Gun : MonoBehaviour, IGun
 
         switch (_gunType)
         {
-            case GunType.AssaultRifle:
+            case GunsType.None:
+                break;
+            case GunsType.AssaultRifle:
                 _gun = "AssaultRifle";
                 break;
-            case GunType.Melee:
+            case GunsType.Melee:
                 _gun = "Melee";
                 break;
-            case GunType.Rifle:
+            case GunsType.Rifle:
                 _gun = "Rifle";
                 break;
-            case GunType.Shotgun:
+            case GunsType.Shotgun:
                 _gun = "Shotgun";
+                break;
+            case GunsType.Shield:
+                _gun = "Shield";
                 break;
         }
     }

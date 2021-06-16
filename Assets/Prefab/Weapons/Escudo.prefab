@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7439518348729266694}
   - component: {fileID: 3747826046956326655}
   - component: {fileID: 8410676310378795655}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Escudo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,15 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8c60755b4a4f2d9df7e71764bac9e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data: {fileID: 0}
-  _gunType: 0
-  _maxBullets: 0
-  _availableBullets: 0
-  _bulletsPerClick: 0
-  _damage: 0
-  _critChance: 0
-  _critMultiplier: 0
-  _hitChance: 0
-  _chanceToHitOtherParts: 0
-  _attackRange: 0
-  _bodyPartsSelectionQuantity: 0
+  _weaponData: {fileID: 11400000, guid: 38d74c12bcea6b643bce8d740104c596, type: 2}
+  interactionPrefabs: {fileID: 5014275589471437119, guid: 48321c648e7851b4db5de547475e45c2,
+    type: 3}
+  prefabHeight: 3

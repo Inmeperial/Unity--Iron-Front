@@ -95,7 +95,7 @@ public class Character : EnumsClass
     // Start is called before the first frame update
     void Start()
     {
-        this.transform.position = new Vector3(this.transform.position.x, 2.4f, this.transform.position.z);
+        transform.position = new Vector3(transform.position.x, 2.4f, transform.position.z);
         #region GetComponents
         _mechaMaterlaHandler = GetComponent<MechaMaterialhandler>();
         _smokeMechaHandler = GetComponent<SmokeMechaHandler>();
@@ -137,6 +137,8 @@ public class Character : EnumsClass
         if (_rightArmAlive)
         {
             _selectedGun = _rightGun;
+            if (_selectedGun.GetGunType() == GunsType.Shield)
+                _selectedGun.Ability();
             _canAttack = true;
             _rightGunSelected = true;
             _leftGunSelected = false;
@@ -144,6 +146,8 @@ public class Character : EnumsClass
         else if (_leftArmAlive)
         {
             _selectedGun = _leftGun;
+            if (_selectedGun.GetGunType() == GunsType.Shield)
+                _selectedGun.Ability();
             _canAttack = true;
             _rightGunSelected = false;
             _leftGunSelected = true;
@@ -265,16 +269,31 @@ public class Character : EnumsClass
     /// </summary>
     public void SelectLeftGun()
     {
+        if (_selectedGun.GetGunType() == GunsType.Shield)
+            _selectedGun.Ability();
+        
         _selectedGun = _leftGun;
         _leftGunSelected = true;
         _rightGunSelected = false;
         ResetTilesInAttackRange();
         ResetTilesInMoveRange();
-        if (_canAttack)
+
+        if (_selectedGun.GetGunType() != GunsType.Shield)
         {
-            PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
-            CheckEnemiesInAttackRange();
+            if (_canAttack)
+            {
+                PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+                CheckEnemiesInAttackRange();
+            }
         }
+        else
+        {
+            if (_canAttack)
+            {
+                _selectedGun.Ability();
+            }
+        }
+        
 
         if (_canMove)
         {
@@ -287,15 +306,29 @@ public class Character : EnumsClass
     /// </summary>
     public void SelectRightGun()
     {
+        if (_selectedGun.GetGunType() == GunsType.Shield)
+            _selectedGun.Ability();
+        
         _selectedGun = _rightGun;
         _leftGunSelected = false;
         _rightGunSelected = true;
         ResetTilesInAttackRange();
         ResetTilesInMoveRange();
-        if (_canAttack)
+        
+        if (_selectedGun.GetGunType() != GunsType.Shield)
         {
-            PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
-            CheckEnemiesInAttackRange();
+            if (_canAttack)
+            {
+                PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+                CheckEnemiesInAttackRange();
+            }
+        }
+        else
+        {
+            if (_canAttack)
+            {
+                _selectedGun.Ability();
+            }
         }
         
         if (_canMove)
