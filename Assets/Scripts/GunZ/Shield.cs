@@ -60,7 +60,30 @@ public class Shield : Gun
 
     public void Rotate(Transform t)
     {
-        _character.transform.LookAt(t.position);
+        var position = _character.transform.position;
+        var shieldCharVector = (transform.position - position).normalized;
+        var buttonCharVector = (t.position - position).normalized;
+        
+        var angle = Vector3.SignedAngle(shieldCharVector, buttonCharVector, Vector3.up);
+
+        if (angle >= 90 && angle < 180)
+            angle = 90;
+        else if (angle >= 180 && angle < 270)
+            angle = 180;
+        else if (angle >= -90 && angle < 0)
+            angle = -90;
+        else if (angle >= -180 && angle < -90)
+            angle = -180;
+        else return;
+        
+        _character.transform.RotateAround(_character.transform.position, _character.transform.up, angle);
+        foreach (var prefab in _instantiated)
+        {
+            Destroy(prefab);
+        }
+        
+        _instantiated.Clear();
+        _selected = false;
         _character.DeactivateAttack();
     }
 }

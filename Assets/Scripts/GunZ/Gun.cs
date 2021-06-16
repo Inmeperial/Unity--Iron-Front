@@ -26,10 +26,16 @@ public abstract class Gun : EnumsClass, IGun
     protected Dictionary<string, int> _hitRoulette = new Dictionary<string, int>();
 
     protected bool _abilityUsed;
+    protected string _location;
 
     private const int MissHit = 0;
     private const int NormalHit = 1;
     private const int CriticalHit = 2;
+    
+    public void SetRightOrLeft(string location)
+    {
+        _location = location;
+    }
     
     # region Getters
     public int GetMaxBullets()

@@ -120,6 +120,7 @@ public class Character : EnumsClass
             _leftGun.gameObject.tag = "LArm";
             _leftGun.SetGun();
             _leftGun.StartRoulette();
+            _leftGun.SetRightOrLeft("Left");
         }
         
         _rightArmAlive = rightArm.GetCurrentHp() > 0 ? true : false;
@@ -129,6 +130,7 @@ public class Character : EnumsClass
             _rightGun.gameObject.tag = "RArm";
             _rightGun.SetGun();
             _rightGun.StartRoulette();
+            _rightGun.SetRightOrLeft("Right");
         }
         
         leftArm.SetRightOrLeft("Left");
