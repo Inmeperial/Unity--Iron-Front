@@ -272,14 +272,14 @@ public class Character : EnumsClass
     public void SelectLeftGun()
     {
         if (_selectedGun.GetGunType() == GunsType.Shield)
-            _selectedGun.Ability();
+            if (_canAttack) _selectedGun.Ability();
         
         _selectedGun = _leftGun;
         _leftGunSelected = true;
         _rightGunSelected = false;
         ResetTilesInAttackRange();
         ResetTilesInMoveRange();
-
+        Debug.Log("can attack " + _canAttack);
         if (_selectedGun.GetGunType() != GunsType.Shield)
         {
             if (_canAttack)
@@ -309,7 +309,7 @@ public class Character : EnumsClass
     public void SelectRightGun()
     {
         if (_selectedGun.GetGunType() == GunsType.Shield)
-            _selectedGun.Ability();
+            if (_canAttack) _selectedGun.Ability();
         
         _selectedGun = _rightGun;
         _leftGunSelected = false;
@@ -1053,8 +1053,6 @@ public class Character : EnumsClass
     public void DeactivateAttack()
     {
         ResetTilesInAttackRange();
-        ResetTilesInMoveRange();
-        highlight.PathLinesClear();
         _canAttack = false;
     }
     
