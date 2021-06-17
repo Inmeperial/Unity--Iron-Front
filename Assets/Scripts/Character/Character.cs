@@ -13,7 +13,9 @@ public class Character : EnumsClass
     
     [Header("Team")]
     [SerializeField] private Team _unitTeam;
-
+    [SerializeField] private Sprite _myIcon;
+    [SerializeField] private string _myName;
+    
     [SerializeField] private LineRenderer _rayForBody;
     [SerializeField] private LineRenderer _rayForLeftArm;
     [SerializeField] private LineRenderer _rayForRightArm;
