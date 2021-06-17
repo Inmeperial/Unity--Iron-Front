@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "Gun", menuName = "Create Gun")]
 public class GunSO : ScriptableObject
@@ -14,9 +15,11 @@ public class GunSO : ScriptableObject
         Shield,
         Shotgun
     };
-
+    
+    
     public GunsType gunType;
     public int maxBullets;
+    public Sprite gunImage;
     public int availableBullets;
     public int bulletsPerClick;
     public int damage;
