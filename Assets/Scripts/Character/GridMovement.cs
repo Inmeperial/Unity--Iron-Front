@@ -102,7 +102,11 @@ public class GridMovement : MonoBehaviour
             _rotate = false;
             _posToRotate = Vector3.zero;
             if (_callback != null)
+            {
                 _callback();
+                _callback = null;
+            }
+                
             return;
         }
         
