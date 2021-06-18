@@ -271,4 +271,12 @@ public class TurnManager : EnumsClass, IObservable
 
         rect.anchoredPosition = end.anchoredPosition;
     }
+
+    public void PortraitsActiveState(bool state)
+    {
+        foreach (var p in _portraits)
+        {
+            p.gameObject.SetActive(state);
+        }
+    }
 }

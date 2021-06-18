@@ -449,6 +449,7 @@ public class ButtonsUIManager : MonoBehaviour
             _selectedChar.DeactivateAttack();
         }
         _turnManager.CalculateTurnOrder(false);
+        _turnManager.PortraitsActiveState(true);
         buttonEndTurn.gameObject.SetActive(true);
     }
 
@@ -505,6 +506,7 @@ public class ButtonsUIManager : MonoBehaviour
         DeactivateEnemyHUD();
         buttonEndTurn.gameObject.SetActive(true);
         buttonExecuteAttack.gameObject.SetActive(false);
+        _turnManager.PortraitsActiveState(true);
         _selectedChar = null;
         _selectedEnemy = null;
     }
@@ -757,6 +759,7 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 _selectedEnemy.SetSelectedForAttack(true);
                 buttonEndTurn.gameObject.SetActive(false);
+                _turnManager.PortraitsActiveState(false);
                 FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position, ActivateBodyPartsContainer);
                 playerHudContainer.SetActive(false);
                 _selectedChar.ResetTilesInAttackRange();
