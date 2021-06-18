@@ -265,9 +265,9 @@ public class WorldUI : MonoBehaviour
         _attackActionIcon.SetActive(status);
     }
 
-    public void SetTurnOrder(int number)
+    public void SetName(string name)
     {
-        _turnOrderText.text = number.ToString();
+        _turnOrderText.text = name;
     }
 #endregion
 

@@ -1077,7 +1077,7 @@ public class Character : EnumsClass
     /// </summary>
     public void ShowWorldUI()
     {
-        _myUI.SetTurnOrder(turnManager.GetMyTurn(this));
+        _myUI.SetName(_myName);
         _myUI.SetWorldUIValues(body.GetCurrentHp(), rightArm.GetCurrentHp(), leftArm.GetCurrentHp(), legs.GetCurrentHp(), _canMove, _canAttack);
         _myUI.ContainerActivation(true);
     }

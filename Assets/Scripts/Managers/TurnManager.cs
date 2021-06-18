@@ -104,7 +104,6 @@ public class TurnManager : EnumsClass, IObservable
 
         if (_turnCounter >= _currentTurnOrder.Count-1)
         {
-            Debug.Log("calculate");
             CalculateTurnOrder(false);
             _actualCharacter = _currentTurnOrder[0];
         }
@@ -201,7 +200,7 @@ public class TurnManager : EnumsClass, IObservable
                 p.mechaName.text = c._myName;
                 p.leftGunIcon.sprite = c.GetLeftGun().GetIcon();
                 p.rightGunIcon.sprite = c.GetRightGun().GetIcon();
-            // }
+            //}
             
             // if (!firstTurn)
             //     StartCoroutine(MovePortrait(GetMyTurn(c)-1, count));
@@ -217,6 +216,8 @@ public class TurnManager : EnumsClass, IObservable
         //     var c = character.Item1;
         //     _currentTurnOrder.Add(c);
         // }
+        
+        
     }
 
     public int GetMyTurn(Character unit)
