@@ -10,6 +10,7 @@ public abstract class Gun : EnumsClass, IGun
     
     protected GunsType _gunType;
     protected string _gun;
+    protected Sprite _icon;
     protected int _maxBullets;
     protected int _availableBullets;
     protected int _bulletsPerClick;
@@ -92,6 +93,11 @@ public abstract class Gun : EnumsClass, IGun
     {
         return _bulletsPerClick;
     }
+
+    public Sprite GetIcon()
+    {
+        return _icon;
+    }
     #endregion
     
     /// <summary>
@@ -100,6 +106,7 @@ public abstract class Gun : EnumsClass, IGun
     public virtual void SetGun()
     {
         _gunType = (GunsType)_weaponData.gunType;
+        _icon = _weaponData.gunImage;
         _maxBullets = _weaponData.maxBullets;
         _availableBullets = _maxBullets;
         _bulletsPerClick = _weaponData.bulletsPerClick;

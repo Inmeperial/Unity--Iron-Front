@@ -18,7 +18,6 @@ public class ButtonsUIManager : MonoBehaviour
     public KeyCode showWorldUIKey;
     public KeyCode toggleWorldUIKey;
 
-
     #region Buttons
     private bool _buttonBodySelected;
     private int _bulletsForBody;

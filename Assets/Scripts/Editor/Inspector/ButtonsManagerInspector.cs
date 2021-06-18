@@ -29,7 +29,7 @@ public class ButtonsManagerInspector : Editor
         _selection.selectLGunKey = (KeyCode)EditorGUILayout.EnumPopup("Select LGun Key", _selection.selectLGunKey);
         _selection.showWorldUIKey = (KeyCode)EditorGUILayout.EnumPopup("Show World UI Key", _selection.showWorldUIKey);
         _selection.toggleWorldUIKey = (KeyCode)EditorGUILayout.EnumPopup("Toggle World UI Key", _selection.toggleWorldUIKey);
-
+        
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Player HUD", _importantStyle);
         showPlayerHud = EditorGUILayout.Toggle(showPlayerHud);

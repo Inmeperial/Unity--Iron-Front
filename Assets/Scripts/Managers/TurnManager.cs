@@ -13,7 +13,7 @@ public class TurnManager : EnumsClass, IObservable
     private Character[] _allUnits;
     [SerializeField] CharacterSelection _charSelect;
     [SerializeField] TileHighlight _highlight;
-    private ButtonsUIManager _buttonsManager;
+    private ButtonsUIManager _buttonsUIManager;
 
     private Team _activeTeam;
 
@@ -26,6 +26,7 @@ public class TurnManager : EnumsClass, IObservable
     private Character _actualCharacter;
     private CameraMovement _cameraMovement;
 
+    [SerializeField] private List<FramesUI> _portraits = new List<FramesUI>();
     private void Awake()
     {
         _cameraMovement = FindObjectOfType<CameraMovement>();
@@ -40,7 +41,7 @@ public class TurnManager : EnumsClass, IObservable
         SeparateByTeam(_allUnits);
         _charSelect = FindObjectOfType<CharacterSelection>();
         _highlight = FindObjectOfType<TileHighlight>();
-        _buttonsManager = FindObjectOfType<ButtonsUIManager>();
+        _buttonsUIManager = FindObjectOfType<ButtonsUIManager>();
         _activeTeam = Team.Capsule;
 
         var mortars = FindObjectsOfType<Mortar>();
@@ -55,7 +56,7 @@ public class TurnManager : EnumsClass, IObservable
         _activeTeam = _actualCharacter.GetUnitTeam();
         Action toDo = () =>
         {
-            _buttonsManager.ActivateEndTurnButton();
+            _buttonsUIManager.ActivateEndTurnButton();
             _charSelect.Selection(_actualCharacter);
         };
         _cameraMovement.MoveTo(_actualCharacter.transform.position, toDo);
@@ -91,7 +92,7 @@ public class TurnManager : EnumsClass, IObservable
         var character = _charSelect.GetSelectedCharacter();
         if (character != null && character.IsMoving() != false) return;
         
-        _buttonsManager.DeactivateEndTurnButton();
+        _buttonsUIManager.DeactivateEndTurnButton();
             
         ResetTurn(_actualCharacter);
 
@@ -111,7 +112,7 @@ public class TurnManager : EnumsClass, IObservable
         _activeTeam = _actualCharacter.GetUnitTeam();
         Action toDo = () =>
         {
-            _buttonsManager.ActivateEndTurnButton();
+            _buttonsUIManager.ActivateEndTurnButton();
             _charSelect.Selection(_actualCharacter);
         };
         _cameraMovement.MoveTo(_actualCharacter.transform.position, toDo);
@@ -178,10 +179,22 @@ public class TurnManager : EnumsClass, IObservable
         //Orders them with the highest initiative first
         var ordered = unitsList.OrderByDescending(x => x.Item2);
 
+        int count = 0;
+
         foreach (var character in ordered)
         {
-            character.Item1.SetTurn(false);
-            _currentTurnOrder.Add(character.Item1);
+            Debug.Log("count: " + count);
+            if (count == _portraits.Count)
+                return;
+            var p = _portraits[count];
+            var c = character.Item1;
+            p.mechaImage.sprite = c._myIcon;
+            p.mechaName.text = c._myName;
+            p.leftGunIcon.sprite = c.GetLeftGun().GetIcon();
+            p.rightGunIcon.sprite = c.GetRightGun().GetIcon();
+            c.SetTurn(false);
+            _currentTurnOrder.Add(c);
+            count++;
         }
     }
 

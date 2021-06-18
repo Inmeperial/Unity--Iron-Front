@@ -13,8 +13,8 @@ public class Character : EnumsClass
     
     [Header("Team")]
     [SerializeField] private Team _unitTeam;
-    [SerializeField] private Sprite _myIcon;
-    [SerializeField] private string _myName;
+    [SerializeField] public Sprite _myIcon;
+    [SerializeField] public string _myName;
     
     [SerializeField] private LineRenderer _rayForBody;
     [SerializeField] private LineRenderer _rayForLeftArm;
@@ -94,8 +94,7 @@ public class Character : EnumsClass
 	[HideInInspector]
 	public ButtonsUIManager buttonsManager;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         transform.position = new Vector3(transform.position.x, 2.4f, transform.position.z);
         #region GetComponents
@@ -164,7 +163,11 @@ public class Character : EnumsClass
             _leftGunSelected = false;
         }
         #endregion
-        
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         _canMove = legs.GetCurrentHp() > 0;
         _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
         
