@@ -64,7 +64,7 @@ public class Character : EnumsClass
     private bool _canBeSelected;
     private bool _selected;
     private bool _moving = false;
-    private bool _canMove = true;
+    public bool _canMove = true;
     private bool _canAttack = true;
     private bool _leftArmAlive;
     private bool _rightArmAlive;

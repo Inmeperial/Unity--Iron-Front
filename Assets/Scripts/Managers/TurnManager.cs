@@ -205,7 +205,8 @@ public class TurnManager : EnumsClass, IObservable
             // if (!firstTurn)
             //     StartCoroutine(MovePortrait(GetMyTurn(c)-1, count));
            
-            c.SetTurn(false);
+            if (c != _actualCharacter)
+                c.SetTurn(false);
             
             count++;
             _currentTurnOrder.Add(c);
