@@ -123,6 +123,7 @@ public class Legs : Parts
         _myChar.effectsController.PlayParticlesEffect(transform.position, "Damage");
         _myChar.effectsController.CreateDamageText(damage.ToString(), 1, transform.position, true);
         //_myChar.ShowWorldUI();
+        _myChar.turnManager.CalculateTurnOrder(false);
     }
 
     public float GetRotationSpeed()

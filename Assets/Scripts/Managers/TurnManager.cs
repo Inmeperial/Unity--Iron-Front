@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Linq;
+using UnityEngine.Experimental.PlayerLoop;
 
 public class TurnManager : EnumsClass, IObservable
 {
@@ -27,6 +28,11 @@ public class TurnManager : EnumsClass, IObservable
     private CameraMovement _cameraMovement;
 
     [SerializeField] private List<FramesUI> _portraits = new List<FramesUI>();
+    [SerializeField] private List<RectTransform> _portraitsPositions = new List<RectTransform>();
+    [SerializeField] private float _moveTime;
+
+    public int current;
+    public int newPos;
     private void Awake()
     {
         _cameraMovement = FindObjectOfType<CameraMovement>();
@@ -49,7 +55,7 @@ public class TurnManager : EnumsClass, IObservable
         {
             Subscribe(mortar);
         }
-        CalculateTurnOrder();
+        CalculateTurnOrder(true);
 
         _actualCharacter = _currentTurnOrder[0];
         _actualCharacter.SetTurn(true);
@@ -60,6 +66,12 @@ public class TurnManager : EnumsClass, IObservable
             _charSelect.Selection(_actualCharacter);
         };
         _cameraMovement.MoveTo(_actualCharacter.transform.position, toDo);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            StartCoroutine(MovePortrait(current, newPos));
     }
 
     public void UnitIsMoving()
@@ -99,7 +111,7 @@ public class TurnManager : EnumsClass, IObservable
         if (_turnCounter >= _currentTurnOrder.Count-1)
         {
             Debug.Log("calculate");
-            CalculateTurnOrder();
+            CalculateTurnOrder(false);
             _actualCharacter = _currentTurnOrder[0];
         }
         else
@@ -161,16 +173,16 @@ public class TurnManager : EnumsClass, IObservable
         return unit.GetTileBelow();
     }
 
-    public void CalculateTurnOrder()
+    public void CalculateTurnOrder(bool firstTurn)
     {
         _turnCounter = 0;
-        _currentTurnOrder.Clear();
+        //_currentTurnOrder.Clear();
         var unitsList = new List<Tuple<Character, float>>();
         
         //Adds them to a collection with their initiative
         foreach (var character in _allUnits)
         {
-            if (!(character.body.GetCurrentHp() > 0)) continue;
+            //if (!(character.body.GetCurrentHp() > 0)) continue;
             
             var t = Tuple.Create(character, character.GetCharacterInitiative());
             unitsList.Add(t);
@@ -183,18 +195,32 @@ public class TurnManager : EnumsClass, IObservable
 
         foreach (var character in ordered)
         {
-            Debug.Log("count: " + count);
             if (count == _portraits.Count)
                 return;
-            var p = _portraits[count];
+            
             var c = character.Item1;
-            p.mechaImage.sprite = c._myIcon;
-            p.mechaName.text = c._myName;
-            p.leftGunIcon.sprite = c.GetLeftGun().GetIcon();
-            p.rightGunIcon.sprite = c.GetRightGun().GetIcon();
+
+            if (firstTurn)
+            {
+                var p = _portraits[count];
+                p.mechaImage.sprite = c._myIcon;
+                p.mechaName.text = c._myName;
+                p.leftGunIcon.sprite = c.GetLeftGun().GetIcon();
+                p.rightGunIcon.sprite = c.GetRightGun().GetIcon();
+            }
+            
+            if (!firstTurn)
+                StartCoroutine(MovePortrait(GetMyTurn(c)-1, count));
+           
             c.SetTurn(false);
-            _currentTurnOrder.Add(c);
+            
             count++;
+        }
+        _currentTurnOrder.Clear();
+        foreach (var character in ordered)
+        {
+            var c = character.Item1;
+            _currentTurnOrder.Add(c);
         }
     }
 
@@ -227,5 +253,26 @@ public class TurnManager : EnumsClass, IObservable
         {
             _observers[i].Notify(action);
         }
+    }
+
+    IEnumerator MovePortrait(int current, int newPos)
+    {
+        var rect = _portraits[current].gameObject.GetComponent<RectTransform>();
+        var startV = _portraitsPositions[current].gameObject.GetComponent<RectTransform>();
+        var end = _portraitsPositions[newPos].gameObject.GetComponent<RectTransform>();
+        var time = 0f;
+        
+        Debug.Log("empiezo");
+        while (time <= _moveTime)
+        {
+            time += Time.deltaTime;
+            var normalized = time / _moveTime;
+
+            rect.anchorMax = Vector2.Lerp(startV.anchorMax, end.anchorMax, normalized);
+            rect.anchorMin = Vector2.Lerp(startV.anchorMin, end.anchorMin, normalized);
+            yield return new WaitForEndOfFrame();
+        }
+
+        rect.anchoredPosition = end.anchoredPosition;
     }
 }
