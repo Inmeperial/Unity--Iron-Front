@@ -535,7 +535,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.778, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1200,7 +1200,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.884, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1258,7 +1258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1537430174455955700
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1429,7 +1429,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.631, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6412,7 +6412,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4309859850662032359, guid: e16b53fa451185d458a4d4538ab85355, type: 3}
+  - {fileID: 2100000, guid: e4fd2c6dbf2a2274488c43d45fe3bdde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7141,7 +7141,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.815, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8759,7 +8759,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.847, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9497,7 +9497,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.683, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9989,7 +9989,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.894, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10077,7 +10077,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4313955211140616591, guid: e16b53fa451185d458a4d4538ab85355, type: 3}
+  - {fileID: 2100000, guid: 91bb8fea70f092c438c691db1e521817, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10349,7 +10349,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.747, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10720,26 +10720,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8ead686a30e3c4d98f6a1e81d8b8f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayOrigin: {fileID: 1537430175530845072}
   _unitTeam: 0
+  _myIcon: {fileID: 0}
+  _myName: 
+  _rayForBody: {fileID: 0}
+  _rayForLeftArm: {fileID: 0}
+  _rayForRightArm: {fileID: 0}
+  _rayForLegs: {fileID: 0}
+  _rayHitMaterial: {fileID: 0}
+  _rayMissMaterial: {fileID: 0}
   body: {fileID: 1537430175735964626}
   _bodyTransform: {fileID: 1537430175735964629}
   leftArm: {fileID: 1537430174522420405}
-  _leftGun: {fileID: 0}
-  _lArmTransform: {fileID: 1537430174522420393}
+  _leftGunType: 0
+  _leftGunSpawn: {fileID: 0}
   rightArm: {fileID: 3509053355696088306}
-  _rightGun: {fileID: 0}
-  _rArmTransform: {fileID: 1453942273309153383}
+  _rightGunType: 0
+  _rightGunSpawn: {fileID: 0}
   legs: {fileID: 1537430175139714437}
   _legsTransform: {fileID: 1537430175139714488}
   block:
     serializedVersion: 2
     m_Bits: 256
   _path: []
-  _canAttack: 1
-  selectingEnemy: 0
-  selectedForAttack: 0
-  myTurn: 0
   soundMotorStart: {fileID: 8300000, guid: 2edd383291de62941af11fff69e0908b, type: 3}
   soundWalk: {fileID: 8300000, guid: 14971f7d9e4423e4d9e324ce74b5d8a2, type: 3}
   effectsController: {fileID: 0}
@@ -16239,7 +16242,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1562806997816385014, guid: e16b53fa451185d458a4d4538ab85355, type: 3}
+  - {fileID: 2100000, guid: 1fc6c283d0cc46e4083e3d811d88f787, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
