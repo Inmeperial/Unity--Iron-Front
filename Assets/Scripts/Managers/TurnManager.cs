@@ -68,12 +68,6 @@ public class TurnManager : EnumsClass, IObservable
         _cameraMovement.MoveTo(_actualCharacter.transform.position, toDo);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            StartCoroutine(MovePortrait(current, newPos));
-    }
-
     public void UnitIsMoving()
     {
         _charSelect.ActivateCharacterSelection(false);
@@ -176,7 +170,7 @@ public class TurnManager : EnumsClass, IObservable
     public void CalculateTurnOrder(bool firstTurn)
     {
         _turnCounter = 0;
-        //_currentTurnOrder.Clear();
+        _currentTurnOrder.Clear();
         var unitsList = new List<Tuple<Character, float>>();
         
         //Adds them to a collection with their initiative
@@ -200,28 +194,29 @@ public class TurnManager : EnumsClass, IObservable
             
             var c = character.Item1;
 
-            if (firstTurn)
-            {
+            // if (firstTurn)
+            // {
                 var p = _portraits[count];
                 p.mechaImage.sprite = c._myIcon;
                 p.mechaName.text = c._myName;
                 p.leftGunIcon.sprite = c.GetLeftGun().GetIcon();
                 p.rightGunIcon.sprite = c.GetRightGun().GetIcon();
-            }
+            // }
             
-            if (!firstTurn)
-                StartCoroutine(MovePortrait(GetMyTurn(c)-1, count));
+            // if (!firstTurn)
+            //     StartCoroutine(MovePortrait(GetMyTurn(c)-1, count));
            
             c.SetTurn(false);
             
             count++;
-        }
-        _currentTurnOrder.Clear();
-        foreach (var character in ordered)
-        {
-            var c = character.Item1;
             _currentTurnOrder.Add(c);
         }
+        // _currentTurnOrder.Clear();
+        // foreach (var character in ordered)
+        // {
+        //     var c = character.Item1;
+        //     _currentTurnOrder.Add(c);
+        // }
     }
 
     public int GetMyTurn(Character unit)
