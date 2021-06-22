@@ -247,14 +247,14 @@ public class Tile : MonoBehaviour
     // //CAMBIAR CUANDO ESTE EL SHADER
     public void EndActivationRangeColor()
     {
-        Debug.Log("END ACTIVATION RANGE");
+        //Debug.Log("END ACTIVATION RANGE");
     }
 
     //Pinta el ultimo tile del path
     //CAMBIAR
     public void LastInPathColor()
     {
-        Debug.Log("ultimo on");
+        //Debug.Log("ultimo on");
         _materialHandler.DiseableAndEnableStatus(true);
         _materialHandler.StatusTileToMoveToLastTileSelected();
     }
@@ -263,7 +263,7 @@ public class Tile : MonoBehaviour
     //CAMBIAR
     public void EndLastInPathColor()
     {
-        Debug.Log("ultimo off");
+        //Debug.Log("ultimo off");
     }
     #endregion
 

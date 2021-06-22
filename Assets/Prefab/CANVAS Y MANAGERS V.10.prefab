@@ -9089,6 +9089,7 @@ MonoBehaviour:
   _highlight: {fileID: 0}
   _currentTurnOrder: []
   _turnCounter: 0
+  _actualCharacter: {fileID: 0}
   _portraits:
   - {fileID: 4821962483660813944}
   - {fileID: 3859248391068419811}
@@ -9098,8 +9099,16 @@ MonoBehaviour:
   - {fileID: 6598953465240286354}
   - {fileID: 82820119688065885}
   - {fileID: 1855733258485661533}
-  _portraitsPositions: []
-  _moveTime: 0
+  _portraitsPositions:
+  - {fileID: 7163998878431615185}
+  - {fileID: 8279914726809255624}
+  - {fileID: 8176093707324880046}
+  - {fileID: 115062336370082077}
+  - {fileID: 490709103227880122}
+  - {fileID: 4417336061669887774}
+  - {fileID: 3616176425922904472}
+  - {fileID: 8565931553848298821}
+  _moveTime: 1
   current: 0
   newPos: 0
 --- !u!1 &7329690851957777069
