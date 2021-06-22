@@ -41,14 +41,14 @@ public class AnimationMechaHandler : MonoBehaviour
         this.GetComponent<Animator>().SetBool("isSniperAttackLeft", false);
     }
 
-    public void SetIsHammerkAttackRightAnimatorFalse()
+    public void SetIsHammerAttackRightAnimatorFalse()
     {
-        this.GetComponent<Animator>().SetBool("isHammerkAttackRight", false);
+        this.GetComponent<Animator>().SetBool("isHammerAttackRight", false);
     }
 
-    public void SetIsHammerkAttackLeftAnimatorFalse()
+    public void SetIsHammerAttackLeftAnimatorFalse()
     {
-        this.GetComponent<Animator>().SetBool("isHammerkAttackLeft", false);
+        this.GetComponent<Animator>().SetBool("isHammerAttackLeft", false);
     }
     public void SetIsShotgunAttackRightAnimatorFalse()
     {
@@ -58,6 +58,16 @@ public class AnimationMechaHandler : MonoBehaviour
     public void SetIsShotgunAttackLeftAnimatorFalse()
     {
         this.GetComponent<Animator>().SetBool("isShotgunAttackLeft", false);
+    }
+
+    public void SetIsMachineGunAttackLeftAnimatorFalse()
+    {
+        this.GetComponent<Animator>().SetBool("isMachinegunAttackLeft", false);
+    }
+
+    public void SetIsMachineGunAttackRightAnimatorFalse()
+    {
+        this.GetComponent<Animator>().SetBool("isMachinegunAttackRight", false);
     }
 
     public void SetIsSniperAttackRightAnimatorTrue()
@@ -70,14 +80,14 @@ public class AnimationMechaHandler : MonoBehaviour
         this.GetComponent<Animator>().SetBool("isSniperAttackLeft", true);
     }
 
-    public void SetIsHammerkAttackRightAnimatorTrue()
+    public void SetIsHammerAttackRightAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isHammerkAttackRight", true);
+        this.GetComponent<Animator>().SetBool("isHammerAttackRight", true);
     }
 
-    public void SetIsHammerkAttackLeftAnimatorTrue()
+    public void SetIsHammerAttackLeftAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isHammerkAttackLeft", true);
+        this.GetComponent<Animator>().SetBool("isHammerAttackLeft", true);
     }
 
     public void SetIsShotgunAttackRightAnimatorTrue()
@@ -90,6 +100,16 @@ public class AnimationMechaHandler : MonoBehaviour
         this.GetComponent<Animator>().SetBool("isShotgunAttackLeft", true);
     }
 
+    public void SetIsMachineGunAttackLeftAnimatorTrue()
+    {
+        this.GetComponent<Animator>().SetBool("isMachinegunAttackLeft", true);
+    }
+
+    public void SetIsMachineGunAttackRightAnimatorTrue()
+    {
+        this.GetComponent<Animator>().SetBool("isMachinegunAttackRight", true);
+    }
+
     public void SetIsWalkingAnimatorTrue()
     {
         this.GetComponent<Animator>().SetBool("isWalkingAnimator", true);
@@ -99,4 +119,5 @@ public class AnimationMechaHandler : MonoBehaviour
     {
         this.GetComponent<Animator>().SetBool("isReciveDamageAnimator", true);
     }
+
 }

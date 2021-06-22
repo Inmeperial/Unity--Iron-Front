@@ -231,10 +231,10 @@ public class Character : EnumsClass
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
-                    _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
+                    _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
                     break;
                 case GunsType.Melee:
-                    _animationMechaHandler.SetIsHammerkAttackRightAnimatorTrue();
+                    _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
                     break;
                 case GunsType.Rifle:
                     _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
@@ -254,10 +254,10 @@ public class Character : EnumsClass
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
-                    _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
+                    _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Melee:
-                    _animationMechaHandler.SetIsHammerkAttackLeftAnimatorTrue();
+                    _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Rifle:
                     _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();

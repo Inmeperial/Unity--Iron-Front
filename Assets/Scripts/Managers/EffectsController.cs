@@ -125,4 +125,16 @@ public class EffectsController : MonoBehaviour
         yield return new WaitForSeconds(time);
         Destroy(effect);
     }
+
+    private void SetFullCover(bool isFullCoverOn)
+    {
+        if (isFullCoverOn)
+        {
+            this.GetComponent<MeshRenderer>().material.SetInt("_isFullCover", 1);
+        }
+        else
+        {
+            this.GetComponent<MeshRenderer>().material.SetInt("_isFullCover", 0);
+        }
+    }
 }
