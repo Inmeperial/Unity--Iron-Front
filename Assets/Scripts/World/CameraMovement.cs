@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
@@ -16,16 +17,31 @@ public class CameraMovement : MonoBehaviour
 
     private float _yPos;
 
+    public TextMeshProUGUI cameraSpeedText;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _initialPos = transform.position;
         _initialRot = transform.rotation;
         _yPos = transform.position.y;
+        cameraSpeedText.text = "CAMERA SPEED: " + speed;
     }
     // Update is called once per frame
     public void Update()
     {
+        if (Input.GetKey(KeyCode.KeypadPlus))
+        {
+            speed++;
+            cameraSpeedText.text = "CAMERA SPEED: " + speed;
+        }
+        if (Input.GetKey(KeyCode.KeypadMinus))
+        {
+            speed--;
+            cameraSpeedText.text = "CAMERA SPEED: " + speed;
+        }
+            
+        
+        
         if (_cameraLocked)
         {
             _rb.velocity = Vector3.zero;
