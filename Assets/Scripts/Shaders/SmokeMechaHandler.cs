@@ -4,55 +4,43 @@ using UnityEngine;
 
 public class SmokeMechaHandler : MonoBehaviour
 {
-    private ParticleSystem.MainModule _partSystemMain;
-    private GameObject smokeObj;
-    //private bool _isEffectOn = false;
+    public GameObject[] arrParticleObj;
+    private ParticleSystem[] _arrPartSystem;
 
-    //Add for para el partSystem y que todos activen o desActiven.
-   /* void Start()
+    void Start()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        if (arrParticleObj != null)
         {
-            transform.GetChild(i).gameObject.GetComponent<Renderer>();
-            if (transform.GetChild(i).gameObject.name == "SmokeMecha")
+            _arrPartSystem = new ParticleSystem[arrParticleObj.Length];
+            for (int i = 0; i < arrParticleObj.Length; i++)
             {
-                smokeObj = transform.GetChild(i).gameObject;
+                if (arrParticleObj[i].GetComponent<ParticleSystem>() != null)
+                {
+                    _arrPartSystem[i] = arrParticleObj[i].GetComponent<ParticleSystem>();
+                }
             }
-        }
-		
-		if (smokeObj != null)
-        {
-            _partSystemMain = smokeObj.GetComponent<ParticleSystem>().main;
-        }
-        else
-        {
-            Debug.Log("SmokeMecha obj not found in mecha : " + this.gameObject.name.ToString());
         }
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.A))
-    //    {
-    //        SetMachineOn(true);
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.S))
-    //    {
-    //        SetMachineOn(false);
-    //    }
-    //}*/
-
     public void SetMachineOn(bool boolEffect)
     {
-        /*if (boolEffect)
+        if (_arrPartSystem != null)
         {
-            _partSystemMain.startSize = new ParticleSystem.MinMaxCurve(2f, 4f);
-            _partSystemMain.startLifetime = 4f;
+            for (int i = 0; i < _arrPartSystem.Length; i++)
+            {
+                var particleMain = _arrPartSystem[i].main;
+
+                if (boolEffect)
+                {
+                    particleMain.startSize = new ParticleSystem.MinMaxCurve(2f, 4f);
+                    particleMain.startLifetime = 4f;
+                }
+                else
+                {
+                    particleMain.startSize = new ParticleSystem.MinMaxCurve(1f, 2f);
+                    particleMain.startLifetime = 2f;
+                }
+            }
         }
-        else
-        {
-            _partSystemMain.startSize = new ParticleSystem.MinMaxCurve(1f, 2f);
-            _partSystemMain.startLifetime = 2f;
-        }*/
     }
 }
