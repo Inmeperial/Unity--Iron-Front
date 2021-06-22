@@ -448,7 +448,7 @@ public class ButtonsUIManager : MonoBehaviour
             }
             _selectedChar.DeactivateAttack();
         }
-        _turnManager.CalculateTurnOrder(false);
+        //_turnManager.OrderTurns();
         _turnManager.PortraitsActiveState(true);
         buttonEndTurn.gameObject.SetActive(true);
     }

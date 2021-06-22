@@ -18,17 +18,18 @@ public class TurnManager : EnumsClass, IObservable
 
     private Team _activeTeam;
 
-	private List<Character> _currentTurnOrder = new List<Character>();
+	[SerializeField] private List<Character> _currentTurnOrder = new List<Character>();
     
     private List<IObserver> _observers = new List<IObserver>();
 
     private int _turnCounter;
-    private Character _actualCharacter;
+    [SerializeField] private Character _actualCharacter;
     private CameraMovement _cameraMovement;
 
     [SerializeField] private List<FramesUI> _portraits = new List<FramesUI>();
     [SerializeField] private List<RectTransform> _portraitsPositions = new List<RectTransform>();
     [SerializeField] private float _moveTime;
+    private List<Tuple<Character, FramesUI>> _charAndFramesList = new List<Tuple<Character, FramesUI>>();
     private void Awake()
     {
         _cameraMovement = FindObjectOfType<CameraMovement>();
@@ -51,7 +52,7 @@ public class TurnManager : EnumsClass, IObservable
         {
             Subscribe(mortar);
         }
-        CalculateTurnOrder(true);
+        SetFirstTurn();
 
         _actualCharacter = _currentTurnOrder[0];
         _actualCharacter.SetTurn(true);
@@ -95,18 +96,23 @@ public class TurnManager : EnumsClass, IObservable
         if (character != null && character.IsMoving() != false) return;
         
         _buttonsUIManager.DeactivateEndTurnButton();
-        StartCoroutine(MovePortrait(_portraits[0].gameObject.GetComponent<RectTransform>(), 0, _portraitsPositions.Count-1));
+        StartCoroutine(MovePortrait(GetMyRect(_actualCharacter), 0, _portraitsPositions.Count-1));
         _currentTurnOrder.RemoveAt(0);
         _currentTurnOrder.Insert(_currentTurnOrder.Count, _actualCharacter);
-        
-        var p = _portraits[0];
-        _portraits.RemoveAt(0);
-        _portraits.Insert(_portraits.Count, p);
-        
+
         ResetTurn(_actualCharacter);
+        var previous = new Dictionary<Character, int>();
+
+        for (var i = 0; i < _currentTurnOrder.Count; i++)
+        {
+            var c = _currentTurnOrder[i];
+            previous.Add(c, i);
+        }
+        
         for (int i = 0; i < _portraits.Count-1; i++)
         {
-            StartCoroutine(MovePortrait(_portraits[i].gameObject.GetComponent<RectTransform>(),i, i));
+            var c = _currentTurnOrder[i];
+            StartCoroutine(MovePortrait(GetMyRect(c),previous[c], i));
         }
 
         _actualCharacter = _currentTurnOrder[0];
@@ -163,22 +169,9 @@ public class TurnManager : EnumsClass, IObservable
         return unit.GetTileBelow();
     }
 
-    public void CalculateTurnOrder(bool firstTurn)
+    public void SetFirstTurn()
     {
-        _currentTurnOrder.Clear();
-        var unitsList = new List<Tuple<Character, float>>();
-        
-        //Adds them to a collection with their initiative
-        foreach (var character in _allUnits)
-        {
-            //if (!(character.body.GetCurrentHp() > 0)) continue;
-            
-            var t = Tuple.Create(character, character.GetCharacterInitiative());
-            unitsList.Add(t);
-        }
-
-        //Orders them with the highest initiative first
-        var ordered = unitsList.OrderByDescending(x => x.Item2);
+        var ordered = GetOrderedUnits();
 
         int count = 0;
 
@@ -188,26 +181,65 @@ public class TurnManager : EnumsClass, IObservable
                 return;
             
             var c = character.Item1;
-
-            if (firstTurn)
-            {
-                var p = _portraits[count];
-                p.mechaImage.sprite = c._myIcon;
-                p.mechaName.text = c._myName;
-                p.leftGunIcon.sprite = c.GetLeftGun().GetIcon();
-                p.rightGunIcon.sprite = c.GetRightGun().GetIcon();
-            }
-
-            if (!firstTurn)
-            {
-                var turn = GetMyTurn(c) - 1;
-                StartCoroutine(MovePortrait(_portraits[turn].gameObject.GetComponent<RectTransform>(),turn, count));
-            }
-                
-           
+            var p = _portraits[count];
+            p.mechaImage.sprite = c._myIcon;
+            p.mechaName.text = c._myName;
+            p.leftGunIcon.sprite = c.GetLeftGun().GetIcon();
+            p.rightGunIcon.sprite = c.GetRightGun().GetIcon();
+            
             count++;
             _currentTurnOrder.Add(c);
+            _charAndFramesList.Add(Tuple.Create(c,p));
         }
+    }
+
+    public void OrderTurns()
+    {
+        var previous = new Dictionary<Character, int>();
+
+        for (var i = 0; i < _currentTurnOrder.Count; i++)
+        {
+            var character = _currentTurnOrder[i];
+            previous.Add(character, i);
+        }
+
+        var ordered = GetOrderedUnits();
+        
+        var pos = 0;
+        for (int i = 0; i < ordered.Count; i++)
+        {
+            if (ordered[i].Item1 == _actualCharacter)
+            {
+                pos = i;
+                break;
+            }
+        }
+
+        var c = ordered[pos];
+        ordered.RemoveAt(pos);
+        ordered.Insert(0, c);
+        _currentTurnOrder.Clear();
+
+        for (int i = 0; i < ordered.Count; i++)
+        {
+            var character = ordered[i].Item1;
+            _currentTurnOrder.Add(character);
+            StartCoroutine(MovePortrait(GetMyRect(character), previous[character], i));
+        }
+    }
+
+    List<Tuple<Character, float>> GetOrderedUnits()
+    {
+        var unitsList = new List<Tuple<Character, float>>();
+        
+        //Adds them to a collection with their initiative
+        foreach (var character in _allUnits)
+        {
+            var t = Tuple.Create(character, character.GetCharacterInitiative());
+            unitsList.Add(t);
+        }
+        
+        return unitsList.OrderByDescending(x => x.Item2).ToList();
     }
 
     public int GetMyTurn(Character unit)
@@ -219,6 +251,21 @@ public class TurnManager : EnumsClass, IObservable
         }
 
         return -1;
+    }
+
+    public RectTransform GetMyRect(Character c)
+    {
+        //var asd = _charAndFramesList.Where(x => x.Item1 == c).Select(y => y.Item2).FirstOrDefault().GetComponent<RectTransform>();
+        
+        foreach (var t in _charAndFramesList)
+        {
+            if (t.Item1 == c)
+            {
+                return t.Item2.GetComponent<RectTransform>();
+            }
+        }
+
+        return null;
     }
 
     public void Subscribe(IObserver observer)
@@ -241,9 +288,9 @@ public class TurnManager : EnumsClass, IObservable
         }
     }
 
-    IEnumerator MovePortrait(RectTransform myRect, int current, int newPos)
+    IEnumerator MovePortrait(RectTransform myRect, int currentPos, int newPos)
     {
-        var startV = _portraitsPositions[current].gameObject.GetComponent<RectTransform>();
+        var startV = _portraitsPositions[currentPos].gameObject.GetComponent<RectTransform>();
         var end = _portraitsPositions[newPos].gameObject.GetComponent<RectTransform>();
         var time = 0f;
         

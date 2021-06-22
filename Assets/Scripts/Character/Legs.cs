@@ -86,6 +86,7 @@ public class Legs : Parts
         ui.ContainerActivation(true);
         ui.UpdateLegsSlider(total, _legsHP);
         _myChar.MakeNotAttackable();
+        _myChar.turnManager.OrderTurns();
     }
     // public void TakeDamageLegs(int damage)
     // {
@@ -123,7 +124,7 @@ public class Legs : Parts
         _myChar.effectsController.PlayParticlesEffect(transform.position, "Damage");
         _myChar.effectsController.CreateDamageText(damage.ToString(), 1, transform.position, true);
         //_myChar.ShowWorldUI();
-        _myChar.turnManager.CalculateTurnOrder(false);
+        //_myChar.turnManager.OrderTurns();
     }
 
     public float GetRotationSpeed()

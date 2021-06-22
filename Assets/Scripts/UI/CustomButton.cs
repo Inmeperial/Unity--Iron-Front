@@ -28,12 +28,12 @@ public class CustomButton : Selectable, IPointerClickHandler
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("boton");
+       
     }
 
     public override void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("salgo del boton");
+       
     }
 
     private void PressRight()
