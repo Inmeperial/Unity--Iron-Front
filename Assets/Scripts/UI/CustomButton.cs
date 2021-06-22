@@ -21,6 +21,7 @@ public class CustomButton : Selectable, IPointerClickHandler
                 PressRight();
                 break;
             case PointerEventData.InputButton.Left:
+                Debug.Log("left click");
                 PressLeft();
                 break;
         }
@@ -28,7 +29,7 @@ public class CustomButton : Selectable, IPointerClickHandler
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
-       
+       Debug.Log("mouse over");
     }
 
     public override void OnPointerExit(PointerEventData eventData)

@@ -10,6 +10,7 @@ public class FramesUI : MonoBehaviour
 	public Image leftGunIcon;
 	public Image rightGunIcon;
 	public TextMeshProUGUI mechaName;
+	public CustomButton selectionButton;
 	
 	FramesUI(Image mecha, Image leftGun, Image rightGun, TextMeshProUGUI myName)
 	{

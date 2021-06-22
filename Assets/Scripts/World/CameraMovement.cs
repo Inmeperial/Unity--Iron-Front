@@ -81,8 +81,10 @@ public class CameraMovement : MonoBehaviour
 
     }
 
-    public void MoveTo(Vector3 pos, Action callback = null)
+    public void MoveTo(Transform transform, Action callback = null)
     {
+        Debug.Log("asd");
+        var pos = transform.position;
         pos.y = _yPos;
         _cameraLocked = true;
         StartCoroutine(Move(pos, callback));

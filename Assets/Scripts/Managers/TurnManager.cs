@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Linq;
+using UnityEngine.Events;
 using UnityEngine.Experimental.PlayerLoop;
 
 public class TurnManager : EnumsClass, IObservable
@@ -62,7 +63,7 @@ public class TurnManager : EnumsClass, IObservable
             _buttonsUIManager.ActivateEndTurnButton();
             _charSelect.Selection(_actualCharacter);
         };
-        _cameraMovement.MoveTo(_actualCharacter.transform.position, toDo);
+        _cameraMovement.MoveTo(_actualCharacter.transform, toDo);
     }
 
     public void UnitIsMoving()
@@ -123,7 +124,7 @@ public class TurnManager : EnumsClass, IObservable
             _buttonsUIManager.ActivateEndTurnButton();
             _charSelect.Selection(_actualCharacter);
         };
-        _cameraMovement.MoveTo(_actualCharacter.transform.position, toDo);
+        _cameraMovement.MoveTo(_actualCharacter.transform, toDo);
 
         NotifyObserver("EndTurn");
         NotifyObserver("Deselect");
@@ -169,7 +170,7 @@ public class TurnManager : EnumsClass, IObservable
         return unit.GetTileBelow();
     }
 
-    public void SetFirstTurn()
+    private void SetFirstTurn()
     {
         var ordered = GetOrderedUnits();
 
@@ -186,7 +187,8 @@ public class TurnManager : EnumsClass, IObservable
             p.mechaName.text = c._myName;
             p.leftGunIcon.sprite = c.GetLeftGun().GetIcon();
             p.rightGunIcon.sprite = c.GetRightGun().GetIcon();
-            
+            p.selectionButton.OnLeftClick.RemoveAllListeners();
+            p.selectionButton.OnLeftClick.AddListener(() => _cameraMovement.MoveTo(c.transform));
             count++;
             _currentTurnOrder.Add(c);
             _charAndFramesList.Add(Tuple.Create(c,p));
