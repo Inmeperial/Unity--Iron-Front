@@ -577,6 +577,7 @@ public class Character : EnumsClass
     {
         return _selected;
     }
+    
 
     /// <summary>
     /// Return the Tile below the Character.
@@ -788,6 +789,11 @@ public class Character : EnumsClass
     public void SetCharacterMove(bool state)
     {
         _canMove = state;
+    }
+    
+    public void SetSelection(bool state)
+    {
+        _selected = state;
     }
     #endregion
     

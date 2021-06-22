@@ -11,8 +11,8 @@ public class CharacterSelection : MonoBehaviour
     public LayerMask charMask;
     public LayerMask gridBlockMask;
     private Character _selection;
-    TileHighlight _highlight;
-    TurnManager _turnManager;
+    private TileHighlight _highlight;
+    private TurnManager _turnManager;
     ButtonsUIManager _buttonsManager;
     public bool _canSelectUnit;
     private Character _enemySelection;

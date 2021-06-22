@@ -69,6 +69,8 @@ public class Mortar : MonoBehaviour, IObserver
         //Chequeo si hago click en el mortero o no
         if (MouseRay.GetTargetGameObject(_mortarMask))
         {
+            var s = FindObjectOfType<CharacterSelection>().GetSelectedCharacter();
+            s.SetSelection(false);
             _selected = true;
             if (SelectedPlayerAbove())
             {
@@ -296,6 +298,8 @@ public class Mortar : MonoBehaviour, IObserver
 
     private void Deselect()
     {
+        var s = FindObjectOfType<CharacterSelection>().GetSelectedCharacter();
+        s.SetSelection(false);
         _selected = false;
         _highlight.ClearTilesInActivationRange(_tilesInActivationRange);
         _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
