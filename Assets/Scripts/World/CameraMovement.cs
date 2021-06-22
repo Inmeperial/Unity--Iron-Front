@@ -26,7 +26,11 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (_cameraLocked) return;
+        if (_cameraLocked)
+        {
+            _rb.velocity = Vector3.zero;
+            return;
+        }
         
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");

@@ -97,7 +97,7 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (((_selectedChar && _selectedChar.IsMoving() == false) || _selectedEnemy) &&
                 (Input.GetKeyDown(deselectKey)))
-                DeselectUnit();
+                DeselectActions();
 
             if ((_selectedChar && _selectedChar.IsMoving() == false) && _selectedChar.GetPath().Count > 0 &&
                 Input.GetMouseButtonDown(1))
@@ -501,13 +501,13 @@ public class ButtonsUIManager : MonoBehaviour
             _selectedEnemy.SetSelectedForAttack(false);
         }
 
-        DeactivatePlayerHUD();
-
+        // DeactivatePlayerHUD();
+        //
         DeactivateEnemyHUD();
         buttonEndTurn.gameObject.SetActive(true);
         buttonExecuteAttack.gameObject.SetActive(false);
         _turnManager.PortraitsActiveState(true);
-        _selectedChar = null;
+        //_selectedChar = null;
         _selectedEnemy = null;
     }
 
