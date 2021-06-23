@@ -188,31 +188,23 @@ public class AudioManager : MonoBehaviour
 
     private AudioSource GetOrSetAudioSourceFromObj(GameObject target)
     {
-        AudioSource audioSource = target.AddComponent<AudioSource>();
+        AudioSource audioSource = new AudioSource();
+
+        if (target.GetComponents<AudioSource>() != null)
+        {
+            foreach (var item in target.GetComponents<AudioSource>())
+            {
+                if (!item.GetComponent<AudioSource>().isPlaying)
+                {
+                    audioSource = target.GetComponent<AudioSource>();
+                    break;
+                }
+            }
+        }
+        if (audioSource == null)
+        {
+            audioSource = target.AddComponent<AudioSource>();
+        }
         return audioSource;
     }
 }
-
-//[System.Serializable]
-//public class AudioRollOff
-//{
-//    public AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic;
-
-//    public float distanceMin = 1;
-//    public float distanceMax = 500;
-//    public bool setCustomCurve = false;
-
-//    public AnimationCurve distanceCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 1), new Keyframe(1, 0) });
-
-
-//    public void Set(AudioSource audioSource)
-//    {
-
-//        audioSource.rolloffMode = rolloffMode;
-//        audioSource.minDistance = distanceMin;
-//        audioSource.maxDistance = distanceMax;
-
-//        if (setCustomCurve)
-//            audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, distanceCurve);
-//    }
-//}

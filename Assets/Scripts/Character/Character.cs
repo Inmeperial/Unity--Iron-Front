@@ -213,7 +213,7 @@ public class Character : EnumsClass
         ResetTilesInMoveRange();
         _animationMechaHandler.SetIsWalkingAnimatorTrue();
         AudioManager.audioManagerInstance.PlaySound(soundMotorStart, this.gameObject);
-        AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
+        //AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
         _smokeMechaHandler.SetMachineOn(true);
         _move.StartMovement(_path);
     }
@@ -941,7 +941,6 @@ public class Character : EnumsClass
         _tilesInAttackRange.Clear();
         _animationMechaHandler.SetIsWalkingAnimatorFalse();
         AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,this.gameObject);
-        AudioManager.audioManagerInstance.StopSound(soundWalk,this.gameObject);
         _smokeMechaHandler.SetMachineOn(false);
 
         if (CanAttack())
@@ -1104,5 +1103,8 @@ public class Character : EnumsClass
         _animationMechaHandler.SetIsReciveDamageAnimatorTrue();
     }
 
-
+    public void WalkSoundStepMecha()
+    {
+        AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
+    }
 }
