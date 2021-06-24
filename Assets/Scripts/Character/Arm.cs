@@ -80,7 +80,19 @@ public class Arm : Parts
                 ui.UpdateRightArmSlider(total, (int)_armHP);
                 break;
         }
-        
+        if (_armHP <= 0)
+        {
+            switch (_location)
+            {
+                case "Left":
+                    _myChar.GetLeftGun().TurnOff();
+                    break;
+                case "Right":
+                    _myChar.GetRightGun().TurnOff();
+                    break;
+            }
+            
+        }
         _myChar.CheckArms();
         _myChar.MakeNotAttackable();
     }
