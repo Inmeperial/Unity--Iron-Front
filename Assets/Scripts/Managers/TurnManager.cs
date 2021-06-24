@@ -95,13 +95,44 @@ public class TurnManager : EnumsClass, IObservable
     {
         var character = _charSelect.GetSelectedCharacter();
         if (character != null && character.IsMoving() != false) return;
-        
+
+        StartCoroutine(OnEndTurn());
+    }
+
+    IEnumerator OnEndTurn()
+    {
+        MoveToLast();
+
+        ResetTurn(_actualCharacter);
+
+        _actualCharacter = _currentTurnOrder[0];
+
+        while (_actualCharacter.body.GetCurrentHp() <= 0)
+        {
+            MoveToLast();
+            yield return new WaitForSeconds(1);
+            _actualCharacter = _currentTurnOrder[0];
+        }
+        _actualCharacter.SetTurn(true);
+        _activeTeam = _actualCharacter.GetUnitTeam();
+        Action toDo = () =>
+        {
+            _buttonsUIManager.ActivateEndTurnButton();
+            _charSelect.Selection(_actualCharacter);
+        };
+        _cameraMovement.MoveTo(_actualCharacter.transform, toDo);
+
+        NotifyObserver("EndTurn");
+        NotifyObserver("Deselect");
+    }
+
+    void MoveToLast()
+    {
         _buttonsUIManager.DeactivateEndTurnButton();
         StartCoroutine(MovePortrait(GetMyRect(_actualCharacter), 0, _portraitsPositions.Count-1));
         _currentTurnOrder.RemoveAt(0);
         _currentTurnOrder.Insert(_currentTurnOrder.Count, _actualCharacter);
-
-        ResetTurn(_actualCharacter);
+        
         var previous = new Dictionary<Character, int>();
 
         for (var i = 0; i < _currentTurnOrder.Count; i++)
@@ -115,19 +146,6 @@ public class TurnManager : EnumsClass, IObservable
             var c = _currentTurnOrder[i];
             StartCoroutine(MovePortrait(GetMyRect(c),previous[c], i));
         }
-
-        _actualCharacter = _currentTurnOrder[0];
-        _actualCharacter.SetTurn(true);
-        _activeTeam = _actualCharacter.GetUnitTeam();
-        Action toDo = () =>
-        {
-            _buttonsUIManager.ActivateEndTurnButton();
-            _charSelect.Selection(_actualCharacter);
-        };
-        _cameraMovement.MoveTo(_actualCharacter.transform, toDo);
-
-        NotifyObserver("EndTurn");
-        NotifyObserver("Deselect");
     }
 
     private void ResetTurn(List<Character> team)
@@ -185,6 +203,7 @@ public class TurnManager : EnumsClass, IObservable
             var p = _portraits[count];
             p.mechaImage.sprite = c._myIcon;
             p.mechaName.text = c._myName;
+            c.gameObject.name = c._myName;
             p.leftGunIcon.sprite = c.GetLeftGun().GetIcon();
             p.rightGunIcon.sprite = c.GetRightGun().GetIcon();
             p.selectionButton.OnLeftClick.RemoveAllListeners();
@@ -230,6 +249,26 @@ public class TurnManager : EnumsClass, IObservable
         }
     }
 
+    public void ReducePosition(Character unit)
+    {
+        var myPos = GetMyTurn(unit);
+        
+        //If last, return
+        if (myPos == _currentTurnOrder.Count -1) return;
+        
+        //Move unit portrait one position behind
+        
+        var newPos = myPos + 1;
+        StartCoroutine(MovePortrait(GetMyRect(unit), myPos, newPos));
+
+        //Move portrait that was behind to one position ahead
+        var other = _currentTurnOrder[newPos];
+        StartCoroutine(MovePortrait(GetMyRect(other), newPos, myPos));
+        _currentTurnOrder.RemoveAt(myPos);
+        _currentTurnOrder.Insert(newPos, unit);
+        
+    }
+
     List<Tuple<Character, float>> GetOrderedUnits()
     {
         var unitsList = new List<Tuple<Character, float>>();
@@ -249,7 +288,7 @@ public class TurnManager : EnumsClass, IObservable
         for (int i = 0; i < _currentTurnOrder.Count; i++)
         {
             if (_currentTurnOrder[i] == unit)
-                return i + 1;
+                return i;
         }
 
         return -1;

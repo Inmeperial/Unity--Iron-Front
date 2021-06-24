@@ -86,7 +86,8 @@ public class Legs : Parts
         ui.ContainerActivation(true);
         ui.UpdateLegsSlider(total, _legsHP);
         _myChar.MakeNotAttackable();
-        _myChar.turnManager.OrderTurns();
+        //_myChar.turnManager.OrderTurns();
+        _myChar.turnManager.ReducePosition(_myChar);
     }
     // public void TakeDamageLegs(int damage)
     // {
