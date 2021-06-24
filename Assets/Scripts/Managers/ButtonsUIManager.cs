@@ -840,10 +840,10 @@ public class ButtonsUIManager : MonoBehaviour
 
     void ShowUnitHudText(TextMeshProUGUI bodyHpText, float bodyValue, TextMeshProUGUI lArmHpText, float lArmValue, TextMeshProUGUI rArmHpText, float rArmValue, TextMeshProUGUI legsHpText, float legsValue)
     {
-        bodyHpText.text = bodyValue + " HP";
-        lArmHpText.text = lArmValue + " HP";
-        rArmHpText.text = rArmValue + " HP";
-        legsHpText.text = legsValue + " HP";
+        bodyHpText.text = bodyValue.ToString();
+        lArmHpText.text = lArmValue.ToString();
+        rArmHpText.text = rArmValue.ToString();
+        legsHpText.text = legsValue.ToString();
     }
     
     public void UpdateLegsHUD(float value, bool isPlayer)

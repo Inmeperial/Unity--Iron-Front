@@ -243,4 +243,14 @@ public abstract class Gun : EnumsClass, IGun
     {
         return _abilityUsed;
     }
+
+    public void TurnOff()
+    {
+        var childs = transform.GetComponentsInChildren<MeshRenderer>();
+        foreach (var m in childs)
+        {
+            if (m) m.enabled = false;
+        }
+        GetComponent<BoxCollider>().enabled = false;
+    }
 }
