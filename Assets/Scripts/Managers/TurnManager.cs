@@ -24,13 +24,17 @@ public class TurnManager : EnumsClass, IObservable
     private List<IObserver> _observers = new List<IObserver>();
 
     private int _turnCounter;
-    [SerializeField] private Character _actualCharacter;
+    private Character _actualCharacter;
     private CameraMovement _cameraMovement;
 
     [SerializeField] private List<FramesUI> _portraits = new List<FramesUI>();
     [SerializeField] private List<RectTransform> _portraitsPositions = new List<RectTransform>();
     [SerializeField] private float _moveTime;
     private List<Tuple<Character, FramesUI>> _charAndFramesList = new List<Tuple<Character, FramesUI>>();
+
+    public bool mortarAttack;
+
+    public float waitForMortarAttack;
     private void Awake()
     {
         _cameraMovement = FindObjectOfType<CameraMovement>();
@@ -96,11 +100,20 @@ public class TurnManager : EnumsClass, IObservable
         var character = _charSelect.GetSelectedCharacter();
         if (character != null && character.IsMoving() != false) return;
 
+        NotifyObserver("EndTurn");
+        NotifyObserver("Deselect");
+        
         StartCoroutine(OnEndTurn());
     }
 
     IEnumerator OnEndTurn()
     {
+        if (mortarAttack)
+        {
+            yield return new WaitUntil(() => !mortarAttack);
+            yield return new WaitForSeconds(waitForMortarAttack);
+        }
+        
         MoveToLast();
 
         ResetTurn(_actualCharacter);
@@ -121,9 +134,6 @@ public class TurnManager : EnumsClass, IObservable
             _charSelect.Selection(_actualCharacter);
         };
         _cameraMovement.MoveTo(_actualCharacter.transform, toDo);
-
-        NotifyObserver("EndTurn");
-        NotifyObserver("Deselect");
     }
 
     void MoveToLast()

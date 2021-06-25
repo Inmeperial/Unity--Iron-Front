@@ -14035,7 +14035,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentTurnOrder: []
-  _actualCharacter: {fileID: 0}
   _portraits:
   - {fileID: 5788962396947687931}
   - {fileID: 2824678368636852576}
@@ -14055,6 +14054,8 @@ MonoBehaviour:
   - {fileID: 2347139259732008475}
   - {fileID: 7232155007582589638}
   _moveTime: 1
+  mortarAttack: 0
+  waitForMortarAttack: 3
 --- !u!1 &8576473316728550775
 GameObject:
   m_ObjectHideFlags: 0
@@ -14189,7 +14190,6 @@ MonoBehaviour:
   gridBlockMask:
     serializedVersion: 2
     m_Bits: 256
-  _canSelectUnit: 0
   playerSelected: 0
 --- !u!120 &8576473316752784681
 LineRenderer:

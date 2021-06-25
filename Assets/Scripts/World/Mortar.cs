@@ -22,6 +22,7 @@ public class Mortar : MonoBehaviour, IObserver
     private HashSet<Tile> _tilesInPreviewRange = new HashSet<Tile>();
 
     private HashSet<Tile> _tilesToAttack = new HashSet<Tile>();
+    private Tile _centerToAttack;
     private TileHighlight _highlight;
 
     private bool _selected = false;
@@ -44,7 +45,7 @@ public class Mortar : MonoBehaviour, IObserver
         _highlight = FindObjectOfType<TileHighlight>();
         _myPositionTile = GetTileBelow();
         _selected = false;
-        _actionsDic.Add("EndTurn", ExecuteAttack);
+        _actionsDic.Add("EndTurn", CheckAttack);
         _actionsDic.Add("Deselect", Deselect);
         GetTilesInActivationRange();
         GetTilesInAttackRange(_myPositionTile, 0);
@@ -147,6 +148,7 @@ public class Mortar : MonoBehaviour, IObserver
             else if (tile == _last && SelectedPlayerAbove())
             {
                 Debug.Log("preparo el ataque");
+                _centerToAttack = _last;
                 PrepareAttack();
             }
         }
@@ -278,13 +280,19 @@ public class Mortar : MonoBehaviour, IObserver
         _actionsDic[action]();
     }
 
-    private void ExecuteAttack()
+    private void CheckAttack()
     {
         if (!_attackPending) return;
 
         _turnCount++;
         if (_turnCount < _turnsToAttack) return;
-        
+        FindObjectOfType<TurnManager>().mortarAttack = true;
+        var c = FindObjectOfType<CameraMovement>();
+        c.MoveTo(_centerToAttack.gameObject.transform, Attack);
+    }
+
+    void Attack()
+    {
         Debug.Log("mortero ataca");
         
         foreach (var tile in _tilesToAttack)
@@ -300,6 +308,7 @@ public class Mortar : MonoBehaviour, IObserver
         }
         //_tilesToAttack.Clear();
         _attackPending = false;
+        FindObjectOfType<TurnManager>().mortarAttack = false;
         _turnCount = 0;
         Deselect();
     }
