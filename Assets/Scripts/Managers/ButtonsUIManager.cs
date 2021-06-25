@@ -127,6 +127,8 @@ public class ButtonsUIManager : MonoBehaviour
         }
         
         
+        if (_selectedChar && _selectedEnemy) return;
+        
         if (Input.GetKeyDown(showWorldUIKey))
             ShowAllWorldUI();
         
