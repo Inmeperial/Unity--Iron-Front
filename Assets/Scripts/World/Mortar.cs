@@ -48,6 +48,12 @@ public class Mortar : MonoBehaviour, IObserver
         _actionsDic.Add("EndTurn", CheckAttack);
         _actionsDic.Add("Deselect", Deselect);
         GetTilesInActivationRange();
+
+        foreach (var t in _tilesInActivationRange)
+        {
+            _highlight.MortarPaintTilesInActivationRange(t);
+        }
+        
         GetTilesInAttackRange(_myPositionTile, 0);
     }
 
@@ -91,11 +97,6 @@ public class Mortar : MonoBehaviour, IObserver
                 tiles.inAttackRange = true;
                 _highlight.MortarPaintTilesInAttackRange(tiles);
             }
-            
-            foreach (var tiles in _tilesInActivationRange)
-            {
-                _highlight.MortarPaintTilesInActivationRange(tiles);
-            }
         }
         //Si no hago click en el mortero (hago click en un tile), pero ya estaba seleccionado
         else if (_selected)
@@ -112,11 +113,6 @@ public class Mortar : MonoBehaviour, IObserver
             {
                 tiles.inAttackRange = true;
                 _highlight.MortarPaintTilesInAttackRange(tiles);
-            }
-
-            foreach (var tiles in _tilesInActivationRange)
-            {
-                _highlight.MortarPaintTilesInActivationRange(tiles);
             }
 
             var tile = target.GetComponent<Tile>();
@@ -138,10 +134,7 @@ public class Mortar : MonoBehaviour, IObserver
                     tiles.inAttackRange = true;
                     _highlight.MortarPaintTilesInAttackRange(tiles);
                 }
-                foreach (var tiles in _tilesInActivationRange)
-                {
-                    _highlight.MortarPaintTilesInActivationRange(tiles);
-                }
+                
                 _tilesToAttack.Clear();
                 PaintTilesInPreviewRange(_last, 0);
             }
@@ -318,7 +311,6 @@ public class Mortar : MonoBehaviour, IObserver
         var s = FindObjectOfType<CharacterSelection>().GetSelectedCharacter(); 
         if (s) s.SetSelection(false);
         _selected = false;
-        _highlight.ClearTilesInActivationRange(_tilesInActivationRange);
         _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
 
         foreach (var t in _tilesToAttack)
