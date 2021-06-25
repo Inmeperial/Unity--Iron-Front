@@ -194,7 +194,7 @@ public class Tile : MonoBehaviour
     
     public void MortarCanBeAttackedColor()
     {
-        _materialHandler.StatusAoEOfAttackForMortar();
+        //_materialHandler.StatusAoEOfAttackForMortar();
         _materialHandler.DiseableAndEnableSelectedNodeForMortar(true);
     }
 
