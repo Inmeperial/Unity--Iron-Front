@@ -19,28 +19,12 @@ public class CloseUpCamera : MonoBehaviour
     public float lerp = .9f;
     private  Camera _cam;
     private  Camera _mainCam;
-	public TextMeshProUGUI cameraLerpText;
 	private void Start()
     {
         _mainCam = transform.parent.GetComponent<Camera>();
         _cam = GetComponent<Camera>();
         _cam.enabled = false;
-		cameraLerpText.text = "CAMERA LERP: " + lerp;
     }
-
-	private void Update()
-	{
-		if (Input.GetKey(KeyCode.RightArrow))
-		{
-			lerp = Mathf.Clamp(lerp + 0.01f, 0, 1);
-			cameraLerpText.text = "CAMERA LERP: " + Math.Round(lerp, 2);
-		}
-		if (Input.GetKey(KeyCode.LeftArrow))
-		{
-			lerp = Mathf.Clamp(lerp - 0.01f, 0, 1);
-			cameraLerpText.text = "CAMERA LERP: " + Math.Round(lerp, 2);
-		}
-	}
 
 	public void MoveCameraWithLerp(Vector3 enemyPosToLerp, Vector3 playerPosToLerp, Action callback = null)
     {
