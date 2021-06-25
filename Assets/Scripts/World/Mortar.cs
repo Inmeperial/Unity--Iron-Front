@@ -296,7 +296,7 @@ public class Mortar : MonoBehaviour, IObserver
             unit.leftArm.TakeDamageArm(_damage);
             unit.rightArm.TakeDamageArm(_damage);
             unit.legs.TakeDamageLegs(_damage);
-            effect.PlayParticlesEffect(unit.transform.position, "Mine");
+            effect.PlayParticlesEffect(tile.transform.position, "Mine");
         }
         
         //_tilesToAttack.Clear();
