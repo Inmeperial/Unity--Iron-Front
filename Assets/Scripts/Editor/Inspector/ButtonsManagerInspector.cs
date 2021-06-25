@@ -12,6 +12,7 @@ public class ButtonsManagerInspector : Editor
     GUIStyle _importantStyle = new GUIStyle();
     bool showButtons;
     bool showPlayerHud;
+    bool showAttackHud;
     bool showEnemyHud;
     private void OnEnable()
     {
@@ -63,6 +64,22 @@ public class ButtonsManagerInspector : Editor
             
             _selection.playerLegsCurrHp = (TextMeshProUGUI)EditorGUILayout.ObjectField("Legs HP Text", _selection.playerLegsCurrHp, typeof(TextMeshProUGUI), true);
             _selection.playerLegsSlider = (Slider)EditorGUILayout.ObjectField("Legs HP Slider", _selection.playerLegsSlider, typeof(Slider), true);
+        }
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Attack HUD", _importantStyle);
+        showAttackHud = EditorGUILayout.Toggle(showAttackHud);
+        EditorGUILayout.EndHorizontal();
+        
+        if (showAttackHud)
+        {
+            _selection.attackHudContainer = (GameObject)EditorGUILayout.ObjectField("Attack HUD Container", _selection.attackHudContainer, typeof(GameObject), true);
+            _selection.attackWeaponNameText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Weapon Name Text", _selection.attackWeaponNameText, typeof(TextMeshProUGUI), true);
+            _selection.attackWeaponHitsText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Weapon Hits Text", _selection.attackWeaponHitsText, typeof(TextMeshProUGUI), true);
+            _selection.attackWeaponDamageText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Weapon Damage Text", _selection.attackWeaponDamageText, typeof(TextMeshProUGUI), true);
+            _selection.attackWeaponHitChanceText = (TextMeshProUGUI)EditorGUILayout.ObjectField("Weapon HitChance Text", _selection.attackWeaponHitChanceText, typeof(TextMeshProUGUI), true);
+            _selection.hitContainer = (GameObject)EditorGUILayout.ObjectField("Hit Container", _selection.hitContainer, typeof(GameObject), true);
+            _selection.hitImagePrefab = (GameObject)EditorGUILayout.ObjectField("Hit Image Prefab", _selection.hitImagePrefab, typeof(GameObject), true);
         }
     }
 }

@@ -14,7 +14,7 @@ public class CharacterSelection : MonoBehaviour
     private TileHighlight _highlight;
     private TurnManager _turnManager;
     ButtonsUIManager _buttonsManager;
-    public bool _canSelectUnit;
+    private bool _canSelectUnit;
     private Character _enemySelection;
 
     public bool playerSelected;
@@ -99,6 +99,7 @@ public class CharacterSelection : MonoBehaviour
             _enemySelection.SelectedAsEnemy();
             _buttonsManager.SetEnemy(_enemySelection);
             _buttonsManager.SetEnemyUI();
+            _canSelectUnit = false;
             if (_selection && _selection.CanAttack())
             {
                 _selection.RotateTowardsEnemy(_enemySelection.transform.position);
