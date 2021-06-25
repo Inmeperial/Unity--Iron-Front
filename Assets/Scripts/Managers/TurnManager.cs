@@ -365,4 +365,9 @@ public class TurnManager : EnumsClass, IObservable
             p.gameObject.SetActive(state);
         }
     }
+
+    public Character[] GetAllUnits()
+    {
+        return _allUnits;
+    }
 }

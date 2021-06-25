@@ -412,6 +412,11 @@ public class ButtonsUIManager : MonoBehaviour
         DeactivateBodyPartsContainer();
         attackHudContainer.SetActive(false);
         _selectedChar.bodyRenderContainer.SetActive(true);
+        var units = _turnManager.GetAllUnits();
+        foreach (var u in units)
+        {
+            u.gameObject.SetActive(true);
+        }
         cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, Attack);
     }
 
@@ -503,6 +508,11 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 _selectedChar.bodyRenderContainer.SetActive(true);
                 attackHudContainer.SetActive(false);
+                var units = _turnManager.GetAllUnits();
+                foreach (var u in units)
+                {
+                    u.gameObject.SetActive(true);
+                }
                 var cam = FindObjectOfType<CloseUpCamera>();
                 cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, cam.ResetCamera);
 
@@ -814,6 +824,15 @@ public class ButtonsUIManager : MonoBehaviour
                 _selectedEnemy.SetSelectedForAttack(true);
                 buttonEndTurn.gameObject.SetActive(false);
                 _turnManager.PortraitsActiveState(false);
+                var units = _turnManager.GetAllUnits();
+
+                foreach (var u in units)
+                {
+                    if (u == _selectedChar || u == _selectedEnemy) continue;
+                    
+                    u.gameObject.SetActive(false);
+                }
+                
                 FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position, ActivateBodyPartsContainer);
                 playerHudContainer.SetActive(false);
                 _selectedChar.ResetTilesInAttackRange();
