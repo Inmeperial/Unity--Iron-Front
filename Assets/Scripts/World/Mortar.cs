@@ -294,18 +294,18 @@ public class Mortar : MonoBehaviour, IObserver
     void Attack()
     {
         Debug.Log("mortero ataca");
-        
+        var effect = FindObjectOfType<EffectsController>();
         foreach (var tile in _tilesToAttack)
         {
             var unit = tile.GetCharacterAbove();
-            if (unit)
-            {
-                unit.body.TakeDamageBody(_damage);
-                unit.leftArm.TakeDamageArm(_damage);
-                unit.rightArm.TakeDamageArm(_damage);
-                unit.legs.TakeDamageLegs(_damage);
-            }
+            if (!unit) continue;
+            unit.body.TakeDamageBody(_damage);
+            unit.leftArm.TakeDamageArm(_damage);
+            unit.rightArm.TakeDamageArm(_damage);
+            unit.legs.TakeDamageLegs(_damage);
+            effect.PlayParticlesEffect(unit.transform.position, "Mine");
         }
+        
         //_tilesToAttack.Clear();
         _attackPending = false;
         FindObjectOfType<TurnManager>().mortarAttack = false;
