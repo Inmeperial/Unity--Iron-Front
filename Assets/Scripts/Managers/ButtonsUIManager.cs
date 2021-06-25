@@ -238,7 +238,6 @@ public class ButtonsUIManager : MonoBehaviour
         
         var gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets();
-        CreateImage(gun.GetBulletsPerClick());
         _bulletsForLArm = _bulletsForLArm > 0 ? (_bulletsForLArm - gun.GetBulletsPerClick()) : 0;
         _selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLArm);
         CheckIfCanExecuteAttack();
@@ -301,10 +300,9 @@ public class ButtonsUIManager : MonoBehaviour
         
         var gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets();
-        CreateImage(gun.GetBulletsPerClick());
         _bulletsForRArm = _bulletsForRArm > 0 ? (_bulletsForRArm - gun.GetBulletsPerClick()) : 0;
         _selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRArm);
-
+        CreateImage(gun.GetBulletsPerClick());
         CheckIfCanExecuteAttack();
         if (_bulletsForRArm == 0)
         {
@@ -365,9 +363,9 @@ public class ButtonsUIManager : MonoBehaviour
         
         var gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets();
-        CreateImage(gun.GetBulletsPerClick());
         _bulletsForLegs = _bulletsForLegs > 0 ? (_bulletsForLegs - gun.GetBulletsPerClick()) : 0;
         _selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
+        CreateImage(gun.GetBulletsPerClick());
         CheckIfCanExecuteAttack();
         if (_bulletsForLegs == 0)
         {
@@ -741,11 +739,14 @@ public class ButtonsUIManager : MonoBehaviour
 
     void CreateImage(int quantity)
     {
+        var c = 0;
         for (int i = 0; i < quantity; i++)
         {
+            c++;
             var image = Instantiate(hitImagePrefab, hitContainer.transform, true);
             _hitImagesCreated.Add(image);
         }
+        Debug.Log("creo: " + c);
     }
 
     void DestroyImage(int quantity)
