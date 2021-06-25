@@ -53,7 +53,7 @@ public class Mortar : MonoBehaviour, IObserver
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(_deselectKey))
+        if (_selected && Input.GetKeyDown(_deselectKey))
         {
             Deselect();
         }
@@ -67,21 +67,23 @@ public class Mortar : MonoBehaviour, IObserver
     private void Selection()
     {
         //Chequeo si hago click en el mortero o no
-        if (MouseRay.GetTargetGameObject(_mortarMask))
+        if (MouseRay.GetTargetGameObject(_mortarMask) == gameObject)
         {
+            var mortars = FindObjectsOfType<Mortar>();
+
+            foreach (var m in mortars)
+            {
+                if (m != this)
+                    m.Deselect();
+            }
+            
+            Debug.Log("my name" + name);
             var s = FindObjectOfType<CharacterSelection>().GetSelectedCharacter();
             s.SetSelection(false);
             _selected = true;
             if (SelectedPlayerAbove())
             {
                 _activationCharacter.ResetInRangeLists();
-                // foreach (var tiles in _tilesInAttackRange)
-                // {
-                //     tiles.inAttackRange = true;
-                //     _highlight.PaintTilesInAttackRange(tiles);
-                //     //_highlight.PaintTilesInPreviewRange(tiles);
-                //     //_highlight.PaintTilesInActivationRange(tiles);
-                // }
             }
             foreach (var tiles in _tilesInAttackRange)
             {
@@ -101,12 +103,11 @@ public class Mortar : MonoBehaviour, IObserver
             
             if (!IsValidTarget(target)) return;
             
-            if (SelectedPlayerAbove())
-            {
-                _activationCharacter.ResetInRangeLists();
-            }
+            if (!SelectedPlayerAbove()) return;
             
-            foreach (var tiles in _tilesInAttackRange)
+            _activationCharacter.ResetInRangeLists();
+
+                foreach (var tiles in _tilesInAttackRange)
             {
                 tiles.inAttackRange = true;
                 _highlight.MortarPaintTilesInAttackRange(tiles);
@@ -164,6 +165,8 @@ public class Mortar : MonoBehaviour, IObserver
                 return true;
             }
         }
+
+        _activationCharacter = null;
         return false;
     }
 

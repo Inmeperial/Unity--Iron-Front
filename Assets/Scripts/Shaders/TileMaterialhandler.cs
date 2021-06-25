@@ -46,6 +46,11 @@ public class TileMaterialhandler : MonoBehaviour
 
     public void DiseableAndEnableSelectedNodeForMortar(bool isStatusOn)
     {
+        _childStatusAoEMortar.gameObject.SetActive(isStatusOn);
+    }
+    
+    public void DiseableAndEnableActivationNodeForMortar(bool isStatusOn)
+    {
         _childStatusActivationMortar.gameObject.SetActive(isStatusOn);
     }
 
@@ -165,10 +170,16 @@ public class TileMaterialhandler : MonoBehaviour
                 _childSelectedNode = transform.GetChild(i);
                 continue;
             }
+
+            if (transform.GetChild(i).gameObject.name == "PlaneForAoEMortar")
+            {
+                _childStatusAoEMortar = transform.GetChild(i);
+                continue;
+            }
+            
             if (transform.GetChild(i).gameObject.name == "PlaneForMortar")
             {
                 _childStatusActivationMortar = transform.GetChild(i);
-                continue;
             }
         }
     }

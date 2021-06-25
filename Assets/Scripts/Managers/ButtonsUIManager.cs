@@ -913,7 +913,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (!isPlayer) return;
         
-        playerLegsCurrHp.text = value + "HP";
+        playerLegsCurrHp.text = value.ToString();
         playerLegsSlider.value = value;
     }
 

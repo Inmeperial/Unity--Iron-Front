@@ -194,7 +194,7 @@ public class Tile : MonoBehaviour
     
     public void MortarCanBeAttackedColor()
     {
-        //_materialHandler.StatusAoEOfAttackForMortar();
+        //_materialHandler.StatusAoEOfAttackForMortar(true);
         _materialHandler.DiseableAndEnableSelectedNodeForMortar(true);
     }
 
@@ -226,13 +226,7 @@ public class Tile : MonoBehaviour
         _materialHandler.StatusBulletAoEOfAttackForMortar(true);
         //MouseOverColor();
     }
-
-    public void MortarActivationRange()
-    {
-        _materialHandler.StatusActivationRageForMortar();
-    }
-
-
+    
     //Despinta el tile para el preview de ataque
     public void EndAttackPreviewColor()
     {
@@ -241,11 +235,17 @@ public class Tile : MonoBehaviour
         _materialHandler.DiseableAndEnableStatus(false);
         EndMouseOverColor();
     }
-    
+    public void MortarActivationRange()
+    {
+        _materialHandler.DiseableAndEnableActivationNodeForMortar(true);
+        _materialHandler.StatusActivationRageForMortar();
+    }
+
     // //CAMBIAR CUANDO ESTE EL SHADER
     public void EndActivationRangeColor()
     {
         //Debug.Log("END ACTIVATION RANGE");
+        _materialHandler.DiseableAndEnableActivationNodeForMortar(false);
     }
 
     //Pinta el ultimo tile del path
