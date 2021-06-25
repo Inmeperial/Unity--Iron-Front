@@ -214,7 +214,6 @@ public class Character : EnumsClass
         ResetTilesInMoveRange();
         _animationMechaHandler.SetIsWalkingAnimatorTrue();
         AudioManager.audioManagerInstance.PlaySound(soundMotorStart, this.gameObject);
-        //AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
         _smokeMechaHandler.SetMachineOn(true);
         _move.StartMovement(_path);
     }
@@ -232,17 +231,20 @@ public class Character : EnumsClass
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
+                    effectsController.PlayParticlesEffect(this.transform.position + new Vector3(2, 2.5f, 3), "AssaultRifle");
                     _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
                     break;
                 case GunsType.Melee:
                     _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
                     break;
                 case GunsType.Rifle:
+                    effectsController.PlayParticlesEffect(this.transform.position + new Vector3(2, 2.5f, 3), "Rifle");
                     _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
                     break;
                 case GunsType.Shield:
                     break;
                 case GunsType.Shotgun:
+                    effectsController.PlayParticlesEffect(this.transform.position + new Vector3(2, 2.5f, 3), "ShootGun");
                     _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
                     break;
             }

@@ -9,15 +9,17 @@ public class EffectsController : MonoBehaviour
 {
     [Header("Particles")]
     [SerializeField] private GameObject _attackEffect;
-    
     [SerializeField] private GameObject _damageEffect;
-    
     [SerializeField] private GameObject _mineExplosionEffect;
-
     [SerializeField] private GameObject _shootGunEffect;
+    [SerializeField] private GameObject _assalutRifleEffect;
+    [SerializeField] private GameObject _rifleEffect;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip _shootGunSound;
+    [SerializeField] private AudioClip _assalutRifleSound;
+    [SerializeField] private AudioClip _rifleSound;
+    [SerializeField] private AudioClip _mineSound;
 
     [Header("Damage Text")]
     
@@ -66,6 +68,7 @@ public class EffectsController : MonoBehaviour
                 particle.time = 0f;
                 particle.Play();
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                AudioManager.audioManagerInstance.PlaySound(_mineSound, this.gameObject);
                 break;
 
             case "ShootGun":
@@ -74,6 +77,22 @@ public class EffectsController : MonoBehaviour
                 particle.time = 0f;
                 particle.Play();
                 AudioManager.audioManagerInstance.PlaySound(_shootGunSound, this.gameObject);
+                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                break;
+            case "AssaultRifle":
+                effect = Instantiate(_assalutRifleEffect, pos, transform.rotation, transform);
+                particle = effect.GetComponent<ParticleSystem>();
+                particle.time = 0f;
+                particle.Play();
+                AudioManager.audioManagerInstance.PlaySound(_assalutRifleSound, this.gameObject);
+                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                break;
+            case "Rifle":
+                effect = Instantiate(_rifleEffect, pos, transform.rotation, transform);
+                particle = effect.GetComponent<ParticleSystem>();
+                particle.time = 0f;
+                particle.Play();
+                AudioManager.audioManagerInstance.PlaySound(_rifleSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
         }
