@@ -11,6 +11,7 @@ public class CloseUpCamera : MonoBehaviour
 	public float minHeight = 5f;
 	public float maxHeight = 8f;
     public float threshold = 15f;
+    public float moveBackInZ;
     [SerializeField] private Camera _uiCam;
     [Header("1 closest to player")]
     [Header("0 closest to enemy")]
@@ -53,7 +54,8 @@ public class CloseUpCamera : MonoBehaviour
 		enemyPosToLerp.y = clampedHeight;
 		playerPosToLerp.y = clampedHeight;
 		
-        var destination = Vector3.Lerp(enemyPosToLerp, playerPosToLerp, lerp);
+		var destination = Vector3.Lerp(enemyPosToLerp, playerPosToLerp, lerp);
+		destination.z += moveBackInZ;
         StartCoroutine(Move(destination, enemyPosToLerp, callback));
     }
 

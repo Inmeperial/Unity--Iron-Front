@@ -74,6 +74,7 @@ public class Character : EnumsClass
     private bool _myTurn = false;
 
     //OTHERS
+    public GameObject bodyRenderContainer;
     private HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
     private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
     private Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();

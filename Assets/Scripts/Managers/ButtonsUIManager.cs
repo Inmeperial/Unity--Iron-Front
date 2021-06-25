@@ -387,6 +387,7 @@ public class ButtonsUIManager : MonoBehaviour
         buttonExecuteAttack.gameObject.SetActive(false);
         _selectedChar.ResetInRangeLists();
         DeactivateBodyPartsContainer();
+        _selectedChar.bodyRenderContainer.SetActive(true);
         cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, Attack);
     }
 
@@ -476,6 +477,7 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (_selectedEnemy)
             {
+                _selectedChar.bodyRenderContainer.SetActive(true);
                 var cam = FindObjectOfType<CloseUpCamera>();
                 cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, cam.ResetCamera);
 
@@ -882,6 +884,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedEnemy)
         {
+            _selectedChar.bodyRenderContainer.SetActive(false);
             _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform.position, ActivateParts);
         }
     }
