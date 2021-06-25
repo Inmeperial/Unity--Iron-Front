@@ -136,7 +136,10 @@ public class Mortar : MonoBehaviour, IObserver
                     tiles.inAttackRange = true;
                     _highlight.MortarPaintTilesInAttackRange(tiles);
                 }
-                
+                foreach (var tiles in _tilesInActivationRange)
+                {
+                    _highlight.MortarPaintTilesInActivationRange(tiles);
+                }
                 _tilesToAttack.Clear();
                 PaintTilesInPreviewRange(_last, 0);
             }
@@ -279,6 +282,8 @@ public class Mortar : MonoBehaviour, IObserver
         _turnCount++;
         if (_turnCount < _turnsToAttack) return;
         
+        Debug.Log("mortero ataca");
+        
         foreach (var tile in _tilesToAttack)
         {
             var unit = tile.GetCharacterAbove();
@@ -290,7 +295,7 @@ public class Mortar : MonoBehaviour, IObserver
                 unit.legs.TakeDamageLegs(_damage);
             }
         }
-        _tilesToAttack.Clear();
+        //_tilesToAttack.Clear();
         _attackPending = false;
         _turnCount = 0;
         Deselect();
@@ -303,11 +308,22 @@ public class Mortar : MonoBehaviour, IObserver
         _selected = false;
         _highlight.ClearTilesInActivationRange(_tilesInActivationRange);
         _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
-        _highlight.ClearTilesInPreview(_tilesInPreviewRange);
-        _highlight.ClearTilesInPreview(_tilesToAttack);
-        _tilesInPreviewRange.Clear();
+
+        foreach (var t in _tilesToAttack)
+        {
+            _highlight.PaintTilesInPreviewRange(t);
+        }
+        
+        if (!_attackPending)
+        {
+            _highlight.ClearTilesInPreview(_tilesInPreviewRange);
+            _highlight.ClearTilesInPreview(_tilesToAttack);
+            _tilesInPreviewRange.Clear();
+            _tilesToAttack.Clear();
+        }
+        
         _tilesForPreviewChecked.Clear();
-        _tilesToAttack.Clear();
+        
         _last = null;
     }
 }

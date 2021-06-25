@@ -223,8 +223,6 @@ public class Tile : MonoBehaviour
     //Pinta el tile para el preview de ataque
     public void InAttackPreviewColor()
     {
-        _materialHandler.DiseableAndEnableStatus(true);
-        //_materialHandler.StatusAoEOfAttackForMortar();
         _materialHandler.StatusBulletAoEOfAttackForMortar(true);
         //MouseOverColor();
     }
