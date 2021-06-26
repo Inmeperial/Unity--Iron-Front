@@ -67,7 +67,7 @@ public class TurnManager : EnumsClass, IObservable
             _buttonsUIManager.ActivateEndTurnButton();
             _charSelect.Selection(_actualCharacter);
         };
-        _cameraMovement.MoveTo(_actualCharacter.transform, toDo);
+        _cameraMovement.MoveTo(_actualCharacter.transform, toDo, _actualCharacter.transform);
     }
 
     public void UnitIsMoving()
@@ -133,7 +133,7 @@ public class TurnManager : EnumsClass, IObservable
             _buttonsUIManager.ActivateEndTurnButton();
             _charSelect.Selection(_actualCharacter);
         };
-        _cameraMovement.MoveTo(_actualCharacter.transform, toDo);
+        _cameraMovement.MoveTo(_actualCharacter.transform, toDo, _actualCharacter.transform);
     }
 
     void MoveToLast()
