@@ -6,38 +6,46 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public float fixationThreshold;
+    [Header("Manual Control")]
+    public float manualMovementSpeed;
     public float speed;
     public float rotationSpeed;
+    public TextMeshProUGUI cameraSpeedText;
+    
+    [Header("Transition")]
+    public float fixationThreshold;
+    public float distanceToStartRotation;
+    public float transitionRotationSpeed;
+    public float transitionRotationWatchdog;
     private bool _cameraLocked;
     private Vector3 _initialPos;
     private Quaternion _initialRot;
-
+    private float _watchdogCounter;
     private Rigidbody _rb;
 
     private float _yPos;
 
-    public TextMeshProUGUI cameraSpeedText;
+    
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _initialPos = transform.position;
         _initialRot = transform.rotation;
         _yPos = transform.position.y;
-        cameraSpeedText.text = "CAMERA SPEED: " + speed;
+        cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
     }
     // Update is called once per frame
     public void Update()
     {
         if (Input.GetKey(KeyCode.KeypadPlus))
         {
-            speed++;
-            cameraSpeedText.text = "CAMERA SPEED: " + speed;
+            manualMovementSpeed++;
+            cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
         }
         if (Input.GetKey(KeyCode.KeypadMinus))
         {
-            speed--;
-            cameraSpeedText.text = "CAMERA SPEED: " + speed;
+            manualMovementSpeed--;
+            cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
         }
             
         
@@ -52,7 +60,7 @@ public class CameraMovement : MonoBehaviour
         float z = Input.GetAxis("Vertical");
 
         var dir = transform.right * x + transform.forward * z;
-        _rb.velocity = dir * speed;
+        _rb.velocity = dir * manualMovementSpeed;
 
 
         if (Input.GetKey(KeyCode.E))
@@ -81,19 +89,31 @@ public class CameraMovement : MonoBehaviour
 
     }
 
-    public void MoveTo(Transform transform, Action callback = null)
+    public void MoveTo(Transform transformToMove, Action callback = null, Transform lookAt = null)
     {
-        var pos = transform.position;
+        var pos = transformToMove.position;
         pos.y = _yPos;
         _cameraLocked = true;
-        StartCoroutine(Move(pos, callback));
+        StartCoroutine(Move(pos, callback, lookAt));
     }
 
-    IEnumerator Move(Vector3 pos, Action callback = null)
+    IEnumerator Move(Vector3 pos, Action callback = null, Transform lookAt = null)
     {
+        bool started = false;
         while ((pos - transform.position).magnitude >= fixationThreshold)
         {
-            var dir = (pos - transform.position).normalized;
+            if (lookAt)
+            {
+                var angle = Vector3.Angle(transform.forward, lookAt.forward);
+                if (angle != 0 && !started &&
+                    (pos - transform.position).magnitude <= distanceToStartRotation)
+                {
+                    started = true;
+                    StartCoroutine(Rotate(lookAt));
+                }
+            }
+                
+            var dir = pos - transform.position;
 
             transform.position += dir * (speed * Time.deltaTime);
             yield return new WaitForEndOfFrame();
@@ -102,7 +122,36 @@ public class CameraMovement : MonoBehaviour
         transform.position = pos;
         _cameraLocked = false;
         
+        
         if (callback != null)
             callback();
+    }
+
+    IEnumerator Rotate(Transform lookAt)
+    {
+        _watchdogCounter = 0;
+        var pos = lookAt.position;
+        pos.y = transform.position.y;
+        pos += lookAt.forward;
+        while (!CheckIfFacing(pos) && _watchdogCounter < transitionRotationWatchdog)
+        {
+            float step = transitionRotationSpeed * Time.deltaTime;
+            Vector3 dir = (pos - transform.position).normalized;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, dir, step, 0f);
+            transform.rotation = Quaternion.LookRotation(newDir);
+            _watchdogCounter++;
+            yield return new WaitForEndOfFrame();
+        }
+        
+        transform.LookAt(pos);
+        yield return null;
+    }
+
+    private bool CheckIfFacing(Vector3 pos)
+    {
+        var dir = pos - transform.position;
+        var thresholdPlus = new Vector3(dir.x + 0.1f, dir.y, dir.z + 0.1f);
+        var thresholdMin = new Vector3(dir.x - 0.1f, dir.y, dir.z - 0.1f);
+        return transform.forward == dir.normalized || transform.forward == thresholdPlus || transform.forward == thresholdMin;
     }
 }
