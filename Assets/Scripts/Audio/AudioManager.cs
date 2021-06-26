@@ -185,26 +185,43 @@ public class AudioManager : MonoBehaviour
         sound.source.playOnAwake = true;
         sound.source.Play();
     }
-
+    
     private AudioSource GetOrSetAudioSourceFromObj(GameObject target)
     {
         AudioSource audioSource = new AudioSource();
-
-        if (target.GetComponents<AudioSource>() != null)
+        var targetAudio = target.GetComponent<AudioSource>(); 
+        if (targetAudio)
         {
-            foreach (var item in target.GetComponents<AudioSource>())
-            {
-                if (!item.GetComponent<AudioSource>().isPlaying)
-                {
-                    audioSource = target.GetComponent<AudioSource>();
-                    break;
-                }
-            }
+            Debug.Log("target tiene audiosource " + target.name);
+            audioSource = targetAudio;
         }
-        if (audioSource == null)
+        else
         {
+            Debug.Log("creo audiosource: " + target.name);
             audioSource = target.AddComponent<AudioSource>();
         }
         return audioSource;
     }
+
+    // private AudioSource GetOrSetAudioSourceFromObj(GameObject target)
+    // {
+    //     AudioSource audioSource = new AudioSource();
+    //
+    //     if (target.GetComponents<AudioSource>() != null)
+    //     {
+    //         foreach (var item in target.GetComponents<AudioSource>())
+    //         {
+    //             if (!item.GetComponent<AudioSource>().isPlaying)
+    //             {
+    //                 audioSource = target.GetComponent<AudioSource>();
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     if (audioSource == null)
+    //     {
+    //         audioSource = target.AddComponent<AudioSource>();
+    //     }
+    //     return audioSource;
+    // }
 }
