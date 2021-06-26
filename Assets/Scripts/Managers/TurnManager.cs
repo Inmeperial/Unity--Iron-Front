@@ -261,21 +261,40 @@ public class TurnManager : EnumsClass, IObservable
 
     public void ReducePosition(Character unit)
     {
-        var myPos = GetMyTurn(unit);
+        var oldPos = GetMyTurn(unit);
         
         //If last, return
-        if (myPos == _currentTurnOrder.Count -1) return;
+        if (oldPos == _currentTurnOrder.Count -1) return;
         
         //Move unit portrait one position behind
-        
-        var newPos = myPos + 1;
-        StartCoroutine(MovePortrait(GetMyRect(unit), myPos, newPos));
 
-        //Move portrait that was behind to one position ahead
-        var other = _currentTurnOrder[newPos];
-        StartCoroutine(MovePortrait(GetMyRect(other), newPos, myPos));
-        _currentTurnOrder.RemoveAt(myPos);
-        _currentTurnOrder.Insert(newPos, unit);
+        var newPos = 0;
+
+        if (unit.legs.GetCurrentHp() > 0)
+        {
+            newPos = oldPos + 1;
+            StartCoroutine(MovePortrait(GetMyRect(unit), oldPos, newPos));
+
+            //Move portrait that was behind to one position ahead
+            var other = _currentTurnOrder[newPos];
+            StartCoroutine(MovePortrait(GetMyRect(other), newPos, oldPos));
+            _currentTurnOrder.RemoveAt(oldPos);
+            _currentTurnOrder.Insert(newPos, unit);
+        }
+        else
+        {
+            newPos = _portraitsPositions.Count - 1;
+            StartCoroutine(MovePortrait(GetMyRect(unit), oldPos, newPos));
+            _currentTurnOrder.RemoveAt(oldPos);
+            _currentTurnOrder.Insert(newPos, unit);
+
+            for (int i = oldPos; i < newPos; i++)
+            {
+                var u = _currentTurnOrder[i];
+                StartCoroutine(MovePortrait(GetMyRect(u), i + 1, i));
+            }
+        } 
+        
         
     }
 

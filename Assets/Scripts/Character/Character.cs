@@ -908,11 +908,11 @@ public class Character : EnumsClass
     public void NewTurn()
     {
         _myTurn = false;
-        _canMove = legs.GetCurrentHp() > 0 ? true : false;
+        _canMove = true;
         _canAttack = true;
         _selectedGun.SetGun();
         _path.Clear();
-        _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
+        _currentSteps = legs.GetCurrentHp() > 0 ? legs.GetMaxSteps() : legs.GetMaxSteps() / 2;
         _enemiesInRange.Clear();
         _canBeAttacked = false;
         pathCreator.ResetPath();
