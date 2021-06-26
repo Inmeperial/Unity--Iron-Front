@@ -43,9 +43,9 @@ public class CloseUpCamera : MonoBehaviour
         StartCoroutine(Move(destination, enemyPosToLerp, callback));
     }
 
-    public void MoveCameraToParent(Vector3 destination, Vector3 targetToLook, Action callback = null)
+    public void MoveCameraToParent(Vector3 destination, Vector3 targetToLook, Action callback = null, float callbackDelay = 0)
     {
-        StartCoroutine(MoveToParent(destination, targetToLook, callback));
+        StartCoroutine(MoveToParent(destination, targetToLook, callback, callbackDelay));
     }
 
     IEnumerator Move(Vector3 destination, Vector3 targetToLook, Action callback = null)
@@ -64,7 +64,7 @@ public class CloseUpCamera : MonoBehaviour
         }
         transform.LookAt(targetToLook);
     }
-    IEnumerator MoveToParent(Vector3 destination, Vector3 targetToLook, Action callback = null)
+    IEnumerator MoveToParent(Vector3 destination, Vector3 targetToLook, Action callback = null, float callbackDelay = 0)
     {
         while ((destination - transform.position).magnitude >= threshold)
         {
@@ -78,6 +78,7 @@ public class CloseUpCamera : MonoBehaviour
         
         if (callback != null)
         {
+            yield return new WaitForSeconds(callbackDelay);
             callback();
         }
     }

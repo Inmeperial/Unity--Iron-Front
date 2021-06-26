@@ -10,6 +10,7 @@ public class ButtonsUIManager : MonoBehaviour
 {
     public LayerMask gridBlock;
     public Button buttonExecuteAttack;
+    public float attackDelay;
     public Button buttonEndTurn;
 
     public KeyCode deselectKey;
@@ -419,7 +420,7 @@ public class ButtonsUIManager : MonoBehaviour
         {
             u.gameObject.SetActive(true);
         }
-        cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, Attack);
+        cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, Attack, attackDelay);
     }
 
     /// <summary>
