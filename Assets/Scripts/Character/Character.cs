@@ -231,20 +231,20 @@ public class Character : EnumsClass
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
-                    effectsController.PlayParticlesEffect(GetParticleSpawnerFromWeapon(_rightGunSpawn), "AssaultRifle");
+                    effectsController.PlayParticlesEffect(_rightGun.GetParticleSpawn(), "AssaultRifle");
                     _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
                     break;
                 case GunsType.Melee:
                     _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
                     break;
                 case GunsType.Rifle:
-                    effectsController.PlayParticlesEffect(GetParticleSpawnerFromWeapon(_rightGunSpawn), "Rifle");
+                    effectsController.PlayParticlesEffect(_rightGun.GetParticleSpawn(), "Rifle");
                     _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
                     break;
                 case GunsType.Shield:
                     break;
                 case GunsType.Shotgun:
-                    effectsController.PlayParticlesEffect(GetParticleSpawnerFromWeapon(_rightGunSpawn), "ShootGun");
+                    effectsController.PlayParticlesEffect(_rightGun.GetParticleSpawn(), "ShootGun");
                     _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
                     break;
             }
@@ -257,20 +257,20 @@ public class Character : EnumsClass
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
-                    effectsController.PlayParticlesEffect(GetParticleSpawnerFromWeapon(_leftGunSpawn), "AssaultRifle");
+                    effectsController.PlayParticlesEffect(_leftGun.GetParticleSpawn(), "AssaultRifle");
                     _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Melee:
                     _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Rifle:
-                    effectsController.PlayParticlesEffect(GetParticleSpawnerFromWeapon(_leftGunSpawn), "Rifle");
+                    effectsController.PlayParticlesEffect(_leftGun.GetParticleSpawn(), "Rifle");
                     _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Shield:
                     break;
                 case GunsType.Shotgun:
-                    effectsController.PlayParticlesEffect(GetParticleSpawnerFromWeapon(_leftGunSpawn), "ShootGun");
+                    effectsController.PlayParticlesEffect(_leftGun.GetParticleSpawn(), "ShootGun");
                     _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
                     break;
             }
@@ -1112,11 +1112,5 @@ public class Character : EnumsClass
     public void WalkSoundStepMecha()
     {
         AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
-    }
-
-    private GameObject GetParticleSpawnerFromWeapon(GameObject obj)
-    {
-        GameObject objWeapon = obj.transform.GetChild(0).gameObject.transform.Find("ParticleSpawner").gameObject;
-        return objWeapon;
     }
 }

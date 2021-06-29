@@ -32,7 +32,8 @@ public abstract class Gun : EnumsClass, IGun
     private const int MissHit = 0;
     private const int NormalHit = 1;
     private const int CriticalHit = 2;
-    
+
+    [SerializeField] protected GameObject _particleSpawn;
     public void SetRightOrLeft(string location)
     {
         _location = location;
@@ -252,5 +253,10 @@ public abstract class Gun : EnumsClass, IGun
             if (m) m.enabled = false;
         }
         GetComponent<BoxCollider>().enabled = false;
+    }
+
+    public GameObject GetParticleSpawn()
+    {
+        return _particleSpawn;
     }
 }
