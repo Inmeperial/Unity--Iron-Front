@@ -77,10 +77,12 @@ public class Legs : Parts
                    
                 case NormalHit:
                     _myChar.effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, legsPos, i == damages.Count - 1 ? true : false);
+                    _myChar.HitSoundMecha();
                     break;
                
                 case CriticalHit:
                     _myChar.effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, legsPos, i == damages.Count - 1 ? true : false);
+                    _myChar.HitSoundMecha();
                     break;
             }
         }
@@ -125,6 +127,7 @@ public class Legs : Parts
         _myChar.buttonsManager.UpdateLegsHUD(_legsHP, true);
         _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
         _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Hit");
+        _myChar.HitSoundMecha();
         _myChar.effectsController.CreateDamageText(damage.ToString(), 1, transform.position, true);
         //_myChar.ShowWorldUI();
         //_myChar.turnManager.OrderTurns();

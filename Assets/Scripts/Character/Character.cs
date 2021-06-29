@@ -86,6 +86,7 @@ public class Character : EnumsClass, IObservable
     private SmokeMechaHandler _smokeMechaHandler;
     public AudioClip soundMotorStart;
     public AudioClip soundWalk;
+    public AudioClip soundHit;
     private AnimationMechaHandler _animationMechaHandler;
     
     private List<IObserver> _observers = new List<IObserver>();
@@ -1130,6 +1131,11 @@ public class Character : EnumsClass, IObservable
     public void WalkSoundStepMecha()
     {
         AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
+    }
+
+    public void HitSoundMecha()
+    {
+        AudioManager.audioManagerInstance.PlaySound(soundHit, this.gameObject);
     }
 
     public void Subscribe(IObserver observer)
