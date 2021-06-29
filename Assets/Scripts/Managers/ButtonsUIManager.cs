@@ -441,6 +441,9 @@ public class ButtonsUIManager : MonoBehaviour
                 gun.Ability();
             }
             _selectedChar.DeactivateAttack();
+            
+            if (_selectedEnemy.body.GetCurrentHp() <= 0)
+                _selectedEnemy.Dead();
         }
 
 

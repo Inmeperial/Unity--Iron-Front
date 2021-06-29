@@ -41,12 +41,7 @@ public class Body : Parts
             total += damages[i].Item1;
             var hp = _bodyHP - damages[i].Item1;
             _bodyHP = hp > 0 ? hp : 0;
-            
-            if (_bodyHP <= 0)
-            {
-                _myChar.Dead();
-            }
-            
+
             _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
             _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Hit");
             var item = damages[i].Item2;
@@ -78,11 +73,6 @@ public class Body : Parts
         ui.SetBodySlider(_bodyHP);
         var hp = _bodyHP - damage;
         _bodyHP = hp > 0 ? hp : 0;
-        
-        if (_bodyHP <= 0)
-        {
-            _myChar.Dead();
-        }
 
         var bodyPos = transform.position;
         _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");

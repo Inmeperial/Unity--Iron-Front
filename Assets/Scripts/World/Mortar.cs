@@ -286,7 +286,6 @@ public class Mortar : MonoBehaviour, IObserver
 
     void Attack()
     {
-        Debug.Log("mortero ataca");
         var effect = FindObjectOfType<EffectsController>();
         foreach (var tile in _tilesToAttack)
         {
@@ -298,6 +297,9 @@ public class Mortar : MonoBehaviour, IObserver
             unit.legs.TakeDamageLegs(_damage);
             //effect.PlayParticlesEffect(tile.transform.position, "Mine");
             effect.PlayParticlesEffect(tile.gameObject, "Mine");
+            
+            if (unit.body.GetCurrentHp() <= 0)
+                unit.Dead();
         }
         
         //_tilesToAttack.Clear();
