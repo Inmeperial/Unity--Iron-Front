@@ -8,4 +8,8 @@ public class AssaultRifle : Gun
     {
         
     }
+
+    public override void Deselect()
+    {
+    }
 }

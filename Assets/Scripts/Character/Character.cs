@@ -282,8 +282,7 @@ public class Character : EnumsClass
     /// </summary>
     public void SelectLeftGun()
     {
-        if (_selectedGun.GetGunType() == GunsType.Shield)
-            if (_canAttack) _selectedGun.Ability();
+        if (_rightGun) _rightGun.Deselect();
         
         _selectedGun = _leftGun;
         _leftGunSelected = true;
@@ -319,8 +318,7 @@ public class Character : EnumsClass
     /// </summary>
     public void SelectRightGun()
     {
-        if (_selectedGun.GetGunType() == GunsType.Shield)
-            if (_canAttack) _selectedGun.Ability();
+        if (_leftGun) _leftGun.Deselect();
         
         _selectedGun = _rightGun;
         _leftGunSelected = false;
@@ -910,6 +908,8 @@ public class Character : EnumsClass
     /// </summary>
     public void NewTurn()
     {
+        _rightGun.Deselect();
+        _leftGun.Deselect();
         _myTurn = false;
         _canMove = true;
         _canAttack = true;

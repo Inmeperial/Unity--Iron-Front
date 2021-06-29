@@ -64,6 +64,10 @@ public class Shotgun : Gun
         }
     }
 
+    public override void Deselect()
+    {
+    }
+
     public override void StartRoulette()
     {
         base.StartRoulette();

@@ -8,4 +8,8 @@ public class Rifle : Gun
     {
         
     }
+
+    public override void Deselect()
+    {
+    }
 }

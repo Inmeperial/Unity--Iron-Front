@@ -237,6 +237,8 @@ public abstract class Gun : EnumsClass, IGun
 
     public abstract void Ability();
 
+    public abstract void Deselect();
+
     /// <summary>
     /// Return true if the Gun ability was used, false if not.
     /// </summary>

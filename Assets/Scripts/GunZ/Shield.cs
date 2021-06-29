@@ -26,22 +26,22 @@ public class Shield : Gun
 
                 var go = Instantiate(interactionPrefabs, p, Quaternion.identity);
                 var button = go.GetComponentInChildren<CustomButton>();
-                button.OnLeftClick.AddListener(() =>Rotate(go.transform));
+                button.OnLeftClick.AddListener(() => Rotate(go.transform));
                 _instantiated.Add(go);
             }
 
             _selected = true;
         }
-        else
+    }
+
+    public override void Deselect()
+    {
+        _selected = false;
+        foreach (var prefab in _instantiated)
         {
-            foreach (var prefab in _instantiated)
-            {
-                Destroy(prefab);
-            }
-            _instantiated.Clear();
-            _selected = false;
+            Destroy(prefab);
         }
-        
+        _instantiated.Clear();
     }
 
     private Character GetCharacter(Transform parent)
