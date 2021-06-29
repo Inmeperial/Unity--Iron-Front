@@ -67,6 +67,7 @@ public class Legs : Parts
             UpdateHp(hp > 0 ? hp : 0);
             _myChar.SetCharacterMove(_legsHP > 0 ? true : false);
             _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
+            _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Hit");
             var item = damages[i].Item2;
             switch (item)
             {
@@ -123,6 +124,7 @@ public class Legs : Parts
         }
         _myChar.buttonsManager.UpdateLegsHUD(_legsHP, true);
         _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
+        _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Hit");
         _myChar.effectsController.CreateDamageText(damage.ToString(), 1, transform.position, true);
         //_myChar.ShowWorldUI();
         //_myChar.turnManager.OrderTurns();

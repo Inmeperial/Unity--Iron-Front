@@ -7,6 +7,7 @@ public class AnimationMechaHandler : MonoBehaviour
     public void SetPauseDeadAnimation()
     {
         this.GetComponent<Animator>().speed = 0;
+        this.GetComponent<Character>().effectsController.PlayParticlesEffect(this.gameObject, "Dead");
     }
 
     public void SetIsDeadAnimatorTrue()

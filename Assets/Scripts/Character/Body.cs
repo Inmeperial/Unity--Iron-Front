@@ -42,6 +42,7 @@ public class Body : Parts
             var hp = _bodyHP - damages[i].Item1;
             _bodyHP = hp > 0 ? hp : 0;
             _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
+            _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Hit");
             var item = damages[i].Item2;
             switch (item)
             {
@@ -60,7 +61,7 @@ public class Body : Parts
         }
         if (_bodyHP <= 0)
         {
-            _myChar.NotSelectable();
+            MechaDeath();
         }
         ui.ContainerActivation(true);
         ui.UpdateBodySlider(total, (int)_bodyHP);
@@ -76,16 +77,22 @@ public class Body : Parts
         _bodyHP = hp > 0 ? hp : 0;
         if (_bodyHP <= 0)
         {
-            _myChar.NotSelectable();
+            MechaDeath();
         }
 
         var bodyPos = transform.position;
         _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
+        _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Hit");
         _myChar.effectsController.CreateDamageText(damage.ToString(), 1, bodyPos, true);
         ui.ContainerActivation(true);
         ui.UpdateBodySlider(damage, (int)_bodyHP);
         _myChar.MakeNotAttackable();
     }
 
-    
+    public void MechaDeath()
+    {
+        _myChar.NotSelectable();
+        //_myChar.effectsController.PlayParticlesEffect(this.gameObject, "Dead");
+    }
+
 }

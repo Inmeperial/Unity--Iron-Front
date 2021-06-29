@@ -4,9 +4,16 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class EffectsController : MonoBehaviour
 {
+    [Header("Camera Shake")]
+    public float shakeMagnetude = 0.05f, shakeTime = 0.5f;
+    private Vector3 _cameraInitialPosition;
+    
+    //private Camera mainCamera;
+
     [Header("Particles")]
     [SerializeField] private GameObject _attackEffect;
     [SerializeField] private GameObject _damageEffect;
@@ -14,6 +21,8 @@ public class EffectsController : MonoBehaviour
     [SerializeField] private GameObject _shootGunEffect;
     [SerializeField] private GameObject _assalutRifleEffect;
     [SerializeField] private GameObject _rifleEffect;
+    [SerializeField] private GameObject _deadMechaEffect;
+    [SerializeField] private GameObject _hitMechaEffect;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip _shootGunSound;
@@ -80,6 +89,7 @@ public class EffectsController : MonoBehaviour
                 AudioManager.audioManagerInstance.PlaySound(_shootGunSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
+
             case "AssaultRifle":
                 effect = Instantiate(_assalutRifleEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
                 effect.transform.SetParent(obj.transform);
@@ -89,8 +99,30 @@ public class EffectsController : MonoBehaviour
                 AudioManager.audioManagerInstance.PlaySound(_assalutRifleSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
+
             case "Rifle":
                 effect = Instantiate(_rifleEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
+                effect.transform.SetParent(obj.transform);
+                particle = effect.GetComponent<ParticleSystem>();
+                particle.time = 0f;
+                particle.Play();
+                AudioManager.audioManagerInstance.PlaySound(_rifleSound, this.gameObject);
+                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                break;
+
+            case "Dead":
+                effect = Instantiate(_deadMechaEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
+                effect.transform.SetParent(obj.transform);
+                particle = effect.GetComponent<ParticleSystem>();
+                particle.time = 0f;
+                particle.Play();
+                ShakeIt();
+                AudioManager.audioManagerInstance.PlaySound(_rifleSound, this.gameObject);
+                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                break;
+
+            case "Hit":
+                effect = Instantiate(_hitMechaEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
                 effect.transform.SetParent(obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
@@ -159,4 +191,28 @@ public class EffectsController : MonoBehaviour
             this.GetComponent<MeshRenderer>().material.SetInt("_isFullCover", 0);
         }
     }
+
+    private void ShakeIt()
+    {
+        _cameraInitialPosition = _cam.transform.position;
+        InvokeRepeating("StartCameraShaking", 0f, 0.005f);
+        Invoke("StopCameraShaking", shakeTime);
+    }
+
+    private void StopCameraShaking()
+    {
+        CancelInvoke("StartCameraShaking");
+        _cam.transform.position = _cameraInitialPosition;
+    }
+
+    private void StartCameraShaking()
+    {
+        float cameraShakingOffsetX = Random.value * shakeMagnetude * 2 - shakeMagnetude;
+        float cameraShakingOffsetY = Random.value * shakeMagnetude * 2 - shakeMagnetude;
+        Vector3 cameraIntermadiatePosition = _cam.transform.position;
+        cameraIntermadiatePosition.x += cameraShakingOffsetX;
+        cameraIntermadiatePosition.y += cameraShakingOffsetY;
+        _cam.transform.position = cameraIntermadiatePosition;
+    }
+
 }

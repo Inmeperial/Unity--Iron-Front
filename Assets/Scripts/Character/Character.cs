@@ -1100,8 +1100,7 @@ public class Character : EnumsClass
     {
         _myUI.DeactivateWorldUI();
     }
-
-
+    
     #endregion
 
     public void SetHurtAnimation()

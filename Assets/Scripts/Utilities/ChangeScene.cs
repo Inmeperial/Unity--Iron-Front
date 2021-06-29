@@ -14,12 +14,12 @@ public class ChangeScene : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.P))
-		{
-			Change();
-		}
+		//if (Input.GetKeyDown(KeyCode.P))
+		//{
+		//	Change();
+		//}
 
-		if (Input.GetKeyDown(KeyCode.F))
+		if (Input.GetKeyDown(KeyCode.F1))
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 }

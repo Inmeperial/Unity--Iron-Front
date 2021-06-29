@@ -192,12 +192,12 @@ public class AudioManager : MonoBehaviour
         var targetAudio = target.GetComponent<AudioSource>(); 
         if (targetAudio)
         {
-            Debug.Log("target tiene audiosource " + target.name);
+            //Debug.Log("target tiene audiosource " + target.name);
             audioSource = targetAudio;
         }
         else
         {
-            Debug.Log("creo audiosource: " + target.name);
+            //Debug.Log("creo audiosource: " + target.name);
             audioSource = target.AddComponent<AudioSource>();
         }
         return audioSource;
