@@ -6,8 +6,8 @@ public abstract class EnumsClass: MonoBehaviour
 {
     public enum Team
     {
-        Capsule,
-        Box
+        Green,
+        Red
     };
 
     public enum GunsType

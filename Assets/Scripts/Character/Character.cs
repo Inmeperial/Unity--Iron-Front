@@ -62,7 +62,7 @@ public class Character : EnumsClass
     [SerializeField]private List<Tile> _path = new List<Tile>();
 
     //FLAGS
-    public bool _canBeSelected;
+    private bool _canBeSelected;
     private bool _selected;
     private bool _moving = false;
     public bool _canMove = true;
@@ -725,7 +725,7 @@ public class Character : EnumsClass
     /// </summary>
     public bool LeftArmAlive()
     {
-        _leftArmAlive = leftArm.GetCurrentHp() > 0 ? true : false;
+        _leftArmAlive = leftArm.GetCurrentHp() > 0;
         return _leftArmAlive;
     }
     
@@ -734,7 +734,7 @@ public class Character : EnumsClass
     /// </summary>
     public bool RightArmAlive()
     {
-        _rightArmAlive = rightArm.GetCurrentHp() > 0 ? true : false;
+        _rightArmAlive = rightArm.GetCurrentHp() > 0;
         return _rightArmAlive;
     }
     
@@ -1076,7 +1076,7 @@ public class Character : EnumsClass
     
     private void OnMouseOver()
     {
-        if (!_selectedForAttack)
+        if (!_selectedForAttack && _canBeSelected)
             ShowWorldUI();
     }
 

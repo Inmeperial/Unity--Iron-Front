@@ -602,10 +602,10 @@ public class ButtonsUIManager : MonoBehaviour
     private void ShowAllWorldUI()
     {
         _worldUIActive = true;
-        var units = _turnManager.GetEnemies(EnumsClass.Team.Box).Concat(_turnManager.GetEnemies(EnumsClass.Team.Capsule));
+        var units = _turnManager.GetEnemies(EnumsClass.Team.Red).Concat(_turnManager.GetEnemies(EnumsClass.Team.Green));
         foreach (var unit in units)
         {
-            if (!unit.IsSelectedForAttack())
+            if (!unit.IsSelectedForAttack() && unit.CanBeSelected())
                 unit.ShowWorldUI();
         }
     }
@@ -614,7 +614,7 @@ public class ButtonsUIManager : MonoBehaviour
     private void HideAllWorldUI()
     {
         _worldUIActive = false;
-        var units = _turnManager.GetEnemies(EnumsClass.Team.Box).Concat(_turnManager.GetEnemies(EnumsClass.Team.Capsule));
+        var units = _turnManager.GetEnemies(EnumsClass.Team.Red).Concat(_turnManager.GetEnemies(EnumsClass.Team.Green));
         foreach (var unit in units)
         {
             unit.HideWorldUI();

@@ -10,8 +10,8 @@ using UnityEngine.Experimental.PlayerLoop;
 
 public class TurnManager : EnumsClass, IObservable
 {
-    private List<Character> _capsuleTeam = new List<Character>();
-    private List<Character> _boxTeam = new List<Character>();
+    private List<Character> _greenTeam = new List<Character>();
+    private List<Character> _redTeam = new List<Character>();
     private Character[] _allUnits;
     private CharacterSelection _charSelect;
     private TileHighlight _highlight;
@@ -50,7 +50,7 @@ public class TurnManager : EnumsClass, IObservable
         _charSelect = FindObjectOfType<CharacterSelection>();
         _highlight = FindObjectOfType<TileHighlight>();
         _buttonsUIManager = FindObjectOfType<ButtonsUIManager>();
-        _activeTeam = Team.Capsule;
+        _activeTeam = Team.Green;
 
         var mortars = FindObjectsOfType<Mortar>();
         foreach (var mortar in mortars)
@@ -84,15 +84,15 @@ public class TurnManager : EnumsClass, IObservable
     {
         foreach (var item in units)
         {
-            if (item.GetUnitTeam() == EnumsClass.Team.Capsule)
-                _capsuleTeam.Add(item);
-            else _boxTeam.Add(item);
+            if (item.GetUnitTeam() == Team.Green)
+                _greenTeam.Add(item);
+            else _redTeam.Add(item);
         }
     }
 
     public List<Character> GetEnemies(Team myTeam)
     {
-        return myTeam == Team.Capsule ? _boxTeam : _capsuleTeam;
+        return myTeam == Team.Green ? _redTeam : _greenTeam;
     }
 
     public void EndTurn()

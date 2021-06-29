@@ -310,7 +310,7 @@ public class Mortar : MonoBehaviour, IObserver
     private void Deselect()
     {
         var s = FindObjectOfType<CharacterSelection>().GetSelectedCharacter(); 
-        if (s) s.SetSelection(false);
+        if (s) s.SetSelection(true);
         _selected = false;
         _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
 
