@@ -470,7 +470,7 @@ public class Character : EnumsClass
         var dir = (partPosition - position).normalized; 
         
         Physics.Raycast(position, dir, out var hit, 1000f);
-        var goodHit = hit.collider.transform.gameObject.CompareTag(tagToCheck);
+        var goodHit = hit.collider.transform.gameObject.CompareTag(tagToCheck) && hit.collider.transform.position == partPosition;
 
         LineRenderer renderer = null;
         switch (tagToCheck)
@@ -499,12 +499,12 @@ public class Character : EnumsClass
         if (goodHit)
         {
             //renderer.material = _rayHitMaterial;
-            Debug.DrawRay(position, dir * 20f, Color.green, 1000f);
+            Debug.DrawRay(position, dir * 20f, Color.green, 10f);
             return true;
         }
         
         //renderer.material = _rayMissMaterial;
-        Debug.DrawRay(position, dir * 20f, Color.red, 1000f);
+        Debug.DrawRay(position, dir * 20f, Color.red, 10f);
         return false;
         
     }

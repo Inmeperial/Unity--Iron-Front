@@ -826,14 +826,7 @@ public class ButtonsUIManager : MonoBehaviour
                 _selectedEnemy.SetSelectedForAttack(true);
                 buttonEndTurn.gameObject.SetActive(false);
                 _turnManager.PortraitsActiveState(false);
-                var units = _turnManager.GetAllUnits();
-
-                foreach (var u in units)
-                {
-                    if (u == _selectedChar || u == _selectedEnemy) continue;
-                    
-                    u.gameObject.SetActive(false);
-                }
+                
                 
                 FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position, ActivateBodyPartsContainer);
                 playerHudContainer.SetActive(false);
@@ -1010,6 +1003,17 @@ public class ButtonsUIManager : MonoBehaviour
         {
             _legsInsight = false;
         }
+        
+        var units = _turnManager.GetAllUnits();
+
+        foreach (var u in units)
+        {
+            if (u == _selectedChar || u == _selectedEnemy) continue;
+                    
+            u.gameObject.SetActive(false);
+        }
+        
+        
         var ui = _selectedEnemy.GetMyUI();
         ui.ButtonsEnabling(_bodyInsight, _lArmInsight, _rArmInsight, _legsInsight, this);
         
