@@ -8,10 +8,12 @@ using System.Linq;
 using UnityEngine.Events;
 using UnityEngine.Experimental.PlayerLoop;
 
-public class TurnManager : EnumsClass, IObservable
+public class TurnManager : EnumsClass, IObservable, IObserver
 {
     private List<Character> _greenTeam = new List<Character>();
+    private int _greenDeadCount;
     private List<Character> _redTeam = new List<Character>();
+    private int _redDeadCount;
     private Character[] _allUnits;
     private CharacterSelection _charSelect;
     private TileHighlight _highlight;
@@ -35,6 +37,9 @@ public class TurnManager : EnumsClass, IObservable
     public bool mortarAttack;
 
     public float waitForMortarAttack;
+    
+    private delegate void Execute();
+    Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
     private void Awake()
     {
         _cameraMovement = FindObjectOfType<CameraMovement>();
@@ -62,6 +67,10 @@ public class TurnManager : EnumsClass, IObservable
         _actualCharacter = _currentTurnOrder[0];
         _actualCharacter.SetTurn(true);
         _activeTeam = _actualCharacter.GetUnitTeam();
+        
+        _actionsDic.Add("GreenDead", GreenUnitDied);
+        _actionsDic.Add("RedDead", RedUnitDied);
+        
         Action toDo = () =>
         {
             _buttonsUIManager.ActivateEndTurnButton();
@@ -338,25 +347,6 @@ public class TurnManager : EnumsClass, IObservable
         return null;
     }
 
-    public void Subscribe(IObserver observer)
-    {
-        if (_observers.Contains(observer) == false)
-            _observers.Add(observer);
-    }
-
-    public void Unsubscribe(IObserver observer)
-    {
-        if (_observers.Contains(observer))
-            _observers.Remove(observer);
-    }
-
-    public void NotifyObserver(string action)
-    {
-        for (int i = _observers.Count - 1; i >= 0; i--)
-        {
-            _observers[i].Notify(action);
-        }
-    }
 
     IEnumerator MovePortrait(RectTransform myRect, int currentPos, int newPos)
     {
@@ -388,5 +378,45 @@ public class TurnManager : EnumsClass, IObservable
     public Character[] GetAllUnits()
     {
         return _allUnits;
+    }
+
+    private void GreenUnitDied()
+    {
+        _greenDeadCount++;
+        if (_greenDeadCount >= _greenTeam.Count)
+            Debug.Log("Lose");
+    }
+
+    private void RedUnitDied()
+    {
+        _redDeadCount++;
+        if (_redDeadCount >= _redTeam.Count)
+            Debug.Log("Win");
+    }
+
+    public void Notify(string action)
+    {
+        _actionsDic[action]();
+    }
+    
+    
+    public void Subscribe(IObserver observer)
+    {
+        if (_observers.Contains(observer) == false)
+            _observers.Add(observer);
+    }
+
+    public void Unsubscribe(IObserver observer)
+    {
+        if (_observers.Contains(observer))
+            _observers.Remove(observer);
+    }
+
+    public void NotifyObserver(string action)
+    {
+        for (int i = _observers.Count - 1; i >= 0; i--)
+        {
+            _observers[i].Notify(action);
+        }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityStandardAssets.Effects;
 using Random = System.Random;
 
-public class Character : EnumsClass
+public class Character : EnumsClass, IObservable
 {
     //STATS
     #region Stats
@@ -86,6 +86,8 @@ public class Character : EnumsClass
     public AudioClip soundMotorStart;
     public AudioClip soundWalk;
     private AnimationMechaHandler _animationMechaHandler;
+    
+    private List<IObserver> _observers = new List<IObserver>();
 
     [HideInInspector]
 	public EffectsController effectsController;
@@ -164,6 +166,7 @@ public class Character : EnumsClass
             _rightGunSelected = false;
             _leftGunSelected = false;
         }
+        Subscribe(turnManager);
         #endregion
     }
 
@@ -184,6 +187,8 @@ public class Character : EnumsClass
 
         _selected = false;
         _canBeSelected = body.GetCurrentHp() > 0;
+        
+        
     }
 
     // Update is called once per frame
@@ -985,8 +990,14 @@ public class Character : EnumsClass
     /// </summary>
     public void NotSelectable()
     {
-        Debug.Log("not selectable");
         _canBeSelected = false;
+    }
+
+    public void Dead()
+    {
+        _canBeSelected = false;
+
+        NotifyObserver(_unitTeam == Team.Green ? "GreenDead" : "RedDead");
     }
     
     /// <summary>
@@ -1113,5 +1124,25 @@ public class Character : EnumsClass
     public void WalkSoundStepMecha()
     {
         AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
+    }
+
+    public void Subscribe(IObserver observer)
+    {
+        if (_observers.Contains(observer) == false)
+            _observers.Add(observer);
+    }
+
+    public void Unsubscribe(IObserver observer)
+    {
+        if (_observers.Contains(observer))
+            _observers.Remove(observer);
+    }
+
+    public void NotifyObserver(string action)
+    {
+        for (int i = _observers.Count - 1; i >= 0; i--)
+        {
+            _observers[i].Notify(action);
+        }
     }
 }

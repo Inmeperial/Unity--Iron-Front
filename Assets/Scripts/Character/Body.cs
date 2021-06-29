@@ -41,6 +41,12 @@ public class Body : Parts
             total += damages[i].Item1;
             var hp = _bodyHP - damages[i].Item1;
             _bodyHP = hp > 0 ? hp : 0;
+            
+            if (_bodyHP <= 0)
+            {
+                _myChar.Dead();
+            }
+            
             _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
             _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Hit");
             var item = damages[i].Item2;
@@ -59,10 +65,7 @@ public class Body : Parts
                     break;
             }
         }
-        if (_bodyHP <= 0)
-        {
-            MechaDeath();
-        }
+        
         ui.ContainerActivation(true);
         ui.UpdateBodySlider(total, (int)_bodyHP);
         _myChar.MakeNotAttackable();
@@ -75,9 +78,10 @@ public class Body : Parts
         ui.SetBodySlider(_bodyHP);
         var hp = _bodyHP - damage;
         _bodyHP = hp > 0 ? hp : 0;
+        
         if (_bodyHP <= 0)
         {
-            MechaDeath();
+            _myChar.Dead();
         }
 
         var bodyPos = transform.position;
