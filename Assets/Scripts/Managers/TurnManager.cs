@@ -383,15 +383,18 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     private void GreenUnitDied()
     {
         _greenDeadCount++;
-        if (_greenDeadCount >= _greenTeam.Count)
-            Debug.Log("Lose");
+        if (_greenDeadCount < _greenTeam.Count) return;
+        Debug.Log("Lose");
+        FindObjectOfType<ChangeScene>().Defeat();
+
     }
 
     private void RedUnitDied()
     {
         _redDeadCount++;
-        if (_redDeadCount >= _redTeam.Count)
-            Debug.Log("Win");
+        if (_redDeadCount < _redTeam.Count) return;
+        Debug.Log("Win");
+        FindObjectOfType<ChangeScene>().Win();
     }
 
     public void Notify(string action)
