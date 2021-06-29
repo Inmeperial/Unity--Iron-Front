@@ -5278,14 +5278,15 @@ MonoBehaviour:
   m_text: Fire
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 37399cad52049954cb173de70ca8983f, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 4440859372323168551, guid: 37399cad52049954cb173de70ca8983f,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293197624
-  m_fontColor: {r: 0.21960784, g: 1, b: 0.89411765, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5303,14 +5304,14 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 62.8
+  m_fontSize: 60
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 60
   m_fontStyle: 0
-  m_textAlignment: 514
+  m_textAlignment: 1026
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -5355,7 +5356,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -5618,7 +5619,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3337449813846282466
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5634,8 +5635,8 @@ RectTransform:
   m_Father: {fileID: 8576473317025532380}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.4370831, y: 0.044588607}
-  m_AnchorMax: {x: 0.56344724, y: 0.1095712}
+  m_AnchorMin: {x: 0.4591885, y: 0}
+  m_AnchorMax: {x: 0.5803543, y: 0.06801082}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5699,7 +5700,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 1, g: 0.72156864, b: 0.30588236, a: 1}
     m_PressedColor: {r: 1, g: 0.5764706, b: 0.13725491, a: 1}
     m_SelectedColor: {r: 1, g: 0.72156864, b: 0.30588236, a: 1}
-    m_DisabledColor: {r: 0.11053756, g: 0.5485422, b: 0.8679245, a: 0.4}
+    m_DisabledColor: {r: 0.8745099, g: 0.5019608, b: 0.121568635, a: 0.4}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
