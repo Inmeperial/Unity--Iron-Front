@@ -26,6 +26,7 @@ public class Character : EnumsClass
     [Header("Body")] 
     public Body body;
     [SerializeField] private Transform _bodyTransform;
+    [SerializeField] private Transform _bodyParticleSpawn;
 
     [Header("Left Arm")]
     public Arm leftArm;
