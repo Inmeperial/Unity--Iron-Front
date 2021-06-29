@@ -26,8 +26,8 @@ public class CameraMovement : MonoBehaviour
     private Rigidbody _rb;
 
     private float _yPos;
+    private TurnManager _turnManager;
 
-    
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -37,7 +37,9 @@ public class CameraMovement : MonoBehaviour
        // cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
         _gameCam = Camera.main;
         _camInitialPos = _gameCam.transform.localPosition;
+        _turnManager = FindObjectOfType<TurnManager>();
     }
+
     // Update is called once per frame
     public void Update()
     {
@@ -101,6 +103,7 @@ public class CameraMovement : MonoBehaviour
         var pos = transformToMove.position;
         pos.y = _yPos;
         _cameraLocked = true;
+        _turnManager.DeactivatePortraitsButtons();
         StartCoroutine(Move(pos, callback, lookAt));
     }
 
@@ -128,7 +131,7 @@ public class CameraMovement : MonoBehaviour
 
         transform.position = pos;
         _cameraLocked = false;
-        
+        _turnManager.ActivatePortraitsButtons();
         
         if (callback != null)
             callback();

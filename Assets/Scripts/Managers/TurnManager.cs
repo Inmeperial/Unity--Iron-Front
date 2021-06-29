@@ -375,6 +375,22 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         }
     }
 
+    public void ActivatePortraitsButtons()
+    {
+        foreach (var portrait in _portraits)
+        {
+            portrait.selectionButton.interactable = true;
+        }
+    }
+    
+    public void DeactivatePortraitsButtons()
+    {
+        foreach (var portrait in _portraits)
+        {
+            portrait.selectionButton.interactable = false;
+        }
+    }
+
     public Character[] GetAllUnits()
     {
         return _allUnits;
