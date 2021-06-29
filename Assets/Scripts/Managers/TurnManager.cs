@@ -391,6 +391,16 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         }
     }
 
+    public void DeadPortrait(Character character)
+    {
+        foreach (var c in _charAndFramesList)
+        {
+            if (c.Item1 == character)
+                c.Item2.mechaImage.color = Color.red;
+        }
+        
+    }
+
     public Character[] GetAllUnits()
     {
         return _allUnits;
