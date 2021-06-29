@@ -290,16 +290,18 @@ public class Mortar : MonoBehaviour, IObserver
         foreach (var tile in _tilesToAttack)
         {
             var unit = tile.GetCharacterAbove();
-            if (!unit) continue;
-            unit.body.TakeDamageBody(_damage);
-            unit.leftArm.TakeDamageArm(_damage);
-            unit.rightArm.TakeDamageArm(_damage);
-            unit.legs.TakeDamageLegs(_damage);
+            if (unit)
+            {
+                unit.body.TakeDamageBody(_damage);
+                unit.leftArm.TakeDamageArm(_damage);
+                unit.rightArm.TakeDamageArm(_damage);
+                unit.legs.TakeDamageLegs(_damage);
+                if (unit.body.GetCurrentHp() <= 0)
+                unit.Dead();
+            }
+            
             //effect.PlayParticlesEffect(tile.transform.position, "Mine");
             effect.PlayParticlesEffect(tile.gameObject, "Mine");
-            
-            if (unit.body.GetCurrentHp() <= 0)
-                unit.Dead();
         }
         
         //_tilesToAttack.Clear();
