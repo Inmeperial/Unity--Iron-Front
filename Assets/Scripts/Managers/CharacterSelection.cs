@@ -67,6 +67,7 @@ public class CharacterSelection : MonoBehaviour
     /// <param name="c">The Character to select.</param>
     public void Selection(Character c)
     {
+        if (!c.CanBeSelected()) return;
         if (c.IsMyTurn())
         {
             _buttonsManager.DeselectActions();

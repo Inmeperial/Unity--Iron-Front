@@ -337,9 +337,9 @@ MonoBehaviour:
   rotationSpeed: 100
   cameraSpeedText: {fileID: 0}
   fixationThreshold: 0.2
-  distanceToStartRotation: 1
+  distanceToStartRotation: 0.5
   transitionRotationSpeed: 3
-  transitionRotationWatchdog: 20
+  transitionRotationWatchdog: 100
 --- !u!65 &2198611426922619475
 BoxCollider:
   m_ObjectHideFlags: 0

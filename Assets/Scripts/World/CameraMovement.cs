@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    [SerializeField] private Camera _gameCam;
+    private Vector3 _camInitialPos;
     [Header("Manual Control")]
     public float manualMovementSpeed;
     public float speed;
@@ -33,6 +35,8 @@ public class CameraMovement : MonoBehaviour
         _initialRot = transform.rotation;
         _yPos = transform.position.y;
         cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
+        _gameCam = Camera.main;
+        _camInitialPos = _gameCam.transform.localPosition;
     }
     // Update is called once per frame
     public void Update()
@@ -67,6 +71,9 @@ public class CameraMovement : MonoBehaviour
             transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
         if (Input.GetKey(KeyCode.Q))
             transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
+
+        if (_gameCam.transform.localPosition != _camInitialPos)
+            _gameCam.transform.localPosition = _camInitialPos;
     }
 
     public void LockCamera(bool status)

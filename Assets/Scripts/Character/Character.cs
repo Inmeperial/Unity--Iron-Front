@@ -61,7 +61,7 @@ public class Character : EnumsClass
     [SerializeField]private List<Tile> _path = new List<Tile>();
 
     //FLAGS
-    private bool _canBeSelected;
+    public bool _canBeSelected;
     private bool _selected;
     private bool _moving = false;
     public bool _canMove = true;
@@ -746,7 +746,7 @@ public class Character : EnumsClass
     
     public bool CanBeSelected()
     {
-        return _canBeSelected && _myTurn;
+        return _canBeSelected;
     }
     
     /// <summary>
@@ -984,6 +984,7 @@ public class Character : EnumsClass
     /// </summary>
     public void NotSelectable()
     {
+        Debug.Log("not selectable");
         _canBeSelected = false;
     }
     
