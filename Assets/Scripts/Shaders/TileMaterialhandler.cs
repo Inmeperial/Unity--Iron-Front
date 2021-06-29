@@ -4,31 +4,27 @@ using UnityEngine;
 
 public class TileMaterialhandler : MonoBehaviour
 {
+    [Header("Materials")]
     public Material MoveMaterial;
     public Material AttackMaterial;
     public Material AttackAndMoveMaterial;
     public Material MortarAoeAttackMaterial;
     public Material ActivationAoeForMortar;
     public Material MechaToAttackInAnimationTileMaterial;
+
+    [Header("Plane Obj")]
+    public GameObject childStatusNode;
+    public GameObject childStatusActivationMortar;
+    public GameObject childStatusAoEMortar;
+    public GameObject childSelectedNode;
     //----------------------
     private Renderer _rend;
-    private Transform _childStatusNode;
-    private Transform _childStatusActivationMortar;
-    private Transform _childStatusAoEMortar;
-    private Transform _childSelectedNode;
     private Material _sharedMaterialCopy;
 
     void Start()
     {
-        GetChilds();
-        if (_childStatusNode == null)
-        {
-            Debug.Log("Cant Find PlaneForMove child in Node");
-        }
-        if (_childSelectedNode == null)
-        {
-            Debug.Log("Cant Find PlaneForMouse child in Node");
-        }
+       
+        //GetChilds();
 
         DiseableAndEnableSelectedNode(false);
         DiseableAndEnableStatus(false);
@@ -41,17 +37,17 @@ public class TileMaterialhandler : MonoBehaviour
     /// </summary>
     public void DiseableAndEnableSelectedNode(bool isStatusOn)
     {
-        _childSelectedNode.gameObject.SetActive(isStatusOn);
+        childSelectedNode.gameObject.SetActive(isStatusOn);
     }
 
     public void DiseableAndEnableSelectedNodeForMortar(bool isStatusOn)
     {
-        _childStatusAoEMortar.gameObject.SetActive(isStatusOn);
+        childStatusAoEMortar.gameObject.SetActive(isStatusOn);
     }
     
     public void DiseableAndEnableActivationNodeForMortar(bool isStatusOn)
     {
-        _childStatusActivationMortar.gameObject.SetActive(isStatusOn);
+        childStatusActivationMortar.gameObject.SetActive(isStatusOn);
     }
 
     /// <summary>
@@ -60,7 +56,7 @@ public class TileMaterialhandler : MonoBehaviour
     /// <param name="isStatusOn"></param>
     public void DiseableAndEnableStatus(bool isStatusOn)
     {
-        _childStatusNode.gameObject.SetActive(isStatusOn);
+        childStatusNode.gameObject.SetActive(isStatusOn);
     }
 
     /// <summary>
@@ -68,7 +64,7 @@ public class TileMaterialhandler : MonoBehaviour
     /// </summary>
     public void StatusToMove()
     {
-        _rend = _childStatusNode.gameObject.GetComponent<Renderer>();
+        _rend = childStatusNode.gameObject.GetComponent<Renderer>();
         _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
 
         _sharedMaterialCopy = _rend.sharedMaterial;
@@ -81,7 +77,7 @@ public class TileMaterialhandler : MonoBehaviour
     /// </summary>
     public void StatusToAttack()
     {
-        _rend = _childStatusNode.gameObject.GetComponent<Renderer>();
+        _rend = childStatusNode.gameObject.GetComponent<Renderer>();
         _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
 
         _sharedMaterialCopy = _rend.sharedMaterial;
@@ -94,7 +90,7 @@ public class TileMaterialhandler : MonoBehaviour
     /// </summary>
     public void StatusToAttackAndMove()
     {
-        _rend = _childStatusNode.gameObject.GetComponent<Renderer>();
+        _rend = childStatusNode.gameObject.GetComponent<Renderer>();
         _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
 
         _sharedMaterialCopy = _rend.sharedMaterial;
@@ -136,7 +132,7 @@ public class TileMaterialhandler : MonoBehaviour
 
     public void StatusActivationRageForMortar()
     {
-        _rend = _childStatusActivationMortar.gameObject.GetComponent<Renderer>();
+        _rend = childStatusActivationMortar.gameObject.GetComponent<Renderer>();
         _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
 
         _sharedMaterialCopy = _rend.sharedMaterial;
@@ -146,7 +142,7 @@ public class TileMaterialhandler : MonoBehaviour
 
     public void StatusTileToMoveToLastTileSelected()
     {
-        _rend = _childStatusNode.gameObject.GetComponent<Renderer>();
+        _rend = childStatusNode.gameObject.GetComponent<Renderer>();
         _rend.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
 
         _sharedMaterialCopy = _rend.sharedMaterial;
@@ -156,33 +152,33 @@ public class TileMaterialhandler : MonoBehaviour
 
     #endregion
 
-    public void GetChilds()
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            if (transform.GetChild(i).gameObject.name == "PlaneForMove")
-            {
-                _childStatusNode = transform.GetChild(i);
-                continue;
-            }
-            if (transform.GetChild(i).gameObject.name == "PlaneForMouse")
-            {
-                _childSelectedNode = transform.GetChild(i);
-                continue;
-            }
+    //public void GetChilds()
+    //{
+    //    for (int i = 0; i < transform.childCount; i++)
+    //    {
+    //        if (transform.GetChild(i).gameObject.name == "PlaneForMove")
+    //        {
+    //            childStatusNode = transform.GetChild(i);
+    //            continue;
+    //        }
+    //        if (transform.GetChild(i).gameObject.name == "PlaneForMouse")
+    //        {
+    //            childSelectedNode = transform.GetChild(i);
+    //            continue;
+    //        }
 
-            if (transform.GetChild(i).gameObject.name == "PlaneForAoEMortar")
-            {
-                _childStatusAoEMortar = transform.GetChild(i);
-                continue;
-            }
+    //        if (transform.GetChild(i).gameObject.name == "PlaneForAoEMortar")
+    //        {
+    //            _childStatusAoEMortar = transform.GetChild(i);
+    //            continue;
+    //        }
             
-            if (transform.GetChild(i).gameObject.name == "PlaneForMortar")
-            {
-                _childStatusActivationMortar = transform.GetChild(i);
-            }
-        }
-    }
+    //        if (transform.GetChild(i).gameObject.name == "PlaneForMortar")
+    //        {
+    //            childStatusActivationMortar = transform.GetChild(i);
+    //        }
+    //    }
+    //}
 }
 
 

@@ -41,7 +41,7 @@ public class Body : Parts
             total += damages[i].Item1;
             var hp = _bodyHP - damages[i].Item1;
             _bodyHP = hp > 0 ? hp : 0;
-            _myChar.effectsController.PlayParticlesEffect(bodyPos, "Damage");
+            _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
             var item = damages[i].Item2;
             switch (item)
             {
@@ -80,7 +80,7 @@ public class Body : Parts
         }
 
         var bodyPos = transform.position;
-        _myChar.effectsController.PlayParticlesEffect(bodyPos, "Damage");
+        _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
         _myChar.effectsController.CreateDamageText(damage.ToString(), 1, bodyPos, true);
         ui.ContainerActivation(true);
         ui.UpdateBodySlider(damage, (int)_bodyHP);

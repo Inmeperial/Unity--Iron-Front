@@ -35,7 +35,7 @@ public class GizmoWindow : EditorWindow
             var tiles = FindObjectsOfType<TileMaterialhandler>();
             foreach (var tile in tiles)
             {
-                tile.GetChilds();
+                //tile.GetChilds();
                 tile.DiseableAndEnableStatus(true);
                 tile.DiseableAndEnableSelectedNode(true);
                 EditorUtility.SetDirty(tile);
@@ -48,7 +48,7 @@ public class GizmoWindow : EditorWindow
             var tiles = FindObjectsOfType<TileMaterialhandler>();
             foreach (var tile in tiles)
             {
-                tile.GetChilds();
+                //tile.GetChilds();
                 tile.DiseableAndEnableStatus(false);
                 tile.DiseableAndEnableSelectedNode(false);
                 EditorUtility.SetDirty(tile);

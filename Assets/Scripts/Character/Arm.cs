@@ -46,7 +46,7 @@ public class Arm : Parts
             total += damages[i].Item1;
             var hp = _armHP - damages[i].Item1;
             _armHP = hp > 0 ? hp : 0;
-            _myChar.effectsController.PlayParticlesEffect(pos, "Damage");
+            _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
 
             var item = damages[i].Item2;
             switch (item)
@@ -105,7 +105,7 @@ public class Arm : Parts
         _armHP = hp > 0 ? hp : 0;
         
         var pos = transform.position;
-        _myChar.effectsController.PlayParticlesEffect(pos, "Damage");
+        _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
         _myChar.effectsController.CreateDamageText(damage.ToString(), 1, pos, true);
         
         var ui = _myChar.GetMyUI();

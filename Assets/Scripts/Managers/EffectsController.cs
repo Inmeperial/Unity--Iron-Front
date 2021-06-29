@@ -40,14 +40,14 @@ public class EffectsController : MonoBehaviour
     /// </summary>
     /// <param name="pos">Position the particle will spawn.</param>
     /// <param name="type">Damage - Attack - Mine - Shootgun</param>
-    public void PlayParticlesEffect(Vector3 pos, string type)
+    public void PlayParticlesEffect(GameObject obj, string type)
     {
         GameObject effect;
         ParticleSystem particle;
         switch (type)
         {
             case "Damage":
-                effect = Instantiate(_damageEffect, pos, transform.rotation, transform);
+                effect = Instantiate(_damageEffect, obj.transform.position, transform.rotation, transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
@@ -55,7 +55,7 @@ public class EffectsController : MonoBehaviour
                 break;
             
             case "Attack":
-                effect = Instantiate(_attackEffect, pos, transform.rotation, transform);
+                effect = Instantiate(_attackEffect, obj.transform.position, transform.rotation, transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
@@ -63,7 +63,7 @@ public class EffectsController : MonoBehaviour
                 break;
             
             case "Mine":
-                effect = Instantiate(_mineExplosionEffect, pos, transform.rotation, transform);
+                effect = Instantiate(_mineExplosionEffect, obj.transform.position, transform.rotation, transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
@@ -72,7 +72,8 @@ public class EffectsController : MonoBehaviour
                 break;
 
             case "ShootGun":
-                effect = Instantiate(_shootGunEffect, pos, transform.rotation, transform);
+                effect = Instantiate(_shootGunEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
+                effect.transform.SetParent(obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
@@ -80,7 +81,8 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
             case "AssaultRifle":
-                effect = Instantiate(_assalutRifleEffect, pos, transform.rotation, transform);
+                effect = Instantiate(_assalutRifleEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
+                effect.transform.SetParent(obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
@@ -88,7 +90,8 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
             case "Rifle":
-                effect = Instantiate(_rifleEffect, pos, transform.rotation, transform);
+                effect = Instantiate(_rifleEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
+                effect.transform.SetParent(obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
