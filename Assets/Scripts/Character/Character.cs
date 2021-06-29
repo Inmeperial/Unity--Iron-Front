@@ -73,6 +73,7 @@ public class Character : EnumsClass, IObservable
     private bool _selectingEnemy = false;
     private bool _selectedForAttack;
     private bool _myTurn = false;
+    private bool _isDead = false;
 
     //OTHERS
     public GameObject bodyRenderContainer;
@@ -688,6 +689,11 @@ public class Character : EnumsClass, IObservable
         return _myTurn;
     }
 
+    public bool IsDead()
+    {
+        return _isDead;
+    }
+
     /// <summary>
     /// Return true if Character is selected for an attack.
     /// </summary>
@@ -996,7 +1002,7 @@ public class Character : EnumsClass, IObservable
     public void Dead()
     {
         _canBeSelected = false;
-
+        _isDead = true;
         NotifyObserver(_unitTeam == Team.Green ? "GreenDead" : "RedDead");
     }
     

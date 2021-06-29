@@ -436,14 +436,19 @@ public class ButtonsUIManager : MonoBehaviour
             var d = gun.DamageCalculation(_bulletsForBody);
             _selectedEnemy.body.TakeDamageBody(d);
             _bulletsForBody = 0;
+            
+                
             if (gun.AbilityUsed() == false)
             {
                 gun.Ability();
             }
             _selectedChar.DeactivateAttack();
             
-            if (_selectedEnemy.body.GetCurrentHp() <= 0)
+            if (_selectedEnemy.body.GetCurrentHp() <= 0 && !_selectedEnemy.IsDead())
+            {
                 _selectedEnemy.Dead();
+            }
+            
         }
 
 
