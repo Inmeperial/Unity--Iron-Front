@@ -214,8 +214,8 @@ public class TurnManager : EnumsClass, IObservable
             p.mechaImage.sprite = c._myIcon;
             p.mechaName.text = c._myName;
             c.gameObject.name = c._myName;
-            p.leftGunIcon.sprite = c.GetLeftGun().GetIcon();
-            p.rightGunIcon.sprite = c.GetRightGun().GetIcon();
+            // p.leftGunIcon.sprite = c.GetLeftGun().GetIcon();
+            // p.rightGunIcon.sprite = c.GetRightGun().GetIcon();
             p.selectionButton.OnLeftClick.RemoveAllListeners();
             p.selectionButton.OnLeftClick.AddListener(() => _cameraMovement.MoveTo(c.transform));
             count++;
