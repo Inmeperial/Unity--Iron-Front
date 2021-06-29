@@ -12,26 +12,30 @@ public class CloseUpCamera : MonoBehaviour
 	public float maxHeight = 8f;
     public float threshold = 15f;
     public float moveBackInZ;
-    [SerializeField] private Camera _uiCam;
+    
     [Header("1 closest to player")]
     [Header("0 closest to enemy")]
     [Header("0 to 1 (float)")]
     public float lerp = .9f;
-    private  Camera _cam;
-    private  Camera _mainCam;
+    private  Camera _mainCamWorld;
+    [SerializeField] private Camera _mainCamUI;
+    private  Camera _closeCameraWorld;
+    [SerializeField] private Camera _closeCameraUI;
+    
 	private void Start()
     {
-        _mainCam = transform.parent.GetComponent<Camera>();
-        _cam = GetComponent<Camera>();
-        _cam.enabled = false;
+        _mainCamWorld = transform.parent.GetComponent<Camera>();
+        _closeCameraWorld = GetComponent<Camera>();
+        _closeCameraWorld.enabled = false;
     }
 
 	public void MoveCameraWithLerp(Vector3 enemyPosToLerp, Vector3 playerPosToLerp, Action callback = null)
     {
         FindObjectOfType<CameraMovement>().LockCamera(true);
-        _uiCam.enabled = true;
-        _cam.enabled = true;
-        _mainCam.enabled = false;
+        _closeCameraUI.enabled = true;
+        _closeCameraWorld.enabled = true;
+        _mainCamWorld.enabled = false;
+        _mainCamUI.enabled = false;
 		//Calcular el height según la distancia de las dos unidades y, clampearla en un min y max
 		var distanceHeight = Vector3.Distance(enemyPosToLerp, playerPosToLerp);
 		var clampedHeight = Mathf.Clamp(distanceHeight, minHeight, maxHeight);
@@ -88,8 +92,9 @@ public class CloseUpCamera : MonoBehaviour
         FindObjectOfType<CameraMovement>().LockCamera(false);
         StopAllCoroutines();
         transform.localPosition = Vector3.zero;
-        _mainCam.enabled = true;
-        _cam.enabled = false;
-        _uiCam.enabled = false;
+        _mainCamWorld.enabled = true;
+        _mainCamUI.enabled = true;
+        _closeCameraWorld.enabled = false;
+        _closeCameraUI.enabled = false;
     }
 }

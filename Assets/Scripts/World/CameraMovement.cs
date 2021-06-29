@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    [SerializeField] private Camera _gameCam;
+    private Camera _gameCam;
     private Vector3 _camInitialPos;
     [Header("Manual Control")]
     public float manualMovementSpeed;
     public float speed;
     public float rotationSpeed;
-    public TextMeshProUGUI cameraSpeedText;
+    //public TextMeshProUGUI cameraSpeedText;
     
     [Header("Transition")]
     public float fixationThreshold;
@@ -34,7 +34,7 @@ public class CameraMovement : MonoBehaviour
         _initialPos = transform.position;
         _initialRot = transform.rotation;
         _yPos = transform.position.y;
-        cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
+       // cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
         _gameCam = Camera.main;
         _camInitialPos = _gameCam.transform.localPosition;
     }
@@ -44,12 +44,12 @@ public class CameraMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.KeypadPlus))
         {
             manualMovementSpeed++;
-            cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
+            //cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
         }
         if (Input.GetKey(KeyCode.KeypadMinus))
         {
             manualMovementSpeed--;
-            cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
+            //cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
         }
             
         
