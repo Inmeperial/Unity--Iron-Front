@@ -21,10 +21,14 @@ public class Shield : Gun
 
             for (int i = 0; i < t.Count; i++)
             {
-                var p = t[i].transform.position;
-                p.y = prefabHeight;
+                var tr = t[i].transform;
+                var pos = tr.position;
+                pos.y += prefabHeight;
 
-                var go = Instantiate(interactionPrefabs, p, Quaternion.identity);
+                var go = Instantiate(interactionPrefabs, pos, Quaternion.identity);
+                var rt = go.GetComponent<RectTransform>();
+                rt.Rotate(rt.right, 90f);
+                rt.Rotate(rt.up, 90f * -i);
                 var button = go.GetComponentInChildren<CustomButton>();
                 button.OnLeftClick.AddListener(() => Rotate(go.transform));
                 _instantiated.Add(go);
