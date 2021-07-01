@@ -921,6 +921,7 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void NewTurn()
     {
+        if (_isDead) return;
         _rightGun.Deselect();
         _leftGun.Deselect();
         _myTurn = false;

@@ -10,6 +10,7 @@ using UnityEngine.Experimental.PlayerLoop;
 
 public class TurnManager : EnumsClass, IObservable, IObserver
 {
+    [SerializeField] private Transform _canvasTransform;
     private List<Character> _greenTeam = new List<Character>();
     private int _greenDeadCount;
     private List<Character> _redTeam = new List<Character>();
@@ -352,6 +353,26 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     {
         var startV = _portraitsPositions[currentPos].gameObject.GetComponent<RectTransform>();
         var end = _portraitsPositions[newPos].gameObject.GetComponent<RectTransform>();
+        var midRectA = new RectTransform();
+        var midGoA = new GameObject();
+        if (Mathf.Abs(currentPos - newPos) > 1)
+        {
+            midGoA.transform.parent = _canvasTransform;
+            midRectA = midGoA.AddComponent<RectTransform>();
+            midRectA.gameObject.name = "INSTANCIA";
+            midRectA.anchorMax = Vector2.Lerp(startV.anchorMax, end.anchorMax, 0.5f);
+            midRectA.anchorMin = Vector2.Lerp(startV.anchorMin, end.anchorMin, 0.5f);
+            var anchorMax = midRectA.anchorMax;
+            anchorMax.y = 0.75f;
+            anchorMax.x = Mathf.Lerp(startV.anchorMax.x, end.anchorMax.x, 0.5f);
+            midRectA.anchorMax = anchorMax;
+            var anchorMin = midRectA.anchorMin;
+            anchorMin.y = 0.75f - (startV.anchorMax.y - startV.anchorMin.y);
+            anchorMin.x = anchorMax.x - (startV.anchorMax.x - startV.anchorMin.x);
+            midRectA.anchorMin = anchorMin;
+            //Debug.Break();
+        }
+
         var time = 0f;
         
         while (time <= _moveTime)
@@ -359,12 +380,30 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             time += Time.deltaTime;
             var normalized = time / _moveTime;
 
-            myRect.anchorMax = Vector2.Lerp(startV.anchorMax, end.anchorMax, normalized);
-            myRect.anchorMin = Vector2.Lerp(startV.anchorMin, end.anchorMin, normalized);
+            if (Mathf.Abs(currentPos - newPos) > 1)
+            {
+                if (normalized <= 0.5f)
+                {
+                    myRect.anchorMax = Vector2.Lerp(startV.anchorMax, midRectA.anchorMax, normalized * 2);
+                    myRect.anchorMin = Vector2.Lerp(startV.anchorMin, midRectA.anchorMin, normalized * 2);
+                }
+                else
+                {
+                    myRect.anchorMax = Vector2.Lerp(midRectA.anchorMax, end.anchorMax, normalized);
+                    myRect.anchorMin = Vector2.Lerp(midRectA.anchorMin, end.anchorMin, normalized);
+                }
+            }
+            else
+            {
+                myRect.anchorMax = Vector2.Lerp(startV.anchorMax, end.anchorMax, normalized);
+                myRect.anchorMin = Vector2.Lerp(startV.anchorMin, end.anchorMin, normalized);
+            }
             yield return new WaitForEndOfFrame();
         }
 
         myRect.anchoredPosition = end.anchoredPosition;
+        
+        Destroy(midGoA);
     }
 
     public void PortraitsActiveState(bool state)
