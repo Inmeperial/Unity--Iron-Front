@@ -23,6 +23,7 @@ public class CameraMovement : MonoBehaviour
     private Vector3 _initialPos;
     private Quaternion _initialRot;
     private float _watchdogCounter;
+    private bool _rotating;
     private Rigidbody _rb;
 
     private float _yPos;
@@ -109,16 +110,15 @@ public class CameraMovement : MonoBehaviour
 
     IEnumerator Move(Vector3 pos, Action callback = null, Transform lookAt = null)
     {
-        bool started = false;
         while ((pos - transform.position).magnitude >= fixationThreshold)
         {
             if (lookAt)
             {
                 var angle = Vector3.Angle(transform.forward, lookAt.forward);
-                if (angle != 0 && !started &&
+                if (angle != 0 && !_rotating &&
                     (pos - transform.position).magnitude <= distanceToStartRotation)
                 {
-                    started = true;
+                    _rotating = true;
                     StartCoroutine(Rotate(lookAt));
                 }
             }
@@ -130,7 +130,9 @@ public class CameraMovement : MonoBehaviour
         }
 
         transform.position = pos;
-        _cameraLocked = false;
+        
+        if (!_rotating) _cameraLocked = false;
+        
         _turnManager.ActivatePortraitsButtons();
         
         if (callback != null)
@@ -154,6 +156,8 @@ public class CameraMovement : MonoBehaviour
         }
         
         transform.LookAt(pos);
+        _cameraLocked = false;
+        _rotating = false;
         yield return null;
     }
 
