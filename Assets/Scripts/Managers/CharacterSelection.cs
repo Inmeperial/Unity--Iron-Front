@@ -97,17 +97,37 @@ public class CharacterSelection : MonoBehaviour
                 _enemySelection.DeselectThisUnit();
             }
             _enemySelection = c;
-            _enemySelection.SelectedAsEnemy();
-            _buttonsManager.SetEnemy(_enemySelection);
-            _buttonsManager.SetEnemyUI();
-            _canSelectUnit = false;
             if (_selection && _selection.CanAttack())
             {
                 _selection.RotateTowardsEnemy(_enemySelection.transform.position);
+                var body = _selection.RayToPartsForAttack(_enemySelection.GetBodyPosition(), "Body") &&
+                           _enemySelection.body.GetCurrentHp() > 0;
+                
+                var lArm = _selection.RayToPartsForAttack(_enemySelection.GetLArmPosition(), "LArm") &&
+                           _enemySelection.leftArm.GetCurrentHp() > 0;
+                
+                var rArm= _selection.RayToPartsForAttack(_enemySelection.GetRArmPosition(), "RArm") &&
+                          _enemySelection.rightArm.GetCurrentHp() > 0;
+                
+                var legs =  _selection.RayToPartsForAttack(_enemySelection.GetLegsPosition(), "Legs") &&
+                            _enemySelection.legs.GetCurrentHp() > 0;
+
+                if (body || lArm || rArm || legs)
+                {
+                    _enemySelection.SelectedAsEnemy();
+                    _buttonsManager.SetEnemy(_enemySelection);
+                    _buttonsManager.SetEnemyUI();
+                    _canSelectUnit = false;
+                }
+                else
+                {
+                    _selection.RaysOffDelay();
+                    Selection(_selection);
+                }
             }
         }
     }
-    
+
     public Character GetSelectedCharacter()
     {
         return _selection;

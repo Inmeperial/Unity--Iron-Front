@@ -17,12 +17,14 @@ public class Character : EnumsClass, IObservable
     [SerializeField] public Sprite _myIcon;
     [SerializeField] public string _myName;
     
+    [Header("Rays")]
     [SerializeField] private LineRenderer _rayForBody;
     [SerializeField] private LineRenderer _rayForLeftArm;
     [SerializeField] private LineRenderer _rayForRightArm;
     [SerializeField] private LineRenderer _rayForLegs;
     [SerializeField] private Material _rayHitMaterial;
     [SerializeField] private Material _rayMissMaterial;
+    [SerializeField] private float _raysOffDelay;
 
     [Header("Body")] 
     public Body body;
@@ -444,11 +446,6 @@ public class Character : EnumsClass, IObservable
         _path.Clear();
         highlight.PathLinesClear();
         pathCreator.ResetPath();
-
-        _rayForBody.positionCount = 0;
-        _rayForLegs.positionCount = 0;
-        _rayForLeftArm.positionCount = 0;
-        _rayForRightArm.positionCount = 0;
     }
 
     /// <summary>
@@ -500,21 +497,44 @@ public class Character : EnumsClass, IObservable
                 break;
         }
         
-        // renderer.positionCount = 2;
-        // renderer.SetPosition(0, position);
-        // renderer.SetPosition(1, partPosition);
+        renderer.positionCount = 2;
+        renderer.SetPosition(0, position);
+        renderer.SetPosition(1, partPosition);
         
         if (goodHit)
         {
-            //renderer.material = _rayHitMaterial;
+            renderer.material = _rayHitMaterial;
             Debug.DrawRay(position, dir * 20f, Color.green, 10f);
             return true;
         }
-        
-        //renderer.material = _rayMissMaterial;
+        Debug.Log("rayo rojo");
+        renderer.material = _rayMissMaterial;
         Debug.DrawRay(position, dir * 20f, Color.red, 10f);
         return false;
         
+    }
+
+    public void RaysOff()
+    {
+        _rayForBody.positionCount = 0;
+        _rayForBody.materials[0] = null;
+        _rayForLegs.positionCount = 0;
+        _rayForLegs.materials[0] = null;
+        _rayForLeftArm.positionCount = 0;
+        _rayForLeftArm.materials[0] = null;
+        _rayForRightArm.positionCount = 0;
+        _rayForRightArm.materials[0] = null;
+    }
+
+    public void RaysOffDelay()
+    {
+        StartCoroutine(RaysOffWithDelay());
+    }
+
+    IEnumerator RaysOffWithDelay()
+    {
+        yield return new WaitForSeconds(_raysOffDelay);
+        RaysOff();
     }
     
     

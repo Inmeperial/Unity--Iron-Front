@@ -1063,7 +1063,8 @@ public class ButtonsUIManager : MonoBehaviour
                     
             u.gameObject.SetActive(false);
         }
-        
+        _selectedChar.RaysOffDelay();
+        //_selectedChar.RaysOff();
         
         var ui = _selectedEnemy.GetMyUI();
         ui.ButtonsEnabling(_bodyInsight, _lArmInsight, _rArmInsight, _legsInsight, this);
