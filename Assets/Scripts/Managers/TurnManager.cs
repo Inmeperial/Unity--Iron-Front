@@ -10,7 +10,6 @@ using UnityEngine.Experimental.PlayerLoop;
 
 public class TurnManager : EnumsClass, IObservable, IObserver
 {
-    [SerializeField] private Transform _canvasTransform;
     private List<Character> _greenTeam = new List<Character>();
     private int _greenDeadCount;
     private List<Character> _redTeam = new List<Character>();
@@ -22,6 +21,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
     private Team _activeTeam;
 
+    [Header("Turns")]
 	[SerializeField] private List<Character> _currentTurnOrder = new List<Character>();
     
     private List<IObserver> _observers = new List<IObserver>();
@@ -30,15 +30,17 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     private Character _actualCharacter;
     private CameraMovement _cameraMovement;
 
+    [Header("Portraits")]
+    [SerializeField] private Transform _canvasTransform;
+    [SerializeField] private float _portraitPivotHeightForAnimation = 0.75f;
     [SerializeField] private List<FramesUI> _portraits = new List<FramesUI>();
     [SerializeField] private List<RectTransform> _portraitsPositions = new List<RectTransform>();
-    [SerializeField] private float _moveTime;
+    [SerializeField] private float _portraitMoveTime;
     private List<Tuple<Character, FramesUI>> _charAndFramesList = new List<Tuple<Character, FramesUI>>();
 
-    public bool mortarAttack;
-
+    [Header("Mortar Turn")]
     public float waitForMortarAttack;
-    
+    private bool _mortarAttack;
     private delegate void Execute();
     Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
     private void Awake()
@@ -118,9 +120,9 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
     IEnumerator OnEndTurn()
     {
-        if (mortarAttack)
+        if (_mortarAttack)
         {
-            yield return new WaitUntil(() => !mortarAttack);
+            yield return new WaitUntil(() => !_mortarAttack);
             yield return new WaitForSeconds(waitForMortarAttack);
         }
         
@@ -363,11 +365,11 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             midRectA.anchorMax = Vector2.Lerp(startV.anchorMax, end.anchorMax, 0.5f);
             midRectA.anchorMin = Vector2.Lerp(startV.anchorMin, end.anchorMin, 0.5f);
             var anchorMax = midRectA.anchorMax;
-            anchorMax.y = 0.75f;
+            anchorMax.y = _portraitPivotHeightForAnimation;
             anchorMax.x = Mathf.Lerp(startV.anchorMax.x, end.anchorMax.x, 0.5f);
             midRectA.anchorMax = anchorMax;
             var anchorMin = midRectA.anchorMin;
-            anchorMin.y = 0.75f - (startV.anchorMax.y - startV.anchorMin.y);
+            anchorMin.y = _portraitPivotHeightForAnimation - (startV.anchorMax.y - startV.anchorMin.y);
             anchorMin.x = anchorMax.x - (startV.anchorMax.x - startV.anchorMin.x);
             midRectA.anchorMin = anchorMin;
             //Debug.Break();
@@ -375,10 +377,10 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
         var time = 0f;
         
-        while (time <= _moveTime)
+        while (time <= _portraitMoveTime)
         {
             time += Time.deltaTime;
-            var normalized = time / _moveTime;
+            var normalized = time / _portraitMoveTime;
 
             if (Mathf.Abs(currentPos - newPos) > 1)
             {
@@ -466,11 +468,15 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         FindObjectOfType<ChangeScene>().Win();
     }
 
+    public void SetMortarAttack(bool state)
+    {
+        _mortarAttack = state;
+    }
+    
     public void Notify(string action)
     {
         _actionsDic[action]();
     }
-    
     
     public void Subscribe(IObserver observer)
     {

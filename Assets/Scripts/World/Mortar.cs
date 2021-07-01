@@ -279,7 +279,7 @@ public class Mortar : MonoBehaviour, IObserver
 
         _turnCount++;
         if (_turnCount < _turnsToAttack) return;
-        FindObjectOfType<TurnManager>().mortarAttack = true;
+        FindObjectOfType<TurnManager>().SetMortarAttack(true);
         var c = FindObjectOfType<CameraMovement>();
         c.MoveTo(_centerToAttack.gameObject.transform, Attack);
     }
@@ -306,7 +306,7 @@ public class Mortar : MonoBehaviour, IObserver
         
         //_tilesToAttack.Clear();
         _attackPending = false;
-        FindObjectOfType<TurnManager>().mortarAttack = false;
+        FindObjectOfType<TurnManager>().SetMortarAttack(false);
         _turnCount = 0;
         Deselect();
     }
