@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using UnityEngine;
 
 
 public abstract class Gun : EnumsClass, IGun
 {
     [SerializeField] protected GunSO _weaponData;
-    
+    [SerializeField] protected GameObject[] _models;
     protected GunsType _gunType;
     protected string _gun;
     protected Sprite _icon;
@@ -260,5 +261,21 @@ public abstract class Gun : EnumsClass, IGun
     public GameObject GetParticleSpawn()
     {
         return _particleSpawn;
+    }
+
+    public void ModelsOff()
+    {
+        foreach (var m in _models)
+        {
+            m.gameObject.SetActive(false);
+        }
+    }
+    
+    public void ModelsOn()
+    {
+        foreach (var m in _models)
+        {
+            m.gameObject.SetActive(true);
+        }
     }
 }

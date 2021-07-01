@@ -10,7 +10,8 @@ public class Character : EnumsClass, IObservable
 {
     //STATS
     #region Stats
-    
+
+    public bool gunsOffOnCloseUp;
     [Header("Team")]
     [SerializeField] private Team _unitTeam;
     [SerializeField] public Sprite _myIcon;

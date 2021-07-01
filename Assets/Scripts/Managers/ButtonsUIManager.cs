@@ -415,6 +415,12 @@ public class ButtonsUIManager : MonoBehaviour
         DeactivateBodyPartsContainer();
         attackHudContainer.SetActive(false);
         _selectedChar.bodyRenderContainer.SetActive(true);
+        if (_selectedChar.gunsOffOnCloseUp)
+        {
+            _selectedChar.GetLeftGun().ModelsOn();
+            _selectedChar.GetRightGun().ModelsOn();
+        }
+        
         var units = _turnManager.GetAllUnits();
         foreach (var u in units)
         {
@@ -517,6 +523,12 @@ public class ButtonsUIManager : MonoBehaviour
             if (_selectedEnemy)
             {
                 _selectedChar.bodyRenderContainer.SetActive(true);
+                if (_selectedChar.gunsOffOnCloseUp)
+                {
+                    _selectedChar.GetLeftGun().ModelsOn();
+                    _selectedChar.GetRightGun().ModelsOn();  
+                }
+                
                 attackHudContainer.SetActive(false);
                 var units = _turnManager.GetAllUnits();
                 foreach (var u in units)
@@ -995,6 +1007,11 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedEnemy)
         {
             _selectedChar.bodyRenderContainer.SetActive(false);
+            if (_selectedChar.gunsOffOnCloseUp)
+            {
+                _selectedChar.GetLeftGun().ModelsOff();
+                _selectedChar.GetRightGun().ModelsOff();
+            }
             _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform.position, ActivateParts);
         }
     }
