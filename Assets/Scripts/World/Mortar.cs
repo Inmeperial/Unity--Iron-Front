@@ -14,7 +14,9 @@ public class Mortar : MonoBehaviour, IObserver
     [SerializeField] private int _aoe;
     [SerializeField] private int _damage;
     [SerializeField] private int _turnsToAttack;
-    [SerializeField] private TextMeshProUGUI _turnsCounterText;
+    [SerializeField] private Transform _textSpawnPos;
+    [SerializeField] private GameObject _turnsCounterTextPrefab;
+    private List<TextMeshProUGUI> _textsList = new List<TextMeshProUGUI>();
     private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
     private Dictionary<Tile, int> _tilesForPreviewChecked = new Dictionary<Tile, int>();
 
@@ -238,11 +240,22 @@ public class Mortar : MonoBehaviour, IObserver
 
     private void PrepareAttack()
     {
+        _textsList.Clear();
         //_tilesToAttack = _tilesInPreviewRange;
         _attackPending = true;
         _turnCount = _turnsToAttack;
-        _turnsCounterText.text = _turnCount.ToString();
-        _turnsCounterText.gameObject.SetActive(true);
+        
+        var mortarText = Instantiate(_turnsCounterTextPrefab, _textSpawnPos.position, Quaternion.identity).GetComponentInChildren<TextMeshProUGUI>();
+        _textsList.Add(mortarText);
+        
+        var pos = _centerToAttack.transform.position;
+        pos.y = _textSpawnPos.position.y;
+        var missileText = Instantiate(_turnsCounterTextPrefab, pos, Quaternion.identity).GetComponentInChildren<TextMeshProUGUI>();
+        _textsList.Add(missileText);
+        
+        mortarText.text = _turnCount.ToString();
+        missileText.text = _turnCount.ToString();
+        
         _activationCharacter.DeactivateAttack();
         _activationCharacter = null;
         Deselect();
@@ -280,11 +293,20 @@ public class Mortar : MonoBehaviour, IObserver
         if (!_attackPending) return;
 
         _turnCount--;
-        _turnsCounterText.text = _turnCount.ToString();
+        _textsList[0].text = _turnCount.ToString();
+        _textsList[1].text = _turnCount.ToString();
+        
         if (_turnCount > 0) return;
-        _turnsCounterText.gameObject.SetActive(false);
+        
+        Destroy(_textsList[0].gameObject);
+        Destroy(_textsList[1].gameObject);
+        
+        _textsList.Clear();
+        
         FindObjectOfType<TurnManager>().SetMortarAttack(true);
+        
         var c = FindObjectOfType<CameraMovement>();
+        
         c.MoveTo(_centerToAttack.gameObject.transform, Attack);
     }
 
