@@ -363,6 +363,11 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         var end = _portraitsPositions[newPos].gameObject.GetComponent<RectTransform>();
         var midRectA = new RectTransform();
         var midGoA = new GameObject();
+
+        AnimationCurve curveMinX = null;
+        AnimationCurve curveMaxX = null;
+        AnimationCurve curveMinY = null;
+        AnimationCurve curveMaxY = null;
         if (Mathf.Abs(currentPos - newPos) > 1)
         {
             midGoA.transform.parent = _canvasTransform;
@@ -378,6 +383,35 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             anchorMin.y = _portraitPivotHeightForAnimation - (startV.anchorMax.y - startV.anchorMin.y);
             anchorMin.x = anchorMax.x - (startV.anchorMax.x - startV.anchorMin.x);
             midRectA.anchorMin = anchorMin;
+
+            Keyframe[] kMinX = new Keyframe[3];
+            kMinX[0] = new Keyframe(0, startV.anchorMin.x);
+            kMinX[1] = new Keyframe(_portraitMoveTime/2, midRectA.anchorMin.x);
+            kMinX[2] = new Keyframe(_portraitMoveTime, end.anchorMin.x);
+            
+            Keyframe[] kMaxX = new Keyframe[3];
+            kMaxX[0] = new Keyframe(0, startV.anchorMax.x);
+            kMaxX[1] = new Keyframe(_portraitMoveTime/2, midRectA.anchorMax.x);
+            kMaxX[2] = new Keyframe(_portraitMoveTime, end.anchorMax.x);
+            
+            Keyframe[] kMinY = new Keyframe[3];
+            kMinY[0] = new Keyframe(0, startV.anchorMin.y);
+            kMinY[1] = new Keyframe(_portraitMoveTime/2, midRectA.anchorMin.y);
+            kMinY[2] = new Keyframe(_portraitMoveTime, end.anchorMin.y);
+            
+            Keyframe[] kMaxY = new Keyframe[3];
+            kMaxY[0] = new Keyframe(0, startV.anchorMax.y);
+            kMaxY[1] = new Keyframe(_portraitMoveTime/2, midRectA.anchorMax.y);
+            kMaxY[2] = new Keyframe(_portraitMoveTime, end.anchorMax.y);
+
+            curveMinX = new AnimationCurve(kMinX);
+            curveMinX.SmoothTangents(1, 3);
+            curveMaxX = new AnimationCurve(kMaxX);
+            curveMaxX.SmoothTangents(1, 3);
+            curveMinY = new AnimationCurve(kMinY);
+            //curveMinY.SmoothTangents(1, 0);
+            curveMaxY = new AnimationCurve(kMaxY);
+            //curveMaxY.SmoothTangents(1, 0);
             //Debug.Break();
         }
 
@@ -387,19 +421,23 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         {
             time += Time.deltaTime;
             var normalized = time / _portraitMoveTime;
-
+            
             if (Mathf.Abs(currentPos - newPos) > 1)
             {
-                if (normalized <= 0.5f)
-                {
-                    myRect.anchorMax = Vector2.Lerp(startV.anchorMax, midRectA.anchorMax, normalized * 2);
-                    myRect.anchorMin = Vector2.Lerp(startV.anchorMin, midRectA.anchorMin, normalized * 2);
-                }
-                else
-                {
-                    myRect.anchorMax = Vector2.Lerp(midRectA.anchorMax, end.anchorMax, normalized);
-                    myRect.anchorMin = Vector2.Lerp(midRectA.anchorMin, end.anchorMin, normalized);
-                }
+                //myRect.anchoredPosition = new Vector2(animationCurveX.Evaluate(time), animationCurveY.Evaluate(time));
+                myRect.anchorMax = new Vector2(curveMaxX.Evaluate(time), curveMaxY.Evaluate(time));
+                myRect.anchorMin = new Vector2(curveMinX.Evaluate(time), curveMinY.Evaluate(time));
+
+                // if (normalized <= 0.5f)
+                // {
+                //     myRect.anchorMax = Vector2.Lerp(startV.anchorMax, midRectA.anchorMax, normalized * 2);
+                //     myRect.anchorMin = Vector2.Lerp(startV.anchorMin, midRectA.anchorMin, normalized * 2);
+                // }
+                // else
+                // {
+                //     myRect.anchorMax = Vector2.Lerp(midRectA.anchorMax, end.anchorMax, normalized);
+                //     myRect.anchorMin = Vector2.Lerp(midRectA.anchorMin, end.anchorMin, normalized);
+                // }
             }
             else
             {
