@@ -190,6 +190,12 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         unit.NewTurn();
     }
 
+	//Cambio Nico
+	public Character GetSelectedCharacter()
+	{
+		return _charSelect.GetSelectedCharacter();
+	}
+
     public Team GetActiveTeam()
     {
         return _activeTeam;

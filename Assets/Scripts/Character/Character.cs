@@ -63,6 +63,7 @@ public class Character : EnumsClass, IObservable
     private Tile _myPositionTile;
     private Tile _targetTile;
     [SerializeField]private List<Tile> _path = new List<Tile>();
+	public Quaternion InitialRotation { get; private set; }//Cambio Nico
 
     //FLAGS
     private bool _canBeSelected;
@@ -389,6 +390,7 @@ public class Character : EnumsClass, IObservable
     public void SelectThisUnit()
     {
         _selected = true;
+		InitialRotation = transform.rotation;//Cambio Nico
         ResetInRangeLists();
         _path.Clear();
         highlight.PathLinesClear();
@@ -970,6 +972,7 @@ public class Character : EnumsClass, IObservable
         highlight.characterMoving = false;
         highlight.EndPreview();
         _moving = false;
+		InitialRotation = transform.rotation;//Cambio Nico
         if (_myPositionTile)
         {
             _myPositionTile.MakeTileFree();
@@ -1119,12 +1122,35 @@ public class Character : EnumsClass, IObservable
     {
         if (!_selectedForAttack && _canBeSelected)
             ShowWorldUI();
+
+		//Cambio Nico
+		if (_canBeAttacked && !_selectedForAttack)//me tendría que dar true si soy enemigo de la unidad actual y estoy en su rango de ataque. Tengo que poner otro chequeo para que no se prendan cuando estoy atacando.
+		{
+			//Tengo que rotar a la unidad que es su turno hacia el enemigo este que pongo el mouse por encima
+			var c = turnManager.GetSelectedCharacter();
+			c.RotateTowardsEnemy(transform.position);//Roto a la unidad seleccionada(la que esta haciendo su turno) hacia mi, su enemigo
+			//Tengo que prender los line renderers de los raycasts
+			var _body = c.RayToPartsForAttack(GetBodyPosition(), "Body") && body.GetCurrentHp() > 0;
+			var _lArm = c.RayToPartsForAttack(GetLArmPosition(), "LArm") && leftArm.GetCurrentHp() > 0;
+			var _rArm = c.RayToPartsForAttack(GetRArmPosition(), "RArm") && rightArm.GetCurrentHp() > 0;
+			var _legs = c.RayToPartsForAttack(GetLegsPosition(), "Legs") && legs.GetCurrentHp() > 0;
+		}
+
     }
 
     private void OnMouseExit()
     {
         HideWorldUI();
-    }
+
+		//Cambio Nico
+		if (_canBeAttacked)// me tendría que dar true si soy enemigo de la unidad actual y estoy en su rango de ataque
+		{
+			var c = turnManager.GetSelectedCharacter();
+			c.transform.rotation = c.InitialRotation;//Volver la rotación del mecha a InitialRotation, esto podría ser más smooth
+			c.RaysOff();//Apago los raycasts cuando saco el mouse
+		}
+
+	}
 
     /// <summary>
     /// Activates Character World UI.
