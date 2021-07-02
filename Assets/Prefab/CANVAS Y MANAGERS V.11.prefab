@@ -14706,6 +14706,8 @@ MonoBehaviour:
   _currentTurnOrder: []
   _canvasTransform: {fileID: 8576473317025532380}
   _portraitPivotHeightForAnimation: 0.75
+  _portraitMoveTime: 2
+  _animationCurveWeight: 3
   _portraits:
   - {fileID: 5788962396947687931}
   - {fileID: 2824678368636852576}
@@ -14724,7 +14726,6 @@ MonoBehaviour:
   - {fileID: 3454274427228688541}
   - {fileID: 2347139259732008475}
   - {fileID: 7232155007582589638}
-  _portraitMoveTime: 2
   waitForMortarAttack: 3
 --- !u!1 &8576473316728550775
 GameObject:

@@ -33,9 +33,11 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     [Header("Portraits")]
     [SerializeField] private Transform _canvasTransform;
     [SerializeField] private float _portraitPivotHeightForAnimation = 0.75f;
+    [SerializeField] private float _portraitMoveTime;
+    [SerializeField] private float _animationCurveWeight;
     [SerializeField] private List<FramesUI> _portraits = new List<FramesUI>();
     [SerializeField] private List<RectTransform> _portraitsPositions = new List<RectTransform>();
-    [SerializeField] private float _portraitMoveTime;
+    
     private List<Tuple<Character, FramesUI>> _charAndFramesList = new List<Tuple<Character, FramesUI>>();
 
     [Header("Mortar Turn")]
@@ -405,9 +407,9 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             kMaxY[2] = new Keyframe(_portraitMoveTime, end.anchorMax.y);
 
             curveMinX = new AnimationCurve(kMinX);
-            curveMinX.SmoothTangents(1, 3);
+            curveMinX.SmoothTangents(1, _animationCurveWeight);
             curveMaxX = new AnimationCurve(kMaxX);
-            curveMaxX.SmoothTangents(1, 3);
+            curveMaxX.SmoothTangents(1, _animationCurveWeight);
             curveMinY = new AnimationCurve(kMinY);
             //curveMinY.SmoothTangents(1, 0);
             curveMaxY = new AnimationCurve(kMaxY);
