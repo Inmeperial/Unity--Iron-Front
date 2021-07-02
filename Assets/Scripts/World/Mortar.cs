@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using TMPro;
 public class Mortar : MonoBehaviour, IObserver
 {
     public float activationTilesDetectionRange;
@@ -14,7 +14,7 @@ public class Mortar : MonoBehaviour, IObserver
     [SerializeField] private int _aoe;
     [SerializeField] private int _damage;
     [SerializeField] private int _turnsToAttack;
-
+    [SerializeField] private TextMeshProUGUI _turnsCounterText;
     private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
     private Dictionary<Tile, int> _tilesForPreviewChecked = new Dictionary<Tile, int>();
 
@@ -240,7 +240,9 @@ public class Mortar : MonoBehaviour, IObserver
     {
         //_tilesToAttack = _tilesInPreviewRange;
         _attackPending = true;
-        _turnCount = 0;
+        _turnCount = _turnsToAttack;
+        _turnsCounterText.text = _turnCount.ToString();
+        _turnsCounterText.gameObject.SetActive(true);
         _activationCharacter.DeactivateAttack();
         _activationCharacter = null;
         Deselect();
@@ -277,8 +279,10 @@ public class Mortar : MonoBehaviour, IObserver
     {
         if (!_attackPending) return;
 
-        _turnCount++;
-        if (_turnCount < _turnsToAttack) return;
+        _turnCount--;
+        _turnsCounterText.text = _turnCount.ToString();
+        if (_turnCount > 0) return;
+        _turnsCounterText.gameObject.SetActive(false);
         FindObjectOfType<TurnManager>().SetMortarAttack(true);
         var c = FindObjectOfType<CameraMovement>();
         c.MoveTo(_centerToAttack.gameObject.transform, Attack);
@@ -307,7 +311,7 @@ public class Mortar : MonoBehaviour, IObserver
         //_tilesToAttack.Clear();
         _attackPending = false;
         FindObjectOfType<TurnManager>().SetMortarAttack(false);
-        _turnCount = 0;
+        _turnCount = _turnsToAttack;
         Deselect();
     }
 
@@ -336,4 +340,6 @@ public class Mortar : MonoBehaviour, IObserver
         
         _last = null;
     }
+    
+    
 }
