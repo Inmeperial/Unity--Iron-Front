@@ -15,7 +15,12 @@ public class LandMine : MonoBehaviour
         
         selectedEnemy.SetHurtAnimation();
         obj.TakeDamageLegs(damage);
-        FindObjectOfType<EffectsController>().PlayParticlesEffect(this.gameObject, "Mine");
-        Destroy(gameObject);
+        DestroyMine();
+    }
+
+    public void DestroyMine()
+    {
+        FindObjectOfType<EffectsController>().PlayParticlesEffect(gameObject, "Mine");
+        Destroy(gameObject); 
     }
 }

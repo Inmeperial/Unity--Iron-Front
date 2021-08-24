@@ -28,7 +28,7 @@ public class Tile : MonoBehaviour
     public bool inAttackRange;
     public bool inPreviewRange;
     public bool unitAboveSelected;
-    
+    public LandMine _mine;
     private void Awake()
     {
         _isFree = true;
@@ -38,6 +38,12 @@ public class Tile : MonoBehaviour
         inAttackRange = false;
         inPreviewRange = false;
         unitAboveSelected = false;
+        var objs = Physics.OverlapSphere(transform.position, 3f);
+        foreach (var o in objs)
+        {
+            _mine = o.GetComponent<LandMine>();
+            if (_mine) break;
+        }
     }
 
     public void GetNeighbours()
@@ -314,6 +320,7 @@ public class Tile : MonoBehaviour
         {
             Gizmos.color = Color.black;
             Gizmos.DrawWireCube(transform.position, transform.localScale);
+            //Gizmos.DrawSphere(transform.position, 3f);
         }
     }
 
@@ -326,5 +333,8 @@ public class Tile : MonoBehaviour
         else return null;
     }
 
-    
+    public LandMine GetMineAbove()
+    {
+        return _mine;
+    }
 }

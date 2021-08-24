@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 4750529651639803753}
   - component: {fileID: 8190419262628815420}
   m_Layer: 2
-  m_Name: Mina (13)
+  m_Name: Mina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -233,7 +233,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 0.984808, z: 0.8890041}
-  m_Center: {x: 0, y: -1.7363748e-15, z: 0.44450152}
+  m_Center: {x: 0, y: -1.7363748e-15, z: 0.41}
 --- !u!114 &4750529651639803753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,8 +247,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 100
-  soundExplosion: {fileID: 8300000, guid: 40ccb284c11dd61409f23f5a75ca4320, type: 3}
-  particleEffectObj: {fileID: 100002, guid: 6890a03af913b874092fbb1e8337747d, type: 3}
 --- !u!114 &8190419262628815420
 MonoBehaviour:
   m_ObjectHideFlags: 0

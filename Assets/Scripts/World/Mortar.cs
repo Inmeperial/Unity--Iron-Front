@@ -326,7 +326,12 @@ public class Mortar : MonoBehaviour, IObserver
                 if (unit.body.GetCurrentHp() <= 0)
                 unit.Dead();
             }
-            
+
+            var mine = tile.GetMineAbove();
+            if (mine)
+                mine.DestroyMine();
+                
+
             //effect.PlayParticlesEffect(tile.transform.position, "Mine");
             effect.PlayParticlesEffect(tile.gameObject, "Mine");
         }
