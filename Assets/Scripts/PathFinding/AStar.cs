@@ -8,7 +8,7 @@ public class AStar<T>
     public delegate Dictionary<T, float> GetNeighbours(T curr);
     public delegate float GetCost(T father, T child);
     public delegate float Heuristic(T current);
-    public List<T> Run(T start, Satisfies satisfies, GetNeighbours getNeighbours, Heuristic heuristic, int watchDog = 500)
+    public List<T> Run(T start, Satisfies satisfies, GetNeighbours getNeighbours, Heuristic heuristic, int watchDog = 1000)
     {
         Dictionary<T, float> cost = new Dictionary<T, float>();
         Dictionary<T, T> parents = new Dictionary<T, T>();
@@ -16,11 +16,16 @@ public class AStar<T>
         HashSet<T> visited = new HashSet<T>();
         pending.Enqueue(start, 0);
         cost.Add(start, 0);
+        int count = 0;
         while (!pending.IsEmpty)
         {
             T current = pending.Dequeue();
             watchDog--;
-            if (watchDog <= 0) return new List<T>();
+            if (watchDog <= 0)
+            {
+                Debug.Log("return watchdog");
+                return new List<T>();
+            }
             if (satisfies(current))
             {
                 return ConstructPath(current, parents);
@@ -39,6 +44,7 @@ public class AStar<T>
                 pending.Enqueue(node, totalCost + heuristic(node));
             }
         }
+        Debug.Log("pending empty");
         return new List<T>();
     }
 

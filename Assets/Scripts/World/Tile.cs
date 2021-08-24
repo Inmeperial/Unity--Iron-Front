@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Experimental.VFX.Utility;
 
 
+[SelectionBase]
 public class Tile : MonoBehaviour
 {
     [SerializeField] private bool isWalkable;
@@ -280,7 +281,7 @@ public class Tile : MonoBehaviour
         _isFree = false;
         foreach (var tile in neighboursForMove)
         {
-            tile.RemoveMoveNeighbour(this);
+            //tile.RemoveMoveNeighbour(this);
         }
     }
 

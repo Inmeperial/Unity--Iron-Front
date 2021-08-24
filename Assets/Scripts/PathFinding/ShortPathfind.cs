@@ -12,9 +12,9 @@ public class ShortPathfind : MonoBehaviour, IPathCreator
         _agent = FindObjectOfType<AStarAgent>();
     }
 
-    public void Calculate(Character character, Tile end, int distance)
+    public void Calculate(Tile start, Tile end, int distance)
     {
-        _agent.init = character.GetTileBelow();
+        _agent.init = start;
         _agent.finit = end;
         _path = _agent.PathFindingAstar();
     }

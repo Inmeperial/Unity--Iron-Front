@@ -540,6 +540,7 @@ public class ButtonsUIManager : MonoBehaviour
                     u.gameObject.SetActive(true);
                 }
                 var cam = FindObjectOfType<CloseUpCamera>();
+                _selectedChar.ResetRotationAndRays();
                 cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, cam.ResetCamera);
 
             }

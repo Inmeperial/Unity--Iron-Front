@@ -89,6 +89,7 @@ public class Mortar : MonoBehaviour, IObserver
             Debug.Log("my name" + name);
             var s = FindObjectOfType<CharacterSelection>().GetSelectedCharacter();
             s.SetSelection(false);
+            s.ResetRotationAndRays();
             _selected = true;
             if (SelectedPlayerAbove())
             {

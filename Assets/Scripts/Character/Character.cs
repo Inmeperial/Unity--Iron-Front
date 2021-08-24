@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityStandardAssets.Effects;
 using Random = System.Random;
 
+[SelectionBase]
 public class Character : EnumsClass, IObservable
 {
     //STATS
@@ -13,87 +14,87 @@ public class Character : EnumsClass, IObservable
 
     public bool gunsOffOnCloseUp;
     [Header("Team")]
-    [SerializeField] private Team _unitTeam;
+    [SerializeField] protected Team _unitTeam;
     [SerializeField] public Sprite _myIcon;
     [SerializeField] public string _myName;
     
     [Header("Rays")]
-    [SerializeField] private LineRenderer _rayForBody;
-    [SerializeField] private LineRenderer _rayForLeftArm;
-    [SerializeField] private LineRenderer _rayForRightArm;
-    [SerializeField] private LineRenderer _rayForLegs;
-    [SerializeField] private Material _rayHitMaterial;
-    [SerializeField] private Material _rayMissMaterial;
-    [SerializeField] private float _raysOffDelay;
+    [SerializeField] protected LineRenderer _rayForBody;
+    [SerializeField] protected LineRenderer _rayForLeftArm;
+    [SerializeField] protected LineRenderer _rayForRightArm;
+    [SerializeField] protected LineRenderer _rayForLegs;
+    [SerializeField] protected Material _rayHitMaterial;
+    [SerializeField] protected Material _rayMissMaterial;
+    [SerializeField] protected float _raysOffDelay;
 
     [Header("Body")] 
     public Body body;
-    [SerializeField] private Transform _bodyTransform;
-    [SerializeField] private Transform _bodyParticleSpawn;
+    [SerializeField] protected Transform _bodyTransform;
+    [SerializeField] protected Transform _bodyParticleSpawn;
 
     [Header("Left Arm")]
     public Arm leftArm;
-    private Gun _leftGun;
-    private bool _leftGunSelected;
-    [SerializeField] private GunsType _leftGunType;
-    [SerializeField] private GameObject _leftGunSpawn;
+    protected Gun _leftGun;
+    protected bool _leftGunSelected;
+    [SerializeField] protected GunsType _leftGunType;
+    [SerializeField] protected GameObject _leftGunSpawn;
 
     [Header("Right Arm")]
     public Arm rightArm;
-    private Gun _rightGun;
-    private bool _rightGunSelected;
-    [SerializeField] private GunsType _rightGunType;
-    [SerializeField] private GameObject _rightGunSpawn;
+    protected Gun _rightGun;
+    protected bool _rightGunSelected;
+    [SerializeField] protected GunsType _rightGunType;
+    [SerializeField] protected GameObject _rightGunSpawn;
     
     [Header("Legs")] 
     public Legs legs;
-    [SerializeField] private Transform _legsTransform;
-    private int _currentSteps;
+    [SerializeField] protected Transform _legsTransform;
+    protected int _currentSteps;
     #endregion
 
-    private Gun _selectedGun;
+    protected Gun _selectedGun;
 
     
     
     //MOVEMENT RELATED
     public IPathCreator pathCreator;
-    private GridMovement _move;
+    protected GridMovement _move;
     public LayerMask block;
-    private List<Tile> _tilesInMoveRange = new List<Tile>();
-    private Tile _myPositionTile;
-    private Tile _targetTile;
-    [SerializeField]private List<Tile> _path = new List<Tile>();
+    protected List<Tile> _tilesInMoveRange = new List<Tile>();
+    protected Tile _myPositionTile;
+    protected Tile _targetTile;
+    [SerializeField]protected List<Tile> _path = new List<Tile>();
 	public Quaternion InitialRotation { get; private set; }//Cambio Nico
 
     //FLAGS
-    private bool _canBeSelected;
-    private bool _selected;
-    private bool _moving = false;
+    protected bool _canBeSelected;
+    protected bool _selected;
+    protected bool _moving = false;
     public bool _canMove = true;
-    private bool _canAttack = true;
-    private bool _leftArmAlive;
-    private bool _rightArmAlive;
-    private bool _canBeAttacked = false;
-    private bool _selectingEnemy = false;
-    private bool _selectedForAttack;
-    private bool _myTurn = false;
-    private bool _isDead = false;
+    protected bool _canAttack = true;
+    protected bool _leftArmAlive;
+    protected bool _rightArmAlive;
+    protected bool _canBeAttacked = false;
+    protected bool _selectingEnemy = false;
+    protected bool _selectedForAttack;
+    protected bool _myTurn = false;
+    protected bool _isDead = false;
 
     //OTHERS
     public GameObject bodyRenderContainer;
-    private HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
-    private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
-    private Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();
-    private List<Character> _enemiesInRange = new List<Character>();
-    private WorldUI _myUI;
-    private MechaMaterialhandler _mechaMaterlaHandler;
-    private SmokeMechaHandler _smokeMechaHandler;
+    protected HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
+    protected Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
+    protected Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();
+    protected List<Character> _enemiesInRange = new List<Character>();
+    protected WorldUI _myUI;
+    protected MechaMaterialhandler _mechaMaterlaHandler;
+    protected SmokeMechaHandler _smokeMechaHandler;
     public AudioClip soundMotorStart;
     public AudioClip soundWalk;
     public AudioClip soundHit;
-    private AnimationMechaHandler _animationMechaHandler;
+    protected AnimationMechaHandler _animationMechaHandler;
     
-    private List<IObserver> _observers = new List<IObserver>();
+    protected List<IObserver> _observers = new List<IObserver>();
 
     [HideInInspector]
 	public EffectsController effectsController;
@@ -177,7 +178,7 @@ public class Character : EnumsClass, IObservable
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         _canMove = legs.GetCurrentHp() > 0;
         _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
@@ -198,7 +199,7 @@ public class Character : EnumsClass, IObservable
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (_selected && !_moving && _canMove && !_selectingEnemy && Input.GetMouseButtonDown(0))
         {
@@ -209,9 +210,23 @@ public class Character : EnumsClass, IObservable
 
     #region Actions
 
-    private void Move()
+    protected void Move()
     {
-        if (_moving != false || _path == null || _path.Count <= 0) return;
+        if (_moving || _path == null || _path.Count <= 0)
+        {
+            if (_moving)
+            {
+                Debug.Log("return moving");
+            }
+            else if (_path == null)
+            {
+                Debug.Log("return null");
+            }
+            else Debug.Log("path 0");
+            
+            
+            return;
+        }
         
         _moving = true;
         buttonsManager.DeactivateBodyPartsContainer();
@@ -559,7 +574,7 @@ public class Character : EnumsClass, IObservable
         else
         {
                 
-            pathCreator.Calculate(this, newTile, _currentSteps);
+            pathCreator.Calculate(_myPositionTile, newTile, _currentSteps);
                 
             if (pathCreator.GetDistance() > legs.GetMaxSteps()) return;
                 
@@ -797,7 +812,7 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Set if it's Character turn.
     /// </summary>
-    public void SetTurn(bool state)
+    public virtual void SetTurn(bool state)
     {
         _myTurn = state;
     }
@@ -840,7 +855,7 @@ public class Character : EnumsClass, IObservable
     #region Utilities
     
     //Se pintan los tiles dentro del rango de ataque
-    private void PaintTilesInAttackRange(Tile currentTile, int count)
+    protected void PaintTilesInAttackRange(Tile currentTile, int count)
     {
         if (_selectedGun == null || count >= _selectedGun.GetAttackRange() || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
             return;
@@ -868,7 +883,7 @@ public class Character : EnumsClass, IObservable
     }
 
     //Se pintan los tiles dentro del rango de movimiento
-    private void PaintTilesInMoveRange(Tile currentTile, int count)
+    protected void PaintTilesInMoveRange(Tile currentTile, int count)
     {
         if (count >= _currentSteps || (_tilesForMoveChecked.ContainsKey(currentTile) && _tilesForMoveChecked[currentTile] <= count))
             return;
@@ -934,7 +949,7 @@ public class Character : EnumsClass, IObservable
         _enemiesInRange.Clear();
     }
 
-    private void AddTilesInMoveRange()
+    protected void AddTilesInMoveRange()
     {
         highlight.AddTilesInMoveRange(_tilesInMoveRange);
     }
@@ -942,7 +957,7 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Reset Character for new turn.
     /// </summary>
-    public void NewTurn()
+    public virtual void NewTurn()
     {
         if (_isDead) return;
         _rightGun.Deselect();
@@ -1123,18 +1138,9 @@ public class Character : EnumsClass, IObservable
         if (!_selectedForAttack && _canBeSelected)
             ShowWorldUI();
 
-		//Cambio Nico
-		if (_canBeAttacked && !_selectedForAttack)//me tendría que dar true si soy enemigo de la unidad actual y estoy en su rango de ataque. Tengo que poner otro chequeo para que no se prendan cuando estoy atacando.
-		{
-			//Tengo que rotar a la unidad que es su turno hacia el enemigo este que pongo el mouse por encima
-			var c = turnManager.GetSelectedCharacter();
-			c.RotateTowardsEnemy(transform.position);//Roto a la unidad seleccionada(la que esta haciendo su turno) hacia mi, su enemigo
-			//Tengo que prender los line renderers de los raycasts
-			var _body = c.RayToPartsForAttack(GetBodyPosition(), "Body") && body.GetCurrentHp() > 0;
-			var _lArm = c.RayToPartsForAttack(GetLArmPosition(), "LArm") && leftArm.GetCurrentHp() > 0;
-			var _rArm = c.RayToPartsForAttack(GetRArmPosition(), "RArm") && rightArm.GetCurrentHp() > 0;
-			var _legs = c.RayToPartsForAttack(GetLegsPosition(), "Legs") && legs.GetCurrentHp() > 0;
-		}
+        //Cambio Nico
+        if (_canBeAttacked && !_selectedForAttack)//me tendría que dar true si soy enemigo de la unidad actual y estoy en su rango de ataque. Tengo que poner otro chequeo para que no se prendan cuando estoy atacando.
+            RotateWithRays();
 
     }
 
@@ -1144,13 +1150,28 @@ public class Character : EnumsClass, IObservable
 
 		//Cambio Nico
 		if (_canBeAttacked)// me tendría que dar true si soy enemigo de la unidad actual y estoy en su rango de ataque
-		{
-			var c = turnManager.GetSelectedCharacter();
-			c.transform.rotation = c.InitialRotation;//Volver la rotación del mecha a InitialRotation, esto podría ser más smooth
-			c.RaysOff();//Apago los raycasts cuando saco el mouse
-		}
+            ResetRotationAndRays();
+    }
 
-	}
+    private void RotateWithRays()
+    {
+        //Tengo que rotar a la unidad que es su turno hacia el enemigo este que pongo el mouse por encima
+        var c = turnManager.GetSelectedCharacter();
+        if (!c._selected) return;
+        c.RotateTowardsEnemy(transform.position);//Roto a la unidad seleccionada(la que esta haciendo su turno) hacia mi, su enemigo
+        //Tengo que prender los line renderers de los raycasts
+        var _body = c.RayToPartsForAttack(GetBodyPosition(), "Body") && body.GetCurrentHp() > 0;
+        var _lArm = c.RayToPartsForAttack(GetLArmPosition(), "LArm") && leftArm.GetCurrentHp() > 0;
+        var _rArm = c.RayToPartsForAttack(GetRArmPosition(), "RArm") && rightArm.GetCurrentHp() > 0;
+        var _legs = c.RayToPartsForAttack(GetLegsPosition(), "Legs") && legs.GetCurrentHp() > 0;
+    }
+
+    public void ResetRotationAndRays()
+    {
+        var c = turnManager.GetSelectedCharacter();
+        c.transform.rotation = c.InitialRotation;//Volver la rotación del mecha a InitialRotation, esto podría ser más smooth
+        c.RaysOff();//Apago los raycasts cuando saco el mouse
+    }
 
     /// <summary>
     /// Activates Character World UI.

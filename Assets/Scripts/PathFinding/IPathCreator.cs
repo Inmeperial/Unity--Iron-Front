@@ -4,11 +4,13 @@ using UnityEngine;
 
 public interface IPathCreator
 {
-    void Calculate(Character character, Tile end, int distance);
+    void Calculate(Tile start, Tile end, int distance);
     List<Tile> GetPath();
 
     int GetDistance();
 
     void UndoLastWaypoint();
     void ResetPath();
+
+    //List<Tile> Calculate(Tile start, Tile end);
 }

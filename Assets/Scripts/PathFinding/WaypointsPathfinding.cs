@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WaypointsPathfinding : MonoBehaviour, IPathCreator
@@ -15,13 +16,12 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         _char = GetComponent<Character>();
     }
 
-    public void Calculate(Character character, Tile end, int distance)
+    public void Calculate(Tile start, Tile end, int distance)
     {
-        //If list is empty, pathfinding starts with the tile of player position.
         if (_fullMovePath == null || _fullMovePath.Count == 0)
         {
             _fullMovePath = new List<Tile>();
-            _agent.init = character.GetMyPositionTile();
+            _agent.init = start;
         }
         //If list is not empty, pathfinding starts with last tile of the list.
         else if (_fullMovePath.Count > 1)
@@ -57,6 +57,26 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         }
         _partialPaths.Push(temp);
     }
+
+    // public List<Tile> Calculate(Tile start, Tile end)
+    // {
+    //     _agent.init = start;
+    //     _agent.finit = end;
+    //     List<Tile> temp = _agent.PathFindingAstar();
+    //     Debug.Log("agent: " + _agent.PathFindingAstar().Count);
+    //     Debug.Log("temp calculate: " + temp.Count);
+    //     List<Tile> finalList = new List<Tile>();
+    //
+    //     foreach (var t in temp)
+    //     {
+    //         if (t == null) continue;
+    //         
+    //         if (t.IsWalkable() && t.IsUnitFree())
+    //             finalList.Add(t);
+    //     }
+    //
+    //     return finalList;
+    // }
 
     public List<Tile> GetPath()
     {
