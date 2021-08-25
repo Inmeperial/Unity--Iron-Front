@@ -320,17 +320,15 @@ public class Tile : MonoBehaviour
         {
             Gizmos.color = Color.black;
             Gizmos.DrawWireCube(transform.position, transform.localScale);
-            //Gizmos.DrawSphere(transform.position, 3f);
         }
     }
 
     public Character GetCharacterAbove()
     {
-        RaycastHit hit;
-        Physics.Raycast(transform.position, transform.up, out hit, 3, characterMask);
+        Physics.Raycast(transform.position, transform.up, out var hit, 3, characterMask);
         if (hit.transform)
             return hit.transform.GetComponent<Character>();
-        else return null;
+        return null;
     }
 
     public LandMine GetMineAbove()
