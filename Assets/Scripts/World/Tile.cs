@@ -285,19 +285,19 @@ public class Tile : MonoBehaviour
     public void MakeTileOccupied()
     {
         _isFree = false;
-        foreach (var tile in neighboursForMove)
-        {
-            //tile.RemoveMoveNeighbour(this);
-        }
+        // foreach (var tile in neighboursForMove)
+        // {
+        //     //tile.RemoveMoveNeighbour(this);
+        // }
     }
 
     public void MakeTileFree()
     {
         _isFree = true;
-        foreach (var tile in neighboursForMove)
-        {
-            tile.AddMoveNeighbour(this);
-        }
+        // foreach (var tile in neighboursForMove)
+        // {
+        //     tile.AddMoveNeighbour(this);
+        // }
     }
 
     public void ShowGizmo()

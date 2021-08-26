@@ -58,26 +58,6 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         _partialPaths.Push(temp);
     }
 
-    // public List<Tile> Calculate(Tile start, Tile end)
-    // {
-    //     _agent.init = start;
-    //     _agent.finit = end;
-    //     List<Tile> temp = _agent.PathFindingAstar();
-    //     Debug.Log("agent: " + _agent.PathFindingAstar().Count);
-    //     Debug.Log("temp calculate: " + temp.Count);
-    //     List<Tile> finalList = new List<Tile>();
-    //
-    //     foreach (var t in temp)
-    //     {
-    //         if (t == null) continue;
-    //         
-    //         if (t.IsWalkable() && t.IsUnitFree())
-    //             finalList.Add(t);
-    //     }
-    //
-    //     return finalList;
-    // }
-
     public List<Tile> GetPath()
     {
         return _fullMovePath;

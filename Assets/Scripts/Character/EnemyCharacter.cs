@@ -25,48 +25,11 @@ public class EnemyCharacter : Character
     void CalculateAutoMovement()
     {
         Debug.Log("calculate auto movement ia");
-        Character[] units = turnManager.GetAllUnits();
-
-        List<Character> greenTeam = new List<Character>();
-
-        foreach (var c in units)
-        {
-            if (!c.IsDead() && c.GetUnitTeam() != _unitTeam)
-            {
-                greenTeam.Add(c);
-            }
-        }
-
-        Character closestEnemy = null;
         
-        List<Tile> path = new List<Tile>();
-        
-        for (int i = 0; i < greenTeam.Count; i++)
-        {
-            pathCreator.ResetPath();
-            pathCreator.Calculate(_myPositionTile, greenTeam[i].GetMyPositionTile(), 1000);
 
-            var p = pathCreator.GetPath();
-            if (i == 0)
-            {
-                foreach (var tile in p)
-                {
-                    path.Add(tile);
-                }
-                closestEnemy = greenTeam[i];
-                continue;
-            }
+        List<Character> enemyTeam = GetEnemyTeam();
 
-            if (p.Count < path.Count)
-            {
-                path.Clear();
-                foreach (var tile in p)
-                {
-                    path.Add(tile);
-                }
-                closestEnemy = greenTeam[i];
-            }
-        }
+        Character closestEnemy = GetClosestEnemy(enemyTeam);
 
 
         Tile enemyTile = closestEnemy.GetMyPositionTile();
@@ -91,9 +54,12 @@ public class EnemyCharacter : Character
                 distance = p.Count;
                 
                 _targetTile = p[0];
+                Debug.Log("target tile: " + _targetTile.name);
+                Debug.Break();
             }
         }
-
+        pathCreator.ResetPath();
+        _currentSteps = legs.GetMaxSteps();
         pathCreator.Calculate(_myPositionTile, _targetTile, _currentSteps);
         _path = pathCreator.GetPath();
         highlight.PathPreview(_path);
@@ -106,6 +72,59 @@ public class EnemyCharacter : Character
         // PaintTilesInMoveRange(_targetTile, 0);
         // AddTilesInMoveRange();
         // highlight.PaintLastTileInPath(_targetTile);
+    }
+
+    Character GetClosestEnemy(List<Character> enemies) 
+    {
+        Character closestEnemy = null;
+        
+        List<Tile> path = new List<Tile>();
+        
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            pathCreator.ResetPath();
+            pathCreator.Calculate(_myPositionTile, enemies[i].GetMyPositionTile(), 1000);
+
+            var p = pathCreator.GetPath();
+            if (i == 0)
+            {
+                foreach (var tile in p)
+                {
+                    path.Add(tile);
+                }
+                closestEnemy = enemies[i];
+                continue;
+            }
+
+            if (p.Count < path.Count)
+            {
+                path.Clear();
+                foreach (var tile in p)
+                {
+                    path.Add(tile);
+                }
+                closestEnemy = enemies[i];
+            }
+        }
+        _currentSteps = legs.GetMaxSteps();
+        return closestEnemy;
+    }
+
+    List<Character> GetEnemyTeam()
+    {
+        Character[] units = turnManager.GetAllUnits();
+        
+        List<Character> enemyTeam = new List<Character>();
+
+        foreach (var c in units)
+        {
+            if (!c.IsDead() && c.GetUnitTeam() != _unitTeam)
+            {
+                enemyTeam.Add(c);
+            }
+        }
+
+        return enemyTeam;
     }
 
     IEnumerator StartMovement()
