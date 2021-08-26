@@ -54,8 +54,6 @@ public class EnemyCharacter : Character
                 distance = p.Count;
                 
                 _targetTile = p[0];
-                Debug.Log("target tile: " + _targetTile.name);
-                Debug.Break();
             }
         }
         pathCreator.ResetPath();

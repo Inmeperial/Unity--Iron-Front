@@ -498,7 +498,7 @@ public class ButtonsUIManager : MonoBehaviour
         
         
         _selectedEnemy.SetSelectedForAttack(false);
-        _turnManager.PortraitsActiveState(true);
+        PortraitsController.Instance.PortraitsActiveState(true);
         buttonEndTurn.gameObject.SetActive(true);
         DeselectActions();
         _charSelection.Selection(_selectedChar);
@@ -574,7 +574,7 @@ public class ButtonsUIManager : MonoBehaviour
         DeactivateEnemyHUD();
         buttonEndTurn.gameObject.SetActive(true);
         buttonExecuteAttack.gameObject.SetActive(false);
-        _turnManager.PortraitsActiveState(true);
+        PortraitsController.Instance.PortraitsActiveState(true);
         //_selectedChar = null;
         _selectedEnemy = null;
     }
@@ -856,7 +856,7 @@ public class ButtonsUIManager : MonoBehaviour
             {
                 _selectedEnemy.SetSelectedForAttack(true);
                 buttonEndTurn.gameObject.SetActive(false);
-                _turnManager.PortraitsActiveState(false);
+                PortraitsController.Instance.PortraitsActiveState(false);
                 
                 
                 FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position, ActivateBodyPartsContainer);

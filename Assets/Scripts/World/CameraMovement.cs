@@ -28,7 +28,7 @@ public class CameraMovement : MonoBehaviour
 
     private float _yPos;
     private TurnManager _turnManager;
-
+    private PortraitsController _portraitsController;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -39,6 +39,7 @@ public class CameraMovement : MonoBehaviour
         _gameCam = Camera.main;
         _camInitialPos = _gameCam.transform.localPosition;
         _turnManager = FindObjectOfType<TurnManager>();
+        _portraitsController = FindObjectOfType<PortraitsController>();
     }
 
     // Update is called once per frame
@@ -104,7 +105,7 @@ public class CameraMovement : MonoBehaviour
         var pos = transformToMove.position;
         pos.y = _yPos;
         _cameraLocked = true;
-        _turnManager.DeactivatePortraitsButtons();
+        _portraitsController.DeactivatePortraitsButtons();
         StartCoroutine(Move(pos, callback, lookAt));
     }
 
@@ -133,7 +134,7 @@ public class CameraMovement : MonoBehaviour
         
         if (!_rotating) _cameraLocked = false;
         
-        _turnManager.ActivatePortraitsButtons();
+        _portraitsController.ActivatePortraitsButtons();
         
         if (callback != null)
             callback();

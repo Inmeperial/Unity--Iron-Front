@@ -1044,7 +1044,7 @@ public class Character : EnumsClass, IObservable
     {
         _canBeSelected = false;
         _isDead = true;
-        turnManager.DeadPortrait(this);
+        PortraitsController.Instance.DeadPortrait(this);
         NotifyObserver(_unitTeam == Team.Green ? "GreenDead" : "RedDead");
     }
     
