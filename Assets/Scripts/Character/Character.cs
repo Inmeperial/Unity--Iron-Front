@@ -805,6 +805,16 @@ public class Character : EnumsClass, IObservable
     {
         return legs.GetCurrentHp() / legs.GetMaxHp() * 100 + legs.GetLegsInitiative();
     }
+
+    public Sprite GetCharacterSprite()
+    {
+        return _myIcon;
+    }
+
+    public string GetCharacterName()
+    {
+        return _myName;
+    }
     #endregion
 
     #region Setters

@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class FramesUI : MonoBehaviour
 {
@@ -36,4 +38,36 @@ public class FramesUI : MonoBehaviour
 	{
 		return new FramesUI(newFrame.mechaImage, newFrame.leftGunIcon, newFrame.rightGunIcon, newFrame.mechaName);
 	}*/
+	
+	public void RemoveButtonLeftClickListeners()
+	{
+		selectionButton.OnLeftClick.RemoveAllListeners();
+	}
+	
+	public void AddButtonLeftClickListener(UnityAction action)
+	{
+		selectionButton.OnLeftClick.AddListener(action);
+	}
+	
+	public void RemoveButtonRightClickListeners()
+	{
+		selectionButton.OnRightClick.RemoveAllListeners();
+	}
+	
+	public void AddButtonRightClickListener(UnityAction action)
+	{
+		selectionButton.OnRightClick.AddListener(action);
+	}
+
+	public FramesUI SetSprite(Sprite sprite)
+	{
+		mechaImage.sprite = sprite;
+		return this;
+	}
+
+	public FramesUI SetName(string unitName)
+	{
+		mechaName.text = unitName;
+		return this;
+	}
 }

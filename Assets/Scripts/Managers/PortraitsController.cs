@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 public class PortraitsController : MonoBehaviour
 {
     public static PortraitsController Instance;
@@ -185,5 +187,24 @@ public class PortraitsController : MonoBehaviour
     public List<RectTransform> GetPortraitsRectPosition()
     {
         return _portraitsPositions;
+    }
+
+    public FramesUI SetPortrait(int position, Sprite sprite, string name, UnityAction leftButtonAction = null, UnityAction rightButtonAction = null)
+    {
+        FramesUI portrait = _portraits[position].SetSprite(sprite).SetName(name);
+
+        if (leftButtonAction != null)
+        {
+            portrait.RemoveButtonLeftClickListeners();
+            portrait.AddButtonLeftClickListener(leftButtonAction);
+        }
+        
+        if (rightButtonAction != null)
+        {
+            portrait.RemoveButtonRightClickListeners();
+            portrait.AddButtonRightClickListener(rightButtonAction);
+        }
+
+        return portrait;
     }
 }

@@ -219,20 +219,23 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         int count = 0;
 
         List<FramesUI> portraits = PortraitsController.Instance.GetPortraits();
-        foreach (var character in ordered)
+        foreach (Tuple<Character, float> character in ordered)
         {
             if (count == portraits.Count)
                 return;
             
-            var c = character.Item1;
-            var p = portraits[count];
-            p.mechaImage.sprite = c._myIcon;
-            p.mechaName.text = c._myName;
+            Character c = character.Item1;
+            // FramesUI p = portraits[count];
+            // p.mechaImage.sprite = c._myIcon;
+            // p.mechaName.text = c._myName;
             c.gameObject.name = c._myName;
             // p.leftGunIcon.sprite = c.GetLeftGun().GetIcon();
             // p.rightGunIcon.sprite = c.GetRightGun().GetIcon();
-            p.selectionButton.OnLeftClick.RemoveAllListeners();
-            p.selectionButton.OnLeftClick.AddListener(() => _cameraMovement.MoveTo(c.transform));
+            // p.selectionButton.OnLeftClick.RemoveAllListeners();
+            // p.selectionButton.OnLeftClick.AddListener(() => _cameraMovement.MoveTo(c.transform));
+
+            FramesUI p = PortraitsController.Instance.SetPortrait(count, c.GetCharacterSprite(), c.GetCharacterName(),
+                () => _cameraMovement.MoveTo(c.transform));
             count++;
             _currentTurnOrder.Add(c);
             PortraitsController.Instance.AddCharAndFrame(Tuple.Create(c,p));
