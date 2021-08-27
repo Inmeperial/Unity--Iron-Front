@@ -33,12 +33,38 @@ public class EnemyCharacter : Character
 
 
         Tile enemyTile = closestEnemy.GetMyPositionTile();
+        Tile closestTileToEnemy = null;
+        
         int distance = 0;
         
+        //Search for the closest tile to enemy position.
+        for (int i = 0; i < enemyTile.neighboursForMove.Count; i++)
+        {
+            pathCreator.ResetPath();
+            pathCreator.Calculate(_tilesInMoveRange[i], enemyTile.neighboursForMove[i], 1000);
+            
+            var p = pathCreator.GetPath();
+            if (i == 0)
+            {
+                distance = p.Count;
+                closestTileToEnemy = p[p.Count-1];
+                continue;
+            }
+            
+            if (p.Count < distance)
+            {
+                
+                distance = p.Count;
+                
+                closestTileToEnemy = p[p.Count-1];
+            }
+        }
+        
+        //Finds the farthest tile I can reach in my movement range.
         for (int i = 0; i < _tilesInMoveRange.Count; i++)
         {
             pathCreator.ResetPath();
-            pathCreator.Calculate(_tilesInMoveRange[i], enemyTile, 1000);
+            pathCreator.Calculate(_tilesInMoveRange[i], closestTileToEnemy, 1000);
 
             var p = pathCreator.GetPath();
             if (i == 0)
@@ -50,26 +76,24 @@ public class EnemyCharacter : Character
 
             if (p.Count < distance)
             {
-                
+
                 distance = p.Count;
-                
+
                 _targetTile = p[0];
             }
         }
+        
+        //Clears previous calculated paths
         pathCreator.ResetPath();
+        
         _currentSteps = legs.GetMaxSteps();
+        
+        //Calculates shortest path.
         pathCreator.Calculate(_myPositionTile, _targetTile, _currentSteps);
         _path = pathCreator.GetPath();
+        
         highlight.PathPreview(_path);
-        // ResetTilesInMoveRange();
-        // ResetTilesInAttackRange();
         highlight.CreatePathLines(_path);
-        // if (CanAttack())
-        //     PaintTilesInAttackRange(_targetTile, 0);
-        //
-        // PaintTilesInMoveRange(_targetTile, 0);
-        // AddTilesInMoveRange();
-        // highlight.PaintLastTileInPath(_targetTile);
     }
 
     Character GetClosestEnemy(List<Character> enemies) 

@@ -9,12 +9,11 @@ using UnityEngine.Experimental.VFX.Utility;
 public class Tile : MonoBehaviour
 {
     [SerializeField] private bool isWalkable;
-    public MeshRenderer render;
     public List<Tile> neighboursForMove = new List<Tile>();
     public List<Tile> allNeighbours = new List<Tile>();
     public LayerMask obstacle;
     public LayerMask characterMask;
-    private bool _isFree = true;
+    [SerializeField]private bool _isOccupied = true;
     private Material _mat;
     public bool showLineGizmo = true;
 
@@ -31,7 +30,7 @@ public class Tile : MonoBehaviour
     public LandMine _mine;
     private void Awake()
     {
-        _isFree = true;
+        _isOccupied = true;
         _materialHandler = GetComponent<TileMaterialhandler>();
 
         inMoveRange = false;
@@ -272,9 +271,9 @@ public class Tile : MonoBehaviour
     }
     #endregion
 
-    public bool IsUnitFree()
+    public bool IsOcuppied()
     {
-        return _isFree;
+        return _isOccupied;
     }
 
     public bool IsWalkable()
@@ -284,20 +283,20 @@ public class Tile : MonoBehaviour
 
     public void MakeTileOccupied()
     {
-        _isFree = false;
-        // foreach (var tile in neighboursForMove)
-        // {
-        //     //tile.RemoveMoveNeighbour(this);
-        // }
+        _isOccupied = false;
+        foreach (var tile in neighboursForMove)
+        {
+            tile.RemoveMoveNeighbour(this);
+        }
     }
 
     public void MakeTileFree()
     {
-        _isFree = true;
-        // foreach (var tile in neighboursForMove)
-        // {
-        //     tile.AddMoveNeighbour(this);
-        // }
+        _isOccupied = true;
+        foreach (var tile in neighboursForMove)
+        {
+            tile.AddMoveNeighbour(this);
+        }
     }
 
     public void ShowGizmo()

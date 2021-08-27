@@ -894,7 +894,7 @@ public class Character : EnumsClass, IObservable
         {
             if (!_tilesInMoveRange.Contains(tile))
             {
-                if (tile.IsWalkable() && tile.IsUnitFree())
+                if (tile.IsWalkable() && tile.IsOcuppied())
                 {
                     _tilesInMoveRange.Add(tile);
                     tile.inMoveRange = true;
@@ -993,13 +993,17 @@ public class Character : EnumsClass, IObservable
             _myPositionTile.MakeTileFree();
         }
         _myPositionTile = _targetTile;
-        
+        _myPositionTile.MakeTileOccupied();
+        _myPositionTile.SetUnitAbove(this);
+        _myPositionTile.unitAboveSelected = true;
+        _myPositionTile.MouseOverColor();
+        _targetTile = null;
         turnManager.UnitStoppedMoving();
         pathCreator.ResetPath();
         _tilesForAttackChecked.Clear();
         _tilesInAttackRange.Clear();
         _animationMechaHandler.SetIsWalkingAnimatorFalse();
-        AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,this.gameObject);
+        AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,gameObject);
         _smokeMechaHandler.SetMachineOn(false);
 
         if (CanAttack())
@@ -1007,11 +1011,7 @@ public class Character : EnumsClass, IObservable
             PaintTilesInAttackRange(_myPositionTile, 0);
             CheckEnemiesInAttackRange();
         }
-        _myPositionTile.MakeTileOccupied();
-        _myPositionTile.SetUnitAbove(this);
-        _myPositionTile.unitAboveSelected = true;
-        _myPositionTile.MouseOverColor();
-        _targetTile = null;
+        
     }
 
     /// <summary>
@@ -1073,7 +1073,7 @@ public class Character : EnumsClass, IObservable
         
         var tile = target.gameObject.GetComponent<Tile>();
         
-        return (tile && tile.IsWalkable() && tile.IsUnitFree() && tile.inMoveRange) || tile == _targetTile;
+        return (tile && tile.IsWalkable() && tile.IsOcuppied() && tile.inMoveRange) || tile == _targetTile;
     }
 
     
@@ -1088,7 +1088,7 @@ public class Character : EnumsClass, IObservable
         _enemiesInRange.Clear();
         foreach (var item in _tilesInAttackRange)
         {
-            if (item.IsUnitFree()) continue;
+            if (item.IsOcuppied()) continue;
             
             var unit = item.GetUnitAbove();
             
