@@ -42,13 +42,11 @@ public class WorldUI : MonoBehaviour
     [SerializeField] private MechaPartButton _rightArmButton;
     [SerializeField] private MechaPartButton _legsButton;
     #endregion
-    private Camera _camera;
 
     // Start is called before the first frame update
     private void Start()
     {
         _statusContainer.SetActive(false);
-        _camera = Camera.main;
         _buttonsContainer.SetActive(false);
     }
 

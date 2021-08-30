@@ -7,14 +7,14 @@ public class RouletteWheel
     {
         int totalWeight = 0;
 
-        foreach (var item in actions)
+        foreach (KeyValuePair<string, int> item in actions)
         {
             totalWeight += item.Value;
         }
 
         int random = Random.Range(0, totalWeight);
 
-        foreach (var item in actions)
+        foreach (KeyValuePair<string, int> item in actions)
         {
             random -= item.Value;
 

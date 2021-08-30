@@ -63,7 +63,7 @@ public class TileHighlight : MonoBehaviour
         _previewPath = path;
         foreach (Tile tile in path)
         {
-            if (tile.IsWalkable() && tile.IsOcuppied())
+            if (tile.IsWalkable() && tile.IsOccupied())
                 tile.InMoveRangeColor();
         }
     }

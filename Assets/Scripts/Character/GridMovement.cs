@@ -58,7 +58,7 @@ public class GridMovement : MonoBehaviour
     {
         if(_tilesIndex != _tilesList.Count)
         {
-            var newPos = _tilesList[_tilesIndex].transform.position;
+            Vector3 newPos = _tilesList[_tilesIndex].transform.position;
             newPos.y = _yPosition;
             if (_forcedForward == false)
             {
@@ -101,12 +101,11 @@ public class GridMovement : MonoBehaviour
             _watchdogCounter = 0;
             _rotate = false;
             _posToRotate = Vector3.zero;
-            if (_callback != null)
-            {
-                _callback();
-                _callback = null;
-            }
-                
+            if (_callback == null) return;
+            
+            _callback();
+            _callback = null;
+
             return;
         }
         
@@ -119,9 +118,9 @@ public class GridMovement : MonoBehaviour
 
     private bool CheckIfFacing(Vector3 pos)
     {
-        var dir = pos - transform.position;
-        var thresholdPlus = new Vector3(dir.x + 0.1f, dir.y, dir.z + 0.1f);
-        var thresholdMin = new Vector3(dir.x - 0.1f, dir.y, dir.z - 0.1f);
+        Vector3 dir = pos - transform.position;
+        Vector3 thresholdPlus = new Vector3(dir.x + 0.1f, dir.y, dir.z + 0.1f);
+        Vector3 thresholdMin = new Vector3(dir.x - 0.1f, dir.y, dir.z - 0.1f);
         return transform.forward == dir.normalized || transform.forward == thresholdPlus || transform.forward == thresholdMin;
     }
 

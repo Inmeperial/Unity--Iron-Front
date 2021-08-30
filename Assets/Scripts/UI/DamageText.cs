@@ -66,7 +66,6 @@ public class DamageText : MonoBehaviour
     {
         transform.rotation = _cam.transform.rotation;
         transform.position += transform.up * (_moveSpeed * Time.deltaTime);
-        //_color.a -= _fadeSpeed * Time.deltaTime;
         _text.color = _color;
     }
     

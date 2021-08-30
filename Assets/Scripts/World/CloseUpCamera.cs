@@ -37,12 +37,12 @@ public class CloseUpCamera : MonoBehaviour
         _mainCamWorld.enabled = false;
         _mainCamUI.enabled = false;
 		//Calcular el height según la distancia de las dos unidades y, clampearla en un min y max
-		var distanceHeight = Vector3.Distance(enemyPosToLerp, playerPosToLerp);
-		var clampedHeight = Mathf.Clamp(distanceHeight, minHeight, maxHeight);
+		float distanceHeight = Vector3.Distance(enemyPosToLerp, playerPosToLerp);
+		float clampedHeight = Mathf.Clamp(distanceHeight, minHeight, maxHeight);
 		enemyPosToLerp.y = clampedHeight;
 		playerPosToLerp.y = clampedHeight;
 		
-		var destination = Vector3.Lerp(enemyPosToLerp, playerPosToLerp, lerp);
+		Vector3 destination = Vector3.Lerp(enemyPosToLerp, playerPosToLerp, lerp);
 		destination.z += moveBackInZ;
         StartCoroutine(Move(destination, enemyPosToLerp, callback));
     }
@@ -56,7 +56,7 @@ public class CloseUpCamera : MonoBehaviour
     {
         while ((destination - transform.position).magnitude >= threshold)
         {
-            var dir = (destination - transform.position).normalized;
+            Vector3 dir = (destination - transform.position).normalized;
             transform.position += dir * (speed * Time.deltaTime);
             transform.LookAt(targetToLook);
             yield return new WaitForEndOfFrame();
@@ -72,7 +72,7 @@ public class CloseUpCamera : MonoBehaviour
     {
         while ((destination - transform.position).magnitude >= threshold)
         {
-            var dir = (destination - transform.position).normalized;
+            Vector3 dir = (destination - transform.position).normalized;
             transform.position += dir * (speed * Time.deltaTime);
             transform.LookAt(targetToLook);
             yield return new WaitForEndOfFrame();

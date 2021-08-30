@@ -9,20 +9,18 @@ public class Shotgun : Gun
     private readonly string[] _parts = { "Body", "LArm", "RArm", "Legs" };
     public override void Ability()
     {
-        var m = _roulette.ExecuteAction(_multipleHitRoulette);
+        string m = _roulette.ExecuteAction(_multipleHitRoulette);
         _abilityUsed = true;
         switch (m)
         {
             case "Multiple":
             {
-                var mgr = FindObjectOfType<ButtonsUIManager>();
-
-                var partsIndex = new List<int>();
+                List<int> partsIndex = new List<int>();
 
                 //Determines how many and which parts will be attacked.
                 for (int i = 0; i < 4; i++)
                 {
-                    var r = Random.Range(0, 4);
+                    int r = Random.Range(0, 4);
                     if (partsIndex.Contains(r))
                         partsIndex.Add(-1);
                     else partsIndex.Add(r);
@@ -34,7 +32,7 @@ public class Shotgun : Gun
                     if (partsIndex[i] == -1)
                         continue;
 
-                    var bullets = Random.Range(1, _maxBullets);
+                    int bullets = Random.Range(1, _maxBullets);
 
                     switch (_parts[partsIndex[i]])
                     {
@@ -59,7 +57,6 @@ public class Shotgun : Gun
                 break;
             }
             case "Normal":
-                Debug.Log("no se activa la habilidad");
                 break;
         }
     }

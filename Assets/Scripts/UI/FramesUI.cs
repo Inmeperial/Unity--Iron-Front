@@ -30,15 +30,6 @@ public class FramesUI : MonoBehaviour
 		mechaName.text = newMechaName.text;
 	}
 
-	public void ChangeName(TextMeshProUGUI newName)
-	{
-		mechaName.text = newName.text;
-	}
-	/*public FramesUI ChangeData(FramesUI newFrame)
-	{
-		return new FramesUI(newFrame.mechaImage, newFrame.leftGunIcon, newFrame.rightGunIcon, newFrame.mechaName);
-	}*/
-	
 	public void RemoveButtonLeftClickListeners()
 	{
 		selectionButton.OnLeftClick.RemoveAllListeners();

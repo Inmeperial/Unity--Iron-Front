@@ -30,7 +30,6 @@ public class Character : EnumsClass, IObservable
     [Header("Body")] 
     public Body body;
     [SerializeField] protected Transform _bodyTransform;
-    [SerializeField] protected Transform _bodyParticleSpawn;
 
     [Header("Left Arm")]
     public Arm leftArm;
@@ -64,7 +63,7 @@ public class Character : EnumsClass, IObservable
     protected Tile _myPositionTile;
     protected Tile _targetTile;
     [SerializeField]protected List<Tile> _path = new List<Tile>();
-	public Quaternion InitialRotation { get; private set; }//Cambio Nico
+	protected Quaternion InitialRotation { get; private set; }//Cambio Nico
 
     //FLAGS
     protected bool _canBeSelected;
@@ -95,19 +94,14 @@ public class Character : EnumsClass, IObservable
     protected AnimationMechaHandler _animationMechaHandler;
     
     protected List<IObserver> _observers = new List<IObserver>();
-
-    [HideInInspector]
-	public EffectsController effectsController;
-    [HideInInspector]
-    public TurnManager turnManager;
+    
 	[HideInInspector]
 	public TileHighlight highlight;
-	[HideInInspector]
-	public ButtonsUIManager buttonsManager;
 
     private void Awake()
     {
         transform.position = new Vector3(transform.position.x, 2.4f, transform.position.z);
+        
         #region GetComponents
         _mechaMaterlaHandler = GetComponent<MechaMaterialhandler>();
         _smokeMechaHandler = GetComponent<SmokeMechaHandler>();
@@ -116,15 +110,11 @@ public class Character : EnumsClass, IObservable
         _myUI = GetComponent<WorldUI>();
         _animationMechaHandler = GetComponent<AnimationMechaHandler>();
         #endregion
-        #region FindObject
-        turnManager = FindObjectOfType<TurnManager>();
-        highlight = FindObjectOfType<TileHighlight>();
-        buttonsManager = FindObjectOfType<ButtonsUIManager>();
-        effectsController = FindObjectOfType<EffectsController>();
         
-        #endregion
+        highlight = FindObjectOfType<TileHighlight>();
+        
         #region GunsAndArms
-        var gunSpawn = FindObjectOfType<GunsSpawner>();
+        GunsSpawner gunSpawn = FindObjectOfType<GunsSpawner>();
         _leftArmAlive = leftArm.GetCurrentHp() > 0 ? true : false;
         _leftGun = gunSpawn.SpawnGun(_leftGunType, Vector3.zero, _leftGunSpawn.transform);
         if (_leftGun)
@@ -173,7 +163,7 @@ public class Character : EnumsClass, IObservable
             _rightGunSelected = false;
             _leftGunSelected = false;
         }
-        Subscribe(turnManager);
+        Subscribe(TurnManager.Instance);
         #endregion
     }
 
@@ -194,8 +184,6 @@ public class Character : EnumsClass, IObservable
 
         _selected = false;
         _canBeSelected = body.GetCurrentHp() > 0;
-        
-        
     }
 
     // Update is called once per frame
@@ -212,21 +200,6 @@ public class Character : EnumsClass, IObservable
 
     protected void Move()
     {
-        if (_moving || _path == null || _path.Count <= 0)
-        {
-            if (_moving)
-            {
-                Debug.Log("return moving");
-            }
-            else if (_path == null)
-            {
-                Debug.Log("return null");
-            }
-            else Debug.Log("path 0");
-            
-            
-            return;
-        }
         
         _moving = true;
         ButtonsUIManager.Instance.DeactivateBodyPartsContainer();
@@ -314,7 +287,7 @@ public class Character : EnumsClass, IObservable
         _rightGunSelected = false;
         ResetTilesInAttackRange();
         ResetTilesInMoveRange();
-        Debug.Log("can attack " + _canAttack);
+        
         if (_selectedGun.GetGunType() != GunsType.Shield)
         {
             if (_canAttack)
@@ -330,7 +303,6 @@ public class Character : EnumsClass, IObservable
                 _selectedGun.Ability();
             }
         }
-        
 
         if (_canMove)
         {
@@ -416,7 +388,6 @@ public class Character : EnumsClass, IObservable
             _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
         }
         
-        //_mechaMaterlaHandler.SetSelectedMechaMaterial(true);
         if (CanAttack())
         {
             if (_rightArmAlive)
@@ -485,11 +456,12 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool RayToPartsForAttack(Vector3 partPosition, string tagToCheck)
     {
-        var position = _rayForBody.gameObject.transform.position;
-        var dir = (partPosition - position).normalized; 
+        Vector3 position = _rayForBody.gameObject.transform.position;
+        Vector3 dir = (partPosition - position).normalized; 
         
-        Physics.Raycast(position, dir, out var hit, 1000f);
-        var goodHit = hit.collider.transform.gameObject.CompareTag(tagToCheck) && hit.collider.transform.position == partPosition;
+        Physics.Raycast(position, dir, out RaycastHit hit, 1000f);
+        Transform hitObj = hit.collider.transform;
+        bool goodHit = hitObj.gameObject.CompareTag(tagToCheck) && hitObj.position == partPosition;
 
         LineRenderer renderer = null;
         switch (tagToCheck)
@@ -521,14 +493,13 @@ public class Character : EnumsClass, IObservable
             Debug.DrawRay(position, dir * 20f, Color.green, 10f);
             return true;
         }
-        Debug.Log("rayo rojo");
         renderer.material = _rayMissMaterial;
         Debug.DrawRay(position, dir * 20f, Color.red, 10f);
         return false;
         
     }
 
-    public void RaysOff()
+    private void RaysOff()
     {
         _rayForBody.positionCount = 0;
         _rayForBody.materials[0] = null;
@@ -562,8 +533,8 @@ public class Character : EnumsClass, IObservable
 
         if (!IsValidBlock(target)) return;
         
-        var newTile = target.GetComponent<Tile>();
-        //LLAMAR A MOVE
+        Tile newTile = target.GetComponent<Tile>();
+        
         if (_targetTile && _targetTile == newTile && _path.Count > 0)
         {
             Move();
@@ -869,7 +840,7 @@ public class Character : EnumsClass, IObservable
         
         _tilesForAttackChecked[currentTile] = count;
 
-        foreach (var tile in currentTile.allNeighbours)
+        foreach (Tile tile in currentTile.allNeighbours)
         {
             if (!_tilesInAttackRange.Contains(tile))
             {
@@ -897,11 +868,11 @@ public class Character : EnumsClass, IObservable
 
         _tilesForMoveChecked[currentTile] = count;
 
-        foreach (var tile in currentTile.neighboursForMove)
+        foreach (Tile tile in currentTile.neighboursForMove)
         {
             if (!_tilesInMoveRange.Contains(tile))
             {
-                if (tile.IsWalkable() && tile.IsOcuppied())
+                if (tile.IsWalkable() && tile.IsOccupied())
                 {
                     _tilesInMoveRange.Add(tile);
                     tile.inMoveRange = true;
@@ -1013,12 +984,11 @@ public class Character : EnumsClass, IObservable
         AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,gameObject);
         _smokeMechaHandler.SetMachineOn(false);
 
-        if (CanAttack())
-        {
-            PaintTilesInAttackRange(_myPositionTile, 0);
-            CheckEnemiesInAttackRange();
-        }
+        if (!CanAttack()) return;
         
+        PaintTilesInAttackRange(_myPositionTile, 0);
+        CheckEnemiesInAttackRange();
+
     }
 
     /// <summary>
@@ -1026,7 +996,7 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void ReduceAvailableSteps(int amount)
     {
-        var steps = _currentSteps - amount;
+        int steps = _currentSteps - amount;
         _currentSteps = steps >= 0 ? steps : 0;
     }
 
@@ -1035,7 +1005,7 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void IncreaseAvailableSteps(int amount)
     {
-        var steps = _currentSteps + amount;
+        int steps = _currentSteps + amount;
         _currentSteps = steps <= legs.GetMaxSteps() ? steps : legs.GetMaxSteps();
     }
     
@@ -1078,9 +1048,9 @@ public class Character : EnumsClass, IObservable
         
         if (target.gameObject.layer != LayerMask.NameToLayer("GridBlock")) return false;
         
-        var tile = target.gameObject.GetComponent<Tile>();
+        Tile tile = target.gameObject.GetComponent<Tile>();
         
-        return (tile && tile.IsWalkable() && tile.IsOcuppied() && tile.inMoveRange) || tile == _targetTile;
+        return (tile && tile.IsWalkable() && tile.IsOccupied() && tile.inMoveRange) || tile == _targetTile;
     }
 
     
@@ -1095,7 +1065,7 @@ public class Character : EnumsClass, IObservable
         _enemiesInRange.Clear();
         foreach (Tile item in _tilesInAttackRange)
         {
-            if (item.IsOcuppied()) continue;
+            if (item.IsOccupied()) continue;
             
             Character unit = item.GetUnitAbove();
             
@@ -1167,10 +1137,10 @@ public class Character : EnumsClass, IObservable
         if (!c._selected) return;
         c.RotateTowardsEnemy(transform.position);//Roto a la unidad seleccionada(la que esta haciendo su turno) hacia mi, su enemigo
         //Tengo que prender los line renderers de los raycasts
-        var _body = c.RayToPartsForAttack(GetBodyPosition(), "Body") && body.GetCurrentHp() > 0;
-        var _lArm = c.RayToPartsForAttack(GetLArmPosition(), "LArm") && leftArm.GetCurrentHp() > 0;
-        var _rArm = c.RayToPartsForAttack(GetRArmPosition(), "RArm") && rightArm.GetCurrentHp() > 0;
-        var _legs = c.RayToPartsForAttack(GetLegsPosition(), "Legs") && legs.GetCurrentHp() > 0;
+        bool _body = c.RayToPartsForAttack(GetBodyPosition(), "Body") && body.GetCurrentHp() > 0;
+        bool _lArm = c.RayToPartsForAttack(GetLArmPosition(), "LArm") && leftArm.GetCurrentHp() > 0;
+        bool _rArm = c.RayToPartsForAttack(GetRArmPosition(), "RArm") && rightArm.GetCurrentHp() > 0;
+        bool _legs = c.RayToPartsForAttack(GetLegsPosition(), "Legs") && legs.GetCurrentHp() > 0;
     }
 
     public void ResetRotationAndRays()

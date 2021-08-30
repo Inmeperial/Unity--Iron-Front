@@ -20,7 +20,6 @@ public class CustomButton : Selectable, IPointerClickHandler
                 PressRight();
                 break;
             case PointerEventData.InputButton.Left:
-                Debug.Log("left click");
                 PressLeft();
                 break;
         }

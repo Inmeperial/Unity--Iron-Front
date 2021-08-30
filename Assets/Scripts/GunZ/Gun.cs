@@ -181,14 +181,13 @@ public abstract class Gun : EnumsClass, IGun
     /// </summary>
     public List<Tuple<int, int>> DamageCalculation(int bullets)
     {
-        var list = new List<Tuple<int, int>>();
-        var damage = new int[bullets];
+        List<Tuple<int, int>> list = new List<Tuple<int, int>>();
 
         for (int i = 0; i < bullets; i++)
         {
             Tuple<int, int> t = null;
             //Determines if bullet hits.
-            var h = _roulette.ExecuteAction(_hitRoulette);
+            string h = _roulette.ExecuteAction(_hitRoulette);
 
             //MISS == 0
             //HIT == 1
@@ -196,7 +195,7 @@ public abstract class Gun : EnumsClass, IGun
             if (h == "Hit")
             {
                 //Determines if it crits or not.
-                var c = _roulette.ExecuteAction(_critRoulette);
+                string c = _roulette.ExecuteAction(_critRoulette);
 
                 switch (c)
                 {
@@ -227,11 +226,11 @@ public abstract class Gun : EnumsClass, IGun
     {
         _roulette = new RouletteWheel();
         _critRoulette.Add("Crit", _critChance);
-        var c = 100 - _critChance;
+        int c = 100 - _critChance;
         _critRoulette.Add("Normal", c > 0 ? c : 0);
 
         _hitRoulette.Add("Hit", _hitChance);
-        var h = 100 - _hitChance;
+        int h = 100 - _hitChance;
         _hitRoulette.Add("Miss", h > 0 ? h : 0);
     }
 
@@ -249,8 +248,8 @@ public abstract class Gun : EnumsClass, IGun
 
     public void TurnOff()
     {
-        var childs = transform.GetComponentsInChildren<MeshRenderer>();
-        foreach (var m in childs)
+        MeshRenderer[] childs = transform.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer m in childs)
         {
             if (m) m.enabled = false;
         }
@@ -264,7 +263,7 @@ public abstract class Gun : EnumsClass, IGun
 
     public void ModelsOff()
     {
-        foreach (var m in _models)
+        foreach (GameObject m in _models)
         {
             m.gameObject.SetActive(false);
         }
@@ -272,7 +271,7 @@ public abstract class Gun : EnumsClass, IGun
     
     public void ModelsOn()
     {
-        foreach (var m in _models)
+        foreach (GameObject m in _models)
         {
             m.gameObject.SetActive(true);
         }

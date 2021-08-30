@@ -68,7 +68,7 @@ public class Legs : Parts
             _myChar.SetCharacterMove(_legsHP > 0 ? true : false);
             EffectsController.Instance.PlayParticlesEffect(gameObject, "Damage");
             EffectsController.Instance.PlayParticlesEffect(gameObject, "Hit");
-            var item = damages[i].Item2;
+            int item = damages[i].Item2;
             switch (item)
             {
                 case MissHit:

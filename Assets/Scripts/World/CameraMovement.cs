@@ -12,8 +12,7 @@ public class CameraMovement : MonoBehaviour
     public float manualMovementSpeed;
     public float speed;
     public float rotationSpeed;
-    //public TextMeshProUGUI cameraSpeedText;
-    
+
     [Header("Transition")]
     public float fixationThreshold;
     public float distanceToStartRotation;
@@ -27,19 +26,14 @@ public class CameraMovement : MonoBehaviour
     private Rigidbody _rb;
 
     private float _yPos;
-    private TurnManager _turnManager;
-    private PortraitsController _portraitsController;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _initialPos = transform.position;
         _initialRot = transform.rotation;
         _yPos = transform.position.y;
-       // cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
         _gameCam = Camera.main;
         _camInitialPos = _gameCam.transform.localPosition;
-        _turnManager = FindObjectOfType<TurnManager>();
-        _portraitsController = FindObjectOfType<PortraitsController>();
     }
 
     // Update is called once per frame
@@ -48,12 +42,10 @@ public class CameraMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.KeypadPlus))
         {
             manualMovementSpeed++;
-            //cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
         }
         if (Input.GetKey(KeyCode.KeypadMinus))
         {
             manualMovementSpeed--;
-            //cameraSpeedText.text = "CAMERA SPEED: " + manualMovementSpeed;
         }
             
         
@@ -67,7 +59,7 @@ public class CameraMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        var dir = transform.right * x + transform.forward * z;
+        Vector3 dir = transform.right * x + transform.forward * z;
         _rb.velocity = dir * manualMovementSpeed;
 
 
@@ -102,10 +94,10 @@ public class CameraMovement : MonoBehaviour
 
     public void MoveTo(Transform transformToMove, Action callback = null, Transform lookAt = null)
     {
-        var pos = transformToMove.position;
+        Vector3 pos = transformToMove.position;
         pos.y = _yPos;
         _cameraLocked = true;
-        _portraitsController.DeactivatePortraitsButtons();
+        PortraitsController.Instance.DeactivatePortraitsButtons();
         StartCoroutine(Move(pos, callback, lookAt));
     }
 
@@ -115,7 +107,7 @@ public class CameraMovement : MonoBehaviour
         {
             if (lookAt)
             {
-                var angle = Vector3.Angle(transform.forward, lookAt.forward);
+                float angle = Vector3.Angle(transform.forward, lookAt.forward);
                 if (angle != 0 && !_rotating &&
                     (pos - transform.position).magnitude <= distanceToStartRotation)
                 {
@@ -124,7 +116,7 @@ public class CameraMovement : MonoBehaviour
                 }
             }
                 
-            var dir = pos - transform.position;
+            Vector3 dir = pos - transform.position;
 
             transform.position += dir * (speed * Time.deltaTime);
             yield return new WaitForEndOfFrame();
@@ -134,7 +126,7 @@ public class CameraMovement : MonoBehaviour
         
         if (!_rotating) _cameraLocked = false;
         
-        _portraitsController.ActivatePortraitsButtons();
+        PortraitsController.Instance.ActivatePortraitsButtons();
         
         if (callback != null)
             callback();
@@ -143,7 +135,7 @@ public class CameraMovement : MonoBehaviour
     IEnumerator Rotate(Transform lookAt)
     {
         _watchdogCounter = 0;
-        var pos = lookAt.position;
+        Vector3 pos = lookAt.position;
         pos.y = transform.position.y;
         pos += lookAt.forward;
         while (!CheckIfFacing(pos) && _watchdogCounter < transitionRotationWatchdog)
@@ -164,9 +156,9 @@ public class CameraMovement : MonoBehaviour
 
     private bool CheckIfFacing(Vector3 pos)
     {
-        var dir = pos - transform.position;
-        var thresholdPlus = new Vector3(dir.x + 0.1f, dir.y, dir.z + 0.1f);
-        var thresholdMin = new Vector3(dir.x - 0.1f, dir.y, dir.z - 0.1f);
+        Vector3 dir = pos - transform.position;
+        Vector3 thresholdPlus = new Vector3(dir.x + 0.1f, dir.y, dir.z + 0.1f);
+        Vector3 thresholdMin = new Vector3(dir.x - 0.1f, dir.y, dir.z - 0.1f);
         return transform.forward == dir.normalized || transform.forward == thresholdPlus || transform.forward == thresholdMin;
     }
 }

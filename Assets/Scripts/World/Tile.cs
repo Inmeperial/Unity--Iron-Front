@@ -27,7 +27,7 @@ public class Tile : MonoBehaviour
     public bool inAttackRange;
     public bool inPreviewRange;
     public bool unitAboveSelected;
-    public LandMine _mine;
+    private LandMine _mine;
     private void Awake()
     {
         _isOccupied = true;
@@ -37,8 +37,8 @@ public class Tile : MonoBehaviour
         inAttackRange = false;
         inPreviewRange = false;
         unitAboveSelected = false;
-        var objs = Physics.OverlapSphere(transform.position, 3f);
-        foreach (var o in objs)
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 3f);
+        foreach (Collider o in colliders)
         {
             _mine = o.GetComponent<LandMine>();
             if (_mine) break;
@@ -80,30 +80,32 @@ public class Tile : MonoBehaviour
         if (transform.localScale.x >= transform.localScale.z)
             d = transform.localScale.x;
         else d = transform.localScale.z;
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, dir, out hit, d))
-        {
-            var neighbour = hit.collider.GetComponent<Tile>();
-            if (neighbour && neighbour.isWalkable)
-                if (!neighboursForMove.Contains(neighbour))
-                    neighboursForMove.Add(neighbour);
-        }
+
+        if (!Physics.Raycast(transform.position, dir, out RaycastHit hit, d)) return;
+        
+        Tile neighbour = hit.collider.GetComponent<Tile>();
+        if (!neighbour || !neighbour.isWalkable) return;
+        
+        if (!neighboursForMove.Contains(neighbour))
+            neighboursForMove.Add(neighbour);
     }
 
     private void RayToAllNeighbours(Vector3 dir)
     {
-        RaycastHit hit;
         float d;
+        
         if (transform.localScale.x >= transform.localScale.z)
             d = transform.localScale.x;
         else d = transform.localScale.z;
-        if (Physics.Raycast(transform.position, dir, out hit, d))
-        {
-            var neighbour = hit.collider.GetComponent<Tile>();
-            if (neighbour)
-                if (!allNeighbours.Contains(neighbour) && !_hasTileAbove)
-                    allNeighbours.Add(neighbour);
-        }
+
+        if (!Physics.Raycast(transform.position, dir, out RaycastHit hit, d)) return;
+        
+        Tile neighbour = hit.collider.GetComponent<Tile>();
+
+        if (!neighbour) return;
+        
+        if (!allNeighbours.Contains(neighbour) && !_hasTileAbove)
+            allNeighbours.Add(neighbour);
     }
 
     //Check if there is a tile above.
@@ -230,7 +232,6 @@ public class Tile : MonoBehaviour
     public void InAttackPreviewColor()
     {
         _materialHandler.StatusBulletAoEOfAttackForMortar(true);
-        //MouseOverColor();
     }
     
     //Despinta el tile para el preview de ataque
@@ -246,32 +247,27 @@ public class Tile : MonoBehaviour
         _materialHandler.DiseableAndEnableActivationNodeForMortar(true);
         _materialHandler.StatusActivationRageForMortar();
     }
-
-    // //CAMBIAR CUANDO ESTE EL SHADER
+    
     public void EndActivationRangeColor()
     {
-        //Debug.Log("END ACTIVATION RANGE");
         _materialHandler.DiseableAndEnableActivationNodeForMortar(false);
     }
 
     //Pinta el ultimo tile del path
-    //CAMBIAR
     public void LastInPathColor()
     {
-        //Debug.Log("ultimo on");
         _materialHandler.DiseableAndEnableStatus(true);
         _materialHandler.StatusTileToMoveToLastTileSelected();
     }
     
     //Despinta el ultimo tile del path
-    //CAMBIAR
     public void EndLastInPathColor()
     {
-        //Debug.Log("ultimo off");
+        
     }
     #endregion
 
-    public bool IsOcuppied()
+    public bool IsOccupied()
     {
         return _isOccupied;
     }
@@ -284,7 +280,7 @@ public class Tile : MonoBehaviour
     public void MakeTileOccupied()
     {
         _isOccupied = false;
-        foreach (var tile in neighboursForMove)
+        foreach (Tile tile in neighboursForMove)
         {
             tile.RemoveMoveNeighbour(this);
         }
@@ -293,7 +289,7 @@ public class Tile : MonoBehaviour
     public void MakeTileFree()
     {
         _isOccupied = true;
-        foreach (var tile in neighboursForMove)
+        foreach (Tile tile in neighboursForMove)
         {
             tile.AddMoveNeighbour(this);
         }
@@ -324,7 +320,7 @@ public class Tile : MonoBehaviour
 
     public Character GetCharacterAbove()
     {
-        Physics.Raycast(transform.position, transform.up, out var hit, 3, characterMask);
+        Physics.Raycast(transform.position, transform.up, out RaycastHit hit, 3, characterMask);
         if (hit.transform)
             return hit.transform.GetComponent<Character>();
         return null;

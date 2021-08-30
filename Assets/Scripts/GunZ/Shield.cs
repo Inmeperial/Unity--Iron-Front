@@ -15,33 +15,32 @@ public class Shield : Gun
 
     public override void Ability()
     {
-        if (!_selected)
+        if (_selected) return;
+        
+        List<Tile> t = _character.GetTileBelow().allNeighbours;
+
+        for (int i = 0; i < t.Count; i++)
         {
-            var t = _character.GetTileBelow().allNeighbours;
+            Transform tr = t[i].transform;
+            Vector3 pos = tr.position;
+            pos.y += prefabHeight;
 
-            for (int i = 0; i < t.Count; i++)
-            {
-                var tr = t[i].transform;
-                var pos = tr.position;
-                pos.y += prefabHeight;
-
-                var go = Instantiate(interactionPrefabs, pos, Quaternion.identity);
-                var rt = go.GetComponent<RectTransform>();
-                rt.Rotate(rt.right, 90f);
-                rt.Rotate(rt.up, 90f * -i);
-                var button = go.GetComponentInChildren<CustomButton>();
-                button.OnLeftClick.AddListener(() => Rotate(go.transform));
-                _instantiated.Add(go);
-            }
-
-            _selected = true;
+            GameObject go = Instantiate(interactionPrefabs, pos, Quaternion.identity);
+            RectTransform rt = go.GetComponent<RectTransform>();
+            rt.Rotate(rt.right, 90f);
+            rt.Rotate(rt.up, 90f * -i);
+            CustomButton button = go.GetComponentInChildren<CustomButton>();
+            button.OnLeftClick.AddListener(() => Rotate(go.transform));
+            _instantiated.Add(go);
         }
+
+        _selected = true;
     }
 
     public override void Deselect()
     {
         _selected = false;
-        foreach (var prefab in _instantiated)
+        foreach (GameObject prefab in _instantiated)
         {
             Destroy(prefab);
         }
@@ -62,13 +61,13 @@ public class Shield : Gun
         }
     }
 
-    public void Rotate(Transform t)
+    private void Rotate(Transform t)
     {
-        var position = _character.transform.position;
-        var shieldCharVector = (transform.position - position).normalized;
-        var buttonCharVector = (t.position - position).normalized;
+        Vector3 position = _character.transform.position;
+        Vector3 shieldCharVector = (transform.position - position).normalized;
+        Vector3 buttonCharVector = (t.position - position).normalized;
         
-        var angle = Vector3.SignedAngle(shieldCharVector, buttonCharVector, Vector3.up);
+        float angle = Vector3.SignedAngle(shieldCharVector, buttonCharVector, Vector3.up);
 
         if (angle >= 90 && angle < 180)
             angle = 90;
@@ -81,7 +80,7 @@ public class Shield : Gun
         else return;
         
         _character.transform.RotateAround(_character.transform.position, _character.transform.up, angle);
-        foreach (var prefab in _instantiated)
+        foreach (GameObject prefab in _instantiated)
         {
             Destroy(prefab);
         }

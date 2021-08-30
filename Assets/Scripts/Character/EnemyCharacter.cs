@@ -14,18 +14,12 @@ public class EnemyCharacter : Character
     public override void SetTurn(bool state)
     {
         base.SetTurn(state);
-        Debug.Log("start turn ia");
-        
-        
-        
-        //Move();
+
         StartCoroutine(StartMovement());
     }
 
     void CalculateAutoMovement()
     {
-        Debug.Log("calculate auto movement ia");
-        
 
         List<Character> enemyTeam = GetEnemyTeam();
 
@@ -43,21 +37,19 @@ public class EnemyCharacter : Character
             pathCreator.ResetPath();
             pathCreator.Calculate(_tilesInMoveRange[i], enemyTile.neighboursForMove[i], 1000);
             
-            var p = pathCreator.GetPath();
+            List<Tile> p = pathCreator.GetPath();
             if (i == 0)
             {
                 distance = p.Count;
                 closestTileToEnemy = p[p.Count-1];
                 continue;
             }
+
+            if (p.Count >= distance) continue;
             
-            if (p.Count < distance)
-            {
+            distance = p.Count;
                 
-                distance = p.Count;
-                
-                closestTileToEnemy = p[p.Count-1];
-            }
+            closestTileToEnemy = p[p.Count-1];
         }
         
         //Finds the farthest tile I can reach in my movement range.
@@ -66,7 +58,7 @@ public class EnemyCharacter : Character
             pathCreator.ResetPath();
             pathCreator.Calculate(_tilesInMoveRange[i], closestTileToEnemy, 1000);
 
-            var p = pathCreator.GetPath();
+            List<Tile> p = pathCreator.GetPath();
             if (i == 0)
             {
                 distance = p.Count;
@@ -74,13 +66,11 @@ public class EnemyCharacter : Character
                 continue;
             }
 
-            if (p.Count < distance)
-            {
+            if (p.Count >= distance) continue;
+            
+            distance = p.Count;
 
-                distance = p.Count;
-
-                _targetTile = p[0];
-            }
+            _targetTile = p[0];
         }
         
         //Clears previous calculated paths
@@ -107,7 +97,7 @@ public class EnemyCharacter : Character
             pathCreator.ResetPath();
             pathCreator.Calculate(_myPositionTile, enemies[i].GetMyPositionTile(), 1000);
 
-            var p = pathCreator.GetPath();
+            List<Tile> p = pathCreator.GetPath();
             if (i == 0)
             {
                 foreach (var tile in p)
@@ -118,15 +108,13 @@ public class EnemyCharacter : Character
                 continue;
             }
 
-            if (p.Count < path.Count)
-            {
-                path.Clear();
+            if (p.Count >= path.Count) continue;
+            path.Clear();
                 foreach (var tile in p)
                 {
                     path.Add(tile);
                 }
                 closestEnemy = enemies[i];
-            }
         }
         _currentSteps = legs.GetMaxSteps();
         return closestEnemy;
@@ -156,7 +144,6 @@ public class EnemyCharacter : Character
         PaintTilesInMoveRange(_myPositionTile, 0);
         PaintTilesInAttackRange(_myPositionTile, 0);
         CalculateAutoMovement();
-        Debug.Log("empiezo a moverme");
         Move();
     }
 }
