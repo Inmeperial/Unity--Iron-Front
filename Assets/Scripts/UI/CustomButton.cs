@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class CustomButton : Selectable, IPointerClickHandler
 {
-    public PointerEventData.InputButton button { get; set; }
     public UnityEvent OnLeftClick;
     public UnityEvent OnRightClick;
 

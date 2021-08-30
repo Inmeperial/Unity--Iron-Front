@@ -14,29 +14,21 @@ public class WorldUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _turnOrderText;
     
     [Header("Body")]
-    [SerializeField] private TextMeshProUGUI _bodyHpText;
     [SerializeField] private Slider _bodyHpSlider;
     [SerializeField] private Slider _bodyDamageSlider;
-    [SerializeField] private TextMeshProUGUI _bodyCount;
-    
+
     [Header("Left Arm")]
-    [SerializeField] private TextMeshProUGUI _leftArmHpText;
     [SerializeField] private Slider _leftArmHpSlider;
     [SerializeField] private Slider _leftArmDamageSlider;
-    [SerializeField] private TextMeshProUGUI _leftArmCount;
-    
+
     [Header("Right Arm")]
-    [SerializeField] private TextMeshProUGUI _rightArmHpText;
     [SerializeField] private Slider _rightArmHpSlider;
     [SerializeField] private Slider _rightArmDamageSlider;
-    [SerializeField] private TextMeshProUGUI _rightArmCount;
-    
+
     [Header("Legs")]
-    [SerializeField] private TextMeshProUGUI _legsHpText;
     [SerializeField] private Slider _legsHpSlider;
     [SerializeField] private Slider _legsDamageSlider;
-    [SerializeField] private TextMeshProUGUI _legsCount;
-    
+
     [Header("Actions")]
     [SerializeField] private GameObject _moveActionIcon;
     [SerializeField] private GameObject _attackActionIcon;
@@ -45,14 +37,10 @@ public class WorldUI : MonoBehaviour
     [SerializeField] private float _forwardMultiplier;
     [SerializeField] private GameObject _buttonsContainer;
 
-    [SerializeField] private CustomButton _bodyButton;
-    [SerializeField] private Slider _bodyButtonSlider;
-    [SerializeField] private CustomButton _leftArmButton;
-    [SerializeField] private Slider _leftArmButtonSlider;
-    [SerializeField] private CustomButton _rightArmButton;
-    [SerializeField] private Slider _rightArmButtonSlider;
-    [SerializeField] private CustomButton _legsButton;
-    [SerializeField] private Slider _legsButtonSlider;
+    [SerializeField] private MechaPartButton _bodyButton;
+    [SerializeField] private MechaPartButton _leftArmButton;
+    [SerializeField] private MechaPartButton _rightArmButton;
+    [SerializeField] private MechaPartButton _legsButton;
     #endregion
     private Camera _camera;
 
@@ -97,33 +85,30 @@ public class WorldUI : MonoBehaviour
     
     public void SetLimits(float bodyMax, float rArmMax, float lArmMax, float legsMax)
     {
+        
         _bodyHpSlider.maxValue = bodyMax;
         _bodyHpSlider.minValue = 0;
         _bodyDamageSlider.maxValue = bodyMax;
         _bodyDamageSlider.minValue = 0;
-        _bodyButtonSlider.maxValue = bodyMax;
-        _bodyButtonSlider.minValue = 0;
+        _bodyButton.SetSlider(0, bodyMax);
 
         _rightArmHpSlider.maxValue = rArmMax;
         _rightArmHpSlider.minValue = 0;
         _rightArmDamageSlider.maxValue = rArmMax;
         _rightArmDamageSlider.minValue = 0;
-        _rightArmButtonSlider.maxValue = rArmMax;
-        _rightArmButtonSlider.minValue = 0;
+        _rightArmButton.SetSlider(0, rArmMax);
 
         _leftArmHpSlider.maxValue = lArmMax;
         _leftArmHpSlider.minValue = 0;
         _leftArmDamageSlider.maxValue = lArmMax;
         _leftArmDamageSlider.minValue = 0;
-        _leftArmButtonSlider.maxValue = lArmMax;
-        _leftArmButtonSlider.minValue = 0;
+        _rightArmButton.SetSlider(0, lArmMax);
 
         _legsHpSlider.maxValue = legsMax;
         _legsHpSlider.minValue = 0;
         _legsDamageSlider.maxValue = legsMax;
         _legsDamageSlider.minValue = 0;
-        _legsButtonSlider.maxValue = legsMax;
-        _legsButtonSlider.minValue = 0;
+        _legsButton.SetSlider(0, legsMax);
     }
     
     #region WorldCanvas
@@ -301,7 +286,7 @@ public class WorldUI : MonoBehaviour
             _bodyButton.OnLeftClick.AddListener(mng.BodySelection); 
         }
         
-        _bodyCount.text = "0";
+        _bodyButton.SetBulletsCount(0);
     }
     
     public void LeftArmEnabling(bool status, ButtonsUIManager mng = null)
@@ -317,7 +302,7 @@ public class WorldUI : MonoBehaviour
             _leftArmButton.OnLeftClick.AddListener(mng.LeftArmSelection);
         }
 
-        _leftArmCount.text = "0";
+        _leftArmButton.SetBulletsCount(0);
     }
     
     public void RightArmEnabling(bool status, ButtonsUIManager mng = null)
@@ -334,7 +319,7 @@ public class WorldUI : MonoBehaviour
             _rightArmButton.OnLeftClick.AddListener(mng.RightArmSelection);
         }
 
-        _rightArmCount.text = "0";
+        _rightArmButton.SetBulletsCount(0);
     }
     public void LegsEnabling(bool status, ButtonsUIManager mng = null)
     {
@@ -349,55 +334,55 @@ public class WorldUI : MonoBehaviour
             _legsButton.OnLeftClick.AddListener(mng.LegsSelection);
         }
         
-        _legsCount.text = "0";
+        _legsButton.SetBulletsCount(0);
     }
 
     public void SetBodyHpText(float hp)
     {
         var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
-        _bodyHpText.text = h.ToString();
-        _bodyButtonSlider.value = h;
+        _bodyButton.SetHpText(h.ToString());
+        _bodyButton.UpdateHpSlider(h);
     }
     
     public void SetLeftArmHpText(float hp)
     {
         var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
-        _leftArmHpText.text = h.ToString();
-        _leftArmButtonSlider.value = h;
+        _leftArmButton.SetHpText(h.ToString());
+        _leftArmButton.UpdateHpSlider(h);
     }
     
     public void SetRightArmHpText(float hp)
     {
         var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
-        _rightArmHpText.text = h.ToString();
-        _rightArmButtonSlider.value = h;
+        _rightArmButton.SetHpText(h.ToString());
+        _rightArmButton.UpdateHpSlider(h);
     }
     
     public void SetLegsHpText(float hp)
     {
         var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
-        _legsHpText.text = h.ToString();
-        _legsButtonSlider.value = h;
+        _legsButton.SetHpText(h.ToString());
+        _legsButton.UpdateHpSlider(h);
     }
 
     public void SetBodyCount(int count)
     {
-        _bodyCount.text = count.ToString();
+        _bodyButton.SetBulletsCount(count);
     }
     
     public void SetLeftArmCount(int count)
     {
-        _leftArmCount.text = count.ToString();
+        _leftArmButton.SetBulletsCount(count);
     }
     
     public void SetRightArmCount(int count)
     {
-        _rightArmCount.text = count.ToString();
+        _rightArmButton.SetBulletsCount(count);
     }
     
     public void SetLegsCount(int count)
     {
-        _legsCount.text = count.ToString();
+        _legsButton.SetBulletsCount(count);
     }
     
     #endregion
