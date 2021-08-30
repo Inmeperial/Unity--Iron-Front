@@ -106,9 +106,14 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject() == false)
         {
-            if (((_selectedChar && _selectedChar.IsMoving() == false) || _selectedEnemy) &&
-                (Input.GetKeyDown(deselectKey)))
+            if (_selectedChar && _selectedChar.IsMoving() == false && _selectedEnemy &&
+                Input.GetKeyDown(deselectKey))
+            {
+                Debug.Log("deselect update");
                 DeselectActions();
+                ClearSelectedEnemy();
+            }
+                
 
             if ((_selectedChar && _selectedChar.IsMoving() == false) && _selectedChar.GetPath().Count > 0 &&
                 Input.GetMouseButtonDown(1))
@@ -576,6 +581,10 @@ public class ButtonsUIManager : MonoBehaviour
         buttonExecuteAttack.gameObject.SetActive(false);
         PortraitsController.Instance.PortraitsActiveState(true);
         //_selectedChar = null;
+    }
+
+    private void ClearSelectedEnemy()
+    {
         _selectedEnemy = null;
     }
 

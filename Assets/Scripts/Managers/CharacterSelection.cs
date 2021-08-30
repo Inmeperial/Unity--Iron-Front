@@ -16,8 +16,22 @@ public class CharacterSelection : MonoBehaviour
     ButtonsUIManager _buttonsManager;
     private bool _canSelectUnit;
     private Character _enemySelection;
-
+    
     public bool playerSelected;
+
+    public static CharacterSelection Instance;
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
     private void Start()
     {
         _canSelectUnit = true;
@@ -114,6 +128,7 @@ public class CharacterSelection : MonoBehaviour
 
                 if (body || lArm || rArm || legs)
                 {
+                    //if (_enemySelection)
                     _enemySelection.SelectedAsEnemy();
                     _buttonsManager.SetEnemy(_enemySelection);
                     _buttonsManager.SetEnemyUI();

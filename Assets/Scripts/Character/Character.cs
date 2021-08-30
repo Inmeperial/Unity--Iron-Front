@@ -1179,6 +1179,7 @@ public class Character : EnumsClass, IObservable
     public void ResetRotationAndRays()
     {
         var c = turnManager.GetSelectedCharacter();
+        if (c == null) return;
         c.transform.rotation = c.InitialRotation;//Volver la rotación del mecha a InitialRotation, esto podría ser más smooth
         c.RaysOff();//Apago los raycasts cuando saco el mouse
     }

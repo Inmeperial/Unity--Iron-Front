@@ -36,7 +36,7 @@ public class CustomButton : Selectable, IPointerClickHandler
        
     }
 
-    private void PressRight()
+    protected virtual void PressRight()
     {
         if (!IsActive() || !IsInteractable())
             return;
@@ -44,7 +44,7 @@ public class CustomButton : Selectable, IPointerClickHandler
         OnRightClick?.Invoke();
     }
 
-    private void PressLeft()
+    protected virtual void PressLeft()
     {
         if (!IsActive() || !IsInteractable())
             return;

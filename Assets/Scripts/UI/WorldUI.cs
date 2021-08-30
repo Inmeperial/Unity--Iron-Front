@@ -102,7 +102,7 @@ public class WorldUI : MonoBehaviour
         _leftArmHpSlider.minValue = 0;
         _leftArmDamageSlider.maxValue = lArmMax;
         _leftArmDamageSlider.minValue = 0;
-        _rightArmButton.SetSlider(0, lArmMax);
+        _leftArmButton.SetSlider(0, lArmMax);
 
         _legsHpSlider.maxValue = legsMax;
         _legsHpSlider.minValue = 0;

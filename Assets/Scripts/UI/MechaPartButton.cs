@@ -17,12 +17,27 @@ public class MechaPartButton : CustomButton
     
     public override void OnPointerEnter(PointerEventData eventData)
     {
+        UpdateDamagePreviewSlider();
+        
         _damagePreviewSlider.gameObject.SetActive(true);
     }
     
     public override void OnPointerExit(PointerEventData eventData)
     {
-        _damagePreviewSlider.gameObject.SetActive(false);
+        if (_bulletsCount <= 0)
+            _damagePreviewSlider.gameObject.SetActive(false);
+    }
+
+    protected override void PressRight()
+    {
+        base.PressRight();
+        UpdateDamagePreviewSlider();
+    }
+
+    protected override void PressLeft()
+    {
+        base.PressLeft();
+        UpdateDamagePreviewSlider();
     }
 
     public void SetSlider(float minValue, float maxValue)
@@ -39,9 +54,15 @@ public class MechaPartButton : CustomButton
         _currentHPSlider.value = value;
     }
 
-    public void UpdateDamagePreviewSlider(float value)
+    public void UpdateDamagePreviewSlider()
     {
-        _damagePreviewSlider.value = value;
+        Character selectedCharacter = CharacterSelection.Instance.GetSelectedCharacter();
+
+        Gun gun = selectedCharacter.GetSelectedGun();
+
+        float estimatedDamage = gun.GetBulletDamage() * _bulletsCount;
+
+        _damagePreviewSlider.value = _currentHPSlider.value - estimatedDamage;
     }
 
     public void SetHpText(string text)
