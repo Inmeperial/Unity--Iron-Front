@@ -38,7 +38,22 @@ public class EffectsController : MonoBehaviour
     private bool _canCreate;
     private List<Tuple<string, int, Vector3>> _list = new List<Tuple<string, int, Vector3>>();
     private Camera _cam;
+    
+    public static EffectsController Instance;
 
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+    
     private void Start()
     {
         _cam = Camera.main;
@@ -143,7 +158,7 @@ public class EffectsController : MonoBehaviour
     /// <param name="last">Is the last text to spawn?</param>
     public void CreateDamageText(string text, int type, Vector3 position, bool last)
     {
-        var t = Tuple.Create(text, type, position);
+        Tuple<string, int, Vector3> t = Tuple.Create(text, type, position);
         _list.Add(t);
         if (last) StartCoroutine(CreateDamageTextWithSpacing());
     }
@@ -153,17 +168,17 @@ public class EffectsController : MonoBehaviour
     {
         for (int i = 0; i < _list.Count; i++)
         {
-            var myText = _list[i];
+            Tuple<string, int, Vector3> myText = _list[i];
 
-            var obj = new GameObject();
+            GameObject obj = new GameObject();
             //Creo un objeto vacio que mire a la camara en la posicion donde va a crearse el texto 
-            var rot = Instantiate(obj, myText.Item3, Quaternion.identity);
+            GameObject rot = Instantiate(obj, myText.Item3, Quaternion.identity);
             Destroy(obj);
             rot.transform.LookAt(rot.transform.position + _cam.transform.forward);
             rot.name = "name: " + i;
             //Uso la rotacion del objeto vacio para que el texto se instancie con esa rotacion
-            var tObj = Instantiate(_damageText, myText.Item3 + new Vector3(0, 0,0), rot.transform.rotation);
-            var t = tObj.GetComponent<DamageText>(); 
+            GameObject tObj = Instantiate(_damageText, myText.Item3 + new Vector3(0, 0,0), rot.transform.rotation);
+            DamageText t = tObj.GetComponent<DamageText>(); 
             t.SetText(myText.Item1, myText.Item2, i);
             Destroy(rot);
             StartCoroutine(DestroyEffect(tObj, t.GetDuration()));
@@ -184,11 +199,11 @@ public class EffectsController : MonoBehaviour
     {
         if (isFullCoverOn)
         {
-            this.GetComponent<MeshRenderer>().material.SetInt("_isFullCover", 1);
+            GetComponent<MeshRenderer>().material.SetInt("_isFullCover", 1);
         }
         else
         {
-            this.GetComponent<MeshRenderer>().material.SetInt("_isFullCover", 0);
+            GetComponent<MeshRenderer>().material.SetInt("_isFullCover", 0);
         }
     }
 

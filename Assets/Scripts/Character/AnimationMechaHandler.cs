@@ -1,124 +1,132 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimationMechaHandler : MonoBehaviour
 {
+    private Animator _animator;
+
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
     public void SetPauseDeadAnimation()
     {
-        this.GetComponent<Animator>().speed = 0;
-        this.GetComponent<Character>().effectsController.PlayParticlesEffect(this.gameObject, "Dead");
+        _animator.speed = 0;
+        EffectsController.Instance.PlayParticlesEffect(gameObject, "Dead");
     }
 
     public void SetIsDeadAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isDead", true);
+        _animator.SetBool("isDead", true);
     }
 
     public void SetIsWalkingAnimatorFalse()
     {
-        this.GetComponent<Animator>().SetBool("isWalkingAnimator", false);
+        _animator.SetBool("isWalkingAnimator", false);
     }
 
     public void SetIsReciveDamageAnimatorFalse()
     {
-        if (this.GetComponent<Character>().body.GetCurrentHp() <= 0)
+        if (GetComponent<Character>().body.GetCurrentHp() <= 0)
         {
             SetIsDeadAnimatorTrue();
         }
         else
         {
-            this.GetComponent<Animator>().SetBool("isReciveDamageAnimator", false);
+            _animator.SetBool("isReciveDamageAnimator", false);
         }
     }
 
     public void SetIsSniperAttackRightAnimatorFalse()
     {
-        this.GetComponent<Animator>().SetBool("isSniperAttackRight", false);
+        _animator.SetBool("isSniperAttackRight", false);
     }
 
     public void SetIsSniperAttackLeftAnimatorFalse()
     {
-        this.GetComponent<Animator>().SetBool("isSniperAttackLeft", false);
+        _animator.SetBool("isSniperAttackLeft", false);
     }
 
     public void SetIsHammerAttackRightAnimatorFalse()
     {
-        this.GetComponent<Animator>().SetBool("isHammerAttackRight", false);
+        _animator.SetBool("isHammerAttackRight", false);
     }
 
     public void SetIsHammerAttackLeftAnimatorFalse()
     {
-        this.GetComponent<Animator>().SetBool("isHammerAttackLeft", false);
+        _animator.SetBool("isHammerAttackLeft", false);
     }
     public void SetIsShotgunAttackRightAnimatorFalse()
     {
-        this.GetComponent<Animator>().SetBool("isShotgunAttackRight", false);
+        _animator.SetBool("isShotgunAttackRight", false);
     }
 
     public void SetIsShotgunAttackLeftAnimatorFalse()
     {
-        this.GetComponent<Animator>().SetBool("isShotgunAttackLeft", false);
+        _animator.SetBool("isShotgunAttackLeft", false);
     }
 
     public void SetIsMachineGunAttackLeftAnimatorFalse()
     {
-        this.GetComponent<Animator>().SetBool("isMachinegunAttackLeft", false);
+        _animator.SetBool("isMachinegunAttackLeft", false);
     }
 
     public void SetIsMachineGunAttackRightAnimatorFalse()
     {
-        this.GetComponent<Animator>().SetBool("isMachinegunAttackRight", false);
+        _animator.SetBool("isMachinegunAttackRight", false);
     }
 
     public void SetIsSniperAttackRightAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isSniperAttackRight", true);
+        _animator.SetBool("isSniperAttackRight", true);
     }
 
     public void SetIsSniperAttackLeftAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isSniperAttackLeft", true);
+        _animator.SetBool("isSniperAttackLeft", true);
     }
 
     public void SetIsHammerAttackRightAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isHammerAttackRight", true);
+        _animator.SetBool("isHammerAttackRight", true);
     }
 
     public void SetIsHammerAttackLeftAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isHammerAttackLeft", true);
+        _animator.SetBool("isHammerAttackLeft", true);
     }
 
     public void SetIsShotgunAttackRightAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isShotgunAttackRight", true);
+        _animator.SetBool("isShotgunAttackRight", true);
     }
 
     public void SetIsShotgunAttackLeftAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isShotgunAttackLeft", true);
+        _animator.SetBool("isShotgunAttackLeft", true);
     }
 
     public void SetIsMachineGunAttackLeftAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isMachinegunAttackLeft", true);
+        _animator.SetBool("isMachinegunAttackLeft", true);
     }
 
     public void SetIsMachineGunAttackRightAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isMachinegunAttackRight", true);
+        _animator.SetBool("isMachinegunAttackRight", true);
     }
 
     public void SetIsWalkingAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isWalkingAnimator", true);
+        _animator.SetBool("isWalkingAnimator", true);
     }
 
     public void SetIsReciveDamageAnimatorTrue()
     {
-        this.GetComponent<Animator>().SetBool("isReciveDamageAnimator", true);
+        _animator.SetBool("isReciveDamageAnimator", true);
     }
 
 }

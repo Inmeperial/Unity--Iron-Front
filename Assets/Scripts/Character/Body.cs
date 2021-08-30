@@ -32,32 +32,32 @@ public class Body : Parts
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public void TakeDamageBody(List<Tuple<int,int>> damages)
     {
-        var ui = _myChar.GetMyUI();
+        WorldUI ui = _myChar.GetMyUI();
         ui.SetBodySlider(_bodyHP);
         int total = 0;
-        var bodyPos = transform.position;
+        Vector3 bodyPos = transform.position;
         for (int i = 0; i < damages.Count; i++)
         {
             total += damages[i].Item1;
-            var hp = _bodyHP - damages[i].Item1;
+            float hp = _bodyHP - damages[i].Item1;
             _bodyHP = hp > 0 ? hp : 0;
 
-            _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
-            _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Hit");
-            var item = damages[i].Item2;
+            EffectsController.Instance.PlayParticlesEffect(gameObject, "Damage");
+            EffectsController.Instance.PlayParticlesEffect(gameObject, "Hit");
+            int item = damages[i].Item2;
             switch (item)
             {
                 case MissHit:
-                    _myChar.effectsController.CreateDamageText("Miss", 0, bodyPos, i == damages.Count - 1 ? true : false);
+                    EffectsController.Instance.CreateDamageText("Miss", 0, bodyPos, i == damages.Count - 1 ? true : false);
                     break;
                    
                 case NormalHit:
-                    _myChar.effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, bodyPos, i == damages.Count - 1 ? true : false);
+                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 1, bodyPos, i == damages.Count - 1 ? true : false);
                     _myChar.HitSoundMecha();
                     break;
                
                 case CriticalHit:
-                    _myChar.effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, bodyPos, i == damages.Count - 1 ? true : false);
+                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 2, bodyPos, i == damages.Count - 1 ? true : false);
                     _myChar.HitSoundMecha();
                     break;
             }
@@ -71,16 +71,16 @@ public class Body : Parts
     //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public void TakeDamageBody(int damage)
     {
-        var ui = _myChar.GetMyUI();
+        WorldUI ui = _myChar.GetMyUI();
         ui.SetBodySlider(_bodyHP);
-        var hp = _bodyHP - damage;
+        float hp = _bodyHP - damage;
         _bodyHP = hp > 0 ? hp : 0;
 
-        var bodyPos = transform.position;
-        _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
-        _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Hit");
+        Vector3 bodyPos = transform.position;
+        EffectsController.Instance.PlayParticlesEffect(gameObject, "Damage");
+        EffectsController.Instance.PlayParticlesEffect(gameObject, "Hit");
         _myChar.HitSoundMecha();
-        _myChar.effectsController.CreateDamageText(damage.ToString(), 1, bodyPos, true);
+        EffectsController.Instance.CreateDamageText(damage.ToString(), 1, bodyPos, true);
         ui.ContainerActivation(true);
         ui.UpdateBodySlider(damage, (int)_bodyHP);
         _myChar.MakeNotAttackable();

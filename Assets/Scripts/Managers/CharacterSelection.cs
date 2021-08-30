@@ -84,7 +84,7 @@ public class CharacterSelection : MonoBehaviour
         if (!c.CanBeSelected()) return;
         if (c.IsMyTurn())
         {
-            _buttonsManager.DeselectActions();
+            ButtonsUIManager.Instance.DeselectActions();
             if (_selection)
                 _selection.DeselectThisUnit();
             if (_enemySelection)
@@ -97,14 +97,14 @@ public class CharacterSelection : MonoBehaviour
             _selection = c;
             _selection.SelectThisUnit();
             _highlight.ChangeActiveCharacter(_selection);
-            _buttonsManager.SetPlayerCharacter(_selection);
-            _buttonsManager.SetPlayerUI();
+            ButtonsUIManager.Instance.SetPlayerCharacter(_selection);
+            ButtonsUIManager.Instance.SetPlayerUI();
             if (_enemySelection)
             {
                 _selection.RotateTowardsEnemy(_enemySelection.transform.position);
             }
         }
-        else if (c.GetUnitTeam() != _turnManager.GetActiveTeam())
+        else if (c.GetUnitTeam() != TurnManager.Instance.GetActiveTeam())
         {
             if (_enemySelection)
             {
@@ -114,24 +114,23 @@ public class CharacterSelection : MonoBehaviour
             if (_selection && _selection.CanAttack())
             {
                 _selection.RotateTowardsEnemy(_enemySelection.transform.position);
-                var body = _selection.RayToPartsForAttack(_enemySelection.GetBodyPosition(), "Body") &&
+                bool body = _selection.RayToPartsForAttack(_enemySelection.GetBodyPosition(), "Body") &&
                            _enemySelection.body.GetCurrentHp() > 0;
                 
-                var lArm = _selection.RayToPartsForAttack(_enemySelection.GetLArmPosition(), "LArm") &&
+                bool lArm = _selection.RayToPartsForAttack(_enemySelection.GetLArmPosition(), "LArm") &&
                            _enemySelection.leftArm.GetCurrentHp() > 0;
                 
-                var rArm= _selection.RayToPartsForAttack(_enemySelection.GetRArmPosition(), "RArm") &&
+                bool rArm= _selection.RayToPartsForAttack(_enemySelection.GetRArmPosition(), "RArm") &&
                           _enemySelection.rightArm.GetCurrentHp() > 0;
                 
-                var legs =  _selection.RayToPartsForAttack(_enemySelection.GetLegsPosition(), "Legs") &&
+                bool legs =  _selection.RayToPartsForAttack(_enemySelection.GetLegsPosition(), "Legs") &&
                             _enemySelection.legs.GetCurrentHp() > 0;
 
                 if (body || lArm || rArm || legs)
                 {
-                    //if (_enemySelection)
                     _enemySelection.SelectedAsEnemy();
-                    _buttonsManager.SetEnemy(_enemySelection);
-                    _buttonsManager.SetEnemyUI();
+                    ButtonsUIManager.Instance.SetEnemy(_enemySelection);
+                    ButtonsUIManager.Instance.SetEnemyUI();
                     _canSelectUnit = false;
                 }
                 else
@@ -161,7 +160,7 @@ public class CharacterSelection : MonoBehaviour
     public void ResetSelector()
     {
         DeselectUnit();
-        _buttonsManager.DeactivateExecuteAttackButton();
+        ButtonsUIManager.Instance.DeactivateExecuteAttackButton();
     }
 
     public void DeselectUnit()

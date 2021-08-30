@@ -30,7 +30,7 @@ public class PortraitsController : MonoBehaviour
 
     public RectTransform GetMyRect(Character c)
     {
-        foreach (var t in _charAndFramesList)
+        foreach (Tuple<Character, FramesUI> t in _charAndFramesList)
         {
             if (t.Item1 == c)
             {
@@ -43,14 +43,14 @@ public class PortraitsController : MonoBehaviour
     
     public void PortraitsActiveState(bool state)
     {
-        foreach (var p in _portraits)
+        foreach (FramesUI p in _portraits)
         {
             p.gameObject.SetActive(state);
         }
     }
     public void ActivatePortraitsButtons()
     {
-        foreach (var portrait in _portraits)
+        foreach (FramesUI portrait in _portraits)
         {
             portrait.selectionButton.interactable = true;
         }
@@ -58,7 +58,7 @@ public class PortraitsController : MonoBehaviour
     
     public void DeactivatePortraitsButtons()
     {
-        foreach (var portrait in _portraits)
+        foreach (FramesUI portrait in _portraits)
         {
             portrait.selectionButton.interactable = false;
         }
@@ -66,7 +66,7 @@ public class PortraitsController : MonoBehaviour
 
     public void DeadPortrait(Character character)
     {
-        foreach (var c in _charAndFramesList)
+        foreach (Tuple<Character, FramesUI> c in _charAndFramesList)
         {
             if (c.Item1 == character)
                 c.Item2.mechaImage.color = Color.red;
@@ -81,10 +81,10 @@ public class PortraitsController : MonoBehaviour
     
     IEnumerator PortraitMovement(RectTransform myRect, int currentPos, int newPos)
     {
-        var startV = _portraitsPositions[currentPos].gameObject.GetComponent<RectTransform>();
-        var end = _portraitsPositions[newPos].gameObject.GetComponent<RectTransform>();
-        var midRectA = new RectTransform();
-        var midGoA = new GameObject();
+        RectTransform startV = _portraitsPositions[currentPos].gameObject.GetComponent<RectTransform>();
+        RectTransform end = _portraitsPositions[newPos].gameObject.GetComponent<RectTransform>();
+        RectTransform midRectA = new RectTransform();
+        GameObject midGoA = new GameObject();
 
         AnimationCurve curveMinX = null;
         AnimationCurve curveMaxX = null;
@@ -97,11 +97,11 @@ public class PortraitsController : MonoBehaviour
             midRectA.gameObject.name = "INSTANCIA";
             midRectA.anchorMax = Vector2.Lerp(startV.anchorMax, end.anchorMax, 0.5f);
             midRectA.anchorMin = Vector2.Lerp(startV.anchorMin, end.anchorMin, 0.5f);
-            var anchorMax = midRectA.anchorMax;
+            Vector2 anchorMax = midRectA.anchorMax;
             anchorMax.y = _portraitPivotHeightForAnimation;
             anchorMax.x = Mathf.Lerp(startV.anchorMax.x, end.anchorMax.x, 0.5f);
             midRectA.anchorMax = anchorMax;
-            var anchorMin = midRectA.anchorMin;
+            Vector2 anchorMin = midRectA.anchorMin;
             anchorMin.y = _portraitPivotHeightForAnimation - (startV.anchorMax.y - startV.anchorMin.y);
             anchorMin.x = anchorMax.x - (startV.anchorMax.x - startV.anchorMin.x);
             midRectA.anchorMin = anchorMin;
@@ -131,35 +131,20 @@ public class PortraitsController : MonoBehaviour
             curveMaxX = new AnimationCurve(kMaxX);
             curveMaxX.SmoothTangents(1, _animationCurveWeight);
             curveMinY = new AnimationCurve(kMinY);
-            //curveMinY.SmoothTangents(1, 0);
             curveMaxY = new AnimationCurve(kMaxY);
-            //curveMaxY.SmoothTangents(1, 0);
-            //Debug.Break();
         }
 
-        var time = 0f;
+        float time = 0f;
         
         while (time <= _portraitMoveTime)
         {
             time += Time.deltaTime;
-            var normalized = time / _portraitMoveTime;
+            float normalized = time / _portraitMoveTime;
             
             if (Mathf.Abs(currentPos - newPos) > 1)
             {
-                //myRect.anchoredPosition = new Vector2(animationCurveX.Evaluate(time), animationCurveY.Evaluate(time));
                 myRect.anchorMax = new Vector2(curveMaxX.Evaluate(time), curveMaxY.Evaluate(time));
                 myRect.anchorMin = new Vector2(curveMinX.Evaluate(time), curveMinY.Evaluate(time));
-
-                // if (normalized <= 0.5f)
-                // {
-                //     myRect.anchorMax = Vector2.Lerp(startV.anchorMax, midRectA.anchorMax, normalized * 2);
-                //     myRect.anchorMin = Vector2.Lerp(startV.anchorMin, midRectA.anchorMin, normalized * 2);
-                // }
-                // else
-                // {
-                //     myRect.anchorMax = Vector2.Lerp(midRectA.anchorMax, end.anchorMax, normalized);
-                //     myRect.anchorMin = Vector2.Lerp(midRectA.anchorMin, end.anchorMin, normalized);
-                // }
             }
             else
             {

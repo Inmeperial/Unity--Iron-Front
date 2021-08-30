@@ -134,11 +134,11 @@ public class EnemyCharacter : Character
 
     List<Character> GetEnemyTeam()
     {
-        Character[] units = turnManager.GetAllUnits();
+        Character[] units = TurnManager.Instance.GetAllUnits();
         
         List<Character> enemyTeam = new List<Character>();
 
-        foreach (var c in units)
+        foreach (Character c in units)
         {
             if (!c.IsDead() && c.GetUnitTeam() != _unitTeam)
             {

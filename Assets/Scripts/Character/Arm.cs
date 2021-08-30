@@ -38,37 +38,36 @@ public class Arm : Parts
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public void TakeDamageArm(List<Tuple<int,int>> damages)
     {
-        
         int total = 0;
-        var pos = transform.position;
+        Vector3 pos = transform.position;
         for (int i = 0; i < damages.Count; i++)
         {
             total += damages[i].Item1;
-            var hp = _armHP - damages[i].Item1;
+            float hp = _armHP - damages[i].Item1;
             _armHP = hp > 0 ? hp : 0;
-            _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
-            _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Hit");
+            EffectsController.Instance.PlayParticlesEffect(this.gameObject, "Damage");
+            EffectsController.Instance.PlayParticlesEffect(this.gameObject, "Hit");
 
-            var item = damages[i].Item2;
+            int item = damages[i].Item2;
             switch (item)
             {
                 case MissHit:
-                    _myChar.effectsController.CreateDamageText("Miss", 0, pos, i == damages.Count - 1 ? true : false);
+                    EffectsController.Instance.CreateDamageText("Miss", 0, pos, i == damages.Count - 1 ? true : false);
                     break;
                    
                 case NormalHit:
-                    _myChar.effectsController.CreateDamageText(damages[i].Item1.ToString(), 1, pos, i == damages.Count - 1 ? true : false);
+                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 1, pos, i == damages.Count - 1 ? true : false);
                     _myChar.HitSoundMecha();
                     break;
                
                 case CriticalHit:
-                    _myChar.effectsController.CreateDamageText(damages[i].Item1.ToString(), 2, pos, i == damages.Count - 1 ? true : false);
+                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 2, pos, i == damages.Count - 1 ? true : false);
                     _myChar.HitSoundMecha();
                     break;
             }
         }
         
-        var ui = _myChar.GetMyUI();
+        WorldUI ui = _myChar.GetMyUI();
         ui.ContainerActivation(true);
         
         switch (_location)
@@ -103,17 +102,17 @@ public class Arm : Parts
     public void TakeDamageArm(int damage)
     {
         
-        var hp = _armHP - damage;
+        float hp = _armHP - damage;
         _armHP = hp > 0 ? hp : 0;
         
-        var pos = transform.position;
-        _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Damage");
-        _myChar.effectsController.PlayParticlesEffect(this.gameObject, "Hit");
+        Vector3 pos = transform.position;
+        EffectsController.Instance.PlayParticlesEffect(gameObject, "Damage");
+        EffectsController.Instance.PlayParticlesEffect(gameObject, "Hit");
         _myChar.HitSoundMecha();
 
-        _myChar.effectsController.CreateDamageText(damage.ToString(), 1, pos, true);
+        EffectsController.Instance.CreateDamageText(damage.ToString(), 1, pos, true);
         
-        var ui = _myChar.GetMyUI();
+        WorldUI ui = _myChar.GetMyUI();
         ui.ContainerActivation(true);
         
         switch (_location)

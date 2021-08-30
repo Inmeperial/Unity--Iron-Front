@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,7 +9,6 @@ using UnityEngine.EventSystems;
 
 public class ButtonsUIManager : MonoBehaviour
 {
-    public LayerMask gridBlock;
     public Button buttonExecuteAttack;
     public float attackDelay;
     public Button buttonEndTurn;
@@ -61,25 +61,13 @@ public class ButtonsUIManager : MonoBehaviour
     public GameObject hitContainer;
     public GameObject hitImagePrefab;
     private List<GameObject> _hitImagesCreated = new List<GameObject>();
-    
-    //Enemy
-    // public TextMeshProUGUI enemyBodyCurrHp;
-    // public TextMeshProUGUI bulletsForBodyText;
-    // public TextMeshProUGUI enemyLeftArmCurrHp;
-    // public TextMeshProUGUI bulletsForLArmText;
-    // public TextMeshProUGUI enemyRightArmCurrHp;
-    // public TextMeshProUGUI bulletsForRArmText;
-    // public TextMeshProUGUI bulletsForLegsText;
     #endregion
 
     //OTHERS
-    [SerializeField] private CharacterSelection _charSelection;
     [SerializeField] private Character _selectedChar;
     [SerializeField] private Character _selectedEnemy;
-    private TurnManager _turnManager;
     private int _partsSelected;
     private SoundsMenu _soundsMenuManager;
-    private EffectsController _effectsController;
 
     private bool _bodyInsight;
     private bool _legsInsight;
@@ -87,19 +75,30 @@ public class ButtonsUIManager : MonoBehaviour
     private bool _lArmInsight;
 
     private bool _worldUIActive = false;
+    public static ButtonsUIManager Instance;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+    
     private void Start()
     {
-        _effectsController = FindObjectOfType<EffectsController>();
         playerHudContainer.SetActive(false);
         _buttonBodySelected = false;
         _buttonLArmSelected = false;
         _buttonRArmSelected = false;
         _buttonLegsSelected = false;
-
-        _charSelection = FindObjectOfType<CharacterSelection>();
+        
         _soundsMenuManager = FindObjectOfType<SoundsMenu>();
-        _turnManager = FindObjectOfType<TurnManager>();
-        gridBlock = _charSelection.gridBlockMask;
     }
 
     private void Update()
@@ -156,7 +155,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (!CharacterHasBullets(_selectedChar)) return;
         
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
         
         if (_partsSelected > gun.GetAvailableSelections()) return;
         
@@ -180,7 +179,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForBody <= 0) return;
         
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets();
         _bulletsForBody = _bulletsForBody > 0 ? (_bulletsForBody - gun.GetBulletsPerClick()) : 0;
         _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
@@ -201,7 +200,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForBody <= 0) return;
         
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets(_bulletsForBody);
         DestroyImage(gun.GetMaxBullets());
         _hitImagesCreated.Clear();
@@ -220,7 +219,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (!CharacterHasBullets(_selectedChar)) return;
         
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
         
         if (_partsSelected > gun.GetAvailableSelections()) return;
         
@@ -244,7 +243,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForLArm <= 0) return;
         
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets();
         _bulletsForLArm = _bulletsForLArm > 0 ? (_bulletsForLArm - gun.GetBulletsPerClick()) : 0;
         _selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLArm);
@@ -264,7 +263,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForLArm <= 0) return;
         
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets(_bulletsForLArm);
         DestroyImage(gun.GetMaxBullets());
         _bulletsForLArm = 0;
@@ -283,7 +282,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (!CharacterHasBullets(_selectedChar)) return;
         
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
 
         if (_partsSelected > gun.GetAvailableSelections()) return;
         
@@ -306,7 +305,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForRArm <= 0) return;
         
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets();
         _bulletsForRArm = _bulletsForRArm > 0 ? (_bulletsForRArm - gun.GetBulletsPerClick()) : 0;
         _selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRArm);
@@ -326,7 +325,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForRArm <= 0) return;
         
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets(_bulletsForRArm);
         DestroyImage(gun.GetMaxBullets());
         _bulletsForRArm = 0;
@@ -345,7 +344,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (!CharacterHasBullets(_selectedChar)) return;
         
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
 
         if (_partsSelected > gun.GetAvailableSelections()) return;
         
@@ -369,7 +368,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForLegs <= 0) return;
         
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets();
         _bulletsForLegs = _bulletsForLegs > 0 ? (_bulletsForLegs - gun.GetBulletsPerClick()) : 0;
         _selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
@@ -389,7 +388,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_bulletsForLegs <= 0) return;
         
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets(_bulletsForLegs);
         DestroyImage(gun.GetMaxBullets());
         _bulletsForLegs = 0;
@@ -412,7 +411,7 @@ public class ButtonsUIManager : MonoBehaviour
         
         buttonEndTurn.gameObject.SetActive(false);
         var cam = FindObjectOfType<CloseUpCamera>();
-        var ui = _selectedEnemy.GetMyUI();
+        WorldUI ui = _selectedEnemy.GetMyUI();
         ui.SetLimits(_selectedEnemy.body.GetMaxHp(), _selectedEnemy.rightArm.GetCurrentHp(), _selectedEnemy.leftArm.GetCurrentHp(), _selectedEnemy.legs.GetMaxHp());
         buttonExecuteAttack.interactable = false;
         buttonExecuteAttack.gameObject.SetActive(false);
@@ -426,8 +425,8 @@ public class ButtonsUIManager : MonoBehaviour
             _selectedChar.GetRightGun().ModelsOn();
         }
         
-        var units = _turnManager.GetAllUnits();
-        foreach (var u in units)
+        Character[] units = TurnManager.Instance.GetAllUnits();
+        foreach (Character u in units)
         {
             u.gameObject.SetActive(true);
         }
@@ -439,12 +438,12 @@ public class ButtonsUIManager : MonoBehaviour
     /// </summary>
     private void Attack()
     {
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
         _selectedChar.Shoot();
         _selectedEnemy.SetHurtAnimation();
         if (_bulletsForBody > 0)
         {
-            var d = gun.DamageCalculation(_bulletsForBody);
+            List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForBody);
             _selectedEnemy.body.TakeDamageBody(d);
             _bulletsForBody = 0;
             
@@ -465,7 +464,7 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_bulletsForLArm > 0)
         {
-            var d = gun.DamageCalculation(_bulletsForLArm);
+            List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForLArm);
             _selectedEnemy.leftArm.TakeDamageArm(d);
             _bulletsForLArm = 0;
                 
@@ -478,7 +477,7 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_bulletsForRArm > 0)
         {
-            var d = gun.DamageCalculation(_bulletsForRArm);
+            List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForRArm);
             _selectedEnemy.rightArm.TakeDamageArm(d);
             _bulletsForRArm = 0;
             if (gun.AbilityUsed() == false)
@@ -490,7 +489,7 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_bulletsForLegs > 0)
         {
-            var d = gun.DamageCalculation(_bulletsForLegs);
+            List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForLegs);
             _selectedEnemy.legs.TakeDamageLegs(d);
             _bulletsForLegs = 0;
             if (gun.AbilityUsed() == false)
@@ -499,32 +498,24 @@ public class ButtonsUIManager : MonoBehaviour
             }
             _selectedChar.DeactivateAttack();
         }
-        //_turnManager.OrderTurns();
-        
         
         _selectedEnemy.SetSelectedForAttack(false);
         PortraitsController.Instance.PortraitsActiveState(true);
         buttonEndTurn.gameObject.SetActive(true);
         DeselectActions();
-        _charSelection.Selection(_selectedChar);
+        CharacterSelection.Instance.Selection(_selectedChar);
     }
 
     public void EndTurn()
     {
         if (_selectedChar != null && _selectedChar.IsMoving()) return;
         
-        _turnManager.EndTurn();
-        DeactivateEnemyHUD();
+        TurnManager.Instance.EndTurn();
+        DeactivateBodyPartsContainer();
         DeactivatePlayerHUD();
         ResetBodyParts();
     }
 
-    // private void DeselectUnit()
-    // {
-    //     DeselectActions();
-    //     _charSelection.DeselectUnit();
-    // }
-    
     public void DeselectActions()
     {
         if (_selectedChar)
@@ -539,8 +530,8 @@ public class ButtonsUIManager : MonoBehaviour
                 }
                 
                 attackHudContainer.SetActive(false);
-                var units = _turnManager.GetAllUnits();
-                foreach (var u in units)
+                Character[] units = TurnManager.Instance.GetAllUnits();
+                foreach (Character u in units)
                 {
                     u.gameObject.SetActive(true);
                 }
@@ -549,7 +540,7 @@ public class ButtonsUIManager : MonoBehaviour
                 cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, cam.ResetCamera);
 
             }
-            var gun = _selectedChar.GetSelectedGun();
+            Gun gun = _selectedChar.GetSelectedGun();
 
             if (_bulletsForBody > 0)
                 gun.IncreaseAvailableBullets(_bulletsForBody);
@@ -573,14 +564,12 @@ public class ButtonsUIManager : MonoBehaviour
             _selectedEnemy.SetSelectedForAttack(false);
         }
         
-        _charSelection.ActivateCharacterSelection(true);
-        // DeactivatePlayerHUD();
-        //
-        DeactivateEnemyHUD();
+        CharacterSelection.Instance.ActivateCharacterSelection(true);
+
+        DeactivateBodyPartsContainer();
         buttonEndTurn.gameObject.SetActive(true);
         buttonExecuteAttack.gameObject.SetActive(false);
         PortraitsController.Instance.PortraitsActiveState(true);
-        //_selectedChar = null;
     }
 
     private void ClearSelectedEnemy()
@@ -603,8 +592,7 @@ public class ButtonsUIManager : MonoBehaviour
         _selectedChar.SelectLeftGun();
         leftWeaponCircle.SetActive(true);
         rightWeaponCircle.SetActive(false);
-        //ShowPlayerHudText(playerBodyCurrHp, _selectedChar.body.GetCurrentHp(), playerLeftArmCurrHp, _selectedChar.leftArm.GetCurrentHp(), playerRightArmCurrHp, _selectedChar.rightArm.GetCurrentHp(), playerLegsCurrHp, _selectedChar.legs.GetCurrentHp());
-        
+
         ShowPlayerHudText();
 
         if (_selectedChar.HasEnemiesInRange())
@@ -627,8 +615,7 @@ public class ButtonsUIManager : MonoBehaviour
         _selectedChar.SelectRightGun();
         rightWeaponCircle.SetActive(true);
         leftWeaponCircle.SetActive(false);
-        //ShowPlayerHudText(playerBodyCurrHp, _selectedChar.body.GetCurrentHp(), playerLeftArmCurrHp, _selectedChar.leftArm.GetCurrentHp(), playerRightArmCurrHp, _selectedChar.rightArm.GetCurrentHp(), playerLegsCurrHp, _selectedChar.legs.GetCurrentHp());
-        
+
         ShowPlayerHudText();
 
         if (_selectedChar.HasEnemiesInRange())
@@ -640,8 +627,8 @@ public class ButtonsUIManager : MonoBehaviour
     private void ShowAllWorldUI()
     {
         _worldUIActive = true;
-        var units = _turnManager.GetEnemies(EnumsClass.Team.Red).Concat(_turnManager.GetEnemies(EnumsClass.Team.Green));
-        foreach (var unit in units)
+        Character[] units = TurnManager.Instance.GetAllUnits();
+        foreach (Character unit in units)
         {
             if (!unit.IsSelectedForAttack() && unit.CanBeSelected())
                 unit.ShowWorldUI();
@@ -652,8 +639,8 @@ public class ButtonsUIManager : MonoBehaviour
     private void HideAllWorldUI()
     {
         _worldUIActive = false;
-        var units = _turnManager.GetEnemies(EnumsClass.Team.Red).Concat(_turnManager.GetEnemies(EnumsClass.Team.Green));
-        foreach (var unit in units)
+        Character[] units = TurnManager.Instance.GetAllUnits();
+        foreach (Character unit in units)
         {
             unit.HideWorldUI();
         }
@@ -716,7 +703,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (!_selectedChar) return;
         
-        var ui = _selectedEnemy.GetMyUI();
+        WorldUI ui = _selectedEnemy.GetMyUI();
         if (_selectedChar.GetSelectedGun().GetAvailableBullets() <= 0 || _partsSelected == _selectedChar.GetSelectedGun().GetAvailableSelections())
         {
             if (_buttonBodySelected == false)
@@ -789,14 +776,13 @@ public class ButtonsUIManager : MonoBehaviour
 
     void CreateImage(int quantity)
     {
-        var c = 0;
+        int c = 0;
         for (int i = 0; i < quantity; i++)
         {
             c++;
-            var image = Instantiate(hitImagePrefab, hitContainer.transform, true);
+            GameObject image = Instantiate(hitImagePrefab, hitContainer.transform, true);
             _hitImagesCreated.Add(image);
         }
-        Debug.Log("creo: " + c);
     }
 
     void DestroyImage(int quantity)
@@ -804,10 +790,9 @@ public class ButtonsUIManager : MonoBehaviour
         for (int i = 0; i < quantity; i++)
         {
             if (_hitImagesCreated.Count <= 0) break;
-            var image = _hitImagesCreated[_hitImagesCreated.Count - 1];
+            GameObject image = _hitImagesCreated[_hitImagesCreated.Count - 1];
             _hitImagesCreated.RemoveAt(_hitImagesCreated.Count - 1);
             Destroy(image);
-
         }
     }
 
@@ -819,8 +804,6 @@ public class ButtonsUIManager : MonoBehaviour
     /// </summary>
     public void SetPlayerUI()
     {
-        //ShowPlayerHudText(playerBodyCurrHp, _selectedChar.body.GetCurrentHp(), playerLeftArmCurrHp, _selectedChar.leftArm.GetCurrentHp(), playerRightArmCurrHp, _selectedChar.rightArm.GetCurrentHp(), playerLegsCurrHp, _selectedChar.legs.GetCurrentHp());
-
         ShowPlayerHudText();
         
         if (_selectedChar.RightArmAlive())
@@ -883,14 +866,9 @@ public class ButtonsUIManager : MonoBehaviour
         }
     }
 
-    private void DeactivateEnemyHUD()
-    {
-        DeactivateBodyPartsContainer();
-    }
-
     private void SetAttackHUD()
     {
-        var gun = _selectedChar.GetSelectedGun();
+        Gun gun = _selectedChar.GetSelectedGun();
         attackWeaponNameText.text = gun.GetGunTypeString();
         attackWeaponHitsText.text = gun.GetMaxBullets().ToString();
         attackWeaponDamageText.text = gun.GetBulletDamage().ToString();
@@ -899,11 +877,9 @@ public class ButtonsUIManager : MonoBehaviour
         CreateImage(gun.GetMaxBullets());
         attackHudContainer.SetActive(true);
     }
-
-    //private void ShowPlayerHudText(TextMeshProUGUI bodyHpText, float bodyValue, TextMeshProUGUI lArmHpText, float lArmValue, TextMeshProUGUI rArmHpText, float rArmValue, TextMeshProUGUI legsHpText, float legsValue)
+    
     private void ShowPlayerHudText()
     {
-        //ShowUnitHudText(bodyHpText, bodyValue, lArmHpText, lArmValue, rArmHpText, rArmValue, legsHpText, legsValue);
         ShowUnitHudText();
 
         playerBodySlider.minValue = 0;
@@ -924,17 +900,17 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_selectedChar.LeftArmAlive())
         {
-            var left = _selectedChar.GetLeftGun();
+            Gun left = _selectedChar.GetLeftGun();
             if (left)
             {
                 leftGunTypeText.text = left.GetGunTypeString();
-                var b = left.GetAvailableBullets().ToString();
+                string b = left.GetAvailableBullets().ToString();
                 leftGunHitsText.text = b;
 
-                var dmg = left.GetBulletDamage().ToString();
+                string dmg = left.GetBulletDamage().ToString();
                 leftGunDamageText.text = dmg;
 
-                var h = left.GetHitChance().ToString();
+                string h = left.GetHitChance().ToString();
                 leftGunHitChanceText.text = h + "%";
             }
         }
@@ -947,18 +923,18 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_selectedChar.RightArmAlive())
         {
-            var right = _selectedChar.GetRightGun();
+            Gun right = _selectedChar.GetRightGun();
             if (right)
             {
                 rightGunTypeText.text = right.GetGunTypeString();
 
-                var b = right.GetAvailableBullets().ToString();
+                string b = right.GetAvailableBullets().ToString();
                 rightGunHitsText.text = b;
 
-                var dmg = right.GetBulletDamage().ToString();
+                string dmg = right.GetBulletDamage().ToString();
                 rightGunDamageText.text = dmg;
 
-                var h = right.GetHitChance().ToString();
+                string h = right.GetHitChance().ToString();
                 rightGunHitChanceText.text = h + "%"; 
             }
         }
@@ -971,13 +947,7 @@ public class ButtonsUIManager : MonoBehaviour
     }
 
     void ShowUnitHudText()
-    //void ShowUnitHudText(TextMeshProUGUI bodyHpText, float bodyValue, TextMeshProUGUI lArmHpText, float lArmValue, TextMeshProUGUI rArmHpText, float rArmValue, TextMeshProUGUI legsHpText, float legsValue)
     {
-        // bodyHpText.text = bodyValue.ToString();
-        // lArmHpText.text = lArmValue.ToString();
-        // rArmHpText.text = rArmValue.ToString();
-        // legsHpText.text = legsValue.ToString();
-
         playerBodyCurrHp.text = _selectedChar.body.GetCurrentHp().ToString();
         playerLeftArmCurrHp.text = _selectedChar.leftArm.GetCurrentHp().ToString();
         playerRightArmCurrHp.text = _selectedChar.rightArm.GetCurrentHp().ToString();
@@ -1069,18 +1039,17 @@ public class ButtonsUIManager : MonoBehaviour
             _legsInsight = false;
         }
         
-        var units = _turnManager.GetAllUnits();
+        Character[] units = TurnManager.Instance.GetAllUnits();
 
-        foreach (var u in units)
+        foreach (Character u in units)
         {
             if (u == _selectedChar || u == _selectedEnemy) continue;
                     
             u.gameObject.SetActive(false);
         }
         _selectedChar.RaysOffDelay();
-        //_selectedChar.RaysOff();
-        
-        var ui = _selectedEnemy.GetMyUI();
+
+        WorldUI ui = _selectedEnemy.GetMyUI();
         ui.ButtonsEnabling(_bodyInsight, _lArmInsight, _rArmInsight, _legsInsight, this);
         
         

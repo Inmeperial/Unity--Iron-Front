@@ -229,8 +229,8 @@ public class Character : EnumsClass, IObservable
         }
         
         _moving = true;
-        buttonsManager.DeactivateBodyPartsContainer();
-        turnManager.UnitIsMoving();
+        ButtonsUIManager.Instance.DeactivateBodyPartsContainer();
+        TurnManager.Instance.UnitIsMoving();
         highlight.characterMoving = true;
         if (_myPositionTile)
         {
@@ -252,52 +252,50 @@ public class Character : EnumsClass, IObservable
     {
         if (_rightGunSelected)
         {
-            //effectsController.PlayParticlesEffect(_leftGun.gameObject.transform.position, "Attack");
             switch (_rightGunType)
             {
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
-                    effectsController.PlayParticlesEffect(_rightGun.GetParticleSpawn(), "AssaultRifle");
+                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), "AssaultRifle");
                     _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
                     break;
                 case GunsType.Melee:
                     _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
                     break;
                 case GunsType.Rifle:
-                    effectsController.PlayParticlesEffect(_rightGun.GetParticleSpawn(), "Rifle");
+                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), "Rifle");
                     _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
                     break;
                 case GunsType.Shield:
                     break;
                 case GunsType.Shotgun:
-                    effectsController.PlayParticlesEffect(_rightGun.GetParticleSpawn(), "ShootGun");
+                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), "ShootGun");
                     _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
                     break;
             }
         }
         else if (_leftGunSelected)
         {
-            //effectsController.PlayParticlesEffect(_rightGun.gameObject.transform.position, "Attack");
             switch (_leftGunType)
             {
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
-                    effectsController.PlayParticlesEffect(_leftGun.GetParticleSpawn(), "AssaultRifle");
+                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), "AssaultRifle");
                     _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Melee:
                     _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Rifle:
-                    effectsController.PlayParticlesEffect(_leftGun.GetParticleSpawn(), "Rifle");
+                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), "Rifle");
                     _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Shield:
                     break;
                 case GunsType.Shotgun:
-                    effectsController.PlayParticlesEffect(_leftGun.GetParticleSpawn(), "ShootGun");
+                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), "ShootGun");
                     _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
                     break;
             }
@@ -451,10 +449,9 @@ public class Character : EnumsClass, IObservable
             _myPositionTile.EndMouseOverColor();
         }
         
-        //_mechaMaterlaHandler.SetSelectedMechaMaterial(false);
-        foreach (var item in _enemiesInRange)
+        foreach (Character item in _enemiesInRange)
         {
-            turnManager.UnitCantBeAttacked(item);
+            TurnManager.Instance.UnitCantBeAttacked(item);
         }
 
         if (_canMove)
@@ -946,9 +943,9 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void ResetInRangeLists()
     {
-        foreach (var item in _enemiesInRange)
+        foreach (Character item in _enemiesInRange)
         {
-            turnManager.UnitCantBeAttacked(item);
+            TurnManager.Instance.UnitCantBeAttacked(item);
         }
         highlight.PathLinesClear();
         if (_path.Count > 0)
@@ -1008,7 +1005,7 @@ public class Character : EnumsClass, IObservable
         _myPositionTile.unitAboveSelected = true;
         _myPositionTile.MouseOverColor();
         _targetTile = null;
-        turnManager.UnitStoppedMoving();
+        TurnManager.Instance.UnitStoppedMoving();
         pathCreator.ResetPath();
         _tilesForAttackChecked.Clear();
         _tilesInAttackRange.Clear();
@@ -1091,20 +1088,20 @@ public class Character : EnumsClass, IObservable
     {
         if (_tilesInAttackRange == null || _tilesInAttackRange.Count <= 0) return;
         
-        foreach (var unit in _enemiesInRange)
+        foreach (Character unit in _enemiesInRange)
         {
-            turnManager.UnitCantBeAttacked(unit);
+            TurnManager.Instance.UnitCantBeAttacked(unit);
         }
         _enemiesInRange.Clear();
-        foreach (var item in _tilesInAttackRange)
+        foreach (Tile item in _tilesInAttackRange)
         {
             if (item.IsOcuppied()) continue;
             
-            var unit = item.GetUnitAbove();
+            Character unit = item.GetUnitAbove();
             
             if (unit.GetUnitTeam() == _unitTeam) continue;
             
-            turnManager.UnitCanBeAttacked(unit);
+            TurnManager.Instance.UnitCanBeAttacked(unit);
             _enemiesInRange.Add(unit);
         }
     }
@@ -1166,7 +1163,7 @@ public class Character : EnumsClass, IObservable
     private void RotateWithRays()
     {
         //Tengo que rotar a la unidad que es su turno hacia el enemigo este que pongo el mouse por encima
-        var c = turnManager.GetSelectedCharacter();
+        Character c = CharacterSelection.Instance.GetSelectedCharacter();
         if (!c._selected) return;
         c.RotateTowardsEnemy(transform.position);//Roto a la unidad seleccionada(la que esta haciendo su turno) hacia mi, su enemigo
         //Tengo que prender los line renderers de los raycasts
@@ -1178,7 +1175,7 @@ public class Character : EnumsClass, IObservable
 
     public void ResetRotationAndRays()
     {
-        var c = turnManager.GetSelectedCharacter();
+        Character c = CharacterSelection.Instance.GetSelectedCharacter();
         if (c == null) return;
         c.transform.rotation = c.InitialRotation;//Volver la rotación del mecha a InitialRotation, esto podría ser más smooth
         c.RaysOff();//Apago los raycasts cuando saco el mouse

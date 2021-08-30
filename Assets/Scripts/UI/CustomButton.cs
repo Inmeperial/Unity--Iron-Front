@@ -28,7 +28,7 @@ public class CustomButton : Selectable, IPointerClickHandler
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
-       Debug.Log("mouse over");
+        
     }
 
     public override void OnPointerExit(PointerEventData eventData)

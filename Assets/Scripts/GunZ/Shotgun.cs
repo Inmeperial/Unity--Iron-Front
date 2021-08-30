@@ -39,19 +39,19 @@ public class Shotgun : Gun
                     switch (_parts[partsIndex[i]])
                     {
                         case "Body":
-                            mgr.AddBulletsToBody(bullets);
+                            ButtonsUIManager.Instance.AddBulletsToBody(bullets);
                             break;
 
                         case "LArm":
-                            mgr.AddBulletsToLArm(bullets);
+                            ButtonsUIManager.Instance.AddBulletsToLArm(bullets);
                             break;
 
                         case "RArm":
-                            mgr.AddBulletsToRArm(bullets);
+                            ButtonsUIManager.Instance.AddBulletsToRArm(bullets);
                             break;
 
                         case "Legs":
-                            mgr.AddBulletsToLegs(bullets);
+                            ButtonsUIManager.Instance.AddBulletsToLegs(bullets);
                             break;
                     }
                 }

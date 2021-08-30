@@ -8,19 +8,19 @@ public class LandMine : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var obj = other.GetComponent<Legs>();
+        Legs legs = other.GetComponent<Legs>();
         Character selectedEnemy = other.gameObject.transform.parent.GetComponent<Character>();
 
-        if (!obj) return;
+        if (!legs) return;
         
         selectedEnemy.SetHurtAnimation();
-        obj.TakeDamageLegs(damage);
+        legs.TakeDamageLegs(damage);
         DestroyMine();
     }
 
     public void DestroyMine()
     {
-        FindObjectOfType<EffectsController>().PlayParticlesEffect(gameObject, "Mine");
+        EffectsController.Instance.PlayParticlesEffect(gameObject, "Mine");
         Destroy(gameObject); 
     }
 }

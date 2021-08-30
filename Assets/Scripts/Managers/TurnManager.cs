@@ -11,7 +11,6 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     private List<Character> _redTeam = new List<Character>();
     private int _redDeadCount;
     private Character[] _allUnits;
-    private CharacterSelection _charSelect;
     private TileHighlight _highlight;
     private ButtonsUIManager _buttonsUIManager;
 
@@ -31,6 +30,8 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     private bool _mortarAttack;
     private delegate void Execute();
     Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
+    public static TurnManager Instance;
+
     private void Awake()
     {
         _cameraMovement = FindObjectOfType<CameraMovement>();
@@ -38,12 +39,20 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         _allUnits = new Character[units.Length];
         _allUnits = units;
         
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     private void Start()
     {
         SeparateByTeam(_allUnits);
-        _charSelect = FindObjectOfType<CharacterSelection>();
         _highlight = FindObjectOfType<TileHighlight>();
         _buttonsUIManager = FindObjectOfType<ButtonsUIManager>();
         _activeTeam = Team.Green;
@@ -64,20 +73,20 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         
         Action toDo = () =>
         {
-            _buttonsUIManager.ActivateEndTurnButton();
-            _charSelect.Selection(_actualCharacter);
+            ButtonsUIManager.Instance.ActivateEndTurnButton();
+            CharacterSelection.Instance.Selection(_actualCharacter);
         };
         _cameraMovement.MoveTo(_actualCharacter.transform, toDo, _actualCharacter.transform);
     }
 
     public void UnitIsMoving()
     {
-        _charSelect.ActivateCharacterSelection(false);
+        CharacterSelection.Instance.ActivateCharacterSelection(false);
     }
 
     public void UnitStoppedMoving()
     {
-        _charSelect.ActivateCharacterSelection(true);
+        CharacterSelection.Instance.ActivateCharacterSelection(true);
     }
 
     private void SeparateByTeam(Character[] units)
@@ -97,7 +106,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
     public void EndTurn()
     {
-        Character character = _charSelect.GetSelectedCharacter();
+        Character character = CharacterSelection.Instance.GetSelectedCharacter();
         if (character != null && character.IsMoving()) return;
 
         NotifyObserver("EndTurn");
@@ -130,8 +139,8 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         _activeTeam = _actualCharacter.GetUnitTeam();
         Action toDo = () =>
         {
-            _buttonsUIManager.ActivateEndTurnButton();
-            _charSelect.Selection(_actualCharacter);
+            ButtonsUIManager.Instance.ActivateEndTurnButton();
+            CharacterSelection.Instance.Selection(_actualCharacter);
         };
         _cameraMovement.MoveTo(_actualCharacter.transform, toDo, _actualCharacter.transform);
     }
@@ -139,14 +148,14 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     void MoveToLast()
     {
         List<FramesUI> portraits = PortraitsController.Instance.GetPortraits();
-        _buttonsUIManager.DeactivateEndTurnButton();
+        ButtonsUIManager.Instance.DeactivateEndTurnButton();
         PortraitsController.Instance.MovePortrait(_actualCharacter, 0, PortraitsController.Instance.GetPortraitsRectPosition().Count-1);
         _currentTurnOrder.RemoveAt(0);
         _currentTurnOrder.Insert(_currentTurnOrder.Count, _actualCharacter);
         
         Dictionary<Character, int> previous = new Dictionary<Character, int>();
 
-        for (var i = 0; i < _currentTurnOrder.Count; i++)
+        for (int i = 0; i < _currentTurnOrder.Count; i++)
         {
             Character c = _currentTurnOrder[i];
             previous.Add(c, i);
@@ -160,32 +169,16 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         }
     }
 
-    private void ResetTurn(List<Character> team)
-    {
-        _charSelect.ResetSelector();
-        _highlight.EndPreview();
-        foreach (var unit in team)
-        {
-            unit.NewTurn();
-        }
-    }
-
     /// <summary>
     /// Reset stats for new turn of the given unit.
     /// </summary>
     private void ResetTurn(Character unit)
     {
-        _charSelect.ResetSelector();
+        CharacterSelection.Instance.ResetSelector();
         _highlight.EndPreview();
         unit.NewTurn();
     }
-
-	//Cambio Nico
-	public Character GetSelectedCharacter()
-	{
-		return _charSelect.GetSelectedCharacter();
-	}
-
+    
     public Team GetActiveTeam()
     {
         return _activeTeam;
@@ -229,44 +222,44 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         }
     }
 
-    public void OrderTurns()
-    {
-        Dictionary<Character, int> previous = new Dictionary<Character, int>();
-
-        for (var i = 0; i < _currentTurnOrder.Count; i++)
-        {
-            Character character = _currentTurnOrder[i];
-            previous.Add(character, i);
-        }
-
-        List<Tuple<Character, float>> ordered = GetOrderedUnits();
-        
-        int pos = 0;
-        for (int i = 0; i < ordered.Count; i++)
-        {
-            if (ordered[i].Item1 == _actualCharacter)
-            {
-                pos = i;
-                break;
-            }
-        }
-
-        Tuple<Character, float> c = ordered[pos];
-        ordered.RemoveAt(pos);
-        ordered.Insert(0, c);
-        _currentTurnOrder.Clear();
-
-        for (int i = 0; i < ordered.Count; i++)
-        {
-            Character character = ordered[i].Item1;
-            _currentTurnOrder.Add(character);
-            PortraitsController.Instance.MovePortrait(character, previous[character], i);
-        }
-    }
+    // public void OrderTurns()
+    // {
+    //     Dictionary<Character, int> previous = new Dictionary<Character, int>();
+    //
+    //     for (var i = 0; i < _currentTurnOrder.Count; i++)
+    //     {
+    //         Character character = _currentTurnOrder[i];
+    //         previous.Add(character, i);
+    //     }
+    //
+    //     List<Tuple<Character, float>> ordered = GetOrderedUnits();
+    //     
+    //     int pos = 0;
+    //     for (int i = 0; i < ordered.Count; i++)
+    //     {
+    //         if (ordered[i].Item1 == _actualCharacter)
+    //         {
+    //             pos = i;
+    //             break;
+    //         }
+    //     }
+    //
+    //     Tuple<Character, float> c = ordered[pos];
+    //     ordered.RemoveAt(pos);
+    //     ordered.Insert(0, c);
+    //     _currentTurnOrder.Clear();
+    //
+    //     for (int i = 0; i < ordered.Count; i++)
+    //     {
+    //         Character character = ordered[i].Item1;
+    //         _currentTurnOrder.Add(character);
+    //         PortraitsController.Instance.MovePortrait(character, previous[character], i);
+    //     }
+    // }
 
     public void ReducePosition(Character unit)
     {
-        var oldPos = GetMyTurn(unit);
+        int oldPos = GetMyTurn(unit);
         
         //If last, return
         if (oldPos == _currentTurnOrder.Count -1) return;

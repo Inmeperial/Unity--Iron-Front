@@ -87,7 +87,7 @@ public class Mortar : MonoBehaviour, IObserver
             }
             
             Debug.Log("my name" + name);
-            var s = FindObjectOfType<CharacterSelection>().GetSelectedCharacter();
+            Character s = CharacterSelection.Instance.GetSelectedCharacter();
             s.SetSelection(false);
             s.ResetRotationAndRays();
             _selected = true;
@@ -153,11 +153,10 @@ public class Mortar : MonoBehaviour, IObserver
     //Determina si hay alguna unidad sobre las tiles de activacion
     private bool SelectedPlayerAbove()
     {
-        var selector = FindObjectOfType<CharacterSelection>();
         foreach (var tile in _tilesInActivationRange)
         {
-            var character = tile.GetUnitAbove();
-            if (PlayerIsSelected(character, selector))
+            Character character = tile.GetUnitAbove();
+            if (CharacterSelection.Instance.PlayerIsSelected(character))
             {
                 _activationCharacter = character;
                 return true;
@@ -234,11 +233,6 @@ public class Mortar : MonoBehaviour, IObserver
         return tile && tile.inAttackRange;
     }
 
-    private bool PlayerIsSelected(Character character, CharacterSelection selector)
-    {
-        return selector.PlayerIsSelected(character);
-    }
-
     private void PrepareAttack()
     {
         _textsList.Clear();
@@ -304,7 +298,7 @@ public class Mortar : MonoBehaviour, IObserver
         
         _textsList.Clear();
         
-        FindObjectOfType<TurnManager>().SetMortarAttack(true);
+        TurnManager.Instance.SetMortarAttack(true);
         
         var c = FindObjectOfType<CameraMovement>();
         
@@ -313,10 +307,9 @@ public class Mortar : MonoBehaviour, IObserver
 
     void Attack()
     {
-        var effect = FindObjectOfType<EffectsController>();
-        foreach (var tile in _tilesToAttack)
+        foreach (Tile tile in _tilesToAttack)
         {
-            var unit = tile.GetCharacterAbove();
+            Character unit = tile.GetCharacterAbove();
             if (unit)
             {
                 unit.body.TakeDamageBody(_damage);
@@ -327,18 +320,16 @@ public class Mortar : MonoBehaviour, IObserver
                 unit.Dead();
             }
 
-            var mine = tile.GetMineAbove();
+            LandMine mine = tile.GetMineAbove();
             if (mine)
                 mine.DestroyMine();
                 
-
-            //effect.PlayParticlesEffect(tile.transform.position, "Mine");
-            effect.PlayParticlesEffect(tile.gameObject, "Mine");
+            
+            EffectsController.Instance.PlayParticlesEffect(tile.gameObject, "Mine");
         }
         
-        //_tilesToAttack.Clear();
         _attackPending = false;
-        FindObjectOfType<TurnManager>().SetMortarAttack(false);
+        TurnManager.Instance.SetMortarAttack(false);
         _turnCount = _turnsToAttack;
         Deselect();
     }
@@ -346,8 +337,8 @@ public class Mortar : MonoBehaviour, IObserver
     private void Deselect()
     {
         var charSelect = FindObjectOfType<CharacterSelection>();
-        var selection = charSelect.GetSelectedCharacter(); 
-        if (charSelect && selection) charSelect.Selection(selection);
+        Character selection = CharacterSelection.Instance.GetSelectedCharacter(); 
+        if (charSelect && selection) CharacterSelection.Instance.Selection(selection);
         _selected = false;
         _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
 

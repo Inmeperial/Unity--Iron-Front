@@ -17,46 +17,9 @@ public class TileHighlight : MonoBehaviour
         _lineRenderer = GetComponent<LineRenderer>();
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-        // if (previousTile)
-        // {
-        //     MouseExitsTile();
-        // }
-
-        // if (!characterMoving)
-        //     RayToTile();
-    }
     
-    // private void RayToTile()
-    // {
-    //     var obj = MouseRay.GetTargetTransform(tileMask);
-    //     
-    //     if (!obj || !obj.CompareTag("GridBlock")) return;
-    //     
-    //     var tile = obj.gameObject.GetComponent<Tile>();
-    //     if (tile.IsWalkable())
-    //     {
-    //         MouseOverTile(tile);
-    //     }
-    // }
 
     #region Change tile color methods.
-    // //Pinta los tiles cuando el mouse está encima
-    // private void MouseOverTile(Tile tile)
-    // {
-    //     tile.MouseOverColor();
-    //     previousTile = tile.transform;
-    // }
-
-    
-    //Despinta los tiles cuando el mouse no está encima
-    // private void MouseExitsTile()
-    // {
-    //     Tile tile = previousTile.gameObject.GetComponent<Tile>();
-    //     tile.EndMouseOverColor();
-    // }
 
     /// <summary>
     /// Unpaint movement tiles and clear path lines.
@@ -98,7 +61,7 @@ public class TileHighlight : MonoBehaviour
     public void PathPreview(List<Tile> path)
     {
         _previewPath = path;
-        foreach (var tile in path)
+        foreach (Tile tile in path)
         {
             if (tile.IsWalkable() && tile.IsOcuppied())
                 tile.InMoveRangeColor();
@@ -136,7 +99,7 @@ public class TileHighlight : MonoBehaviour
     /// </summary>
     public void ClearTilesInAttackRange(HashSet<Tile> tiles)
     {
-        foreach (var item in tiles)
+        foreach (Tile item in tiles)
         {
             item.EndCanBeAttackedColor();
             item.EndCanMoveAndAttackColor();
@@ -145,7 +108,7 @@ public class TileHighlight : MonoBehaviour
     
     public void MortarClearTilesInAttackRange(HashSet<Tile> tiles)
     {
-        foreach (var item in tiles)
+        foreach (Tile item in tiles)
         {
             item.MortarEndCanBeAttackedColor();
         }
@@ -156,7 +119,7 @@ public class TileHighlight : MonoBehaviour
     /// </summary>
     public void ClearTilesInMoveRange(List<Tile> tiles)
     {
-        foreach (var item in tiles)
+        foreach (Tile item in tiles)
         {
             item.EndInMoveRangeColor();
             item.EndCanMoveAndAttackColor();
@@ -169,19 +132,11 @@ public class TileHighlight : MonoBehaviour
     /// </summary>
     public void ClearTilesInPreview(HashSet<Tile> tiles)
     {
-        foreach (var tile in tiles)
+        foreach (Tile tile in tiles)
         {
             tile.EndAttackPreviewColor();
         }
     }
-    
-    /// <summary>
-    /// Paint given tiles with activation range color for mortar.
-    /// </summary>
-    // public void PaintTilesInActivationRange(Tile tile)
-    // {
-    //     tile.ActivationRangeColor();
-    // }
 
     /// <summary>
     /// Clear activation range color of the given tiles.
@@ -220,10 +175,10 @@ public class TileHighlight : MonoBehaviour
     {
         if (_inMoveRangeTiles.Count <= 0) return;
         
-        var removed = _inMoveRangeTiles.Pop();
+        List<Tile> removed = _inMoveRangeTiles.Pop();
         ClearTilesInMoveRange(removed);
 
-        var path = _character.GetPath();
+        List<Tile> path = _character.GetPath();
 
         CreatePathLines(path);
 
@@ -238,7 +193,7 @@ public class TileHighlight : MonoBehaviour
         
         if (path.Count <= 0) return;
         
-        var v = path[0].transform.position;
+        Vector3 v = path[0].transform.position;
         v.y += path[0].transform.localScale.y;
         _lineRenderer.positionCount = path.Count;
         _lineRenderer.transform.position = v;
