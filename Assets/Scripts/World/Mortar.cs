@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
-public class Mortar : MonoBehaviour, IObserver
+public class Mortar : MonoBehaviour, IObserver, IInteractable
 {
     public float activationTilesDetectionRange;
     [SerializeField] private LayerMask _mortarMask;
@@ -69,11 +69,11 @@ public class Mortar : MonoBehaviour, IObserver
 
         if (!_attackPending && Input.GetMouseButtonDown(0))
         {
-            Selection();
+            Interact();
         }
     }
 
-    private void Selection()
+    public void Interact()
     {
         //Chequeo si hago click en el mortero o no
         if (MouseRay.GetTargetGameObject(_mortarMask) == gameObject)
