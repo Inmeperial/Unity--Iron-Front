@@ -9,16 +9,22 @@ using UnityEngine.EventSystems;
 
 public class ButtonsUIManager : MonoBehaviour
 {
+    [Header("Important Buttons")]
     public Button buttonExecuteAttack;
     public float attackDelay;
     public Button buttonEndTurn;
 
+    [Space]
+    
+    [Header("Keys")]
     public KeyCode deselectKey;
     public KeyCode selectLGunKey;
     public KeyCode selectRGunKey;
     public KeyCode showWorldUIKey;
     public KeyCode toggleWorldUIKey;
 
+    [Space]
+    
     #region Buttons
     private bool _buttonBodySelected;
     private int _bulletsForBody;
@@ -30,9 +36,11 @@ public class ButtonsUIManager : MonoBehaviour
     private int _bulletsForLegs;
     #endregion
 
+    [Header("Player HUD")]
     #region HUD
     //Player
     public GameObject playerHudContainer;
+    [Header("Weapons")]
     public TextMeshProUGUI leftGunTypeText;
     public TextMeshProUGUI leftGunDamageText;
     public TextMeshProUGUI leftGunHitsText;
@@ -41,6 +49,11 @@ public class ButtonsUIManager : MonoBehaviour
     public TextMeshProUGUI rightGunDamageText;
     public TextMeshProUGUI rightGunHitsText;
     public TextMeshProUGUI rightGunHitChanceText;
+    public GameObject leftWeaponCircle;
+    public GameObject rightWeaponCircle;
+    public ItemButton itemButton;
+
+    [Header("Player Stats")]
     public TextMeshProUGUI playerBodyCurrHp;
     public Slider playerBodySlider;
     public TextMeshProUGUI playerLeftArmCurrHp;
@@ -49,9 +62,11 @@ public class ButtonsUIManager : MonoBehaviour
     public Slider playerRightArmSlider;
     public TextMeshProUGUI playerLegsCurrHp;
     public Slider playerLegsSlider;
-    public GameObject leftWeaponCircle;
-    public GameObject rightWeaponCircle;
 
+    [Space]
+    
+    [Header("Attack HUD")]
+    
     //Weapon Attack
     public GameObject attackHudContainer;
     public TextMeshProUGUI attackWeaponNameText;
@@ -61,12 +76,12 @@ public class ButtonsUIManager : MonoBehaviour
     public GameObject hitContainer;
     public GameObject hitImagePrefab;
     private List<GameObject> _hitImagesCreated = new List<GameObject>();
-    public ItemButton itemButton;
+    
     #endregion
 
     //OTHERS
-    [SerializeField] private Character _selectedChar;
-    [SerializeField] private Character _selectedEnemy;
+    private Character _selectedChar;
+    private Character _selectedEnemy;
     private int _partsSelected;
     private SoundsMenu _soundsMenuManager;
 
