@@ -54,7 +54,7 @@ public class Legs : Parts
     }
 
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamageLegs(List<Tuple<int,int>> damages)
+    public override void TakeDamage(List<Tuple<int,int>> damages)
     {
         WorldUI ui = _myChar.GetMyUI();
         ui.SetLegsSlider(_legsHP);
@@ -92,7 +92,7 @@ public class Legs : Parts
         TurnManager.Instance.ReducePosition(_myChar);
     }
 
-    public void TakeDamageLegs(int damage)
+    public override void TakeDamage(int damage)
     {
         WorldUI ui = _myChar.GetMyUI();
         ui.SetLegsSlider(_legsHP);

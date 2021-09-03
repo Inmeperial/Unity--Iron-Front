@@ -30,7 +30,7 @@ public class Body : Parts
     }
     
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamageBody(List<Tuple<int,int>> damages)
+    public override void TakeDamage(List<Tuple<int,int>> damages)
     {
         WorldUI ui = _myChar.GetMyUI();
         ui.SetBodySlider(_bodyHP);
@@ -69,7 +69,7 @@ public class Body : Parts
     }
     
     //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamageBody(int damage)
+    public override void TakeDamage(int damage)
     {
         WorldUI ui = _myChar.GetMyUI();
         ui.SetBodySlider(_bodyHP);

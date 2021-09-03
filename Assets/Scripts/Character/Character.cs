@@ -9,6 +9,8 @@ using Random = System.Random;
 [SelectionBase]
 public class Character : EnumsClass, IObservable
 {
+    [SerializeField] protected ItemType _itemType;
+    [SerializeField] private Item _item;
     //STATS
     #region Stats
 
@@ -69,7 +71,7 @@ public class Character : EnumsClass, IObservable
     protected bool _canBeSelected;
     protected bool _selected;
     protected bool _moving = false;
-    public bool _canMove = true;
+    protected bool _canMove = true;
     protected bool _canAttack = true;
     protected bool _leftArmAlive;
     protected bool _rightArmAlive;
@@ -78,6 +80,7 @@ public class Character : EnumsClass, IObservable
     protected bool _selectedForAttack;
     protected bool _myTurn = false;
     protected bool _isDead = false;
+    protected bool _itemSelected;
 
     //OTHERS
     public GameObject bodyRenderContainer;
@@ -114,9 +117,9 @@ public class Character : EnumsClass, IObservable
         highlight = FindObjectOfType<TileHighlight>();
         
         #region GunsAndArms
-        GunsSpawner gunSpawn = FindObjectOfType<GunsSpawner>();
+        EquipmentSpawner equipmentSpawn = FindObjectOfType<EquipmentSpawner>();
         _leftArmAlive = leftArm.GetCurrentHp() > 0 ? true : false;
-        _leftGun = gunSpawn.SpawnGun(_leftGunType, Vector3.zero, _leftGunSpawn.transform);
+        _leftGun = equipmentSpawn.SpawnGun(_leftGunType, Vector3.zero, _leftGunSpawn.transform);
         if (_leftGun)
         {
             _leftGun.gameObject.tag = "LArm";
@@ -126,7 +129,7 @@ public class Character : EnumsClass, IObservable
         }
         
         _rightArmAlive = rightArm.GetCurrentHp() > 0 ? true : false;
-        _rightGun = gunSpawn.SpawnGun(_rightGunType, Vector3.zero, _rightGunSpawn.transform);
+        _rightGun = equipmentSpawn.SpawnGun(_rightGunType, Vector3.zero, _rightGunSpawn.transform);
         if (_rightGun)
         {
             _rightGun.gameObject.tag = "RArm";
@@ -163,6 +166,9 @@ public class Character : EnumsClass, IObservable
             _rightGunSelected = false;
             _leftGunSelected = false;
         }
+
+        _item = equipmentSpawn.SpawnItem(_itemType, this);
+
         Subscribe(TurnManager.Instance);
         #endregion
     }
@@ -192,6 +198,11 @@ public class Character : EnumsClass, IObservable
         if (_selected && !_moving && _canMove && !_selectingEnemy && Input.GetMouseButtonDown(0))
         {
             GetTargetToMove();
+        }
+
+        if (!_selected && _item != null && _itemSelected)
+        {
+            _item.Use(OnUseItem);
         }
     }
     
@@ -783,6 +794,11 @@ public class Character : EnumsClass, IObservable
     {
         return _myName;
     }
+
+    public Item GetItem()
+    {
+        return _item;
+    }
     #endregion
 
     #region Setters
@@ -833,7 +849,7 @@ public class Character : EnumsClass, IObservable
     #region Utilities
     
     //Se pintan los tiles dentro del rango de ataque
-    protected void PaintTilesInAttackRange(Tile currentTile, int count)
+    public void PaintTilesInAttackRange(Tile currentTile, int count)
     {
         if (_selectedGun == null || count >= _selectedGun.GetAttackRange() || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
             return;
@@ -861,7 +877,7 @@ public class Character : EnumsClass, IObservable
     }
 
     //Se pintan los tiles dentro del rango de movimiento
-    protected void PaintTilesInMoveRange(Tile currentTile, int count)
+    public void PaintTilesInMoveRange(Tile currentTile, int count)
     {
         if (count >= _currentSteps || (_tilesForMoveChecked.ContainsKey(currentTile) && _tilesForMoveChecked[currentTile] <= count))
             return;
@@ -1205,4 +1221,35 @@ public class Character : EnumsClass, IObservable
             _observers[i].Notify(action);
         }
     }
+
+    public void ItemSelectionState(bool state)
+    {
+        _itemSelected = state;
+    }
+
+    public void OnUseItem()
+    {
+        ButtonsUIManager.Instance.itemButton.OnRightClick?.Invoke();
+        ButtonsUIManager.Instance.ItemButtonState(false);
+        ButtonsUIManager.Instance.UpdateItemButtonName();
+    }
+
+    // public void StartItemUpdate()
+    // {
+    //     StartCoroutine(ItemUpdate());
+    // }
+    //
+    // IEnumerator ItemUpdate()
+    // {
+    //     while (true)
+    //     {
+    //         _item.Use();
+    //         yield return new WaitForEndOfFrame();
+    //     }
+    // }
+    //
+    // public void StopItemUpdate()
+    // {
+    //     StopCoroutine(ItemUpdate());
+    // }
 }

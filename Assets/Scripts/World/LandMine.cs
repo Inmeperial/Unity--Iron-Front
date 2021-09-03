@@ -14,7 +14,7 @@ public class LandMine : MonoBehaviour
         if (!legs) return;
         
         selectedEnemy.SetHurtAnimation();
-        legs.TakeDamageLegs(damage);
+        legs.TakeDamage(damage);
         DestroyMine();
     }
 

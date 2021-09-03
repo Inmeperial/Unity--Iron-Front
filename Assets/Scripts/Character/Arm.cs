@@ -36,7 +36,7 @@ public class Arm : Parts
     }
     
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamageArm(List<Tuple<int,int>> damages)
+    public override void TakeDamage(List<Tuple<int,int>> damages)
     {
         int total = 0;
         Vector3 pos = transform.position;
@@ -99,7 +99,7 @@ public class Arm : Parts
     }
     
     //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamageArm(int damage)
+    public override void TakeDamage(int damage)
     {
         
         float hp = _armHP - damage;

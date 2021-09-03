@@ -23,6 +23,8 @@ public class ButtonsManagerInspector : Editor
 
     public override void OnInspectorGUI()
     {
+        _selection.itemButton =
+            (ItemButton) EditorGUILayout.ObjectField("ItemButton", _selection.itemButton, typeof(ItemButton), true);
         _selection.buttonExecuteAttack = (Button)EditorGUILayout.ObjectField("Button Execute Attack", _selection.buttonExecuteAttack, typeof(Button), true);
         _selection.attackDelay = EditorGUILayout.FloatField("Attack Delay", _selection.attackDelay);
         _selection.buttonEndTurn = (Button)EditorGUILayout.ObjectField("Button End Turn", _selection.buttonEndTurn, typeof(Button), true);

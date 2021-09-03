@@ -310,10 +310,10 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
             Character unit = tile.GetCharacterAbove();
             if (unit)
             {
-                unit.body.TakeDamageBody(_damage);
-                unit.leftArm.TakeDamageArm(_damage);
-                unit.rightArm.TakeDamageArm(_damage);
-                unit.legs.TakeDamageLegs(_damage);
+                unit.body.TakeDamage(_damage);
+                unit.leftArm.TakeDamage(_damage);
+                unit.rightArm.TakeDamage(_damage);
+                unit.legs.TakeDamage(_damage);
                 
                 if (unit.body.GetCurrentHp() <= 0) unit.Dead();
             }

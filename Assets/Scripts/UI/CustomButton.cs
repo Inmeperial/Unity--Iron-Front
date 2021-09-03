@@ -13,6 +13,11 @@ public class CustomButton : Selectable, IPointerClickHandler
     public UnityEvent OnLeftClick;
     public UnityEvent OnRightClick;
 
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     public virtual void OnPointerClick(PointerEventData eventData)
     {
         switch (eventData.button)

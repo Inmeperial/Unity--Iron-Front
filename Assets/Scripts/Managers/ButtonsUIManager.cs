@@ -61,6 +61,7 @@ public class ButtonsUIManager : MonoBehaviour
     public GameObject hitContainer;
     public GameObject hitImagePrefab;
     private List<GameObject> _hitImagesCreated = new List<GameObject>();
+    public ItemButton itemButton;
     #endregion
 
     //OTHERS
@@ -444,7 +445,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_bulletsForBody > 0)
         {
             List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForBody);
-            _selectedEnemy.body.TakeDamageBody(d);
+            _selectedEnemy.body.TakeDamage(d);
             _bulletsForBody = 0;
             
                 
@@ -465,7 +466,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_bulletsForLArm > 0)
         {
             List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForLArm);
-            _selectedEnemy.leftArm.TakeDamageArm(d);
+            _selectedEnemy.leftArm.TakeDamage(d);
             _bulletsForLArm = 0;
                 
             if (gun.AbilityUsed() == false)
@@ -478,7 +479,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_bulletsForRArm > 0)
         {
             List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForRArm);
-            _selectedEnemy.rightArm.TakeDamageArm(d);
+            _selectedEnemy.rightArm.TakeDamage(d);
             _bulletsForRArm = 0;
             if (gun.AbilityUsed() == false)
             {
@@ -490,7 +491,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_bulletsForLegs > 0)
         {
             List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForLegs);
-            _selectedEnemy.legs.TakeDamageLegs(d);
+            _selectedEnemy.legs.TakeDamage(d);
             _bulletsForLegs = 0;
             if (gun.AbilityUsed() == false)
             {
@@ -944,6 +945,46 @@ public class ButtonsUIManager : MonoBehaviour
 			rightGunDamageText.text = "";
 			rightGunHitChanceText.text = "";
         }
+
+        Item item = _selectedChar.GetItem();
+        if (item != null)
+        {
+            itemButton.SetItemButtonName(item.GetItemName() + " x" + item.GetItemUses());
+
+            if (item.GetItemUses() > 0)
+            {
+                itemButton.ClearLeftClick();
+                itemButton.AddLeftClick(item.SelectItem);
+                itemButton.AddLeftClick(() => _selectedChar.SetSelection(false));
+                itemButton.AddLeftClick(() => _selectedChar.ResetInRangeLists());
+                //itemButton.AddLeftClick(() => _selectedChar.StartItemUpdate());
+
+                itemButton.ClearRightClick();
+                //itemButton.AddRightClick(() => _selectedChar.StopItemUpdate());
+                itemButton.AddRightClick(item.DeselectItem);
+                itemButton.AddRightClick(() => _selectedChar.SetSelection(true));
+                itemButton.AddRightClick(() =>
+                {
+                    _selectedChar.PaintTilesInAttackRange(_selectedChar.GetMyPositionTile(), 0);
+                    _selectedChar.PaintTilesInMoveRange(_selectedChar.GetMyPositionTile(), 0);
+                });
+
+                itemButton.SetCharacter(_selectedChar);
+                itemButton.interactable = true; 
+            }
+            else
+            {
+                itemButton.interactable = false;
+            }
+            
+            itemButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            itemButton.SetCharacter(null);
+            itemButton.interactable = false;
+            itemButton.gameObject.SetActive(false);
+        }
     }
 
     void ShowUnitHudText()
@@ -1079,6 +1120,17 @@ public class ButtonsUIManager : MonoBehaviour
     public void DeactivateExecuteAttackButton()
     {
         buttonExecuteAttack.interactable = false;
+    }
+
+    public void ItemButtonState(bool state)
+    {
+        itemButton.interactable = state;
+    }
+
+    public void UpdateItemButtonName()
+    {
+        var item = _selectedChar.GetItem();
+        itemButton.SetItemButtonName(item.GetItemName() + " x" + item.GetItemUses());
     }
     #endregion
 }

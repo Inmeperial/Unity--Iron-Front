@@ -23,7 +23,6 @@ public class AStar<T>
             watchDog--;
             if (watchDog <= 0)
             {
-                Debug.Log("return watchdog");
                 return new List<T>();
             }
             if (satisfies(current))
@@ -44,7 +43,6 @@ public class AStar<T>
                 pending.Enqueue(node, totalCost + heuristic(node));
             }
         }
-        Debug.Log("pending empty");
         return new List<T>();
     }
 

@@ -20,4 +20,7 @@ public abstract class Parts : MonoBehaviour
     public abstract float GetCurrentHp();
 
     public abstract void UpdateHp(float value);
+
+    public abstract void TakeDamage(List<Tuple<int,int>> damages);
+    public abstract void TakeDamage(int damage);
 }
