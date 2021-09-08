@@ -56,7 +56,7 @@ public class GridMovement : MonoBehaviour
     
     private void Movement()
     {
-        if(_tilesIndex != _tilesList.Count)
+        if(_tilesIndex < _tilesList.Count)
         {
             Vector3 newPos = _tilesList[_tilesIndex].transform.position;
             newPos.y = _yPosition;

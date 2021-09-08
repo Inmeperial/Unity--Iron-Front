@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 2643396}
   - component: {fileID: 2643395}
   m_Layer: 0
-  m_Name: MECHA C
+  m_Name: Camera position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 385187015}
   - component: {fileID: 385187014}
   m_Layer: 0
-  m_Name: MECHA B
+  m_Name: Camera position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -451,7 +451,7 @@ GameObject:
   - component: {fileID: 451898294}
   - component: {fileID: 451898293}
   m_Layer: 0
-  m_Name: MECHA D
+  m_Name: Camera position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 513431237}
   - component: {fileID: 513431236}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Camera Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -884,7 +884,7 @@ MonoBehaviour:
     spaceCount: 0
     wordCount: 1
     linkCount: 0
-    lineCount: 2
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1014,7 +1014,7 @@ GameObject:
   - component: {fileID: 1059063682}
   - component: {fileID: 1059063681}
   m_Layer: 0
-  m_Name: MECHA A
+  m_Name: Camera position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1305,7 +1305,7 @@ GameObject:
   - component: {fileID: 1194276623}
   - component: {fileID: 1194276622}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Camera Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1513,7 +1513,7 @@ MonoBehaviour:
     spaceCount: 0
     wordCount: 1
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1552,7 +1552,7 @@ GameObject:
   - component: {fileID: 1434552008}
   - component: {fileID: 1434552007}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Camera Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1650,7 +1650,7 @@ GameObject:
   - component: {fileID: 1541878484}
   - component: {fileID: 1541878483}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Camera Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1870,7 +1870,7 @@ MonoBehaviour:
     spaceCount: 0
     wordCount: 1
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -2084,16 +2084,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2035863138}
     m_Modifications:
-    - target: {fileID: 6671635715738390754, guid: b40529a2191a9444d86e41f790ad2f17,
-        type: 3}
-      propertyPath: OnLeftClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1572572700}
-    - target: {fileID: 6671635715738390754, guid: b40529a2191a9444d86e41f790ad2f17,
-        type: 3}
-      propertyPath: OnLeftClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 1059063680}
     - target: {fileID: 6671635715295153692, guid: b40529a2191a9444d86e41f790ad2f17,
         type: 3}
       propertyPath: m_firstOverflowCharacterIndex
@@ -2104,6 +2094,16 @@ PrefabInstance:
       propertyPath: m_textInfo.lineCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6671635715738390754, guid: b40529a2191a9444d86e41f790ad2f17,
+        type: 3}
+      propertyPath: OnLeftClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1572572700}
+    - target: {fileID: 6671635715738390754, guid: b40529a2191a9444d86e41f790ad2f17,
+        type: 3}
+      propertyPath: OnLeftClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1059063680}
     - target: {fileID: 6671635715738390754, guid: b40529a2191a9444d86e41f790ad2f17,
         type: 3}
       propertyPath: OnLeftClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName

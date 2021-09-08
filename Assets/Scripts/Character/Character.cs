@@ -101,7 +101,7 @@ public class Character : EnumsClass, IObservable
 	[HideInInspector]
 	public TileHighlight highlight;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         transform.position = new Vector3(transform.position.x, 2.4f, transform.position.z);
         
@@ -223,6 +223,7 @@ public class Character : EnumsClass, IObservable
         }
             
         ResetTilesInMoveRange();
+        ResetTilesInAttackRange();
         _animationMechaHandler.SetIsWalkingAnimatorTrue();
         AudioManager.audioManagerInstance.PlaySound(soundMotorStart, this.gameObject);
         _smokeMechaHandler.SetMachineOn(true);
@@ -383,7 +384,7 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Select Character and paint tiles.
     /// </summary>
-    public void SelectThisUnit()
+    public virtual void SelectThisUnit()
     {
         _selected = true;
 		InitialRotation = transform.rotation;//Cambio Nico
@@ -975,7 +976,7 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Executed when Character reached the end of the path.
     /// </summary>
-    public void ReachedEnd()
+    public virtual void ReachedEnd()
     {
         _canMove = false;
         highlight.characterMoving = false;
@@ -999,7 +1000,7 @@ public class Character : EnumsClass, IObservable
         _animationMechaHandler.SetIsWalkingAnimatorFalse();
         AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,gameObject);
         _smokeMechaHandler.SetMachineOn(false);
-
+        
         if (!CanAttack()) return;
         
         PaintTilesInAttackRange(_myPositionTile, 0);

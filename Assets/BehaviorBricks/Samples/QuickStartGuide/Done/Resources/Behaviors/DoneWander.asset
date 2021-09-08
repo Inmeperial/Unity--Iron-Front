@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -50,7 +51,7 @@ MonoBehaviour:
     the execution of its child node\" cardinality=\"1\" hasParent=\"False\">\r\n          <BehaviorTree
     id=\"0\" />\r\n          <RepeatDecorator id=\"4\" />\r\n        </data>\r\n      </_data>\r\n
     \   </RepeatDecorator>\r\n    <SequenceNode id=\"3\">\r\n      <_data>\r\n        <data
-    breakpoint=\"0\" selected=\"False\" position=\"453.375 224\" name=\"Sequence\"
+    breakpoint=\"0\" selected=\"True\" position=\"453.375 224\" name=\"Sequence\"
     description=\"Executes all its children in sequence until all of them are successful\"
     cardinality=\"-1\" hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n
     \         <SequenceNode id=\"3\" />\r\n          <RepeatDecorator id=\"4\" />\r\n

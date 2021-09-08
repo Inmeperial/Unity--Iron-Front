@@ -127,6 +127,9 @@ public class CameraMovement : MonoBehaviour
         if (!_rotating) _cameraLocked = false;
         
         PortraitsController.Instance.ActivatePortraitsButtons();
+
+
+        yield return new WaitWhile(() => _rotating);
         
         if (callback != null)
             callback();
@@ -135,9 +138,7 @@ public class CameraMovement : MonoBehaviour
     IEnumerator Rotate(Transform lookAt)
     {
         _watchdogCounter = 0;
-        Vector3 pos = lookAt.position;
-        pos.y = transform.position.y;
-        pos += lookAt.forward;
+        Vector3 pos = GetPositionToLook(lookAt);
         while (!CheckIfFacing(pos) && _watchdogCounter < transitionRotationWatchdog)
         {
             float step = transitionRotationSpeed * Time.deltaTime;
@@ -160,5 +161,13 @@ public class CameraMovement : MonoBehaviour
         Vector3 thresholdPlus = new Vector3(dir.x + 0.1f, dir.y, dir.z + 0.1f);
         Vector3 thresholdMin = new Vector3(dir.x - 0.1f, dir.y, dir.z - 0.1f);
         return transform.forward == dir.normalized || transform.forward == thresholdPlus || transform.forward == thresholdMin;
+    }
+
+    private Vector3 GetPositionToLook(Transform t)
+    {
+        Vector3 pos = t.position;
+        pos.y = transform.position.y;
+        pos += t.forward;
+        return pos;
     }
 }

@@ -65,7 +65,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         SetFirstTurn();
 
         _actualCharacter = _currentTurnOrder[0];
-        _actualCharacter.SetTurn(true);
+        
         _activeTeam = _actualCharacter.GetUnitTeam();
         
         _actionsDic.Add("GreenDead", GreenUnitDied);
@@ -74,7 +74,9 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         Action toDo = () =>
         {
             ButtonsUIManager.Instance.ActivateEndTurnButton();
+            _actualCharacter.SetTurn(true);
             CharacterSelection.Instance.Selection(_actualCharacter);
+            
         };
         _cameraMovement.MoveTo(_actualCharacter.transform, toDo, _actualCharacter.transform);
     }
