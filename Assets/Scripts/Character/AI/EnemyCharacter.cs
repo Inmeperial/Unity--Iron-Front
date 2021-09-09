@@ -15,16 +15,20 @@ public class EnemyCharacter : Character
             _behaviorExecutor.paused = true;
     }
 
-    // Update is called once per frame
-    protected override void Update()
-    {
-        
-    }
-
     public override void SelectThisUnit()
     {
         base.SelectThisUnit();
         _behaviorExecutor.paused = false;
+    }
+
+    public void SetAttackFORTEST()
+    {
+        _canAttack = false;
+    }
+
+    public void PauseFORTEST()
+    {
+        _behaviorExecutor.paused = true;
     }
 
     public void CalculateAutoMovement()
@@ -147,15 +151,22 @@ public class EnemyCharacter : Character
 
     public void EnemyMove()
     {
-        Debug.Log("pauso el behavior");
-        _behaviorExecutor.paused = true;
         Move();
     }
 
     public override void ReachedEnd()
     {
         base.ReachedEnd();
-        Debug.Log("despauso el behavior");
-        //_behaviorExecutor.paused = false;
+        _behaviorExecutor.paused = false;
+    }
+
+    public void OnStartAction()
+    {
+        _behaviorExecutor.paused = true;
+    }
+
+    public void OnEndAction()
+    {
+        _behaviorExecutor.paused = false;
     }
 }

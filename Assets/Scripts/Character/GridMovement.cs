@@ -19,6 +19,7 @@ public class GridMovement : MonoBehaviour
     private int _index;
     private float _yPosition;
     private Vector3 _posToRotate;
+    private Vector3 _prevPos;
 
     private Action _callback;
     private Vector3 _nextPos;
@@ -66,6 +67,20 @@ public class GridMovement : MonoBehaviour
                 {
                     _rotate = true;
                     _posToRotate = newPos;
+                    Vector3 prev;
+                    
+                    if (_tilesIndex - 1 >= 0)
+                    {
+                        prev = _tilesList[_tilesIndex - 1].transform.position;
+                    }
+                    else
+                    {
+                        prev = _character.GetMyPositionTile().transform.position;
+                    }
+                    
+                    prev.y = _yPosition;
+                    _prevPos = prev;
+                        
                     return;
                 }  
             }
@@ -110,7 +125,7 @@ public class GridMovement : MonoBehaviour
         }
         
         float step = _rotationSpeed * Time.deltaTime;
-        Vector3 dir = (_posToRotate - transform.position).normalized;
+        Vector3 dir = (_posToRotate - _prevPos).normalized;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, dir, step, 0f);
         transform.rotation = Quaternion.LookRotation(newDir);
 

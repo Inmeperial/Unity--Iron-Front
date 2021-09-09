@@ -15,22 +15,91 @@ MonoBehaviour:
   brickName: Assets/Scripts/Character/AI/MOVE TEST.asset
   xml: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<BehaviorBricks xmlns:ref=\"urn:padaone\"
     version=\"1.0\">\r\n  <BehaviorTree id=\"0\" />\r\n  <runtimeInfo>\r\n    <BehaviorTree
-    id=\"0\" guid=\"452b165fc9f7000448e7099c47fb0cb8\" nextId=\"2\">\r\n      <root>\r\n
-    \       <ActionNode id=\"1\" />\r\n      </root>\r\n      <inputParams />\r\n
-    \     <outputParams />\r\n      <localParams />\r\n    </BehaviorTree>\r\n    <ActionNode
-    id=\"1\" action=\"AI Actions/Move\">\r\n      <inputParams>\r\n        <inputValues>\r\n
-    \         <entry name=\"myUnit\" type=\"EnemyCharacter\" isBlackboard=\"False\"
-    />\r\n        </inputValues>\r\n      </inputParams>\r\n      <outputParams />\r\n
-    \     <localParams />\r\n    </ActionNode>\r\n  </runtimeInfo>\r\n  <editorInfo>\r\n
-    \   <BehaviorTree id=\"0\" _name=\"MOVE TEST\" _description=\"\" _removeIfClosed=\"False\">\r\n
-    \     <_rootList>\r\n        <elem>\r\n          <ActionNode id=\"1\" />\r\n        </elem>\r\n
-    \     </_rootList>\r\n      <_nodes>\r\n        <nodes>\r\n          <ActionNode
-    id=\"1\" />\r\n        </nodes>\r\n      </_nodes>\r\n    </BehaviorTree>\r\n
-    \   <ActionNode id=\"1\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"True\"
-    position=\"428 277.75\" name=\"AI Actions/Move\" description=\"Enemy AI will move
-    towards the closest enemy depending on its move range.\" cardinality=\"0\" hasParent=\"False\">\r\n
-    \         <BehaviorTree id=\"0\" />\r\n          <ActionNode id=\"1\" />\r\n        </data>\r\n
-    \     </_data>\r\n    </ActionNode>\r\n  </editorInfo>\r\n</BehaviorBricks>"
-  zoom: 0.8
+    id=\"0\" guid=\"452b165fc9f7000448e7099c47fb0cb8\" nextId=\"25\">\r\n      <root>\r\n
+    \       <RepeatDecorator id=\"20\" />\r\n      </root>\r\n      <inputParams />\r\n
+    \     <outputParams />\r\n      <localParams />\r\n    </BehaviorTree>\r\n    <RepeatDecorator
+    id=\"20\" loops=\"-1\" policy=\"ContinueWhenChildFails\">\r\n      <child>\r\n
+    \       <PrioritySelectorNode id=\"17\" />\r\n      </child>\r\n      <inputParams
+    />\r\n      <outputParams />\r\n      <localParams />\r\n    </RepeatDecorator>\r\n
+    \   <PrioritySelectorNode id=\"17\">\r\n      <children>\r\n        <elem>\r\n
+    \         <GuardAndNode>\r\n            <guard>\r\n              <ConditionEvalNode
+    id=\"19\" />\r\n            </guard>\r\n            <child>\r\n              <ActionNode
+    id=\"18\" />\r\n            </child>\r\n          </GuardAndNode>\r\n        </elem>\r\n
+    \       <elem>\r\n          <GuardAndNode>\r\n            <guard>\r\n              <ConditionEvalNode
+    id=\"22\" />\r\n            </guard>\r\n            <child>\r\n              <ActionNode
+    id=\"21\" />\r\n            </child>\r\n          </GuardAndNode>\r\n        </elem>\r\n
+    \       <elem>\r\n          <GuardAndNode>\r\n            <guard>\r\n              <ConditionEvalNode
+    id=\"24\" />\r\n            </guard>\r\n            <child>\r\n              <ActionNode
+    id=\"23\" />\r\n            </child>\r\n          </GuardAndNode>\r\n        </elem>\r\n
+    \     </children>\r\n      <inputParams />\r\n      <outputParams />\r\n      <localParams
+    />\r\n    </PrioritySelectorNode>\r\n    <ConditionEvalNode id=\"19\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\"
+    name=\"Iron Front/AI Conditions/CanAttack\">\r\n      <inputParams />\r\n      <outputParams
+    />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n    <ActionNode id=\"18\"
+    action=\"Iron Front/AI Actions/Attack\">\r\n      <inputParams />\r\n      <outputParams
+    />\r\n      <localParams />\r\n    </ActionNode>\r\n    <ConditionEvalNode id=\"22\"
+    policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"Iron Front/AI Conditions/CanMove\">\r\n
+    \     <inputParams />\r\n      <outputParams />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n
+    \   <ActionNode id=\"21\" action=\"Iron Front/AI Actions/Move\">\r\n      <inputParams
+    />\r\n      <outputParams />\r\n      <localParams />\r\n    </ActionNode>\r\n
+    \   <ConditionEvalNode id=\"24\" policy=\"ATOMIC_CHECK\" name=\"AlwaysTrue\">\r\n
+    \     <inputParams />\r\n      <outputParams />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n
+    \   <ActionNode id=\"23\" action=\"Iron Front/AI Actions/End Turn\">\r\n      <inputParams
+    />\r\n      <outputParams />\r\n      <localParams />\r\n    </ActionNode>\r\n
+    \ </runtimeInfo>\r\n  <editorInfo>\r\n    <BehaviorTree id=\"0\" _name=\"MOVE
+    TEST\" _description=\"\" _removeIfClosed=\"False\">\r\n      <_rootList>\r\n        <elem>\r\n
+    \         <PrioritySelectorNode id=\"17\" />\r\n        </elem>\r\n        <elem>\r\n
+    \         <ActionNode id=\"18\" />\r\n        </elem>\r\n        <elem>\r\n          <ConditionEvalNode
+    id=\"19\" />\r\n        </elem>\r\n        <elem>\r\n          <RepeatDecorator
+    id=\"20\" />\r\n        </elem>\r\n        <elem>\r\n          <ActionNode id=\"21\"
+    />\r\n        </elem>\r\n        <elem>\r\n          <ConditionEvalNode id=\"22\"
+    />\r\n        </elem>\r\n        <elem>\r\n          <ActionNode id=\"23\" />\r\n
+    \       </elem>\r\n        <elem>\r\n          <ConditionEvalNode id=\"24\" />\r\n
+    \       </elem>\r\n      </_rootList>\r\n      <_nodes>\r\n        <nodes>\r\n
+    \         <ConditionEvalNode id=\"22\" />\r\n          <ActionNode id=\"18\" />\r\n
+    \         <ConditionEvalNode id=\"19\" />\r\n          <PrioritySelectorNode id=\"17\"
+    />\r\n          <RepeatDecorator id=\"20\" />\r\n          <ActionNode id=\"21\"
+    />\r\n          <ActionNode id=\"23\" />\r\n          <ConditionEvalNode id=\"24\"
+    />\r\n        </nodes>\r\n      </_nodes>\r\n    </BehaviorTree>\r\n    <RepeatDecorator
+    id=\"20\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"738.5714 144.2857\" name=\"Repeat\" description=\"Repeats the execution
+    of its child node\" cardinality=\"1\" hasParent=\"False\">\r\n          <BehaviorTree
+    id=\"0\" />\r\n          <RepeatDecorator id=\"20\" />\r\n        </data>\r\n
+    \     </_data>\r\n    </RepeatDecorator>\r\n    <PrioritySelectorNode id=\"17\">\r\n
+    \     <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"658.5714
+    322.8571\" name=\"Priority Selector\" description=\"\" cardinality=\"1\" hasParent=\"True\">\r\n
+    \         <BehaviorTree id=\"0\" />\r\n          <PrioritySelectorNode id=\"17\"
+    />\r\n          <RepeatDecorator id=\"20\" />\r\n        </data>\r\n      </_data>\r\n
+    \   </PrioritySelectorNode>\r\n    <ConditionEvalNode id=\"19\">\r\n      <_data>\r\n
+    \       <data breakpoint=\"0\" selected=\"False\" position=\"844.4899 686.3265\"
+    name=\"Iron Front/AI Conditions/CanAttack\" description=\"Eval\" cardinality=\"1\"
+    hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ConditionEvalNode
+    id=\"19\" />\r\n          <PrioritySelectorNode id=\"17\" />\r\n        </data>\r\n
+    \     </_data>\r\n    </ConditionEvalNode>\r\n    <ActionNode id=\"18\">\r\n      <_data>\r\n
+    \       <data breakpoint=\"0\" selected=\"False\" position=\"571.4286 480\" name=\"Iron
+    Front/AI Actions/Attack\" description=\"Enemy AI will attack the closest enemy
+    depending on its move range (debug ).\" cardinality=\"0\" hasParent=\"False\">\r\n
+    \         <BehaviorTree id=\"0\" />\r\n          <ActionNode id=\"18\" />\r\n
+    \       </data>\r\n      </_data>\r\n    </ActionNode>\r\n    <ConditionEvalNode
+    id=\"22\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"1166.327 687.551\" name=\"Iron Front/AI Conditions/CanMove\" description=\"Eval\"
+    cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n
+    \         <ConditionEvalNode id=\"22\" />\r\n          <PrioritySelectorNode id=\"17\"
+    />\r\n        </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n    <ActionNode
+    id=\"21\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"814.2857 488.5714\" name=\"Iron Front/AI Actions/Move\" description=\"Enemy
+    AI will move towards the closest enemy depending on its move range.\" cardinality=\"0\"
+    hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ActionNode
+    id=\"21\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n    <ConditionEvalNode
+    id=\"24\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"1498.368 701.6327\" name=\"AlwaysTrue\" description=\"Eval\" cardinality=\"1\"
+    hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ConditionEvalNode
+    id=\"24\" />\r\n          <PrioritySelectorNode id=\"17\" />\r\n        </data>\r\n
+    \     </_data>\r\n    </ConditionEvalNode>\r\n    <ActionNode id=\"23\">\r\n      <_data>\r\n
+    \       <data breakpoint=\"0\" selected=\"False\" position=\"1034.286 484.2857\"
+    name=\"Iron Front/AI Actions/End Turn\" description=\"Enemy AI will end it's turn.\"
+    cardinality=\"0\" hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n
+    \         <ActionNode id=\"23\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n
+    \ </editorInfo>\r\n</BehaviorBricks>"
+  zoom: 0.7
   subslist: []
   _guid: 452b165fc9f7000448e7099c47fb0cb8

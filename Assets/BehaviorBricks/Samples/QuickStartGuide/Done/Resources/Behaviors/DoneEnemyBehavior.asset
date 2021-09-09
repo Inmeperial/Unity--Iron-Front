@@ -64,14 +64,14 @@ MonoBehaviour:
     description=\"Repeats the execution of its child node\" cardinality=\"1\" hasParent=\"False\">\r\n
     \         <BehaviorTree id=\"0\" />\r\n          <RepeatDecorator id=\"6\" />\r\n
     \       </data>\r\n      </_data>\r\n    </RepeatDecorator>\r\n    <PrioritySelectorNode
-    id=\"1\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    id=\"1\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"True\"
     position=\"412.299 236.5555\" name=\"Priority Selector\" description=\"Executes
     all its children, starting from the one with the highest priority, until one of
     them is successful\" cardinality=\"-1\" hasParent=\"True\">\r\n          <BehaviorTree
     id=\"0\" />\r\n          <PrioritySelectorNode id=\"1\" />\r\n          <RepeatDecorator
     id=\"6\" />\r\n        </data>\r\n      </_data>\r\n    </PrioritySelectorNode>\r\n
     \   <ConditionEvalNode id=\"19\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
-    selected=\"True\" position=\"302.5211 391.5556\" name=\"Perception/IsTargetClose\"
+    selected=\"False\" position=\"302.5211 391.5556\" name=\"Perception/IsTargetClose\"
     description=\"Eval\" cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree
     id=\"0\" />\r\n          <ConditionEvalNode id=\"19\" />\r\n          <PrioritySelectorNode
     id=\"1\" />\r\n        </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n
