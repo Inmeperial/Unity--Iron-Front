@@ -5,7 +5,7 @@ public class AStarAgent : MonoBehaviour
 {
     public Tile init;
     public Tile finit;
-    AStar<Tile> _aStar = new AStar<Tile>();
+    AStar _aStar = new AStar();
     public List<Tile> PathFindingAstar()
     {
         return _aStar.Run(init, Satisfies, GetNeighboursCost, Heuristic);
@@ -19,6 +19,7 @@ public class AStarAgent : MonoBehaviour
         Dictionary<Tile, float> dic = new Dictionary<Tile, float>();
         for (int i = 0; i < curr.neighboursForMove.Count; i++)
         {
+            
             float cost = 0;
             cost += Vector3.Distance(curr.transform.position, curr.neighboursForMove[i].transform.position);
             dic[curr.neighboursForMove[i]] = cost;

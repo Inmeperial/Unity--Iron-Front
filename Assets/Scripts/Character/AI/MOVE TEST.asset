@@ -37,11 +37,11 @@ MonoBehaviour:
     />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n    <ActionNode id=\"18\"
     action=\"Iron Front/AI Actions/Attack\">\r\n      <inputParams />\r\n      <outputParams
     />\r\n      <localParams />\r\n    </ActionNode>\r\n    <ConditionEvalNode id=\"22\"
-    policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"Iron Front/AI Conditions/CanMove\">\r\n
+    policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\" name=\"Iron Front/AI Conditions/CanMove\">\r\n
     \     <inputParams />\r\n      <outputParams />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n
     \   <ActionNode id=\"21\" action=\"Iron Front/AI Actions/Move\">\r\n      <inputParams
     />\r\n      <outputParams />\r\n      <localParams />\r\n    </ActionNode>\r\n
-    \   <ConditionEvalNode id=\"24\" policy=\"ATOMIC_CHECK\" name=\"AlwaysTrue\">\r\n
+    \   <ConditionEvalNode id=\"24\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"AlwaysTrue\">\r\n
     \     <inputParams />\r\n      <outputParams />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n
     \   <ActionNode id=\"23\" action=\"Iron Front/AI Actions/End Turn\">\r\n      <inputParams
     />\r\n      <outputParams />\r\n      <localParams />\r\n    </ActionNode>\r\n
@@ -61,45 +61,45 @@ MonoBehaviour:
     />\r\n          <ActionNode id=\"23\" />\r\n          <ConditionEvalNode id=\"24\"
     />\r\n        </nodes>\r\n      </_nodes>\r\n    </BehaviorTree>\r\n    <RepeatDecorator
     id=\"20\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"738.5714 144.2857\" name=\"Repeat\" description=\"Repeats the execution
+    position=\"461.2836 86.14284\" name=\"Repeat\" description=\"Repeats the execution
     of its child node\" cardinality=\"1\" hasParent=\"False\">\r\n          <BehaviorTree
     id=\"0\" />\r\n          <RepeatDecorator id=\"20\" />\r\n        </data>\r\n
     \     </_data>\r\n    </RepeatDecorator>\r\n    <PrioritySelectorNode id=\"17\">\r\n
-    \     <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"658.5714
-    322.8571\" name=\"Priority Selector\" description=\"\" cardinality=\"1\" hasParent=\"True\">\r\n
+    \     <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"381.2836
+    264.7142\" name=\"Priority Selector\" description=\"\" cardinality=\"1\" hasParent=\"True\">\r\n
     \         <BehaviorTree id=\"0\" />\r\n          <PrioritySelectorNode id=\"17\"
     />\r\n          <RepeatDecorator id=\"20\" />\r\n        </data>\r\n      </_data>\r\n
     \   </PrioritySelectorNode>\r\n    <ConditionEvalNode id=\"19\">\r\n      <_data>\r\n
-    \       <data breakpoint=\"0\" selected=\"False\" position=\"844.4899 686.3265\"
+    \       <data breakpoint=\"0\" selected=\"False\" position=\"567.2023 628.1838\"
     name=\"Iron Front/AI Conditions/CanAttack\" description=\"Eval\" cardinality=\"1\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ConditionEvalNode
     id=\"19\" />\r\n          <PrioritySelectorNode id=\"17\" />\r\n        </data>\r\n
     \     </_data>\r\n    </ConditionEvalNode>\r\n    <ActionNode id=\"18\">\r\n      <_data>\r\n
-    \       <data breakpoint=\"0\" selected=\"False\" position=\"571.4286 480\" name=\"Iron
-    Front/AI Actions/Attack\" description=\"Enemy AI will attack the closest enemy
-    depending on its move range (debug ).\" cardinality=\"0\" hasParent=\"False\">\r\n
+    \       <data breakpoint=\"0\" selected=\"False\" position=\"294.1408 421.8571\"
+    name=\"Iron Front/AI Actions/Attack\" description=\"Enemy AI will attack the closest
+    enemy depending on its move range (debug ).\" cardinality=\"0\" hasParent=\"False\">\r\n
     \         <BehaviorTree id=\"0\" />\r\n          <ActionNode id=\"18\" />\r\n
     \       </data>\r\n      </_data>\r\n    </ActionNode>\r\n    <ConditionEvalNode
     id=\"22\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"1166.327 687.551\" name=\"Iron Front/AI Conditions/CanMove\" description=\"Eval\"
+    position=\"889.0394 629.4084\" name=\"Iron Front/AI Conditions/CanMove\" description=\"Eval\"
     cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n
     \         <ConditionEvalNode id=\"22\" />\r\n          <PrioritySelectorNode id=\"17\"
     />\r\n        </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n    <ActionNode
     id=\"21\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"814.2857 488.5714\" name=\"Iron Front/AI Actions/Move\" description=\"Enemy
+    position=\"536.9981 430.4285\" name=\"Iron Front/AI Actions/Move\" description=\"Enemy
     AI will move towards the closest enemy depending on its move range.\" cardinality=\"0\"
     hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ActionNode
     id=\"21\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n    <ConditionEvalNode
     id=\"24\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"1498.368 701.6327\" name=\"AlwaysTrue\" description=\"Eval\" cardinality=\"1\"
+    position=\"1221.08 643.4901\" name=\"AlwaysTrue\" description=\"Eval\" cardinality=\"1\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ConditionEvalNode
     id=\"24\" />\r\n          <PrioritySelectorNode id=\"17\" />\r\n        </data>\r\n
     \     </_data>\r\n    </ConditionEvalNode>\r\n    <ActionNode id=\"23\">\r\n      <_data>\r\n
-    \       <data breakpoint=\"0\" selected=\"False\" position=\"1034.286 484.2857\"
+    \       <data breakpoint=\"0\" selected=\"False\" position=\"756.9984 426.1428\"
     name=\"Iron Front/AI Actions/End Turn\" description=\"Enemy AI will end it's turn.\"
     cardinality=\"0\" hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n
     \         <ActionNode id=\"23\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n
     \ </editorInfo>\r\n</BehaviorBricks>"
-  zoom: 0.7
+  zoom: 0.9
   subslist: []
   _guid: 452b165fc9f7000448e7099c47fb0cb8

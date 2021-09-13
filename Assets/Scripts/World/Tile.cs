@@ -13,7 +13,7 @@ public class Tile : MonoBehaviour
     public List<Tile> allNeighbours = new List<Tile>();
     public LayerMask obstacle;
     public LayerMask characterMask;
-    [SerializeField]private bool _isOccupied = true;
+    [SerializeField] private bool _isFree;
     private Material _mat;
     public bool showLineGizmo = true;
 
@@ -30,7 +30,7 @@ public class Tile : MonoBehaviour
     private LandMine _mine;
     private void Awake()
     {
-        _isOccupied = true;
+        _isFree = true;
         _materialHandler = GetComponent<TileMaterialhandler>();
 
         inMoveRange = false;
@@ -127,12 +127,18 @@ public class Tile : MonoBehaviour
     private void RemoveMoveNeighbour(Tile tile)
     {
         if (neighboursForMove.Contains(tile))
+        {
             neighboursForMove.Remove(tile);
+        }
+            
     }
 
     private void AddMoveNeighbour(Tile tile)
     {
-        neighboursForMove.Add(tile);
+        if (!neighboursForMove.Contains(tile))
+        {
+            neighboursForMove.Add(tile);
+        }
     }
 
     #region Color methods.
@@ -267,9 +273,9 @@ public class Tile : MonoBehaviour
     }
     #endregion
 
-    public bool IsOccupied()
+    public bool IsFree()
     {
-        return _isOccupied;
+        return _isFree;
     }
 
     public bool IsWalkable()
@@ -279,20 +285,91 @@ public class Tile : MonoBehaviour
 
     public void MakeTileOccupied()
     {
-        _isOccupied = false;
-        foreach (Tile tile in neighboursForMove)
-        {
-            tile.RemoveMoveNeighbour(this);
-        }
+        _isFree = false;
+        // foreach (Tile tile in neighboursForMove)
+        // {
+        //     tile.RemoveMoveNeighbour(this);
+        // }
+        RemoveFromNeighbour();
     }
 
     public void MakeTileFree()
     {
-        _isOccupied = true;
-        foreach (Tile tile in neighboursForMove)
+        _isFree = true;
+        // foreach (Tile tile in neighboursForMove)
+        // {
+        //     tile.AddMoveNeighbour(this);
+        // }
+        AddToNeighbour();
+    }
+
+    void RemoveFromNeighbour()
+    {
+        for (int i = 0; i < 4; i++)
         {
-            tile.AddMoveNeighbour(this);
+            Tile t = null;
+            switch (i)
+            {
+                case 0: 
+                   t = RayForUpdate(Vector3.forward);
+                    break;
+                case 1: 
+                    t = RayForUpdate(Vector3.right);;
+                    break;
+                case 2: 
+                    t = RayForUpdate(Vector3.back);
+                    break;
+                case 3: 
+                    t = RayForUpdate(Vector3.left);
+                    break;
+            }
+
+            if (t && t.neighboursForMove.Contains(this))
+            {
+                t.RemoveMoveNeighbour(this);
+            }
         }
+    }
+
+    void AddToNeighbour()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Tile t = null;
+            switch (i)
+            {
+                case 0: 
+                    t = RayForUpdate(Vector3.forward);
+                    break;
+                case 1: 
+                    t = RayForUpdate(Vector3.right);;
+                    break;
+                case 2: 
+                    t = RayForUpdate(Vector3.back);
+                    break;
+                case 3: 
+                    t = RayForUpdate(Vector3.left);
+                    break;
+            }
+
+            if (t && t.isWalkable && !t.neighboursForMove.Contains(this))
+            {
+                t.AddMoveNeighbour(this);
+            }
+        }
+    }
+
+    private Tile RayForUpdate(Vector3 dir)
+    {
+        float d;
+        if (transform.localScale.x >= transform.localScale.z)
+            d = transform.localScale.x;
+        else d = transform.localScale.z;
+
+        if (!Physics.Raycast(transform.position, dir, out RaycastHit hit, d)) return null;
+
+        return hit.collider.GetComponent<Tile>();
+        
     }
 
     public void ShowGizmo()

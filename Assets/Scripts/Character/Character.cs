@@ -35,14 +35,14 @@ public class Character : EnumsClass, IObservable
 
     [Header("Left Arm")]
     public Arm leftArm;
-    protected Gun _leftGun;
+    [SerializeField] protected Gun _leftGun;
     protected bool _leftGunSelected;
     [SerializeField] protected GunsType _leftGunType;
     [SerializeField] protected GameObject _leftGunSpawn;
 
     [Header("Right Arm")]
     public Arm rightArm;
-    protected Gun _rightGun;
+    [SerializeField] protected Gun _rightGun;
     protected bool _rightGunSelected;
     [SerializeField] protected GunsType _rightGunType;
     [SerializeField] protected GameObject _rightGunSpawn;
@@ -53,7 +53,7 @@ public class Character : EnumsClass, IObservable
     protected int _currentSteps;
     #endregion
 
-    protected Gun _selectedGun;
+    [SerializeField] protected Gun _selectedGun;
 
     
     
@@ -61,8 +61,8 @@ public class Character : EnumsClass, IObservable
     public IPathCreator pathCreator;
     protected GridMovement _move;
     public LayerMask block;
-    protected List<Tile> _tilesInMoveRange = new List<Tile>();
-    protected Tile _myPositionTile;
+    [SerializeField] protected List<Tile> _tilesInMoveRange = new List<Tile>();
+    [SerializeField] protected Tile _myPositionTile;
     protected Tile _targetTile;
     [SerializeField]protected List<Tile> _path = new List<Tile>();
 	protected Quaternion InitialRotation { get; private set; }//Cambio Nico
@@ -889,15 +889,18 @@ public class Character : EnumsClass, IObservable
         {
             if (!_tilesInMoveRange.Contains(tile))
             {
-                if (tile.IsWalkable() && tile.IsOccupied())
+                if (tile.IsWalkable() && tile.IsFree())
                 {
-                    _tilesInMoveRange.Add(tile);
-                    tile.inMoveRange = true;
-                    if (tile.inAttackRange)
+                    if (!_tilesInMoveRange.Contains(tile))
                     {
-                        highlight.PaintTilesInMoveAndAttackRange(tile);
+                        _tilesInMoveRange.Add(tile);
+                        tile.inMoveRange = true;
+                        if (tile.inAttackRange)
+                        {
+                            highlight.PaintTilesInMoveAndAttackRange(tile);
+                        }
+                        else highlight.PaintTilesInMoveRange(tile);
                     }
-                    else highlight.PaintTilesInMoveRange(tile);
                 }
                 
             }
@@ -1067,7 +1070,7 @@ public class Character : EnumsClass, IObservable
         
         Tile tile = target.gameObject.GetComponent<Tile>();
         
-        return (tile && tile.IsWalkable() && tile.IsOccupied() && tile.inMoveRange) || tile == _targetTile;
+        return (tile && tile.IsWalkable() && tile.IsFree() && tile.inMoveRange) || tile == _targetTile;
     }
 
     
@@ -1082,14 +1085,15 @@ public class Character : EnumsClass, IObservable
         _enemiesInRange.Clear();
         foreach (Tile item in _tilesInAttackRange)
         {
-            if (item.IsOccupied()) continue;
+            if (!item.IsFree())
+            {
+                Character unit = item.GetUnitAbove();
             
-            Character unit = item.GetUnitAbove();
+                if (unit.GetUnitTeam() == _unitTeam) continue;
             
-            if (unit.GetUnitTeam() == _unitTeam) continue;
-            
-            TurnManager.Instance.UnitCanBeAttacked(unit);
-            _enemiesInRange.Add(unit);
+                TurnManager.Instance.UnitCanBeAttacked(unit);
+                _enemiesInRange.Add(unit); 
+            }
         }
     }
     

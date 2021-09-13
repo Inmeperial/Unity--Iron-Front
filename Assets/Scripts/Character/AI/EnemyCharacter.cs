@@ -48,22 +48,23 @@ public class EnemyCharacter : Character
         {
             pathCreator.ResetPath();
             pathCreator.Calculate(_tilesInMoveRange[i], enemyTile.neighboursForMove[i], 1000);
-            
             List<Tile> p = pathCreator.GetPath();
+            
             if (i == 0)
             {
                 distance = p.Count;
+                
                 closestTileToEnemy = p[p.Count-1];
                 continue;
             }
-
+            
             if (p.Count >= distance) continue;
             
             distance = p.Count;
                 
             closestTileToEnemy = p[p.Count-1];
         }
-        
+
         //Finds the farthest tile I can reach in my movement range.
         for (int i = 0; i < _tilesInMoveRange.Count; i++)
         {
@@ -71,6 +72,7 @@ public class EnemyCharacter : Character
             pathCreator.Calculate(_tilesInMoveRange[i], closestTileToEnemy, 1000);
 
             List<Tile> p = pathCreator.GetPath();
+            
             if (i == 0)
             {
                 distance = p.Count;
@@ -93,7 +95,7 @@ public class EnemyCharacter : Character
         //Calculates shortest path.
         pathCreator.Calculate(_myPositionTile, _targetTile, _currentSteps);
         _path = pathCreator.GetPath();
-        
+
         highlight.PathPreview(_path);
         highlight.CreatePathLines(_path);
     }

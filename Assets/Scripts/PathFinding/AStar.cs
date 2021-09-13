@@ -2,38 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AStar<T>
+public class AStar//<Tile>
 {
-    public delegate bool Satisfies(T curr);
-    public delegate Dictionary<T, float> GetNeighbours(T curr);
-    public delegate float GetCost(T father, T child);
-    public delegate float Heuristic(T current);
-    public List<T> Run(T start, Satisfies satisfies, GetNeighbours getNeighbours, Heuristic heuristic, int watchDog = 1000)
+    public delegate bool Satisfies(Tile curr);
+    public delegate Dictionary<Tile, float> GetNeighbours(Tile curr);
+    public delegate float GetCost(Tile father, Tile child);
+    public delegate float Heuristic(Tile current);
+    public List<Tile> Run(Tile start, Satisfies satisfies, GetNeighbours getNeighbours, Heuristic heuristic, int watchDog = 1000)
     {
-        Dictionary<T, float> cost = new Dictionary<T, float>();
-        Dictionary<T, T> parents = new Dictionary<T, T>();
-        PriorityQueue<T> pending = new PriorityQueue<T>();
-        HashSet<T> visited = new HashSet<T>();
+        Dictionary<Tile, float> cost = new Dictionary<Tile, float>();
+        Dictionary<Tile, Tile> parents = new Dictionary<Tile, Tile>();
+        PriorityQueue<Tile> pending = new PriorityQueue<Tile>();
+        HashSet<Tile> visited = new HashSet<Tile>();
         pending.Enqueue(start, 0);
         cost.Add(start, 0);
         int count = 0;
         while (!pending.IsEmpty)
         {
-            T current = pending.Dequeue();
+            Tile current = pending.Dequeue();
+            if (!current.IsFree())
+                continue;
             watchDog--;
             if (watchDog <= 0)
             {
-                return new List<T>();
+                return new List<Tile>();
             }
             if (satisfies(current))
             {
                 return ConstructPath(current, parents);
             }
             visited.Add(current);
-            Dictionary<T, float> neighbours = getNeighbours(current);
+            Dictionary<Tile, float> neighbours = getNeighbours(current);
             foreach (var item in neighbours)
             {
-                T node = item.Key;
+                Tile node = item.Key;
                 if (visited.Contains(node)) continue;
                 float nodeCost = item.Value;
                 float totalCost = cost[current] + nodeCost;
@@ -43,12 +45,12 @@ public class AStar<T>
                 pending.Enqueue(node, totalCost + heuristic(node));
             }
         }
-        return new List<T>();
+        return new List<Tile>();
     }
 
-    List<T> ConstructPath(T end, Dictionary<T, T> parents)
+    List<Tile> ConstructPath(Tile end, Dictionary<Tile, Tile> parents)
     {
-        var path = new List<T>();
+        var path = new List<Tile>();
         path.Add(end);
         while (parents.ContainsKey(path[path.Count - 1]))
         {

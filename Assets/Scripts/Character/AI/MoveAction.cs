@@ -30,17 +30,15 @@ public class MoveAction : GOAction
             _myUnit = gameObject.GetComponent<EnemyCharacter>();
             if (!_myUnit)
             {
-                Debug.Log("no encontre al enemy character");
-
                 return TaskStatus.FAILED;
             }
         }
 
-        Debug.Log("si encontre el enemy character");
         _myUnit.OnStartAction();
         _myUnit.CalculateAutoMovement();
         _myUnit.EnemyMove();
         return TaskStatus.COMPLETED;
+
 
     }
 }

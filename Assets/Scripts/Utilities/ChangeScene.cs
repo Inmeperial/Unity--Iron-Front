@@ -15,6 +15,9 @@ public class ChangeScene : MonoBehaviour
 		{
 			SceneManager.LoadScene("TallerScene");
 		}
+		
+		if (Input.GetKeyDown(KeyCode.F3))
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	public void LoadGame()
