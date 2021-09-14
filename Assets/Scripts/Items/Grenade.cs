@@ -13,23 +13,30 @@ public class Grenade : Item
     
     private TileHighlight _highlight;
     private Tile _tile;
-    public Grenade(GrenadeSO itemData, Character character, TileHighlight tileHighlight)
+
+
+    public override void Initialize(Character character, EquipableSO data)
     {
-        this.itemData = itemData;
-        _character = character;
-        _highlight = tileHighlight;
-        SetItem();
+        base.Initialize(character, data);
+        _highlight = FindObjectOfType<TileHighlight>();
     }
-    public override void SelectItem()
+    public override void Select()
     {
+        _character.DeselectThisUnit();
         _character.ItemSelectionState(true);
         _tile = null;
+        // _tilesInSelectionRange = new HashSet<Tile>();
+        // _tilesForSelectionChecked = new Dictionary<Tile, int>();
+        // _tilesInAttackRange = new HashSet<Tile>();
+        // _tilesForAttackChecked = new Dictionary<Tile, int>();
         PaintTilesInSelectionRange(_character.GetMyPositionTile(), 0);
+       
     }
 
-    public override void DeselectItem()
+    public override void Deselect()
     {
         _character.ItemSelectionState(false);
+        
         _highlight.ClearTilesInPreview(_tilesInAttackRange);
         _highlight.ClearTilesInActivationRange(_tilesInSelectionRange);
         _tile = null;
@@ -37,6 +44,7 @@ public class Grenade : Item
         _tilesInAttackRange.Clear();
         _tilesForSelectionChecked.Clear();
         _tilesInSelectionRange.Clear();
+        _character.SelectThisUnit();
     }
 
     public override void Use(Action callback = null)
@@ -52,7 +60,12 @@ public class Grenade : Item
                 return;
             }
             
-            if (!IsValidBlock(selection)) return;
+            Debug.Log("selection: " + selection.gameObject.name);
+            if (!IsValidBlock(selection))
+            {
+                Debug.Log("no es valid");
+                return;
+            }
                 
             Debug.Log(selection.name);
 
@@ -118,6 +131,7 @@ public class Grenade : Item
                 if (!tile.HasTileAbove() && tile.IsWalkable())
                 {
                     _tilesInSelectionRange.Add(tile);
+                    Debug.Log("tile: " + tile.name);
                     _highlight.MortarPaintTilesInActivationRange(tile);
                 }
             }
@@ -138,18 +152,25 @@ public class Grenade : Item
             unit.legs.TakeDamage(GetItemDamage());
         }
         UpdateUses();
+        _button.SetItemButtonName(_itemData.equipableName + " x" + _availableUses);
+        _button.OnRightClick?.Invoke();
+        _button.interactable = false;
     }
     
     private bool IsValidBlock(Transform target)
     {
+        Debug.Log("if event");
         if (EventSystem.current.IsPointerOverGameObject()) return false;
 
+        Debug.Log("if target");
         if (!target) return false;
 
+        Debug.Log("if layermask");
         if (LayerMask.LayerToName(target.gameObject.layer) != "GridBlock") return false;
 
         var t = target.GetComponent<Tile>();
         
+        Debug.Log("return contains");
         return _tilesInSelectionRange.Contains(t);
     }
 }

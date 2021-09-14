@@ -19,10 +19,4 @@ public abstract class EnumsClass: MonoBehaviour
         Shield,
         Shotgun
     };
-
-    public enum ItemType
-    {
-        None,
-        Grenade
-    };
 }

@@ -10,8 +10,6 @@ public class EquipmentSpawner : EnumsClass
     [SerializeField] private Rifle _rifle;
     [SerializeField] private Shield _shield;
     [SerializeField] private Shotgun _shotgun;
-
-    [SerializeField] private GrenadeSO _grenadeSo;
     /// <summary>
     /// Spawn a gun of the given type.
     /// </summary>
@@ -52,16 +50,16 @@ public class EquipmentSpawner : EnumsClass
         return gun;
     }
 
-    public Item SpawnItem(ItemType type, Character owner)
-    {
-        Item item = null;
-        switch (type)
-        {
-            case ItemType.Grenade:
-                item = new Grenade(_grenadeSo, owner, FindObjectOfType<TileHighlight>());
-                break;
-        }
-
-        return item;
-    }
+    // public Item SpawnItem(ItemType type, Character owner)
+    // {
+    //     Item item = null;
+    //     switch (type)
+    //     {
+    //         case ItemType.Grenade:
+    //             item = new Grenade(_grenadeSo, owner, FindObjectOfType<TileHighlight>());
+    //             break;
+    //     }
+    //
+    //     return item;
+    // }
 }

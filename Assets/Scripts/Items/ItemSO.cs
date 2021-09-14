@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEditor;
 using UnityEngine;
 
-public class ItemSO : ScriptableObject
+[CreateAssetMenu(fileName = "ItemSO", menuName = "Create ItemSO")]
+public class ItemSO : EquipableSO
 {
-    public string itemName;
-    
-    public int damage;
+    public enum ItemType
+    {
+        Grenade
+    }
 
+    public ItemType itemType;
+    public int damage;
     public int areaOfEffect;
 
     public int duration;
 
     public int useRange;
-
-    public int usesAmount;
 }

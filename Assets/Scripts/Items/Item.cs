@@ -1,72 +1,74 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEditor;
 using UnityEngine;
 
-public class Item
+public class Item : Equipable
 {
-    public ItemSO itemData;
+    protected ItemSO _itemData;
+    protected ItemSO.ItemType _itemType;
+    public override void Initialize(Character character, EquipableSO data)
+    {
+        _character = character;
+        _itemData = data as ItemSO;
+        _availableUses = _itemData.maxUses;
+        _itemType = _itemData.itemType;
+    }
 
-    protected int _usesAmount;
-
-    protected Character _character;
-
-    protected delegate void _delegate();
-
-    public virtual void SelectItem()
+    public override void Select()
     {
         
     }
 
-    public virtual void DeselectItem()
+    public override void Deselect()
     {
         
     }
 
-    public virtual void Use(Action callback = null)
+    public override void Use(Action callback = null)
     {
         
     }
 
-    public string GetItemName()
+    public override string GetEquipableName()
     {
-        return itemData.itemName;
+        return _itemData.equipableName;
     }
+
 
     public int GetItemDamage()
     {
-        return itemData.damage;
+        return _itemData.damage;
     }
-
+    
     public int GetItemAoE()
     {
-        return itemData.areaOfEffect;
+        return _itemData.areaOfEffect;
     }
 
     public int GetItemDuration()
     {
-        return itemData.duration;;
+        return _itemData.duration;;
     }
 
     public int GetItemRange()
     {
-        return itemData.useRange;
+        return _itemData.useRange;
     }
 
+    public int GetMaxUses()
+    {
+        return _itemData.maxUses;
+    }
+    
     public int GetItemUses()
     {
-        return _usesAmount;
+        return _availableUses;
     }
-
-    protected void SetItem()
-    {
-        _usesAmount = itemData.usesAmount;
-    }
-
+    
     protected virtual void UpdateUses()
     {
-        _usesAmount--;
+        _availableUses--;
     }
+
 }

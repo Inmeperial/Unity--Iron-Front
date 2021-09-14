@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -51,7 +52,8 @@ public class ButtonsUIManager : MonoBehaviour
     public TextMeshProUGUI rightGunHitChanceText;
     public GameObject leftWeaponCircle;
     public GameObject rightWeaponCircle;
-    public ItemButton itemButton;
+    //public EquipmentButton equipmentButton;
+    public EquipmentButton[] equipmentButtons;
 
     [Header("Player Stats")]
     public TextMeshProUGUI playerBodyCurrHp;
@@ -108,6 +110,12 @@ public class ButtonsUIManager : MonoBehaviour
     
     private void Start()
     {
+        foreach (var button in equipmentButtons)
+        {
+            button.interactable = false;
+            button.gameObject.SetActive(false);
+        }
+        
         playerHudContainer.SetActive(false);
         _buttonBodySelected = false;
         _buttonLArmSelected = false;
@@ -961,44 +969,75 @@ public class ButtonsUIManager : MonoBehaviour
 			rightGunHitChanceText.text = "";
         }
 
-        Item item = _selectedChar.GetItem();
-        if (item != null)
+        //Item item = _selectedChar.GetItem();
+
+        List<Equipable> equipables = _selectedChar.GetEquipables();
+
+        if (equipables != null && equipables.Count > 0)
         {
-            itemButton.SetItemButtonName(item.GetItemName() + " x" + item.GetItemUses());
-
-            if (item.GetItemUses() > 0)
+            for (int i = 0; i < equipmentButtons.Length; i++)
             {
-                itemButton.ClearLeftClick();
-                itemButton.AddLeftClick(item.SelectItem);
-                itemButton.AddLeftClick(() => _selectedChar.SetSelection(false));
-                itemButton.AddLeftClick(() => _selectedChar.ResetInRangeLists());
-                //itemButton.AddLeftClick(() => _selectedChar.StartItemUpdate());
-
-                itemButton.ClearRightClick();
-                //itemButton.AddRightClick(() => _selectedChar.StopItemUpdate());
-                itemButton.AddRightClick(item.DeselectItem);
-                itemButton.AddRightClick(() => _selectedChar.SetSelection(true));
-                itemButton.AddRightClick(() =>
+                if (i > equipables.Count-1)
                 {
-                    _selectedChar.PaintTilesInAttackRange(_selectedChar.GetMyPositionTile(), 0);
-                    _selectedChar.PaintTilesInMoveRange(_selectedChar.GetMyPositionTile(), 0);
-                });
+                    return;
+                }
+                
+                var button = equipmentButtons[i];
+                var equipment = equipables[i];
+                
+                equipment.SetButton(button);
+                button.gameObject.SetActive(true);
+                Ability ability;
+                switch (equipment.GetEquipableType())
+                {
+                    case EquipableSO.EquipableType.Item:
+                        var item = equipment as Item;
+                        if (item)
+                        {
+                            button.SetItemButtonName(item.GetEquipableName() + " x" + item.GetItemUses());
 
-                itemButton.SetCharacter(_selectedChar);
-                itemButton.interactable = true; 
+                            if (item.GetItemUses() > 0)
+                            {
+                                button.ClearLeftClick();
+                                button.AddLeftClick(item.Select);
+                                
+                                button.ClearRightClick();
+                                button.AddRightClick(item.Deselect);
+
+                                button.SetCharacter(_selectedChar);
+                                button.interactable = true;
+                            }
+                            
+                        }
+                        else button.interactable = false;
+                            
+                        break;
+                    case EquipableSO.EquipableType.PassiveAbility:
+                        ability = equipment as Ability;
+                        if (ability)
+                        {
+                            button.SetItemButtonName(ability.GetEquipableName() + " " + ability.AbilityStatus());
+                            button.interactable = false;
+                        }
+                        break;
+                    case EquipableSO.EquipableType.ActiveAbility:
+                        ability = equipment as Ability;
+                        if (ability)
+                        {
+                            Debug.Log("if active");
+                            button.SetItemButtonName(ability.GetEquipableName() + " " + ability.AbilityStatus());
+                            button.ClearLeftClick();
+                            button.AddLeftClick(ability.Select);
+
+                            button.ClearRightClick();
+                            button.AddRightClick(ability.Deselect);
+
+                            button.SetCharacter(_selectedChar);
+                            button.interactable = true;
+                        }
+                        break;
+                }
             }
-            else
-            {
-                itemButton.interactable = false;
-            }
-            
-            itemButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            itemButton.SetCharacter(null);
-            itemButton.interactable = false;
-            itemButton.gameObject.SetActive(false);
         }
     }
 
@@ -1137,15 +1176,15 @@ public class ButtonsUIManager : MonoBehaviour
         buttonExecuteAttack.interactable = false;
     }
 
-    public void ItemButtonState(bool state)
+    public void EquipmentButtonState(EquipmentButton button, bool state)
     {
-        itemButton.interactable = state;
+        button.interactable = state;
     }
 
-    public void UpdateItemButtonName()
-    {
-        var item = _selectedChar.GetItem();
-        itemButton.SetItemButtonName(item.GetItemName() + " x" + item.GetItemUses());
-    }
+    // public void UpdateItemButtonName()
+    // {
+    //     var item = _selectedChar.GetItem();
+    //     equipmentButton.SetItemButtonName(item.GetItemName() + " x" + item.GetItemUses());
+    // }
     #endregion
 }

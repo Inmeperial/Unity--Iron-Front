@@ -19,6 +19,6 @@ public class CheckMove : GOCondition
                 return false;
         }
 
-        return _myUnit.ThisUnitCanMove();
+        return _myUnit.CanMove();
     }
 }

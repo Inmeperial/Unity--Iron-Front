@@ -9,8 +9,10 @@ using Random = System.Random;
 [SelectionBase]
 public class Character : EnumsClass, IObservable
 {
-    [SerializeField] protected ItemType _itemType;
-    [SerializeField] private Item _item;
+    public ItemSO itemSOData;
+    public Item itemPrefab;
+
+    private Item _item;
     //STATS
     #region Stats
 
@@ -35,14 +37,14 @@ public class Character : EnumsClass, IObservable
 
     [Header("Left Arm")]
     public Arm leftArm;
-    [SerializeField] protected Gun _leftGun;
+    protected Gun _leftGun;
     protected bool _leftGunSelected;
     [SerializeField] protected GunsType _leftGunType;
     [SerializeField] protected GameObject _leftGunSpawn;
 
     [Header("Right Arm")]
     public Arm rightArm;
-    [SerializeField] protected Gun _rightGun;
+    protected Gun _rightGun;
     protected bool _rightGunSelected;
     [SerializeField] protected GunsType _rightGunType;
     [SerializeField] protected GameObject _rightGunSpawn;
@@ -50,10 +52,10 @@ public class Character : EnumsClass, IObservable
     [Header("Legs")] 
     public Legs legs;
     [SerializeField] protected Transform _legsTransform;
-    protected int _currentSteps;
+    [SerializeField] protected int _currentSteps;
     #endregion
 
-    [SerializeField] protected Gun _selectedGun;
+    protected Gun _selectedGun;
 
     
     
@@ -61,11 +63,13 @@ public class Character : EnumsClass, IObservable
     public IPathCreator pathCreator;
     protected GridMovement _move;
     public LayerMask block;
-    [SerializeField] protected List<Tile> _tilesInMoveRange = new List<Tile>();
-    [SerializeField] protected Tile _myPositionTile;
+    protected List<Tile> _tilesInMoveRange = new List<Tile>();
+    protected Tile _myPositionTile;
     protected Tile _targetTile;
-    [SerializeField]protected List<Tile> _path = new List<Tile>();
+    protected List<Tile> _path = new List<Tile>();
 	protected Quaternion InitialRotation { get; private set; }//Cambio Nico
+
+    public bool legsOvercharged;
 
     //FLAGS
     protected bool _canBeSelected;
@@ -101,6 +105,7 @@ public class Character : EnumsClass, IObservable
 	[HideInInspector]
 	public TileHighlight highlight;
 
+    public List<Equipable> equipables = new List<Equipable>();
     protected virtual void Awake()
     {
         transform.position = new Vector3(transform.position.x, 2.4f, transform.position.z);
@@ -167,9 +172,21 @@ public class Character : EnumsClass, IObservable
             _leftGunSelected = false;
         }
 
-        _item = equipmentSpawn.SpawnItem(_itemType, this);
-
         Subscribe(TurnManager.Instance);
+
+        if (itemSOData)
+        {
+            Debug.Log("agrego item");
+            switch (itemSOData.itemType)
+            {
+                case ItemSO.ItemType.Grenade:
+                    _item = Instantiate(itemPrefab, transform);
+                    break;
+            }
+            _item.Initialize(this, itemSOData);
+            equipables.Add(_item);
+        }
+            
         #endregion
     }
 
@@ -411,7 +428,9 @@ public class Character : EnumsClass, IObservable
         }
         if (_canMove)
         {
-            _currentSteps = legs.GetMaxSteps();
+            if (!legsOvercharged)
+                _currentSteps = legs.GetMaxSteps();
+            else _currentSteps = legs.GetMaxSteps() * 2;
             AddTilesInMoveRange();
             PaintTilesInMoveRange(_myPositionTile, 0);
         }
@@ -555,8 +574,10 @@ public class Character : EnumsClass, IObservable
         {
                 
             pathCreator.Calculate(_myPositionTile, newTile, _currentSteps);
-                
-            if (pathCreator.GetDistance() > legs.GetMaxSteps()) return;
+            
+            if (!legsOvercharged)
+                if (pathCreator.GetDistance() > legs.GetMaxSteps()) return;
+            else if (pathCreator.GetDistance() > legs.GetMaxSteps() * 2) return;
                 
             if (_targetTile) highlight.EndLastTileInPath(_targetTile);
             
@@ -768,14 +789,14 @@ public class Character : EnumsClass, IObservable
         return _rightArmAlive;
     }
     
-    public bool ThisUnitCanMove()
+    public bool CanMove()
     {
         return _canMove;
     }
     
     public bool CanBeSelected()
     {
-        return _canBeSelected;
+        return !_itemSelected && _canBeSelected;
     }
     
     /// <summary>
@@ -799,6 +820,11 @@ public class Character : EnumsClass, IObservable
     public Item GetItem()
     {
         return _item;
+    }
+
+    public List<Equipable> GetEquipables()
+    {
+        return equipables;
     }
     #endregion
 
@@ -958,6 +984,7 @@ public class Character : EnumsClass, IObservable
     public virtual void NewTurn()
     {
         if (_isDead) return;
+        legsOvercharged = false;
         _rightGun.Deselect();
         _leftGun.Deselect();
         _myTurn = false;
@@ -982,6 +1009,7 @@ public class Character : EnumsClass, IObservable
     public virtual void ReachedEnd()
     {
         _canMove = false;
+        legsOvercharged = false;
         highlight.characterMoving = false;
         highlight.EndPreview();
         _moving = false;
@@ -1025,10 +1053,15 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void IncreaseAvailableSteps(int amount)
     {
-        int steps = _currentSteps + amount;
-        _currentSteps = steps <= legs.GetMaxSteps() ? steps : legs.GetMaxSteps();
+        if (!legsOvercharged)
+        {
+            int steps = _currentSteps + amount;
+            _currentSteps = steps <= legs.GetMaxSteps() ? steps : legs.GetMaxSteps();
+        }
+        else _currentSteps += amount;
+
     }
-    
+
     /// <summary>
     /// Make Character not selectable.
     /// </summary>
@@ -1234,9 +1267,9 @@ public class Character : EnumsClass, IObservable
 
     public void OnUseItem()
     {
-        ButtonsUIManager.Instance.itemButton.OnRightClick?.Invoke();
-        ButtonsUIManager.Instance.ItemButtonState(false);
-        ButtonsUIManager.Instance.UpdateItemButtonName();
+        // ButtonsUIManager.Instance.equipmentButton.OnRightClick?.Invoke();
+        // ButtonsUIManager.Instance.EquipmentButtonState(false);
+        // ButtonsUIManager.Instance.UpdateItemButtonName();
     }
 
     // public void StartItemUpdate()
