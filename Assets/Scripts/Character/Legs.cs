@@ -66,8 +66,8 @@ public class Legs : Parts
             float hp = _legsHP - damages[i].Item1;
             UpdateHp(hp > 0 ? hp : 0);
             _myChar.SetCharacterMove(_legsHP > 0 ? true : false);
-            EffectsController.Instance.PlayParticlesEffect(gameObject, "Damage");
-            EffectsController.Instance.PlayParticlesEffect(gameObject, "Hit");
+            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
+            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
             int item = damages[i].Item2;
             switch (item)
             {
@@ -106,8 +106,8 @@ public class Legs : Parts
             HalfSteps();
         }
         ButtonsUIManager.Instance.UpdateLegsHUD(_legsHP, true);
-        EffectsController.Instance.PlayParticlesEffect(gameObject, "Damage");
-        EffectsController.Instance.PlayParticlesEffect(gameObject, "Hit");
+        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
+        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
         _myChar.HitSoundMecha();
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position, true);
     }

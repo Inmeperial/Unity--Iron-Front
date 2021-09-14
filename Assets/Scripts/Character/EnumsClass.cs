@@ -19,4 +19,22 @@ public abstract class EnumsClass: MonoBehaviour
         Shield,
         Shotgun
     };
+
+    public enum ItemType
+    {
+        None,
+        Grenade
+    };
+
+    public enum ParticleActionType
+    { 
+        Damage,
+        Attack,
+        Mine,
+        ShootGun,
+        AssaultRigle,
+        Rifle,
+        Dead,
+        Hit
+    };
 }

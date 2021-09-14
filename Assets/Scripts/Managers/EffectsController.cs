@@ -19,14 +19,14 @@ public class EffectsController : MonoBehaviour
     [SerializeField] private GameObject _damageEffect;
     [SerializeField] private GameObject _mineExplosionEffect;
     [SerializeField] private GameObject _shootGunEffect;
-    [SerializeField] private GameObject _assalutRifleEffect;
+    [SerializeField] private GameObject _assaultRifleEffect;
     [SerializeField] private GameObject _rifleEffect;
     [SerializeField] private GameObject _deadMechaEffect;
     [SerializeField] private GameObject _hitMechaEffect;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip _shootGunSound;
-    [SerializeField] private AudioClip _assalutRifleSound;
+    [SerializeField] private AudioClip _assaultRifleSound;
     [SerializeField] private AudioClip _rifleSound;
     [SerializeField] private AudioClip _mineSound;
 
@@ -63,14 +63,14 @@ public class EffectsController : MonoBehaviour
     /// Spawn and reproduce the particle effect.
     /// </summary>
     /// <param name="pos">Position the particle will spawn.</param>
-    /// <param name="type">Damage - Attack - Mine - Shootgun</param>
-    public void PlayParticlesEffect(GameObject obj, string type)
+    /// <param name="Enum ParticleActionType">Damage - Attack - Mine - Shootgun</param>
+    public void PlayParticlesEffect(GameObject obj, EnumsClass.ParticleActionType type)
     {
         GameObject effect;
         ParticleSystem particle;
         switch (type)
         {
-            case "Damage":
+            case EnumsClass.ParticleActionType.Damage:
                 effect = Instantiate(_damageEffect, obj.transform.position, transform.rotation, transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
@@ -78,7 +78,7 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
             
-            case "Attack":
+            case EnumsClass.ParticleActionType.Attack:
                 effect = Instantiate(_attackEffect, obj.transform.position, transform.rotation, transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
@@ -86,7 +86,7 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
             
-            case "Mine":
+            case EnumsClass.ParticleActionType.Mine:
                 effect = Instantiate(_mineExplosionEffect, obj.transform.position, transform.rotation, transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
@@ -95,7 +95,7 @@ public class EffectsController : MonoBehaviour
                 AudioManager.audioManagerInstance.PlaySound(_mineSound, this.gameObject);
                 break;
 
-            case "ShootGun":
+            case EnumsClass.ParticleActionType.ShootGun:
                 effect = Instantiate(_shootGunEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
                 effect.transform.SetParent(obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();
@@ -105,17 +105,17 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
-            case "AssaultRifle":
-                effect = Instantiate(_assalutRifleEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
+            case EnumsClass.ParticleActionType.AssaultRigle:
+                effect = Instantiate(_assaultRifleEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
                 effect.transform.SetParent(obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
-                AudioManager.audioManagerInstance.PlaySound(_assalutRifleSound, this.gameObject);
+                AudioManager.audioManagerInstance.PlaySound(_assaultRifleSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
-            case "Rifle":
+            case EnumsClass.ParticleActionType.Rifle:
                 effect = Instantiate(_rifleEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
                 effect.transform.SetParent(obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();
@@ -125,7 +125,7 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
-            case "Dead":
+            case EnumsClass.ParticleActionType.Dead:
                 effect = Instantiate(_deadMechaEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
                 effect.transform.SetParent(obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();
@@ -136,7 +136,7 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
-            case "Hit":
+            case EnumsClass.ParticleActionType.Hit:
                 effect = Instantiate(_hitMechaEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
                 effect.transform.SetParent(obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();

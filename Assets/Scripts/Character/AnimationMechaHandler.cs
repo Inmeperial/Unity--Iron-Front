@@ -6,16 +6,19 @@ using UnityEngine;
 public class AnimationMechaHandler : MonoBehaviour
 {
     private Animator _animator;
+    private SmokeMechaHandler _smokeMechaHandler;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        _smokeMechaHandler = this.GetComponent<SmokeMechaHandler>();
     }
 
     public void SetPauseDeadAnimation()
     {
         _animator.speed = 0;
-        EffectsController.Instance.PlayParticlesEffect(gameObject, "Dead");
+        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Dead);
+        _smokeMechaHandler.SetDiseableParticle();
     }
 
     public void SetIsDeadAnimatorTrue()

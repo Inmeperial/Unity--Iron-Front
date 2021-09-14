@@ -259,20 +259,21 @@ public class Character : EnumsClass, IObservable
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
-                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), "AssaultRifle");
+                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), EnumsClass.ParticleActionType.AssaultRigle);
                     _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
                     break;
                 case GunsType.Melee:
                     _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
                     break;
                 case GunsType.Rifle:
-                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), "Rifle");
+                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), EnumsClass.ParticleActionType.Rifle);
                     _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
                     break;
                 case GunsType.Shield:
                     break;
                 case GunsType.Shotgun:
-                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), "ShootGun");
+                    Debug.Log("Shotgun");
+                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
                     _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
                     break;
             }
@@ -284,20 +285,20 @@ public class Character : EnumsClass, IObservable
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
-                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), "AssaultRifle");
+                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), EnumsClass.ParticleActionType.AssaultRigle);
                     _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Melee:
                     _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Rifle:
-                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), "Rifle");
+                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), EnumsClass.ParticleActionType.Rifle);
                     _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Shield:
                     break;
                 case GunsType.Shotgun:
-                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), "ShootGun");
+                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
                     _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
                     break;
             }

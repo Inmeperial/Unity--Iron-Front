@@ -321,7 +321,7 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
             LandMine mine = tile.GetMineAbove();
             if (mine) mine.DestroyMine();
 
-            EffectsController.Instance.PlayParticlesEffect(tile.gameObject, "Mine");
+            EffectsController.Instance.PlayParticlesEffect(tile.gameObject, EnumsClass.ParticleActionType.Mine);
         }
         
         _attackPending = false;

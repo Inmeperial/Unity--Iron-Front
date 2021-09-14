@@ -20,7 +20,7 @@ public class LandMine : MonoBehaviour
 
     public void DestroyMine()
     {
-        EffectsController.Instance.PlayParticlesEffect(gameObject, "Mine");
+        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Mine);
         Destroy(gameObject); 
     }
 }

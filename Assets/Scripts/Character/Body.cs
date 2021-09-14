@@ -42,8 +42,8 @@ public class Body : Parts
             float hp = _bodyHP - damages[i].Item1;
             _bodyHP = hp > 0 ? hp : 0;
 
-            EffectsController.Instance.PlayParticlesEffect(gameObject, "Damage");
-            EffectsController.Instance.PlayParticlesEffect(gameObject, "Hit");
+            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
+            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
             int item = damages[i].Item2;
             switch (item)
             {
@@ -77,8 +77,8 @@ public class Body : Parts
         _bodyHP = hp > 0 ? hp : 0;
 
         Vector3 bodyPos = transform.position;
-        EffectsController.Instance.PlayParticlesEffect(gameObject, "Damage");
-        EffectsController.Instance.PlayParticlesEffect(gameObject, "Hit");
+        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
+        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
         _myChar.HitSoundMecha();
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, bodyPos, true);
         ui.ContainerActivation(true);

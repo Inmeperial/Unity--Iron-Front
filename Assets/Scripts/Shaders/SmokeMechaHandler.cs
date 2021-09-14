@@ -43,4 +43,18 @@ public class SmokeMechaHandler : MonoBehaviour
             }
         }
     }
+
+    public void SetDiseableParticle()
+    {
+        if (_arrPartSystem != null)
+        {
+            for (int i = 0; i < _arrPartSystem.Length; i++)
+            {
+                var particleMain = _arrPartSystem[i].main;
+
+                particleMain.startSize = new ParticleSystem.MinMaxCurve(0f, 0f);
+                particleMain.startLifetime = 0f;
+            }
+        }
+    }
 }
