@@ -76,7 +76,7 @@ public class Character : EnumsClass, IObservable
     protected bool _selected;
     protected bool _moving = false;
     protected bool _canMove = true;
-    protected bool _canAttack = true;
+    [SerializeField] protected bool _canAttack = true;
     protected bool _leftArmAlive;
     protected bool _rightArmAlive;
     protected bool _canBeAttacked = false;
@@ -176,7 +176,6 @@ public class Character : EnumsClass, IObservable
 
         if (itemSOData)
         {
-            Debug.Log("agrego item");
             switch (itemSOData.itemType)
             {
                 case ItemSO.ItemType.Grenade:
@@ -663,7 +662,7 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool HasEnemiesInRange()
     {
-        return _enemiesInRange.Count > 0 ? true : false;
+        return _enemiesInRange.Count > 0;
     }
 
     /// <summary>

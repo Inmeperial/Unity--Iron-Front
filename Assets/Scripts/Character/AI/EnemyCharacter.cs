@@ -31,7 +31,7 @@ public class EnemyCharacter : Character
         _behaviorExecutor.paused = true;
     }
 
-    public void CalculateAutoMovement()
+    public bool CalculateAutoMovement()
     {
         List<Character> enemyTeam = GetEnemyTeam();
 
@@ -90,14 +90,18 @@ public class EnemyCharacter : Character
         //Clears previous calculated paths
         pathCreator.ResetPath();
         
+        if (_targetTile == _myPositionTile)
+            return false;
+        
         _currentSteps = legs.GetMaxSteps();
         
         //Calculates shortest path.
         pathCreator.Calculate(_myPositionTile, _targetTile, _currentSteps);
         _path = pathCreator.GetPath();
-
+        
         highlight.PathPreview(_path);
         highlight.CreatePathLines(_path);
+        return true;
     }
 
     Character GetClosestEnemy(List<Character> enemies) 
@@ -165,6 +169,7 @@ public class EnemyCharacter : Character
     public void OnStartAction()
     {
         _behaviorExecutor.paused = true;
+        _behaviorExecutor.restartWhenFinished = true;
     }
 
     public void OnEndAction()

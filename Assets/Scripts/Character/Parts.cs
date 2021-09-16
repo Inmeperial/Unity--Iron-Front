@@ -18,8 +18,6 @@ public abstract class Parts : MonoBehaviour
 
         if (abilitySO)
         {
-            Debug.Log("agrego habilidad");
-
             switch (abilitySO.abilityType)
             {
                 case AbilitySO.AbilityType.LegsOvercharge:

@@ -17,9 +17,6 @@ public class AttackAction : GOAction
     {
         
         _myUnit = gameObject.GetComponent<EnemyCharacter>();
-        
-        if (_myUnit)
-            Debug.Log("si encontre el enemy character en el start");
     }
 
     public override TaskStatus OnUpdate()
@@ -30,13 +27,9 @@ public class AttackAction : GOAction
             _myUnit = gameObject.GetComponent<EnemyCharacter>();
             if (!_myUnit)
             {
-                Debug.Log("no encontre al enemy character");
-
                 return TaskStatus.FAILED;
             }
         }
-
-        Debug.Log("ataco");
         _myUnit.SetAttackFORTEST();
         return TaskStatus.COMPLETED;
 

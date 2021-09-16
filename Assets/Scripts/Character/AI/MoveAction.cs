@@ -17,9 +17,6 @@ public class MoveAction : GOAction
     {
         
         _myUnit = gameObject.GetComponent<EnemyCharacter>();
-        
-        if (_myUnit)
-            Debug.Log("si encontre el enemy character en el start");
     }
 
     public override TaskStatus OnUpdate()
@@ -35,8 +32,10 @@ public class MoveAction : GOAction
         }
 
         _myUnit.OnStartAction();
-        _myUnit.CalculateAutoMovement();
-        _myUnit.EnemyMove();
+        if (_myUnit.CalculateAutoMovement())
+            _myUnit.EnemyMove();
+        else _myUnit.OnEndAction();
+        
         return TaskStatus.COMPLETED;
 
 

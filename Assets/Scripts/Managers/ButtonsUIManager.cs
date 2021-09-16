@@ -1024,7 +1024,6 @@ public class ButtonsUIManager : MonoBehaviour
                         ability = equipment as Ability;
                         if (ability)
                         {
-                            Debug.Log("if active");
                             button.SetItemButtonName(ability.GetEquipableName() + " " + ability.AbilityStatus());
                             button.ClearLeftClick();
                             button.AddLeftClick(ability.Select);
