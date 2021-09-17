@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class EnemyCharacter : Character
 {
     private BehaviorExecutor _behaviorExecutor;
+    public bool checkedParts;
+    private Character _closestEnemy;
     protected override void Awake()
     {
         base.Awake();
@@ -18,6 +21,7 @@ public class EnemyCharacter : Character
     public override void SelectThisUnit()
     {
         base.SelectThisUnit();
+        _closestEnemy = null;
         _behaviorExecutor.paused = false;
     }
 
@@ -35,35 +39,11 @@ public class EnemyCharacter : Character
     {
         List<Character> enemyTeam = GetEnemyTeam();
 
-        Character closestEnemy = GetClosestEnemy(enemyTeam);
-
-
-        Tile enemyTile = closestEnemy.GetMyPositionTile();
-        Tile closestTileToEnemy = null;
+       _closestEnemy = CalculateClosestEnemy(enemyTeam);
+        
+        Tile closestTileToEnemy = ClosestTileToEnemy(_closestEnemy);
         
         int distance = 0;
-        
-        //Search for the closest tile to enemy position.
-        for (int i = 0; i < enemyTile.neighboursForMove.Count; i++)
-        {
-            pathCreator.ResetPath();
-            pathCreator.Calculate(_tilesInMoveRange[i], enemyTile.neighboursForMove[i], 1000);
-            List<Tile> p = pathCreator.GetPath();
-            
-            if (i == 0)
-            {
-                distance = p.Count;
-                
-                closestTileToEnemy = p[p.Count-1];
-                continue;
-            }
-            
-            if (p.Count >= distance) continue;
-            
-            distance = p.Count;
-                
-            closestTileToEnemy = p[p.Count-1];
-        }
 
         //Finds the farthest tile I can reach in my movement range.
         for (int i = 0; i < _tilesInMoveRange.Count; i++)
@@ -103,8 +83,8 @@ public class EnemyCharacter : Character
         highlight.CreatePathLines(_path);
         return true;
     }
-
-    Character GetClosestEnemy(List<Character> enemies) 
+    
+    private Character CalculateClosestEnemy(List<Character> enemies) 
     {
         Character closestEnemy = null;
         
@@ -112,15 +92,18 @@ public class EnemyCharacter : Character
         
         for (int i = 0; i < enemies.Count; i++)
         {
+            Tile tile = ClosestTileToEnemy(enemies[i]);
             pathCreator.ResetPath();
-            pathCreator.Calculate(_myPositionTile, enemies[i].GetMyPositionTile(), 1000);
-
+            pathCreator.Calculate(_myPositionTile, tile, 1000);
+            
+            
+            
             List<Tile> p = pathCreator.GetPath();
             if (i == 0)
             {
-                foreach (var tile in p)
+                foreach (var t in p)
                 {
-                    path.Add(tile);
+                    path.Add(t);
                 }
                 closestEnemy = enemies[i];
                 continue;
@@ -128,14 +111,49 @@ public class EnemyCharacter : Character
 
             if (p.Count >= path.Count) continue;
             path.Clear();
-                foreach (var tile in p)
-                {
-                    path.Add(tile);
-                }
-                closestEnemy = enemies[i];
+            foreach (var t in p)
+            {
+                path.Add(t);
+            }
+            closestEnemy = enemies[i];
         }
         _currentSteps = legs.GetMaxSteps();
+        
         return closestEnemy;
+    }
+
+    //Search for the closest tile to enemy position.
+    Tile ClosestTileToEnemy(Character character)
+    {
+        Tile closest = null;
+        int distance = 0;
+        Tile enemyTile = character.GetMyPositionTile();
+        for (int i = 0; i < enemyTile.neighboursForMove.Count; i++)
+        {
+            pathCreator.ResetPath();
+            
+            if (_tilesInMoveRange.Count > 0)
+                pathCreator.Calculate(_tilesInMoveRange[i], enemyTile.neighboursForMove[i], 1000);
+            else pathCreator.Calculate(_myPositionTile.allNeighbours[i], enemyTile.neighboursForMove[i], 1000);
+            List<Tile> p = pathCreator.GetPath();
+            
+            if (i == 0)
+            {
+                distance = p.Count;
+                
+                closest = p[p.Count-1];
+                continue;
+            }
+
+            if (p.Count >= distance) continue;
+            distance = p.Count;
+
+            if (p.Count == 0)
+                return closest;
+            closest = p[p.Count-1];
+        }
+
+        return closest;
     }
 
     List<Character> GetEnemyTeam()
@@ -155,6 +173,11 @@ public class EnemyCharacter : Character
         return enemyTeam;
     }
 
+    public Character GetClosestEnemy()
+    {
+        return _closestEnemy;
+    }
+
     public void EnemyMove()
     {
         Move();
@@ -169,7 +192,8 @@ public class EnemyCharacter : Character
     public void OnStartAction()
     {
         _behaviorExecutor.paused = true;
-        _behaviorExecutor.restartWhenFinished = true;
+        checkedParts = false;
+        //_behaviorExecutor.restartWhenFinished = true;
     }
 
     public void OnEndAction()

@@ -11,7 +11,9 @@ public abstract class Parts : MonoBehaviour
     protected Character _myChar;
     public AbilitySO abilitySO;
     public Ability abilityPrefab;
-    protected Ability _ability; 
+    protected Ability _ability;
+    protected float _maxHP;
+    protected float _currentHP;
     protected virtual void Start()
     {
         _myChar = transform.parent.GetComponent<Character>();
@@ -29,13 +31,20 @@ public abstract class Parts : MonoBehaviour
         }
     }
 
-    public abstract float GetMaxHp();
+    public float GetMaxHp()
+    {
+        return _maxHP;
+    }
 
-    public abstract float GetCurrentHp();
+    public float GetCurrentHp()
+    {
+        return _currentHP;
+    }
 
     public abstract void UpdateHp(float value);
 
-    public abstract void TakeDamage(List<Tuple<int,int>> damages);
+    public abstract void TakeDamage(List<Tuple<int, int>> damages);
+
     public abstract void TakeDamage(int damage);
     public Ability GetAbility()
     {

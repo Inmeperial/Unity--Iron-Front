@@ -67,7 +67,7 @@ public class Character : EnumsClass, IObservable
     protected Tile _myPositionTile;
     protected Tile _targetTile;
     protected List<Tile> _path = new List<Tile>();
-	protected Quaternion InitialRotation { get; private set; }//Cambio Nico
+	public Quaternion InitialRotation { get; private set; }//Cambio Nico
 
     public bool legsOvercharged;
 
@@ -211,6 +211,8 @@ public class Character : EnumsClass, IObservable
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (_isDead) return;
+        
         if (_selected && !_moving && _canMove && !_selectingEnemy && Input.GetMouseButtonDown(0))
         {
             GetTargetToMove();
@@ -403,6 +405,9 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public virtual void SelectThisUnit()
     {
+        if (_isDead) return;
+        
+        
         _selected = true;
 		InitialRotation = transform.rotation;//Cambio Nico
         ResetInRangeLists();
@@ -984,6 +989,7 @@ public class Character : EnumsClass, IObservable
     public virtual void NewTurn()
     {
         if (_isDead) return;
+        
         legsOvercharged = false;
         _rightGun.Deselect();
         _leftGun.Deselect();
@@ -1072,6 +1078,7 @@ public class Character : EnumsClass, IObservable
 
     public void Dead()
     {
+        if (_isDead) return;
         _canBeSelected = false;
         _isDead = true;
         PortraitsController.Instance.DeadPortrait(this);
@@ -1083,6 +1090,8 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void SelectedAsEnemy()
     {
+        if (_isDead) return;
+        
         _myPositionTile = GetTileBelow();
         if (!_myPositionTile) return;
         
@@ -1203,6 +1212,14 @@ public class Character : EnumsClass, IObservable
         if (c == null) return;
         c.transform.rotation = c.InitialRotation;//Volver la rotación del mecha a InitialRotation, esto podría ser más smooth
         c.RaysOff();//Apago los raycasts cuando saco el mouse
+    }
+    
+    public void ResetRotationAndRays(Quaternion rot)
+    {
+        Character c = CharacterSelection.Instance.GetSelectedCharacter();
+        if (c == null) return;
+        c.transform.rotation = rot;
+        c.RaysOff();
     }
 
     /// <summary>

@@ -6,9 +6,7 @@ using UnityEngine;
 public class Legs : Parts
 {
     public LegsSO legsData;
-    private float _legsMaxHP;
-    private float _legsHP;
-    
+
     private int _maxSteps;
     
     private float _moveSpeed;
@@ -20,8 +18,8 @@ public class Legs : Parts
 
     private void Awake()
     {
-        _legsMaxHP = legsData.maxHP;
-        _legsHP = _legsMaxHP;
+        _maxHP = legsData.maxHP;
+        _currentHP = _maxHP;
         _maxSteps = legsData.maxSteps;
         _moveSpeed = legsData.moveSpeed;
         _rotationSpeed = legsData.rotationSpeed;
@@ -35,17 +33,7 @@ public class Legs : Parts
 
     public override void UpdateHp(float newValue)
     {
-        _legsHP = newValue;
-    }
-    
-    public override float GetMaxHp()
-    {
-        return _legsMaxHP;
-    }
-
-    public override float GetCurrentHp()
-    {
-        return _legsHP;
+        _currentHP = newValue;
     }
 
     public int GetLegsInitiative()
@@ -56,16 +44,19 @@ public class Legs : Parts
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void TakeDamage(List<Tuple<int,int>> damages)
     {
+        if (_currentHP <= 0) return;
+        
+        
         WorldUI ui = _myChar.GetMyUI();
-        ui.SetLegsSlider(_legsHP);
+        ui.SetLegsSlider(_currentHP);
         int total = 0;
         Vector3 legsPos = transform.position;
         for (int i = 0; i < damages.Count; i++)
         {
             total += damages[i].Item1;
-            float hp = _legsHP - damages[i].Item1;
+            float hp = _currentHP - damages[i].Item1;
             UpdateHp(hp > 0 ? hp : 0);
-            _myChar.SetCharacterMove(_legsHP > 0 ? true : false);
+            _myChar.SetCharacterMove(_currentHP > 0 ? true : false);
             EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
             EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
             int item = damages[i].Item2;
@@ -87,25 +78,28 @@ public class Legs : Parts
             }
         }
         ui.ContainerActivation(true);
-        ui.UpdateLegsSlider(total, _legsHP);
+        ui.UpdateLegsSlider(total, _currentHP);
         _myChar.MakeNotAttackable();
         TurnManager.Instance.ReducePosition(_myChar);
     }
 
     public override void TakeDamage(int damage)
     {
+        if (_currentHP <= 0) return;
+        
+        
         WorldUI ui = _myChar.GetMyUI();
-        ui.SetLegsSlider(_legsHP);
+        ui.SetLegsSlider(_currentHP);
         ui.ContainerActivation(true);
-        ui.UpdateLegsSlider(damage, _legsHP);
+        ui.UpdateLegsSlider(damage, _currentHP);
         ui.DeactivateWorldUIWithTimer();
-        float hp = _legsHP - damage;
-        _legsHP = hp > 0 ? hp : 0;
-        if (_legsHP <= 0 && !_brokenLegs)
+        float hp = _currentHP - damage;
+        _currentHP = hp > 0 ? hp : 0;
+        if (_currentHP <= 0 && !_brokenLegs)
         {
             HalfSteps();
         }
-        ButtonsUIManager.Instance.UpdateLegsHUD(_legsHP, true);
+        ButtonsUIManager.Instance.UpdateLegsHUD(_currentHP, true);
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
         _myChar.HitSoundMecha();

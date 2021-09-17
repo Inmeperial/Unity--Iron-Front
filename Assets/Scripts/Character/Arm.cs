@@ -6,28 +6,16 @@ using UnityEngine;
 public class Arm : Parts
 {
     public ArmSO armData;
-    private float _armMaxHP;
-    private float _armHP;
     private string _location;
     private void Awake()
     {
-        _armMaxHP = armData.maxHP;
-        _armHP = _armMaxHP;
+        _maxHP = armData.maxHP;
+        _currentHP = _maxHP;
     }
 
     public override void UpdateHp(float newValue)
     {
-        _armHP = newValue;
-    }
-    
-    public override float GetMaxHp()
-    {
-        return _armMaxHP;
-    }
-    
-    public override float GetCurrentHp()
-    {
-        return _armHP;
+        _currentHP = newValue;
     }
 
     public void SetRightOrLeft(string location)
@@ -38,13 +26,15 @@ public class Arm : Parts
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void TakeDamage(List<Tuple<int,int>> damages)
     {
+        if (_currentHP <= 0) return;
+        
         int total = 0;
         Vector3 pos = transform.position;
         for (int i = 0; i < damages.Count; i++)
         {
             total += damages[i].Item1;
-            float hp = _armHP - damages[i].Item1;
-            _armHP = hp > 0 ? hp : 0;
+            float hp = _currentHP - damages[i].Item1;
+            _currentHP = hp > 0 ? hp : 0;
             EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.Damage);
             EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.Hit);
 
@@ -73,16 +63,16 @@ public class Arm : Parts
         switch (_location)
         {
             case "Left":
-                ui.SetLeftArmSlider(_armHP);
-                ui.UpdateLeftArmSlider(total, (int)_armHP);
+                ui.SetLeftArmSlider(_currentHP);
+                ui.UpdateLeftArmSlider(total, (int)_currentHP);
                 break;
             
             case "Right":
-                ui.SetRightArmSlider(_armHP);
-                ui.UpdateRightArmSlider(total, (int)_armHP);
+                ui.SetRightArmSlider(_currentHP);
+                ui.UpdateRightArmSlider(total, (int)_currentHP);
                 break;
         }
-        if (_armHP <= 0)
+        if (_currentHP <= 0)
         {
             switch (_location)
             {
@@ -101,9 +91,10 @@ public class Arm : Parts
     //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void TakeDamage(int damage)
     {
+        if (_currentHP <= 0) return;
         
-        float hp = _armHP - damage;
-        _armHP = hp > 0 ? hp : 0;
+        float hp = _currentHP - damage;
+        _currentHP = hp > 0 ? hp : 0;
         
         Vector3 pos = transform.position;
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
@@ -118,17 +109,17 @@ public class Arm : Parts
         switch (_location)
         {
             case "Left":
-                ui.SetLeftArmSlider(_armHP);
-                ui.UpdateLeftArmSlider(damage, (int)_armHP);
+                ui.SetLeftArmSlider(_currentHP);
+                ui.UpdateLeftArmSlider(damage, (int)_currentHP);
                 break;
             
             case "Right":
-                ui.SetRightArmSlider(_armHP);
-                ui.UpdateRightArmSlider(damage, (int)_armHP);
+                ui.SetRightArmSlider(_currentHP);
+                ui.UpdateRightArmSlider(damage, (int)_currentHP);
                 break;
         }
         
-        if (_armHP <= 0)
+        if (_currentHP <= 0)
         {
             switch (_location)
             {

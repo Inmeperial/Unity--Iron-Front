@@ -19,6 +19,7 @@ public class AStar//<Tile>
         int count = 0;
         while (!pending.IsEmpty)
         {
+            
             Tile current = pending.Dequeue();
             if (!current.IsFree())
                 continue;
