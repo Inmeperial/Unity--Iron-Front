@@ -23,7 +23,7 @@ MonoBehaviour:
     id=\"5\" />\r\n            </guard>\r\n            <child>\r\n              <PrioritySelectorNode
     id=\"4\" />\r\n            </child>\r\n          </GuardAndNode>\r\n        </elem>\r\n
     \     </children>\r\n      <inputParams />\r\n      <outputParams />\r\n      <localParams
-    />\r\n    </PrioritySelectorNode>\r\n    <ConditionEvalNode id=\"5\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\"
+    />\r\n    </PrioritySelectorNode>\r\n    <ConditionEvalNode id=\"5\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\"
     name=\"Iron Front/AI Conditions/CanAttack\">\r\n      <inputParams />\r\n      <outputParams
     />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n    <PrioritySelectorNode
     id=\"4\">\r\n      <children>\r\n        <elem>\r\n          <GuardAndNode>\r\n
@@ -31,7 +31,7 @@ MonoBehaviour:
     \           <child>\r\n              <PrioritySelectorNode id=\"8\" />\r\n            </child>\r\n
     \         </GuardAndNode>\r\n        </elem>\r\n      </children>\r\n      <inputParams
     />\r\n      <outputParams />\r\n      <localParams />\r\n    </PrioritySelectorNode>\r\n
-    \   <ConditionEvalNode id=\"9\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"Iron
+    \   <ConditionEvalNode id=\"9\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\" name=\"Iron
     Front/AI Conditions/HasEnemiesInRange\">\r\n      <inputParams />\r\n      <outputParams
     />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n    <PrioritySelectorNode
     id=\"8\">\r\n      <children>\r\n        <elem>\r\n          <GuardAndNode>\r\n
@@ -59,39 +59,39 @@ MonoBehaviour:
     id=\"6\" />\r\n          <ConditionEvalNode id=\"10\" />\r\n          <PrioritySelectorNode
     id=\"8\" />\r\n          <ConditionEvalNode id=\"9\" />\r\n        </nodes>\r\n
     \     </_nodes>\r\n    </BehaviorTree>\r\n    <PrioritySelectorNode id=\"1\">\r\n
-    \     <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"526.6666
-    11.11115\" name=\"Priority Selector\" description=\"\" cardinality=\"1\" hasParent=\"False\">\r\n
+    \     <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"638.4166
+    57.36115\" name=\"Priority Selector\" description=\"\" cardinality=\"1\" hasParent=\"False\">\r\n
     \         <BehaviorTree id=\"0\" />\r\n          <PrioritySelectorNode id=\"1\"
     />\r\n        </data>\r\n      </_data>\r\n    </PrioritySelectorNode>\r\n    <ConditionEvalNode
     id=\"5\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"526.6666 148.1111\" name=\"Iron Front/AI Conditions/CanAttack\" description=\"Eval\"
+    position=\"638.4166 194.3611\" name=\"Iron Front/AI Conditions/CanAttack\" description=\"Eval\"
     cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n
     \         <ConditionEvalNode id=\"5\" />\r\n          <PrioritySelectorNode id=\"1\"
     />\r\n        </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n    <PrioritySelectorNode
     id=\"4\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"526.6666 148.1111\" name=\"Priority Selector\" description=\"\" cardinality=\"1\"
+    position=\"638.4166 194.3611\" name=\"Priority Selector\" description=\"\" cardinality=\"1\"
     hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n          <PrioritySelectorNode
     id=\"4\" />\r\n        </data>\r\n      </_data>\r\n    </PrioritySelectorNode>\r\n
     \   <ConditionEvalNode id=\"9\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
-    selected=\"False\" position=\"548.5184 428.7655\" name=\"Iron Front/AI Conditions/HasEnemiesInRange\"
+    selected=\"False\" position=\"660.2684 475.0155\" name=\"Iron Front/AI Conditions/HasEnemiesInRange\"
     description=\"Eval\" cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree
     id=\"0\" />\r\n          <ConditionEvalNode id=\"9\" />\r\n          <PrioritySelectorNode
     id=\"4\" />\r\n        </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n
     \   <PrioritySelectorNode id=\"8\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
-    selected=\"False\" position=\"497.778 387.778\" name=\"Priority Selector\" description=\"\"
+    selected=\"False\" position=\"609.528 434.028\" name=\"Priority Selector\" description=\"\"
     cardinality=\"1\" hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n
     \         <PrioritySelectorNode id=\"8\" />\r\n        </data>\r\n      </_data>\r\n
     \   </PrioritySelectorNode>\r\n    <ConditionEvalNode id=\"10\">\r\n      <_data>\r\n
-    \       <data breakpoint=\"0\" selected=\"False\" position=\"529.0123 702.7161\"
+    \       <data breakpoint=\"0\" selected=\"False\" position=\"640.7623 748.9661\"
     name=\"Iron Front/AI Conditions/CheckPartsInSight\" description=\"Eval\" cardinality=\"1\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ConditionEvalNode
     id=\"10\" />\r\n          <PrioritySelectorNode id=\"8\" />\r\n        </data>\r\n
     \     </_data>\r\n    </ConditionEvalNode>\r\n    <ActionNode id=\"6\">\r\n      <_data>\r\n
-    \       <data breakpoint=\"0\" selected=\"False\" position=\"498.5558 653.1111\"
+    \       <data breakpoint=\"0\" selected=\"False\" position=\"610.3058 699.3611\"
     name=\"Iron Front/AI Actions/Attack\" description=\"Enemy AI will attack the closest
     enemy depending on its move range (debug ).\" cardinality=\"0\" hasParent=\"False\">\r\n
     \         <BehaviorTree id=\"0\" />\r\n          <ActionNode id=\"6\" />\r\n        </data>\r\n
     \     </_data>\r\n    </ActionNode>\r\n  </editorInfo>\r\n</BehaviorBricks>"
-  zoom: 0.9
+  zoom: 0.8
   subslist: []
   _guid: ca0575fdcf83aea488c8de5d8e8644cc

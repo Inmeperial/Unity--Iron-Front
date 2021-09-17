@@ -93,6 +93,7 @@ public class Character : EnumsClass, IObservable
     protected Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();
     protected List<Character> _enemiesInRange = new List<Character>();
     protected WorldUI _myUI;
+    protected bool _worldUIToggled;
     protected MechaMaterialhandler _mechaMaterlaHandler;
     protected SmokeMechaHandler _smokeMechaHandler;
     public AudioClip soundMotorStart;
@@ -1237,7 +1238,12 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void HideWorldUI()
     {
-        _myUI.DeactivateWorldUI();
+        if (_worldUIToggled == false) _myUI.DeactivateWorldUI();
+    }
+
+    public void WorldUIToggled(bool state)
+    {
+        _worldUIToggled = state;
     }
     
     #endregion

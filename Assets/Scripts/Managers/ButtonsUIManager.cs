@@ -93,7 +93,9 @@ public class ButtonsUIManager : MonoBehaviour
     private bool _lArmInsight;
 
     private bool _worldUIActive = false;
+    private bool _worldUIToggled;
     public static ButtonsUIManager Instance;
+    
 
     private void Awake()
     {
@@ -157,18 +159,24 @@ public class ButtonsUIManager : MonoBehaviour
         
         
         if (_selectedChar && _selectedEnemy) return;
+
+        if (!_worldUIToggled)
+        {
+            if (Input.GetKeyDown(showWorldUIKey))
+                ShowAllWorldUI();
         
-        if (Input.GetKeyDown(showWorldUIKey))
-            ShowAllWorldUI();
+            if (Input.GetKeyUp(showWorldUIKey))
+                HideAllWorldUI(); 
+        }
         
-        if (Input.GetKeyUp(showWorldUIKey))
-            HideAllWorldUI();
             
         if (Input.GetKeyDown(toggleWorldUIKey))
         {
-            if(_worldUIActive)
-                HideAllWorldUI();
-            else ShowAllWorldUI();
+            if (_worldUIActive)
+            {
+                ToggleWorldUI(false);
+            }
+            else ToggleWorldUI(true);
         }
     }
     #region ButtonsActions
@@ -462,6 +470,7 @@ public class ButtonsUIManager : MonoBehaviour
     /// </summary>
     private void Attack()
     {
+        Debug.Log("attacking unit:" + _selectedChar.GetCharacterName());
         Gun gun = _selectedChar.GetSelectedGun();
         _selectedChar.Shoot();
         _selectedEnemy.SetHurtAnimation();
@@ -655,7 +664,9 @@ public class ButtonsUIManager : MonoBehaviour
         foreach (Character unit in units)
         {
             if (!unit.IsSelectedForAttack() && unit.CanBeSelected())
+            {
                 unit.ShowWorldUI();
+            }
         }
     }
 
@@ -667,6 +678,35 @@ public class ButtonsUIManager : MonoBehaviour
         foreach (Character unit in units)
         {
             unit.HideWorldUI();
+        }
+    }
+
+    private void ToggleWorldUI(bool state)
+    {
+        if (state)
+        {
+            _worldUIActive = true;
+            _worldUIToggled = true;
+            Character[] units = TurnManager.Instance.GetAllUnits();
+            foreach (Character unit in units)
+            {
+                if (!unit.IsSelectedForAttack() && unit.CanBeSelected())
+                {
+                    unit.ShowWorldUI();
+                    unit.WorldUIToggled(true);
+                }
+            }
+        }
+        else
+        {
+            _worldUIActive = false;
+            _worldUIToggled = false;
+            Character[] units = TurnManager.Instance.GetAllUnits();
+            foreach (Character unit in units)
+            {
+                unit.WorldUIToggled(false);
+                unit.HideWorldUI();
+            }
         }
     }
 

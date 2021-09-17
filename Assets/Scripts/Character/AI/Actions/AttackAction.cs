@@ -30,7 +30,65 @@ public class AttackAction : GOAction
                 return TaskStatus.FAILED;
             }
         }
-        _myUnit.SetAttackFORTEST();
+
+        Character closestEnemy = _myUnit.GetClosestEnemy();
+        ButtonsUIManager.Instance.SetPlayerCharacter(_myUnit);
+        ButtonsUIManager.Instance.SetEnemy(closestEnemy);
+        
+        var rot = _myUnit.InitialRotation;
+        _myUnit.RotateTowardsEnemy(closestEnemy.transform.position);
+        bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body");
+        bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LArm");
+        bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RArm");
+        bool legs = _myUnit.RayToPartsForAttack(closestEnemy.GetLegsPosition(), "Legs");
+
+        Dictionary<string, float> parts = new Dictionary<string, float>();
+        
+        if (body)
+            parts.Add("Body", closestEnemy.body.GetCurrentHp());
+        if (leftArm)
+            parts.Add("LArm", closestEnemy.leftArm.GetCurrentHp());
+        if (rightArm)
+            parts.Add("RArm", closestEnemy.rightArm.GetCurrentHp());
+        if (legs)
+            parts.Add("Legs", closestEnemy.legs.GetCurrentHp());
+
+        string partToAttack = "DEFAULT";
+        float lowest = 100000; 
+        foreach (var part in parts)
+        {
+            if (part.Value <= lowest)
+            {
+                lowest = part.Value;
+                partToAttack = part.Key;
+            }
+        }
+        
+        Debug.Log("part to attack: " + partToAttack);
+
+        var gun = _myUnit.GetSelectedGun();
+        switch (partToAttack)
+        {
+            case "Body":
+                ButtonsUIManager.Instance.AddBulletsToBody(gun.GetAvailableBullets());
+                break;
+                
+            case "LArm":
+                ButtonsUIManager.Instance.AddBulletsToLArm(gun.GetAvailableBullets());
+                break;
+            
+            case "RArm":
+                ButtonsUIManager.Instance.AddBulletsToRArm(gun.GetAvailableBullets());
+                break;
+            
+            case "Legs":
+                ButtonsUIManager.Instance.AddBulletsToLegs(gun.GetAvailableBullets());
+                break;
+            
+            case "DEFAULT":
+                Debug.Log("sin partes para atacar");
+                break;
+        }
         return TaskStatus.COMPLETED;
 
     }

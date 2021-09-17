@@ -27,23 +27,13 @@ public class CheckPartsInSight : GOCondition
         var enemies = TurnManager.Instance.GetEnemies(_myUnit.GetUnitTeam());
 
         Character closestEnemy = _myUnit.GetClosestEnemy();
-        Debug.Log("closest: " + closestEnemy.GetCharacterName());
         var rot = _myUnit.InitialRotation;
         _myUnit.RotateTowardsEnemy(closestEnemy.transform.position);
         bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body");
         bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LArm");
         bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RArm");
         bool legs = _myUnit.RayToPartsForAttack(closestEnemy.GetLegsPosition(), "Legs");
-    
-        if (body)
-            Debug.Log("body");
-        if (leftArm)
-            Debug.Log("leftArm");
-        if (rightArm)
-            Debug.Log("rightArm");
-        if (legs)
-            Debug.Log("legs");
-        
+
         if (body || leftArm || rightArm || legs)
             _myUnit.checkedParts = true;
         _myUnit.ResetRotationAndRays(rot);
