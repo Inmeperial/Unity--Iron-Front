@@ -105,7 +105,7 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
-            case EnumsClass.ParticleActionType.AssaultRigle:
+            case EnumsClass.ParticleActionType.AssaultRifle:
                 effect = Instantiate(_assaultRifleEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
                 effect.transform.SetParent(obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();

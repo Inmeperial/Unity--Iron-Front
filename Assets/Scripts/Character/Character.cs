@@ -93,13 +93,22 @@ public class Character : EnumsClass, IObservable
     protected Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();
     protected List<Character> _enemiesInRange = new List<Character>();
     protected WorldUI _myUI;
+<<<<<<< Updated upstream
     protected bool _worldUIToggled;
     protected MechaMaterialhandler _mechaMaterlaHandler;
     protected SmokeMechaHandler _smokeMechaHandler;
     public AudioClip soundMotorStart;
     public AudioClip soundWalk;
+=======
+    //public AudioClip soundMotorStart;
+    //public AudioClip soundWalk;
+>>>>>>> Stashed changes
     public AudioClip soundHit;
+
+    protected MaterialMechaHandler _materialMechaHandler;
+    protected ParticleMechaHandler _particleMechaHandler;
     protected AnimationMechaHandler _animationMechaHandler;
+    protected AudioMechaHandler _audioMechaHandler;
     
     protected List<IObserver> _observers = new List<IObserver>();
     
@@ -112,12 +121,14 @@ public class Character : EnumsClass, IObservable
         transform.position = new Vector3(transform.position.x, 2.4f, transform.position.z);
         
         #region GetComponents
-        _mechaMaterlaHandler = GetComponent<MechaMaterialhandler>();
-        _smokeMechaHandler = GetComponent<SmokeMechaHandler>();
+        _materialMechaHandler = GetComponent<MaterialMechaHandler>();
+        _particleMechaHandler = GetComponent<ParticleMechaHandler>();
+        _animationMechaHandler = GetComponent<AnimationMechaHandler>();
+        _audioMechaHandler = GetComponent<AudioMechaHandler>();
         _move = GetComponent<GridMovement>();
         pathCreator = GetComponent<IPathCreator>();
         _myUI = GetComponent<WorldUI>();
-        _animationMechaHandler = GetComponent<AnimationMechaHandler>();
+        
         #endregion
         
         highlight = FindObjectOfType<TileHighlight>();
@@ -244,8 +255,8 @@ public class Character : EnumsClass, IObservable
         ResetTilesInMoveRange();
         ResetTilesInAttackRange();
         _animationMechaHandler.SetIsWalkingAnimatorTrue();
-        AudioManager.audioManagerInstance.PlaySound(soundMotorStart, this.gameObject);
-        _smokeMechaHandler.SetMachineOn(true);
+        _audioMechaHandler.SetPlayMotorStart();
+        _particleMechaHandler.SetMachineOn(true);
         _move.StartMovement(_path);
     }
     
@@ -261,21 +272,17 @@ public class Character : EnumsClass, IObservable
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
-                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), EnumsClass.ParticleActionType.AssaultRigle);
                     _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
                     break;
                 case GunsType.Melee:
                     _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
                     break;
                 case GunsType.Rifle:
-                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), EnumsClass.ParticleActionType.Rifle);
                     _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
                     break;
                 case GunsType.Shield:
                     break;
                 case GunsType.Shotgun:
-                    Debug.Log("Shotgun");
-                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
                     _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
                     break;
             }
@@ -287,20 +294,17 @@ public class Character : EnumsClass, IObservable
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
-                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), EnumsClass.ParticleActionType.AssaultRigle);
                     _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Melee:
                     _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Rifle:
-                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), EnumsClass.ParticleActionType.Rifle);
                     _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Shield:
                     break;
                 case GunsType.Shotgun:
-                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
                     _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
                     break;
             }
@@ -1036,8 +1040,8 @@ public class Character : EnumsClass, IObservable
         _tilesForAttackChecked.Clear();
         _tilesInAttackRange.Clear();
         _animationMechaHandler.SetIsWalkingAnimatorFalse();
-        AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,gameObject);
-        _smokeMechaHandler.SetMachineOn(false);
+        _audioMechaHandler.SetMuteWalk();
+        _particleMechaHandler.SetMachineOn(false);
         
         if (!CanAttack()) return;
         
@@ -1251,11 +1255,6 @@ public class Character : EnumsClass, IObservable
     public void SetHurtAnimation()
     {
         _animationMechaHandler.SetIsReciveDamageAnimatorTrue();
-    }
-
-    public void WalkSoundStepMecha()
-    {
-        AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
     }
 
     public void HitSoundMecha()
