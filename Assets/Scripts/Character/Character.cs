@@ -93,16 +93,7 @@ public class Character : EnumsClass, IObservable
     protected Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();
     protected List<Character> _enemiesInRange = new List<Character>();
     protected WorldUI _myUI;
-<<<<<<< Updated upstream
     protected bool _worldUIToggled;
-    protected MechaMaterialhandler _mechaMaterlaHandler;
-    protected SmokeMechaHandler _smokeMechaHandler;
-    public AudioClip soundMotorStart;
-    public AudioClip soundWalk;
-=======
-    //public AudioClip soundMotorStart;
-    //public AudioClip soundWalk;
->>>>>>> Stashed changes
     public AudioClip soundHit;
 
     protected MaterialMechaHandler _materialMechaHandler;
