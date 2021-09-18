@@ -94,13 +94,6 @@ public class Character : EnumsClass, IObservable
     protected List<Character> _enemiesInRange = new List<Character>();
     protected WorldUI _myUI;
     protected bool _worldUIToggled;
-<<<<<<< HEAD
-=======
-    protected MechaMaterialhandler _mechaMaterlaHandler;
-    protected SmokeMechaHandler _smokeMechaHandler;
-    public AudioClip soundMotorStart;
-    public AudioClip soundWalk;
->>>>>>> parent of 32951a5 (Animations effects updated and Particle Pack Unity 5.0)
     public AudioClip soundHit;
     protected AnimationMechaHandler _animationMechaHandler;
     
@@ -115,8 +108,6 @@ public class Character : EnumsClass, IObservable
         transform.position = new Vector3(transform.position.x, 2.4f, transform.position.z);
         
         #region GetComponents
-        _mechaMaterlaHandler = GetComponent<MechaMaterialhandler>();
-        _smokeMechaHandler = GetComponent<SmokeMechaHandler>();
         _move = GetComponent<GridMovement>();
         pathCreator = GetComponent<IPathCreator>();
         _myUI = GetComponent<WorldUI>();
@@ -247,8 +238,6 @@ public class Character : EnumsClass, IObservable
         ResetTilesInMoveRange();
         ResetTilesInAttackRange();
         _animationMechaHandler.SetIsWalkingAnimatorTrue();
-        AudioManager.audioManagerInstance.PlaySound(soundMotorStart, this.gameObject);
-        _smokeMechaHandler.SetMachineOn(true);
         _move.StartMovement(_path);
     }
     
@@ -1039,8 +1028,6 @@ public class Character : EnumsClass, IObservable
         _tilesForAttackChecked.Clear();
         _tilesInAttackRange.Clear();
         _animationMechaHandler.SetIsWalkingAnimatorFalse();
-        AudioManager.audioManagerInstance.StopSoundWithFadeOut(soundMotorStart,gameObject);
-        _smokeMechaHandler.SetMachineOn(false);
         
         if (!CanAttack()) return;
         
@@ -1254,11 +1241,6 @@ public class Character : EnumsClass, IObservable
     public void SetHurtAnimation()
     {
         _animationMechaHandler.SetIsReciveDamageAnimatorTrue();
-    }
-
-    public void WalkSoundStepMecha()
-    {
-        AudioManager.audioManagerInstance.PlaySound(soundWalk, this.gameObject);
     }
 
     public void HitSoundMecha()
