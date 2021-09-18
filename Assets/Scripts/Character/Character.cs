@@ -95,7 +95,11 @@ public class Character : EnumsClass, IObservable
     protected WorldUI _myUI;
     protected bool _worldUIToggled;
     public AudioClip soundHit;
+
+    protected MaterialMechaHandler _materialMechaHandler;
+    protected ParticleMechaHandler _particleMechaHandler;
     protected AnimationMechaHandler _animationMechaHandler;
+    protected AudioMechaHandler _audioMechaHandler;
     
     protected List<IObserver> _observers = new List<IObserver>();
     
@@ -108,10 +112,14 @@ public class Character : EnumsClass, IObservable
         transform.position = new Vector3(transform.position.x, 2.4f, transform.position.z);
         
         #region GetComponents
+        _materialMechaHandler = GetComponent<MaterialMechaHandler>();
+        _particleMechaHandler = GetComponent<ParticleMechaHandler>();
+        _animationMechaHandler = GetComponent<AnimationMechaHandler>();
+        _audioMechaHandler = GetComponent<AudioMechaHandler>();
         _move = GetComponent<GridMovement>();
         pathCreator = GetComponent<IPathCreator>();
         _myUI = GetComponent<WorldUI>();
-        _animationMechaHandler = GetComponent<AnimationMechaHandler>();
+        
         #endregion
         
         highlight = FindObjectOfType<TileHighlight>();
@@ -238,6 +246,8 @@ public class Character : EnumsClass, IObservable
         ResetTilesInMoveRange();
         ResetTilesInAttackRange();
         _animationMechaHandler.SetIsWalkingAnimatorTrue();
+        _audioMechaHandler.SetPlayMotorStart();
+        _particleMechaHandler.SetMachineOn(true);
         _move.StartMovement(_path);
     }
     
@@ -253,21 +263,17 @@ public class Character : EnumsClass, IObservable
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
-                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), EnumsClass.ParticleActionType.AssaultRigle);
                     _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
                     break;
                 case GunsType.Melee:
                     _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
                     break;
                 case GunsType.Rifle:
-                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), EnumsClass.ParticleActionType.Rifle);
                     _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
                     break;
                 case GunsType.Shield:
                     break;
                 case GunsType.Shotgun:
-                    Debug.Log("Shotgun");
-                    EffectsController.Instance.PlayParticlesEffect(_rightGun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
                     _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
                     break;
             }
@@ -279,20 +285,17 @@ public class Character : EnumsClass, IObservable
                 case GunsType.None:
                     break;
                 case GunsType.AssaultRifle:
-                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), EnumsClass.ParticleActionType.AssaultRigle);
                     _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Melee:
                     _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Rifle:
-                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), EnumsClass.ParticleActionType.Rifle);
                     _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
                     break;
                 case GunsType.Shield:
                     break;
                 case GunsType.Shotgun:
-                    EffectsController.Instance.PlayParticlesEffect(_leftGun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
                     _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
                     break;
             }
@@ -1028,6 +1031,8 @@ public class Character : EnumsClass, IObservable
         _tilesForAttackChecked.Clear();
         _tilesInAttackRange.Clear();
         _animationMechaHandler.SetIsWalkingAnimatorFalse();
+        _audioMechaHandler.SetMuteWalk();
+        _particleMechaHandler.SetMachineOn(false);
         
         if (!CanAttack()) return;
         

@@ -11574,7 +11574,7 @@ MonoBehaviour:
   rightGunHitChanceText: {fileID: 5406847287610801584}
   leftWeaponCircle: {fileID: 7920446667666300467}
   rightWeaponCircle: {fileID: 6262962569331772227}
-  itemButton: {fileID: 915494750023088789}
+  equipmentButtons: []
   playerBodyCurrHp: {fileID: 1695923762599544170}
   playerBodySlider: {fileID: 3449432524510837758}
   playerLeftArmCurrHp: {fileID: 1695923763384212711}
@@ -12240,16 +12240,17 @@ MonoBehaviour:
     type: 3}
   _shootGunEffect: {fileID: 2469516227474882344, guid: 2d075491ec1def9489ad2eeb14763f7f,
     type: 3}
-  _assalutRifleEffect: {fileID: 2469516227474882344, guid: 2d075491ec1def9489ad2eeb14763f7f,
-    type: 3}
+  _assaultRifleEffect: {fileID: 0}
   _rifleEffect: {fileID: 5883531398929719350, guid: 371b86e031b85034fb7733816e90d7d6,
     type: 3}
   _deadMechaEffect: {fileID: 6693956348149542107, guid: 67950f700fb12604592472547b595d38,
     type: 3}
   _hitMechaEffect: {fileID: 3216076196911345987, guid: 41ed484128da5f64bb23ca8b9c8bfd91,
     type: 3}
+  _burningMechaEffect: {fileID: 8748843286601463307, guid: f9b7338b10e253b4aad26006a0fce7a2,
+    type: 3}
   _shootGunSound: {fileID: 8300000, guid: 7b6f7d57e21b97b4cbbde01f3fd53182, type: 3}
-  _assalutRifleSound: {fileID: 8300000, guid: de75995142243de4fa1cad72439a1ca8, type: 3}
+  _assaultRifleSound: {fileID: 0}
   _rifleSound: {fileID: 8300000, guid: c51f17a48568de24a90d87d9569b3ce5, type: 3}
   _mineSound: {fileID: 8300000, guid: 40ccb284c11dd61409f23f5a75ca4320, type: 3}
   _damageText: {fileID: 4234916408291941215, guid: 9ab3727a293b8c34fa969c03532e0714,
@@ -13325,7 +13326,6 @@ MonoBehaviour:
   _shield: {fileID: 5198349229067255723, guid: bff67cbdba499de40a383d5c52fae6cf, type: 3}
   _shotgun: {fileID: 8974839597958927679, guid: 0c8d5880b93bf2d49a9456e753db2a11,
     type: 3}
-  _grenadeSo: {fileID: 11400000, guid: e77fb742db4055343be0598ee9e6495a, type: 2}
 --- !u!1 &6729383136069131556
 GameObject:
   m_ObjectHideFlags: 0

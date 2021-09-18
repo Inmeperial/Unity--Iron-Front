@@ -23,6 +23,9 @@ public class EffectsController : MonoBehaviour
     [SerializeField] private GameObject _rifleEffect;
     [SerializeField] private GameObject _deadMechaEffect;
     [SerializeField] private GameObject _hitMechaEffect;
+    [SerializeField] private GameObject _burningMechaEffect;
+    [SerializeField] private GameObject _dustMortarBulletEffect;
+
 
     [Header("Sounds")]
     [SerializeField] private AudioClip _shootGunSound;
@@ -84,6 +87,8 @@ public class EffectsController : MonoBehaviour
                 particle.time = 0f;
                 particle.Play();
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                var effect2 = Instantiate(_burningMechaEffect, obj.transform.position, transform.rotation, transform);
+
                 break;
             
             case EnumsClass.ParticleActionType.Mine:
@@ -105,7 +110,7 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
-            case EnumsClass.ParticleActionType.AssaultRigle:
+            case EnumsClass.ParticleActionType.AssaultRifle:
                 effect = Instantiate(_assaultRifleEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
                 effect.transform.SetParent(obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();
