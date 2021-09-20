@@ -20,7 +20,7 @@ public class Character : EnumsClass, IObservable
     [Header("Team")]
     [SerializeField] protected Team _unitTeam;
     [SerializeField] public Sprite _myIcon;
-    [SerializeField] public string _myName;
+    [SerializeField] protected string _myName;
     
     [Header("Rays")]
     [SerializeField] protected LineRenderer _rayForBody;
@@ -1133,6 +1133,7 @@ public class Character : EnumsClass, IObservable
             
                 if (unit.GetUnitTeam() == _unitTeam) continue;
             
+                if (unit.IsDead()) continue;
                 TurnManager.Instance.UnitCanBeAttacked(unit);
                 _enemiesInRange.Add(unit); 
             }

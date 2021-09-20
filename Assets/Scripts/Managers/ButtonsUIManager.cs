@@ -542,7 +542,8 @@ public class ButtonsUIManager : MonoBehaviour
     public void EndTurn()
     {
         if (_selectedChar != null && _selectedChar.IsMoving()) return;
-        
+        _selectedChar = null;
+        _selectedEnemy = null;
         TurnManager.Instance.EndTurn();
         DeactivateBodyPartsContainer();
         DeactivatePlayerHUD();
@@ -1122,9 +1123,12 @@ public class ButtonsUIManager : MonoBehaviour
 
     private void ActivateBodyPartsContainer()
     {
+        Debug.Log("body parts containter");
         if (_selectedEnemy)
         {
+            Debug.Log("apago body render");
             _selectedChar.bodyRenderContainer.SetActive(false);
+            Debug.Break();
             if (_selectedChar.gunsOffOnCloseUp)
             {
                 _selectedChar.GetLeftGun().ModelsOff();
@@ -1179,8 +1183,10 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (u == _selectedChar || u == _selectedEnemy) continue;
                     
+            Debug.Log("apago GO: " + u.GetCharacterName());
             u.gameObject.SetActive(false);
         }
+        Debug.Break();
         _selectedChar.RaysOffDelay();
 
         WorldUI ui = _selectedEnemy.GetMyUI();

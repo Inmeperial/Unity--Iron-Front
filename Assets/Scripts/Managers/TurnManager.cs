@@ -214,7 +214,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
                 return;
             
             Character c = character.Item1;
-            c.gameObject.name = c._myName;
+            c.gameObject.name = c.GetCharacterName();
 
             FramesUI p = PortraitsController.Instance.SetPortrait(count, c.GetCharacterSprite(), c.GetCharacterName(),
                 () => _cameraMovement.MoveTo(c.transform));

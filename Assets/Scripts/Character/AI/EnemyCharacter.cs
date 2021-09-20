@@ -100,11 +100,12 @@ public class EnemyCharacter : Character
             Tile tile = ClosestTileToEnemy(enemies[i]);
             pathCreator.ResetPath();
             pathCreator.Calculate(_myPositionTile, tile, 1000);
-            
-            
-            
+
             List<Tile> p = pathCreator.GetPath();
-            if (i == 0)
+
+            if (p.Count == 0) continue;
+            
+            if (path.Count == 0)
             {
                 foreach (var t in p)
                 {
@@ -142,7 +143,10 @@ public class EnemyCharacter : Character
                 pathCreator.Calculate(_tilesInMoveRange[j], enemyTile.neighboursForMove[i], 1000);
                 List<Tile> p = pathCreator.GetPath();
             
-                if (i == 0 && j == 0)
+                if (p.Count == 0) continue;
+                
+                //if (i == 0 && j == 0)
+                if (distance == 0)
                 {
                     distance = p.Count;
                 
@@ -150,8 +154,6 @@ public class EnemyCharacter : Character
                     continue;
                 }
 
-                if (p.Count == 0) continue;
-                
                 if (p.Count >= distance) continue;
                 distance = p.Count;
                 
@@ -178,10 +180,10 @@ public class EnemyCharacter : Character
         {
             if (!c.IsDead() && c.GetUnitTeam() != _unitTeam)
             {
+                Debug.Log("enemy team:" + c.GetCharacterName());
                 enemyTeam.Add(c);
             }
         }
-
         return enemyTeam;
     }
 
