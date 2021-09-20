@@ -62,11 +62,12 @@ public class CloseUpCamera : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         transform.position = destination;
+        transform.LookAt(targetToLook);
         if (callback != null)
         {
             callback();
         }
-        transform.LookAt(targetToLook);
+        
     }
     IEnumerator MoveToParent(Vector3 destination, Vector3 targetToLook, Action callback = null, float callbackDelay = 0)
     {

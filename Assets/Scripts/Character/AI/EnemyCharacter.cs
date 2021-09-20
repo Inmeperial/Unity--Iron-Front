@@ -39,9 +39,7 @@ public class EnemyCharacter : Character
 
     public bool CalculateAutoMovement()
     {
-        List<Character> enemyTeam = GetEnemyTeam();
-
-       _closestEnemy = CalculateClosestEnemy(enemyTeam);
+        _closestEnemy = CalculateClosestEnemy();
         
         Tile closestTileToEnemy = ClosestTileToEnemy(_closestEnemy);
         
@@ -86,7 +84,7 @@ public class EnemyCharacter : Character
         return true;
     }
     
-    public Character CalculateClosestEnemy(List<Character> enemies)
+    public Character CalculateClosestEnemy()
     {
         if (!_canAttack && !_canMove) return _closestEnemy;
         if (_closestEnemy != null) return _closestEnemy;
@@ -95,8 +93,11 @@ public class EnemyCharacter : Character
         
         List<Tile> path = new List<Tile>();
         
+        var enemies = GetEnemyTeam();
+        
         for (int i = 0; i < enemies.Count; i++)
         {
+
             Tile tile = ClosestTileToEnemy(enemies[i]);
             pathCreator.ResetPath();
             pathCreator.Calculate(_myPositionTile, tile, 1000);

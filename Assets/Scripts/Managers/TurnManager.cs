@@ -139,6 +139,9 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         }
         _actualCharacter.SetTurn(true);
         _activeTeam = _actualCharacter.GetUnitTeam();
+        if (_activeTeam == Team.Green)
+            CharacterSelection.Instance.ActivateCharacterSelection(true);
+        else CharacterSelection.Instance.ActivateCharacterSelection(false);
         Action toDo = () =>
         {
             ButtonsUIManager.Instance.ActivateEndTurnButton();

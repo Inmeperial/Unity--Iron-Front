@@ -38,10 +38,10 @@ public class AttackAction : GOAction
         
         var rot = _myUnit.InitialRotation;
         _myUnit.RotateTowardsEnemy(closestEnemy.transform.position);
-        bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body");
-        bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LArm");
-        bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RArm");
-        bool legs = _myUnit.RayToPartsForAttack(closestEnemy.GetLegsPosition(), "Legs");
+        bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
+        bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LArm",false);
+        bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RArm", false);
+        bool legs = _myUnit.RayToPartsForAttack(closestEnemy.GetLegsPosition(), "Legs", false);
 
         Dictionary<string, float> parts = new Dictionary<string, float>();
         

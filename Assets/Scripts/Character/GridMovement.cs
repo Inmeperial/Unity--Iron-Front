@@ -118,7 +118,7 @@ public class GridMovement : MonoBehaviour
             _posToRotate = Vector3.zero;
             if (_callback == null) return;
             
-            _callback();
+            _callback?.Invoke();
             _callback = null;
 
             return;
@@ -162,5 +162,10 @@ public class GridMovement : MonoBehaviour
     {
         _rotate = true;
         _callback = callback;
+    }
+
+    public void StopRotation()
+    {
+        _rotate = false;
     }
 }

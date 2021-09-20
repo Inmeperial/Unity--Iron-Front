@@ -134,7 +134,7 @@ public class ButtonsUIManager : MonoBehaviour
             if (_selectedChar && _selectedChar.IsMoving() == false && _selectedEnemy &&
                 Input.GetKeyDown(deselectKey))
             {
-                Debug.Log("deselect update");
+                _selectedChar.ResetRotationOnDeselect();
                 DeselectActions();
                 ClearSelectedEnemy();
             }
@@ -470,7 +470,7 @@ public class ButtonsUIManager : MonoBehaviour
     /// </summary>
     private void Attack()
     {
-        Debug.Log("attacking unit:" + _selectedChar.GetCharacterName());
+        _selectedChar.SetInitialRotation(_selectedChar.transform.rotation);
         Gun gun = _selectedChar.GetSelectedGun();
         _selectedChar.Shoot();
         _selectedEnemy.SetHurtAnimation();
@@ -914,13 +914,18 @@ public class ButtonsUIManager : MonoBehaviour
                 _selectedEnemy.SetSelectedForAttack(true);
                 buttonEndTurn.gameObject.SetActive(false);
                 PortraitsController.Instance.PortraitsActiveState(false);
+
+                Action toDo = () =>
+                {
+                    ActivateBodyPartsContainer();
+                    playerHudContainer.SetActive(false);
+                    _selectedChar.ResetTilesInAttackRange();
+                    _selectedChar.ResetTilesInMoveRange();
+                    _selectedChar.SetSelectingEnemy(true);
+                };
+
+                FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position, toDo);
                 
-                
-                FindObjectOfType<CloseUpCamera>().MoveCameraWithLerp(_selectedEnemy.transform.position, _selectedChar.transform.position, ActivateBodyPartsContainer);
-                playerHudContainer.SetActive(false);
-                _selectedChar.ResetTilesInAttackRange();
-                _selectedChar.ResetTilesInMoveRange();
-                _selectedChar.SetSelectingEnemy(true);
             }
                 
             else DeactivateBodyPartsContainer();
@@ -1123,12 +1128,9 @@ public class ButtonsUIManager : MonoBehaviour
 
     private void ActivateBodyPartsContainer()
     {
-        Debug.Log("body parts containter");
         if (_selectedEnemy)
         {
-            Debug.Log("apago body render");
             _selectedChar.bodyRenderContainer.SetActive(false);
-            Debug.Break();
             if (_selectedChar.gunsOffOnCloseUp)
             {
                 _selectedChar.GetLeftGun().ModelsOff();
@@ -1140,7 +1142,7 @@ public class ButtonsUIManager : MonoBehaviour
 
     private void ActivateParts()
     {
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body") && _selectedEnemy.body.GetCurrentHp() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body", false) && _selectedEnemy.body.GetCurrentHp() > 0)
         {
             _bodyInsight = true;
         }
@@ -1149,7 +1151,7 @@ public class ButtonsUIManager : MonoBehaviour
             _bodyInsight = false;
         }
 
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLArmPosition(), "LArm") && _selectedEnemy.leftArm.GetCurrentHp() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLArmPosition(), "LArm", false) && _selectedEnemy.leftArm.GetCurrentHp() > 0)
         {
             _lArmInsight = true;
         }
@@ -1158,7 +1160,7 @@ public class ButtonsUIManager : MonoBehaviour
             _lArmInsight = false;
         }
 
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetRArmPosition(), "RArm") && _selectedEnemy.rightArm.GetCurrentHp() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetRArmPosition(), "RArm", false) && _selectedEnemy.rightArm.GetCurrentHp() > 0)
         {
             _rArmInsight = true;
         }
@@ -1168,7 +1170,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
 
 
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs") &&_selectedEnemy.legs.GetCurrentHp() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs", false) &&_selectedEnemy.legs.GetCurrentHp() > 0)
         {
             _legsInsight = true;
         }
@@ -1182,11 +1184,9 @@ public class ButtonsUIManager : MonoBehaviour
         foreach (Character u in units)
         {
             if (u == _selectedChar || u == _selectedEnemy) continue;
-                    
-            Debug.Log("apago GO: " + u.GetCharacterName());
+            
             u.gameObject.SetActive(false);
         }
-        Debug.Break();
         _selectedChar.RaysOffDelay();
 
         WorldUI ui = _selectedEnemy.GetMyUI();

@@ -113,17 +113,18 @@ public class CharacterSelection : MonoBehaviour
             _enemySelection = c;
             if (_selection && _selection.CanAttack())
             {
+                _selection.SetRotationBeforeAttack(_selection.transform.rotation);
                 _selection.RotateTowardsEnemy(_enemySelection.transform.position);
-                bool body = _selection.RayToPartsForAttack(_enemySelection.GetBodyPosition(), "Body") &&
+                bool body = _selection.RayToPartsForAttack(_enemySelection.GetBodyPosition(), "Body", false) &&
                            _enemySelection.body.GetCurrentHp() > 0;
                 
-                bool lArm = _selection.RayToPartsForAttack(_enemySelection.GetLArmPosition(), "LArm") &&
+                bool lArm = _selection.RayToPartsForAttack(_enemySelection.GetLArmPosition(), "LArm", false) &&
                            _enemySelection.leftArm.GetCurrentHp() > 0;
                 
-                bool rArm= _selection.RayToPartsForAttack(_enemySelection.GetRArmPosition(), "RArm") &&
+                bool rArm= _selection.RayToPartsForAttack(_enemySelection.GetRArmPosition(), "RArm", false) &&
                           _enemySelection.rightArm.GetCurrentHp() > 0;
                 
-                bool legs =  _selection.RayToPartsForAttack(_enemySelection.GetLegsPosition(), "Legs") &&
+                bool legs =  _selection.RayToPartsForAttack(_enemySelection.GetLegsPosition(), "Legs", false) &&
                             _enemySelection.legs.GetCurrentHp() > 0;
 
                 if (body || lArm || rArm || legs)

@@ -29,14 +29,15 @@ public class CheckPartsInSight : GOCondition
         Character closestEnemy = _myUnit.GetClosestEnemy();
         var rot = _myUnit.InitialRotation;
         _myUnit.RotateTowardsEnemy(closestEnemy.transform.position);
-        bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body");
-        bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LArm");
-        bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RArm");
-        bool legs = _myUnit.RayToPartsForAttack(closestEnemy.GetLegsPosition(), "Legs");
+        bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
+        bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LArm", false);
+        bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RArm", false);
+        bool legs = _myUnit.RayToPartsForAttack(closestEnemy.GetLegsPosition(), "Legs", false);
 
         if (body || leftArm || rightArm || legs)
             _myUnit.checkedParts = true;
-        _myUnit.ResetRotationAndRays(rot);
+        //_myUnit.ResetRotationAndRays(rot);
+        _myUnit.ResetRotationAndRays();
         return body || leftArm || rightArm || legs;
         }
 }

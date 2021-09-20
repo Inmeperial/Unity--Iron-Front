@@ -39,7 +39,7 @@ public class FindClosestEnemy : GOAction
 
 
         _myUnit.OnStartAction();
-        var enemy = _myUnit.CalculateClosestEnemy(TurnManager.Instance.GetEnemies(_myUnit.GetUnitTeam()));
+        var enemy = _myUnit.CalculateClosestEnemy();
         _myUnit.SetClosestEnemy(enemy);
         _myUnit.OnEndAction();
         
