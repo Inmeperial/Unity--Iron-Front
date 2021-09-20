@@ -33,7 +33,7 @@ public class Character : EnumsClass, IObservable
 
     [Header("Body")] 
     public Body body;
-    [SerializeField] protected Transform _bodyTransform;
+    protected Transform _bodyTransform;
 
     [Header("Left Arm")]
     public Arm leftArm;
@@ -51,8 +51,8 @@ public class Character : EnumsClass, IObservable
     
     [Header("Legs")] 
     public Legs legs;
-    [SerializeField] protected Transform _legsTransform;
-    [SerializeField] protected int _currentSteps;
+    protected Transform _legsTransform;
+    protected int _currentSteps;
     #endregion
 
     protected Gun _selectedGun;
@@ -69,6 +69,7 @@ public class Character : EnumsClass, IObservable
     protected List<Tile> _path = new List<Tile>();
 	public Quaternion InitialRotation { get; private set; }//Cambio Nico
 
+    [HideInInspector]
     public bool legsOvercharged;
 
     //FLAGS
@@ -76,7 +77,7 @@ public class Character : EnumsClass, IObservable
     protected bool _selected;
     protected bool _moving = false;
     protected bool _canMove = true;
-    [SerializeField] protected bool _canAttack = true;
+    protected bool _canAttack = true;
     protected bool _leftArmAlive;
     protected bool _rightArmAlive;
     protected bool _canBeAttacked = false;
@@ -105,7 +106,7 @@ public class Character : EnumsClass, IObservable
     
 	[HideInInspector]
 	public TileHighlight highlight;
-
+    [HideInInspector]
     public List<Equipable> equipables = new List<Equipable>();
     protected virtual void Awake()
     {
@@ -209,6 +210,9 @@ public class Character : EnumsClass, IObservable
 
         _selected = false;
         _canBeSelected = body.GetCurrentHp() > 0;
+        
+        _bodyTransform = body.transform;
+        _legsTransform = legs.transform;
     }
 
     // Update is called once per frame

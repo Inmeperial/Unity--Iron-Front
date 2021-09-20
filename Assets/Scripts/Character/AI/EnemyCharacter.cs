@@ -6,8 +6,10 @@ using UnityEngine;
 public class EnemyCharacter : Character
 {
     private BehaviorExecutor _behaviorExecutor;
-    public bool checkedParts;
     private Character _closestEnemy;
+    [HideInInspector]
+    public bool checkedParts;
+    
     protected override void Awake()
     {
         base.Awake();
@@ -84,8 +86,11 @@ public class EnemyCharacter : Character
         return true;
     }
     
-    private Character CalculateClosestEnemy(List<Character> enemies) 
+    public Character CalculateClosestEnemy(List<Character> enemies)
     {
+        if (!_canAttack && !_canMove) return _closestEnemy;
+        if (_closestEnemy != null) return _closestEnemy;
+        
         Character closestEnemy = null;
         
         List<Tile> path = new List<Tile>();
@@ -130,27 +135,34 @@ public class EnemyCharacter : Character
         Tile enemyTile = character.GetMyPositionTile();
         for (int i = 0; i < enemyTile.neighboursForMove.Count; i++)
         {
-            pathCreator.ResetPath();
-            
-            if (_tilesInMoveRange.Count > 0)
-                pathCreator.Calculate(_tilesInMoveRange[i], enemyTile.neighboursForMove[i], 1000);
-            else pathCreator.Calculate(_myPositionTile.allNeighbours[i], enemyTile.neighboursForMove[i], 1000);
-            List<Tile> p = pathCreator.GetPath();
-            
-            if (i == 0)
+            for (int j = 0; j < _tilesInMoveRange.Count; j++)
             {
+                pathCreator.ResetPath();
+                
+                pathCreator.Calculate(_tilesInMoveRange[j], enemyTile.neighboursForMove[i], 1000);
+                List<Tile> p = pathCreator.GetPath();
+            
+                if (i == 0 && j == 0)
+                {
+                    distance = p.Count;
+                
+                    closest = p[p.Count-1];
+                    continue;
+                }
+
+                if (p.Count == 0) continue;
+                
+                if (p.Count >= distance) continue;
                 distance = p.Count;
                 
                 closest = p[p.Count-1];
-                continue;
             }
-
-            if (p.Count >= distance) continue;
-            distance = p.Count;
-
-            if (p.Count == 0)
-                return closest;
-            closest = p[p.Count-1];
+            
+            
+            // if (_tilesInMoveRange.Count > 0 && _tilesInMoveRange.Count < i)
+            //     pathCreator.Calculate(_tilesInMoveRange[i], enemyTile.neighboursForMove[i], 1000);
+            // else pathCreator.Calculate(_myPositionTile.allNeighbours[i], enemyTile.neighboursForMove[i], 1000);
+            
         }
 
         return closest;
@@ -171,6 +183,11 @@ public class EnemyCharacter : Character
         }
 
         return enemyTeam;
+    }
+
+    public void SetClosestEnemy(Character character)
+    {
+        _closestEnemy = character;
     }
 
     public Character GetClosestEnemy()

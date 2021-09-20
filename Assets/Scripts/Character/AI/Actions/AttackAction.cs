@@ -31,6 +31,7 @@ public class AttackAction : GOAction
             }
         }
 
+        _myUnit.OnStartAction();
         Character closestEnemy = _myUnit.GetClosestEnemy();
         ButtonsUIManager.Instance.SetPlayerCharacter(_myUnit);
         ButtonsUIManager.Instance.SetEnemy(closestEnemy);
@@ -89,6 +90,7 @@ public class AttackAction : GOAction
                 Debug.Log("sin partes para atacar");
                 break;
         }
+        _myUnit.OnEndAction();
         return TaskStatus.COMPLETED;
 
     }
