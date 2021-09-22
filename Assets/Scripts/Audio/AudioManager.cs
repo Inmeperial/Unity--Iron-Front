@@ -154,6 +154,7 @@ public class AudioManager : MonoBehaviour
         // ----------
 
         aSource.clip = sound.clip;
+        aSource.outputAudioMixerGroup = _mixer;
         aSource.Play();
     }
 
@@ -172,6 +173,7 @@ public class AudioManager : MonoBehaviour
         aSource.loop = sound.loop;
         aSource.playOnAwake = true;
         aSource.spatialBlend = 0;
+        aSource.outputAudioMixerGroup = _mixer;
         aSource.Play();
     }
 
@@ -215,6 +217,7 @@ public class AudioManager : MonoBehaviour
         aSource.maxDistance = 130f;
         aSource.rolloffMode = AudioRolloffMode.Linear;
         aSource.playOnAwake = true;
+        aSource.outputAudioMixerGroup = _mixer;
         aSource.Play();
     }
 
