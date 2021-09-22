@@ -17,6 +17,7 @@ public class WorkshopCamera : MonoBehaviour
     {
         transform.position = _startPosition.position;
         transform.LookAt(_firstTargetToLook);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void Start()
