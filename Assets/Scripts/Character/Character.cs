@@ -1194,14 +1194,15 @@ public class Character : EnumsClass, IObservable
 
     private void OnMouseOver()
     {
+        if (Cursor.lockState == CursorLockMode.Locked) return;
+        
         if (!_selectedForAttack && _canBeSelected)
             ShowWorldUI();
-
-        //Cambio Nico
+        
         if (_canBeAttacked && !_selectedForAttack)
         {
             RotateWithRays();
-        } //me tendría que dar true si soy enemigo de la unidad actual y estoy en su rango de ataque. Tengo que poner otro chequeo para que no se prendan cuando estoy atacando.
+        }
             
 
     }
@@ -1209,26 +1210,23 @@ public class Character : EnumsClass, IObservable
     private void OnMouseExit()
     {
         HideWorldUI();
-
-        //Cambio Nico
+        
         if (_canBeAttacked)
         {
             ResetRotationAndRays();
-        } // me tendría que dar true si soy enemigo de la unidad actual y estoy en su rango de ataque
+        } 
             
     }
 
     private void RotateWithRays()
     {
-        //Tengo que rotar a la unidad que es su turno hacia el enemigo este que pongo el mouse por encima
         Character c = CharacterSelection.Instance.GetSelectedCharacter();
         if (!c._selected) return;
         
         if (c.rotated) return;
         c.rotated = true;
         c.SetInitialRotation(c.transform.rotation);
-        c.RotateTowardsEnemy(transform.position); //Roto a la unidad seleccionada(la que esta haciendo su turno) hacia mi, su enemigo
-        //Tengo que prender los line renderers de los raycasts
+        c.RotateTowardsEnemy(transform.position);
         bool _body = c.RayToPartsForAttack(GetBodyPosition(), "Body", true) && body.GetCurrentHp() > 0;
         bool _lArm = c.RayToPartsForAttack(GetLArmPosition(), "LArm", true) && leftArm.GetCurrentHp() > 0;
         bool _rArm = c.RayToPartsForAttack(GetRArmPosition(), "RArm", true) && rightArm.GetCurrentHp() > 0;

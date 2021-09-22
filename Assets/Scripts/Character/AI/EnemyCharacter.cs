@@ -181,7 +181,6 @@ public class EnemyCharacter : Character
         {
             if (!c.IsDead() && c.GetUnitTeam() != _unitTeam)
             {
-                Debug.Log("enemy team:" + c.GetCharacterName());
                 enemyTeam.Add(c);
             }
         }

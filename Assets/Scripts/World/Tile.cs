@@ -171,6 +171,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseOver()
     {
+        if (Cursor.lockState == CursorLockMode.Locked) return;
         MouseOverColor();
     }
 

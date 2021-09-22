@@ -54,8 +54,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     {
         SeparateByTeam(_allUnits);
         _highlight = FindObjectOfType<TileHighlight>();
-        _buttonsUIManager = FindObjectOfType<ButtonsUIManager>();
-        _activeTeam = Team.Green;
+        //_activeTeam = Team.Green;
 
         Mortar[] mortars = FindObjectsOfType<Mortar>();
         foreach (Mortar mortar in mortars)
@@ -71,13 +70,39 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         _actionsDic.Add("GreenDead", GreenUnitDied);
         _actionsDic.Add("RedDead", RedUnitDied);
         
+        
         Action toDo = () =>
         {
-            ButtonsUIManager.Instance.ActivateEndTurnButton();
             _actualCharacter.SetTurn(true);
             CharacterSelection.Instance.Selection(_actualCharacter);
-            
         };
+        if (_activeTeam == Team.Green)
+        {
+            CharacterSelection.Instance.ActivateCharacterSelection(true);
+            
+            Cursor.lockState = CursorLockMode.None;
+            
+            ButtonsUIManager.Instance.RightWeaponCircleState(true);
+            ButtonsUIManager.Instance.LeftWeaponCircleState(true);
+            ButtonsUIManager.Instance.RightWeaponBarButtonState(true);
+            ButtonsUIManager.Instance.LeftWeaponBarButtonState(true);
+            
+            toDo += () => ButtonsUIManager.Instance.ActivateEndTurnButton();
+        }
+        else
+        {
+            CharacterSelection.Instance.ActivateCharacterSelection(false);
+            
+            Cursor.lockState = CursorLockMode.Locked;
+            
+            ButtonsUIManager.Instance.DeactivateEndTurnButton();
+            
+            ButtonsUIManager.Instance.RightWeaponCircleState(false);
+            ButtonsUIManager.Instance.LeftWeaponCircleState(false);
+            ButtonsUIManager.Instance.RightWeaponBarButtonState(false);
+            ButtonsUIManager.Instance.LeftWeaponBarButtonState(false);
+            
+        }
         _cameraMovement.MoveTo(_actualCharacter.transform, toDo, _actualCharacter.transform);
     }
 
@@ -137,16 +162,34 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             yield return new WaitForSeconds(1);
             _actualCharacter = _currentTurnOrder[0];
         }
+
+        Action toDo = () => CharacterSelection.Instance.Selection(_actualCharacter);
         _actualCharacter.SetTurn(true);
         _activeTeam = _actualCharacter.GetUnitTeam();
         if (_activeTeam == Team.Green)
-            CharacterSelection.Instance.ActivateCharacterSelection(true);
-        else CharacterSelection.Instance.ActivateCharacterSelection(false);
-        Action toDo = () =>
         {
-            ButtonsUIManager.Instance.ActivateEndTurnButton();
-            CharacterSelection.Instance.Selection(_actualCharacter);
-        };
+            CharacterSelection.Instance.ActivateCharacterSelection(true);
+            Cursor.lockState = CursorLockMode.None;
+            
+            ButtonsUIManager.Instance.RightWeaponCircleState(true);
+            ButtonsUIManager.Instance.LeftWeaponCircleState(true);
+            ButtonsUIManager.Instance.RightWeaponBarButtonState(true);
+            ButtonsUIManager.Instance.LeftWeaponBarButtonState(true);
+            
+            toDo += () => ButtonsUIManager.Instance.ActivateEndTurnButton();
+        }
+        else
+        {
+            CharacterSelection.Instance.ActivateCharacterSelection(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            ButtonsUIManager.Instance.DeactivateEndTurnButton();
+            
+            ButtonsUIManager.Instance.RightWeaponCircleState(false);
+            ButtonsUIManager.Instance.LeftWeaponCircleState(false);
+            ButtonsUIManager.Instance.RightWeaponBarButtonState(false);
+            ButtonsUIManager.Instance.LeftWeaponBarButtonState(false);
+        }
+         
         _cameraMovement.MoveTo(_actualCharacter.transform, toDo, _actualCharacter.transform);
     }
 
@@ -226,41 +269,6 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             PortraitsController.Instance.AddCharAndFrame(Tuple.Create(c,p));
         }
     }
-
-    // public void OrderTurns()
-    // {
-    //     Dictionary<Character, int> previous = new Dictionary<Character, int>();
-    //
-    //     for (var i = 0; i < _currentTurnOrder.Count; i++)
-    //     {
-    //         Character character = _currentTurnOrder[i];
-    //         previous.Add(character, i);
-    //     }
-    //
-    //     List<Tuple<Character, float>> ordered = GetOrderedUnits();
-    //     
-    //     int pos = 0;
-    //     for (int i = 0; i < ordered.Count; i++)
-    //     {
-    //         if (ordered[i].Item1 == _actualCharacter)
-    //         {
-    //             pos = i;
-    //             break;
-    //         }
-    //     }
-    //
-    //     Tuple<Character, float> c = ordered[pos];
-    //     ordered.RemoveAt(pos);
-    //     ordered.Insert(0, c);
-    //     _currentTurnOrder.Clear();
-    //
-    //     for (int i = 0; i < ordered.Count; i++)
-    //     {
-    //         Character character = ordered[i].Item1;
-    //         _currentTurnOrder.Add(character);
-    //         PortraitsController.Instance.MovePortrait(character, previous[character], i);
-    //     }
-    // }
 
     public void ReducePosition(Character unit)
     {

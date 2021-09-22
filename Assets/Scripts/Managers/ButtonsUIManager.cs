@@ -52,6 +52,8 @@ public class ButtonsUIManager : MonoBehaviour
     public TextMeshProUGUI rightGunHitChanceText;
     public GameObject leftWeaponCircle;
     public GameObject rightWeaponCircle;
+    public Button leftWeaponBar;
+    public Button rightWeaponBar;
     //public EquipmentButton equipmentButton;
     public EquipmentButton[] equipmentButtons;
 
@@ -129,6 +131,8 @@ public class ButtonsUIManager : MonoBehaviour
 
     private void Update()
     {
+        if (Cursor.lockState == CursorLockMode.Locked) return;
+        
         if (EventSystem.current.IsPointerOverGameObject() == false)
         {
             if (_selectedChar && _selectedChar.IsMoving() == false && _selectedEnemy &&
@@ -441,7 +445,7 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (!_selectedEnemy) return;
         
-        buttonEndTurn.gameObject.SetActive(false);
+        DeactivateEndTurnButton();
         var cam = FindObjectOfType<CloseUpCamera>();
         WorldUI ui = _selectedEnemy.GetMyUI();
         ui.SetLimits(_selectedEnemy.body.GetMaxHp(), _selectedEnemy.rightArm.GetCurrentHp(), _selectedEnemy.leftArm.GetCurrentHp(), _selectedEnemy.legs.GetMaxHp());
@@ -534,7 +538,9 @@ public class ButtonsUIManager : MonoBehaviour
         
         _selectedEnemy.SetSelectedForAttack(false);
         PortraitsController.Instance.PortraitsActiveState(true);
-        buttonEndTurn.gameObject.SetActive(true);
+        
+        if (_selectedChar.GetUnitTeam() == EnumsClass.Team.Green)
+            ActivateEndTurnButton();
         DeselectActions();
         CharacterSelection.Instance.Selection(_selectedChar);
     }
@@ -601,7 +607,9 @@ public class ButtonsUIManager : MonoBehaviour
         CharacterSelection.Instance.ActivateCharacterSelection(true);
 
         DeactivateBodyPartsContainer();
-        buttonEndTurn.gameObject.SetActive(true);
+
+        if (TurnManager.Instance.GetActiveTeam() == EnumsClass.Team.Green)
+            ActivateEndTurnButton();
         buttonExecuteAttack.gameObject.SetActive(false);
         PortraitsController.Instance.PortraitsActiveState(true);
     }
@@ -912,7 +920,7 @@ public class ButtonsUIManager : MonoBehaviour
             if (_selectedChar.CanAttack() && _selectedEnemy.CanBeAttacked())
             {
                 _selectedEnemy.SetSelectedForAttack(true);
-                buttonEndTurn.gameObject.SetActive(false);
+                DeactivateEndTurnButton();
                 PortraitsController.Instance.PortraitsActiveState(false);
 
                 Action toDo = () =>
@@ -1118,11 +1126,13 @@ public class ButtonsUIManager : MonoBehaviour
     
     public void ActivateEndTurnButton()
     {
+        Debug.Log("activate end");
         buttonEndTurn.gameObject.SetActive(true);
     }
 
     public void DeactivateEndTurnButton()
     {
+        Debug.Log("deactivate end");
         buttonEndTurn.gameObject.SetActive(false);
     }
 
@@ -1226,10 +1236,21 @@ public class ButtonsUIManager : MonoBehaviour
         button.interactable = state;
     }
 
-    // public void UpdateItemButtonName()
-    // {
-    //     var item = _selectedChar.GetItem();
-    //     equipmentButton.SetItemButtonName(item.GetItemName() + " x" + item.GetItemUses());
-    // }
+    public void RightWeaponCircleState(bool state)
+    {
+        rightWeaponCircle.transform.parent.gameObject.SetActive(state);
+    }
+    public void LeftWeaponCircleState(bool state)
+    {
+        leftWeaponCircle.transform.parent.gameObject.SetActive(state);
+    }
+    public void RightWeaponBarButtonState(bool state)
+    {
+        rightWeaponBar.enabled = state;
+    }
+    public void LeftWeaponBarButtonState(bool state)
+    {
+        leftWeaponBar.enabled = state;
+    }
     #endregion
 }
