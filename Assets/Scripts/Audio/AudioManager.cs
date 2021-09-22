@@ -5,11 +5,14 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField]
+    private AudioMixerGroup _mixer;
+    [SerializeField]
     private Sound[] _sounds;
     [SerializeField]
     private Sound[] _environmentalSounds;
     [SerializeField]
     private Sound[] _environmentalFXSounds;
+
 
     public static AudioManager audioManagerInstance;
     private bool _isFadeOutOn = false;
@@ -136,60 +139,89 @@ public class AudioManager : MonoBehaviour
 
     private void PlayCustomSound(Sound sound, AudioSource aSource)
     {
-        sound.source = aSource;
-        sound.source.clip = sound.clip;
-        sound.source.playOnAwake = aSource.playOnAwake;
-        sound.source.rolloffMode = aSource.rolloffMode;
-        sound.source.Play();
-        sound.source = aSource;
+        //sound.source = aSource;
+        //sound.source.clip = sound.clip;
+        //sound.source.playOnAwake = aSource.playOnAwake;
+        //sound.source.rolloffMode = aSource.rolloffMode;
+        //sound.source.Play();
 
         //sound.source.volume = sound.volume;
         //sound.source.loop = sound.loop;
         //sound.source.playOnAwake = true;
         //sound.source.spatialBlend = 0;
         //sound.source.Play();
+
+        // ----------
+
+        aSource.clip = sound.clip;
+        aSource.Play();
     }
 
     private void PlayFXSound(AudioSource aSource, Sound sound)
     {
-        sound.source = aSource;
-        sound.source.clip = sound.clip;
-        sound.source.volume = sound.volume;
-        sound.source.loop = sound.loop;
-        sound.source.playOnAwake = true;
-        sound.source.spatialBlend = 0;
-        sound.source.Play();
+        //sound.source = aSource;
+        //sound.source.clip = sound.clip;
+        //sound.source.volume = sound.volume;
+        //sound.source.loop = sound.loop;
+        //sound.source.playOnAwake = true;
+        //sound.source.spatialBlend = 0;
+        //sound.source.Play();
+
+        aSource.clip = sound.clip;
+        aSource.volume = sound.volume;
+        aSource.loop = sound.loop;
+        aSource.playOnAwake = true;
+        aSource.spatialBlend = 0;
+        aSource.Play();
     }
 
     private void PlayEnvironmentalSound(AudioSource aSource, Sound sound)
     {
-        sound.source = aSource;
-        sound.source.clip = sound.clip;
-        sound.source.volume = sound.volume;
-        sound.source.loop = sound.loop;
-        sound.source.playOnAwake = true;
-        sound.source.spatialBlend = 0;
-        sound.source.Play();
+        //sound.source = aSource;
+        //sound.source.clip = sound.clip;
+        //sound.source.volume = sound.volume;
+        //sound.source.loop = sound.loop;
+        //sound.source.playOnAwake = true;
+        //sound.source.spatialBlend = 0;
+        //sound.source.Play();
+
+        aSource.clip = sound.clip;
+        aSource.volume = sound.volume;
+        aSource.loop = sound.loop;
+        aSource.playOnAwake = true;
+        aSource.spatialBlend = 0;
+        aSource.outputAudioMixerGroup = _mixer;
+        aSource.Play();
     }
 
     private void PlayEnvironmentalFXSound(AudioSource aSource, Sound sound)
     {
-        sound.source = aSource;
-        sound.source.clip = sound.clip;
-        sound.source.volume = sound.volume;
-        sound.source.loop = sound.loop;
-        sound.source.spatialBlend = 1;
-        sound.source.minDistance = 5f;
-        sound.source.maxDistance = 130f;
-        sound.source.rolloffMode = AudioRolloffMode.Linear;
-        sound.source.playOnAwake = true;
-        sound.source.Play();
+        //sound.source = aSource;
+        //sound.source.clip = sound.clip;
+        //sound.source.volume = sound.volume;
+        //sound.source.loop = sound.loop;
+        //sound.source.spatialBlend = 1;
+        //sound.source.minDistance = 5f;
+        //sound.source.maxDistance = 130f;
+        //sound.source.rolloffMode = AudioRolloffMode.Linear;
+        //sound.source.playOnAwake = true;
+        //sound.source.Play();
+
+        aSource.clip = sound.clip;
+        aSource.volume = sound.volume;
+        aSource.loop = sound.loop;
+        aSource.spatialBlend = 1;
+        aSource.minDistance = 5f;
+        aSource.maxDistance = 130f;
+        aSource.rolloffMode = AudioRolloffMode.Linear;
+        aSource.playOnAwake = true;
+        aSource.Play();
     }
-    
+
     private AudioSource GetOrSetAudioSourceFromObj(GameObject target)
     {
         AudioSource audioSource = new AudioSource();
-        var targetAudio = target.GetComponent<AudioSource>(); 
+        var targetAudio = target.GetComponent<AudioSource>();
         if (targetAudio)
         {
             //Debug.Log("target tiene audiosource " + target.name);
@@ -202,6 +234,24 @@ public class AudioManager : MonoBehaviour
         }
         return audioSource;
     }
+
+    //public void Pause(SoundID cSoundID)
+    //{
+    //    if (!channels[(int)cSoundID].isPlaying) return;
+
+    //    channels[(int)cSoundID].Pause();
+    //}
+
+
+    //public void Resume(SoundID cSoundID)
+    //{
+    //    channels[(int)cSoundID].UnPause();
+    //}
+
+    //public void Mute(SoundID cSoundID)
+    //{
+    //    channels[(int)cSoundID].mute = !channels[(int)cSoundID].mute;
+    //}
 
     // private AudioSource GetOrSetAudioSourceFromObj(GameObject target)
     // {

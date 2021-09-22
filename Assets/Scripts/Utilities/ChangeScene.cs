@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoBehaviour
 {
-	public KeyCode changeWorkshopKey;
-	private void Update()
-	{
+    //public KeyCode changeWorkshopKey;
+
+    private void Update()
+    {
+        /*
 		if (Input.GetKeyDown(KeyCode.F1))
 			SceneManager.LoadScene("Level");
 
@@ -18,27 +20,37 @@ public class ChangeScene : MonoBehaviour
 		
 		if (Input.GetKeyDown(KeyCode.F3))
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-	}
+		*/
+    }
 
-	public void LoadGame()
-	{
-		SceneManager.LoadScene("Level");
-	}
+    public void LoadGame()
+    {
+        SceneManager.LoadScene("Level");
+    }
 
-	public void Win()
-	{
-		SceneManager.LoadScene("Win");
-	}
+    public void LoadWorkShop()
+    {
+        SceneManager.LoadScene("TallerScene");
+    }
 
-	public void Defeat()
-	{
-		SceneManager.LoadScene("Defeat");
-	}
+    public void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
+    public void Win()
+    {
+        SceneManager.LoadScene("Win");
+    }
 
-	public void Quit()
-	{
-		Debug.Log("Bye");
-		Application.Quit();
-	}
+    public void Defeat()
+    {
+        SceneManager.LoadScene("Defeat");
+    }
+
+    public void Quit()
+    {
+        Debug.Log("Bye");
+        Application.Quit();
+    }
 }

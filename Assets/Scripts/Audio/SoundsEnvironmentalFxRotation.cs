@@ -9,14 +9,7 @@ public class SoundsEnvironmentalFxRotation : MonoBehaviour
     public float maxWaitTimeBetweenSounds = 6f;
     public AudioClip[] soundsEnvironmentalFxArray;
     private float _durationSound = 1;
-
-    /*
-        TO-DO
-        Ver de normalizar los audios en el vegas.
-     */
-
-
-
+    
     void Start()
     {
         ChangeRandomPosition();

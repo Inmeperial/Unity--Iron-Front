@@ -9,7 +9,7 @@ public class DamageText : MonoBehaviour
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _fadeSpeed;
     [SerializeField] private Color _normalHitColor;
-    [SerializeField] private float _normalHitFontSize;
+    [SerializeField] private float _normalHitFontSize = default;
     [SerializeField] private Color _criticalHitColor;
     [SerializeField] private float _criticalHitFontSize;
     [SerializeField] private Color _missColor;
