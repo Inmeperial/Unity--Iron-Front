@@ -64,8 +64,6 @@ public class AttackAction : GOAction
                 partToAttack = part.Key;
             }
         }
-        
-        Debug.Log("part to attack: " + partToAttack);
 
         var gun = _myUnit.GetSelectedGun();
         switch (partToAttack)

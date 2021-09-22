@@ -11527,7 +11527,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5682944921627050796
 Transform:
@@ -11574,6 +11574,8 @@ MonoBehaviour:
   rightGunHitChanceText: {fileID: 5406847287610801584}
   leftWeaponCircle: {fileID: 7920446667666300467}
   rightWeaponCircle: {fileID: 6262962569331772227}
+  leftWeaponBar: {fileID: 1125373559271943500}
+  rightWeaponBar: {fileID: 2804876751312710529}
   equipmentButtons: []
   playerBodyCurrHp: {fileID: 1695923762599544170}
   playerBodySlider: {fileID: 3449432524510837758}

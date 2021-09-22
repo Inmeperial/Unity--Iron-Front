@@ -160,12 +160,6 @@ public class EnemyCharacter : Character
                 
                 closest = p[p.Count-1];
             }
-            
-            
-            // if (_tilesInMoveRange.Count > 0 && _tilesInMoveRange.Count < i)
-            //     pathCreator.Calculate(_tilesInMoveRange[i], enemyTile.neighboursForMove[i], 1000);
-            // else pathCreator.Calculate(_myPositionTile.allNeighbours[i], enemyTile.neighboursForMove[i], 1000);
-            
         }
 
         return closest;
@@ -181,7 +175,6 @@ public class EnemyCharacter : Character
         {
             if (!c.IsDead() && c.GetUnitTeam() != _unitTeam)
             {
-                Debug.Log("enemy team:" + c.GetCharacterName());
                 enemyTeam.Add(c);
             }
         }
@@ -213,11 +206,17 @@ public class EnemyCharacter : Character
     {
         _behaviorExecutor.paused = true;
         checkedParts = false;
-        //_behaviorExecutor.restartWhenFinished = true;
     }
 
     public void OnEndAction()
     {
         _behaviorExecutor.paused = false;
+    }
+
+    public void ForceEnd()
+    {
+        _behaviorExecutor.paused = true;
+        checkedParts = false;
+        _closestEnemy = null;
     }
 }
