@@ -1126,13 +1126,11 @@ public class ButtonsUIManager : MonoBehaviour
     
     public void ActivateEndTurnButton()
     {
-        Debug.Log("activate end");
         buttonEndTurn.gameObject.SetActive(true);
     }
 
     public void DeactivateEndTurnButton()
     {
-        Debug.Log("deactivate end");
         buttonEndTurn.gameObject.SetActive(false);
     }
 

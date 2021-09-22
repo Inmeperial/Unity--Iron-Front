@@ -106,6 +106,26 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         _cameraMovement.MoveTo(_actualCharacter.transform, toDo, _actualCharacter.transform);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            ForceEndTurn();
+        }
+    }
+
+    private void ForceEndTurn()
+    {
+        if (_actualCharacter.GetUnitTeam() == Team.Red)
+        {
+            EnemyCharacter ai = _actualCharacter as EnemyCharacter;
+            
+            if (ai)
+                ai.ForceEnd();
+        }
+        EndTurn();
+    }
+
     public void UnitIsMoving()
     {
         CharacterSelection.Instance.ActivateCharacterSelection(false);
