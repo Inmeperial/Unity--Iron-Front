@@ -37,7 +37,7 @@ public class CameraMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Update()
+    public void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.KeypadPlus))
         {
@@ -64,9 +64,9 @@ public class CameraMovement : MonoBehaviour
 
 
         if (Input.GetKey(KeyCode.E))
-            transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
+            transform.Rotate(new Vector3(0, -rotationSpeed * Time.fixedDeltaTime, 0));
         if (Input.GetKey(KeyCode.Q))
-            transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
+            transform.Rotate(new Vector3(0, rotationSpeed * Time.fixedDeltaTime, 0));
 
         if (_gameCam.transform.localPosition != _camInitialPos)
             _gameCam.transform.localPosition = _camInitialPos;
