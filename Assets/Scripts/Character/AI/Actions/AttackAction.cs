@@ -37,7 +37,8 @@ public class AttackAction : GOAction
         ButtonsUIManager.Instance.SetEnemy(closestEnemy);
         
         var rot = _myUnit.InitialRotation;
-        _myUnit.RotateTowardsEnemy(closestEnemy.transform.position);
+        //_myUnit.RotateTowardsEnemy(closestEnemy.transform.position);
+        _myUnit.transform.LookAt(closestEnemy.transform);
         bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
         bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LArm",false);
         bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RArm", false);

@@ -1235,7 +1235,8 @@ public class Character : EnumsClass, IObservable
         if (c.rotated) return;
         c.rotated = true;
         c.SetInitialRotation(c.transform.rotation);
-        c.RotateTowardsEnemy(transform.position);
+        //c.RotateTowardsEnemy(transform.position);
+        c.transform.LookAt(transform.position);
         bool _body = c.RayToPartsForAttack(GetBodyPosition(), "Body", true) && body.GetCurrentHp() > 0;
         bool _lArm = c.RayToPartsForAttack(GetLArmPosition(), "LArm", true) && leftArm.GetCurrentHp() > 0;
         bool _rArm = c.RayToPartsForAttack(GetRArmPosition(), "RArm", true) && rightArm.GetCurrentHp() > 0;
@@ -1248,7 +1249,7 @@ public class Character : EnumsClass, IObservable
         if (c == null) return;
         
         c.rotated = false;
-        c._move.StopRotation();
+        //c._move.StopRotation();
         c.transform.rotation = c.InitialRotation; //Volver la rotación del mecha a InitialRotation, esto podría ser más smooth
         c.RaysOff(); //Apago los raycasts cuando saco el mouse
     }
