@@ -36,7 +36,7 @@ public class AttackAction : GOAction
         ButtonsUIManager.Instance.SetPlayerCharacter(_myUnit);
         ButtonsUIManager.Instance.SetEnemy(closestEnemy);
         
-        var rot = _myUnit.InitialRotation;
+        var initialRotation = _myUnit.InitialRotation;
         //_myUnit.RotateTowardsEnemy(closestEnemy.transform.position);
         _myUnit.transform.LookAt(closestEnemy.transform);
         bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
@@ -86,6 +86,7 @@ public class AttackAction : GOAction
                 break;
             
             case "DEFAULT":
+                _myUnit.transform.rotation = initialRotation;
                 Debug.Log("sin partes para atacar");
                 break;
         }
