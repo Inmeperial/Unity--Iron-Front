@@ -130,11 +130,9 @@ public class Character : EnumsClass, IObservable
         leftArm.SetPart();
         legs.SetPart();
         _leftArmAlive = leftArm.GetCurrentHp() > 0 ? true : false;
-        Debug.Log(_myName + " leftarm hp: " + leftArm.GetCurrentHp());
         _leftGun = equipmentSpawn.SpawnGun(_leftGunType, Vector3.zero, _leftGunSpawn.transform);
         if (_leftGun)
         {
-            Debug.Log(_myName + " tengo left gun");
             _leftGun.gameObject.tag = "LArm";
             _leftGun.SetGun();
             _leftGun.StartRoulette();
@@ -142,11 +140,9 @@ public class Character : EnumsClass, IObservable
         }
         rightArm.SetPart();
         _rightArmAlive = rightArm.GetCurrentHp() > 0 ? true : false;
-        Debug.Log(_myName + " right hp: " + rightArm.GetCurrentHp());
         _rightGun = equipmentSpawn.SpawnGun(_rightGunType, Vector3.zero, _rightGunSpawn.transform);
         if (_rightGun)
         {
-            Debug.Log(_myName + " tengo right gun");
             _rightGun.gameObject.tag = "RArm";
             _rightGun.SetGun();
             _rightGun.StartRoulette();
@@ -176,7 +172,6 @@ public class Character : EnumsClass, IObservable
         }
         else
         {
-            Debug.Log("armas null");
             _selectedGun = null;
             _canAttack = false;
             _rightGunSelected = false;

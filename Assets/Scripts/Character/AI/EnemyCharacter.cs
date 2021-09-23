@@ -24,12 +24,12 @@ public class EnemyCharacter : Character
     {
         base.SelectThisUnit();
         _closestEnemy = null;
-        StartCoroutine(LAGStart());
+        StartCoroutine(DelayStart());
     }
 
-    IEnumerator LAGStart()
+    IEnumerator DelayStart()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         _behaviorExecutor.paused = false;
     }
 
