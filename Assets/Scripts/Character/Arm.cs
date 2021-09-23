@@ -7,7 +7,8 @@ public class Arm : Parts
 {
     public ArmSO armData;
     private string _location;
-    private void Awake()
+
+    public override void SetPart()
     {
         _maxHP = armData.maxHP;
         _currentHP = _maxHP;

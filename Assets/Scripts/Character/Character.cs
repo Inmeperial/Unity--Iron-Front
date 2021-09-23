@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityStandardAssets.Effects;
@@ -34,13 +35,13 @@ public class Character : EnumsClass, IObservable
     protected Transform _bodyTransform;
 
     [Header("Left Arm")] public Arm leftArm;
-    protected Gun _leftGun;
+    [SerializeField] protected Gun _leftGun;
     protected bool _leftGunSelected;
     [SerializeField] protected GunsType _leftGunType;
     [SerializeField] protected GameObject _leftGunSpawn;
 
     [Header("Right Arm")] public Arm rightArm;
-    protected Gun _rightGun;
+    [SerializeField] protected Gun _rightGun;
     protected bool _rightGunSelected;
     [SerializeField] protected GunsType _rightGunType;
     [SerializeField] protected GameObject _rightGunSpawn;
@@ -125,20 +126,27 @@ public class Character : EnumsClass, IObservable
         #region GunsAndArms
 
         EquipmentSpawner equipmentSpawn = FindObjectOfType<EquipmentSpawner>();
+        body.SetPart();
+        leftArm.SetPart();
+        legs.SetPart();
         _leftArmAlive = leftArm.GetCurrentHp() > 0 ? true : false;
+        Debug.Log(_myName + " leftarm hp: " + leftArm.GetCurrentHp());
         _leftGun = equipmentSpawn.SpawnGun(_leftGunType, Vector3.zero, _leftGunSpawn.transform);
         if (_leftGun)
         {
+            Debug.Log(_myName + " tengo left gun");
             _leftGun.gameObject.tag = "LArm";
             _leftGun.SetGun();
             _leftGun.StartRoulette();
             _leftGun.SetRightOrLeft("Left");
         }
-
+        rightArm.SetPart();
         _rightArmAlive = rightArm.GetCurrentHp() > 0 ? true : false;
+        Debug.Log(_myName + " right hp: " + rightArm.GetCurrentHp());
         _rightGun = equipmentSpawn.SpawnGun(_rightGunType, Vector3.zero, _rightGunSpawn.transform);
         if (_rightGun)
         {
+            Debug.Log(_myName + " tengo right gun");
             _rightGun.gameObject.tag = "RArm";
             _rightGun.SetGun();
             _rightGun.StartRoulette();
@@ -168,6 +176,7 @@ public class Character : EnumsClass, IObservable
         }
         else
         {
+            Debug.Log("armas null");
             _selectedGun = null;
             _canAttack = false;
             _rightGunSelected = false;

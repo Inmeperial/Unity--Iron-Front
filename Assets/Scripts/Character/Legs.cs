@@ -16,7 +16,12 @@ public class Legs : Parts
 
     private bool _brokenLegs = false;
 
-    private void Awake()
+    public int GetMaxSteps()
+    {
+        return _maxSteps;
+    }
+
+    public override void SetPart()
     {
         _maxHP = legsData.maxHP;
         _currentHP = _maxHP;
@@ -24,11 +29,6 @@ public class Legs : Parts
         _moveSpeed = legsData.moveSpeed;
         _rotationSpeed = legsData.rotationSpeed;
         _initiative = legsData.initiative;
-    }
-    
-    public int GetMaxSteps()
-    {
-        return _maxSteps;
     }
 
     public override void UpdateHp(float newValue)

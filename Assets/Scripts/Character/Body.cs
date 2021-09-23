@@ -7,11 +7,12 @@ public class Body : Parts
 {
     public BodySO bodyData;
 
-    private void Awake()
+    public override void SetPart()
     {
         _maxHP = bodyData.maxHP;
         _currentHP = _maxHP;
     }
+
     public override void UpdateHp(float newValue)
     {
         _currentHP = newValue;

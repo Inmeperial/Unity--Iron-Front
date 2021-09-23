@@ -31,6 +31,8 @@ public abstract class Parts : MonoBehaviour
         }
     }
 
+    public abstract void SetPart();
+
     public float GetMaxHp()
     {
         return _maxHP;
