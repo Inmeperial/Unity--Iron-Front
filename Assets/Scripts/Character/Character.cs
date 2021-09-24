@@ -35,13 +35,13 @@ public class Character : EnumsClass, IObservable
     protected Transform _bodyTransform;
 
     [Header("Left Arm")] public Arm leftArm;
-    [SerializeField] protected Gun _leftGun;
+    protected Gun _leftGun;
     protected bool _leftGunSelected;
     [SerializeField] protected GunsType _leftGunType;
     [SerializeField] protected GameObject _leftGunSpawn;
 
     [Header("Right Arm")] public Arm rightArm;
-    [SerializeField] protected Gun _rightGun;
+    protected Gun _rightGun;
     protected bool _rightGunSelected;
     [SerializeField] protected GunsType _rightGunType;
     [SerializeField] protected GameObject _rightGunSpawn;
@@ -241,7 +241,6 @@ public class Character : EnumsClass, IObservable
 
     protected void Move()
     {
-
         _moving = true;
         ButtonsUIManager.Instance.DeactivateBodyPartsContainer();
         TurnManager.Instance.UnitIsMoving();

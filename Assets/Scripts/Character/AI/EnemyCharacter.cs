@@ -43,7 +43,7 @@ public class EnemyCharacter : Character
         _behaviorExecutor.paused = true;
     }
 
-    public bool CalculateAutoMovement()
+    public bool FoundPath()
     {
         _closestEnemy = CalculateClosestEnemy();
         
@@ -199,6 +199,8 @@ public class EnemyCharacter : Character
 
     public void EnemyMove()
     {
+        if (_moving) return;
+        Debug.Log("llamo move ia");
         Move();
     }
 

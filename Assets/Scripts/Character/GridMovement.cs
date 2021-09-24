@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class GridMovement : MonoBehaviour
@@ -10,7 +11,7 @@ public class GridMovement : MonoBehaviour
     private float _watchdogCounter;
     private bool _forcedForward;
     private bool _checkedDirToLast;
-    List<Tile> _tilesList;
+    private List<Tile> _tilesList = new List<Tile>();
     int _tilesIndex;
     Character _character;
     private float _moveSpeed;
@@ -48,6 +49,7 @@ public class GridMovement : MonoBehaviour
     /// </summary>
     public void StartMovement(List<Tile> tilesList)
     {
+        Debug.Log("start move");
         _forcedForward = false;
         _tilesList = tilesList;
         _tilesIndex = 1;
@@ -101,14 +103,25 @@ public class GridMovement : MonoBehaviour
         }
         else
         {
-            var last = _tilesList[_tilesList.Count - 1].transform.position;
-            last.y = _yPosition;
-            
-            var preLast = _tilesList[_tilesList.Count - 2].transform.position;
-            preLast.y = _yPosition;
 
-            var forwardDir = (last - preLast).normalized;
+            Vector3 forwardDir = Vector3.zero;
+            Vector3 last = Vector3.zero;
+            Vector3 preLast = Vector3.zero;
+            Debug.Log("tiles count: " + _tilesList.Count);
+            last = _tilesList[_tilesList.Count - 1].transform.position;
+            if (_tilesList.Count >= 2)
+            {
+                preLast = _tilesList[_tilesList.Count - 2].transform.position;
+                
+            }
+            else
+            {
+                preLast = _character.GetMyPositionTile().transform.position;
+            }
             
+            last.y = _yPosition;
+            preLast.y = _yPosition;
+            forwardDir = (last - preLast).normalized;
             transform.LookAt(transform.position + forwardDir);
             _character.ReachedEnd();
             _move = false;

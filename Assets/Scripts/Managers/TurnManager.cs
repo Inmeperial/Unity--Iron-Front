@@ -190,6 +190,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         {
             CharacterSelection.Instance.ActivateCharacterSelection(true);
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             
             ButtonsUIManager.Instance.RightWeaponCircleState(true);
             ButtonsUIManager.Instance.LeftWeaponCircleState(true);

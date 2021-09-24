@@ -32,8 +32,12 @@ public class MoveAction : GOAction
         }
 
         _myUnit.OnStartAction();
-        if (_myUnit.CalculateAutoMovement())
+        if (!_myUnit.IsMoving() && _myUnit.FoundPath())
+        {
+            Debug.Log("move tree");
             _myUnit.EnemyMove();
+        }
+            
         else _myUnit.OnEndAction();
         
         return TaskStatus.COMPLETED;
