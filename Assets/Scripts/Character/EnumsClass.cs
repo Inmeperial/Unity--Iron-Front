@@ -33,6 +33,7 @@ public abstract class EnumsClass: MonoBehaviour
         Mine,
         ShootGun,
         AssaultRifle,
+        AssaultRifleFinalShot,
         Rifle,
         Dead,
         Hit

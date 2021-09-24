@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class LandMineShaderControl : MonoBehaviour
 {
-    private float num = 0f;
-    private float totalNum = 0f;
-    private GameObject childObj;
-    private Light lightChild;
+    private float _timer = 0f;
+    private float _totalTimer = 0f;
+    private GameObject _childObj;
+    private Light _lightChild;
 
     // Start is called before the first frame update
     void Start()
     {
-        childObj = this.transform.GetChild(0).gameObject;
+        _childObj = this.transform.GetChild(0).gameObject;
         
-        lightChild = childObj.gameObject.GetComponent<Light>();
-        lightChild.intensity = 0;
+        _lightChild = _childObj.gameObject.GetComponent<Light>();
+        _lightChild.intensity = 0;
     }
 
     // Update is called once per frame
@@ -29,12 +29,12 @@ public class LandMineShaderControl : MonoBehaviour
     /// </summary>
     public void AnimationLight()
     {
-        if (num >= 360)
+        if (_timer >= 360)
         {
-            num = 0;
+            _timer = 0;
         }
-        num += Time.deltaTime;
-        totalNum = 3 + Mathf.Sin(Time.time) * 3;
-        lightChild.intensity = totalNum;
+        _timer += Time.deltaTime;
+        _totalTimer = 7 + Mathf.Sin(Time.time) * 3;
+        _lightChild.intensity = _totalTimer;
     }
 }

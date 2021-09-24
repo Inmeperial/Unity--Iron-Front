@@ -39,21 +39,20 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySoundWithParameters(GameObject target)
+    public void PlaySoundWithParameters(AudioClip nameSoundTarget, GameObject target)
     {
         if (target.GetComponent<AudioSource>())
         {
-            string nameSoundTarget = target.GetComponent<SoundsEnvironmentalFX>().clip.name;
-            Sound soundVar = Array.Find(_sounds, item => item.clip.name == nameSoundTarget);
+            Sound soundVar = Array.Find(_sounds, item => item.clip.name == nameSoundTarget.name);
             if (soundVar == null)
             {
-                soundVar = Array.Find(_environmentalSounds, item => item.clip.name == nameSoundTarget);
+                soundVar = Array.Find(_environmentalSounds, item => item.clip.name == nameSoundTarget.name);
                 if (soundVar == null)
                 {
-                    soundVar = Array.Find(_environmentalFXSounds, item => item.clip.name == nameSoundTarget);
+                    soundVar = Array.Find(_environmentalFXSounds, item => item.clip.name == nameSoundTarget.name);
                     if (soundVar == null)
                     {
-                        Debug.Log("Sound: " + nameSoundTarget + " not found!");
+                        Debug.Log("Sound: " + nameSoundTarget.name + " not found!");
                         return;
                     }
                 }

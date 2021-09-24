@@ -113,8 +113,8 @@ Shader "MineLight Shader"
 }
 /*ASEBEGIN
 Version=17800
-0;73;594;938;960.2626;901.5733;1.619503;False;False
-Node;AmplifyShaderEditor.RangedFloatNode;10;-1050.607,306.1755;Inherit;False;Property;_PowerFresnel;PowerFresnel;1;0;Create;True;0;0;False;0;17;17;0;20;0;1;FLOAT;0
+-1920;0;1920;1029;1128.882;743.3636;1.3;True;False
+Node;AmplifyShaderEditor.RangedFloatNode;10;-1050.607,306.1755;Inherit;False;Property;_PowerFresnel;PowerFresnel;1;0;Create;True;0;0;False;0;17;6.8;0;20;0;1;FLOAT;0
 Node;AmplifyShaderEditor.ColorNode;2;-492.4342,-55.20811;Inherit;False;Constant;_Color0;Color 0;0;1;[HDR];Create;True;0;0;False;0;23.96863,0,0,0;2,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.FresnelNode;5;-711.0273,199.2019;Inherit;True;Standard;WorldNormal;ViewDir;False;False;5;0;FLOAT3;0,0,1;False;4;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;5;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;6;-267.8131,189.0863;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
@@ -145,4 +145,4 @@ WireConnection;27;2;29;0
 WireConnection;0;0;32;0
 WireConnection;0;2;6;0
 ASEEND*/
-//CHKSM=54EB29CA264C5499854052D11CA46B3D84EC28A5
+//CHKSM=6A5DE46A6E8B79066E6420CECDA7D995A7F5A3E3

@@ -180,6 +180,23 @@ public class AnimationMechaHandler : MonoBehaviour
         _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.AssaultRifle);
     }
 
+    public void SetParticleAssaultRifleFinalShoot(int num) //call in Animaton
+    {
+        //Anim keyFrame = 26.1 - 45.3 - 63.9 - 81.6 - 
+
+        Gun gun;
+        if (num == 0)
+        {
+            gun = _character.GetRightGun();
+        }
+        else
+        {
+            gun = _character.GetLeftGun();
+        }
+
+        _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.AssaultRifleFinalShot);
+    }
+
     public void SetParticletRifle(int num) //call in Animaton
     {
         //Anim keyFrame = 45.8

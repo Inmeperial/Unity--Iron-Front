@@ -30,6 +30,7 @@ public class EffectsController : MonoBehaviour
     [Header("Sounds")]
     [SerializeField] private AudioClip _shootGunSound;
     [SerializeField] private AudioClip _assaultRifleSound;
+    [SerializeField] private AudioClip _assaultRifleFinalShootSound;
     [SerializeField] private AudioClip _rifleSound;
     [SerializeField] private AudioClip _mineSound;
 
@@ -117,6 +118,16 @@ public class EffectsController : MonoBehaviour
                 particle.time = 0f;
                 particle.Play();
                 AudioManager.audioManagerInstance.PlaySound(_assaultRifleSound, this.gameObject);
+                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                break;
+
+            case EnumsClass.ParticleActionType.AssaultRifleFinalShot:
+                effect = Instantiate(_assaultRifleEffect.transform.GetChild(0).gameObject, obj.transform.position, transform.rotation, transform);
+                effect.transform.SetParent(obj.transform);
+                particle = effect.GetComponent<ParticleSystem>();
+                particle.time = 0f;
+                particle.Play();
+                AudioManager.audioManagerInstance.PlaySound(_assaultRifleFinalShootSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 

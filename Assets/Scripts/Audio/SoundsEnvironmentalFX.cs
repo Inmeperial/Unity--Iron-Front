@@ -10,7 +10,7 @@ public class SoundsEnvironmentalFX : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioManager.audioManagerInstance.PlaySoundWithParameters(this.gameObject);
+        AudioManager.audioManagerInstance.PlaySoundWithParameters(clip, this.gameObject);
     }
 
     // Update is called once per frame

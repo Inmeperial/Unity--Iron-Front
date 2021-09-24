@@ -43,70 +43,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c635a64964c10a4fbbda29a9f8d5963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mixer: {fileID: 24300002, guid: ea43ca31e47576d48a025dd3280c1d27, type: 2}
   _sounds:
   - source: {fileID: 0}
+    volume: 1
     clip: {fileID: 8300000, guid: 66ef0b1a0895d6f4399a8266eca32680, type: 3}
     loop: 0
-    volume: 1
+    mixer: {fileID: 0}
   - source: {fileID: 0}
+    volume: 1
     clip: {fileID: 8300000, guid: 6f274f4b76635ff4691a9ff0ac43697b, type: 3}
     loop: 0
-    volume: 1
+    mixer: {fileID: 0}
   - source: {fileID: 0}
+    volume: 1
     clip: {fileID: 8300000, guid: 9ed97d0a552c47d489599b2189e13c49, type: 3}
     loop: 0
-    volume: 1
+    mixer: {fileID: 0}
   - source: {fileID: 0}
+    volume: 1
     clip: {fileID: 8300000, guid: 2ba09596e49e99f4694a0d4588311b49, type: 3}
     loop: 0
-    volume: 1
+    mixer: {fileID: 0}
   - source: {fileID: 0}
-    clip: {fileID: 8300000, guid: de75995142243de4fa1cad72439a1ca8, type: 3}
-    loop: 0
     volume: 0.6
+    clip: {fileID: 8300000, guid: de0b520d3f09da149be075039cff47b1, type: 3}
+    loop: 0
+    mixer: {fileID: 0}
   - source: {fileID: 0}
+    volume: 0.6
     clip: {fileID: 8300000, guid: 40ccb284c11dd61409f23f5a75ca4320, type: 3}
     loop: 0
-    volume: 0.6
+    mixer: {fileID: 0}
   - source: {fileID: 0}
+    volume: 0.6
     clip: {fileID: 8300000, guid: c51f17a48568de24a90d87d9569b3ce5, type: 3}
     loop: 0
+    mixer: {fileID: 0}
+  - source: {fileID: 0}
     volume: 0.6
+    clip: {fileID: 8300000, guid: 0638495dd4dd3ca4c9f4e53d36897017, type: 3}
+    loop: 0
+    mixer: {fileID: 0}
   _environmentalSounds:
   - source: {fileID: 0}
+    volume: 0.5
     clip: {fileID: 8300000, guid: d66029ea4165b3841af458b1b0b61046, type: 3}
     loop: 0
-    volume: 0.5
+    mixer: {fileID: 0}
   - source: {fileID: 0}
+    volume: 0.6
     clip: {fileID: 8300000, guid: 1663d761fa0069848bd431837b4ab57d, type: 3}
     loop: 0
-    volume: 0.6
+    mixer: {fileID: 0}
   _environmentalFXSounds:
   - source: {fileID: 0}
+    volume: 1
     clip: {fileID: 8300000, guid: ec54c5c8785e23e46ad2bd25882156c5, type: 3}
     loop: 0
-    volume: 1
+    mixer: {fileID: 0}
   - source: {fileID: 0}
+    volume: 1
     clip: {fileID: 8300000, guid: 2d17869df6ed7b64b96bd8fbbfe74914, type: 3}
     loop: 0
-    volume: 1
+    mixer: {fileID: 0}
   - source: {fileID: 0}
+    volume: 1
     clip: {fileID: 8300000, guid: 3799bb1e134db164c9f78d952483099f, type: 3}
     loop: 0
-    volume: 1
+    mixer: {fileID: 0}
   - source: {fileID: 0}
+    volume: 0.2
     clip: {fileID: 8300000, guid: 423cd9670d6cc3c499614a6d13dfb825, type: 3}
     loop: 0
-    volume: 0.2
+    mixer: {fileID: 0}
   - source: {fileID: 0}
+    volume: 0.2
     clip: {fileID: 8300000, guid: a72e27c8ee9554746a41bdd7ceb2478a, type: 3}
     loop: 0
-    volume: 0.2
+    mixer: {fileID: 0}
   - source: {fileID: 0}
+    volume: 0.2
     clip: {fileID: 8300000, guid: ffbd81b6ceaad4c48999248f612f4909, type: 3}
     loop: 0
-    volume: 0.2
+    mixer: {fileID: 0}
   - source: {fileID: 0}
+    volume: 0.7
     clip: {fileID: 8300000, guid: 3799bb1e134db164c9f78d952483099f, type: 3}
     loop: 0
+    mixer: {fileID: 0}
+  - source: {fileID: 0}
     volume: 0.7
+    clip: {fileID: 8300000, guid: 2beca7e9efba4524cbbcbbbea0bb0082, type: 3}
+    loop: 0
+    mixer: {fileID: 0}
