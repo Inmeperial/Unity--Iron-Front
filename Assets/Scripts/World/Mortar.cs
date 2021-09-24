@@ -155,7 +155,7 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
         {
             Character character = tile.GetUnitAbove();
             
-            if (!CharacterSelection.Instance.PlayerIsSelected(character)) continue;
+            if (!CharacterSelection.Instance.IsActiveCharacter(character)) continue;
             
             _activationCharacter = character;
             return true;

@@ -184,7 +184,12 @@ public class CharacterSelection : MonoBehaviour
         _enemySelection = null;
     }
 
-    public bool PlayerIsSelected(Character character)
+    /// <summary>
+    /// Check if the given Character is the active Character.
+    /// </summary>
+    /// <param name="character">The Character to compare.</param>
+    /// <returns>true if given Character is the active one.</returns>
+    public bool IsActiveCharacter(Character character)
     {
         if (_selection) return character == _selection;
         return false;

@@ -1104,11 +1104,27 @@ public class ButtonsUIManager : MonoBehaviour
         playerRightArmCurrHp.text = _selectedChar.rightArm.GetCurrentHp().ToString();
         playerLegsCurrHp.text = _selectedChar.legs.GetCurrentHp().ToString();
     }
-    
-    public void UpdateLegsHUD(float value, bool isPlayer)
+
+    public void UpdateBodyHUD(float value)
     {
-        if (!isPlayer) return;
-        
+        playerBodyCurrHp.text = value.ToString();
+        playerBodySlider.value = value;
+    }
+    
+    public void UpdateRightArmHUD(float value)
+    {
+        playerRightArmCurrHp.text = value.ToString();
+        playerRightArmSlider.value = value;
+    }
+    
+    public void UpdateLeftArmHUD(float value)
+    {
+        playerLeftArmCurrHp.text = value.ToString();
+        playerLeftArmSlider.value = value;
+    }
+
+    public void UpdateLegsHUD(float value)
+    {
         playerLegsCurrHp.text = value.ToString();
         playerLegsSlider.value = value;
     }

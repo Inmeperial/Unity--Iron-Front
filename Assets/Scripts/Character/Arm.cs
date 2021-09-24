@@ -96,41 +96,39 @@ public class Arm : Parts
         
         float hp = _currentHP - damage;
         _currentHP = hp > 0 ? hp : 0;
-        
-        Vector3 pos = transform.position;
+
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
         _myChar.HitSoundMecha();
 
+        Vector3 pos = transform.position;
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, pos, true);
         
         WorldUI ui = _myChar.GetMyUI();
         ui.ContainerActivation(true);
+
+        bool isActive = CharacterSelection.Instance.IsActiveCharacter(_myChar);
         
-        switch (_location)
+        if (_location == "Left")
         {
-            case "Left":
-                ui.SetLeftArmSlider(_currentHP);
-                ui.UpdateLeftArmSlider(damage, (int)_currentHP);
-                break;
-            
-            case "Right":
-                ui.SetRightArmSlider(_currentHP);
-                ui.UpdateRightArmSlider(damage, (int)_currentHP);
-                break;
+            ui.SetLeftArmSlider(_currentHP);
+            ui.UpdateLeftArmSlider(damage, (int) _currentHP);
+
+            if (isActive) ButtonsUIManager.Instance.UpdateLeftArmHUD(_currentHP);
         }
-        
+        else
+        {
+            ui.SetRightArmSlider(_currentHP);
+            ui.UpdateRightArmSlider(damage, (int) _currentHP);
+
+            if (isActive) ButtonsUIManager.Instance.UpdateRightArmHUD(_currentHP);
+        }
+
         if (_currentHP <= 0)
         {
-            switch (_location)
-            {
-                case "Left":
-                    _myChar.GetLeftGun().TurnOff();
-                    break;
-                case "Right":
-                    _myChar.GetRightGun().TurnOff();
-                    break;
-            }
+            if (_location == "Left")
+                _myChar.GetLeftGun().TurnOff();
+            else _myChar.GetRightGun().TurnOff();
         }
         
         _myChar.CheckArms();

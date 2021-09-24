@@ -74,11 +74,17 @@ public class Body : Parts
         float hp = _currentHP - damage;
         _currentHP = hp > 0 ? hp : 0;
 
-        Vector3 bodyPos = transform.position;
+        bool isActive = CharacterSelection.Instance.IsActiveCharacter(_myChar);
+        if (isActive) ButtonsUIManager.Instance.UpdateBodyHUD(_currentHP);
+        
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
+        
         _myChar.HitSoundMecha();
+        
+        Vector3 bodyPos = transform.position;
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, bodyPos, true);
+
         ui.ContainerActivation(true);
         ui.UpdateBodySlider(damage, (int)_currentHP);
         _myChar.MakeNotAttackable();

@@ -99,7 +99,11 @@ public class Legs : Parts
         {
             HalfSteps();
         }
-        ButtonsUIManager.Instance.UpdateLegsHUD(_currentHP, true);
+
+        bool isActive = CharacterSelection.Instance.IsActiveCharacter(_myChar);
+        
+        if (isActive) ButtonsUIManager.Instance.UpdateLegsHUD(_currentHP);
+        
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
         _myChar.HitSoundMecha();
