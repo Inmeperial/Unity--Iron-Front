@@ -9,6 +9,7 @@ public class GridMovement : MonoBehaviour
     public float rotationWatchdog;
     private float _watchdogCounter;
     private bool _forcedForward;
+    private bool _checkedDirToLast;
     List<Tile> _tilesList;
     int _tilesIndex;
     Character _character;
@@ -23,7 +24,6 @@ public class GridMovement : MonoBehaviour
 
     private Action _callback;
     private Vector3 _nextPos;
-    private Vector3 _lastForward;
     private void Start()
     {
         _character = GetComponent<Character>();
@@ -84,11 +84,12 @@ public class GridMovement : MonoBehaviour
                     return;
                 }  
             }
-            
+
+
+
             Vector3 targetDir = newPos - transform.position;
             if ((newPos - transform.position).magnitude <= tpThreshold)
             {
-                _lastForward = targetDir.normalized;
                 _forcedForward = false;
                 transform.position = newPos;
                 _tilesIndex++;
@@ -100,7 +101,15 @@ public class GridMovement : MonoBehaviour
         }
         else
         {
-            transform.LookAt(transform.position + _lastForward);
+            var last = _tilesList[_tilesList.Count - 1].transform.position;
+            last.y = _yPosition;
+            
+            var preLast = _tilesList[_tilesList.Count - 2].transform.position;
+            preLast.y = _yPosition;
+
+            var forwardDir = (last - preLast).normalized;
+            
+            transform.LookAt(transform.position + forwardDir);
             _character.ReachedEnd();
             _move = false;
             _tilesIndex = 0;
@@ -154,18 +163,9 @@ public class GridMovement : MonoBehaviour
         _posToRotate = pos;
     }
 
-    public void StartRotation()
-    {
-        _rotate = true;
-    }
     public void StartRotation(Action callback)
     {
         _rotate = true;
         _callback = callback;
-    }
-
-    public void StopRotation()
-    {
-        _rotate = false;
     }
 }

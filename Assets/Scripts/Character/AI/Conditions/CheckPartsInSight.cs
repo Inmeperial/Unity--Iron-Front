@@ -28,7 +28,8 @@ public class CheckPartsInSight : GOCondition
 
         Character closestEnemy = _myUnit.GetClosestEnemy();
         var rot = _myUnit.InitialRotation;
-        _myUnit.RotateTowardsEnemy(closestEnemy.transform.position);
+        //_myUnit.RotateTowardsEnemy(closestEnemy.transform.position);
+        _myUnit.RotateTowardsEnemy(closestEnemy.transform);
         bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
         bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LArm", false);
         bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RArm", false);

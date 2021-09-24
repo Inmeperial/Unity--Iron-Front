@@ -222,7 +222,9 @@ public class Character : EnumsClass, IObservable
     protected virtual void Update()
     {
         if (_isDead) return;
-
+        
+        if (_unitTeam == Team.Red) return;
+        
         if (_selected && !_moving && _canMove && !_selectingEnemy && Input.GetMouseButtonDown(0))
         {
             GetTargetToMove();
@@ -476,10 +478,11 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Rotate Character towards enemy.
     /// </summary>
-    public void RotateTowardsEnemy(Vector3 pos)
+    public void RotateTowardsEnemy(Transform t)
     {
-        _move.SetPosToRotate(pos);
-        _move.StartRotation();
+        // _move.SetPosToRotate(pos);
+        // _move.StartRotation();
+        transform.LookAt(t);
     }
 
     /// <summary>
@@ -1242,6 +1245,8 @@ public class Character : EnumsClass, IObservable
     {
         Character c = CharacterSelection.Instance.GetSelectedCharacter();
         if (c == null) return;
+
+        if (c.IsSelectingEnemy()) return;
         
         c.rotated = false;
         //c._move.StopRotation();

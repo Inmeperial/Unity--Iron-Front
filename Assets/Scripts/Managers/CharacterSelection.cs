@@ -103,7 +103,8 @@ public class CharacterSelection : MonoBehaviour
             ButtonsUIManager.Instance.SetPlayerUI();
             if (_enemySelection)
             {
-                _selection.RotateTowardsEnemy(_enemySelection.transform.position);
+                //_selection.RotateTowardsEnemy(_enemySelection.transform.position);
+                _selection.RotateTowardsEnemy(_enemySelection.transform);
             }
         }
         else if (c.GetUnitTeam() != TurnManager.Instance.GetActiveTeam())
@@ -116,7 +117,8 @@ public class CharacterSelection : MonoBehaviour
             if (_selection && _selection.CanAttack())
             {
                 _selection.SetRotationBeforeAttack(_selection.transform.rotation);
-                _selection.RotateTowardsEnemy(_enemySelection.transform.position);
+                _selection.RotateTowardsEnemy(_enemySelection.transform);
+                //_selection.RotateTowardsEnemy(_enemySelection.transform.position);
                 bool body = _selection.RayToPartsForAttack(_enemySelection.GetBodyPosition(), "Body", false) &&
                            _enemySelection.body.GetCurrentHp() > 0;
                 
@@ -131,6 +133,7 @@ public class CharacterSelection : MonoBehaviour
 
                 if (body || lArm || rArm || legs)
                 {
+                    _selection.SetSelectingEnemy(true);
                     _enemySelection.SelectedAsEnemy();
                     ButtonsUIManager.Instance.SetEnemy(_enemySelection);
                     ButtonsUIManager.Instance.SetEnemyUI();

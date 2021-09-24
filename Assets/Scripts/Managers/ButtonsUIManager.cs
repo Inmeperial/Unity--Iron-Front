@@ -474,7 +474,9 @@ public class ButtonsUIManager : MonoBehaviour
     /// </summary>
     private void Attack()
     {
+        _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform);
         _selectedChar.SetInitialRotation(_selectedChar.transform.rotation);
+
         Gun gun = _selectedChar.GetSelectedGun();
         _selectedChar.Shoot();
         _selectedEnemy.SetHurtAnimation();
@@ -576,6 +578,7 @@ public class ButtonsUIManager : MonoBehaviour
                     u.gameObject.SetActive(true);
                 }
                 var cam = FindObjectOfType<CloseUpCamera>();
+                _selectedChar.SetSelectingEnemy(false);
                 _selectedChar.ResetRotationAndRays();
                 cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, cam.ResetCamera);
 
@@ -1144,7 +1147,9 @@ public class ButtonsUIManager : MonoBehaviour
                 _selectedChar.GetLeftGun().ModelsOff();
                 _selectedChar.GetRightGun().ModelsOff();
             }
-            _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform.position, ActivateParts);
+            //_selectedChar.RotateTowardsEnemy(_selectedEnemy.transform.position, ActivateParts);
+            _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform);
+            ActivateParts();
         }
     }
 
