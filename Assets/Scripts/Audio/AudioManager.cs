@@ -95,7 +95,7 @@ public class AudioManager : MonoBehaviour
         }
         if (sound == null)
         {
-            Debug.Log("Sound: " + soundAC.name + " not found!");
+            Debug.Log("Sound: " + soundAC.name + " , not found!");
             return;
         }
     }
