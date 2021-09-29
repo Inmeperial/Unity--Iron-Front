@@ -8,7 +8,7 @@ public class EnemyCharacter : Character
     [Header("AI")]
     private BehaviorExecutor _behaviorExecutor;
     private Character _closestEnemy;
-    [SerializeField] private float _delayAfterAttack;
+    [SerializeField] private float _delayAfterAction;
     [HideInInspector]
     public bool checkedParts;
 
@@ -242,7 +242,7 @@ public class EnemyCharacter : Character
     {
         if (time <= 0)
         {
-            time = _delayAfterAttack;
+            time = _delayAfterAction;
         }
         StartCoroutine(EndDelay(time));
     }
