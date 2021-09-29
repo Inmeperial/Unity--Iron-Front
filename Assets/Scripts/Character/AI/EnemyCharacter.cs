@@ -5,15 +5,20 @@ using UnityEngine;
 
 public class EnemyCharacter : Character
 {
+    [Header("AI")]
     private BehaviorExecutor _behaviorExecutor;
     private Character _closestEnemy;
+    [SerializeField] private float _delayAfterAttack;
     [HideInInspector]
     public bool checkedParts;
+
+    private CameraMovement _camera;
     
     protected override void Awake()
     {
         base.Awake();
 
+        _camera = FindObjectOfType<CameraMovement>();
         _behaviorExecutor = GetComponent<BehaviorExecutor>();
 
         if (_behaviorExecutor)
@@ -200,7 +205,7 @@ public class EnemyCharacter : Character
     public void EnemyMove()
     {
         if (_moving) return;
-        Debug.Log("llamo move ia");
+        _camera.MoveTo(_path[_path.Count-1].transform);
         Move();
     }
 
@@ -226,5 +231,25 @@ public class EnemyCharacter : Character
         _behaviorExecutor.paused = true;
         checkedParts = false;
         _closestEnemy = null;
+    }
+
+    /// <summary>
+    /// Resumes behaviour tree execution after the given time.
+    /// </summary>
+    /// <param name="time">Time to resume. If time is less than or equal 0 uses character default time.</param>
+    public void OnEndActionWithDelay(float time)
+    {
+        if (time <= 0)
+        {
+            time = _delayAfterAttack;
+        }
+        StartCoroutine(EndDelay(time));
+    }
+
+    IEnumerator EndDelay(float time)
+    {
+        yield return new WaitForSeconds(time);
+        
+        OnEndAction();
     }
 }

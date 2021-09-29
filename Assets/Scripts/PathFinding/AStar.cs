@@ -16,7 +16,6 @@ public class AStar//<Tile>
         HashSet<Tile> visited = new HashSet<Tile>();
         pending.Enqueue(start, 0);
         cost.Add(start, 0);
-        int count = 0;
         while (!pending.IsEmpty)
         {
             

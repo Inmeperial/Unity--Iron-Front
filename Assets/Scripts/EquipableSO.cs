@@ -16,4 +16,10 @@ public abstract class EquipableSO : ScriptableObject
     public string equipableName;
     public int maxUses;
     public int cooldown;
+
+    [Header("SOLO PARA PUSH, DESP HAGO EL CUSTOM")]
+    public int pushUseRange;
+    public int pushDistance;
+
+    [Space] public bool ES_PARA_DEJAR_UN_ESPACIO;
 }

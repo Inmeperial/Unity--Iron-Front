@@ -15,7 +15,9 @@ public class AbilitySO : EquipableSO
     
     public enum AbilityType
     {
-        LegsOvercharge
+        LegsOvercharge,
+        Push,
+        Pull
     }
 
     public PartSlot partSlot;

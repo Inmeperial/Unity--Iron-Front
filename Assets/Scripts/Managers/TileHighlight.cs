@@ -5,7 +5,6 @@ using UnityEngine;
 public class TileHighlight : MonoBehaviour
 {
     Character _character;
-    Transform previousTile;
     public AStarAgent agent;
     public LayerMask tileMask;
     List<Tile> _previewPath = new List<Tile>();
@@ -26,7 +25,6 @@ public class TileHighlight : MonoBehaviour
     /// </summary>
     public void EndPreview()
     {
-        previousTile = null;
         if (_previewPath.Count <= 0) return;
         
         ClearTilesInMoveRange(_previewPath);

@@ -9,7 +9,7 @@ public abstract class Parts : MonoBehaviour
     protected const int NormalHit = 1;
     protected const int CriticalHit = 2;
     protected Character _myChar;
-    public AbilitySO abilitySO;
+    public AbilitySO abilityData;
     public Ability abilityPrefab;
     protected Ability _ability;
     protected float _maxHP;
@@ -18,15 +18,20 @@ public abstract class Parts : MonoBehaviour
     {
         _myChar = transform.parent.GetComponent<Character>();
 
-        if (abilitySO)
+        if (abilityData)
         {
-            switch (abilitySO.abilityType)
+            switch (abilityData.abilityType)
             {
                 case AbilitySO.AbilityType.LegsOvercharge:
                     _ability = Instantiate(abilityPrefab, transform);
                     break;
+                case AbilitySO.AbilityType.Push:
+                    _ability = Instantiate(abilityPrefab, transform);
+                    break;
+                case AbilitySO.AbilityType.Pull:
+                    break;
             }
-            _ability.Initialize(_myChar, abilitySO);
+            _ability.Initialize(_myChar, abilityData);
             _myChar.equipables.Add(_ability);
         }
     }

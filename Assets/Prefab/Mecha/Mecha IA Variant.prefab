@@ -91,11 +91,9 @@ MonoBehaviour:
   _raysOffDelay: 0
   body: {fileID: 5625386997112990526}
   leftArm: {fileID: 2915370096525810348}
-  _leftGun: {fileID: 0}
   _leftGunType: 1
   _leftGunSpawn: {fileID: 4809400708168879047}
   rightArm: {fileID: 9006859376084301265}
-  _rightGun: {fileID: 0}
   _rightGunType: 1
   _rightGunSpawn: {fileID: 7741757672068180166}
   legs: {fileID: 1358388220531640810}
@@ -108,6 +106,7 @@ MonoBehaviour:
   soundHit: {fileID: 8300000, guid: 66ef0b1a0895d6f4399a8266eca32680, type: 3}
   highlight: {fileID: 0}
   equipables: []
+  _delayAfterAttack: 3
   checkedParts: 0
 --- !u!1001 &3203049490690174228
 PrefabInstance:

@@ -15,7 +15,6 @@ public class AttackAction : GOAction
 
     public override void OnStart()
     {
-        
         _myUnit = gameObject.GetComponent<EnemyCharacter>();
     }
 
@@ -90,8 +89,10 @@ public class AttackAction : GOAction
                 Debug.Log("sin partes para atacar");
                 break;
         }
-        _myUnit.OnEndAction();
+        
+        if (partToAttack != "DEFAULT")
+            _myUnit.OnEndActionWithDelay(0);
+        else _myUnit.OnEndAction();
         return TaskStatus.COMPLETED;
-
     }
 }
