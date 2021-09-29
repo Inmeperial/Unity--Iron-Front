@@ -594,17 +594,18 @@ public class Character : EnumsClass, IObservable
         {
 
             pathCreator.Calculate(_myPositionTile, newTile, _currentSteps);
-
+            
             if (!legsOvercharged)
                 if (pathCreator.GetDistance() > legs.GetMaxSteps()) return;
                 else if (pathCreator.GetDistance() > legs.GetMaxSteps() * 2) return;
 
+            _path = pathCreator.GetPath();
+            
+            if (_path.Count <= 0) return;
+            
             if (_targetTile) highlight.EndLastTileInPath(_targetTile);
 
             _targetTile = newTile;
-            _path = pathCreator.GetPath();
-
-            if (_path.Count <= 0) return;
 
             highlight.PathPreview(_path);
             ResetTilesInMoveRange();

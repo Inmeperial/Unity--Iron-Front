@@ -32,6 +32,8 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         _agent.finit = end;
         var temp = _agent.PathFindingAstar();
 
+        if (temp.Count <= 0) return;
+
         if (_fullMovePath.Count > 0)
         {
             temp.RemoveAt(0);

@@ -205,7 +205,8 @@ public class EnemyCharacter : Character
     public void EnemyMove()
     {
         if (_moving) return;
-        _camera.MoveTo(_path[_path.Count-1].transform);
+        if (_path.Count > 0) _camera.MoveTo(_path[_path.Count-1].transform);
+        
         Move();
     }
 
