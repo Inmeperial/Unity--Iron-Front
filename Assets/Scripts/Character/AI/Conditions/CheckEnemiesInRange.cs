@@ -20,6 +20,12 @@ public class CheckEnemiesInRange : GOCondition
                 return false;
         }
         
+        _myUnit.SelectRightGun();
+
+        if (_myUnit.HasEnemiesInRange()) return true;
+        
+        _myUnit.SelectLeftGun();
+
         return _myUnit.HasEnemiesInRange();
     }
 }

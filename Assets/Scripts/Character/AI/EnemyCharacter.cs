@@ -29,6 +29,7 @@ public class EnemyCharacter : Character
     {
         base.SelectThisUnit();
         _closestEnemy = null;
+
         StartCoroutine(DelayStart());
     }
 

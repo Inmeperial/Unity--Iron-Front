@@ -316,6 +316,8 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void SelectLeftGun()
     {
+        if (!_leftGun) return;
+        
         if (_rightGun) _rightGun.Deselect();
         
         _selectedGun = _leftGun;
@@ -351,6 +353,8 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void SelectRightGun()
     {
+        if (!_rightGun) return;
+        
         if (_leftGun) _leftGun.Deselect();
 
         _selectedGun = _rightGun;
