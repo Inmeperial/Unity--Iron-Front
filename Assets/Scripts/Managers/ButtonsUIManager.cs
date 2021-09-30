@@ -998,13 +998,19 @@ public class ButtonsUIManager : MonoBehaviour
 
             string h = left.GetHitChance().ToString();
             leftGunHitChanceText.text = h + "%";
+            
+            leftWeaponBar.enabled = true;
+            leftWeaponCircle.transform.parent.GetComponent<Button>().enabled = true;
         }
         else
         {
-            leftGunTypeText.text = "No gun - Arm destroyed";
+            if (_selectedChar.LeftArmAlive()) leftGunTypeText.text = "No gun";
+            else leftGunTypeText.text = "Arm Destroyed";
             leftGunHitsText.text = "";
             leftGunDamageText.text = "";
             leftGunHitChanceText.text = "";
+            leftWeaponBar.enabled = false;
+            leftWeaponCircle.transform.parent.GetComponent<Button>().enabled = false;
         }
         
         Gun right = _selectedChar.GetRightGun();
@@ -1020,13 +1026,19 @@ public class ButtonsUIManager : MonoBehaviour
 
             string h = right.GetHitChance().ToString();
             rightGunHitChanceText.text = h + "%";
-            }
+            
+            rightWeaponBar.enabled = true;
+            rightWeaponCircle.transform.parent.GetComponent<Button>().enabled = true;
+        }
         else
         {
-            rightGunTypeText.text = "No gun - Arm destroyed";
+            if (_selectedChar.RightArmAlive()) rightGunTypeText.text = "No gun";
+            else rightGunTypeText.text = "Arm Destroyed";
             rightGunHitsText.text = "";
 			rightGunDamageText.text = "";
 			rightGunHitChanceText.text = "";
+            rightWeaponBar.enabled = false;
+            rightWeaponCircle.transform.parent.GetComponent<Button>().enabled = false;
         }
 
         //Item item = _selectedChar.GetItem();
