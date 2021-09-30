@@ -106,6 +106,7 @@ public abstract class Gun : EnumsClass, IGun
     /// </summary>
     public virtual void SetGun()
     {
+        
         _gunType = (GunsType)_weaponData.gunType;
         _icon = _weaponData.gunImage;
         _maxBullets = _weaponData.maxBullets;

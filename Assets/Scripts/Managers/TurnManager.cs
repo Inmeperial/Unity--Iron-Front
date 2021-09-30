@@ -120,8 +120,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         {
             EnemyCharacter ai = _actualCharacter as EnemyCharacter;
             
-            if (ai)
-                ai.ForceEnd();
+            if (ai) ai.ForceEnd();
         }
         EndTurn();
     }
@@ -155,6 +154,12 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     {
         Character character = CharacterSelection.Instance.GetSelectedCharacter();
         if (character != null && character.IsMoving()) return;
+
+        if (character.GetUnitTeam() == Team.Red)
+        {
+            EnemyCharacter enemy = character as EnemyCharacter;
+            if (enemy) enemy.ForceEnd();
+        }
 
         NotifyObserver("EndTurn");
         NotifyObserver("Deselect");

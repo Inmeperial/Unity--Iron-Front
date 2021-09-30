@@ -152,7 +152,7 @@ public class Character : EnumsClass, IObservable
         leftArm.SetRightOrLeft("Left");
         rightArm.SetRightOrLeft("Right");
 
-        if (_rightArmAlive)
+        if (_rightArmAlive && _rightGun)
         {
             _selectedGun = _rightGun;
             if (_selectedGun.GetGunType() == GunsType.Shield)
@@ -161,7 +161,7 @@ public class Character : EnumsClass, IObservable
             _rightGunSelected = true;
             _leftGunSelected = false;
         }
-        else if (_leftArmAlive)
+        else if (_leftArmAlive && _leftGun)
         {
             _selectedGun = _leftGun;
             if (_selectedGun.GetGunType() == GunsType.Shield)
@@ -173,7 +173,8 @@ public class Character : EnumsClass, IObservable
         else
         {
             _selectedGun = null;
-            _canAttack = false;
+            _leftGun = null;
+            _rightGun = null;
             _rightGunSelected = false;
             _leftGunSelected = false;
         }
@@ -316,7 +317,7 @@ public class Character : EnumsClass, IObservable
     public void SelectLeftGun()
     {
         if (_rightGun) _rightGun.Deselect();
-
+        
         _selectedGun = _leftGun;
         _leftGunSelected = true;
         _rightGunSelected = false;
@@ -428,10 +429,11 @@ public class Character : EnumsClass, IObservable
 
         if (CanAttack())
         {
-            if (_rightArmAlive)
+            if (_rightArmAlive && _rightGun)
                 _selectedGun = _rightGun;
-            else if (_leftArmAlive)
+            else if (_leftArmAlive && _leftGun)
                 _selectedGun = _leftGun;
+            else _selectedGun = null;
             PaintTilesInAttackRange(_myPositionTile, 0);
             CheckEnemiesInAttackRange();
         }
@@ -498,6 +500,8 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool RayToPartsForAttack(Vector3 partPosition, string tagToCheck, bool drawRays)
     {
+        if (partPosition == Vector3.zero) return false;
+        
         Vector3 position = _rayForBody.gameObject.transform.position;
         Vector3 dir = (partPosition - position).normalized;
 
@@ -724,7 +728,9 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public Vector3 GetLArmPosition()
     {
-        return _leftGun.gameObject.transform.position;
+        if (_leftGun) return _leftGun.gameObject.transform.position;
+        
+        return Vector3.zero;
     }
 
     /// <summary>
@@ -732,7 +738,9 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public Vector3 GetRArmPosition()
     {
-        return _rightGun.gameObject.transform.position;
+        if (_rightGun) return _rightGun.gameObject.transform.position;
+        
+        return Vector3.zero;
     }
 
     /// <summary>
@@ -1015,12 +1023,16 @@ public class Character : EnumsClass, IObservable
         if (_isDead) return;
 
         legsOvercharged = false;
-        _rightGun.Deselect();
-        _leftGun.Deselect();
+        if (_rightGun) _rightGun.Deselect();
+        if (_leftGun) _leftGun.Deselect();
         _myTurn = false;
         _canMove = true;
+
+        if (_selectedGun)
+        {
+            _selectedGun.SetGun();
+        }
         _canAttack = true;
-        _selectedGun.SetGun();
         _path.Clear();
         _currentSteps = legs.GetCurrentHp() > 0 ? legs.GetMaxSteps() : legs.GetMaxSteps() / 2;
         _enemiesInRange.Clear();
@@ -1187,7 +1199,7 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void CheckArms()
     {
-        if (!LeftArmAlive() && !RightArmAlive())
+        if ((!LeftArmAlive() && !RightArmAlive()) || _selectedGun == null)
             _canAttack = false;
     }
 

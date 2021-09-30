@@ -23,7 +23,7 @@ MonoBehaviour:
     id=\"5\" />\r\n            </guard>\r\n            <child>\r\n              <PrioritySelectorNode
     id=\"4\" />\r\n            </child>\r\n          </GuardAndNode>\r\n        </elem>\r\n
     \     </children>\r\n      <inputParams />\r\n      <outputParams />\r\n      <localParams
-    />\r\n    </PrioritySelectorNode>\r\n    <ConditionEvalNode id=\"5\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\"
+    />\r\n    </PrioritySelectorNode>\r\n    <ConditionEvalNode id=\"5\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\"
     name=\"Iron Front/AI Conditions/CanAttack\">\r\n      <inputParams />\r\n      <outputParams
     />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n    <PrioritySelectorNode
     id=\"4\">\r\n      <children>\r\n        <elem>\r\n          <GuardAndNode>\r\n

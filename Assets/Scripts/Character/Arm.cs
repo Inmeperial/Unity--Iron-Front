@@ -85,7 +85,7 @@ public class Arm : Parts
                     break;
             }
         }
-        _myChar.CheckArms();
+        //_myChar.CheckArms();
         _myChar.MakeNotAttackable();
     }
     
@@ -131,7 +131,7 @@ public class Arm : Parts
             else _myChar.GetRightGun().TurnOff();
         }
         
-        _myChar.CheckArms();
+        //_myChar.CheckArms();
         _myChar.MakeNotAttackable();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Pada1.BBCore;
 using BBUnity.Conditions;
 using Pada1.BBCore.Tasks;
@@ -20,6 +21,27 @@ public class CheckAttack : GOCondition
             if (!_myUnit)
                 return false;
         }
-        return _myUnit.CanAttack();
+        var b =_myUnit.CanAttack() && _myUnit.GetSelectedGun() != null;
+
+        if (_myUnit.CanAttack())
+        {
+            Debug.Log("puedo atacar");
+        }
+        else
+        {
+            Debug.Log("no puedo atacar");
+        }
+
+        if (_myUnit.GetSelectedGun())
+        {
+            Debug.Log("tengo arma");
+        }
+        else
+        {
+            Debug.Log("no tengo arma");
+        }
+
+        return b;
+
     }
 }

@@ -457,8 +457,9 @@ public class ButtonsUIManager : MonoBehaviour
         _selectedChar.bodyRenderContainer.SetActive(true);
         if (_selectedChar.gunsOffOnCloseUp)
         {
-            _selectedChar.GetLeftGun().ModelsOn();
-            _selectedChar.GetRightGun().ModelsOn();
+            if (_selectedChar.GetLeftGun()) _selectedChar.GetLeftGun().ModelsOn();
+            
+            if (_selectedChar.GetRightGun()) _selectedChar.GetRightGun().ModelsOn();
         }
         
         Character[] units = TurnManager.Instance.GetAllUnits();
@@ -585,19 +586,23 @@ public class ButtonsUIManager : MonoBehaviour
             }
             Gun gun = _selectedChar.GetSelectedGun();
 
-            if (_bulletsForBody > 0)
-                gun.IncreaseAvailableBullets(_bulletsForBody);
+            if (gun)
+            {
+                if (_bulletsForBody > 0)
+                    gun.IncreaseAvailableBullets(_bulletsForBody);
 
-            if (_bulletsForLArm > 0)
-                gun.IncreaseAvailableBullets(_bulletsForLArm);
+                if (_bulletsForLArm > 0)
+                    gun.IncreaseAvailableBullets(_bulletsForLArm);
 
-            if (_bulletsForRArm > 0)
-                gun.IncreaseAvailableBullets(_bulletsForRArm);
+                if (_bulletsForRArm > 0)
+                    gun.IncreaseAvailableBullets(_bulletsForRArm);
 
-            if (_bulletsForLegs > 0)
-                gun.IncreaseAvailableBullets(_bulletsForLegs);
+                if (_bulletsForLegs > 0)
+                    gun.IncreaseAvailableBullets(_bulletsForLegs);
             
-            DestroyImage(gun.GetMaxBullets());
+                DestroyImage(gun.GetMaxBullets());
+            }
+            
             
             ResetBodyParts();
         }
@@ -627,7 +632,7 @@ public class ButtonsUIManager : MonoBehaviour
     /// </summary>
     public void UnitSwapToLeftGun()
     {
-        if (!_selectedChar || !_selectedChar.LeftArmAlive()) return;
+        if (!_selectedChar || !_selectedChar.LeftArmAlive() || !_selectedChar.GetLeftGun()) return;
         
         AudioManager.audioManagerInstance.PlaySound(_soundsMenuManager.GetClickSound(), _soundsMenuManager.GetObjectToAddAudioSource());
         BodyClear();
@@ -650,7 +655,7 @@ public class ButtonsUIManager : MonoBehaviour
     /// </summary>
     public void UnitSwapToRightGun()
     {
-        if (!_selectedChar || !_selectedChar.RightArmAlive()) return;
+        if (!_selectedChar || !_selectedChar.RightArmAlive() || !_selectedChar.GetRightGun()) return;
         
         AudioManager.audioManagerInstance.PlaySound(_soundsMenuManager.GetClickSound(), _soundsMenuManager.GetObjectToAddAudioSource());
         BodyClear();
@@ -882,12 +887,12 @@ public class ButtonsUIManager : MonoBehaviour
     {
         ShowPlayerHudText();
         
-        if (_selectedChar.RightArmAlive())
+        if (_selectedChar.RightArmAlive() && _selectedChar.GetRightGun())
         {
             rightWeaponCircle.SetActive(true);
             leftWeaponCircle.SetActive(false);
         }
-        else if (_selectedChar.LeftArmAlive())
+        else if (_selectedChar.LeftArmAlive() && _selectedChar.GetLeftGun())
         {
             rightWeaponCircle.SetActive(false);
             leftWeaponCircle.SetActive(true);
@@ -895,7 +900,9 @@ public class ButtonsUIManager : MonoBehaviour
         else
         {
             rightWeaponCircle.SetActive(false);
+            rightWeaponBar.enabled = false;
             leftWeaponCircle.SetActive(false);
+            leftWeaponBar.enabled = false;
         }
 
         if (_selectedChar.CanAttack())
@@ -979,49 +986,45 @@ public class ButtonsUIManager : MonoBehaviour
         playerLegsSlider.maxValue = _selectedChar.legs.GetMaxHp();
         playerLegsSlider.value = _selectedChar.legs.GetCurrentHp();
 
-        if (_selectedChar.LeftArmAlive())
+        Gun left = _selectedChar.GetLeftGun();
+        if (_selectedChar.LeftArmAlive() && left)
         {
-            Gun left = _selectedChar.GetLeftGun();
-            if (left)
-            {
-                leftGunTypeText.text = left.GetGunTypeString();
-                string b = left.GetAvailableBullets().ToString();
-                leftGunHitsText.text = b;
+            leftGunTypeText.text = left.GetGunTypeString();
+            string b = left.GetAvailableBullets().ToString();
+            leftGunHitsText.text = b;
 
-                string dmg = left.GetBulletDamage().ToString();
-                leftGunDamageText.text = dmg;
+            string dmg = left.GetBulletDamage().ToString();
+            leftGunDamageText.text = dmg;
 
-                string h = left.GetHitChance().ToString();
-                leftGunHitChanceText.text = h + "%";
-            }
+            string h = left.GetHitChance().ToString();
+            leftGunHitChanceText.text = h + "%";
         }
         else
         {
             leftGunTypeText.text = "No gun - Arm destroyed";
+            leftGunHitsText.text = "";
             leftGunDamageText.text = "";
             leftGunHitChanceText.text = "";
         }
-
-        if (_selectedChar.RightArmAlive())
+        
+        Gun right = _selectedChar.GetRightGun();
+        if (_selectedChar.RightArmAlive() && right)
         {
-            Gun right = _selectedChar.GetRightGun();
-            if (right)
-            {
-                rightGunTypeText.text = right.GetGunTypeString();
+            rightGunTypeText.text = right.GetGunTypeString();
 
-                string b = right.GetAvailableBullets().ToString();
-                rightGunHitsText.text = b;
+            string b = right.GetAvailableBullets().ToString();
+            rightGunHitsText.text = b;
 
-                string dmg = right.GetBulletDamage().ToString();
-                rightGunDamageText.text = dmg;
+            string dmg = right.GetBulletDamage().ToString();
+            rightGunDamageText.text = dmg;
 
-                string h = right.GetHitChance().ToString();
-                rightGunHitChanceText.text = h + "%"; 
+            string h = right.GetHitChance().ToString();
+            rightGunHitChanceText.text = h + "%";
             }
-        }
         else
         {
             rightGunTypeText.text = "No gun - Arm destroyed";
+            rightGunHitsText.text = "";
 			rightGunDamageText.text = "";
 			rightGunHitChanceText.text = "";
         }
@@ -1160,8 +1163,9 @@ public class ButtonsUIManager : MonoBehaviour
             _selectedChar.bodyRenderContainer.SetActive(false);
             if (_selectedChar.gunsOffOnCloseUp)
             {
-                _selectedChar.GetLeftGun().ModelsOff();
-                _selectedChar.GetRightGun().ModelsOff();
+                if (_selectedChar.GetLeftGun()) _selectedChar.GetLeftGun().ModelsOff();
+                
+                if (_selectedChar.GetRightGun()) _selectedChar.GetRightGun().ModelsOff();
             }
             //_selectedChar.RotateTowardsEnemy(_selectedEnemy.transform.position, ActivateParts);
             _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform);

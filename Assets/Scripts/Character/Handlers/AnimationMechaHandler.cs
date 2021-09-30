@@ -159,8 +159,7 @@ public class AnimationMechaHandler : MonoBehaviour
         {
             gun = _character.GetLeftGun();
         }
-
-        _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
+        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
     }
 
     public void SetParticleAssaultRifle(int num) //call in Animaton
@@ -176,8 +175,7 @@ public class AnimationMechaHandler : MonoBehaviour
         {
             gun = _character.GetLeftGun();
         }
-
-        _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.AssaultRifle);
+        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.AssaultRifle);
     }
 
     public void SetParticleAssaultRifleFinalShoot(int num) //call in Animaton
@@ -194,7 +192,7 @@ public class AnimationMechaHandler : MonoBehaviour
             gun = _character.GetLeftGun();
         }
 
-        _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.AssaultRifleFinalShot);
+        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.AssaultRifleFinalShot);
     }
 
     public void SetParticletRifle(int num) //call in Animaton
@@ -211,7 +209,7 @@ public class AnimationMechaHandler : MonoBehaviour
             gun = _character.GetLeftGun();
         }
 
-        _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.Rifle);
+        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.Rifle);
     }
 
     #endregion
