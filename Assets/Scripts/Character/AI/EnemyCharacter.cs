@@ -205,9 +205,18 @@ public class EnemyCharacter : Character
     public void EnemyMove()
     {
         if (_moving) return;
-        if (_path.Count > 0) _camera.MoveTo(_path[_path.Count-1].transform);
-        
-        Move();
+        if (_path.Count > 0)
+        {
+            _camera.MoveTo(_path[_path.Count-1].transform);
+            Debug.Log("move enemy");
+            Move();
+        }
+        else
+        {
+            _canMove = false;
+            Debug.Log("path enemy 0");
+            OnEndAction();
+        }
     }
 
     public override void ReachedEnd()

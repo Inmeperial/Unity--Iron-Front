@@ -588,6 +588,7 @@ public class Character : EnumsClass, IObservable
 
         if (_targetTile && _targetTile == newTile && _path.Count > 0)
         {
+            Debug.Log("move character");
             Move();
         }
         else

@@ -49,7 +49,7 @@ public class GridMovement : MonoBehaviour
     /// </summary>
     public void StartMovement(List<Tile> tilesList)
     {
-        Debug.Log("start move");
+        Debug.Log("start movement tiles list: " + tilesList.Count);
         _forcedForward = false;
         _tilesList = tilesList;
         _tilesIndex = 1;

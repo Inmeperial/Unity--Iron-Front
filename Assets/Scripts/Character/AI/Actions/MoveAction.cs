@@ -34,7 +34,6 @@ public class MoveAction : GOAction
         _myUnit.OnStartAction();
         if (!_myUnit.IsMoving() && _myUnit.FoundPath())
         {
-            Debug.Log("move tree");
             _myUnit.EnemyMove();
         }
             
