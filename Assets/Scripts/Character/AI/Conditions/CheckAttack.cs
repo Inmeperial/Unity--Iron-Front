@@ -21,27 +21,7 @@ public class CheckAttack : GOCondition
             if (!_myUnit)
                 return false;
         }
-        var b =_myUnit.CanAttack() && _myUnit.GetSelectedGun() != null;
 
-        if (_myUnit.CanAttack())
-        {
-            Debug.Log("puedo atacar");
-        }
-        else
-        {
-            Debug.Log("no puedo atacar");
-        }
-
-        if (_myUnit.GetSelectedGun())
-        {
-            Debug.Log("tengo arma");
-        }
-        else
-        {
-            Debug.Log("no tengo arma");
-        }
-
-        return b;
-
+        return _myUnit.CanAttack() && _myUnit.GetSelectedGun() != null;
     }
 }
