@@ -568,8 +568,9 @@ public class ButtonsUIManager : MonoBehaviour
                 _selectedChar.bodyRenderContainer.SetActive(true);
                 if (_selectedChar.gunsOffOnCloseUp)
                 {
-                    _selectedChar.GetLeftGun().ModelsOn();
-                    _selectedChar.GetRightGun().ModelsOn();  
+                    if (_selectedChar.GetLeftGun()) _selectedChar.GetLeftGun().ModelsOn();
+                    
+                    if (_selectedChar.GetRightGun()) _selectedChar.GetRightGun().ModelsOn();  
                 }
                 
                 attackHudContainer.SetActive(false);

@@ -110,6 +110,8 @@ public class EnemyCharacter : Character
         {
 
             Tile tile = ClosestTileToEnemy(enemies[i]);
+            if (!tile) continue;
+            
             pathCreator.ResetPath();
             pathCreator.Calculate(_myPositionTile, tile, 1000);
 

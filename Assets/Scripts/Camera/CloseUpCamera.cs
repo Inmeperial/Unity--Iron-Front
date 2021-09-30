@@ -13,9 +13,7 @@ public class CloseUpCamera : MonoBehaviour
     public float threshold = 15f;
     public float moveBackInZ;
     
-    [Header("1 closest to player")]
-    [Header("0 closest to enemy")]
-    [Header("0 to 1 (float)")]
+    [Range(0,1)]
     public float lerp = .9f;
     private  Camera _mainCamWorld;
     [SerializeField] private Camera _mainCamUI;
