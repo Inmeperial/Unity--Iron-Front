@@ -116,8 +116,9 @@ public class MechaPartButton : CustomButton
         _bulletsCount = value;
     }
 
-    public void SetPart(MechaParts part)
+    public void SetPart(MaterialMechaHandler handler, MechaParts part)
     {
+        _materialHandler = handler;
         _part = part;
     }
 }

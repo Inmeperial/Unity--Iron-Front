@@ -128,10 +128,10 @@ public class Character : EnumsClass, IObservable
         EquipmentSpawner equipmentSpawn = FindObjectOfType<EquipmentSpawner>();
         
         body.SetPart();
-        _myUI.SetBodyButtonPart(MechaParts.Body);
+        _myUI.SetBodyButtonPart(_materialMechaHandler,MechaParts.Body);
         
         legs.SetPart();
-        _myUI.SetLegsButtonPart(MechaParts.Legs);
+        _myUI.SetLegsButtonPart(_materialMechaHandler, MechaParts.Legs);
         
         leftArm.SetPart();
         leftArm.SetRightOrLeft("Left");
@@ -143,7 +143,7 @@ public class Character : EnumsClass, IObservable
             _leftGun.SetGun();
             _leftGun.StartRoulette();
             _leftGun.SetRightOrLeft("Left");
-            _myUI.SetLeftArmButtonPart(MechaParts.LArm);
+            _myUI.SetLeftArmButtonPart(_materialMechaHandler,MechaParts.LArm);
         }
         
         rightArm.SetPart();
@@ -156,7 +156,7 @@ public class Character : EnumsClass, IObservable
             _rightGun.SetGun();
             _rightGun.StartRoulette();
             _rightGun.SetRightOrLeft("Right");
-            _myUI.SetRightArmButtonPart(MechaParts.RArm);
+            _myUI.SetRightArmButtonPart(_materialMechaHandler, MechaParts.RArm);
         }
 
         if (_rightArmAlive && _rightGun)

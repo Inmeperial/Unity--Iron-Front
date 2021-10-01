@@ -382,23 +382,23 @@ public class WorldUI : MonoBehaviour
         _legsButton.SetBulletsCount(count);
     }
 
-    public void SetBodyButtonPart(MechaParts part)
+    public void SetBodyButtonPart(MaterialMechaHandler handler, MechaParts part)
     {
-        _bodyButton.SetPart(part);
+        _bodyButton.SetPart(handler, part);
     }
     
-    public void SetLeftArmButtonPart(MechaParts part)
+    public void SetLeftArmButtonPart(MaterialMechaHandler handler, MechaParts part)
     {
-        _leftArmButton.SetPart(part);
+        _leftArmButton.SetPart(handler, part);
     }
-    public void SetRightArmButtonPart(MechaParts part)
+    public void SetRightArmButtonPart(MaterialMechaHandler handler, MechaParts part)
     {
-        _rightArmButton.SetPart(part);
+        _rightArmButton.SetPart(handler, part);
     }
     
-    public void SetLegsButtonPart(MechaParts part)
+    public void SetLegsButtonPart(MaterialMechaHandler handler, MechaParts part)
     {
-        _legsButton.SetPart(part);
+        _legsButton.SetPart(handler, part);
     }
 
     #endregion
