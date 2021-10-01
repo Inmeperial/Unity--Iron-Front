@@ -46,6 +46,12 @@ public class FindClosestEnemy : GOAction
 
         _myUnit.OnStartAction();
         var enemy = _myUnit.CalculateClosestEnemy();
+
+        if (!enemy)
+        {
+            _myUnit.OnEndAction();
+            return TaskStatus.FAILED;
+        }
         _myUnit.SetClosestEnemy(enemy);
         _myUnit.OnEndAction();
         

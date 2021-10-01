@@ -1268,6 +1268,8 @@ public class Character : EnumsClass, IObservable
         Character c = CharacterSelection.Instance.GetSelectedCharacter();
         if (!c._selected) return;
         
+        if (c.IsMoving()) return;
+        
         if (c.rotated) return;
         c.rotated = true;
         c.SetInitialRotation(c.transform.rotation);
