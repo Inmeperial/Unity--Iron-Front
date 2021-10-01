@@ -452,7 +452,7 @@ public class Character : EnumsClass, IObservable
         if (_canMove)
         {
             if (!legsOvercharged)
-                _currentSteps = legs.GetMaxSteps();
+                _currentSteps = legs.GetCurrentHp() > 0 ? legs.GetMaxSteps() : legs.GetMaxSteps()/2;
             else _currentSteps = legs.GetMaxSteps() * 2;
             AddTilesInMoveRange();
             PaintTilesInMoveRange(_myPositionTile, 0);

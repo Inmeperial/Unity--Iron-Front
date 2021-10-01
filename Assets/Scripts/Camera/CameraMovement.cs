@@ -103,8 +103,14 @@ public class CameraMovement : MonoBehaviour
 
     IEnumerator Move(Vector3 pos, Action callback = null, Transform lookAt = null)
     {
+        float timer = 0;
         while ((pos - transform.position).magnitude >= fixationThreshold)
         {
+            timer += Time.deltaTime;
+            
+            if (timer >= 5) 
+                break;
+            
             if (lookAt)
             {
                 float angle = Vector3.Angle(transform.forward, lookAt.forward);

@@ -153,7 +153,9 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     public void EndTurn()
     {
         Character character = CharacterSelection.Instance.GetSelectedCharacter();
-        if (character != null && character.IsMoving()) return;
+        if (character == null) return;
+        
+        if (character.IsMoving()) return;
 
         if (character.GetUnitTeam() == Team.Red)
         {
