@@ -59,6 +59,8 @@ public class EnemyCharacter : Character
         _closestEnemy = CalculateClosestEnemy();
         
         Tile closestTileToEnemy = ClosestTileToEnemy(_closestEnemy);
+
+        if (!closestTileToEnemy) return false;
         
         int distance = 0;
 
@@ -153,7 +155,13 @@ public class EnemyCharacter : Character
     {
         Tile closest = null;
         int distance = 0;
+
+        if (!character) return null;
+        
         Tile enemyTile = character.GetMyPositionTile();
+
+        if (!enemyTile) return null;
+        
         for (int i = 0; i < enemyTile.neighboursForMove.Count; i++)
         {
             for (int j = 0; j < _tilesInMoveRange.Count; j++)
