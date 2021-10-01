@@ -48,36 +48,36 @@ MonoBehaviour:
     />\r\n          <ActionNode id=\"5\" />\r\n          <ActionNode id=\"6\" />\r\n
     \       </nodes>\r\n      </_nodes>\r\n    </BehaviorTree>\r\n    <RepeatDecorator
     id=\"1\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"347.5486 189.8611\" name=\"Repeat\" description=\"Repeats the execution
+    position=\"974.6324 223.4998\" name=\"Repeat\" description=\"Repeats the execution
     of its child node\" cardinality=\"1\" hasParent=\"False\">\r\n          <BehaviorTree
     id=\"0\" />\r\n          <RepeatDecorator id=\"1\" />\r\n        </data>\r\n      </_data>\r\n
     \   </RepeatDecorator>\r\n    <SelectorNode id=\"2\">\r\n      <_data>\r\n        <data
-    breakpoint=\"0\" selected=\"False\" position=\"340.5486 314.8612\" name=\"Selector\"
+    breakpoint=\"0\" selected=\"False\" position=\"967.6324 348.4999\" name=\"Selector\"
     description=\"Executes all its children until one of them is successful\" cardinality=\"-1\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <SelectorNode
     id=\"2\" />\r\n          <RepeatDecorator id=\"1\" />\r\n        </data>\r\n      </_data>\r\n
     \   </SelectorNode>\r\n    <ActionNode id=\"6\">\r\n      <_data>\r\n        <data
-    breakpoint=\"0\" selected=\"False\" position=\"-121.0001 520.9445\" name=\"Iron
+    breakpoint=\"0\" selected=\"False\" position=\"506.0833 554.5838\" name=\"Iron
     Front/AI Actions/Find Closest Enemy\" description=\"\" cardinality=\"0\" hasParent=\"True\">\r\n
     \         <BehaviorTree id=\"0\" />\r\n          <ActionNode id=\"6\" />\r\n          <SelectorNode
     id=\"2\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n    <SubbehaviorNode
     id=\"3\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"135.5486 511.8611\" name=\"AttackBehavior\" description=\"Checks if
+    position=\"762.6321 545.5004\" name=\"AttackBehavior\" description=\"Checks if
     the AI can attack, then checks if it has enemies in range and then attacks\" cardinality=\"-1\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <SubbehaviorNode
     id=\"3\" />\r\n          <SelectorNode id=\"2\" />\r\n        </data>\r\n      </_data>\r\n
     \   </SubbehaviorNode>\r\n    <SubbehaviorNode id=\"4\">\r\n      <_data>\r\n
-    \       <data breakpoint=\"0\" selected=\"False\" position=\"367.5486 504.8611\"
+    \       <data breakpoint=\"0\" selected=\"False\" position=\"994.6324 538.5004\"
     name=\"MoveBehavior\" description=\"Checks if AI can move and then moves.\" cardinality=\"-1\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <SubbehaviorNode
     id=\"4\" />\r\n          <SelectorNode id=\"2\" />\r\n        </data>\r\n      </_data>\r\n
     \   </SubbehaviorNode>\r\n    <ActionNode id=\"5\">\r\n      <_data>\r\n        <data
-    breakpoint=\"0\" selected=\"False\" position=\"590.5485 505.8611\" name=\"Iron
+    breakpoint=\"0\" selected=\"False\" position=\"1217.633 539.5004\" name=\"Iron
     Front/AI Actions/End Turn\" description=\"Enemy AI will end it's turn.\" cardinality=\"0\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ActionNode
     id=\"5\" />\r\n          <SelectorNode id=\"2\" />\r\n        </data>\r\n      </_data>\r\n
     \   </ActionNode>\r\n  </editorInfo>\r\n</BehaviorBricks>"
-  zoom: 0.8
+  zoom: 0.9
   subslist:
   - {fileID: 11400000, guid: ca0575fdcf83aea488c8de5d8e8644cc, type: 2}
   - {fileID: 11400000, guid: 97ee768282b5d764ea7dd30bfa2c3cb6, type: 2}

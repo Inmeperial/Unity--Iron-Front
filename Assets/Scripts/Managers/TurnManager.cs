@@ -160,7 +160,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             EnemyCharacter enemy = character as EnemyCharacter;
             if (enemy) enemy.ForceEnd();
         }
-
+        CharacterSelection.Instance.ResetSelector();
         NotifyObserver("EndTurn");
         NotifyObserver("Deselect");
         
@@ -248,7 +248,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     /// </summary>
     private void ResetTurn(Character unit)
     {
-        CharacterSelection.Instance.ResetSelector();
+        
         _highlight.EndPreview();
         unit.NewTurn();
     }

@@ -24,6 +24,6 @@ public class CheckAttack : GOCondition
 
         if (_myUnit.IsMoving()) return false;
         
-        return _myUnit.CanAttack() && _myUnit.GetSelectedGun() != null;
+        return _myUnit.CanAttack() && _myUnit.GetSelectedGun() != null && _myUnit.GetSelectedGun().GetGunType() != EnumsClass.GunsType.Shield;
     }
 }

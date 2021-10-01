@@ -56,7 +56,7 @@ public class Legs : Parts
             total += damages[i].Item1;
             float hp = _currentHP - damages[i].Item1;
             UpdateHp(hp > 0 ? hp : 0);
-            _myChar.SetCharacterMove(_currentHP > 0 ? true : false);
+            //_myChar.SetCharacterMove(_currentHP > 0 ? true : false);
             EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
             EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
             int item = damages[i].Item2;

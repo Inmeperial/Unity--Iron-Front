@@ -67,7 +67,8 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
             Deselect();
         }
 
-        if (!_attackPending && Input.GetMouseButtonDown(0))
+        if (CharacterSelection.Instance.GetSelectedCharacter() != null && !CharacterSelection.Instance.GetSelectedCharacter().IsSelectingEnemy() 
+                                                                       && !_attackPending && Input.GetMouseButtonDown(0))
         {
             Interact();
         }

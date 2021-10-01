@@ -29,13 +29,18 @@ public class EnemyCharacter : Character
     {
         base.SelectThisUnit();
         _closestEnemy = null;
-
-        StartCoroutine(DelayStart());
+        if (_myTurn)
+        {
+            Debug.Log("activo en select");
+            StartCoroutine(DelayStart());
+        }
+        else _behaviorExecutor.paused = true;
     }
 
     IEnumerator DelayStart()
     {
         yield return new WaitForSeconds(2);
+        
         _behaviorExecutor.paused = false;
     }
 
@@ -44,7 +49,7 @@ public class EnemyCharacter : Character
         _canAttack = false;
     }
 
-    public void PauseFORTEST()
+    public void ForceBehaviorPause()
     {
         _behaviorExecutor.paused = true;
     }
@@ -211,13 +216,11 @@ public class EnemyCharacter : Character
         if (_path.Count > 0)
         {
             _camera.MoveTo(_path[_path.Count-1].transform);
-            Debug.Log("move enemy");
             Move();
         }
         else
         {
             _canMove = false;
-            Debug.Log("path enemy 0");
             OnEndAction();
         }
     }
@@ -225,6 +228,7 @@ public class EnemyCharacter : Character
     public override void ReachedEnd()
     {
         base.ReachedEnd();
+        Debug.Log("activo en reachend end");
         _behaviorExecutor.paused = false;
     }
 
@@ -236,6 +240,7 @@ public class EnemyCharacter : Character
 
     public void OnEndAction()
     {
+        Debug.Log("activo en end action");
         _behaviorExecutor.paused = false;
     }
 

@@ -30,6 +30,12 @@ public class FindClosestEnemy : GOAction
             }
         }
 
+        if (!_myUnit.IsMyTurn())
+        {
+            _myUnit.ForceBehaviorPause();
+            return TaskStatus.FAILED;
+        }
+
         if (!_myUnit.CanMove() && !_myUnit.CanAttack())
             return TaskStatus.FAILED;
         

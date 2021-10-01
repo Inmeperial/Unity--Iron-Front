@@ -551,6 +551,7 @@ public class ButtonsUIManager : MonoBehaviour
     public void EndTurn()
     {
         if (_selectedChar != null && _selectedChar.IsMoving()) return;
+        
         _selectedChar = null;
         _selectedEnemy = null;
         TurnManager.Instance.EndTurn();
@@ -561,6 +562,7 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void DeselectActions()
     {
+        Debug.Log("deselect");
         if (_selectedChar)
         {
             if (_selectedEnemy)
@@ -582,6 +584,7 @@ public class ButtonsUIManager : MonoBehaviour
                 var cam = FindObjectOfType<CloseUpCamera>();
                 _selectedChar.SetSelectingEnemy(false);
                 _selectedChar.ResetRotationAndRays();
+                
                 cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, cam.ResetCamera);
 
             }
@@ -621,6 +624,7 @@ public class ButtonsUIManager : MonoBehaviour
             ActivateEndTurnButton();
         buttonExecuteAttack.gameObject.SetActive(false);
         PortraitsController.Instance.PortraitsActiveState(true);
+        
     }
 
     private void ClearSelectedEnemy()

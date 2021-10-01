@@ -26,4 +26,9 @@ public class BillboardWithForward : Billboard
     {
         _originalPos = transform.position;
     }
+
+    private void OnDisable()
+    {
+        transform.position = _originalPos;
+    }
 }
