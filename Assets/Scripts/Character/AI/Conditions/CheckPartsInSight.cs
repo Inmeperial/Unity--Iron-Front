@@ -24,11 +24,11 @@ public class CheckPartsInSight : GOCondition
 
         if (_myUnit.checkedParts) return true;
         
-        var enemies = TurnManager.Instance.GetEnemies(_myUnit.GetUnitTeam());
 
         Character closestEnemy = _myUnit.GetClosestEnemy();
-        var rot = _myUnit.InitialRotation;
-        //_myUnit.RotateTowardsEnemy(closestEnemy.transform.position);
+
+        if (!closestEnemy) return false;
+        
         _myUnit.RotateTowardsEnemy(closestEnemy.transform);
         bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
         bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LArm", false);
@@ -37,7 +37,6 @@ public class CheckPartsInSight : GOCondition
 
         if (body || leftArm || rightArm || legs)
             _myUnit.checkedParts = true;
-        //_myUnit.ResetRotationAndRays(rot);
         _myUnit.ResetRotationAndRays();
         return body || leftArm || rightArm || legs;
         }

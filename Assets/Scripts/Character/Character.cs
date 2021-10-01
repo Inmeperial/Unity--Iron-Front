@@ -327,6 +327,12 @@ public class Character : EnumsClass, IObservable
         
         if (_rightGun) _rightGun.Deselect();
         
+        foreach (var e in _enemiesInRange)
+        {
+            TurnManager.Instance.UnitCantBeAttacked(e);
+        }
+        _enemiesInRange.Clear();
+        
         _selectedGun = _leftGun;
         _leftGunSelected = true;
         _rightGunSelected = false;
@@ -364,6 +370,12 @@ public class Character : EnumsClass, IObservable
         
         if (_leftGun) _leftGun.Deselect();
 
+        foreach (var e in _enemiesInRange)
+        {
+            TurnManager.Instance.UnitCantBeAttacked(e);
+        }
+        _enemiesInRange.Clear();
+        
         _selectedGun = _rightGun;
         _leftGunSelected = false;
         _rightGunSelected = true;
@@ -699,6 +711,12 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool HasEnemiesInRange()
     {
+        Debug.Log("enemies in range: " + _enemiesInRange.Count);
+        foreach (var e in _enemiesInRange)
+        {
+           Debug.Log("enemy: " + e.name); 
+        }
+        Debug.Break();
         return _enemiesInRange.Count > 0;
     }
 

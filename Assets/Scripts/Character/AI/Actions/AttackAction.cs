@@ -31,12 +31,24 @@ public class AttackAction : GOAction
         }
 
         _myUnit.OnStartAction();
+
+        if (!_myUnit.LeftArmAlive() && !_myUnit.RightArmAlive())
+        {
+            _myUnit.OnEndAction();
+            return TaskStatus.COMPLETED;
+        }
+
+        if (!_myUnit.GetLeftGun() && !_myUnit.GetRightGun())
+        {
+            _myUnit.OnEndAction();
+            return TaskStatus.COMPLETED;
+        }
+        
         Character closestEnemy = _myUnit.GetClosestEnemy();
         ButtonsUIManager.Instance.SetPlayerCharacter(_myUnit);
         ButtonsUIManager.Instance.SetEnemy(closestEnemy);
         
         var initialRotation = _myUnit.InitialRotation;
-        //_myUnit.RotateTowardsEnemy(closestEnemy.transform.position);
         _myUnit.transform.LookAt(closestEnemy.transform);
         bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
         bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LArm",false);
