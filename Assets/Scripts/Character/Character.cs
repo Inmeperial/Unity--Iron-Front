@@ -711,12 +711,6 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool HasEnemiesInRange()
     {
-        Debug.Log("enemies in range: " + _enemiesInRange.Count);
-        foreach (var e in _enemiesInRange)
-        {
-           Debug.Log("enemy: " + e.name); 
-        }
-        Debug.Break();
         return _enemiesInRange.Count > 0;
     }
 
