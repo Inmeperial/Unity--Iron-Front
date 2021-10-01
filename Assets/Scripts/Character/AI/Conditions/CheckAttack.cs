@@ -22,6 +22,8 @@ public class CheckAttack : GOCondition
                 return false;
         }
 
+        if (_myUnit.IsMoving()) return false;
+        
         return _myUnit.CanAttack() && _myUnit.GetSelectedGun() != null;
     }
 }

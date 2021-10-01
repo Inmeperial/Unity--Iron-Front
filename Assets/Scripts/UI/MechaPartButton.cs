@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,10 +15,29 @@ public class MechaPartButton : CustomButton
 
 
     [SerializeField] private TextMeshProUGUI _bulletsCountText;
-    private int _bulletsCount;
     
+    private int _bulletsCount;
+    private MaterialMechaHandler _materialHandler;
+    private MechaParts _part;
     public override void OnPointerEnter(PointerEventData eventData)
     {
+
+        switch (_part)
+        {
+            case MechaParts.Body:
+                Debug.Log("mouse over body");
+                break;
+            case MechaParts.Legs:
+                Debug.Log("mouse over legs");
+                break;
+            case MechaParts.RArm:
+                Debug.Log("mouse over right arm");
+                break;
+            case MechaParts.LArm:
+                Debug.Log("mouse over left arm");
+                break;
+        }
+        
         UpdateDamagePreviewSlider();
         
         _damagePreviewSlider.gameObject.SetActive(true);
@@ -25,7 +46,26 @@ public class MechaPartButton : CustomButton
     public override void OnPointerExit(PointerEventData eventData)
     {
         if (_bulletsCount <= 0)
+        {
             _damagePreviewSlider.gameObject.SetActive(false);
+            
+            switch (_part)
+            {
+                case MechaParts.Body:
+                    Debug.Log("mouse exits body");
+                    break;
+                case MechaParts.Legs:
+                    Debug.Log("mouse exits legs");
+                    break;
+                case MechaParts.RArm:
+                    Debug.Log("mouse exits right arm");
+                    break;
+                case MechaParts.LArm:
+                    Debug.Log("mouse exits left arm");
+                    break;
+            }
+        }
+            
     }
 
     protected override void PressRight()
@@ -75,5 +115,9 @@ public class MechaPartButton : CustomButton
         _bulletsCountText.text = value.ToString();
         _bulletsCount = value;
     }
-    
+
+    public void SetPart(MechaParts part)
+    {
+        _part = part;
+    }
 }
