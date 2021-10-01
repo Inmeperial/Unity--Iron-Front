@@ -116,6 +116,10 @@ public class CharacterSelection : MonoBehaviour
             _enemySelection = c;
             if (_selection && _selection.CanAttack())
             {
+                if (!_selection.LeftArmAlive() && !_selection.RightArmAlive()) return;
+                
+                if (!_selection.GetLeftGun() && !_selection.GetRightGun()) return;
+                
                 _selection.SetRotationBeforeAttack(_selection.transform.rotation);
                 _selection.RotateTowardsEnemy(_enemySelection.transform);
                 //_selection.RotateTowardsEnemy(_enemySelection.transform.position);
