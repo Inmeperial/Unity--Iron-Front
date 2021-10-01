@@ -933,6 +933,8 @@ public class Character : EnumsClass, IObservable
     //Se pintan los tiles dentro del rango de ataque
     public void PaintTilesInAttackRange(Tile currentTile, int count)
     {
+        if (!_leftArmAlive && !_rightArmAlive) return;
+
         if (_selectedGun == null || count >= _selectedGun.GetAttackRange() ||
             (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
             return;
