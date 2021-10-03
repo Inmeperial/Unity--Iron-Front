@@ -376,6 +376,8 @@ public class Character : EnumsClass, IObservable
         }
         _enemiesInRange.Clear();
         
+        ResetRotationAndRays();
+        
         _selectedGun = _rightGun;
         _leftGunSelected = false;
         _rightGunSelected = true;

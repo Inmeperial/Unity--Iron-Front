@@ -81,6 +81,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             CharacterSelection.Instance.ActivateCharacterSelection(true);
             
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             
             ButtonsUIManager.Instance.RightWeaponCircleState(true);
             ButtonsUIManager.Instance.LeftWeaponCircleState(true);
@@ -94,6 +95,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             CharacterSelection.Instance.ActivateCharacterSelection(false);
             
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             
             ButtonsUIManager.Instance.DeactivateEndTurnButton();
             
@@ -198,7 +200,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             CharacterSelection.Instance.ActivateCharacterSelection(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            
+
             ButtonsUIManager.Instance.RightWeaponCircleState(true);
             ButtonsUIManager.Instance.LeftWeaponCircleState(true);
             ButtonsUIManager.Instance.RightWeaponBarButtonState(true);
@@ -210,6 +212,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         {
             CharacterSelection.Instance.ActivateCharacterSelection(false);
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             ButtonsUIManager.Instance.DeactivateEndTurnButton();
             
             ButtonsUIManager.Instance.RightWeaponCircleState(false);

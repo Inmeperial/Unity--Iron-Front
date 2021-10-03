@@ -40,11 +40,15 @@ public class ChangeScene : MonoBehaviour
 
     public void Win()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene("Win");
     }
 
     public void Defeat()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene("Defeat");
     }
 

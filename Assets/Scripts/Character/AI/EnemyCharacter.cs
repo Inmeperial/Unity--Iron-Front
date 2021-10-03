@@ -31,7 +31,6 @@ public class EnemyCharacter : Character
         _closestEnemy = null;
         if (_myTurn)
         {
-            Debug.Log("activo en select");
             StartCoroutine(DelayStart());
         }
         else _behaviorExecutor.paused = true;
@@ -248,7 +247,6 @@ public class EnemyCharacter : Character
 
     public void OnEndAction()
     {
-        Debug.Log("activo en end action");
         _behaviorExecutor.paused = false;
     }
 
