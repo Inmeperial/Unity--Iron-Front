@@ -7,9 +7,8 @@ public class SoundsEnvironmentalRadio : MonoBehaviour
     public AudioClip[] soundsEnvironmentalRadio;
     public AudioClip[] soundsStatic;
     private AudioSource _audioSource = default;
-    //public AudioSource _audioSourceStatic = default;
     private int _numTrack = 0;
-    private bool _isStatickPlaying = false;
+    private bool _isStatickPlaying = true; //set to true so we start with the music and not static
 
     void Start()
     {
