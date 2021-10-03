@@ -107,7 +107,7 @@ public class CharacterSelection : MonoBehaviour
                 _selection.RotateTowardsEnemy(_enemySelection.transform);
             }
         }
-        else if (c.GetUnitTeam() != TurnManager.Instance.GetActiveTeam())
+        else if (c.GetUnitTeam() != TurnManager.Instance.GetActiveTeam() && c.CanBeAttacked())
         {
             if (_selection)
             {

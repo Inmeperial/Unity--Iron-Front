@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class AnimationMechaHandler : MonoBehaviour
@@ -9,6 +10,7 @@ public class AnimationMechaHandler : MonoBehaviour
     private ParticleMechaHandler _particleMechaHandler;
     private AudioMechaHandler _audioMechaHandler;
     private Character _character;
+    private bool _deadAnimIsActive;
 
     private void Start()
     {
@@ -22,6 +24,8 @@ public class AnimationMechaHandler : MonoBehaviour
 
     public void SetIsReciveDamageAnimatorFalse()
     {
+        if (_deadAnimIsActive) return;
+        
         if (_character.body.GetCurrentHp() <= 0)
         {
             SetIsDeadAnimatorTrue();
@@ -34,6 +38,9 @@ public class AnimationMechaHandler : MonoBehaviour
 
     public void SetIsDeadAnimatorTrue()
     {
+        if (_deadAnimIsActive) return;
+        
+        _deadAnimIsActive = true;
         _animator.SetBool("isDead", true);
     }
 
@@ -45,16 +52,19 @@ public class AnimationMechaHandler : MonoBehaviour
 
     public void SetIsReciveDamageAnimatorTrue()
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isReciveDamageAnimator", true);
     }
 
     public void SetIsWalkingAnimatorFalse()
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isWalkingAnimator", false);
     }
 
     public void SetIsWalkingAnimatorTrue()
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isWalkingAnimator", true);
     }
 
@@ -64,81 +74,97 @@ public class AnimationMechaHandler : MonoBehaviour
 
     public void SetIsSniperAttackRightAnimatorFalse() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isSniperAttackRight", false);
     }
 
     public void SetIsSniperAttackLeftAnimatorFalse() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isSniperAttackLeft", false);
     }
 
     public void SetIsHammerAttackRightAnimatorFalse() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isHammerAttackRight", false);
     }
 
     public void SetIsHammerAttackLeftAnimatorFalse() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isHammerAttackLeft", false);
     }
 
     public void SetIsShotgunAttackRightAnimatorFalse() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isShotgunAttackRight", false);
     }
 
     public void SetIsShotgunAttackLeftAnimatorFalse() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isShotgunAttackLeft", false);
     }
 
     public void SetIsMachineGunAttackLeftAnimatorFalse() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isMachinegunAttackLeft", false);
     }
 
     public void SetIsMachineGunAttackRightAnimatorFalse() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isMachinegunAttackRight", false);
     }
 
     public void SetIsSniperAttackRightAnimatorTrue() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isSniperAttackRight", true);
     }
 
     public void SetIsSniperAttackLeftAnimatorTrue() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isSniperAttackLeft", true);
     }
 
     public void SetIsHammerAttackRightAnimatorTrue() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isHammerAttackRight", true);
     }
 
     public void SetIsHammerAttackLeftAnimatorTrue() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isHammerAttackLeft", true);
     }
 
     public void SetIsShotgunAttackRightAnimatorTrue() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isShotgunAttackRight", true);
     }
 
     public void SetIsShotgunAttackLeftAnimatorTrue() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isShotgunAttackLeft", true);
     }
 
     public void SetIsMachineGunAttackLeftAnimatorTrue() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isMachinegunAttackLeft", true);
     }
 
     public void SetIsMachineGunAttackRightAnimatorTrue() //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         _animator.SetBool("isMachinegunAttackRight", true);
     }
 
@@ -150,6 +176,7 @@ public class AnimationMechaHandler : MonoBehaviour
 
     public void SetParticleShootGun(int num) //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         Gun gun;
         if (num == 0)
         {
@@ -164,6 +191,7 @@ public class AnimationMechaHandler : MonoBehaviour
 
     public void SetParticleAssaultRifle(int num) //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         //Anim keyFrame = 26.1 - 45.3 - 63.9 - 81.6 - 
 
         Gun gun;
@@ -180,6 +208,7 @@ public class AnimationMechaHandler : MonoBehaviour
 
     public void SetParticleAssaultRifleFinalShoot(int num) //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         //Anim keyFrame = 26.1 - 45.3 - 63.9 - 81.6 - 
 
         Gun gun;
@@ -197,6 +226,7 @@ public class AnimationMechaHandler : MonoBehaviour
 
     public void SetParticletRifle(int num) //call in Animaton
     {
+        if (_deadAnimIsActive) return;
         //Anim keyFrame = 45.8
 
         Gun gun;

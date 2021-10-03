@@ -49,7 +49,6 @@ public class GridMovement : MonoBehaviour
     /// </summary>
     public void StartMovement(List<Tile> tilesList)
     {
-        Debug.Log("start movement tiles list: " + tilesList.Count);
         _forcedForward = false;
         _tilesList = tilesList;
         _tilesIndex = 1;
@@ -107,7 +106,6 @@ public class GridMovement : MonoBehaviour
             Vector3 forwardDir = Vector3.zero;
             Vector3 last = Vector3.zero;
             Vector3 preLast = Vector3.zero;
-            Debug.Log("tiles count: " + _tilesList.Count);
             last = _tilesList[_tilesList.Count - 1].transform.position;
             if (_tilesList.Count >= 2)
             {
