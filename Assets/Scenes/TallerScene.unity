@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.03349305, g: 0.044874538, b: 0.07068428, a: 1}
+  m_IndirectSpecularColor: {r: 0.07760706, g: 0.08408485, b: 0.10330084, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -56,7 +56,7 @@ LightmapSettings:
   m_LightmapEditorSettings:
     serializedVersion: 12
     m_Resolution: 2
-    m_BakeResolution: 5
+    m_BakeResolution: 10
     m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
@@ -74,7 +74,7 @@ LightmapSettings:
     m_MixedBakeMode: 0
     m_BakeBackend: 2
     m_PVRSampling: 1
-    m_PVRDirectSampleCount: 32
+    m_PVRDirectSampleCount: 100
     m_PVRSampleCount: 512
     m_PVRBounces: 2
     m_PVREnvironmentSampleCount: 256
@@ -2992,7 +2992,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -3884,7 +3884,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -10688,7 +10688,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.455
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -14276,7 +14276,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -16658,7 +16658,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -17147,7 +17147,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.635
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -17410,7 +17410,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -20400,7 +20400,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.705
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -21643,6 +21643,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 301143485406733650, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6837789
+      objectReference: {fileID: 0}
     - target: {fileID: 495976155020393030, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -21657,6 +21662,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 762796876161639919, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.69267285
       objectReference: {fileID: 0}
     - target: {fileID: 863406461264762519, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
@@ -21682,6 +21692,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062112346804375508, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.70907724
       objectReference: {fileID: 0}
     - target: {fileID: 1063991132501925034, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
@@ -21712,6 +21727,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1276297770875027069, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7254157
       objectReference: {fileID: 0}
     - target: {fileID: 1294595633559290427, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
@@ -21838,6 +21858,26 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 2247405050711987327, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7690948
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405050827371000, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7411613
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405050842895933, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.69596684
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405050858085166, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.36432934
+      objectReference: {fileID: 0}
     - target: {fileID: 2247405050888874032, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -21857,6 +21897,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -9.08699
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405051035203528, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7095384
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405051079143270, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7281827
       objectReference: {fileID: 0}
     - target: {fileID: 2247405051117897108, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
@@ -21878,6 +21928,56 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -9.087
       objectReference: {fileID: 0}
+    - target: {fileID: 2247405051358070801, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6841742
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405051375291179, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7069031
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405051433602414, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.68424004
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405051454282152, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.33724248
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405051462212738, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.69306815
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405051494049352, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7261289
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405051769576853, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6748191
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405051777377353, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3314316
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405051844826727, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6748191
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405051887855396, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7163241
+      objectReference: {fileID: 0}
     - target: {fileID: 2247405051889264805, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -21898,6 +21998,31 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -9.087
       objectReference: {fileID: 0}
+    - target: {fileID: 2247405052080025365, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.683713
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405052166226533, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.71013135
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405052303640242, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.70024914
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405052421078503, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.72225344
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405052477581173, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.68391067
+      objectReference: {fileID: 0}
     - target: {fileID: 2247405052507564535, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -21917,6 +22042,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -9.08699
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405052615247266, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6748191
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247405052717608774, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7032138
       objectReference: {fileID: 0}
     - target: {fileID: 2247405052768036175, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
@@ -22032,6 +22167,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2437361385042169539, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.69227755
       objectReference: {fileID: 0}
     - target: {fileID: 2439877264881598298, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
@@ -23478,6 +23618,16 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 3994237421793719930, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.69207996
+      objectReference: {fileID: 0}
+    - target: {fileID: 3994498680521959177, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.71849823
+      objectReference: {fileID: 0}
     - target: {fileID: 3998821481933904942, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -23517,6 +23667,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4440608893774619780, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7003809
       objectReference: {fileID: 0}
     - target: {fileID: 4588020829197317907, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
@@ -23622,6 +23777,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 5992216785769041362, guid: 745326c6e0be03c458fbd5c5b22d665c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7004468
       objectReference: {fileID: 0}
     - target: {fileID: 6042513419826038799, guid: 745326c6e0be03c458fbd5c5b22d665c,
         type: 3}
@@ -30212,7 +30372,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.71
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -30406,7 +30566,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -32337,7 +32497,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.554
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -32428,7 +32588,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656579325}
   m_LocalRotation: {x: -0, y: -0.9942068, z: -0, w: 0.10748436}
-  m_LocalPosition: {x: 2.436, y: 1.701, z: -0.343}
+  m_LocalPosition: {x: 2.436, y: 1.7032, z: -0.343}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1584098422}
@@ -43282,7 +43442,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -44236,7 +44396,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -45421,7 +45581,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.531
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -46544,7 +46704,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.658
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -47838,7 +47998,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -54687,7 +54847,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.623
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -58416,7 +58576,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -64483,7 +64643,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -70707,7 +70867,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -70888,7 +71048,7 @@ Light:
     m_Resolution: 1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -73132,7 +73292,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 165ba4b9d8d5c5b4486b9bbf562c5d2a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.9389997
+      value: 4.945
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 165ba4b9d8d5c5b4486b9bbf562c5d2a,
         type: 3}
@@ -78387,7 +78547,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -79559,7 +79719,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -80602,7 +80762,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.589
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -84378,7 +84538,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -88310,7 +88470,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -89924,7 +90084,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.577
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -90662,7 +90822,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -92219,7 +92379,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -94120,7 +94280,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -100307,7 +100467,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
