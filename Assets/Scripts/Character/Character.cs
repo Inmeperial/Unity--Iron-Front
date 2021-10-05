@@ -468,8 +468,9 @@ public class Character : EnumsClass, IObservable
             if (!legsOvercharged)
                 _currentSteps = legs.GetCurrentHp() > 0 ? legs.GetMaxSteps() : legs.GetMaxSteps()/2;
             else _currentSteps = legs.GetMaxSteps() * 2;
-            AddTilesInMoveRange();
+            
             PaintTilesInMoveRange(_myPositionTile, 0);
+            AddTilesInMoveRange();
         }
     }
 
@@ -493,8 +494,8 @@ public class Character : EnumsClass, IObservable
             TurnManager.Instance.UnitCantBeAttacked(item);
         }
 
-        if (_canMove)
-            _currentSteps = legs.GetMaxSteps();
+        // if (_canMove)
+        //     _currentSteps = legs.GetMaxSteps();
         ResetInRangeLists();
         _path.Clear();
         highlight.PathLinesClear();
