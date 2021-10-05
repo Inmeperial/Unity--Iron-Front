@@ -174,9 +174,9 @@ public class PortraitsController : MonoBehaviour
         return _portraitsPositions;
     }
 
-    public FramesUI SetPortrait(int position, Sprite sprite, string name, UnityAction leftButtonAction = null, UnityAction rightButtonAction = null)
+    public FramesUI SetPortrait(int position, Sprite sprite, string name, EnumsClass.Team team, UnityAction leftButtonAction = null, UnityAction rightButtonAction = null)
     {
-        FramesUI portrait = _portraits[position].SetSprite(sprite).SetName(name);
+        FramesUI portrait = _portraits[position].SetSprite(sprite).SetName(name).SetBorderColor(team);
 
         if (leftButtonAction != null)
         {

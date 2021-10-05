@@ -11,6 +11,10 @@ public class FramesUI : MonoBehaviour
 	public Image mechaImage;
 	public Image leftGunIcon;
 	public Image rightGunIcon;
+	public Image colorBorder;
+	public Image colorNamePlate;
+	public Color playerColor;
+	public Color enemyColor;
 	public TextMeshProUGUI mechaName;
 	public CustomButton selectionButton;
 	
@@ -59,6 +63,15 @@ public class FramesUI : MonoBehaviour
 	public FramesUI SetName(string unitName)
 	{
 		mechaName.text = unitName;
+		return this;
+	}
+
+	public FramesUI SetBorderColor(EnumsClass.Team team)
+	{
+		var color =  team == EnumsClass.Team.Green ? playerColor : enemyColor;
+		colorBorder.color = color;
+		colorNamePlate.color = color;
+		
 		return this;
 	}
 }
