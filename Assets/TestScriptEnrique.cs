@@ -4,95 +4,84 @@ using UnityEngine;
 
 public class TestScriptEnrique : MonoBehaviour
 {
-    public GameObject objForScale = default;
-    private bool _isNoCover = false;
+    private GameObject _coverPrebaf = default;
     private bool _isHalfCover = false;
     private bool _isFullCover = false;
     private Material _matCover1 = default;
     private Material _matCover2 = default;
+    private GameObject cover1 = default;
+    private GameObject cover2 = default;
+
 
     private void Start()
     {
-        _matCover1 = this.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material;
-        _matCover2 = this.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material;
-        objForScale.transform.position = this.transform.position;
-        SetNoCover();
-    }
+        _coverPrebaf = this.transform.GetChild(1).gameObject;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            Debug.Log("true");
-            SetCover(true);
-        }
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            Debug.Log("false");
-            SetCover(false); 
-        }
+        cover1 = _coverPrebaf.transform.GetChild(0).gameObject;
+        cover2 = _coverPrebaf.transform.GetChild(1).gameObject;
+        _matCover1 = cover1.GetComponent<Renderer>().material;
+        _matCover2 = cover2.GetComponent<Renderer>().material;
+        SetDiseableCover();
     }
-
+    
     public void SetCover(bool isActivated)
     {
-        //cuando termina moverlo afuera del mapa.
         if (isActivated)
         {
-            if (_isNoCover)
+            if (this._isHalfCover)
             {
-                SetNoCover();
+                Debug.Log("ActivateHalfCover");
+                ActivateHalfCover();
             }
-            if (_isHalfCover)
+            if (this._isFullCover)
             {
-                SetHalfCover();
-            }
-            if (_isFullCover)
-            {
-                SetFullCover();
+                ActivateFullCover();
             }
         }
         else
         {
-            SetNoCover();
+            SetDiseableCover();
         }
     }
-    private void SetNoCover()
+    
+
+    private void SetDiseableCover()
     {
-        //_isNoCover = true;
-        _matCover1.SetInt("_halfShield", 0);
-        _matCover1.SetInt("_fullShield", 0);
-        _matCover2.SetInt("_halfShield", 0);
-        _matCover2.SetInt("_fullShield", 0);
+        cover1.SetActive(false);
+        cover2.SetActive(false);
     }
-    private void SetHalfCover()
+
+    private void ActivateHalfCover()
     {
-        //_isHalfCover = false;
+        cover1.SetActive(true);
+        cover2.SetActive(true);
         _matCover1.SetInt("_halfShield", 1);
         _matCover1.SetInt("_fullShield", 0);
         _matCover2.SetInt("_halfShield", 1);
         _matCover2.SetInt("_fullShield", 0);
     }
-    private void SetFullCover()
+
+    private void ActivateFullCover()
     {
-        //_isFullCover = false;
+        cover1.SetActive(true);
+        cover2.SetActive(true);
         _matCover1.SetInt("_halfShield", 0);
         _matCover1.SetInt("_fullShield", 1);
         _matCover2.SetInt("_halfShield", 0);
         _matCover2.SetInt("_fullShield", 1);
     }
-    void OnCollisionEnter(Collision collision)
+
+    public void SetIsHalfCover()
     {
-        if (collision.transform.name == "FeetsScale")
+        Debug.Log("halfCover");
+        this._isHalfCover = true;
+    }
+    public void SetIsFullCover()
+    {
+        this._isFullCover = true;
+        if (this._isHalfCover)
         {
-            _isHalfCover = true;
-            SetHalfCover();
-            objForScale.transform.position = new Vector3(300, 300, 300);
-        }
-        if (collision.transform.name == "BodyScale")
-        {
-            _isFullCover = true;
-            SetFullCover();
-            objForScale.transform.position = new Vector3(300, 300, 300);
+            _isHalfCover = false;
         }
     }
 }

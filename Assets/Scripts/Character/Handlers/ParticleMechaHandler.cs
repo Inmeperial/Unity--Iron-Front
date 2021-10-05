@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ParticleMechaHandler : MonoBehaviour
 {
+    [SerializeField] private GameObject spawnerMechaBurning;
     public GameObject[] arrParticleObj;
     private ParticleSystem[] _arrPartSystem;
 
@@ -62,6 +63,11 @@ public class ParticleMechaHandler : MonoBehaviour
     public void SetParticleWeapon(GameObject objGunParticleSpawn, EnumsClass.ParticleActionType type)
     {
         EffectsController.Instance.PlayParticlesEffect(objGunParticleSpawn, type);
+    }
+
+    public GameObject GetBurningSpawnerFromParticleMechaHandler()
+    {
+        return spawnerMechaBurning;
     }
 
 }

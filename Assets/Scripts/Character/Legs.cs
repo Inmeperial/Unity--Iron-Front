@@ -8,7 +8,7 @@ public class Legs : Parts
     public LegsSO legsData;
 
     private int _maxSteps;
-    
+
     private float _moveSpeed;
     private float _rotationSpeed;
 
@@ -42,11 +42,11 @@ public class Legs : Parts
     }
 
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public override void TakeDamage(List<Tuple<int,int>> damages)
+    public override void TakeDamage(List<Tuple<int, int>> damages)
     {
         if (_currentHP <= 0) return;
-        
-        
+
+
         WorldUI ui = _myChar.GetMyUI();
         ui.SetLegsSlider(_currentHP);
         int total = 0;
@@ -65,15 +65,13 @@ public class Legs : Parts
                 case MissHit:
                     EffectsController.Instance.CreateDamageText("Miss", 0, legsPos, i == damages.Count - 1 ? true : false);
                     break;
-                   
+
                 case NormalHit:
                     EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 1, legsPos, i == damages.Count - 1 ? true : false);
-                    _myChar.HitSoundMecha();
                     break;
-               
+
                 case CriticalHit:
                     EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 2, legsPos, i == damages.Count - 1 ? true : false);
-                    _myChar.HitSoundMecha();
                     break;
             }
         }
@@ -86,8 +84,8 @@ public class Legs : Parts
     public override void TakeDamage(int damage)
     {
         if (_currentHP <= 0) return;
-        
-        
+
+
         WorldUI ui = _myChar.GetMyUI();
         ui.SetLegsSlider(_currentHP);
         ui.ContainerActivation(true);
@@ -101,12 +99,11 @@ public class Legs : Parts
         }
 
         bool isActive = CharacterSelection.Instance.IsActiveCharacter(_myChar);
-        
+
         if (isActive) ButtonsUIManager.Instance.UpdateLegsHUD(_currentHP);
-        
+
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
-        _myChar.HitSoundMecha();
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position, true);
     }
 

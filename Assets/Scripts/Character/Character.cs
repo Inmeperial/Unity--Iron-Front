@@ -1341,10 +1341,10 @@ public class Character : EnumsClass, IObservable
         _animationMechaHandler.SetIsReciveDamageAnimatorTrue();
     }
 
-    public void HitSoundMecha()
-    {
-        AudioManager.audioManagerInstance.PlaySound(soundHit, this.gameObject);
-    }
+    //public void HitSoundMecha()
+    //{
+    //    AudioManager.audioManagerInstance.PlaySound(soundHit, this.gameObject);
+    //}
 
     public void Subscribe(IObserver observer)
     {
@@ -1376,6 +1376,11 @@ public class Character : EnumsClass, IObservable
         // ButtonsUIManager.Instance.equipmentButton.OnRightClick?.Invoke();
         // ButtonsUIManager.Instance.EquipmentButtonState(false);
         // ButtonsUIManager.Instance.UpdateItemButtonName();
+    }
+
+    public GameObject GetBurningSpawner()
+    {
+        return this.GetComponent<ParticleMechaHandler>().GetBurningSpawnerFromParticleMechaHandler();
     }
 
     // public void StartItemUpdate()

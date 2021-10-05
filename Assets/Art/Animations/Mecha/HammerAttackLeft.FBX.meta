@@ -59,6 +59,30 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.16971771
+        functionName: SetParticleStartAttackHammer
+        data: 
+        objectReferenceParameter: {fileID: 7165060716866703110, guid: f61f915c0b07d1a44a152474e0a8507e,
+          type: 3}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.5257755
+        functionName: SetParticleSwingAttackHammer
+        data: 
+        objectReferenceParameter: {fileID: 7165060716866703110, guid: f61f915c0b07d1a44a152474e0a8507e,
+          type: 3}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.74523973
+        functionName: SetParticleLandAttackHammer
+        data: 
+        objectReferenceParameter: {fileID: 7165060716866703110, guid: f61f915c0b07d1a44a152474e0a8507e,
+          type: 3}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
       - time: 1
         functionName: SetIsHammerAttackLeftAnimatorFalse
         data: 

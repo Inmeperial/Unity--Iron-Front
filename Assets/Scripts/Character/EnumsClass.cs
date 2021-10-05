@@ -36,6 +36,7 @@ public abstract class EnumsClass: MonoBehaviour
         AssaultRifleFinalShot,
         Rifle,
         Dead,
-        Hit
+        Hit,
+        MortarHit
     };
 }

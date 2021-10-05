@@ -5,19 +5,26 @@ using UnityEngine;
 public class AudioMechaHandler : MonoBehaviour
 {
     [SerializeField] private AudioClip _soundMotorStart;
+    //[SerializeField] private AudioClip _soundMechaExplosion;
     [SerializeField] private AudioClip _soundWalk;
     [SerializeField] private AudioClip _soundHit;
+
+    //public void SetPlayMechaExplosion()
+    //{
+    //    AudioManager.audioManagerInstance.PlaySound(_soundMechaExplosion, this.gameObject);
+    //}
+
     public void SetPlayMotorStart()
     {
         AudioManager.audioManagerInstance.PlaySound(_soundMotorStart, this.gameObject);
     }
 
-    public void SetPlayHit()
-    {
-        AudioManager.audioManagerInstance.PlaySound(_soundHit, this.gameObject);
-    }
+    //public void SetPlayHit()
+    //{
+    //    AudioManager.audioManagerInstance.PlaySound(_soundHit, this.gameObject);
+    //}
 
-    public void SetPlayWalk()
+    public void SetPlayWalk() //call in Animaton
     {
         AudioManager.audioManagerInstance.PlaySound(_soundWalk, this.gameObject);
     }

@@ -45,12 +45,10 @@ public class Body : Parts
                    
                 case NormalHit:
                     EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 1, bodyPos, i == damages.Count - 1 ? true : false);
-                    _myChar.HitSoundMecha();
                     break;
                
                 case CriticalHit:
                     EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 2, bodyPos, i == damages.Count - 1 ? true : false);
-                    _myChar.HitSoundMecha();
                     break;
             }
         }
@@ -79,8 +77,6 @@ public class Body : Parts
         
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
-        
-        _myChar.HitSoundMecha();
         
         Vector3 bodyPos = transform.position;
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, bodyPos, true);

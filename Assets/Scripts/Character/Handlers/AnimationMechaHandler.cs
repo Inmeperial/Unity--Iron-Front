@@ -39,7 +39,8 @@ public class AnimationMechaHandler : MonoBehaviour
     public void SetIsDeadAnimatorTrue()
     {
         if (_deadAnimIsActive) return;
-        
+
+        //_audioMechaHandler.SetPlayMechaExplosion();
         _deadAnimIsActive = true;
         _animator.SetBool("isDead", true);
     }
@@ -240,6 +241,60 @@ public class AnimationMechaHandler : MonoBehaviour
         }
 
         if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.Rifle);
+    }
+
+    public void SetParticleStartAttackHammer(int num) //call in Animaton
+    {
+        if (_deadAnimIsActive) return;
+
+        //Anim keyFrame = 6 (17,00%)
+
+        Gun gun;
+        if (num == 0)
+        {
+            gun = _character.GetRightGun();
+        }
+        else
+        {
+            gun = _character.GetLeftGun();
+        }
+        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
+    }
+
+    public void SetParticleSwingAttackHammer(int num) //call in Animaton
+    {
+        if (_deadAnimIsActive) return;
+
+        //Anim keyFrame = 18 (52,6%)
+
+        Gun gun;
+        if (num == 0)
+        {
+            gun = _character.GetRightGun();
+        }
+        else
+        {
+            gun = _character.GetLeftGun();
+        }
+        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
+    }
+
+    public void SetParticleLandAttackHammer(int num) //call in Animaton
+    {
+        if (_deadAnimIsActive) return;
+
+        //Anim keyFrame = 26 (74,4%)
+
+        Gun gun;
+        if (num == 0)
+        {
+            gun = _character.GetRightGun();
+        }
+        else
+        {
+            gun = _character.GetLeftGun();
+        }
+        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
     }
 
     #endregion
