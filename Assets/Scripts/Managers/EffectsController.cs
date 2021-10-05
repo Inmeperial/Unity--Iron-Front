@@ -154,7 +154,7 @@ public class EffectsController : MonoBehaviour
                 ShakeIt();
                 AudioManager.audioManagerInstance.PlaySound(_mechaExplosionSound, this.gameObject);
                 GameObject spawnerObj = obj.GetComponent<Character>().GetBurningSpawner();
-                effect2 = Instantiate(_burningMechaEffect, spawnerObj.transform.position, spawnerObj.transform.rotation, GameObject.Find("Assets en escena").transform);
+                effect2 = Instantiate(_burningMechaEffect, spawnerObj.transform.position, spawnerObj.transform.rotation, obj.transform);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 

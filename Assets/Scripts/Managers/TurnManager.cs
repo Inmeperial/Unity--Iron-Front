@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 public class TurnManager : EnumsClass, IObservable, IObserver
 {
@@ -370,6 +371,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
     private void GreenUnitDied()
     {
+        Debug.Log("green dead");
         _greenDeadCount++;
         if (_greenDeadCount < _greenTeam.Count) return;
         FindObjectOfType<ChangeScene>().Defeat();
@@ -377,6 +379,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
     private void RedUnitDied()
     {
+        Debug.Log("red dead");
         _redDeadCount++;
         if (_redDeadCount < _redTeam.Count) return;
         FindObjectOfType<ChangeScene>().Win();
@@ -406,9 +409,9 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
     public void NotifyObserver(string action)
     {
-        for (int i = _observers.Count - 1; i >= 0; i--)
+        foreach (var obs in _observers)
         {
-            _observers[i].Notify(action);
+            obs.Notify(action);
         }
     }
 }

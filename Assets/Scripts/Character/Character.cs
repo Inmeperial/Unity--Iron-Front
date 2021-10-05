@@ -186,8 +186,6 @@ public class Character : EnumsClass, IObservable
             _leftGunSelected = false;
         }
 
-        Subscribe(TurnManager.Instance);
-
         if (itemSOData)
         {
             switch (itemSOData.itemType)
@@ -207,6 +205,7 @@ public class Character : EnumsClass, IObservable
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        Subscribe(TurnManager.Instance);
         _canMove = legs.GetCurrentHp() > 0;
         _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
 
