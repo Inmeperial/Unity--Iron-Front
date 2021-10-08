@@ -115,40 +115,41 @@ public class CharacterSelection : MonoBehaviour
                 
                 if (!_selection.GetLeftGun() && !_selection.GetRightGun()) return;
             }
-            if (_enemySelection)
-            {
-                _enemySelection.DeselectThisUnit();
-            }
-            _enemySelection = c;
+            
             if (_selection.CanAttack())
             {
                 _selection.SetRotationBeforeAttack(_selection.transform.rotation);
-                _selection.RotateTowardsEnemy(_enemySelection.transform);
+                _selection.RotateTowardsEnemy(c.transform);
                 //_selection.RotateTowardsEnemy(_enemySelection.transform.position);
-                bool body = _selection.RayToPartsForAttack(_enemySelection.GetBodyPosition(), "Body", false) &&
-                           _enemySelection.body.GetCurrentHp() > 0;
+                bool body = _selection.RayToPartsForAttack(c.GetBodyPosition(), "Body", false) &&
+                            c.body.GetCurrentHp() > 0;
                 
-                bool lArm = _selection.RayToPartsForAttack(_enemySelection.GetLArmPosition(), "LArm", false) &&
-                           _enemySelection.leftArm.GetCurrentHp() > 0;
+                bool lArm = _selection.RayToPartsForAttack(c.GetLArmPosition(), "LArm", false) &&
+                            c.leftArm.GetCurrentHp() > 0;
                 
-                bool rArm= _selection.RayToPartsForAttack(_enemySelection.GetRArmPosition(), "RArm", false) &&
-                          _enemySelection.rightArm.GetCurrentHp() > 0;
+                bool rArm= _selection.RayToPartsForAttack(c.GetRArmPosition(), "RArm", false) &&
+                           c.rightArm.GetCurrentHp() > 0;
                 
-                bool legs =  _selection.RayToPartsForAttack(_enemySelection.GetLegsPosition(), "Legs", false) &&
-                            _enemySelection.legs.GetCurrentHp() > 0;
+                bool legs =  _selection.RayToPartsForAttack(c.GetLegsPosition(), "Legs", false) &&
+                             c.legs.GetCurrentHp() > 0;
 
                 if (body || lArm || rArm || legs)
                 {
+                    if (_enemySelection)
+                    {
+                        _enemySelection.DeselectThisUnit();
+                    }
+                    _enemySelection = c;
                     _selection.SetSelectingEnemy(true);
-                    _enemySelection.SelectedAsEnemy();
-                    ButtonsUIManager.Instance.SetEnemy(_enemySelection);
+                    c.SelectedAsEnemy();
+                    ButtonsUIManager.Instance.SetEnemy(c);
                     ButtonsUIManager.Instance.SetEnemyUI();
                     _canSelectUnit = false;
                 }
                 else
                 {
                     _selection.RaysOffDelay();
-                    Selection(_selection);
+                    //Selection(_selection);
                 }
             }
         }
