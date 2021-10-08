@@ -15,8 +15,10 @@ public class GunSO : ScriptableObject
         Shield,
         Shotgun
     };
+
+    [HideInInspector] public Gun prefab;
     
-    
+    //TODO: Quitar gunType
     public GunsType gunType;
     public int maxBullets;
     public Sprite gunImage;

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Body : Parts
 {
+    //TODO: Quitar data
     public BodySO bodyData;
 
     public override void SetPart()

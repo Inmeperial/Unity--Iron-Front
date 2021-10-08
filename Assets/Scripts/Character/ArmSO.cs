@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Right Arm", menuName = "Create Parts/ Create RArm")]
 public class ArmSO : PartSO
 {
-    
+    public Arm prefab;
 }

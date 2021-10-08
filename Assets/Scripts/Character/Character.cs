@@ -16,14 +16,20 @@ public class Character : EnumsClass, IObservable
     private Item _item;
     //STATS
 
+    //TODO: Levantar info del MechaEquipmentSO
+    [SerializeField] private MechaEquipmentSO _mechaEquipment;
     #region Stats
 
     public bool gunsOffOnCloseUp;
-    [Header("Team")] [SerializeField] protected Team _unitTeam;
+    [Header("Team")]
+    [SerializeField] protected Team _unitTeam;
     [SerializeField] public Sprite _myIcon;
+    
+    //TODO: Levantar nombre desde MechaEquipmentSO
     [SerializeField] protected string _myName;
 
-    [Header("Rays")] [SerializeField] protected LineRenderer _rayForBody;
+    [Header("Rays")] 
+    [SerializeField] protected LineRenderer _rayForBody;
     [SerializeField] protected LineRenderer _rayForLeftArm;
     [SerializeField] protected LineRenderer _rayForRightArm;
     [SerializeField] protected LineRenderer _rayForLegs;
@@ -31,22 +37,35 @@ public class Character : EnumsClass, IObservable
     [SerializeField] protected Material _rayMissMaterial;
     [SerializeField] protected float _raysOffDelay;
 
-    [Header("Body")] public Body body;
+    [Header("Body")]
+    //TODO: Hacer private para levantar del MechaEquipmentSO
+    public Body body;
+    
+    //TODO: Agregar punto de instanciacion cuando esten meshes separados
     protected Transform _bodyTransform;
 
-    [Header("Left Arm")] public Arm leftArm;
+    [Header("Left Arm")]
+    //TODO: Hacer private para levantar del MechaEquipmentSO
+    public Arm leftArm;
     protected Gun _leftGun;
     protected bool _leftGunSelected;
+    //TODO: Borrar Type para instanciar segun MechaEquipmentSO
     [SerializeField] protected GunsType _leftGunType;
     [SerializeField] protected GameObject _leftGunSpawn;
 
-    [Header("Right Arm")] public Arm rightArm;
+    [Header("Right Arm")] 
+    //TODO: Hacer private para levantar del MechaEquipmentSO
+    public Arm rightArm;
     protected Gun _rightGun;
     protected bool _rightGunSelected;
+    //TODO: Borrar Type para instanciar segun MechaEquipmentSO
     [SerializeField] protected GunsType _rightGunType;
     [SerializeField] protected GameObject _rightGunSpawn;
 
-    [Header("Legs")] public Legs legs;
+    [Header("Legs")]
+    //TODO: Hacer private para levantar del MechaEquipmentSO
+    public Legs legs;
+    //TODO: Agregar punto de instanciacion cuando esten meshes separados
     protected Transform _legsTransform;
     protected int _currentSteps;
 
@@ -66,7 +85,9 @@ public class Character : EnumsClass, IObservable
     protected List<Tile> _path = new List<Tile>();
     public Quaternion InitialRotation { get; private set; } //Cambio Nico
     public Quaternion RotationBeforeAttack { get; private set; }
-    [HideInInspector] public bool legsOvercharged;
+    [HideInInspector]
+    //TODO: Ver de sacar el public
+    public bool legsOvercharged;
 
     //FLAGS
     protected bool _canBeSelected;
@@ -83,6 +104,7 @@ public class Character : EnumsClass, IObservable
     protected bool _isDead = false;
     protected bool _itemSelected;
     [HideInInspector]
+    //TODO: Ver de sacar el public
     public bool rotated;
 
     //OTHERS
@@ -103,6 +125,7 @@ public class Character : EnumsClass, IObservable
     protected List<IObserver> _observers = new List<IObserver>();
 
     [HideInInspector] public TileHighlight highlight;
+    //TODO: Ver de sacar el public
     [HideInInspector] public List<Equipable> equipables = new List<Equipable>();
 
     protected virtual void Awake()
@@ -123,6 +146,8 @@ public class Character : EnumsClass, IObservable
 
         highlight = FindObjectOfType<TileHighlight>();
 
+        
+        //TODO: Cambiar seteo al ConfigureMecha
         #region GunsAndArms
 
         EquipmentSpawner equipmentSpawn = FindObjectOfType<EquipmentSpawner>();
@@ -881,6 +906,17 @@ public class Character : EnumsClass, IObservable
     {
         return equipables;
     }
+    
+    public void ItemSelectionState(bool state)
+    {
+        _itemSelected = state;
+    }
+    
+    public GameObject GetBurningSpawner()
+    {
+        
+        return _particleMechaHandler.GetBurningSpawnerFromParticleMechaHandler();
+    }
 
     #endregion
 
@@ -1250,8 +1286,6 @@ public class Character : EnumsClass, IObservable
         {
             RotateWithRays();
         }
-            
-
     }
 
     private void OnMouseExit()
@@ -1261,8 +1295,7 @@ public class Character : EnumsClass, IObservable
         if (_canBeAttacked)
         {
             ResetRotationAndRays();
-        } 
-            
+        }
     }
 
     private void RotateWithRays()
@@ -1336,6 +1369,8 @@ public class Character : EnumsClass, IObservable
     
     #endregion
 
+    #region Others
+
     public void SetHurtAnimation()
     {
         _animationMechaHandler.SetIsReciveDamageAnimatorTrue();
@@ -1365,24 +1400,14 @@ public class Character : EnumsClass, IObservable
             _observers[i].Notify(action);
         }
     }
-
-    public void ItemSelectionState(bool state)
-    {
-        _itemSelected = state;
-    }
-
+    
     public void OnUseItem()
     {
         // ButtonsUIManager.Instance.equipmentButton.OnRightClick?.Invoke();
         // ButtonsUIManager.Instance.EquipmentButtonState(false);
         // ButtonsUIManager.Instance.UpdateItemButtonName();
     }
-
-    public GameObject GetBurningSpawner()
-    {
-        return this.GetComponent<ParticleMechaHandler>().GetBurningSpawnerFromParticleMechaHandler();
-    }
-
+    
     // public void StartItemUpdate()
     // {
     //     StartCoroutine(ItemUpdate());
@@ -1401,4 +1426,40 @@ public class Character : EnumsClass, IObservable
     // {
     //     StopCoroutine(ItemUpdate());
     // }
+
+    #endregion
+
+
+    //TODO: setear la info de todas las partes
+    private void ConfigureMecha()
+    {
+        if (!_mechaEquipment) return;
+
+        _myName = _mechaEquipment.name;
+        body = _mechaEquipment.body.prefab;
+
+        //TODO: Cambiar cuando esten los mesh separados
+        // var b = Instantiate(body, _bodyTransform);
+        // b.transform.localPosition = Vector3.zero;
+
+        //Esto no se instancia, ya tengo la info asi
+        leftArm = _mechaEquipment.leftArm.prefab;
+        
+        _leftGun = _mechaEquipment.leftGun.prefab;
+        //var l = Instantiate(_leftGun, _leftGunSpawn.transform);
+        //l.transform.localPosition = Vector3.zero;
+
+        //Esto no se instancia, ya tengo la info asi
+        rightArm = _mechaEquipment.rightArm.prefab;
+        
+        _rightGun = _mechaEquipment.rightGun.prefab;
+        //var r = Instantiate(_rightGun, _rightGunSpawn.transform);
+        //r.transform.localPosition = Vector3.zero;
+
+        //Esto no se instancia, ya tengo la info asi
+        legs = _mechaEquipment.legs.prefab;
+    }
+    
+
+    
 }

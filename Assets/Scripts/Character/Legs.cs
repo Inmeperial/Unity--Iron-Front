@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Legs : Parts
 {
+    //TODO: Quitar data
     public LegsSO legsData;
 
     private int _maxSteps;

@@ -6,6 +6,7 @@ using UnityEngine;
 
 public abstract class Gun : EnumsClass, IGun
 {
+    //TODO: Quitar data
     [SerializeField] protected GunSO _weaponData;
     [SerializeField] protected GameObject[] _models;
     protected GunsType _gunType;
@@ -101,12 +102,13 @@ public abstract class Gun : EnumsClass, IGun
     }
     #endregion
     
+    //TODO: Cambiarlo al GunSO
     /// <summary>
     /// Set Gun stats from given scriptable object.
     /// </summary>
     public virtual void SetGun()
     {
-        
+        //TODO: cambiarlo en cada script por separado
         _gunType = (GunsType)_weaponData.gunType;
         _icon = _weaponData.gunImage;
         _maxBullets = _weaponData.maxBullets;

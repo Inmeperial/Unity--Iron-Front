@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Arm : Parts
 {
+    //TODO: Quitar data
     public ArmSO armData;
     private string _location;
 
