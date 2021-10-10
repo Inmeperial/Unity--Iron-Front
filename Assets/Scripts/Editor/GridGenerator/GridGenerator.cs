@@ -77,22 +77,26 @@ public class GridGenerator : EditorWindow
         //i = x coordinate
         for (int i = 0; i < width; i++)
         {
-            pos.x = i;
+            pos.x = i * tiles.transform.localScale.x;
 
-            //j = y coordinate
+            //j = z coordinate
             for (int j = 0; j < length; j++)
             {
-                pos.z = j;
-                GameObject obj;
+                pos.z = j * tiles.transform.localScale.z;
+                GameObject obj = null;
                 if (container)
                 {
-                    obj = Instantiate(tiles, pos, container.transform.rotation, container);
+                    obj = (GameObject) PrefabUtility.InstantiatePrefab(tiles);
+                    obj.transform.parent = container;
+                    obj.transform.position = new Vector3(pos.x, pos.y, pos.z);
                 }
                 else
                 {
-                    obj = Instantiate(tiles, pos, Quaternion.identity);
+                    obj = (GameObject) PrefabUtility.InstantiatePrefab(tiles);
+                    obj.transform.position = new Vector3(pos.x, pos.y, pos.z);
                 }
-                obj.GetComponent<Tile>().MakeWalkable();
+                obj.name = "X: " + obj.transform.position.x + "- Y: " + obj.transform.position.y +" - Z: " + obj.transform.position.z;
+                obj.GetComponent<Tile>().MakeWalkableColor();
             }
         }
     }

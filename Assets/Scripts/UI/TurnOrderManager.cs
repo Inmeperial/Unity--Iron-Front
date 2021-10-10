@@ -1,0 +1,48 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
+
+public class TurnOrderManager : MonoBehaviour
+{
+	public List<FramesUI> framesList = new List<FramesUI>();
+
+    // Start is called before the first frame update
+    void Start()
+    {
+	
+	}
+
+    // Update is called once per frame
+    void Update()
+    {
+		if (Input.GetKeyDown(KeyCode.C)) ChangeOrder();
+    }
+
+	private void ChangeOrder()
+	{
+		int positionToChange = UnityEngine.Random.Range(0, framesList.Count-1);
+		List<FramesUI> tempFramesList = new List<FramesUI>();
+		for (int i = positionToChange; i < framesList.Count; i++)
+		{
+			tempFramesList.Add(framesList[i]);
+		}
+
+		FramesUI frameDataTemp = tempFramesList[0];
+		tempFramesList.RemoveAt(0);
+		tempFramesList.Add(frameDataTemp);
+
+		for (int i = positionToChange; i < framesList.Count; i++)
+		{
+			//Tengo problemas para setear los valores nuevos, y que se cambie el orden de la lista.
+			var tempFrame = tempFramesList[0];
+			var changedFrame = framesList[i]; 
+			framesList[i] = tempFrame;
+			changedFrame.ChangeData(tempFrame.mechaImage, tempFrame.leftGunIcon, tempFrame.rightGunIcon, tempFrame.mechaName);
+			//framesList[i].ChangeName(tempFrame.mechaName);
+			tempFramesList.RemoveAt(0);
+		}
+	}
+}
