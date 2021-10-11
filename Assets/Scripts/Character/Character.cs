@@ -1456,7 +1456,7 @@ public class Character : EnumsClass, IObservable
                 _leftGun.transform.localPosition = Vector3.zero;
                 _leftGun.gameObject.tag = "LArm";
                 _leftGun.StartRoulette();
-                //_myUI.SetLeftArmButtonPart(_materialMechaHandler,MechaParts.LArm);
+                _myUI.SetLeftArmButtonPart(_materialMechaHandler,MechaParts.LArm);
             } 
         }
         
@@ -1475,7 +1475,7 @@ public class Character : EnumsClass, IObservable
                 _rightGun.transform.localPosition = Vector3.zero;
                 _rightGun.gameObject.tag = "RArm";
                 _rightGun.StartRoulette();
-                //_myUI.SetLeftArmButtonPart(_materialMechaHandler,MechaParts.RArm);
+                _myUI.SetLeftArmButtonPart(_materialMechaHandler,MechaParts.RArm);
             } 
         }
         
