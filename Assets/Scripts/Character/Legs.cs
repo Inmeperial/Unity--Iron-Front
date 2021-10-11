@@ -28,6 +28,7 @@ public class Legs : Parts
         _moveSpeed = d.moveSpeed;
         _rotationSpeed = d.rotationSpeed;
         _initiative = d.initiative;
+
         meshFilter[0].mesh = d.mesh[0];
         meshFilter[1].mesh = d.mesh[1];
     }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Arm : Parts
@@ -23,7 +25,6 @@ public class Arm : Parts
     public void SetRightOrLeft(string location)
     {
         _location = location;
-
         switch (_location)
         {
             case "Left":

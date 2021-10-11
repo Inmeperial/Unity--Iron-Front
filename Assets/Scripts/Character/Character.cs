@@ -27,7 +27,7 @@ public class Character : EnumsClass, IObservable
     public bool gunsOffOnCloseUp;
     [Header("Team")]
     [SerializeField] protected Team _unitTeam;
-    [SerializeField] public Sprite _myIcon;
+    [SerializeField] protected Sprite _myIcon;
     
     //TODO: Levantar nombre desde MechaEquipmentSO
     [SerializeField] protected string _myName;
@@ -54,7 +54,7 @@ public class Character : EnumsClass, IObservable
     protected Gun _leftGun;
     protected bool _leftGunSelected;
     //TODO: Borrar Type para instanciar segun MechaEquipmentSO
-    [SerializeField] protected GunsType _leftGunType;
+    //[SerializeField] protected GunsType _leftGunType;
     [SerializeField] protected GameObject _leftGunSpawn;
 
     [Header("Right Arm")] 
@@ -63,7 +63,7 @@ public class Character : EnumsClass, IObservable
     protected Gun _rightGun;
     protected bool _rightGunSelected;
     //TODO: Borrar Type para instanciar segun MechaEquipmentSO
-    [SerializeField] protected GunsType _rightGunType;
+    //[SerializeField] protected GunsType _rightGunType;
     [SerializeField] protected GameObject _rightGunSpawn;
 
     [Header("Legs")]
@@ -131,27 +131,10 @@ public class Character : EnumsClass, IObservable
     [HideInInspector] public TileHighlight highlight;
     //TODO: Ver de sacar el public
     [HideInInspector] public List<Equipable> equipables = new List<Equipable>();
-
+    
     protected virtual void Awake()
     {
-        //TODO: Cambiar a un metodo
-        // body = Instantiate(_mechaEquipment.body.prefab, _bodySpawnPosition);
-        // body.transform.localPosition = Vector3.zero;
-        // body.SetPart(_mechaEquipment.body);
-        //
-        // leftArm = Instantiate(_mechaEquipment.leftArm.prefab, _leftArmSpawnPosition);
-        // leftArm.transform.localPosition = Vector3.zero;
-        // leftArm.SetPart(_mechaEquipment.leftArm);
-        // leftArm.SetRightOrLeft("Left");
-        //
-        // rightArm = Instantiate(_mechaEquipment.rightArm.prefab, _rightArmSpawnPosition);
-        // rightArm.transform.localPosition = Vector3.zero;
-        // rightArm.SetPart(_mechaEquipment.rightArm);
-        // rightArm.SetRightOrLeft("Right");
-        //
-        // legs = Instantiate(_mechaEquipment.legs.prefab, _legsSpawnPosition);
-        // legs.transform.localPosition = Vector3.zero;
-        // legs.SetPart(_mechaEquipment.legs);
+        ConfigureMecha();
         
         transform.position = new Vector3(transform.position.x, 2.4f, transform.position.z);
 
@@ -179,27 +162,15 @@ public class Character : EnumsClass, IObservable
         
         _myUI.SetLegsButtonPart(_materialMechaHandler, MechaParts.Legs);
         
-        leftArm.SetRightOrLeft("Left");
         _leftArmAlive = leftArm.GetCurrentHp() > 0 ? true : false;
-        _leftGun = equipmentSpawn.SpawnGun(_leftGunType, Vector3.zero, _leftGunSpawn.transform);
-        if (_leftGun)
-        {
-            _leftGun.gameObject.tag = "LArm";
-            //_leftGun.SetGun();
-            _leftGun.StartRoulette();
-            _leftGun.SetRightOrLeft("Left");
-            _myUI.SetLeftArmButtonPart(_materialMechaHandler,MechaParts.LArm);
-        }
         
-        rightArm.SetRightOrLeft("Right");
+        
         _rightArmAlive = rightArm.GetCurrentHp() > 0 ? true : false;
-        _rightGun = equipmentSpawn.SpawnGun(_rightGunType, Vector3.zero, _rightGunSpawn.transform);
+        //_rightGun = equipmentSpawn.SpawnGun(_rightGunType, Vector3.zero, _rightGunSpawn.transform);
         if (_rightGun)
         {
             _rightGun.gameObject.tag = "RArm";
-            //_rightGun.SetGun();
             _rightGun.StartRoulette();
-            _rightGun.SetRightOrLeft("Right");
             _myUI.SetRightArmButtonPart(_materialMechaHandler, MechaParts.RArm);
         }
 
@@ -317,7 +288,7 @@ public class Character : EnumsClass, IObservable
     {
         if (_rightGunSelected)
         {
-            switch (_rightGunType)
+            switch (_rightGun.GetGunType())
             {
                 case GunsType.None:
                     break;
@@ -339,7 +310,7 @@ public class Character : EnumsClass, IObservable
         }
         else if (_leftGunSelected)
         {
-            switch (_leftGunType)
+            switch (_leftGun.GetGunType())
             {
                 case GunsType.None:
                     break;
@@ -1464,30 +1435,53 @@ public class Character : EnumsClass, IObservable
     private void ConfigureMecha()
     {
         if (!_mechaEquipment) return;
-
+        
         _myName = _mechaEquipment.name;
-        body = _mechaEquipment.body.prefab;
 
-        //TODO: Cambiar cuando esten los mesh separados
-        // var b = Instantiate(body, _bodyTransform);
-        // b.transform.localPosition = Vector3.zero;
-
-        //Esto no se instancia, ya tengo la info asi
-        leftArm = _mechaEquipment.leftArm.prefab;
+        body = Instantiate(_mechaEquipment.body.prefab, _bodySpawnPosition);
+        body.transform.localPosition = Vector3.zero;
+        body.SetPart(_mechaEquipment.body);
         
-        _leftGun = _mechaEquipment.leftGun.prefab;
-        //var l = Instantiate(_leftGun, _leftGunSpawn.transform);
-        //l.transform.localPosition = Vector3.zero;
+        leftArm = Instantiate(_mechaEquipment.leftArm.prefab, _leftArmSpawnPosition);
+        leftArm.transform.localPosition = Vector3.zero;
+        leftArm.SetPart(_mechaEquipment.leftArm);
+        leftArm.SetRightOrLeft("Left");
 
-        //Esto no se instancia, ya tengo la info asi
-        rightArm = _mechaEquipment.rightArm.prefab;
+        if (_mechaEquipment.leftGun)
+        {
+            _leftGun = Instantiate(_mechaEquipment.leftGun.prefab, _leftGunSpawn.transform);
+
+            if (_leftGun)
+            {
+                _leftGun.transform.localPosition = Vector3.zero;
+                _leftGun.gameObject.tag = "LArm";
+                _leftGun.StartRoulette();
+                //_myUI.SetLeftArmButtonPart(_materialMechaHandler,MechaParts.LArm);
+            } 
+        }
         
-        _rightGun = _mechaEquipment.rightGun.prefab;
-        //var r = Instantiate(_rightGun, _rightGunSpawn.transform);
-        //r.transform.localPosition = Vector3.zero;
+        
+        rightArm = Instantiate(_mechaEquipment.rightArm.prefab, _rightArmSpawnPosition);
+        rightArm.transform.localPosition = Vector3.zero;
+        rightArm.SetPart(_mechaEquipment.rightArm);
+        rightArm.SetRightOrLeft("Right");
+        
+        if (_mechaEquipment.rightGun)
+        {
+            _rightGun = Instantiate(_mechaEquipment.rightGun.prefab, _rightGunSpawn.transform);
 
-        //Esto no se instancia, ya tengo la info asi
-        legs = _mechaEquipment.legs.prefab;
+            if (_rightGun)
+            {
+                _rightGun.transform.localPosition = Vector3.zero;
+                _rightGun.gameObject.tag = "RArm";
+                _rightGun.StartRoulette();
+                //_myUI.SetLeftArmButtonPart(_materialMechaHandler,MechaParts.RArm);
+            } 
+        }
+        
+        legs = Instantiate(_mechaEquipment.legs.prefab, _legsSpawnPosition);
+        legs.transform.localPosition = Vector3.zero;
+        legs.SetPart(_mechaEquipment.legs);
     }
     
     //Funcion de Nico para el push/pull
