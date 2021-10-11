@@ -26,7 +26,7 @@ public class AnimationMechaHandler : MonoBehaviour
     {
         if (_deadAnimIsActive) return;
         
-        if (_character.body.GetCurrentHp() <= 0)
+        if (_character.GetBody().GetCurrentHp() <= 0)
         {
             SetIsDeadAnimatorTrue();
         }

@@ -8,8 +8,8 @@ public class LegsOvercharge : Ability
     public override void Select()
     {
         _character.DeselectThisUnit();
-        _character.legsOvercharged = true;
-        _character.IncreaseAvailableSteps(_character.legs.GetMaxSteps());
+        _character.LegsOverchargeActivate();
+        _character.IncreaseAvailableSteps(_character.GetLegs().GetMaxSteps());
         _button.OnRightClick?.Invoke();
     }
 

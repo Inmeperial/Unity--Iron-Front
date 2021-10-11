@@ -58,13 +58,13 @@ public class AttackAction : GOAction
         Dictionary<string, float> parts = new Dictionary<string, float>();
         
         if (body)
-            parts.Add("Body", closestEnemy.body.GetCurrentHp());
+            parts.Add("Body", closestEnemy.GetBody().GetCurrentHp());
         if (leftArm)
-            parts.Add("LArm", closestEnemy.leftArm.GetCurrentHp());
+            parts.Add("LArm", closestEnemy.GetLeftArm().GetCurrentHp());
         if (rightArm)
-            parts.Add("RArm", closestEnemy.rightArm.GetCurrentHp());
+            parts.Add("RArm", closestEnemy.GetRightArm().GetCurrentHp());
         if (legs)
-            parts.Add("Legs", closestEnemy.legs.GetCurrentHp());
+            parts.Add("Legs", closestEnemy.GetLegs().GetCurrentHp());
 
         string partToAttack = "DEFAULT";
         float lowest = 100000; 

@@ -91,7 +91,7 @@ public class EnemyCharacter : Character
         if (_targetTile == _myPositionTile)
             return false;
         
-        _currentSteps = legs.GetMaxSteps();
+        _currentSteps = _legs.GetMaxSteps();
         
         //Calculates shortest path.
         pathCreator.Calculate(_myPositionTile, _targetTile, _currentSteps);
@@ -144,7 +144,7 @@ public class EnemyCharacter : Character
             }
             closestEnemy = enemies[i];
         }
-        _currentSteps = legs.GetMaxSteps();
+        _currentSteps = _legs.GetMaxSteps();
         
         return closestEnemy;
     }

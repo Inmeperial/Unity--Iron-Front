@@ -66,14 +66,14 @@ public class Push : Ability
         //Hago un Lerp del enemy hacia el tileToPushTo
         enemy.transform.position = Vector3.Lerp(enemy.transform.position, tileToPush.transform.position, 1f);
         enemy.ChangeMyPosTile(tileToPush);
-        enemy.body.TakeDamage(pushDamage);
+        enemy.GetBody().TakeDamage(pushDamage);
 		if (collides)
 		{
-            enemy.body.TakeDamage(collisionDamage);
+            enemy.GetBody().TakeDamage(collisionDamage);
             if (collidingUnit)
             {
                 //Hacer daño a la otra unidad
-                collidingUnit.body.TakeDamage(collisionDamage);
+                collidingUnit.GetBody().TakeDamage(collisionDamage);
             }
         }
 	}

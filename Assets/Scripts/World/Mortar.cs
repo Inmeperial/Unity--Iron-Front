@@ -312,12 +312,12 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
             Character unit = tile.GetCharacterAbove();
             if (unit)
             {
-                unit.body.TakeDamage(_damage);
-                unit.leftArm.TakeDamage(_damage);
-                unit.rightArm.TakeDamage(_damage);
-                unit.legs.TakeDamage(_damage);
+                unit.GetBody().TakeDamage(_damage);
+                unit.GetLeftArm().TakeDamage(_damage);
+                unit.GetRightArm().TakeDamage(_damage);
+                unit.GetLegs().TakeDamage(_damage);
                 
-                if (unit.body.GetCurrentHp() <= 0) unit.Dead();
+                if (unit.GetBody().GetCurrentHp() <= 0) unit.Dead();
             }
 
             LandMine mine = tile.GetMineAbove();

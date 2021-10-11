@@ -33,7 +33,7 @@ public abstract class Parts : MonoBehaviour
                     break;
             }
             _ability.Initialize(_myChar, abilityData);
-            _myChar.equipables.Add(_ability);
+            _myChar.AddEquipable(_ability);
         }
     }
     

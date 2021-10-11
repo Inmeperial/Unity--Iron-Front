@@ -146,10 +146,10 @@ public class Grenade : Item
             var unit = tile.GetUnitAbove();
             if (!unit) continue;
             
-            unit.body.TakeDamage(GetItemDamage());
-            unit.leftArm.TakeDamage(GetItemDamage());
-            unit.rightArm.TakeDamage(GetItemDamage());
-            unit.legs.TakeDamage(GetItemDamage());
+            unit.GetBody().TakeDamage(GetItemDamage());
+            unit.GetLeftArm().TakeDamage(GetItemDamage());
+            unit.GetRightArm().TakeDamage(GetItemDamage());
+            unit.GetLegs().TakeDamage(GetItemDamage());
         }
         UpdateUses();
         _button.SetItemButtonName(_itemData.equipableName + " x" + _availableUses);

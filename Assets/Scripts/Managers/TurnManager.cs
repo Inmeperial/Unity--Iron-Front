@@ -186,7 +186,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
         _actualCharacter = _currentTurnOrder[0];
 
-        while (_actualCharacter.body.GetCurrentHp() <= 0)
+        while (_actualCharacter.GetBody().GetCurrentHp() <= 0)
         {
             MoveToLast();
             yield return new WaitForSeconds(1);
@@ -312,7 +312,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         //Move unit portrait one position behind
         int newPos = 0;
 
-        if (unit.legs.GetCurrentHp() > 0)
+        if (unit.GetLegs().GetCurrentHp() > 0)
         {
             newPos = oldPos + 1;
             PortraitsController.Instance.MovePortrait(unit, oldPos, newPos);

@@ -122,16 +122,16 @@ public class CharacterSelection : MonoBehaviour
                 _selection.RotateTowardsEnemy(c.transform);
                 //_selection.RotateTowardsEnemy(_enemySelection.transform.position);
                 bool body = _selection.RayToPartsForAttack(c.GetBodyPosition(), "Body", false) &&
-                            c.body.GetCurrentHp() > 0;
+                            c.GetBody().GetCurrentHp() > 0;
                 
                 bool lArm = _selection.RayToPartsForAttack(c.GetLArmPosition(), "LArm", false) &&
-                            c.leftArm.GetCurrentHp() > 0;
+                            c.GetLeftArm().GetCurrentHp() > 0;
                 
                 bool rArm= _selection.RayToPartsForAttack(c.GetRArmPosition(), "RArm", false) &&
-                           c.rightArm.GetCurrentHp() > 0;
+                           c.GetRightArm().GetCurrentHp() > 0;
                 
                 bool legs =  _selection.RayToPartsForAttack(c.GetLegsPosition(), "Legs", false) &&
-                             c.legs.GetCurrentHp() > 0;
+                             c.GetLegs().GetCurrentHp() > 0;
 
                 if (body || lArm || rArm || legs)
                 {

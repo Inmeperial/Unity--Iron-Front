@@ -15,22 +15,16 @@ public class Character : EnumsClass, IObservable
 
     private Item _item;
     //STATS
-
-    //TODO: Levantar info del MechaEquipmentSO
+    
     [SerializeField] protected MechaEquipmentSO _mechaEquipment;
-    [SerializeField] protected Transform _bodySpawnPosition;
-    [SerializeField] protected Transform _leftArmSpawnPosition;
-    [SerializeField] protected Transform _rightArmSpawnPosition;
-    [SerializeField] protected Transform _legsSpawnPosition;
-    #region Stats
-
+    
     public bool gunsOffOnCloseUp;
+    
     [Header("Team")]
     [SerializeField] protected Team _unitTeam;
     [SerializeField] protected Sprite _myIcon;
     
-    //TODO: Levantar nombre desde MechaEquipmentSO
-    [SerializeField] protected string _myName;
+    protected string _myName;
 
     [Header("Rays")] 
     [SerializeField] protected LineRenderer _rayForBody;
@@ -41,43 +35,37 @@ public class Character : EnumsClass, IObservable
     [SerializeField] protected Material _rayMissMaterial;
     [SerializeField] protected float _raysOffDelay;
 
-    [Header("Body")]
-    //TODO: Hacer private para levantar del MechaEquipmentSO
-    public Body body;
-    
-    //TODO: Agregar punto de instanciacion cuando esten meshes separados
+    #region Parts
+    [Header("Parts Spawns")]
+    //Body
+    [SerializeField] protected Transform _bodySpawnPosition;
+    protected Body _body;
     protected Transform _bodyTransform;
 
-    [Header("Left Arm")]
-    //TODO: Hacer private para levantar del MechaEquipmentSO
-    public Arm leftArm;
+    //Left Arm
+    [SerializeField] protected Transform _leftArmSpawnPosition;
+    protected Arm _leftArm;
     protected Gun _leftGun;
     protected bool _leftGunSelected;
-    //TODO: Borrar Type para instanciar segun MechaEquipmentSO
-    //[SerializeField] protected GunsType _leftGunType;
     [SerializeField] protected GameObject _leftGunSpawn;
 
-    [Header("Right Arm")] 
-    //TODO: Hacer private para levantar del MechaEquipmentSO
-    public Arm rightArm;
+    //Right Arm
+    [SerializeField] protected Transform _rightArmSpawnPosition;
+    protected Arm _rightArm;
     protected Gun _rightGun;
     protected bool _rightGunSelected;
-    //TODO: Borrar Type para instanciar segun MechaEquipmentSO
-    //[SerializeField] protected GunsType _rightGunType;
     [SerializeField] protected GameObject _rightGunSpawn;
 
-    [Header("Legs")]
-    //TODO: Hacer private para levantar del MechaEquipmentSO
-    public Legs legs;
-    //TODO: Agregar punto de instanciacion cuando esten meshes separados
+    //Legs
+    [SerializeField] protected Transform _legsSpawnPosition;
+    protected Legs _legs;
     protected Transform _legsTransform;
     protected int _currentSteps;
 
     #endregion
 
+    [Header("Others")]
     protected Gun _selectedGun;
-
-
 
     //MOVEMENT RELATED
     public IPathCreator pathCreator;
@@ -89,9 +77,8 @@ public class Character : EnumsClass, IObservable
     protected List<Tile> _path = new List<Tile>();
     public Quaternion InitialRotation { get; private set; } //Cambio Nico
     public Quaternion RotationBeforeAttack { get; private set; }
-    [HideInInspector]
-    //TODO: Ver de sacar el public
-    public bool legsOvercharged;
+    
+    protected bool _legsOvercharged;
 
     //FLAGS
     protected bool _canBeSelected;
@@ -107,9 +94,7 @@ public class Character : EnumsClass, IObservable
     protected bool _myTurn = false;
     protected bool _isDead = false;
     protected bool _itemSelected;
-    [HideInInspector]
-    //TODO: Ver de sacar el public
-    public bool rotated;
+    protected bool _rotated;
 
     //OTHERS
     public GameObject bodyRenderContainer;
@@ -129,8 +114,8 @@ public class Character : EnumsClass, IObservable
     protected List<IObserver> _observers = new List<IObserver>();
 
     [HideInInspector] public TileHighlight highlight;
-    //TODO: Ver de sacar el public
-    [HideInInspector] public List<Equipable> equipables = new List<Equipable>();
+    
+    protected List<Equipable> _equipables = new List<Equipable>();
     
     protected virtual void Awake()
     {
@@ -152,92 +137,33 @@ public class Character : EnumsClass, IObservable
 
         highlight = FindObjectOfType<TileHighlight>();
 
-        
-        //TODO: Cambiar seteo al ConfigureMecha
-        #region GunsAndArms
-
-        EquipmentSpawner equipmentSpawn = FindObjectOfType<EquipmentSpawner>();
-        
         _myUI.SetBodyButtonPart(_materialMechaHandler,MechaParts.Body);
         
         _myUI.SetLegsButtonPart(_materialMechaHandler, MechaParts.Legs);
-        
-        _leftArmAlive = leftArm.GetCurrentHp() > 0 ? true : false;
-        
-        
-        _rightArmAlive = rightArm.GetCurrentHp() > 0 ? true : false;
-        //_rightGun = equipmentSpawn.SpawnGun(_rightGunType, Vector3.zero, _rightGunSpawn.transform);
-        if (_rightGun)
-        {
-            _rightGun.gameObject.tag = "RArm";
-            _rightGun.StartRoulette();
-            _myUI.SetRightArmButtonPart(_materialMechaHandler, MechaParts.RArm);
-        }
 
-        if (_rightArmAlive && _rightGun)
-        {
-            _selectedGun = _rightGun;
-            if (_selectedGun.GetGunType() == GunsType.Shield)
-                _selectedGun.Ability();
-            _canAttack = true;
-            _rightGunSelected = true;
-            _leftGunSelected = false;
-        }
-        else if (_leftArmAlive && _leftGun)
-        {
-            _selectedGun = _leftGun;
-            if (_selectedGun.GetGunType() == GunsType.Shield)
-                _selectedGun.Ability();
-            _canAttack = true;
-            _rightGunSelected = false;
-            _leftGunSelected = true;
-        }
-        else
-        {
-            _selectedGun = null;
-            _leftGun = null;
-            _rightGun = null;
-            _rightGunSelected = false;
-            _leftGunSelected = false;
-        }
-
-        if (itemSOData)
-        {
-            switch (itemSOData.itemType)
-            {
-                case ItemSO.ItemType.Grenade:
-                    _item = Instantiate(itemPrefab, transform);
-                    break;
-            }
-
-            _item.Initialize(this, itemSOData);
-            equipables.Add(_item);
-        }
-
-        #endregion
     }
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         Subscribe(TurnManager.Instance);
-        _canMove = legs.GetCurrentHp() > 0;
-        _currentSteps = _canMove ? legs.GetMaxSteps() : 0;
+        _canMove = _legs.GetCurrentHp() > 0;
+        _currentSteps = _canMove ? _legs.GetMaxSteps() : 0;
 
         _myPositionTile = GetTileBelow();
         _myPositionTile.MakeTileOccupied();
         _myPositionTile.SetUnitAbove(this);
-        _move.SetMoveSpeed(legs.GetMoveSpeed());
-        _move.SetRotationSpeed(legs.GetRotationSpeed());
+        _move.SetMoveSpeed(_legs.GetMoveSpeed());
+        _move.SetRotationSpeed(_legs.GetRotationSpeed());
 
         if (_myUI)
-            _myUI.SetLimits(body.GetMaxHp(), rightArm.GetMaxHp(), leftArm.GetMaxHp(), legs.GetMaxHp());
+            _myUI.SetLimits(_body.GetMaxHp(), _rightArm.GetMaxHp(), _leftArm.GetMaxHp(), _legs.GetMaxHp());
 
         _selected = false;
-        _canBeSelected = body.GetCurrentHp() > 0;
+        _canBeSelected = _body.GetCurrentHp() > 0;
 
-        _bodyTransform = body.transform;
-        _legsTransform = legs.transform;
+        _bodyTransform = _body.transform;
+        _legsTransform = _legs.transform;
     }
 
     // Update is called once per frame
@@ -479,9 +405,9 @@ public class Character : EnumsClass, IObservable
 
         if (_canMove)
         {
-            if (!legsOvercharged)
-                _currentSteps = legs.GetCurrentHp() > 0 ? legs.GetMaxSteps() : legs.GetMaxSteps()/2;
-            else _currentSteps = legs.GetMaxSteps() * 2;
+            if (!_legsOvercharged)
+                _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
+            else _currentSteps = _legs.GetMaxSteps() * 2;
             
             PaintTilesInMoveRange(_myPositionTile, 0);
             AddTilesInMoveRange();
@@ -617,11 +543,54 @@ public class Character : EnumsClass, IObservable
         RaysOff();
     }
 
+    /// <summary>
+    /// Set legs overcharge status to true
+    /// </summary>
+    public void LegsOverchargeActivate()
+    {
+        _legsOvercharged = true;
+    }
 
+    /// <summary>
+    /// Set legs overcharge status to false
+    /// </summary>
+    public void LegsOverchargeDeactivate()
+    {
+        _legsOvercharged = false;
+    }
+
+    public void AddEquipable(Equipable equipable)
+    {
+        _equipables.Add(equipable);
+    }
     #endregion
 
     #region Getters
 
+    public Body GetBody()
+    {
+        return _body;
+    }
+
+    public Arm GetLeftArm()
+    {
+        return _leftArm;
+    }
+
+    public Arm GetRightArm()
+    {
+        return _rightArm;
+    }
+
+    public Legs GetLegs()
+    {
+        return _legs;
+    }
+
+    public bool AreLegsOvercharged()
+    {
+        return _legsOvercharged;
+    }
     private void GetTargetToMove()
     {
         Transform target = MouseRay.GetTargetTransform(block);
@@ -640,9 +609,9 @@ public class Character : EnumsClass, IObservable
 
             pathCreator.Calculate(_myPositionTile, newTile, _currentSteps);
             
-            if (!legsOvercharged)
-                if (pathCreator.GetDistance() > legs.GetMaxSteps()) return;
-                else if (pathCreator.GetDistance() > legs.GetMaxSteps() * 2) return;
+            if (!_legsOvercharged)
+                if (pathCreator.GetDistance() > _legs.GetMaxSteps()) return;
+                else if (pathCreator.GetDistance() > _legs.GetMaxSteps() * 2) return;
 
             _path = pathCreator.GetPath();
             
@@ -846,7 +815,7 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool LeftArmAlive()
     {
-        _leftArmAlive = leftArm.GetCurrentHp() > 0;
+        _leftArmAlive = _leftArm.GetCurrentHp() > 0;
         return _leftArmAlive;
     }
 
@@ -855,7 +824,7 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool RightArmAlive()
     {
-        _rightArmAlive = rightArm.GetCurrentHp() > 0;
+        _rightArmAlive = _rightArm.GetCurrentHp() > 0;
         return _rightArmAlive;
     }
 
@@ -874,7 +843,7 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public float GetCharacterInitiative()
     {
-        return legs.GetCurrentHp() / legs.GetMaxHp() * 100 + legs.GetLegsInitiative();
+        return _legs.GetCurrentHp() / _legs.GetMaxHp() * 100 + _legs.GetLegsInitiative();
     }
 
     public Sprite GetCharacterSprite()
@@ -894,7 +863,7 @@ public class Character : EnumsClass, IObservable
 
     public List<Equipable> GetEquipables()
     {
-        return equipables;
+        return _equipables;
     }
     
     public void ItemSelectionState(bool state)
@@ -1075,7 +1044,7 @@ public class Character : EnumsClass, IObservable
     {
         if (_isDead) return;
 
-        legsOvercharged = false;
+        _legsOvercharged = false;
         if (_rightGun) _rightGun.Deselect();
         if (_leftGun) _leftGun.Deselect();
         _myTurn = false;
@@ -1098,7 +1067,7 @@ public class Character : EnumsClass, IObservable
         }
         _canAttack = true;
         _path.Clear();
-        _currentSteps = legs.GetCurrentHp() > 0 ? legs.GetMaxSteps() : legs.GetMaxSteps() / 2;
+        _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps() / 2;
         _enemiesInRange.Clear();
         _canBeAttacked = false;
         pathCreator.ResetPath();
@@ -1115,7 +1084,7 @@ public class Character : EnumsClass, IObservable
     public virtual void ReachedEnd()
     {
         _canMove = false;
-        legsOvercharged = false;
+        _legsOvercharged = false;
         highlight.characterMoving = false;
         highlight.EndPreview();
         _moving = false;
@@ -1160,10 +1129,10 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void IncreaseAvailableSteps(int amount)
     {
-        if (!legsOvercharged)
+        if (!_legsOvercharged)
         {
             int steps = _currentSteps + amount;
-            _currentSteps = steps <= legs.GetMaxSteps() ? steps : legs.GetMaxSteps();
+            _currentSteps = steps <= _legs.GetMaxSteps() ? steps : _legs.GetMaxSteps();
         }
         else _currentSteps += amount;
 
@@ -1306,15 +1275,15 @@ public class Character : EnumsClass, IObservable
         
         if (c.IsMoving()) return;
         
-        if (c.rotated) return;
-        c.rotated = true;
+        if (c._rotated) return;
+        c._rotated = true;
         c.SetInitialRotation(c.transform.rotation);
         //c.RotateTowardsEnemy(transform.position);
         c.transform.LookAt(transform.position);
-        bool _body = c.RayToPartsForAttack(GetBodyPosition(), "Body", true) && body.GetCurrentHp() > 0;
-        bool _lArm = c.RayToPartsForAttack(GetLArmPosition(), "LArm", true) && leftArm.GetCurrentHp() > 0;
-        bool _rArm = c.RayToPartsForAttack(GetRArmPosition(), "RArm", true) && rightArm.GetCurrentHp() > 0;
-        bool _legs = c.RayToPartsForAttack(GetLegsPosition(), "Legs", true) && legs.GetCurrentHp() > 0;
+        bool _body = c.RayToPartsForAttack(GetBodyPosition(), "Body", true) && this._body.GetCurrentHp() > 0;
+        bool _lArm = c.RayToPartsForAttack(GetLArmPosition(), "LArm", true) && _leftArm.GetCurrentHp() > 0;
+        bool _rArm = c.RayToPartsForAttack(GetRArmPosition(), "RArm", true) && _rightArm.GetCurrentHp() > 0;
+        bool _legs = c.RayToPartsForAttack(GetLegsPosition(), "Legs", true) && this._legs.GetCurrentHp() > 0;
     }
 
     public void ResetRotationAndRays()
@@ -1324,7 +1293,7 @@ public class Character : EnumsClass, IObservable
 
         if (c.IsSelectingEnemy()) return;
         
-        c.rotated = false;
+        c._rotated = false;
         //c._move.StopRotation();
         c.transform.rotation = c.InitialRotation; //Volver la rotación del mecha a InitialRotation, esto podría ser más smooth
         c.RaysOff(); //Apago los raycasts cuando saco el mouse
@@ -1351,7 +1320,7 @@ public class Character : EnumsClass, IObservable
     public void ShowWorldUI()
     {
         _myUI.SetName(_myName);
-        _myUI.SetWorldUIValues(body.GetCurrentHp(), rightArm.GetCurrentHp(), leftArm.GetCurrentHp(), legs.GetCurrentHp(), _canMove, _canAttack);
+        _myUI.SetWorldUIValues(_body.GetCurrentHp(), _rightArm.GetCurrentHp(), _leftArm.GetCurrentHp(), _legs.GetCurrentHp(), _canMove, _canAttack);
         _myUI.ContainerActivation(true);
     }
 
@@ -1429,23 +1398,21 @@ public class Character : EnumsClass, IObservable
     // }
 
     #endregion
-
-
-    //TODO: setear la info de todas las partes
+    
     private void ConfigureMecha()
     {
         if (!_mechaEquipment) return;
         
         _myName = _mechaEquipment.name;
 
-        body = Instantiate(_mechaEquipment.body.prefab, _bodySpawnPosition);
-        body.transform.localPosition = Vector3.zero;
-        body.SetPart(_mechaEquipment.body);
+        _body = Instantiate(_mechaEquipment.body.prefab, _bodySpawnPosition);
+        _body.transform.localPosition = Vector3.zero;
+        _body.SetPart(_mechaEquipment.body);
         
-        leftArm = Instantiate(_mechaEquipment.leftArm.prefab, _leftArmSpawnPosition);
-        leftArm.transform.localPosition = Vector3.zero;
-        leftArm.SetPart(_mechaEquipment.leftArm);
-        leftArm.SetRightOrLeft("Left");
+        _leftArm = Instantiate(_mechaEquipment.leftArm.prefab, _leftArmSpawnPosition);
+        _leftArm.transform.localPosition = Vector3.zero;
+        _leftArm.SetPart(_mechaEquipment.leftArm);
+        _leftArm.SetRightOrLeft("Left");
 
         if (_mechaEquipment.leftGun)
         {
@@ -1461,10 +1428,10 @@ public class Character : EnumsClass, IObservable
         }
         
         
-        rightArm = Instantiate(_mechaEquipment.rightArm.prefab, _rightArmSpawnPosition);
-        rightArm.transform.localPosition = Vector3.zero;
-        rightArm.SetPart(_mechaEquipment.rightArm);
-        rightArm.SetRightOrLeft("Right");
+        _rightArm = Instantiate(_mechaEquipment.rightArm.prefab, _rightArmSpawnPosition);
+        _rightArm.transform.localPosition = Vector3.zero;
+        _rightArm.SetPart(_mechaEquipment.rightArm);
+        _rightArm.SetRightOrLeft("Right");
         
         if (_mechaEquipment.rightGun)
         {
@@ -1479,9 +1446,60 @@ public class Character : EnumsClass, IObservable
             } 
         }
         
-        legs = Instantiate(_mechaEquipment.legs.prefab, _legsSpawnPosition);
-        legs.transform.localPosition = Vector3.zero;
-        legs.SetPart(_mechaEquipment.legs);
+        _legs = Instantiate(_mechaEquipment.legs.prefab, _legsSpawnPosition);
+        _legs.transform.localPosition = Vector3.zero;
+        _legs.SetPart(_mechaEquipment.legs);
+        
+        
+        _leftArmAlive = _leftArm.GetCurrentHp() > 0 ? true : false;
+
+        _rightArmAlive = _rightArm.GetCurrentHp() > 0 ? true : false;
+        if (_rightGun)
+        {
+            _rightGun.gameObject.tag = "RArm";
+            _rightGun.StartRoulette();
+            _myUI.SetRightArmButtonPart(_materialMechaHandler, MechaParts.RArm);
+        }
+
+        if (_rightArmAlive && _rightGun)
+        {
+            _selectedGun = _rightGun;
+            if (_selectedGun.GetGunType() == GunsType.Shield)
+                _selectedGun.Ability();
+            _canAttack = true;
+            _rightGunSelected = true;
+            _leftGunSelected = false;
+        }
+        else if (_leftArmAlive && _leftGun)
+        {
+            _selectedGun = _leftGun;
+            if (_selectedGun.GetGunType() == GunsType.Shield)
+                _selectedGun.Ability();
+            _canAttack = true;
+            _rightGunSelected = false;
+            _leftGunSelected = true;
+        }
+        else
+        {
+            _selectedGun = null;
+            _leftGun = null;
+            _rightGun = null;
+            _rightGunSelected = false;
+            _leftGunSelected = false;
+        }
+
+        if (itemSOData)
+        {
+            switch (itemSOData.itemType)
+            {
+                case ItemSO.ItemType.Grenade:
+                    _item = Instantiate(itemPrefab, transform);
+                    break;
+            }
+
+            _item.Initialize(this, itemSOData);
+            _equipables.Add(_item);
+        }
     }
     
     //Funcion de Nico para el push/pull

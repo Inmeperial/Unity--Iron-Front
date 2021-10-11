@@ -448,7 +448,7 @@ public class ButtonsUIManager : MonoBehaviour
         DeactivateEndTurnButton();
         var cam = FindObjectOfType<CloseUpCamera>();
         WorldUI ui = _selectedEnemy.GetMyUI();
-        ui.SetLimits(_selectedEnemy.body.GetMaxHp(), _selectedEnemy.rightArm.GetCurrentHp(), _selectedEnemy.leftArm.GetCurrentHp(), _selectedEnemy.legs.GetMaxHp());
+        ui.SetLimits(_selectedEnemy.GetBody().GetMaxHp(), _selectedEnemy.GetRightArm().GetCurrentHp(), _selectedEnemy.GetLeftArm().GetCurrentHp(), _selectedEnemy.GetLegs().GetMaxHp());
         buttonExecuteAttack.interactable = false;
         buttonExecuteAttack.gameObject.SetActive(false);
         _selectedChar.ResetInRangeLists();
@@ -484,7 +484,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_bulletsForBody > 0)
         {
             List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForBody);
-            _selectedEnemy.body.TakeDamage(d);
+            _selectedEnemy.GetBody().TakeDamage(d);
             _bulletsForBody = 0;
             
                 
@@ -494,7 +494,7 @@ public class ButtonsUIManager : MonoBehaviour
             }
             _selectedChar.DeactivateAttack();
             
-            if (_selectedEnemy.body.GetCurrentHp() <= 0 && !_selectedEnemy.IsDead())
+            if (_selectedEnemy.GetBody().GetCurrentHp() <= 0 && !_selectedEnemy.IsDead())
             {
                 _selectedEnemy.Dead();
             }
@@ -505,7 +505,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_bulletsForLArm > 0)
         {
             List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForLArm);
-            _selectedEnemy.leftArm.TakeDamage(d);
+            _selectedEnemy.GetLeftArm().TakeDamage(d);
             _bulletsForLArm = 0;
                 
             if (gun.AbilityUsed() == false)
@@ -518,7 +518,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_bulletsForRArm > 0)
         {
             List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForRArm);
-            _selectedEnemy.rightArm.TakeDamage(d);
+            _selectedEnemy.GetRightArm().TakeDamage(d);
             _bulletsForRArm = 0;
             if (gun.AbilityUsed() == false)
             {
@@ -530,7 +530,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_bulletsForLegs > 0)
         {
             List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForLegs);
-            _selectedEnemy.legs.TakeDamage(d);
+            _selectedEnemy.GetLegs().TakeDamage(d);
             _bulletsForLegs = 0;
             if (gun.AbilityUsed() == false)
             {
@@ -976,20 +976,20 @@ public class ButtonsUIManager : MonoBehaviour
         ShowUnitHudText();
 
         playerBodySlider.minValue = 0;
-        playerBodySlider.maxValue = _selectedChar.body.GetMaxHp();
-        playerBodySlider.value = _selectedChar.body.GetCurrentHp();
+        playerBodySlider.maxValue = _selectedChar.GetBody().GetMaxHp();
+        playerBodySlider.value = _selectedChar.GetBody().GetCurrentHp();
         
         playerLeftArmSlider.minValue = 0;
-        playerLeftArmSlider.maxValue = _selectedChar.leftArm.GetMaxHp();
-        playerLeftArmSlider.value = _selectedChar.leftArm.GetCurrentHp();
+        playerLeftArmSlider.maxValue = _selectedChar.GetLeftArm().GetMaxHp();
+        playerLeftArmSlider.value = _selectedChar.GetLeftArm().GetCurrentHp();
         
         playerRightArmSlider.minValue = 0;
-        playerRightArmSlider.maxValue = _selectedChar.rightArm.GetMaxHp();
-        playerRightArmSlider.value = _selectedChar.rightArm.GetCurrentHp();
+        playerRightArmSlider.maxValue = _selectedChar.GetRightArm().GetMaxHp();
+        playerRightArmSlider.value = _selectedChar.GetRightArm().GetCurrentHp();
         
         playerLegsSlider.minValue = 0;
-        playerLegsSlider.maxValue = _selectedChar.legs.GetMaxHp();
-        playerLegsSlider.value = _selectedChar.legs.GetCurrentHp();
+        playerLegsSlider.maxValue = _selectedChar.GetLegs().GetMaxHp();
+        playerLegsSlider.value = _selectedChar.GetLegs().GetCurrentHp();
 
         Gun left = _selectedChar.GetLeftGun();
         if (_selectedChar.LeftArmAlive() && left)
@@ -1119,10 +1119,10 @@ public class ButtonsUIManager : MonoBehaviour
 
     void ShowUnitHudText()
     {
-        playerBodyCurrHp.text = _selectedChar.body.GetCurrentHp().ToString();
-        playerLeftArmCurrHp.text = _selectedChar.leftArm.GetCurrentHp().ToString();
-        playerRightArmCurrHp.text = _selectedChar.rightArm.GetCurrentHp().ToString();
-        playerLegsCurrHp.text = _selectedChar.legs.GetCurrentHp().ToString();
+        playerBodyCurrHp.text = _selectedChar.GetBody().GetCurrentHp().ToString();
+        playerLeftArmCurrHp.text = _selectedChar.GetLeftArm().GetCurrentHp().ToString();
+        playerRightArmCurrHp.text = _selectedChar.GetRightArm().GetCurrentHp().ToString();
+        playerLegsCurrHp.text = _selectedChar.GetLegs().GetCurrentHp().ToString();
     }
 
     public void UpdateBodyHUD(float value)
@@ -1192,7 +1192,7 @@ public class ButtonsUIManager : MonoBehaviour
 
     private void ActivateParts()
     {
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body", false) && _selectedEnemy.body.GetCurrentHp() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetBodyPosition(), "Body", false) && _selectedEnemy.GetBody().GetCurrentHp() > 0)
         {
             _bodyInsight = true;
         }
@@ -1201,7 +1201,7 @@ public class ButtonsUIManager : MonoBehaviour
             _bodyInsight = false;
         }
 
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLArmPosition(), "LArm", false) && _selectedEnemy.leftArm.GetCurrentHp() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLArmPosition(), "LArm", false) && _selectedEnemy.GetLeftArm().GetCurrentHp() > 0)
         {
             _lArmInsight = true;
         }
@@ -1210,7 +1210,7 @@ public class ButtonsUIManager : MonoBehaviour
             _lArmInsight = false;
         }
 
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetRArmPosition(), "RArm", false) && _selectedEnemy.rightArm.GetCurrentHp() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetRArmPosition(), "RArm", false) && _selectedEnemy.GetRightArm().GetCurrentHp() > 0)
         {
             _rArmInsight = true;
         }
@@ -1220,7 +1220,7 @@ public class ButtonsUIManager : MonoBehaviour
         }
 
 
-        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs", false) &&_selectedEnemy.legs.GetCurrentHp() > 0)
+        if (_selectedChar.RayToPartsForAttack(_selectedEnemy.GetLegsPosition(), "Legs", false) &&_selectedEnemy.GetLegs().GetCurrentHp() > 0)
         {
             _legsInsight = true;
         }
@@ -1243,13 +1243,13 @@ public class ButtonsUIManager : MonoBehaviour
         ui.ButtonsEnabling(_bodyInsight, _lArmInsight, _rArmInsight, _legsInsight, this);
         
         
-        ui.SetBodyHpText(_selectedEnemy.body.GetCurrentHp());
+        ui.SetBodyHpText(_selectedEnemy.GetBody().GetCurrentHp());
 
-        ui.SetLeftArmHpText(_selectedEnemy.leftArm.GetCurrentHp());
+        ui.SetLeftArmHpText(_selectedEnemy.GetLeftArm().GetCurrentHp());
 
-        ui.SetRightArmHpText(_selectedEnemy.rightArm.GetCurrentHp());
+        ui.SetRightArmHpText(_selectedEnemy.GetRightArm().GetCurrentHp());
 
-        ui.SetLegsHpText(_selectedEnemy.legs.GetCurrentHp());
+        ui.SetLegsHpText(_selectedEnemy.GetLegs().GetCurrentHp());
 
         ui.ButtonsContainerSetActive(true);
         SetAttackHUD();
