@@ -67,7 +67,7 @@ public class Grenade : Item
                 return;
             }
                 
-            Debug.Log(selection.name);
+            Debug.Log("Selection: " + selection.name);
 
             var newTile = selection.GetComponent<Tile>();
         

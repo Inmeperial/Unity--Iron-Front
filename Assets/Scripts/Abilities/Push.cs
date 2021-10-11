@@ -11,6 +11,11 @@ public class Push : Ability
     private TileHighlight _highlight;
     //private Dictionary<Tile, int> _tilesInRangeChecked = new Dictionary<Tile, int>();
     private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
+    private Tile _lastForwardTile, _lastBackTile, _lastRightTile, _lastLeftTile;
+    bool collides;
+    Character collidingUnit;
+    public int collisionDamage = 50;
+    public int pushDamage = 25;
     public override void Select()
     {
         Debug.Log("pinto tiles push");
@@ -31,9 +36,167 @@ public class Push : Ability
 
     public override void Use(Action callback = null)
     {
-        
+		if (Input.GetMouseButtonDown(0))
+		{
+            Debug.Log("Pushing");
+            var selection = MouseRay.GetTargetTransform(_character.block);
+            var selectedTile = selection.GetComponent<Tile>();
+            if (!selectedTile || !_tilesInRange.Contains(selectedTile)) return;
+            var selectedUnit = selectedTile.GetUnitAbove();
+            if (!selectedUnit) return;
+
+            //Para que solo puedas empujar enemigos
+            var unitTeam = selectedUnit.GetUnitTeam();
+            if (unitTeam == EnumsClass.Team.Green) return;
+
+            var tileToPushTo = GetTileToPushTo(selectedTile, (selectedUnit.transform.position - _character.transform.position).normalized, 0);
+            PushAction(tileToPushTo, selectedUnit);
+            if (callback != null)
+                callback();
+        }
     }
-    
+
+    /// <summary>
+    /// Does the push movement and damage
+    /// </summary>
+    /// <param name="tileToPush"> The tile the unit is pushed to</param>
+    /// <param name="enemy"> The unit that is pushed</param>
+    void PushAction(Tile tileToPush, Character enemy)
+	{
+        //Hago un Lerp del enemy hacia el tileToPushTo
+        enemy.transform.position = Vector3.Lerp(enemy.transform.position, tileToPush.transform.position, 1f);
+        enemy.ChangeMyPosTile(tileToPush);
+        enemy.body.TakeDamage(pushDamage);
+		if (collides)
+		{
+            enemy.body.TakeDamage(collisionDamage);
+            if (collidingUnit)
+            {
+                //Hacer daño a la otra unidad
+                collidingUnit.body.TakeDamage(collisionDamage);
+            }
+        }
+	}
+
+    /// <summary>
+    /// Returns the tile the unit is pushed to
+    /// </summary>
+    /// <param name="currentTile"></param>
+    /// <param name="dir"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    Tile GetTileToPushTo(Tile currentTile, Vector3 dir, int count)
+	{
+        if (count >= _pushDistance) return currentTile;
+        Debug.Log("Push To dir = " + dir);
+        count++;
+        if (dir == Vector3.forward)
+        {
+            Debug.Log("forward count: " + count);
+            RaycastHit forwardHit;
+
+            var position = currentTile.transform.position;
+            Physics.Raycast(position, currentTile.transform.forward, out forwardHit);
+            if (forwardHit.transform)
+            {
+                Tile t = forwardHit.transform.GetComponent<Tile>();
+
+                if (t && t.IsWalkable())//capaz algo con este chequeo me puede decir que no agrega el casillero porque esta ocupado, osea choca con algo
+                {
+                    _highlight.MortarPaintTilesInActivationRange(t);
+                    _lastForwardTile = t;//Para saber a que tile empujar en esta direccion
+                    return GetTileToPushTo(t, forwardHit.transform.forward, count);
+                }
+                else if (!t.IsWalkable())
+				{
+                    collides = true;
+                    collidingUnit = t.GetUnitAbove();
+                    return currentTile;
+
+				}
+            }
+        }
+
+        if(dir == Vector3.back)
+		{
+            RaycastHit backHit;
+
+            var position = currentTile.transform.position;
+            Physics.Raycast(position, currentTile.transform.forward * -1, out backHit);
+
+            if (backHit.transform)
+            {
+                Tile t = backHit.transform.GetComponent<Tile>();
+
+                if (t && t.IsWalkable())
+                {
+                    _highlight.MortarPaintTilesInActivationRange(t);
+                    _lastBackTile = t;//Para saber a que tile empujar en esta direccion
+                    return GetTileToPushTo(t, -backHit.transform.forward, count);
+                }
+                else if (!t.IsWalkable())
+                {
+                    collides = true;
+                    collidingUnit = t.GetUnitAbove();
+                    return currentTile;
+                }
+            }
+        }
+
+        if(dir == Vector3.right)
+		{
+            RaycastHit rightHit;
+
+            var position = currentTile.transform.position;
+            Physics.Raycast(position, currentTile.transform.right * -1, out rightHit);
+
+            if (rightHit.transform)
+            {
+                Tile t = rightHit.transform.GetComponent<Tile>();
+
+                if (t && t.IsWalkable())
+                {
+                    _highlight.MortarPaintTilesInActivationRange(t);
+                    _lastRightTile = t;//Para saber a que tile empujar en esta direccion
+                    return GetTileToPushTo(t, rightHit.transform.right, count);
+                }
+                else if (!t.IsWalkable())
+                {
+                    collides = true;
+                    collidingUnit = t.GetUnitAbove();
+                    return currentTile;
+                }
+            }
+        }
+
+        if(dir == Vector3.left)
+		{
+            RaycastHit leftHit;
+
+            var position = currentTile.transform.position;
+            Physics.Raycast(position, currentTile.transform.right * -1, out leftHit);
+
+            if (leftHit.transform)
+            {
+                Tile t = leftHit.transform.GetComponent<Tile>();
+
+                if (t && t.IsWalkable())
+                {
+                    _highlight.MortarPaintTilesInActivationRange(t);
+                    _lastLeftTile = t; //Para saber a que tile empujar en esta direccion
+                    return GetTileToPushTo(t, -leftHit.transform.right, count);
+                }
+                else if (!t.IsWalkable())
+                {
+                    collides = true;
+                    collidingUnit = t.GetUnitAbove();
+                    return currentTile;
+                }
+            }
+        }
+        return currentTile;
+    }
+
     private void PaintUseTiles(Tile currentTile, int count, Vector3 dir)
     {
         if (count >= _abilityUseRange) //|| (_tilesInRangeChecked.ContainsKey(currentTile) && _tilesInRangeChecked[currentTile] <= count))
@@ -114,6 +277,7 @@ public class Push : Ability
                 if (t && t.IsWalkable())
                 {
                     _highlight.MortarPaintTilesInActivationRange(t);
+                    _lastForwardTile = t;//Para saber a que tile empujar en esta direccion
                     PaintUseTiles(t, count, forwardHit.transform.forward);                    
                 }
             }
@@ -134,6 +298,7 @@ public class Push : Ability
                 if (t && t.IsWalkable())
                 {
                     _highlight.MortarPaintTilesInActivationRange(t);
+                    _lastLeftTile = t; //Para saber a que tile empujar en esta direccion
                     PaintUseTiles(t, count, leftHit.transform.right * -1);                    
                 }
             }
@@ -154,6 +319,7 @@ public class Push : Ability
                 if (t && t.IsWalkable())
                 {
                     _highlight.MortarPaintTilesInActivationRange(t);
+                    _lastRightTile = t;//Para saber a que tile empujar en esta direccion
                     PaintUseTiles(t, count, rightHit.transform.right);                    
                 }
             }
@@ -174,6 +340,7 @@ public class Push : Ability
                 if (t && t.IsWalkable())
                 {
                     _highlight.MortarPaintTilesInActivationRange(t);
+                    _lastBackTile = t;//Para saber a que tile empujar en esta direccion
                     PaintUseTiles(t, count, backHit.transform.forward * -1);                    
                 }
             }

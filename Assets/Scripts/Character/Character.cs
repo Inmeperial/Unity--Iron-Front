@@ -1490,6 +1490,13 @@ public class Character : EnumsClass, IObservable
         legs = _mechaEquipment.legs.prefab;
     }
     
-
+    //Funcion de Nico para el push/pull
+    public void ChangeMyPosTile(Tile newTile)
+	{
+        _myPositionTile.unitAboveSelected = false;
+        _myPositionTile.MakeTileFree();
+        _myPositionTile = newTile;
+        _myPositionTile.MakeTileOccupied();
+	}
     
 }
