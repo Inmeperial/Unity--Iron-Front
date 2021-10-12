@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7916017919122341217}
   - component: {fileID: 7923405173933734124}
+  - component: {fileID: 1976091518949843613}
   m_Layer: 0
   m_Name: Legs
   m_TagString: Untagged
@@ -50,6 +51,19 @@ MonoBehaviour:
   - {fileID: 6439918069914414048}
   abilityData: {fileID: 0}
   abilityPrefab: {fileID: 0}
+--- !u!65 &1976091518949843613
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4143608325215856716}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 2, z: 3}
+  m_Center: {x: 0, y: -3.1, z: 0}
 --- !u!1 &4886952890392531827
 GameObject:
   m_ObjectHideFlags: 0
