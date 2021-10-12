@@ -15,9 +15,9 @@ public abstract class Parts : MonoBehaviour
     protected Ability _ability;
     protected float _maxHP;
     protected float _currentHP;
-    protected virtual void Start()
+    public virtual void ManualStart(Character character)
     {
-        _myChar = transform.parent.GetComponent<Character>();
+        _myChar = character;
 
         if (abilityData)
         {

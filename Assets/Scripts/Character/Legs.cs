@@ -28,26 +28,20 @@ public class Legs : Parts
         _moveSpeed = d.moveSpeed;
         _rotationSpeed = d.rotationSpeed;
         _initiative = d.initiative;
+    }
 
-        meshFilter[0].mesh = d.mesh[0];
-        meshFilter[1].mesh = d.mesh[1];
-        
-        switch (team)
-        {
-            case EnumsClass.Team.Green:
-                foreach (var filter in meshFilter)
-                {
-                    filter.gameObject.GetComponent<MeshRenderer>().material = d.playerMaterial;
-                }
-                break;
-                
-            case EnumsClass.Team.Red:
-                foreach (var filter in meshFilter)
-                {
-                    filter.gameObject.GetComponent<MeshRenderer>().material = d.enemyMaterial;
-                }
-                break;
-        }
+    public void CreateRightLeg(Mesh mesh, Material material)
+    {
+        meshFilter[1].mesh = mesh;
+
+        meshFilter[1].gameObject.GetComponent<MeshRenderer>().material = material;
+    }
+    
+    public void CreateLeftLeg(Mesh mesh, Material material)
+    {
+        meshFilter[0].mesh = mesh;
+
+        meshFilter[0].gameObject.GetComponent<MeshRenderer>().material = material;
     }
 
     public override void UpdateHp(float newValue)
@@ -140,5 +134,11 @@ public class Legs : Parts
     {
         _maxSteps /= 2;
         _brokenLegs = true;
+    }
+
+    public Character GetCharacter()
+    {
+        if (!_myChar) Debug.Log("sin char");
+        return _myChar;
     }
 }

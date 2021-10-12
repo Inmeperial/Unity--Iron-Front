@@ -562,7 +562,6 @@ public class ButtonsUIManager : MonoBehaviour
 
     public void DeselectActions()
     {
-        Debug.Log("deselect");
         if (_selectedChar)
         {
             if (_selectedEnemy)

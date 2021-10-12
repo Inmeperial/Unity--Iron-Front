@@ -235,7 +235,6 @@ public class EnemyCharacter : Character
     public override void ReachedEnd()
     {
         base.ReachedEnd();
-        Debug.Log("activo en reachend end");
         _behaviorExecutor.paused = false;
     }
 

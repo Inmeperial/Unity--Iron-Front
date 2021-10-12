@@ -9,11 +9,10 @@ public class LandMine : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Legs legs = other.GetComponent<Legs>();
-        Character selectedEnemy = other.gameObject.transform.parent.GetComponent<Character>();
 
         if (!legs) return;
         
-        selectedEnemy.SetHurtAnimation();
+        legs.GetCharacter().SetHurtAnimation();
         legs.TakeDamage(damage);
         DestroyMine();
     }

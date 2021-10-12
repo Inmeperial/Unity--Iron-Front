@@ -597,7 +597,6 @@ public class Character : EnumsClass, IObservable
 
         if (_targetTile && _targetTile == newTile && _path.Count > 0)
         {
-            Debug.Log("move character");
             Move();
         }
         else
@@ -684,8 +683,10 @@ public class Character : EnumsClass, IObservable
     public Tile GetTileBelow()
     {
         RaycastHit hit;
-        Physics.Raycast(_legs.transform.position, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
-
+        var pos = _legs.transform.position;
+        //Works at this height after prefab update
+        pos.y = 3;
+        Physics.Raycast(pos, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
         return hit.transform.gameObject.GetComponent<Tile>();
     }
 
@@ -1407,11 +1408,13 @@ public class Character : EnumsClass, IObservable
         _myName = _mechaEquipment.name;
 
         _body = Instantiate(_mechaEquipment.body.prefab, _bodySpawnPosition);
+        _body.ManualStart(this);
         _body.transform.localPosition = Vector3.zero;
         _body.SetPart(_mechaEquipment.body, _unitTeam);
         _myUI.SetBodyButtonPart(_materialMechaHandler,MechaParts.Body);
-        
+
         _leftArm = Instantiate(_mechaEquipment.leftArm.prefab, _leftArmSpawnPosition);
+        _leftArm.ManualStart(this);
         _leftArm.transform.localPosition = Vector3.zero;
         _leftArm.SetPart(_mechaEquipment.leftArm, _unitTeam);
         _leftArm.SetRightOrLeft("Left");
@@ -1433,6 +1436,7 @@ public class Character : EnumsClass, IObservable
         
         
         _rightArm = Instantiate(_mechaEquipment.rightArm.prefab, _rightArmSpawnPosition);
+        _rightArm.ManualStart(this);
         _rightArm.transform.localPosition = Vector3.zero;
         _rightArm.SetPart(_mechaEquipment.rightArm, _unitTeam);
         _rightArm.SetRightOrLeft("Right");
@@ -1452,11 +1456,26 @@ public class Character : EnumsClass, IObservable
         }
         
         _legs = Instantiate(_mechaEquipment.legs.prefab, _leftLegSpawnPosition);
-        _legs.meshFilter[1].gameObject.SetActive(false);
+        _legs.gameObject.name = "pierna del raycaste";
+        _legs.ManualStart(this);
+        //1 is right 0 is left
+        Destroy(_legs.meshFilter[0].gameObject);
         var otherLeg = Instantiate(_mechaEquipment.legs.prefab, _rightLegSpawnPosition);
-        otherLeg.SetPart(_mechaEquipment.legs, _unitTeam);
+        Destroy(otherLeg.meshFilter[1].gameObject);
+        otherLeg.gameObject.name = "other leg";
         otherLeg.gameObject.GetComponent<BoxCollider>().enabled = false;
-        otherLeg.meshFilter[0].gameObject.SetActive(false);
+        switch (_unitTeam)
+        {
+            case Team.Green:
+                _legs.CreateRightLeg(_mechaEquipment.legs.mesh[1], _mechaEquipment.legs.playerMaterial);
+                otherLeg.CreateLeftLeg(_mechaEquipment.legs.mesh[0], _mechaEquipment.legs.playerMaterial);
+                break;
+            case Team.Red:
+                _legs.CreateRightLeg(_mechaEquipment.legs.mesh[1], _mechaEquipment.legs.enemyMaterial);
+                otherLeg.CreateLeftLeg(_mechaEquipment.legs.mesh[0], _mechaEquipment.legs.enemyMaterial);
+                break;
+        }
+        
 
         _legs.transform.localPosition = Vector3.zero;
         _legs.SetPart(_mechaEquipment.legs, _unitTeam);
