@@ -98,7 +98,7 @@ public class Character : EnumsClass, IObservable
     protected bool _rotated;
 
     //OTHERS
-    public GameObject bodyRenderContainer;
+    public List<GameObject> bodyRenderContainer = new List<GameObject>();
     protected HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
     protected Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
     protected Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();

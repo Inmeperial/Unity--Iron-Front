@@ -454,7 +454,10 @@ public class ButtonsUIManager : MonoBehaviour
         _selectedChar.ResetInRangeLists();
         DeactivateBodyPartsContainer();
         attackHudContainer.SetActive(false);
-        _selectedChar.bodyRenderContainer.SetActive(true);
+        foreach (var go in _selectedChar.bodyRenderContainer)
+        {
+            go.SetActive(true);
+        }
         if (_selectedChar.gunsOffOnCloseUp)
         {
             if (_selectedChar.GetLeftGun()) _selectedChar.GetLeftGun().ModelsOn();
@@ -566,7 +569,10 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (_selectedEnemy)
             {
-                _selectedChar.bodyRenderContainer.SetActive(true);
+                foreach (var go in _selectedChar.bodyRenderContainer)
+                {
+                    go.SetActive(true);
+                }
                 if (_selectedChar.gunsOffOnCloseUp)
                 {
                     if (_selectedChar.GetLeftGun()) _selectedChar.GetLeftGun().ModelsOn();
@@ -1176,7 +1182,10 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedEnemy)
         {
-            _selectedChar.bodyRenderContainer.SetActive(false);
+            foreach (var go in _selectedChar.bodyRenderContainer)
+            {
+                go.SetActive(false);
+            }
             if (_selectedChar.gunsOffOnCloseUp)
             {
                 if (_selectedChar.GetLeftGun()) _selectedChar.GetLeftGun().ModelsOff();
