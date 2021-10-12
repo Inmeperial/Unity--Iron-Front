@@ -125,6 +125,17 @@ public class Character : EnumsClass, IObservable
         #region GetComponents
 
         _materialMechaHandler = GetComponent<MaterialMechaHandler>();
+
+        // switch (_unitTeam)
+        // {
+        //     case Team.Green:
+        //         _materialMechaHandler.SetHandlerMaterial(_mechaEquipment.body.playerMaterial, _mechaEquipment.leftArm.playerMaterial, _mechaEquipment.legs.playerMaterial);
+        //         break;
+        //     case Team.Red:
+        //         _materialMechaHandler.SetHandlerMaterial(_mechaEquipment.body.enemyMaterial, _mechaEquipment.leftArm.enemyMaterial, _mechaEquipment.legs.enemyMaterial);
+        //         break;
+        // }
+
         _particleMechaHandler = GetComponent<ParticleMechaHandler>();
         _animationMechaHandler = GetComponent<AnimationMechaHandler>();
         _audioMechaHandler = GetComponent<AudioMechaHandler>();
@@ -1410,13 +1421,15 @@ public class Character : EnumsClass, IObservable
         _body = Instantiate(_mechaEquipment.body.prefab, _bodySpawnPosition);
         _body.ManualStart(this);
         _body.transform.localPosition = Vector3.zero;
-        _body.SetPart(_mechaEquipment.body, _unitTeam);
+        _body.SetPart(_mechaEquipment.body);
+        
+        
         _myUI.SetBodyButtonPart(_materialMechaHandler,MechaParts.Body);
 
         _leftArm = Instantiate(_mechaEquipment.leftArm.prefab, _leftArmSpawnPosition);
         _leftArm.ManualStart(this);
         _leftArm.transform.localPosition = Vector3.zero;
-        _leftArm.SetPart(_mechaEquipment.leftArm, _unitTeam);
+        _leftArm.SetPart(_mechaEquipment.leftArm);
         _leftArm.SetRightOrLeft("Left");
 
         if (_mechaEquipment.leftGun)
@@ -1438,7 +1451,7 @@ public class Character : EnumsClass, IObservable
         _rightArm = Instantiate(_mechaEquipment.rightArm.prefab, _rightArmSpawnPosition);
         _rightArm.ManualStart(this);
         _rightArm.transform.localPosition = Vector3.zero;
-        _rightArm.SetPart(_mechaEquipment.rightArm, _unitTeam);
+        _rightArm.SetPart(_mechaEquipment.rightArm);
         _rightArm.SetRightOrLeft("Right");
         
         if (_mechaEquipment.rightGun)
@@ -1467,18 +1480,20 @@ public class Character : EnumsClass, IObservable
         switch (_unitTeam)
         {
             case Team.Green:
-                _legs.CreateRightLeg(_mechaEquipment.legs.mesh[1], _mechaEquipment.legs.playerMaterial);
-                otherLeg.CreateLeftLeg(_mechaEquipment.legs.mesh[0], _mechaEquipment.legs.playerMaterial);
+                _legs.CreateRightLeg(_mechaEquipment.legs.mesh[1]);
+                otherLeg.CreateLeftLeg(_mechaEquipment.legs.mesh[0]);
                 break;
             case Team.Red:
-                _legs.CreateRightLeg(_mechaEquipment.legs.mesh[1], _mechaEquipment.legs.enemyMaterial);
-                otherLeg.CreateLeftLeg(_mechaEquipment.legs.mesh[0], _mechaEquipment.legs.enemyMaterial);
+                _legs.CreateRightLeg(_mechaEquipment.legs.mesh[1]);
+                otherLeg.CreateLeftLeg(_mechaEquipment.legs.mesh[0]);
                 break;
         }
         
 
         _legs.transform.localPosition = Vector3.zero;
-        _legs.SetPart(_mechaEquipment.legs, _unitTeam);
+        _legs.SetPart(_mechaEquipment.legs);
+        
+        _materialMechaHandler.SetPartGameObject(_body, _leftArm, _rightArm, _legs);
         
         _myUI.SetLegsButtonPart(_materialMechaHandler, MechaParts.Legs);
         

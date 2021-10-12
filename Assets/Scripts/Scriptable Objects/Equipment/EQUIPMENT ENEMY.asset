@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eff40bb0bb505d04db54dff77db5e3e0, type: 3}
-  m_Name: Equipment C
+  m_Name: EQUIPMENT ENEMY
   m_EditorClassIdentifier: 
-  name: 
-  body: {fileID: 11400000, guid: 718a2a5068504a244b1a9f23eabbe4f2, type: 2}
-  leftArm: {fileID: 11400000, guid: 71ae410582038dd48be24d4f2d3d3d2c, type: 2}
+  objectsDatabase: {fileID: 11400000, guid: bac69f91cfa8f474c9a8a84a413dbf90, type: 2}
+  name: IA
+  body: {fileID: 11400000, guid: 4358bc7b9f310e64fabdad87a922f723, type: 2}
+  leftArm: {fileID: 11400000, guid: 1ea89024e5b347d44b9832e99133ca03, type: 2}
   leftGun: {fileID: 11400000, guid: a8eeee1f1d2bf3542a3f889799659fb6, type: 2}
-  rightArm: {fileID: 11400000, guid: 71ae410582038dd48be24d4f2d3d3d2c, type: 2}
+  rightArm: {fileID: 11400000, guid: 1ea89024e5b347d44b9832e99133ca03, type: 2}
   rightGun: {fileID: 11400000, guid: a8eeee1f1d2bf3542a3f889799659fb6, type: 2}
-  legs: {fileID: 11400000, guid: 186800c2cfc95a246aa26a2348bc1c5d, type: 2}
+  legs: {fileID: 11400000, guid: 3f189822eab576849b70d85a9bd73aaf, type: 2}

@@ -37,7 +37,7 @@ public abstract class Parts : MonoBehaviour
         }
     }
     
-    public abstract void SetPart(PartSO data, EnumsClass.Team team);
+    public abstract void SetPart(PartSO data);
 
     public float GetMaxHp()
     {

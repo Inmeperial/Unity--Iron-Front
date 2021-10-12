@@ -84,7 +84,7 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	public void OnPointerEnter(PointerEventData eventData)
 	{
 		//TODO: pintar mesh
-		//_character.GetMaterialHandler()
+		//_character.GetMaterialHandler().SetSelectedPartMaterialToBody()
 	}
 
 	public void OnPointerExit(PointerEventData eventData)

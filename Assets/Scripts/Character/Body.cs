@@ -6,30 +6,13 @@ using UnityEngine;
 public class Body : Parts
 {
     
-    public override void SetPart(PartSO data, EnumsClass.Team team)
+    public override void SetPart(PartSO data)
     {
         
         var d = data as BodySO;
         _maxHP = d.maxHP;
         _currentHP = _maxHP;
         meshFilter[0].mesh = d.mesh[0];
-
-        switch (team)
-        {
-            case EnumsClass.Team.Green:
-                foreach (var filter in meshFilter)
-                {
-                    filter.gameObject.GetComponent<MeshRenderer>().material = d.playerMaterial;
-                }
-                break;
-                
-            case EnumsClass.Team.Red:
-                foreach (var filter in meshFilter)
-                {
-                    filter.gameObject.GetComponent<MeshRenderer>().material = d.enemyMaterial;
-                }
-                break;
-        }
     }
 
     public override void UpdateHp(float newValue)

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7916017919122341217}
   - component: {fileID: 7923405173933734124}
   - component: {fileID: 1976091518949843613}
-  m_Layer: 0
-  m_Name: Legs
-  m_TagString: Untagged
+  m_Layer: 9
+  m_Name: Player Legs
+  m_TagString: Legs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 7316544647716124683}
   - component: {fileID: 7706805636040664322}
   - component: {fileID: 7510507324151624818}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PiernaIzquierda
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 5baf3cb152032bb4fb04472eecb928f3, type: 2}
+  - {fileID: 2100000, guid: e38f1a930a18d7946a59db7630baae73, type: 2}
+  - {fileID: 2100000, guid: 91bb8fea70f092c438c691db1e521817, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -153,7 +155,7 @@ GameObject:
   - component: {fileID: 1970677641096504352}
   - component: {fileID: 6439918069914414048}
   - component: {fileID: 1932261927939219234}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PiernaDerecha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +201,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 5baf3cb152032bb4fb04472eecb928f3, type: 2}
+  - {fileID: 2100000, guid: e38f1a930a18d7946a59db7630baae73, type: 2}
+  - {fileID: 2100000, guid: 91bb8fea70f092c438c691db1e521817, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
