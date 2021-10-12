@@ -1454,6 +1454,7 @@ public class Character : EnumsClass, IObservable
         _legs = Instantiate(_mechaEquipment.legs.prefab, _leftLegSpawnPosition);
         _legs.meshFilter[1].gameObject.SetActive(false);
         var otherLeg = Instantiate(_mechaEquipment.legs.prefab, _rightLegSpawnPosition);
+        otherLeg.gameObject.GetComponent<BoxCollider>().enabled = false;
         otherLeg.meshFilter[0].gameObject.SetActive(false);
 
         _legs.transform.localPosition = Vector3.zero;
