@@ -202,10 +202,12 @@ public abstract class Gun : EnumsClass, IGun
     public virtual void StartRoulette()
     {
         _roulette = new RouletteWheel();
+        _critRoulette = new Dictionary<string, int>();
         _critRoulette.Add("Crit", _critChance);
         int c = 100 - _critChance;
         _critRoulette.Add("Normal", c > 0 ? c : 0);
 
+        _hitRoulette = new Dictionary<string, int>();
         _hitRoulette.Add("Hit", _hitChance);
         int h = 100 - _hitChance;
         _hitRoulette.Add("Miss", h > 0 ? h : 0);

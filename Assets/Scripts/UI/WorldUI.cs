@@ -45,8 +45,8 @@ public class WorldUI : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        _statusContainer.SetActive(false);
-        _buttonsContainer.SetActive(false);
+        DeactivateWorldUI();
+        ButtonsContainerSetActive(false);
     }
 
     public void SetWorldUIValues(float bodyCurr, float rArmCurr, float lArmCurr, float legsCurr, bool moveStatus, bool attackStatus)

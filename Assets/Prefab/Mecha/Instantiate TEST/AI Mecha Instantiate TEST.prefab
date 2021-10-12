@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSOData: {fileID: 0}
   itemPrefab: {fileID: 0}
-  _mechaEquipment: {fileID: 0}
+  _mechaEquipment: {fileID: 11400000, guid: bb67f7b610dc7c443a41d01fc5815fa5, type: 2}
   gunsOffOnCloseUp: 0
   _unitTeam: 1
   _myIcon: {fileID: 21300000, guid: e57b6a69ec916734c8dbb5a1bb9c72b0, type: 3}
@@ -31,6 +31,7 @@ MonoBehaviour:
   _rightArmSpawnPosition: {fileID: 8852386226413320938}
   _rightGunSpawn: {fileID: 4403731503312974581}
   _legsSpawnPosition: {fileID: 6956091209575956760}
+  _legs: {fileID: 0}
   block:
     serializedVersion: 2
     m_Bits: 256
@@ -51,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422fb6956201c7944ae2113a1a53b0b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTasksPerTick: 500
+  maxTasksPerTick: 1
   behavior: {fileID: 11400000, guid: 892e139aff2bd484da0028ccc665cd50, type: 2}
   paused: 0
   restartWhenFinished: 0

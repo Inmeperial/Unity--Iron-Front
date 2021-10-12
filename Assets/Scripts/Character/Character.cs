@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityStandardAssets.Effects;
@@ -119,9 +120,7 @@ public class Character : EnumsClass, IObservable
     
     protected virtual void Awake()
     {
-        ConfigureMecha();
-        
-        transform.position = new Vector3(transform.position.x, 2.4f, transform.position.z);
+        transform.position = new Vector3(transform.position.x, 4f, transform.position.z);
 
         #region GetComponents
 
@@ -137,10 +136,8 @@ public class Character : EnumsClass, IObservable
 
         highlight = FindObjectOfType<TileHighlight>();
 
-        _myUI.SetBodyButtonPart(_materialMechaHandler,MechaParts.Body);
         
-        _myUI.SetLegsButtonPart(_materialMechaHandler, MechaParts.Legs);
-
+        ConfigureMecha();
     }
 
     // Start is called before the first frame update
@@ -155,9 +152,8 @@ public class Character : EnumsClass, IObservable
         _myPositionTile.SetUnitAbove(this);
         _move.SetMoveSpeed(_legs.GetMoveSpeed());
         _move.SetRotationSpeed(_legs.GetRotationSpeed());
-
-        if (_myUI)
-            _myUI.SetLimits(_body.GetMaxHp(), _rightArm.GetMaxHp(), _leftArm.GetMaxHp(), _legs.GetMaxHp());
+        
+        _myUI.SetLimits(_body.GetMaxHp(), _rightArm.GetMaxHp(), _leftArm.GetMaxHp(), _legs.GetMaxHp());
 
         _selected = false;
         _canBeSelected = _body.GetCurrentHp() > 0;
@@ -688,7 +684,8 @@ public class Character : EnumsClass, IObservable
     public Tile GetTileBelow()
     {
         RaycastHit hit;
-        Physics.Raycast(transform.position, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
+        Physics.Raycast(_legs.transform.position, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
+
         return hit.transform.gameObject.GetComponent<Tile>();
     }
 
@@ -962,9 +959,8 @@ public class Character : EnumsClass, IObservable
     //Se pintan los tiles dentro del rango de movimiento
     public void PaintTilesInMoveRange(Tile currentTile, int count)
     {
-        if (count >= _currentSteps ||
-            (_tilesForMoveChecked.ContainsKey(currentTile) && _tilesForMoveChecked[currentTile] <= count))
-            return;
+        if (count >= _currentSteps || _tilesForMoveChecked.ContainsKey(currentTile) && _tilesForMoveChecked[currentTile] <= count)
+                return;
 
         _tilesForMoveChecked[currentTile] = count;
 
@@ -1409,6 +1405,8 @@ public class Character : EnumsClass, IObservable
         _body.transform.localPosition = Vector3.zero;
         _body.SetPart(_mechaEquipment.body);
         
+        _myUI.SetBodyButtonPart(_materialMechaHandler,MechaParts.Body);
+        
         _leftArm = Instantiate(_mechaEquipment.leftArm.prefab, _leftArmSpawnPosition);
         _leftArm.transform.localPosition = Vector3.zero;
         _leftArm.SetPart(_mechaEquipment.leftArm);
@@ -1422,7 +1420,9 @@ public class Character : EnumsClass, IObservable
             {
                 _leftGun.transform.localPosition = Vector3.zero;
                 _leftGun.gameObject.tag = "LArm";
+                _leftGun.SetGun(_mechaEquipment.leftGun);
                 _leftGun.StartRoulette();
+                
                 _myUI.SetLeftArmButtonPart(_materialMechaHandler,MechaParts.LArm);
             } 
         }
@@ -1441,25 +1441,22 @@ public class Character : EnumsClass, IObservable
             {
                 _rightGun.transform.localPosition = Vector3.zero;
                 _rightGun.gameObject.tag = "RArm";
+                _rightGun.SetGun(_mechaEquipment.rightGun);
                 _rightGun.StartRoulette();
-                _myUI.SetLeftArmButtonPart(_materialMechaHandler,MechaParts.RArm);
+                _myUI.SetRightArmButtonPart(_materialMechaHandler,MechaParts.RArm);
             } 
         }
         
         _legs = Instantiate(_mechaEquipment.legs.prefab, _legsSpawnPosition);
+
         _legs.transform.localPosition = Vector3.zero;
         _legs.SetPart(_mechaEquipment.legs);
         
+        _myUI.SetLegsButtonPart(_materialMechaHandler, MechaParts.Legs);
         
         _leftArmAlive = _leftArm.GetCurrentHp() > 0 ? true : false;
 
         _rightArmAlive = _rightArm.GetCurrentHp() > 0 ? true : false;
-        if (_rightGun)
-        {
-            _rightGun.gameObject.tag = "RArm";
-            _rightGun.StartRoulette();
-            _myUI.SetRightArmButtonPart(_materialMechaHandler, MechaParts.RArm);
-        }
 
         if (_rightArmAlive && _rightGun)
         {
