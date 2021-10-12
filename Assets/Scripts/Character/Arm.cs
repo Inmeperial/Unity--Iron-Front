@@ -9,12 +9,29 @@ public class Arm : Parts
 {
     private string _location;
     private Mesh[] _meshes;
-    public override void SetPart(PartSO data)
+    public override void SetPart(PartSO data, EnumsClass.Team team)
     {
         var d = data as ArmSO;
         _maxHP = d.maxHP;
         _currentHP = _maxHP;
         _meshes = d.mesh;
+        
+        switch (team)
+        {
+            case EnumsClass.Team.Green:
+                foreach (var filter in meshFilter)
+                {
+                    filter.gameObject.GetComponent<MeshRenderer>().material = d.playerMaterial;
+                }
+                break;
+                
+            case EnumsClass.Team.Red:
+                foreach (var filter in meshFilter)
+                {
+                    filter.gameObject.GetComponent<MeshRenderer>().material = d.enemyMaterial;
+                }
+                break;
+        }
     }
 
     public override void UpdateHp(float newValue)

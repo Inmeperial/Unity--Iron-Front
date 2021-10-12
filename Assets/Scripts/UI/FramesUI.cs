@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-public class FramesUI : MonoBehaviour
+public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 	public Image mechaImage;
 	public Image leftGunIcon;
@@ -17,7 +18,7 @@ public class FramesUI : MonoBehaviour
 	public Color enemyColor;
 	public TextMeshProUGUI mechaName;
 	public CustomButton selectionButton;
-	
+	private Character _character;
 	FramesUI(Image mecha, Image leftGun, Image rightGun, TextMeshProUGUI myName)
 	{
 		mechaImage = mecha;
@@ -54,6 +55,11 @@ public class FramesUI : MonoBehaviour
 		selectionButton.OnRightClick.AddListener(action);
 	}
 
+	public FramesUI SetCharacter(Character character)
+	{
+		_character = character;
+		return this;
+	}
 	public FramesUI SetSprite(Sprite sprite)
 	{
 		mechaImage.sprite = sprite;
@@ -73,5 +79,17 @@ public class FramesUI : MonoBehaviour
 		colorNamePlate.color = color;
 		
 		return this;
+	}
+
+	public void OnPointerEnter(PointerEventData eventData)
+	{
+		//TODO: pintar mesh
+		//_character.GetMaterialHandler()
+	}
+
+	public void OnPointerExit(PointerEventData eventData)
+	{
+		//TODO: pintar mesh
+		//_character.GetMaterialHandler()
 	}
 }

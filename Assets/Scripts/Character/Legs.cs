@@ -19,7 +19,7 @@ public class Legs : Parts
         return _maxSteps;
     }
 
-    public override void SetPart(PartSO data)
+    public override void SetPart(PartSO data, EnumsClass.Team team)
     {
         var d = data as LegsSO;
         _maxHP = d.maxHP;
@@ -31,6 +31,23 @@ public class Legs : Parts
 
         meshFilter[0].mesh = d.mesh[0];
         meshFilter[1].mesh = d.mesh[1];
+        
+        switch (team)
+        {
+            case EnumsClass.Team.Green:
+                foreach (var filter in meshFilter)
+                {
+                    filter.gameObject.GetComponent<MeshRenderer>().material = d.playerMaterial;
+                }
+                break;
+                
+            case EnumsClass.Team.Red:
+                foreach (var filter in meshFilter)
+                {
+                    filter.gameObject.GetComponent<MeshRenderer>().material = d.enemyMaterial;
+                }
+                break;
+        }
     }
 
     public override void UpdateHp(float newValue)

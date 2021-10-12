@@ -30,8 +30,8 @@ MonoBehaviour:
   _leftGunSpawn: {fileID: 3178041452315406302}
   _rightArmSpawnPosition: {fileID: 2616089044162187958}
   _rightGunSpawn: {fileID: 7172821362159098537}
-  _legsSpawnPosition: {fileID: 4476236525314976068}
-  _legs: {fileID: 0}
+  _leftLegSpawnPosition: {fileID: 4476236525314976068}
+  _rightLegSpawnPosition: {fileID: 5161587771165039986}
   block:
     serializedVersion: 2
     m_Bits: 256
@@ -682,6 +682,12 @@ GameObject:
 --- !u!4 &4476236525314976068 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3208877938108687918, guid: 209f0d0c942a9874eabb880cebb4ea6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1339521946173919082}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5161587771165039986 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6140469697000477208, guid: 209f0d0c942a9874eabb880cebb4ea6c,
     type: 3}
   m_PrefabInstance: {fileID: 1339521946173919082}
   m_PrefabAsset: {fileID: 0}

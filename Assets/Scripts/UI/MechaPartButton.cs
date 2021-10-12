@@ -21,22 +21,8 @@ public class MechaPartButton : CustomButton
     private MechaParts _part;
     public override void OnPointerEnter(PointerEventData eventData)
     {
-
-        switch (_part)
-        {
-            case MechaParts.Body:
-                Debug.Log("mouse over body");
-                break;
-            case MechaParts.Legs:
-                Debug.Log("mouse over legs");
-                break;
-            case MechaParts.RArm:
-                Debug.Log("mouse over right arm");
-                break;
-            case MechaParts.LArm:
-                Debug.Log("mouse over left arm");
-                break;
-        }
+        //TODO: Resaltar partes
+        //_materialHandler.SetSelectedPartMaterialToBody(_part, true);
         
         UpdateDamagePreviewSlider();
         
@@ -48,22 +34,8 @@ public class MechaPartButton : CustomButton
         if (_bulletsCount <= 0)
         {
             _damagePreviewSlider.gameObject.SetActive(false);
-            
-            switch (_part)
-            {
-                case MechaParts.Body:
-                    Debug.Log("mouse exits body");
-                    break;
-                case MechaParts.Legs:
-                    Debug.Log("mouse exits legs");
-                    break;
-                case MechaParts.RArm:
-                    Debug.Log("mouse exits right arm");
-                    break;
-                case MechaParts.LArm:
-                    Debug.Log("mouse exits left arm");
-                    break;
-            }
+            //TODO: Resaltar partes off
+            //_materialHandler.SetSelectedPartMaterialToBody(_part, false);
         }
             
     }

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PartSO : ScriptableObject
+public class PartSO : ScriptableObject
 {
     public float maxHP;
     public Mesh[] mesh;
+    public Material playerMaterial;
+    public Material enemyMaterial;
 }

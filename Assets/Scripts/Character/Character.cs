@@ -18,7 +18,6 @@ public class Character : EnumsClass, IObservable
     //STATS
     
     [SerializeField] protected MechaEquipmentSO _mechaEquipment;
-    
     public bool gunsOffOnCloseUp;
     
     [Header("Team")]
@@ -58,7 +57,8 @@ public class Character : EnumsClass, IObservable
     [SerializeField] protected GameObject _rightGunSpawn;
 
     //Legs
-    [SerializeField] protected Transform _legsSpawnPosition;
+    [SerializeField] protected Transform _leftLegSpawnPosition;
+    [SerializeField] protected Transform _rightLegSpawnPosition;
     protected Legs _legs;
     protected Transform _legsTransform;
     protected int _currentSteps;
@@ -867,11 +867,16 @@ public class Character : EnumsClass, IObservable
     {
         _itemSelected = state;
     }
-    
+
     public GameObject GetBurningSpawner()
     {
-        
+
         return _particleMechaHandler.GetBurningSpawnerFromParticleMechaHandler();
+    }
+
+    public MaterialMechaHandler GetMaterialHandler()
+    {
+        return _materialMechaHandler;
     }
 
     #endregion
@@ -1403,13 +1408,12 @@ public class Character : EnumsClass, IObservable
 
         _body = Instantiate(_mechaEquipment.body.prefab, _bodySpawnPosition);
         _body.transform.localPosition = Vector3.zero;
-        _body.SetPart(_mechaEquipment.body);
-        
+        _body.SetPart(_mechaEquipment.body, _unitTeam);
         _myUI.SetBodyButtonPart(_materialMechaHandler,MechaParts.Body);
         
         _leftArm = Instantiate(_mechaEquipment.leftArm.prefab, _leftArmSpawnPosition);
         _leftArm.transform.localPosition = Vector3.zero;
-        _leftArm.SetPart(_mechaEquipment.leftArm);
+        _leftArm.SetPart(_mechaEquipment.leftArm, _unitTeam);
         _leftArm.SetRightOrLeft("Left");
 
         if (_mechaEquipment.leftGun)
@@ -1430,7 +1434,7 @@ public class Character : EnumsClass, IObservable
         
         _rightArm = Instantiate(_mechaEquipment.rightArm.prefab, _rightArmSpawnPosition);
         _rightArm.transform.localPosition = Vector3.zero;
-        _rightArm.SetPart(_mechaEquipment.rightArm);
+        _rightArm.SetPart(_mechaEquipment.rightArm, _unitTeam);
         _rightArm.SetRightOrLeft("Right");
         
         if (_mechaEquipment.rightGun)
@@ -1447,10 +1451,13 @@ public class Character : EnumsClass, IObservable
             } 
         }
         
-        _legs = Instantiate(_mechaEquipment.legs.prefab, _legsSpawnPosition);
+        _legs = Instantiate(_mechaEquipment.legs.prefab, _leftLegSpawnPosition);
+        _legs.meshFilter[1].gameObject.SetActive(false);
+        var otherLeg = Instantiate(_mechaEquipment.legs.prefab, _rightLegSpawnPosition);
+        otherLeg.meshFilter[0].gameObject.SetActive(false);
 
         _legs.transform.localPosition = Vector3.zero;
-        _legs.SetPart(_mechaEquipment.legs);
+        _legs.SetPart(_mechaEquipment.legs, _unitTeam);
         
         _myUI.SetLegsButtonPart(_materialMechaHandler, MechaParts.Legs);
         

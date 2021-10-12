@@ -294,7 +294,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             Character c = character.Item1;
             c.gameObject.name = c.GetCharacterName();
             
-            FramesUI p = PortraitsController.Instance.SetPortrait(count, c.GetCharacterSprite(), c.GetCharacterName(), c.GetUnitTeam(),
+            FramesUI p = PortraitsController.Instance.SetPortrait(c, count, c.GetCharacterSprite(), c.GetCharacterName(), c.GetUnitTeam(),
                 () => _cameraMovement.MoveTo(c.transform));
             count++;
             _currentTurnOrder.Add(c);
