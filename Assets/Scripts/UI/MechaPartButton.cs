@@ -22,7 +22,7 @@ public class MechaPartButton : CustomButton
     public override void OnPointerEnter(PointerEventData eventData)
     {
         //TODO: Resaltar partes
-        _materialHandler.SetSelectedPartMaterialToBody(_part, true);
+        //_materialHandler.SetSelectedPartMaterialToBody(_part, true);
         
         UpdateDamagePreviewSlider();
         
@@ -35,7 +35,7 @@ public class MechaPartButton : CustomButton
         {
             _damagePreviewSlider.gameObject.SetActive(false);
             //TODO: Resaltar partes off
-            _materialHandler.SetSelectedPartMaterialToBody(_part, false);
+            //_materialHandler.SetSelectedPartMaterialToBody(_part, false);
         }
             
     }
@@ -68,6 +68,7 @@ public class MechaPartButton : CustomButton
 
     public void UpdateDamagePreviewSlider()
     {
+        Debug.Log("update damage preview");
         Character selectedCharacter = CharacterSelection.Instance.GetSelectedCharacter();
 
         Gun gun = selectedCharacter.GetSelectedGun();
@@ -90,7 +91,7 @@ public class MechaPartButton : CustomButton
 
     public void SetPart(MaterialMechaHandler handler, MechaParts part)
     {
-        _materialHandler = handler;
+        //_materialHandler = handler;
         _part = part;
     }
 }
