@@ -286,12 +286,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manualMovementSpeed: 65
-  speed: 3
+  speed: 5
   rotationSpeed: 100
   fixationThreshold: 0.2
   distanceToStartRotation: 0.5
   transitionRotationSpeed: 3
-  transitionRotationWatchdog: 100
+  transitionRotationWatchdog: 50
 --- !u!65 &2198611426922619475
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ public class ChangeScene : MonoBehaviour
 
     public void LoadGame()
     {
-        SceneManager.LoadScene("TEST 1");
+        SceneManager.LoadScene("TEST NUEVO PREFAB");
     }
 
     public void LoadLevel2()

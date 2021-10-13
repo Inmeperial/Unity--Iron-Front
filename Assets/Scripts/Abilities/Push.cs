@@ -11,13 +11,14 @@ public class Push : Ability
     private TileHighlight _highlight;
     //private Dictionary<Tile, int> _tilesInRangeChecked = new Dictionary<Tile, int>();
     private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
-    private Tile _lastForwardTile, _lastBackTile, _lastRightTile, _lastLeftTile;
     bool collides;
     Character collidingUnit;
-    public int collisionDamage = 50;
-    public int pushDamage = 25;
+    [SerializeField] int collisionDamage = 50;
+    [SerializeField] int pushDamage = 25;
+    [SerializeField] float pushLerpDuration = .75f;
     public override void Select()
     {
+        if (InCooldown() || !_character.CanAttack()) return;
         Debug.Log("pinto tiles push");
         if (!_highlight)
         {
@@ -26,16 +27,21 @@ public class Push : Ability
         _abilityUseRange = _abilityData.pushUseRange;
         _pushDistance = _abilityData.pushDistance;
         PaintUseTiles(_character.GetMyPositionTile(), 0, Vector3.zero);
+        _character.EquipableSelectionState(true, this);
+        _character.DeselectThisUnit();
     }
 
     public override void Deselect()
     {
         _highlight.ClearTilesInActivationRange(_tilesInRange);
         _tilesInRange.Clear();
+        _character.EquipableSelectionState(false, null);
+        _character.SelectThisUnit();
     }
 
     public override void Use(Action callback = null)
     {
+        Debug.Log("Using Push");
 		if (Input.GetMouseButtonDown(0))
 		{
             Debug.Log("Pushing");
@@ -53,6 +59,7 @@ public class Push : Ability
             PushAction(tileToPushTo, selectedUnit);
             if (callback != null)
                 callback();
+            Deselect();
         }
     }
 
@@ -61,11 +68,13 @@ public class Push : Ability
     /// </summary>
     /// <param name="tileToPush"> The tile the unit is pushed to</param>
     /// <param name="enemy"> The unit that is pushed</param>
-    void PushAction(Tile tileToPush, Character enemy)
+    void PushAction(Tile tileBeignPushedTo, Character enemy)
 	{
         //Hago un Lerp del enemy hacia el tileToPushTo
-        enemy.transform.position = Vector3.Lerp(enemy.transform.position, tileToPush.transform.position, 1f);
-        enemy.ChangeMyPosTile(tileToPush);
+        //enemy.transform.position = Vector3.Lerp(enemy.transform.position, tileToPush.transform.position, pushLerpTime * Time.deltaTime);
+        //enemy.transform.position = tileBeignPushedTo.transform.position + (Vector3.up * 4);
+        StartCoroutine(LerpPush(enemy.transform, tileBeignPushedTo.transform.position, pushLerpDuration));
+        enemy.ChangeMyPosTile(tileBeignPushedTo);
         enemy.GetBody().TakeDamage(pushDamage);
 		if (collides)
 		{
@@ -76,7 +85,23 @@ public class Push : Ability
                 collidingUnit.GetBody().TakeDamage(collisionDamage);
             }
         }
+        _character.DeactivateAttack();
 	}
+
+    IEnumerator LerpPush(Transform movingTarget, Vector3 targetPos, float duration)
+	{
+        float lerpTime = 0;
+        Vector3 startPos = movingTarget.position;
+        targetPos = targetPos + (Vector3.up * 4);
+        while(lerpTime < duration)
+		{
+            movingTarget.position = Vector3.Lerp(startPos, targetPos, lerpTime / duration);
+            lerpTime += Time.deltaTime;
+            yield return null;
+		}
+        movingTarget.position = targetPos;
+	}
+
 
     /// <summary>
     /// Returns the tile the unit is pushed to
@@ -100,14 +125,12 @@ public class Push : Ability
             if (forwardHit.transform)
             {
                 Tile t = forwardHit.transform.GetComponent<Tile>();
-
-                if (t && t.IsWalkable())//capaz algo con este chequeo me puede decir que no agrega el casillero porque esta ocupado, osea choca con algo
+                
+                if (t && t.IsWalkable() && t.IsFree())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
-                    _lastForwardTile = t;//Para saber a que tile empujar en esta direccion
                     return GetTileToPushTo(t, forwardHit.transform.forward, count);
                 }
-                else if (!t.IsWalkable())
+                else if (!t.IsWalkable() || !t.IsFree())
 				{
                     collides = true;
                     collidingUnit = t.GetUnitAbove();
@@ -122,19 +145,17 @@ public class Push : Ability
             RaycastHit backHit;
 
             var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.forward * -1, out backHit);
+            Physics.Raycast(position, -currentTile.transform.forward, out backHit);
 
             if (backHit.transform)
             {
                 Tile t = backHit.transform.GetComponent<Tile>();
 
-                if (t && t.IsWalkable())
+                if (t && t.IsWalkable() && t.IsFree())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
-                    _lastBackTile = t;//Para saber a que tile empujar en esta direccion
                     return GetTileToPushTo(t, -backHit.transform.forward, count);
                 }
-                else if (!t.IsWalkable())
+                else if (!t.IsWalkable() || !t.IsFree())
                 {
                     collides = true;
                     collidingUnit = t.GetUnitAbove();
@@ -148,19 +169,17 @@ public class Push : Ability
             RaycastHit rightHit;
 
             var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.right * -1, out rightHit);
+            Physics.Raycast(position, currentTile.transform.right, out rightHit);
 
             if (rightHit.transform)
             {
                 Tile t = rightHit.transform.GetComponent<Tile>();
 
-                if (t && t.IsWalkable())
+                if (t && t.IsWalkable() && t.IsFree())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
-                    _lastRightTile = t;//Para saber a que tile empujar en esta direccion
                     return GetTileToPushTo(t, rightHit.transform.right, count);
                 }
-                else if (!t.IsWalkable())
+                else if (!t.IsWalkable() || !t.IsFree())
                 {
                     collides = true;
                     collidingUnit = t.GetUnitAbove();
@@ -174,19 +193,17 @@ public class Push : Ability
             RaycastHit leftHit;
 
             var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.right * -1, out leftHit);
+            Physics.Raycast(position, -currentTile.transform.right, out leftHit);
 
             if (leftHit.transform)
             {
                 Tile t = leftHit.transform.GetComponent<Tile>();
 
-                if (t && t.IsWalkable())
+                if (t && t.IsWalkable() && t.IsFree())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
-                    _lastLeftTile = t; //Para saber a que tile empujar en esta direccion
                     return GetTileToPushTo(t, -leftHit.transform.right, count);
                 }
-                else if (!t.IsWalkable())
+                else if (!t.IsWalkable() || !t.IsFree())
                 {
                     collides = true;
                     collidingUnit = t.GetUnitAbove();
@@ -199,10 +216,10 @@ public class Push : Ability
 
     private void PaintUseTiles(Tile currentTile, int count, Vector3 dir)
     {
+        _tilesInRange.Add(currentTile);
         if (count >= _abilityUseRange) //|| (_tilesInRangeChecked.ContainsKey(currentTile) && _tilesInRangeChecked[currentTile] <= count))
             return;
 
-        _tilesInRange.Add(currentTile);
         count++;
         if (dir == Vector3.zero)
         {
@@ -277,7 +294,6 @@ public class Push : Ability
                 if (t && t.IsWalkable())
                 {
                     _highlight.MortarPaintTilesInActivationRange(t);
-                    _lastForwardTile = t;//Para saber a que tile empujar en esta direccion
                     PaintUseTiles(t, count, forwardHit.transform.forward);                    
                 }
             }
@@ -298,7 +314,6 @@ public class Push : Ability
                 if (t && t.IsWalkable())
                 {
                     _highlight.MortarPaintTilesInActivationRange(t);
-                    _lastLeftTile = t; //Para saber a que tile empujar en esta direccion
                     PaintUseTiles(t, count, leftHit.transform.right * -1);                    
                 }
             }
@@ -319,7 +334,6 @@ public class Push : Ability
                 if (t && t.IsWalkable())
                 {
                     _highlight.MortarPaintTilesInActivationRange(t);
-                    _lastRightTile = t;//Para saber a que tile empujar en esta direccion
                     PaintUseTiles(t, count, rightHit.transform.right);                    
                 }
             }
@@ -340,7 +354,6 @@ public class Push : Ability
                 if (t && t.IsWalkable())
                 {
                     _highlight.MortarPaintTilesInActivationRange(t);
-                    _lastBackTile = t;//Para saber a que tile empujar en esta direccion
                     PaintUseTiles(t, count, backHit.transform.forward * -1);                    
                 }
             }
