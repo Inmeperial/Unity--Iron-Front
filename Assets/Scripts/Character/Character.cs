@@ -14,7 +14,7 @@ public class Character : EnumsClass, IObservable
     public ItemSO itemSOData;
     public Item itemPrefab;
 
-    private Item _item;
+    private Equipable _equipable;
     //STATS
     
     [SerializeField] protected MechaEquipmentSO _mechaEquipment;
@@ -94,7 +94,7 @@ public class Character : EnumsClass, IObservable
     protected bool _selectedForAttack;
     protected bool _myTurn = false;
     protected bool _isDead = false;
-    protected bool _itemSelected;
+    protected bool _equipableSelected;
     protected bool _rotated;
 
     //OTHERS
@@ -185,9 +185,9 @@ public class Character : EnumsClass, IObservable
             GetTargetToMove();
         }
 
-        if (!_selected && _item != null && _itemSelected)
+        if (!_selected && _equipables.Count > 0 && _equipableSelected)
         {
-            _item.Use(OnUseItem);
+            _equipable.Use(OnUseEquipable);
         }
     }
 
@@ -844,7 +844,7 @@ public class Character : EnumsClass, IObservable
 
     public bool CanBeSelected()
     {
-        return !_itemSelected && _canBeSelected;
+        return !_equipableSelected && _canBeSelected;
     }
 
     /// <summary>
@@ -865,19 +865,20 @@ public class Character : EnumsClass, IObservable
         return _myName;
     }
 
-    public Item GetItem()
-    {
-        return _item;
-    }
+    // public Item GetItem()
+    // {
+    //     return _equipable;
+    // }
 
     public List<Equipable> GetEquipables()
     {
         return _equipables;
     }
     
-    public void ItemSelectionState(bool state)
+    public void EquipableSelectionState(bool state, Equipable equipable)
     {
-        _itemSelected = state;
+        _equipableSelected = state;
+        _equipable = equipable;
     }
 
     public GameObject GetBurningSpawner()
@@ -1384,8 +1385,9 @@ public class Character : EnumsClass, IObservable
         }
     }
     
-    public void OnUseItem()
+    public void OnUseEquipable()
     {
+        EquipableSelectionState(false, null);
         // ButtonsUIManager.Instance.equipmentButton.OnRightClick?.Invoke();
         // ButtonsUIManager.Instance.EquipmentButtonState(false);
         // ButtonsUIManager.Instance.UpdateItemButtonName();
@@ -1533,12 +1535,12 @@ public class Character : EnumsClass, IObservable
             switch (itemSOData.itemType)
             {
                 case ItemSO.ItemType.Grenade:
-                    _item = Instantiate(itemPrefab, transform);
+                    _equipable = Instantiate(itemPrefab, transform);
                     break;
             }
 
-            _item.Initialize(this, itemSOData);
-            _equipables.Add(_item);
+            _equipable.Initialize(this, itemSOData);
+            _equipables.Add(_equipable);
         }
     }
     
