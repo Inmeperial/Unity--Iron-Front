@@ -1470,12 +1470,12 @@ public class Character : EnumsClass, IObservable
             } 
         }
         
-        _legs = Instantiate(_mechaEquipment.legs.prefab, _leftLegSpawnPosition);
+        _legs = Instantiate(_mechaEquipment.legs.prefab, _rightLegSpawnPosition);
         _legs.gameObject.name = "pierna del raycaste";
         _legs.ManualStart(this);
         //1 is right 0 is left
         Destroy(_legs.meshFilter[0].gameObject);
-        var otherLeg = Instantiate(_mechaEquipment.legs.prefab, _rightLegSpawnPosition);
+        var otherLeg = Instantiate(_mechaEquipment.legs.prefab, _leftLegSpawnPosition);
         Destroy(otherLeg.meshFilter[1].gameObject);
         otherLeg.gameObject.name = "other leg";
         otherLeg.gameObject.GetComponent<BoxCollider>().enabled = false;
