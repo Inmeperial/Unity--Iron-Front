@@ -23,7 +23,7 @@ public class Grenade : Item
     public override void Select()
     {
         _character.DeselectThisUnit();
-        _character.ItemSelectionState(true);
+        _character.EquipableSelectionState(true, this);
         _tile = null;
         // _tilesInSelectionRange = new HashSet<Tile>();
         // _tilesForSelectionChecked = new Dictionary<Tile, int>();
@@ -35,7 +35,7 @@ public class Grenade : Item
 
     public override void Deselect()
     {
-        _character.ItemSelectionState(false);
+        _character.EquipableSelectionState(false, null);
         
         _highlight.ClearTilesInPreview(_tilesInAttackRange);
         _highlight.ClearTilesInActivationRange(_tilesInSelectionRange);
