@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSOData: {fileID: 0}
   itemPrefab: {fileID: 0}
+  _raycastToTile: {fileID: 5039077744643655393}
   _mechaEquipment: {fileID: 11400000, guid: bb67f7b610dc7c443a41d01fc5815fa5, type: 2}
   gunsOffOnCloseUp: 1
   _unitTeam: 0
@@ -771,6 +772,12 @@ LineRenderer:
 --- !u!120 &5254397002967460941 stripped
 LineRenderer:
   m_CorrespondingSourceObject: {fileID: 6520559291660362535, guid: 209f0d0c942a9874eabb880cebb4ea6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1339521946173919082}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5039077744643655393 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6302953285456660875, guid: 209f0d0c942a9874eabb880cebb4ea6c,
     type: 3}
   m_PrefabInstance: {fileID: 1339521946173919082}
   m_PrefabAsset: {fileID: 0}

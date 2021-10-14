@@ -15,6 +15,8 @@ public class Character : EnumsClass, IObservable
     public Item itemPrefab;
 
     private Equipable _equipable;
+
+    [SerializeField] protected Transform _raycastToTile;
     //STATS
     
     [SerializeField] protected MechaEquipmentSO _mechaEquipment;
@@ -27,6 +29,7 @@ public class Character : EnumsClass, IObservable
     protected string _myName;
 
     [Header("Rays")] 
+    
     [SerializeField] protected LineRenderer _rayForBody;
     [SerializeField] protected LineRenderer _rayForLeftArm;
     [SerializeField] protected LineRenderer _rayForRightArm;
@@ -694,9 +697,9 @@ public class Character : EnumsClass, IObservable
     public Tile GetTileBelow()
     {
         RaycastHit hit;
-        var pos = _legs.transform.position;
+        var pos = _raycastToTile.position;
         //Works at this height after prefab update
-        pos.y = 3;
+        //pos.y = 3;
         Physics.Raycast(pos, Vector3.down, out hit, LayerMask.NameToLayer("GridBlock"));
         return hit.transform.gameObject.GetComponent<Tile>();
     }
