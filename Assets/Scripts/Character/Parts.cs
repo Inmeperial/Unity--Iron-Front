@@ -21,17 +21,7 @@ public abstract class Parts : MonoBehaviour
 
         if (abilityData)
         {
-            switch (abilityData.abilityType)
-            {
-                case AbilitySO.AbilityType.LegsOvercharge:
-                    _ability = Instantiate(abilityPrefab, transform);
-                    break;
-                case AbilitySO.AbilityType.Push:
-                    _ability = Instantiate(abilityPrefab, transform);
-                    break;
-                case AbilitySO.AbilityType.Pull:
-                    break;
-            }
+            _ability = Instantiate(abilityPrefab, transform);
             _ability.Initialize(_myChar, abilityData);
             _myChar.AddEquipable(_ability);
         }

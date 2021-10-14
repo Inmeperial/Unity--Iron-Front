@@ -64,25 +64,25 @@ public class Push : Ability
     }
 
     /// <summary>
-    /// Does the push movement and damage
+    /// Calls the push movement and does the damage
     /// </summary>
     /// <param name="tileToPush"> The tile the unit is pushed to</param>
     /// <param name="enemy"> The unit that is pushed</param>
     void PushAction(Tile tileBeignPushedTo, Character enemy)
 	{
-        //Hago un Lerp del enemy hacia el tileToPushTo
-        //enemy.transform.position = Vector3.Lerp(enemy.transform.position, tileToPush.transform.position, pushLerpTime * Time.deltaTime);
-        //enemy.transform.position = tileBeignPushedTo.transform.position + (Vector3.up * 4);
+        //Hago un Lerp del enemy hacia el tileBeignPushedTo
         StartCoroutine(LerpPush(enemy.transform, tileBeignPushedTo.transform.position, pushLerpDuration));
         enemy.ChangeMyPosTile(tileBeignPushedTo);
         enemy.GetBody().TakeDamage(pushDamage);
 		if (collides)
 		{
             enemy.GetBody().TakeDamage(collisionDamage);
+            enemy.SetHurtAnimation();
             if (collidingUnit)
             {
                 //Hacer daño a la otra unidad
                 collidingUnit.GetBody().TakeDamage(collisionDamage);
+                collidingUnit.SetHurtAnimation();
             }
         }
         _character.DeactivateAttack();
@@ -115,100 +115,25 @@ public class Push : Ability
         if (count >= _pushDistance) return currentTile;
         Debug.Log("Push To dir = " + dir);
         count++;
-        if (dir == Vector3.forward)
+
+        RaycastHit nextHit;
+
+        var position = currentTile.transform.position;
+        Physics.Raycast(position, dir, out nextHit);
+        if (nextHit.transform)
         {
-            Debug.Log("forward count: " + count);
-            RaycastHit forwardHit;
+            Tile t = nextHit.transform.GetComponent<Tile>();
 
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.forward, out forwardHit);
-            if (forwardHit.transform)
+            if (t && t.IsWalkable() && t.IsFree())
             {
-                Tile t = forwardHit.transform.GetComponent<Tile>();
-                
-                if (t && t.IsWalkable() && t.IsFree())
-                {
-                    return GetTileToPushTo(t, forwardHit.transform.forward, count);
-                }
-                else if (!t.IsWalkable() || !t.IsFree())
-				{
-                    collides = true;
-                    collidingUnit = t.GetUnitAbove();
-                    return currentTile;
-
-				}
+                return GetTileToPushTo(t, dir, count);
             }
-        }
-
-        if(dir == Vector3.back)
-		{
-            RaycastHit backHit;
-
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, -currentTile.transform.forward, out backHit);
-
-            if (backHit.transform)
+            else if (!t.IsWalkable() || !t.IsFree())
             {
-                Tile t = backHit.transform.GetComponent<Tile>();
+                collides = true;
+                collidingUnit = t.GetUnitAbove();
+                return currentTile;
 
-                if (t && t.IsWalkable() && t.IsFree())
-                {
-                    return GetTileToPushTo(t, -backHit.transform.forward, count);
-                }
-                else if (!t.IsWalkable() || !t.IsFree())
-                {
-                    collides = true;
-                    collidingUnit = t.GetUnitAbove();
-                    return currentTile;
-                }
-            }
-        }
-
-        if(dir == Vector3.right)
-		{
-            RaycastHit rightHit;
-
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.right, out rightHit);
-
-            if (rightHit.transform)
-            {
-                Tile t = rightHit.transform.GetComponent<Tile>();
-
-                if (t && t.IsWalkable() && t.IsFree())
-                {
-                    return GetTileToPushTo(t, rightHit.transform.right, count);
-                }
-                else if (!t.IsWalkable() || !t.IsFree())
-                {
-                    collides = true;
-                    collidingUnit = t.GetUnitAbove();
-                    return currentTile;
-                }
-            }
-        }
-
-        if(dir == Vector3.left)
-		{
-            RaycastHit leftHit;
-
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, -currentTile.transform.right, out leftHit);
-
-            if (leftHit.transform)
-            {
-                Tile t = leftHit.transform.GetComponent<Tile>();
-
-                if (t && t.IsWalkable() && t.IsFree())
-                {
-                    return GetTileToPushTo(t, -leftHit.transform.right, count);
-                }
-                else if (!t.IsWalkable() || !t.IsFree())
-                {
-                    collides = true;
-                    collidingUnit = t.GetUnitAbove();
-                    return currentTile;
-                }
             }
         }
         return currentTile;
