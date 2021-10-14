@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor; 
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 [CreateAssetMenu(fileName = "Equipment", menuName = "Create Equipment")]
@@ -86,6 +85,11 @@ public class MechaEquipmentSO : ScriptableObject, ISerializationCallbackReceiver
 
     private void OnEnable()
     {
-        _objectsDatabase = (ObjectsDatabase) AssetDatabase.LoadAssetAtPath("Assets/ScriptableObjects/Database/Database.asset", typeof(ObjectsDatabase));
+        LoadObjectsDatabase(); 
+    }
+
+    void LoadObjectsDatabase()
+    {
+        _objectsDatabase = Resources.Load<ObjectsDatabase>("Database/Database");
     }
 }
