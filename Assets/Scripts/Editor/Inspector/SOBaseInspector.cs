@@ -25,6 +25,8 @@ public class SOBaseInspector : Editor
     }
     void SavePreset()
     {
+        if (!_object) return;
+        Debug.Log("saved");
         EditorUtility.SetDirty(_object);
         AssetDatabase.SaveAssets();
         EditorGUILayout.HelpBox("File saved.", MessageType.Error);

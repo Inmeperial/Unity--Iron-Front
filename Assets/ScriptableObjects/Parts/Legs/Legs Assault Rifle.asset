@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c899f9e08fa2bb44eb026bd3451c0f3d, type: 3}
+  m_Name: Legs Assault Rifle
+  m_EditorClassIdentifier: 
+  maxHP: 185
+  mesh:
+  - {fileID: 2903159078022248181, guid: 1fdfc96670e7e994181047d0a1adf3fb, type: 3}
+  - {fileID: -5330212988336884343, guid: 1fdfc96670e7e994181047d0a1adf3fb, type: 3}
+  prefab: {fileID: 7923405173933734124, guid: afb20e2bf72816549845cf0dc4c29083, type: 3}
+  maxSteps: 4
+  moveSpeed: 10
+  rotationSpeed: 10
+  initiative: 3

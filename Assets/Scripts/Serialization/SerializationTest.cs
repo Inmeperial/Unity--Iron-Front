@@ -44,6 +44,17 @@ public class SerializationTest : MonoBehaviour
             Debug.Log("llamo add r arm");
             equipment.AddGun(0, false);
         }
-
+        
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Debug.Log("llamo save");
+            equipment.Save();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Debug.Log("llamo load");
+            equipment.Load();
+        }
     }
 }
