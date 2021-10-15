@@ -6,17 +6,20 @@ using UnityEngine;
 public class WorkshopCamera : MonoBehaviour
 {
     [SerializeField] private Transform _startPosition;
-    [SerializeField] private Transform _firstTargetToLook;
+    [SerializeField] private Transform[] _mechasToLook;
+    [SerializeField] private Transform[] _cameraPositions;
+    [SerializeField] private Transform[] _mechaEditCameraPositions;
     [SerializeField] private float _tpThreshold;
     [SerializeField] private float _speed;
     private bool _isMoving;
-
+    private int _index;
     private CustomButton[] _buttons;
 
     private void Awake()
     {
+        _index = 0;
         transform.position = _startPosition.position;
-        transform.LookAt(_firstTargetToLook);
+        transform.LookAt(_mechasToLook[_index]);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -65,4 +68,26 @@ public class WorkshopCamera : MonoBehaviour
             button.interactable = state;
         }
     }
+
+    public void NextUnitToLookAt()
+	{
+        if (_index >= _cameraPositions.Length) return;
+        
+        _index++;
+        Move(_cameraPositions[_index]);
+	}
+
+    public void PreviusUnitToLookAt()
+    {
+        if (_index == 0) return;
+
+        _index--;
+        Move(_cameraPositions[_index]);
+    }
+
+    public void EditMechaCameraMove()
+	{
+        transform.LookAt(_mechasToLook[_index]);
+        Move(_mechaEditCameraPositions[_index]);
+	}
 }
