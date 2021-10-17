@@ -6,8 +6,8 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "Gun", menuName = "Create Gun")]
 public class GunSO : ScriptableObject
 {
+    public string gunName;
     public Gun prefab;
-    
     public int maxBullets;
     public Sprite gunImage;
     public int availableBullets;

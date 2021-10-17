@@ -34,8 +34,7 @@ public class WorkshopCamera : MonoBehaviour
 
     public void OverviewCameraMove(int mechaIndex)
     {
-        Debug.Log("overview index: " + mechaIndex);
-        OnMove();
+        SetMove();
         var t = _cameraPositions[mechaIndex];
         StartCoroutine(StartMovement(t));
     }
@@ -43,8 +42,7 @@ public class WorkshopCamera : MonoBehaviour
 
     public void FocusCameraMove(int mechaIndex)
     {
-        Debug.Log("focus index: " + mechaIndex);
-        OnMove();
+        SetMove();
         var t = _mechaEditCameraPositions[mechaIndex];
         StartCoroutine(StartMovement(t));
         StartCoroutine(LookWhileMoving(_mechasToLook[mechaIndex]));
@@ -52,14 +50,13 @@ public class WorkshopCamera : MonoBehaviour
 
     public void UnfocusCameraMove(int mechaIndex)
     {
-        Debug.Log("unfocus index: " + mechaIndex);
-        OnMove();
+        SetMove();
         var t = _cameraPositions[mechaIndex];
         StartCoroutine(StartMovement(t));
         StartCoroutine(LookWhileMoving(_mechasToLook[mechaIndex]));
     }
 
-    private void OnMove()
+    private void SetMove()
     {
         _isMoving = true;
         ChangeButtonInteraction(false);

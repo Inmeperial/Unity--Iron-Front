@@ -6,14 +6,16 @@ using UnityEngine;
 public class WorkshopManager : MonoBehaviour
 {
     [SerializeField] private Transform[] _mechas;
+    [SerializeField] private MechaEquipmentContainerSO _equipmentContainer;
+    
     private int _mechaIndex;
 
-    public delegate void ClickAction(int index); 
-
+    public delegate void ClickAction(int index);
     public static event ClickAction OnClickPrevious;
     public static event ClickAction OnClickNext;
     public static event ClickAction OnClickEdit;
     public static event ClickAction OnClickCloseEdit;
+    
     private void Start()
     {
         _mechaIndex = 3;
@@ -45,5 +47,10 @@ public class WorkshopManager : MonoBehaviour
     public void CloseEditionButton()
     {
         OnClickCloseEdit?.Invoke(_mechaIndex);
+    }
+
+    public MechaEquipmentSO GetSelectedMechaEquipment()
+    {
+        return _equipmentContainer.GetEquipment(_mechaIndex);
     }
 }
