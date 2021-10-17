@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class SerializationTest : MonoBehaviour
 {
     public MechaEquipmentSO equipment;
-    
+
+    public TextMeshProUGUI text;
     // Update is called once per frame
     void Update()
     {
@@ -56,5 +57,51 @@ public class SerializationTest : MonoBehaviour
             Debug.Log("llamo load");
             equipment.Load();
         }
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+            CheckEquipment();
+    }
+
+    public void CheckEquipment()
+    {
+        text.text = "";
+
+        if (equipment.body)
+        {
+            text.text += "body ok \n";
+        }
+        else text.text += "body null \n";
+        
+        if (equipment.legs)
+        {
+            text.text += "legs ok \n";
+        }
+        else text.text += "legs null \n";
+        
+        if (equipment.leftArm)
+        {
+            text.text += "leftArm ok \n";
+        }
+        else text.text += "leftArm null \n";
+        
+        if (equipment.rightArm)
+        {
+            text.text += "rightArm ok \n";
+        }
+        else text.text += "rightArm null \n";
+        
+        if (equipment.leftGun)
+        {
+            text.text += "leftGun ok \n";
+        }
+        else text.text += "leftGun null \n";
+        
+        if (equipment.rightGun)
+        {
+            text.text += "rightGun ok \n";
+        }
+        else text.text += "rightGun null \n";
+
+        text.text += "name is: " + equipment.name;
     }
 }

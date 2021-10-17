@@ -17,7 +17,7 @@ public class WorkshopCamera : MonoBehaviour
 
     private void Awake()
     {
-        _index = 0;
+        _index = 3;
         transform.position = _startPosition.position;
         transform.LookAt(_mechasToLook[_index]);
         Cursor.lockState = CursorLockMode.None;
@@ -33,6 +33,7 @@ public class WorkshopCamera : MonoBehaviour
     {
         _isMoving = true;
         ChangeButtonInteraction(false);
+        StopAllCoroutines();
         StartCoroutine(StartMovement(t));
     }
 
@@ -70,18 +71,20 @@ public class WorkshopCamera : MonoBehaviour
     }
 
     public void NextUnitToLookAt()
-	{
-        if (_index >= _cameraPositions.Length) return;
+    {
+        if (_index >= _cameraPositions.Length - 1)
+            _index = 0;
+        else _index++;
         
-        _index++;
         Move(_cameraPositions[_index]);
 	}
 
     public void PreviusUnitToLookAt()
     {
-        if (_index == 0) return;
-
-        _index--;
+        if (_index == 0)
+            _index = _cameraPositions.Length-1;
+        else _index--;
+        
         Move(_cameraPositions[_index]);
     }
 
