@@ -12525,20 +12525,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startPosition: {fileID: 1385664465}
   _mechasToLook:
-  - {fileID: 1374618144}
-  - {fileID: 450772300}
-  - {fileID: 1286284488}
   - {fileID: 584519618}
+  - {fileID: 1286284488}
+  - {fileID: 450772300}
+  - {fileID: 1374618144}
   _cameraPositions:
-  - {fileID: 1385664465}
-  - {fileID: 910432500}
-  - {fileID: 1048753895}
   - {fileID: 947291871}
+  - {fileID: 1048753895}
+  - {fileID: 910432500}
+  - {fileID: 1385664465}
   _mechaEditCameraPositions:
-  - {fileID: 870091253}
-  - {fileID: 517282233}
-  - {fileID: 1453853013}
   - {fileID: 1361810565}
+  - {fileID: 1453853013}
+  - {fileID: 517282233}
+  - {fileID: 870091253}
   _tpThreshold: 0.1
   _speed: 10
 --- !u!1001 &217419959
@@ -12945,6 +12945,17 @@ MonoBehaviour:
       - m_Target: {fileID: 1143327728}
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 670964388}
+        m_MethodName: CloseEditionButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -17514,8 +17525,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 216622524}
-        m_MethodName: NextUnitToLookAt
+      - m_Target: {fileID: 670964388}
+        m_MethodName: PreviousButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19879,7 +19890,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 398, y: -25}
+  m_AnchoredPosition: {x: 382, y: -25}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &365792150
@@ -39157,6 +39168,54 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 669355177}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &670964387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 670964389}
+  - component: {fileID: 670964388}
+  m_Layer: 0
+  m_Name: WorkshopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &670964388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670964387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6604c2d657147624b8a62ba390cc9a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mechas:
+  - {fileID: 584519618}
+  - {fileID: 1286284488}
+  - {fileID: 450772300}
+  - {fileID: 1374618144}
+--- !u!4 &670964389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670964387}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &671194308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39654,7 +39713,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 568, y: -25}
+  m_AnchoredPosition: {x: 552, y: -25}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &676026364
@@ -51201,7 +51260,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1036, y: -279.5}
+  m_AnchoredPosition: {x: 1004, y: -270.5}
   m_SizeDelta: {x: 200, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &929526378
@@ -53310,8 +53369,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 216622524}
-        m_MethodName: PreviusUnitToLookAt
+      - m_Target: {fileID: 670964388}
+        m_MethodName: NextButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -83931,7 +83990,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 738, y: -25}
+  m_AnchoredPosition: {x: 722, y: -25}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1605032053
@@ -90902,7 +90961,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1036, y: -519.5}
+  m_AnchoredPosition: {x: 1004, y: -510.5}
   m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1741148690
@@ -95948,8 +96007,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 216622524}
-        m_MethodName: EditMechaCameraMove
+      - m_Target: {fileID: 670964388}
+        m_MethodName: EditButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -109235,7 +109294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2055024478
 RectTransform:
   m_ObjectHideFlags: 0
@@ -110558,6 +110617,51 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 40386969}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2077646323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2077646325}
+  - component: {fileID: 2077646324}
+  m_Layer: 0
+  m_Name: EquipmentController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2077646324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077646323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b36e6c55a869c4f9303e18ef6e945b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _equipmentContainer: {fileID: 11400000, guid: 386b293f020c69b4385688db7662d725,
+    type: 2}
+--- !u!4 &2077646325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077646323}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2079938893
 GameObject:
   m_ObjectHideFlags: 0

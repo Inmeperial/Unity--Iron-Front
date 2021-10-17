@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+
 [CreateAssetMenu(fileName = "Equipment", menuName = "Create Equipment")]
-public class MechaEquipmentSO : ScriptableObject, ISerializationCallbackReceiver
+public class MechaEquipmentSO : ScriptableObject
 {
+    public string savePath;
     [SerializeField] private ObjectsDatabase _objectsDatabase;
     public string name;
     public BodySO body;
@@ -18,7 +20,6 @@ public class MechaEquipmentSO : ScriptableObject, ISerializationCallbackReceiver
 
     public void AddBody(int partID)
     {
-        Debug.Log("add body");
         var part = _objectsDatabase.bodiesSO[partID];
         body = part;
     }
@@ -50,46 +51,34 @@ public class MechaEquipmentSO : ScriptableObject, ISerializationCallbackReceiver
             leftGun = gun;
         else rightGun = gun;
     }
-
+    
+    private void OnEnable()
+    {
+        LoadObjectsDatabase(); 
+    }
+    
+    void LoadObjectsDatabase()
+    {
+        _objectsDatabase = Resources.Load<ObjectsDatabase>("Database/Database");
+    }
+    
     public void Save()
     {
         string saveData = JsonUtility.ToJson(this, true);
         BinaryFormatter formatter = new BinaryFormatter();
-
-        string path = string.Concat("/", name, ".save");
-        FileStream file = File.Create(string.Concat(Application.persistentDataPath, path));
+        
+        FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
         formatter.Serialize(file, saveData);
         file.Close();
     }
 
     public void Load()
     {
-        string path = string.Concat("/", name, ".save");
-        if (!File.Exists(string.Concat(Application.persistentDataPath, path))) return;
+        if (!File.Exists(string.Concat(Application.persistentDataPath, savePath))) return;
         
         BinaryFormatter formatter = new BinaryFormatter();
-        FileStream file = File.Open(string.Concat(Application.persistentDataPath, path), FileMode.Open);
+        FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
         JsonUtility.FromJsonOverwrite(formatter.Deserialize(file).ToString(), this);
         file.Close();
-    }
-    
-    public void OnBeforeSerialize()
-    {
-        
-    }
-
-    public void OnAfterDeserialize()
-    {
-
-    }
-
-    private void OnEnable()
-    {
-        LoadObjectsDatabase(); 
-    }
-
-    void LoadObjectsDatabase()
-    {
-        _objectsDatabase = Resources.Load<ObjectsDatabase>("Database/Database");
     }
 }

@@ -9,8 +9,8 @@ public class WalkableWindow : EditorWindow
 
     private void OnEnable()
     {
-        this.maxSize = new Vector2(300, 130);
-        this.minSize = new Vector2(300, 130);
+        maxSize = new Vector2(300, 130);
+        minSize = new Vector2(300, 130);
         var tiles = FindObjectsOfType<Tile>();
         _tiles = new Tile[tiles.Length];
         _tiles = tiles;

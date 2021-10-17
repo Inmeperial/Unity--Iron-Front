@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class WorkshopCamera : MonoBehaviour
@@ -12,14 +13,12 @@ public class WorkshopCamera : MonoBehaviour
     [SerializeField] private float _tpThreshold;
     [SerializeField] private float _speed;
     private bool _isMoving;
-    private int _index;
     private CustomButton[] _buttons;
 
     private void Awake()
     {
-        _index = 3;
         transform.position = _startPosition.position;
-        transform.LookAt(_mechasToLook[_index]);
+        transform.LookAt(_mechasToLook[_mechasToLook.Length-1]);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -27,16 +26,46 @@ public class WorkshopCamera : MonoBehaviour
     private void Start()
     {
         _buttons = FindObjectsOfType<CustomButton>();
+        WorkshopManager.OnClickPrevious += OverviewCameraMove;
+        WorkshopManager.OnClickNext += OverviewCameraMove;
+        WorkshopManager.OnClickEdit += FocusCameraMove;
+        WorkshopManager.OnClickCloseEdit += UnfocusCameraMove;
     }
 
-    public void Move(Transform t)
+    public void OverviewCameraMove(int mechaIndex)
+    {
+        Debug.Log("overview index: " + mechaIndex);
+        OnMove();
+        var t = _cameraPositions[mechaIndex];
+        StartCoroutine(StartMovement(t));
+    }
+    
+
+    public void FocusCameraMove(int mechaIndex)
+    {
+        Debug.Log("focus index: " + mechaIndex);
+        OnMove();
+        var t = _mechaEditCameraPositions[mechaIndex];
+        StartCoroutine(StartMovement(t));
+        StartCoroutine(LookWhileMoving(_mechasToLook[mechaIndex]));
+    }
+
+    public void UnfocusCameraMove(int mechaIndex)
+    {
+        Debug.Log("unfocus index: " + mechaIndex);
+        OnMove();
+        var t = _cameraPositions[mechaIndex];
+        StartCoroutine(StartMovement(t));
+        StartCoroutine(LookWhileMoving(_mechasToLook[mechaIndex]));
+    }
+
+    private void OnMove()
     {
         _isMoving = true;
         ChangeButtonInteraction(false);
         StopAllCoroutines();
-        StartCoroutine(StartMovement(t));
     }
-
+    
     IEnumerator StartMovement(Transform t)
     {
         Vector3 endPos = t.position;
@@ -59,9 +88,17 @@ public class WorkshopCamera : MonoBehaviour
         {
             transform.LookAt(t.GetChild(0));
         }
-        
     }
-
+    
+    IEnumerator LookWhileMoving(Transform t)
+    {
+        while (_isMoving)
+        {
+            transform.LookAt(t);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+    
     void ChangeButtonInteraction(bool state)
     {
         foreach (var button in _buttons)
@@ -69,28 +106,4 @@ public class WorkshopCamera : MonoBehaviour
             button.interactable = state;
         }
     }
-
-    public void NextUnitToLookAt()
-    {
-        if (_index >= _cameraPositions.Length - 1)
-            _index = 0;
-        else _index++;
-        
-        Move(_cameraPositions[_index]);
-	}
-
-    public void PreviusUnitToLookAt()
-    {
-        if (_index == 0)
-            _index = _cameraPositions.Length-1;
-        else _index--;
-        
-        Move(_cameraPositions[_index]);
-    }
-
-    public void EditMechaCameraMove()
-	{
-        transform.LookAt(_mechasToLook[_index]);
-        Move(_mechaEditCameraPositions[_index]);
-	}
 }
