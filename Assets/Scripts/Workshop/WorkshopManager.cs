@@ -10,7 +10,7 @@ public class WorkshopManager : MonoBehaviour
     
     private int _mechaIndex;
 
-    public delegate void ClickAction(int index);
+    public delegate void ClickAction(int mechaIndex);
     public static event ClickAction OnClickPrevious;
     public static event ClickAction OnClickNext;
     public static event ClickAction OnClickEdit;

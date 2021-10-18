@@ -33,12 +33,14 @@ public class DatabaseWindow : EditorWindow
             LoadLegs();
             
             LoadGuns();
+            
+            Save();
         }
     }
 
     void LoadBodies()
     {
-        _database.bodies.Clear();
+        _database.bodiesList.Clear();
             
         var bodiesPaths = AssetDatabase.FindAssets("t:BodySO", new[] {"Assets/ScriptableObjects/Parts/Bodies"});
             
@@ -50,14 +52,14 @@ public class DatabaseWindow : EditorWindow
                 
             var body = (BodySO) AssetDatabase.LoadAssetAtPath(bodyFiles[i], typeof(BodySO));
                 
-            if (!_database.bodies.Contains(body))
-                _database.bodies.Add(body);
+            if (!_database.bodiesList.Contains(body))
+                _database.bodiesList.Add(body);
         }
     }
 
     void LoadArms()
     {
-        _database.arms.Clear();
+        _database.armsList.Clear();
             
         var armsPaths = AssetDatabase.FindAssets("t:ArmSO", new[] {"Assets/ScriptableObjects/Parts/Arms"});
             
@@ -69,14 +71,14 @@ public class DatabaseWindow : EditorWindow
                 
             var arm = (ArmSO) AssetDatabase.LoadAssetAtPath(armsFiles[i], typeof(ArmSO));
                 
-            if (!_database.arms.Contains(arm))
-                _database.arms.Add(arm);
+            if (!_database.armsList.Contains(arm))
+                _database.armsList.Add(arm);
         }
     }
 
     void LoadLegs()
     {
-        _database.legs.Clear();
+        _database.legsList.Clear();
             
         var legsPaths = AssetDatabase.FindAssets("t:LegsSO", new[] {"Assets/ScriptableObjects/Parts/Legs"});
             
@@ -88,14 +90,14 @@ public class DatabaseWindow : EditorWindow
                 
             var leg = (LegsSO) AssetDatabase.LoadAssetAtPath(legsFiles[i], typeof(LegsSO));
                 
-            if (!_database.legs.Contains(leg))
-                _database.legs.Add(leg);
+            if (!_database.legsList.Contains(leg))
+                _database.legsList.Add(leg);
         }
     }
 
     void LoadGuns()
     {
-        _database.guns.Clear();
+        _database.gunsList.Clear();
             
         var gunsPaths = AssetDatabase.FindAssets("t:GunSO", new[] {"Assets/ScriptableObjects/Guns"});
             
@@ -107,8 +109,17 @@ public class DatabaseWindow : EditorWindow
                 
             var gun = (GunSO) AssetDatabase.LoadAssetAtPath(gunFiles[i], typeof(GunSO));
                 
-            if (!_database.guns.Contains(gun))
-                _database.guns.Add(gun);
+            if (!_database.gunsList.Contains(gun))
+                _database.gunsList.Add(gun);
         }
+    }
+
+    void Save()
+    {
+        if (!_database) return;
+        Debug.Log("saved");
+        EditorUtility.SetDirty(_database);
+        AssetDatabase.SaveAssets();
+        EditorGUILayout.HelpBox("File saved.", MessageType.Error);
     }
 }

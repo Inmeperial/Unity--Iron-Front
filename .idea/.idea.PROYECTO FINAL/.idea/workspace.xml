@@ -3,21 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="58a4e8b3-6a44-45fc-a481-3cddbb3bc263" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Database/Database.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Database/Database.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/TallerScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TallerScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Equipment/Equipment A.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/Equipment/Equipment A.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Equipment/Equipment B.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/Equipment/Equipment B.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Equipment/Equipment C.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/Equipment/Equipment C.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Equipment/Equipment D.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/Equipment/Equipment D.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Parts/Arms/Assault Rifle Arm.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/Parts/Arms/Assault Rifle Arm.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Parts/Bodies/Body.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Parts/Bodies/Body.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Parts/Legs/Legs Assault Rifle.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/Parts/Legs/Legs Assault Rifle.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Camera/WorkshopCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Camera/WorkshopCamera.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/MechaEquipmentContainerSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/MechaEquipmentContainerSO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/PartSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/PartSO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GunZ/GunSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GunZ/GunSO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/EquipmentController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/EquipmentController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/DatabaseWindow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/DatabaseWindow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Serialization/ObjectsDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Serialization/ObjectsDatabase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/UIManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +44,8 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ED6C4020-915A-41E1-B5EB-5E4C6A560E95/2f/2bb50b22/ConditionAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://F:/DAVINCI/4TO CUATRI/Motores II/Biloni Leandro - TP2 Motores/Assets/PlayerTest.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ED6C4020-915A-41E1-B5EB-5E4C6A560E95/3f/30665a22/ExecutorDebugger.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Workshop/UIManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopDatabaseManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ED6C4020-915A-41E1-B5EB-5E4C6A560E95/fa/8307000b/BasePrimitiveAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ED6C4020-915A-41E1-B5EB-5E4C6A560E95/a2/d4ff2e0a/InternalBrickAsset.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://F:/DAVINCI/4TO CUATRI/Modelos y Algoritmos I/Parcial1MyA1/Assets/Scripts/Bullet.cs" root0="SKIP_HIGHLIGHTING" />
@@ -119,9 +111,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/BillboardWithForward.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ChangeScene.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Character/GridMovement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/EffectsController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Camera/CloseUpCamera.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/MouseEnable.cs" />
@@ -159,17 +148,20 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Serialization/SerializationTest.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Editor/WalkableWindow.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Serialization/ObjectsDatabase.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Editor/DatabaseWindow.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/MechaEquipmentSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Editor/Inspector/SOBaseInspector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/EquipmentController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/MechaEquipmentContainerSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Camera/WorkshopCamera.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/PartSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/GunSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/UIManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Editor/DatabaseWindow.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopDatabaseManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Serialization/ObjectsDatabase.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopObjectButton.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sOlsvSN0iUpd6MRLO6lGcnlToG" />

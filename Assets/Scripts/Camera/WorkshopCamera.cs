@@ -50,6 +50,7 @@ public class WorkshopCamera : MonoBehaviour
 
     public void UnfocusCameraMove(int mechaIndex)
     {
+        Debug.Log("unfocus");
         SetMove();
         var t = _cameraPositions[mechaIndex];
         StartCoroutine(StartMovement(t));
