@@ -20,6 +20,7 @@ public class AbilitySO : EquipableSO
         Pull
     }
 
+    public Ability abilityPrefab;
     public PartSlot partSlot;
     public AbilityType abilityType;
     public string description;

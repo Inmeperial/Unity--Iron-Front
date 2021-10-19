@@ -21,9 +21,8 @@ public class Legs : Parts
 
     public override void SetPart(PartSO data)
     {
+        base.SetPart(data);
         var d = data as LegsSO;
-        _maxHP = d.maxHP;
-        _currentHP = _maxHP;
         _maxSteps = d.maxSteps;
         _moveSpeed = d.moveSpeed;
         _rotationSpeed = d.rotationSpeed;

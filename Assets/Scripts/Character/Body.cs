@@ -8,10 +8,8 @@ public class Body : Parts
     
     public override void SetPart(PartSO data)
     {
-        
+        base.SetPart(data);
         var d = data as BodySO;
-        _maxHP = d.maxHP;
-        _currentHP = _maxHP;
         meshFilter[0].mesh = d.mesh[0];
     }
 

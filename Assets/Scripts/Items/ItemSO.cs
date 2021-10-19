@@ -13,6 +13,7 @@ public class ItemSO : EquipableSO
         Grenade
     }
 
+    public Item itemPrefab;
     public ItemType itemType;
     public int damage;
     public int areaOfEffect;

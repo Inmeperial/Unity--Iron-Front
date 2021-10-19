@@ -1436,6 +1436,7 @@ public class Character : EnumsClass, IObservable
         _leftArm.transform.localPosition = Vector3.zero;
         _leftArm.SetPart(_mechaEquipment.leftArm);
         _leftArm.SetRightOrLeft("Left");
+        
 
         if (_mechaEquipment.leftGun)
         {

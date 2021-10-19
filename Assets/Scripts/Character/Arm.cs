@@ -11,9 +11,8 @@ public class Arm : Parts
     private Mesh[] _meshes;
     public override void SetPart(PartSO data)
     {
+        base.SetPart(data);
         var d = data as ArmSO;
-        _maxHP = d.maxHP;
-        _currentHP = _maxHP;
         _meshes = d.mesh;
     }
 

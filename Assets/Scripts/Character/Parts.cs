@@ -10,24 +10,26 @@ public abstract class Parts : MonoBehaviour
     protected const int NormalHit = 1;
     protected const int CriticalHit = 2;
     protected Character _myChar;
-    public AbilitySO abilityData;
-    public Ability abilityPrefab;
     protected Ability _ability;
     protected float _maxHP;
     protected float _currentHP;
     public virtual void ManualStart(Character character)
     {
         _myChar = character;
+    }
 
-        if (abilityData)
+    public virtual void SetPart(PartSO data)
+    {
+        _maxHP = data.maxHP;
+        _currentHP = _maxHP;
+
+        if (data.ability.abilityPrefab && data.ability)
         {
-            _ability = Instantiate(abilityPrefab, transform);
-            _ability.Initialize(_myChar, abilityData);
+            _ability = Instantiate(data.ability.abilityPrefab, transform);
+            _ability.Initialize(_myChar, data.ability);
             _myChar.AddEquipable(_ability);
         }
     }
-    
-    public abstract void SetPart(PartSO data);
 
     public float GetMaxHp()
     {
@@ -44,6 +46,7 @@ public abstract class Parts : MonoBehaviour
     public abstract void TakeDamage(List<Tuple<int, int>> damages);
 
     public abstract void TakeDamage(int damage);
+
     public Ability GetAbility()
     {
         return _ability;
