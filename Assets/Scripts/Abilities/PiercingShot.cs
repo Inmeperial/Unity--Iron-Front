@@ -53,7 +53,10 @@ public class PiercingShot : Ability
                 callback();
             Deselect();
 		}
-	}
+
+        if (Input.GetMouseButtonDown(1))
+            Deselect();
+    }
 
     private List<Character> GetCharactersInAttackDirection(Tile currentTile, Vector3 dir, int count)
 	{

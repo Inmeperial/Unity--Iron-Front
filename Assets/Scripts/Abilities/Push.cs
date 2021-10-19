@@ -61,6 +61,9 @@ public class Push : Ability
                 callback();
             Deselect();
         }
+
+        if (Input.GetMouseButtonDown(1))
+            Deselect();
     }
 
     /// <summary>
