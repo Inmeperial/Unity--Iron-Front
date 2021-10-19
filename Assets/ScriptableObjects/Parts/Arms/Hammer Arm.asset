@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5805bbeb56679844b9a0c75d8145d72f, type: 3}
   m_Name: Hammer Arm
   m_EditorClassIdentifier: 
+  partName: Hammer
+  ability: {fileID: 11400000, guid: 0423039ab0ba9b448895dfdeaf7e2812, type: 2}
   maxHP: 200
-  mesh: []
-  prefab: {fileID: 0}
+  mesh:
+  - {fileID: -1187652400965878287, guid: 1fdfc96670e7e994181047d0a1adf3fb, type: 3}
+  - {fileID: 6270179268449189568, guid: 1fdfc96670e7e994181047d0a1adf3fb, type: 3}
+  prefab: {fileID: 2814040305092997217, guid: 86341c4faefde4e4a870b640fa86f9ca, type: 3}

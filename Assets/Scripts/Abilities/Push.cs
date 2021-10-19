@@ -77,7 +77,8 @@ public class Push : Ability
         StartCoroutine(LerpPush(enemy.transform, tileBeignPushedTo.transform.position, pushLerpDuration));
         enemy.ChangeMyPosTile(tileBeignPushedTo);
         enemy.GetBody().TakeDamage(pushDamage);
-		if (collides)
+        enemy.SetHurtAnimation();
+        if (collides)
 		{
             enemy.GetBody().TakeDamage(collisionDamage);
             enemy.SetHurtAnimation();

@@ -23,7 +23,7 @@ public abstract class Parts : MonoBehaviour
         _maxHP = data.maxHP;
         _currentHP = _maxHP;
 
-        if (data.ability.abilityPrefab && data.ability)
+        if(data.ability && data.ability.abilityPrefab)
         {
             _ability = Instantiate(data.ability.abilityPrefab, transform);
             _ability.Initialize(_myChar, data.ability);

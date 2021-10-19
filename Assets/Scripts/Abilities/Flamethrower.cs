@@ -17,6 +17,7 @@ public class Flamethrower : Ability
     private Vector3 _facingDir;
     private Camera _mainCam;
     private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
+    private LineRenderer _lineRenderer;
 
     public override void Select()
 	{
@@ -25,6 +26,8 @@ public class Flamethrower : Ability
         {
             _highlight = FindObjectOfType<TileHighlight>();
         }
+        if (!_lineRenderer) _lineRenderer = gameObject.AddComponent<LineRenderer>();
+        _lineRenderer.positionCount = 4;
         _mainCam = Camera.main;
         _position = _character.transform.position;
         _character.EquipableSelectionState(true, this);
@@ -35,6 +38,7 @@ public class Flamethrower : Ability
 	{
         _highlight.MortarClearTilesInAttackRange(_tilesInRange);
         _tilesInRange.Clear();
+        _lineRenderer.positionCount = 0;
         _character.EquipableSelectionState(false, null);
         _character.SelectThisUnit();
     }
@@ -48,7 +52,7 @@ public class Flamethrower : Ability
             _mouseDir = raycastHit.point;
 		}
         _facingDir = (_mouseDir - _position);
-        
+
         //Pinto los tiles que esten en el area de ataque
         var tiles = Physics.OverlapSphere(_position, range, gridMask);
         foreach (var item in tiles)
@@ -63,6 +67,13 @@ public class Flamethrower : Ability
             Debug.Log("Painting Tile");
             PaintAndClearTile(tempTile);
         }
+
+        //Pongo los vertices del line renderer para mostrar el area donde esta el ataque.
+        /*_lineRenderer.SetPosition(0, _position);
+        _lineRenderer.SetPosition(1, Quaternion.Euler(0, angle / 2, 0) * _facingDir * (range/5));
+        _lineRenderer.SetPosition(2, Quaternion.Euler(0, -angle / 2, 0) * _facingDir * (range/5));
+        _lineRenderer.SetPosition(3, _position);*/
+
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.X))
 		{

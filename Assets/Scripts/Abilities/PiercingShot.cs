@@ -14,7 +14,7 @@ public class PiercingShot : Ability
 	{
 		if (InCooldown() || !_character.CanAttack()) return;
 		Debug.Log("Pinto tiles de piercing shot");
-        _abilityUseRange = _character.GetLeftGun().GetAttackRange();//Estaría bueno conseguir el rango del arma que tenga la habilidad.
+        _abilityUseRange = _character.GetRightGun().GetAttackRange();//Estaría bueno conseguir el rango del arma que tenga la habilidad.
         //damage = _character.GetLeftGun().GetBulletDamage() * (_character.GetLeftGun().GetAvailableBullets() / 2);//Formulita para hacer el daño dinamico según que arma tiene
 		if (!_highlight)
 			_highlight = FindObjectOfType<TileHighlight>();
