@@ -10,6 +10,7 @@ public class Flamethrower : Ability
 	[SerializeField]private float angle;
     [SerializeField] private LayerMask gridMask;
     [SerializeField] private LayerMask characterMask;
+    [SerializeField] private Material lineMaterial;
     private TileHighlight _highlight;
     private Vector3 _position;
     private Vector3 _debbugDir;
@@ -27,7 +28,8 @@ public class Flamethrower : Ability
             _highlight = FindObjectOfType<TileHighlight>();
         }
         if (!_lineRenderer) _lineRenderer = gameObject.AddComponent<LineRenderer>();
-        _lineRenderer.positionCount = 4;
+        _lineRenderer.positionCount = 11;
+        _lineRenderer.material = lineMaterial;
         _mainCam = Camera.main;
         _position = _character.transform.position;
         _character.EquipableSelectionState(true, this);
@@ -54,7 +56,7 @@ public class Flamethrower : Ability
         _facingDir = (_mouseDir - _position);
 
         //Pinto los tiles que esten en el area de ataque
-        var tiles = Physics.OverlapSphere(_position, range, gridMask);
+        /*var tiles = Physics.OverlapSphere(_position, range, gridMask);
         foreach (var item in tiles)
         {
             var tempTile = item.GetComponent<Tile>();
@@ -66,16 +68,23 @@ public class Flamethrower : Ability
             }
             Debug.Log("Painting Tile");
             PaintAndClearTile(tempTile);
-        }
+        }*/
 
         //Pongo los vertices del line renderer para mostrar el area donde esta el ataque.
-        /*_lineRenderer.SetPosition(0, _position);
-        _lineRenderer.SetPosition(1, Quaternion.Euler(0, angle / 2, 0) * _facingDir * (range/5));
-        _lineRenderer.SetPosition(2, Quaternion.Euler(0, -angle / 2, 0) * _facingDir * (range/5));
-        _lineRenderer.SetPosition(3, _position);*/
+        _lineRenderer.SetPosition(0, _position);//Necesary
+        _lineRenderer.SetPosition(1, _position + Quaternion.Euler(0, angle / 2, 0) * _facingDir.normalized * range);//Necesary
+        _lineRenderer.SetPosition(2, _position + Quaternion.Euler(0, angle / 3, 0) * _facingDir.normalized * range);
+        _lineRenderer.SetPosition(3, _position + Quaternion.Euler(0, angle / 4, 0) * _facingDir.normalized * range);
+        _lineRenderer.SetPosition(4, _position + Quaternion.Euler(0, angle / 5, 0) * _facingDir.normalized * range);
+        _lineRenderer.SetPosition(5, _position + _facingDir.normalized * range);
+        _lineRenderer.SetPosition(6, _position + Quaternion.Euler(0, -angle / 5, 0) * _facingDir.normalized * range);
+        _lineRenderer.SetPosition(7, _position + Quaternion.Euler(0, -angle / 4, 0) * _facingDir.normalized * range);
+        _lineRenderer.SetPosition(8, _position + Quaternion.Euler(0, -angle / 3, 0) * _facingDir.normalized * range);
+        _lineRenderer.SetPosition(9, _position + Quaternion.Euler(0, -angle / 2, 0) * _facingDir.normalized * range);//Necesary
+        _lineRenderer.SetPosition(10, _position);//Necesary
 
 
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.X))
+        if (Input.GetMouseButtonDown(0))
 		{
             //Ataco a todas las unidades que esten en el area de ataque
             List<Character> charactersHitted = new List<Character>();
