@@ -21,6 +21,13 @@ public class ObjectsDatabase : ScriptableObject, ISerializationCallbackReceiver
     public Dictionary<GunSO, int> gunID = new Dictionary<GunSO, int>();
     public Dictionary<int, GunSO> gunSO = new Dictionary<int, GunSO>();
 
+    public List<AbilitySO> abilitiesList;
+    public Dictionary<AbilitySO, int> abilityID = new Dictionary<AbilitySO, int>();
+    public Dictionary<int, AbilitySO> abilitySO = new Dictionary<int, AbilitySO>();
+    
+    public List<ItemSO> itemsList;
+    public Dictionary<ItemSO, int> itemID = new Dictionary<ItemSO, int>();
+    public Dictionary<int, ItemSO> itemSO = new Dictionary<int, ItemSO>();
     public void OnBeforeSerialize()
     {
         
@@ -61,6 +68,22 @@ public class ObjectsDatabase : ScriptableObject, ISerializationCallbackReceiver
         {
             gunID.Add(gunsList[i], i);
             gunSO.Add(i, gunsList[i]);
+        }
+        
+        abilityID = new Dictionary<AbilitySO, int>();
+        
+        for (int i = 0; i < abilitiesList.Count; i++)
+        {
+            abilityID.Add(abilitiesList[i], i);
+            abilitySO.Add(i, abilitiesList[i]);
+        }
+        
+        itemID = new Dictionary<ItemSO, int>();
+        
+        for (int i = 0; i < itemsList.Count; i++)
+        {
+            itemID.Add(itemsList[i], i);
+            itemSO.Add(i, itemsList[i]);
         }
     }
 }

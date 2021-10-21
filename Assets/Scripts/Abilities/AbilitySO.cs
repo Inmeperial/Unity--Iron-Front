@@ -23,5 +23,5 @@ public class AbilitySO : EquipableSO
     public Ability abilityPrefab;
     public PartSlot partSlot;
     public AbilityType abilityType;
-    public string description;
+    
 }

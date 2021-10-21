@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.Mime;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using TMPro;
@@ -52,30 +51,48 @@ public class WorkshopUIManager : MonoBehaviour
       _overviewRightArm.text = "Right Arm: \n" + equipmentData.rightArm.partName;
       _overviewLegs.text = "Legs: \n" + equipmentData.legs.partName;
    }
-
-   //TODO: Funcionalidad de mostrar
+   
    public void UpdatePartsList(string part)
    {
+      DestroyWorkshopObjects();
+      
       switch (part)
       {
          case "Body":
             Debug.Log("update body list");
-            WorkshopDatabaseManager.Instance.GetBodies();
+            var bodies = WorkshopDatabaseManager.Instance.GetBodies();
+
+            foreach (var body in bodies)
+            {
+               CreateWorkshopObject(body, _partsSpawnParent, _partsDescription);
+            }
             break;
          
          case "LeftArm":
             Debug.Log("update left list");
-            WorkshopDatabaseManager.Instance.GetArms();
+            var lArms = WorkshopDatabaseManager.Instance.GetArms();
+            foreach (var arm in lArms)
+            {
+               CreateWorkshopObject(arm, _partsSpawnParent, _partsDescription);
+            }
             break;
             
          case "RightArm":
             Debug.Log("update right list");
-            WorkshopDatabaseManager.Instance.GetArms();
+            var rArms = WorkshopDatabaseManager.Instance.GetArms();
+            foreach (var arm in rArms)
+            {
+               CreateWorkshopObject(arm, _partsSpawnParent, _partsDescription);
+            }
             break;
          
          case "Legs":
             Debug.Log("update legs list");
-            WorkshopDatabaseManager.Instance.GetLegs();
+            var legs = WorkshopDatabaseManager.Instance.GetLegs();
+            foreach (var leg in legs)
+            {
+               CreateWorkshopObject(leg, _partsSpawnParent, _partsDescription);
+            }
             break;
       }
    }
@@ -83,33 +100,116 @@ public class WorkshopUIManager : MonoBehaviour
    //TODO: Funcionalidad de mostrar
    public void UpdateAbilitiesList(string part)
    {
+      DestroyWorkshopObjects();
+      
+      List<AbilitySO> abilities = new List<AbilitySO>();
+      abilities = WorkshopDatabaseManager.Instance.GetAbilities();
+      
       switch (part)
       {
+            
          case "Body":
             Debug.Log("update body abilities list");
+            
+            foreach (var ability in abilities)
+            {
+               if (ability.partSlot == AbilitySO.PartSlot.Body)
+                  CreateWorkshopObject(ability, _abilitiesSpawnParent, _abilitiesDescription);
+            }
             
             break;
          
          case "LeftArm":
             Debug.Log("update left abilities list");
             
+            foreach (var ability in abilities)
+            {
+               if (ability.partSlot == AbilitySO.PartSlot.Arm)
+                  CreateWorkshopObject(ability, _abilitiesSpawnParent, _abilitiesDescription);
+            }
             break;
             
          case "RightArm":
             Debug.Log("update right abilities list");
+            
+            foreach (var ability in abilities)
+            {
+               if (ability.partSlot == AbilitySO.PartSlot.Arm)
+                  CreateWorkshopObject(ability, _abilitiesSpawnParent, _abilitiesDescription);
+            }
             
             break;
          
          case "Legs":
             Debug.Log("update legs abilities list");
             
+            foreach (var ability in abilities)
+            {
+               if (ability.partSlot == AbilitySO.PartSlot.Legs)
+                  CreateWorkshopObject(ability, _abilitiesSpawnParent, _abilitiesDescription);
+            }
             break;
       }
    }
+
    
-   //TODO: Funcionalidad de mostrar
+   
    public void UpdateItemsList()
    {
+      DestroyWorkshopObjects();
+      
       Debug.Log("update items list");
+      var items = WorkshopDatabaseManager.Instance.GetItems();
+
+      foreach (var item in items)
+      {
+         Debug.Log("creo item");
+         CreateWorkshopObject(item, _itemsSpawnParent, _itemsDescription);
+      }
+   }
+
+   
+   private void CreateWorkshopObject(PartSO part, Transform parent, TextMeshProUGUI descriptionField)
+   {
+      var obj = Instantiate(_workshopObjectPrefab, parent);
+      obj.transform.localPosition = Vector3.zero;
+      obj.SetObjectName(part.partName);
+      obj.SetObjectSprite(part.icon);
+      //obj.SetDescriptionTextField(descriptionField);
+      obj.SetLeftClick(() => descriptionField.text = "HP: " + part.maxHP);
+      _createdObjectButtonList.Add(obj);
+   }
+   
+   private void CreateWorkshopObject(EquipableSO equipable, Transform parent, TextMeshProUGUI descriptionField)
+   {
+      Debug.Log("creo item 2");
+      var obj = Instantiate(_workshopObjectPrefab, parent);
+      obj.transform.localPosition = Vector3.zero;
+      obj.SetObjectName(equipable.equipableName);
+      obj.SetObjectSprite(equipable.equipableIcon);
+      //obj.SetDescriptionTextField(descriptionField);
+      obj.SetLeftClick(() => descriptionField.text = equipable.description);
+      _createdObjectButtonList.Add(obj);
+   }
+   
+   // private void CreateWorkshopObject(ItemSO item, Transform parent, TextMeshProUGUI descriptionField)
+   // {
+   //    var obj = Instantiate(_workshopObjectPrefab, parent);
+   //    obj.transform.localPosition = Vector3.zero;
+   //    obj.SetObjectName(item.equipableName);
+   //    obj.SetObjectSprite(item.equipableIcon);
+   //    //obj.SetDescriptionTextField(descriptionField);
+   //    obj.SetLeftClick(() => descriptionField.text = item.description);
+   //    _createdObjectButtonList.Add(obj);
+   // }
+
+   private void DestroyWorkshopObjects()
+   {
+      foreach (var obj in _createdObjectButtonList)
+      {
+         Destroy(obj.gameObject);
+      }
+
+      _createdObjectButtonList = new List<WorkshopObjectButton>();
    }
 }

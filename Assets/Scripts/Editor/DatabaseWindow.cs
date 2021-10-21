@@ -34,6 +34,10 @@ public class DatabaseWindow : EditorWindow
             
             LoadGuns();
             
+            LoadAbilities();
+            
+            LoadItems();
+            
             Save();
         }
     }
@@ -111,6 +115,44 @@ public class DatabaseWindow : EditorWindow
                 
             if (!_database.gunsList.Contains(gun))
                 _database.gunsList.Add(gun);
+        }
+    }
+
+    void LoadAbilities()
+    {
+        _database.abilitiesList.Clear();
+            
+        var abilitiesPath = AssetDatabase.FindAssets("t:AbilitySO", new[] {"Assets/ScriptableObjects/Abilities"});
+            
+        string[] abilitiesFiles = new string[abilitiesPath.Length];
+            
+        for (int i = 0; i < abilitiesFiles.Length; i++)
+        {
+            abilitiesFiles[i] = AssetDatabase.GUIDToAssetPath(abilitiesPath[i]);
+                
+            var ability = (AbilitySO) AssetDatabase.LoadAssetAtPath(abilitiesFiles[i], typeof(AbilitySO));
+                
+            if (!_database.abilitiesList.Contains(ability))
+                _database.abilitiesList.Add(ability);
+        }
+    }
+
+    void LoadItems()
+    {
+        _database.itemsList.Clear();
+            
+        var itemsPath = AssetDatabase.FindAssets("t:ItemSO", new[] {"Assets/ScriptableObjects/Items"});
+            
+        string[] itemsFiles = new string[itemsPath.Length];
+            
+        for (int i = 0; i < itemsFiles.Length; i++)
+        {
+            itemsFiles[i] = AssetDatabase.GUIDToAssetPath(itemsPath[i]);
+                
+            var item = (ItemSO) AssetDatabase.LoadAssetAtPath(itemsFiles[i], typeof(ItemSO));
+                
+            if (!_database.itemsList.Contains(item))
+                _database.itemsList.Add(item);
         }
     }
 

@@ -14,8 +14,11 @@ public abstract class EquipableSO : ScriptableObject
 
     public EquipableType equipableType;
     public string equipableName;
+    public Sprite equipableIcon;
+    public string description;
     public int maxUses;
     public int cooldown;
+    
 
     [Header("SOLO PARA PUSH, DESP HAGO EL CUSTOM")]
     public int pushUseRange;

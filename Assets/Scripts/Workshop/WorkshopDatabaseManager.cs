@@ -31,4 +31,14 @@ public class WorkshopDatabaseManager : MonoBehaviour
     {
         return _objectsDatabase.legsList;
     }
+
+    public List<AbilitySO> GetAbilities()
+    {
+        return _objectsDatabase.abilitiesList;
+    }
+
+    public List<ItemSO> GetItems()
+    {
+        return _objectsDatabase.itemsList;
+    }
 }

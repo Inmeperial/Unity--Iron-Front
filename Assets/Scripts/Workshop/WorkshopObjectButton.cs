@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,6 +19,8 @@ public class WorkshopObjectButton : CustomButton
 
     public void SetObjectSprite(Sprite sprite)
     {
+        //TODO: sacar cuando haya sprite
+        if (!sprite) return;
         _objectImage.sprite = sprite;
     }
     
