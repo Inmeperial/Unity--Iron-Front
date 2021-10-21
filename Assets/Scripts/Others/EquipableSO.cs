@@ -5,12 +5,13 @@ using UnityEngine;
 
 public abstract class EquipableSO : ScriptableObject
 {
+    //TODO: remover despues
     public enum EquipableType
-    {
-        Item,
-        PassiveAbility,
-        ActiveAbility
-    };
+     {
+         Item,
+         PassiveAbility,
+         ActiveAbility
+     };
 
     public EquipableType equipableType;
     public string equipableName;

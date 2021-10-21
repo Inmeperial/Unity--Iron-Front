@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class Equipable : MonoBehaviour
 {
 
+    //TODO: remover despues
     protected EquipableSO.EquipableType _equipableType;
     protected int _availableUses;
     protected int _currentCooldown;

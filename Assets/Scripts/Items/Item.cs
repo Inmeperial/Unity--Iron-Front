@@ -6,13 +6,14 @@ using UnityEngine;
 public class Item : Equipable
 {
     protected ItemSO _itemData;
-    protected ItemSO.ItemType _itemType;
+    //TODO: remover despues
+    //protected ItemSO.ItemType _itemType;
     public override void Initialize(Character character, EquipableSO data)
     {
         _character = character;
         _itemData = data as ItemSO;
         _availableUses = _itemData.maxUses;
-        _itemType = _itemData.itemType;
+        //_itemType = _itemData.itemType;
     }
 
     public override void Select()

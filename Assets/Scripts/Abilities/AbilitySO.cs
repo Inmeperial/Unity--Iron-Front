@@ -13,15 +13,16 @@ public class AbilitySO : EquipableSO
         Legs
     };
     
-    public enum AbilityType
-    {
-        LegsOvercharge,
-        Push,
-        Pull
-    }
+    //TODO: remover despues
+    // public enum AbilityType
+    // {
+    //     LegsOvercharge,
+    //     Push,
+    //     Pull
+    // }
 
     public Ability abilityPrefab;
     public PartSlot partSlot;
-    public AbilityType abilityType;
+    //public AbilityType abilityType;
     
 }

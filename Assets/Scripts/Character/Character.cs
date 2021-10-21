@@ -11,8 +11,9 @@ using Random = System.Random;
 [SelectionBase]
 public class Character : EnumsClass, IObservable
 {
-    public ItemSO itemSOData;
-    public Item itemPrefab;
+    //TODO: remover despues
+    // public ItemSO itemSOData;
+    // public Item itemPrefab;
 
     private Equipable _equipable;
 
@@ -1534,18 +1535,19 @@ public class Character : EnumsClass, IObservable
             _leftGunSelected = false;
         }
 
-        if (itemSOData)
-        {
-            switch (itemSOData.itemType)
-            {
-                case ItemSO.ItemType.Grenade:
-                    _equipable = Instantiate(itemPrefab, transform);
-                    break;
-            }
-
-            _equipable.Initialize(this, itemSOData);
-            _equipables.Add(_equipable);
-        }
+        //TODO: remover despues
+        // if (itemSOData)
+        // {
+        //     switch (itemSOData.itemType)
+        //     {
+        //         case ItemSO.ItemType.Grenade:
+        //             _equipable = Instantiate(itemPrefab, transform);
+        //             break;
+        //     }
+        //
+        //     _equipable.Initialize(this, itemSOData);
+        //     _equipables.Add(_equipable);
+        // }
     }
     
     //Funcion de Nico para el push/pull

@@ -13,6 +13,7 @@ public class Ability : Equipable
         _character = character;
         _abilityData = data as AbilitySO;
         _partSlot = _abilityData.partSlot;
+        //TODO: remover despues
         _equipableType = _abilityData.equipableType;
     }
     public string AbilityStatus()
@@ -26,7 +27,7 @@ public class Ability : Equipable
                 {
                     return "In Cooldown. Remaining: " + _currentCooldown;
                 }
-
+        
                 return "x" + _availableUses;
         }
 
