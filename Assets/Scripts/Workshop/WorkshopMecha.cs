@@ -81,8 +81,7 @@ public class WorkshopMecha : MonoBehaviour
         Destroy(legs.meshFilter[0].gameObject);
         var otherLeg = Instantiate(_equipment.legs.prefab, _leftLegSpawnPosition);
         Destroy(otherLeg.meshFilter[1].gameObject);
-        otherLeg.gameObject.name = "other leg";
-        
+
         legs.CreateRightLeg(_equipment.legs.mesh[1]);
         otherLeg.CreateLeftLeg(_equipment.legs.mesh[0]);
         
@@ -95,7 +94,6 @@ public class WorkshopMecha : MonoBehaviour
 
     public void ChangeBody(BodySO newBody)
     {
-        Debug.Log("change body");
         if (_body) Destroy(_body);
         
         var body = Instantiate(newBody.prefab, _bodySpawnPosition);
@@ -106,42 +104,39 @@ public class WorkshopMecha : MonoBehaviour
     
     public void ChangeLeftArm(ArmSO newArm)
     {
-        Debug.Log("change l arm");
         if (_leftArm) Destroy(_leftArm);
         
         var arm = Instantiate(newArm.prefab, _leftArmSpawnPosition);
         arm.transform.localPosition = Vector3.zero;
         arm.SetPart(newArm);
+        arm.SetRightOrLeft("Left");
         _leftArm = arm.gameObject;
     }
     
     public void ChangeRightArm(ArmSO newArm)
     {
-        Debug.Log("change r arm");
         if (_rightArm) Destroy(_rightArm);
         
         var arm = Instantiate(newArm.prefab, _rightArmSpawnPosition);
         arm.transform.localPosition = Vector3.zero;
         arm.SetPart(newArm);
+        arm.SetRightOrLeft("Right");
         _rightArm = arm.gameObject;
     }
     
     public void ChangeLegs(LegsSO newLegs)
     {
-        Debug.Log("change legs");
         if (_leftLeg && _rightLeg)
         {
             Destroy(_leftLeg);
             Destroy(_rightLeg);
         }
-        
-        var legs = Instantiate(_equipment.legs.prefab, _rightLegSpawnPosition);
+        var legs = Instantiate(newLegs.prefab, _rightLegSpawnPosition);
         //1 is right 0 is left
         Destroy(legs.meshFilter[0].gameObject);
-        var otherLeg = Instantiate(_equipment.legs.prefab, _leftLegSpawnPosition);
+        var otherLeg = Instantiate(newLegs.prefab, _leftLegSpawnPosition);
         Destroy(otherLeg.meshFilter[1].gameObject);
-        otherLeg.gameObject.name = "other leg";
-        
+
         legs.CreateRightLeg(_equipment.legs.mesh[1]);
         otherLeg.CreateLeftLeg(_equipment.legs.mesh[0]);
         

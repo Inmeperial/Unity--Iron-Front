@@ -78,25 +78,21 @@ public class WorkshopManager : MonoBehaviour
 
     public void UpdateBody(BodySO body)
     {
-        Debug.Log("update body");
         mechas[_mechaIndex].ChangeBody(body);
     }
     
     public void UpdateLeftArm(ArmSO arm)
     {
-        Debug.Log("update l arm");
         mechas[_mechaIndex].ChangeLeftArm(arm);
     }
     
     public void UpdateRightArm(ArmSO arm)
     {
-        Debug.Log("update r arm");
         mechas[_mechaIndex].ChangeRightArm(arm);
     }
     
     public void UpdateLegs(LegsSO legs)
     {
-        Debug.Log("update legs");
         mechas[_mechaIndex].ChangeLegs(legs);
     }
 }
