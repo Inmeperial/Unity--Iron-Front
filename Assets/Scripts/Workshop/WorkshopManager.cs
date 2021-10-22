@@ -6,6 +6,7 @@ public class WorkshopManager : MonoBehaviour
     [SerializeField] private MechaEquipmentContainerSO _equipmentContainer;
     
     private int _mechaIndex;
+    private bool _isEditing;
 
     public delegate void ClickAction(int mechaIndex);
     public static event ClickAction OnClickPrevious;
@@ -16,8 +17,19 @@ public class WorkshopManager : MonoBehaviour
     public WorkshopMecha[] mechas;
     private void Start()
     {
+        _isEditing = false;
         _mechaIndex = 3;
         SetEquipment();
+    }
+
+    private void Update()
+    {
+        if (_isEditing) return;
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            PreviousButton();
+
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            NextButton();
     }
 
     public void PreviousButton()
@@ -40,11 +52,13 @@ public class WorkshopManager : MonoBehaviour
 
     public void EditButton()
     {
+        _isEditing = true;
         OnClickEdit?.Invoke(_mechaIndex);
     }
 
     public void CloseEditionButton()
     {
+        _isEditing = false;
         OnClickCloseEdit?.Invoke(_mechaIndex);
     }
 
