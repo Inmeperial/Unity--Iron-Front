@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WorkshopMecha : MonoBehaviour
 {
@@ -15,6 +12,13 @@ public class WorkshopMecha : MonoBehaviour
     [SerializeField] private Transform _leftLegSpawnPosition;
     [SerializeField] private Transform _rightLegSpawnPosition;
 
+    private GameObject _body;
+    private GameObject _leftArm;
+    private GameObject _rightArm;
+    private GameObject _leftLeg;
+    private GameObject _rightLeg;
+    private GameObject _leftGun;
+    private GameObject _rightGun;
     public void SetEquipment(MechaEquipmentSO equipment)
     {
         _equipment = equipment;
@@ -31,12 +35,14 @@ public class WorkshopMecha : MonoBehaviour
         var body = Instantiate(_equipment.body.prefab, _bodySpawnPosition);
         body.transform.localPosition = Vector3.zero;
         body.SetPart(_equipment.body);
+        _body = body.gameObject;
         
         var leftArm = Instantiate(_equipment.leftArm.prefab, _leftArmSpawnPosition);
 
         leftArm.transform.localPosition = Vector3.zero;
         leftArm.SetPart(_equipment.leftArm);
         leftArm.SetRightOrLeft("Left");
+        _leftArm = leftArm.gameObject;
         
 
         if (_equipment.leftGun)
@@ -47,6 +53,7 @@ public class WorkshopMecha : MonoBehaviour
             {
                 leftGun.transform.localPosition = Vector3.zero;
                 leftGun.gameObject.tag = "LArm";
+                _leftGun = leftGun.gameObject;
             } 
         }
         
@@ -55,6 +62,7 @@ public class WorkshopMecha : MonoBehaviour
         rightArm.transform.localPosition = Vector3.zero;
         rightArm.SetPart(_equipment.rightArm);
         rightArm.SetRightOrLeft("Right");
+        _rightArm = rightArm.gameObject;
         
         if (_equipment.rightGun)
         {
@@ -64,6 +72,7 @@ public class WorkshopMecha : MonoBehaviour
             {
                 rightGun.transform.localPosition = Vector3.zero;
                 rightGun.gameObject.tag = "RArm";
+                _rightGun = rightGun.gameObject;
             } 
         }
         
@@ -79,5 +88,67 @@ public class WorkshopMecha : MonoBehaviour
         
         legs.transform.localPosition = Vector3.zero;
         legs.SetPart(_equipment.legs);
+
+        _leftLeg = legs.gameObject;
+        _rightLeg = otherLeg.gameObject;
+    }
+
+    public void ChangeBody(BodySO newBody)
+    {
+        Debug.Log("change body");
+        if (_body) Destroy(_body);
+        
+        var body = Instantiate(newBody.prefab, _bodySpawnPosition);
+        body.transform.localPosition = Vector3.zero;
+        body.SetPart(newBody);
+        _body = body.gameObject;
+    }
+    
+    public void ChangeLeftArm(ArmSO newArm)
+    {
+        Debug.Log("change l arm");
+        if (_leftArm) Destroy(_leftArm);
+        
+        var arm = Instantiate(newArm.prefab, _leftArmSpawnPosition);
+        arm.transform.localPosition = Vector3.zero;
+        arm.SetPart(newArm);
+        _leftArm = arm.gameObject;
+    }
+    
+    public void ChangeRightArm(ArmSO newArm)
+    {
+        Debug.Log("change r arm");
+        if (_rightArm) Destroy(_rightArm);
+        
+        var arm = Instantiate(newArm.prefab, _rightArmSpawnPosition);
+        arm.transform.localPosition = Vector3.zero;
+        arm.SetPart(newArm);
+        _rightArm = arm.gameObject;
+    }
+    
+    public void ChangeLegs(LegsSO newLegs)
+    {
+        Debug.Log("change legs");
+        if (_leftLeg && _rightLeg)
+        {
+            Destroy(_leftLeg);
+            Destroy(_rightLeg);
+        }
+        
+        var legs = Instantiate(_equipment.legs.prefab, _rightLegSpawnPosition);
+        //1 is right 0 is left
+        Destroy(legs.meshFilter[0].gameObject);
+        var otherLeg = Instantiate(_equipment.legs.prefab, _leftLegSpawnPosition);
+        Destroy(otherLeg.meshFilter[1].gameObject);
+        otherLeg.gameObject.name = "other leg";
+        
+        legs.CreateRightLeg(_equipment.legs.mesh[1]);
+        otherLeg.CreateLeftLeg(_equipment.legs.mesh[0]);
+        
+        legs.transform.localPosition = Vector3.zero;
+        legs.SetPart(_equipment.legs);
+
+        _leftLeg = legs.gameObject;
+        _rightLeg = otherLeg.gameObject;
     }
 }

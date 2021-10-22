@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WorkshopManager : MonoBehaviour
 {
@@ -15,7 +12,7 @@ public class WorkshopManager : MonoBehaviour
     public static event ClickAction OnClickNext;
     public static event ClickAction OnClickEdit;
     public static event ClickAction OnClickCloseEdit;
-
+    
     public WorkshopMecha[] mechas;
     private void Start()
     {
@@ -63,5 +60,29 @@ public class WorkshopManager : MonoBehaviour
             mechas[i].SetEquipment(_equipmentContainer.GetEquipment(i));
             mechas[i].SpawnParts();
         }
+    }
+
+    public void UpdateBody(BodySO body)
+    {
+        Debug.Log("update body");
+        mechas[_mechaIndex].ChangeBody(body);
+    }
+    
+    public void UpdateLeftArm(ArmSO arm)
+    {
+        Debug.Log("update l arm");
+        mechas[_mechaIndex].ChangeLeftArm(arm);
+    }
+    
+    public void UpdateRightArm(ArmSO arm)
+    {
+        Debug.Log("update r arm");
+        mechas[_mechaIndex].ChangeRightArm(arm);
+    }
+    
+    public void UpdateLegs(LegsSO legs)
+    {
+        Debug.Log("update legs");
+        mechas[_mechaIndex].ChangeLegs(legs);
     }
 }

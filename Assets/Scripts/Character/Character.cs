@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityStandardAssets.Effects;
-using Random = System.Random;
 
 [SelectionBase]
 public class Character : EnumsClass, IObservable
@@ -1486,6 +1482,7 @@ public class Character : EnumsClass, IObservable
         otherLeg.gameObject.GetComponent<BoxCollider>().enabled = false;
         switch (_unitTeam)
         {
+            //TODO: revisar por que puse un switch?
             case Team.Green:
                 _legs.CreateRightLeg(_mechaEquipment.legs.mesh[1]);
                 otherLeg.CreateLeftLeg(_mechaEquipment.legs.mesh[0]);

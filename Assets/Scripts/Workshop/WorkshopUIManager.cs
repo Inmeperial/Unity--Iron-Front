@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -55,7 +52,7 @@ public class WorkshopUIManager : MonoBehaviour
    public void UpdatePartsList(string part)
    {
       DestroyWorkshopObjects();
-      
+      var manager = FindObjectOfType<WorkshopManager>();
       switch (part)
       {
          case "Body":
@@ -63,7 +60,12 @@ public class WorkshopUIManager : MonoBehaviour
 
             foreach (var body in bodies)
             {
-               CreateWorkshopObject(body, _partsSpawnParent, _partsDescription);
+               var b =CreateWorkshopObject(body, _partsSpawnParent);
+               b.SetLeftClick(() =>
+               {
+                  _partsDescription.text = "HP: " + body.maxHP;
+                  manager.UpdateBody(body);
+               });
             }
             break;
          
@@ -71,7 +73,12 @@ public class WorkshopUIManager : MonoBehaviour
             var lArms = WorkshopDatabaseManager.Instance.GetArms();
             foreach (var arm in lArms)
             {
-               CreateWorkshopObject(arm, _partsSpawnParent, _partsDescription);
+               var a =CreateWorkshopObject(arm, _partsSpawnParent);
+               a.SetLeftClick(() =>
+               {
+                  _partsDescription.text = "HP: " + arm.maxHP;
+                  manager.UpdateLeftArm(arm);
+               });
             }
             break;
             
@@ -79,7 +86,12 @@ public class WorkshopUIManager : MonoBehaviour
             var rArms = WorkshopDatabaseManager.Instance.GetArms();
             foreach (var arm in rArms)
             {
-               CreateWorkshopObject(arm, _partsSpawnParent, _partsDescription);
+               var a =CreateWorkshopObject(arm, _partsSpawnParent);
+               a.SetLeftClick(() =>
+               {
+                  _partsDescription.text = "HP: " + arm.maxHP;
+                  manager.UpdateRightArm(arm);
+               });
             }
             break;
          
@@ -87,7 +99,12 @@ public class WorkshopUIManager : MonoBehaviour
             var legs = WorkshopDatabaseManager.Instance.GetLegs();
             foreach (var leg in legs)
             {
-               CreateWorkshopObject(leg, _partsSpawnParent, _partsDescription);
+               var l =CreateWorkshopObject(leg, _partsSpawnParent);
+               l.SetLeftClick(() =>
+               {
+                  _partsDescription.text = "HP: " + leg.maxHP;
+                  manager.UpdateLegs(leg);
+               });
             }
             break;
       }
@@ -109,7 +126,10 @@ public class WorkshopUIManager : MonoBehaviour
             foreach (var ability in abilities)
             {
                if (ability.partSlot == AbilitySO.PartSlot.Body)
-                  CreateWorkshopObject(ability, _abilitiesSpawnParent, _abilitiesDescription);
+               {
+                  var obj = CreateWorkshopObject(ability, _abilitiesSpawnParent);
+                  obj.SetLeftClick(() => _itemsDescription.text = ability.description);
+               }
             }
             
             break;
@@ -119,7 +139,10 @@ public class WorkshopUIManager : MonoBehaviour
             foreach (var ability in abilities)
             {
                if (ability.partSlot == AbilitySO.PartSlot.Arm)
-                  CreateWorkshopObject(ability, _abilitiesSpawnParent, _abilitiesDescription);
+               {
+                  var obj = CreateWorkshopObject(ability, _abilitiesSpawnParent);
+                  obj.SetLeftClick(() => _itemsDescription.text = ability.description);
+               }
             }
             break;
             
@@ -128,7 +151,10 @@ public class WorkshopUIManager : MonoBehaviour
             foreach (var ability in abilities)
             {
                if (ability.partSlot == AbilitySO.PartSlot.Arm)
-                  CreateWorkshopObject(ability, _abilitiesSpawnParent, _abilitiesDescription);
+               {
+                  var obj = CreateWorkshopObject(ability, _abilitiesSpawnParent);
+                  obj.SetLeftClick(() => _itemsDescription.text = ability.description);
+               }
             }
             
             break;
@@ -138,7 +164,11 @@ public class WorkshopUIManager : MonoBehaviour
             foreach (var ability in abilities)
             {
                if (ability.partSlot == AbilitySO.PartSlot.Legs)
-                  CreateWorkshopObject(ability, _abilitiesSpawnParent, _abilitiesDescription);
+               {
+                  var obj = CreateWorkshopObject(ability, _abilitiesSpawnParent);
+                  obj.SetLeftClick(() => _itemsDescription.text = ability.description);
+               }
+                  
             }
             break;
       }
@@ -154,30 +184,31 @@ public class WorkshopUIManager : MonoBehaviour
 
       foreach (var item in items)
       {
-         CreateWorkshopObject(item, _itemsSpawnParent, _itemsDescription);
+         var obj = CreateWorkshopObject(item, _itemsSpawnParent);
+         obj.SetLeftClick(() => _itemsDescription.text = item.description);
       }
    }
 
    
-   private void CreateWorkshopObject(PartSO part, Transform parent, TextMeshProUGUI descriptionField)
+   private WorkshopObjectButton CreateWorkshopObject(PartSO part, Transform parent)
    {
       var obj = Instantiate(_workshopObjectPrefab, parent);
       obj.transform.localPosition = Vector3.zero;
       obj.SetObjectName(part.partName);
       obj.SetObjectSprite(part.icon);
-      obj.SetLeftClick(() => descriptionField.text = "HP: " + part.maxHP);
+      
       _createdObjectButtonList.Add(obj);
+      return obj;
    }
    
-   private void CreateWorkshopObject(EquipableSO equipable, Transform parent, TextMeshProUGUI descriptionField)
+   private WorkshopObjectButton CreateWorkshopObject(EquipableSO equipable, Transform parent)
    {
       var obj = Instantiate(_workshopObjectPrefab, parent);
       obj.transform.localPosition = Vector3.zero;
       obj.SetObjectName(equipable.equipableName);
       obj.SetObjectSprite(equipable.equipableIcon);
-      //obj.SetDescriptionTextField(descriptionField);
-      obj.SetLeftClick(() => descriptionField.text = equipable.description);
       _createdObjectButtonList.Add(obj);
+      return obj;
    }
 
    private void DestroyWorkshopObjects()
