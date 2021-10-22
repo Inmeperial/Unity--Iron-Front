@@ -23,6 +23,8 @@ public abstract class Parts : MonoBehaviour
         _maxHP = data.maxHP;
         _currentHP = _maxHP;
 
+        if (!_myChar) return;
+        
         if(data.ability && data.ability.abilityPrefab)
         {
             _ability = Instantiate(data.ability.abilityPrefab, transform);

@@ -15,10 +15,12 @@ public class WorkshopManager : MonoBehaviour
     public static event ClickAction OnClickNext;
     public static event ClickAction OnClickEdit;
     public static event ClickAction OnClickCloseEdit;
-    
+
+    public WorkshopMecha[] mechas;
     private void Start()
     {
         _mechaIndex = 3;
+        SetEquipment();
     }
 
     public void PreviousButton()
@@ -52,5 +54,14 @@ public class WorkshopManager : MonoBehaviour
     public MechaEquipmentSO GetSelectedMechaEquipment()
     {
         return _equipmentContainer.GetEquipment(_mechaIndex);
+    }
+
+    private void SetEquipment()
+    {
+        for (int i = 0; i < mechas.Length; i++)
+        {
+            mechas[i].SetEquipment(_equipmentContainer.GetEquipment(i));
+            mechas[i].SpawnParts();
+        }
     }
 }

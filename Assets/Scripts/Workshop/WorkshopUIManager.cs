@@ -59,7 +59,6 @@ public class WorkshopUIManager : MonoBehaviour
       switch (part)
       {
          case "Body":
-            Debug.Log("update body list");
             var bodies = WorkshopDatabaseManager.Instance.GetBodies();
 
             foreach (var body in bodies)
@@ -69,7 +68,6 @@ public class WorkshopUIManager : MonoBehaviour
             break;
          
          case "LeftArm":
-            Debug.Log("update left list");
             var lArms = WorkshopDatabaseManager.Instance.GetArms();
             foreach (var arm in lArms)
             {
@@ -78,7 +76,6 @@ public class WorkshopUIManager : MonoBehaviour
             break;
             
          case "RightArm":
-            Debug.Log("update right list");
             var rArms = WorkshopDatabaseManager.Instance.GetArms();
             foreach (var arm in rArms)
             {
@@ -87,7 +84,6 @@ public class WorkshopUIManager : MonoBehaviour
             break;
          
          case "Legs":
-            Debug.Log("update legs list");
             var legs = WorkshopDatabaseManager.Instance.GetLegs();
             foreach (var leg in legs)
             {
@@ -109,8 +105,7 @@ public class WorkshopUIManager : MonoBehaviour
       {
             
          case "Body":
-            Debug.Log("update body abilities list");
-            
+
             foreach (var ability in abilities)
             {
                if (ability.partSlot == AbilitySO.PartSlot.Body)
@@ -120,8 +115,7 @@ public class WorkshopUIManager : MonoBehaviour
             break;
          
          case "LeftArm":
-            Debug.Log("update left abilities list");
-            
+
             foreach (var ability in abilities)
             {
                if (ability.partSlot == AbilitySO.PartSlot.Arm)
@@ -130,8 +124,7 @@ public class WorkshopUIManager : MonoBehaviour
             break;
             
          case "RightArm":
-            Debug.Log("update right abilities list");
-            
+
             foreach (var ability in abilities)
             {
                if (ability.partSlot == AbilitySO.PartSlot.Arm)
@@ -141,8 +134,7 @@ public class WorkshopUIManager : MonoBehaviour
             break;
          
          case "Legs":
-            Debug.Log("update legs abilities list");
-            
+
             foreach (var ability in abilities)
             {
                if (ability.partSlot == AbilitySO.PartSlot.Legs)
@@ -158,12 +150,10 @@ public class WorkshopUIManager : MonoBehaviour
    {
       DestroyWorkshopObjects();
       
-      Debug.Log("update items list");
       var items = WorkshopDatabaseManager.Instance.GetItems();
 
       foreach (var item in items)
       {
-         Debug.Log("creo item");
          CreateWorkshopObject(item, _itemsSpawnParent, _itemsDescription);
       }
    }
@@ -175,14 +165,12 @@ public class WorkshopUIManager : MonoBehaviour
       obj.transform.localPosition = Vector3.zero;
       obj.SetObjectName(part.partName);
       obj.SetObjectSprite(part.icon);
-      //obj.SetDescriptionTextField(descriptionField);
       obj.SetLeftClick(() => descriptionField.text = "HP: " + part.maxHP);
       _createdObjectButtonList.Add(obj);
    }
    
    private void CreateWorkshopObject(EquipableSO equipable, Transform parent, TextMeshProUGUI descriptionField)
    {
-      Debug.Log("creo item 2");
       var obj = Instantiate(_workshopObjectPrefab, parent);
       obj.transform.localPosition = Vector3.zero;
       obj.SetObjectName(equipable.equipableName);
@@ -191,17 +179,6 @@ public class WorkshopUIManager : MonoBehaviour
       obj.SetLeftClick(() => descriptionField.text = equipable.description);
       _createdObjectButtonList.Add(obj);
    }
-   
-   // private void CreateWorkshopObject(ItemSO item, Transform parent, TextMeshProUGUI descriptionField)
-   // {
-   //    var obj = Instantiate(_workshopObjectPrefab, parent);
-   //    obj.transform.localPosition = Vector3.zero;
-   //    obj.SetObjectName(item.equipableName);
-   //    obj.SetObjectSprite(item.equipableIcon);
-   //    //obj.SetDescriptionTextField(descriptionField);
-   //    obj.SetLeftClick(() => descriptionField.text = item.description);
-   //    _createdObjectButtonList.Add(obj);
-   // }
 
    private void DestroyWorkshopObjects()
    {
