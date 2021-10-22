@@ -102,26 +102,39 @@ public class WorkshopMecha : MonoBehaviour
         _body = body.gameObject;
     }
     
-    public void ChangeLeftArm(ArmSO newArm)
+    public void ChangeLeftGun(GunSO newGun)
     {
-        if (_leftArm) Destroy(_leftArm);
+        // if (_leftArm) Destroy(_leftArm);
+        //
+        // var arm = Instantiate(newArm.prefab, _leftArmSpawnPosition);
+        // arm.transform.localPosition = Vector3.zero;
+        // arm.SetPart(newArm);
+        // arm.SetRightOrLeft("Left");
+        // _leftArm = arm.gameObject;
         
-        var arm = Instantiate(newArm.prefab, _leftArmSpawnPosition);
-        arm.transform.localPosition = Vector3.zero;
-        arm.SetPart(newArm);
-        arm.SetRightOrLeft("Left");
-        _leftArm = arm.gameObject;
+        if (_leftGun) Destroy(_leftGun);
+        
+        var gun = Instantiate(newGun.prefab, _leftGunSpawn);
+        gun.transform.localPosition = Vector3.zero;
+        gun.SetRightOrLeft("Left");
+        _leftGun = gun.gameObject;
     }
     
-    public void ChangeRightArm(ArmSO newArm)
+    public void ChangeRightGun(GunSO newGun)
     {
-        if (_rightArm) Destroy(_rightArm);
+        // if (_rightArm) Destroy(_rightArm);
+        //
+        // var arm = Instantiate(newArm.prefab, _rightArmSpawnPosition);
+        // arm.transform.localPosition = Vector3.zero;
+        // arm.SetPart(newArm);
+        // arm.SetRightOrLeft("Right");
+        // _rightArm = arm.gameObject;
+        if (_rightGun) Destroy(_rightGun);
         
-        var arm = Instantiate(newArm.prefab, _rightArmSpawnPosition);
-        arm.transform.localPosition = Vector3.zero;
-        arm.SetPart(newArm);
-        arm.SetRightOrLeft("Right");
-        _rightArm = arm.gameObject;
+        var gun = Instantiate(newGun.prefab, _rightGunSpawn);
+        gun.transform.localPosition = Vector3.zero;
+        gun.SetRightOrLeft("Right");
+        _rightGun = gun.gameObject;
     }
     
     public void ChangeLegs(LegsSO newLegs)

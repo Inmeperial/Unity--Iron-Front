@@ -70,27 +70,36 @@ public class WorkshopUIManager : MonoBehaviour
             break;
          
          case "LeftArm":
-            var lArms = WorkshopDatabaseManager.Instance.GetArms();
-            foreach (var arm in lArms)
+            var gunsA = WorkshopDatabaseManager.Instance.GetGuns();
+            foreach (var gun in gunsA)
             {
-               var a =CreateWorkshopObject(arm, _partsSpawnParent);
+               var a =CreateWorkshopObject(gun, _partsSpawnParent);
                a.SetLeftClick(() =>
                {
-                  _partsDescription.text = "HP: " + arm.maxHP;
-                  manager.UpdateLeftArm(arm);
+                  _partsDescription.text = "Damage: " + gun.damage +
+                                           "\n HitChance:" + gun.hitChance +
+                                           "\n Crit Multiplier: " + gun.critMultiplier +
+                                           "\n Crit Chance: " + gun.critChance +
+                                           "\n Attack Range: " + gun.attackRange;
+                                           
+                  manager.UpdateLeftGun(gun);
                });
             }
             break;
             
          case "RightArm":
-            var rArms = WorkshopDatabaseManager.Instance.GetArms();
-            foreach (var arm in rArms)
+            var gunsB = WorkshopDatabaseManager.Instance.GetGuns();
+            foreach (var gun in gunsB)
             {
-               var a =CreateWorkshopObject(arm, _partsSpawnParent);
+               var a =CreateWorkshopObject(gun, _partsSpawnParent);
                a.SetLeftClick(() =>
                {
-                  _partsDescription.text = "HP: " + arm.maxHP;
-                  manager.UpdateRightArm(arm);
+                  _partsDescription.text = "Damage: " + gun.damage +
+                                           "\n HitChance:" + gun.hitChance +
+                                           "\n Crit Multiplier: " + gun.critMultiplier +
+                                           "\n Crit Chance: " + gun.critChance +
+                                           "\n Attack Range: " + gun.attackRange;
+                  manager.UpdateRightGun(gun);
                });
             }
             break;
@@ -196,6 +205,17 @@ public class WorkshopUIManager : MonoBehaviour
       obj.transform.localPosition = Vector3.zero;
       obj.SetObjectName(part.partName);
       obj.SetObjectSprite(part.icon);
+      
+      _createdObjectButtonList.Add(obj);
+      return obj;
+   }
+   
+   private WorkshopObjectButton CreateWorkshopObject(GunSO gun, Transform parent)
+   {
+      var obj = Instantiate(_workshopObjectPrefab, parent);
+      obj.transform.localPosition = Vector3.zero;
+      obj.SetObjectName(gun.gunName);
+      obj.SetObjectSprite(gun.gunImage);
       
       _createdObjectButtonList.Add(obj);
       return obj;

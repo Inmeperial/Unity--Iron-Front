@@ -81,14 +81,14 @@ public class WorkshopManager : MonoBehaviour
         mechas[_mechaIndex].ChangeBody(body);
     }
     
-    public void UpdateLeftArm(ArmSO arm)
+    public void UpdateLeftGun(GunSO gun)
     {
-        mechas[_mechaIndex].ChangeLeftArm(arm);
+        mechas[_mechaIndex].ChangeLeftGun(gun);
     }
     
-    public void UpdateRightArm(ArmSO arm)
+    public void UpdateRightGun(GunSO gun)
     {
-        mechas[_mechaIndex].ChangeRightArm(arm);
+        mechas[_mechaIndex].ChangeRightGun(gun);
     }
     
     public void UpdateLegs(LegsSO legs)

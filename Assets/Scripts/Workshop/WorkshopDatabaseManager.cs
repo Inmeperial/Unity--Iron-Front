@@ -30,6 +30,11 @@ public class WorkshopDatabaseManager : MonoBehaviour
         return _objectsDatabase.legsList;
     }
 
+    public List<GunSO> GetGuns()
+    {
+        return _objectsDatabase.gunsList;
+    }
+
     public List<AbilitySO> GetAbilities()
     {
         return _objectsDatabase.abilitiesList;
