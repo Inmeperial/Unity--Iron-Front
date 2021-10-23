@@ -13,7 +13,6 @@ public class Flamethrower : Ability
     [SerializeField] private Material lineMaterial;
     private TileHighlight _highlight;
     private Vector3 _position;
-    private Vector3 _debbugDir;
     private Vector3 _mouseDir;
     private Vector3 _facingDir;
     private Camera _mainCam;
@@ -49,38 +48,26 @@ public class Flamethrower : Ability
 	{
         //Consigo las direcciones
         Ray ray = _mainCam.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit raycastHit))
+        if(Physics.Raycast(ray, out RaycastHit raycastHit, 1000, gridMask))
 		{
             _mouseDir = raycastHit.point;
 		}
         _facingDir = (_mouseDir - _position);
 
-        //Pinto los tiles que esten en el area de ataque
-        /*var tiles = Physics.OverlapSphere(_position, range, gridMask);
-        foreach (var item in tiles)
-        {
-            var tempTile = item.GetComponent<Tile>();
-            if (!tempTile) continue;
-            if (Vector3.Angle(_facingDir, (item.transform.position - _position)) > angle / 2)
-            {
-                PaintAndClearTile(tempTile);
-                continue;
-            }
-            Debug.Log("Painting Tile");
-            PaintAndClearTile(tempTile);
-        }*/
-
+        var dir = _facingDir.normalized;
+        dir.y = 0;
+        
         //Pongo los vertices del line renderer para mostrar el area donde esta el ataque.
         _lineRenderer.SetPosition(0, _position);//Necesary
-        _lineRenderer.SetPosition(1, _position + Quaternion.Euler(0, angle / 2, 0) * _facingDir.normalized * range);//Necesary
-        _lineRenderer.SetPosition(2, _position + Quaternion.Euler(0, angle / 3, 0) * _facingDir.normalized * range);
-        _lineRenderer.SetPosition(3, _position + Quaternion.Euler(0, angle / 4, 0) * _facingDir.normalized * range);
-        _lineRenderer.SetPosition(4, _position + Quaternion.Euler(0, angle / 5, 0) * _facingDir.normalized * range);
-        _lineRenderer.SetPosition(5, _position + _facingDir.normalized * range);
-        _lineRenderer.SetPosition(6, _position + Quaternion.Euler(0, -angle / 5, 0) * _facingDir.normalized * range);
-        _lineRenderer.SetPosition(7, _position + Quaternion.Euler(0, -angle / 4, 0) * _facingDir.normalized * range);
-        _lineRenderer.SetPosition(8, _position + Quaternion.Euler(0, -angle / 3, 0) * _facingDir.normalized * range);
-        _lineRenderer.SetPosition(9, _position + Quaternion.Euler(0, -angle / 2, 0) * _facingDir.normalized * range);//Necesary
+		_lineRenderer.SetPosition(1, _position + Quaternion.Euler(0, angle / 2, 0) * dir * range);//Necesary
+		_lineRenderer.SetPosition(2, _position + Quaternion.Euler(0, angle / 3, 0) * dir * range);
+		_lineRenderer.SetPosition(3, _position + Quaternion.Euler(0, angle / 4, 0) * dir * range);
+		_lineRenderer.SetPosition(4, _position + Quaternion.Euler(0, angle / 5, 0) * dir * range);
+		_lineRenderer.SetPosition(5, _position + dir * range);
+		_lineRenderer.SetPosition(6, _position + Quaternion.Euler(0, -angle / 5, 0) * dir * range);
+		_lineRenderer.SetPosition(7, _position + Quaternion.Euler(0, -angle / 4, 0) * dir * range);
+		_lineRenderer.SetPosition(8, _position + Quaternion.Euler(0, -angle / 3, 0) * dir * range);
+		_lineRenderer.SetPosition(9, _position + Quaternion.Euler(0, -angle / 2, 0) * dir * range);//Necesary
         _lineRenderer.SetPosition(10, _position);//Necesary
 
 
