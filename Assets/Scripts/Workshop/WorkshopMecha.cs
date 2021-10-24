@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 
 public class WorkshopMecha : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class WorkshopMecha : MonoBehaviour
         body.transform.localPosition = Vector3.zero;
         body.SetPart(_equipment.body);
         _body = body.gameObject;
-        
+
         var leftArm = Instantiate(_equipment.leftArm.prefab, _leftArmSpawnPosition);
 
         leftArm.transform.localPosition = Vector3.zero;

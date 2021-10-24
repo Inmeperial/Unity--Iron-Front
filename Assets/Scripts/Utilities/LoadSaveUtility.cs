@@ -15,7 +15,10 @@ public static class LoadSaveUtility
     /// <returns>Returns the loaded equipment if found, else returns the same equipment.</returns>
     public static MechaEquipmentContainerSO LoadEquipment(MechaEquipmentContainerSO equipmentContainer)
     {
-        if (!File.Exists(string.Concat(Application.dataPath, _savePath))) return equipmentContainer;
+        if (!File.Exists(string.Concat(Application.dataPath, _savePath)))
+        {
+            return equipmentContainer;
+        }
 
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream file = File.Open(string.Concat(Application.dataPath, _savePath), FileMode.Open);
@@ -26,19 +29,15 @@ public static class LoadSaveUtility
         //Separates the string in an array to have each equipment
         char[] separator = {'|'};
         string[] allEquipments = save.Split(separator);
-
+        
         //Length-1 because the last element of the array is an empty string
         for (int i = 0; i < allEquipments.Length-1; i++)
         {
-            var equipmentToOverwrite = equipmentContainer.equipments[i];
             var savedEquipment = allEquipments[i];
             
             //Overwrites the equipment with the saved one
-            JsonUtility.FromJsonOverwrite(savedEquipment, equipmentToOverwrite);
-
-            equipmentContainer.equipments[i] = equipmentToOverwrite;
+            JsonUtility.FromJsonOverwrite(savedEquipment, equipmentContainer.equipments[i]);
         }
-        //JsonUtility.FromJsonOverwrite(formatter.Deserialize(file).ToString(), _equipmentContainer);
         file.Close();
         return equipmentContainer;
     }
