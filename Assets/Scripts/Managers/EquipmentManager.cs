@@ -10,8 +10,7 @@ public class EquipmentManager : MonoBehaviour
     {
         var chars = FindObjectsOfType<Character>();
 
-        LoadSaveUtility.LoadEquipment(_equipmentContainer);
-
+        _equipmentContainer = LoadSaveUtility.LoadEquipment(_equipmentContainer);
         List<Character> green = new List<Character>();
         foreach (var c in chars)
         {

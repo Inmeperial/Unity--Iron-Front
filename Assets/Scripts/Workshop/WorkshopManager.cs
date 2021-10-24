@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WorkshopManager : MonoBehaviour
 {
@@ -39,6 +40,11 @@ public class WorkshopManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             NextButton();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("TEST NUEVO PREFAB");
+        }
     }
 
     public void PreviousButton()
@@ -78,7 +84,7 @@ public class WorkshopManager : MonoBehaviour
 
     private void SetEquipment()
     {
-        LoadSaveUtility.LoadEquipment(_equipmentContainer);
+        _equipmentContainer = LoadSaveUtility.LoadEquipment(_equipmentContainer);
         for (int i = 0; i < mechas.Length; i++)
         {
             mechas[i].SetEquipment(_equipmentContainer.GetEquipment(i));

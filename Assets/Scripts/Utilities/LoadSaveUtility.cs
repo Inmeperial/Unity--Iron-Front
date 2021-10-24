@@ -15,7 +15,7 @@ public static class LoadSaveUtility
     /// <returns>Returns the loaded equipment if found, else returns the same equipment.</returns>
     public static MechaEquipmentContainerSO LoadEquipment(MechaEquipmentContainerSO equipmentContainer)
     {
-        if (!File.Exists(string.Concat(Application.dataPath, "_savePath"))) return equipmentContainer;
+        if (!File.Exists(string.Concat(Application.dataPath, _savePath))) return equipmentContainer;
 
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream file = File.Open(string.Concat(Application.dataPath, _savePath), FileMode.Open);
