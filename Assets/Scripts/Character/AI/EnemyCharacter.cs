@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class EnemyCharacter : Character
 {
-    [Header("AI")]
+    [Header("AI")] 
+    [SerializeField] private MechaEquipmentSO _equipment;
     private BehaviorExecutor _behaviorExecutor;
     private Character _closestEnemy;
     [SerializeField] private float _delayAfterAction;
@@ -14,9 +15,9 @@ public class EnemyCharacter : Character
 
     private CameraMovement _camera;
     
-    protected override void Awake()
+    public override void ManualAwake()
     {
-        base.Awake();
+        base.ManualAwake();
 
         _camera = FindObjectOfType<CameraMovement>();
         _behaviorExecutor = GetComponent<BehaviorExecutor>();
@@ -274,5 +275,12 @@ public class EnemyCharacter : Character
         yield return new WaitForSeconds(time);
         
         OnEndAction();
+    }
+
+    protected override void ConfigureMecha()
+    {
+        if (!_mechaEquipment)
+            _mechaEquipment = _equipment;
+        base.ConfigureMecha();
     }
 }

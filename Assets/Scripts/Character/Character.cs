@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,7 +17,7 @@ public class Character : EnumsClass, IObservable
     [SerializeField] protected Transform _raycastToTile;
     //STATS
     
-    [SerializeField] protected MechaEquipmentSO _mechaEquipment;
+    protected MechaEquipmentSO _mechaEquipment;
     public bool gunsOffOnCloseUp;
     
     [Header("Team")]
@@ -118,7 +119,7 @@ public class Character : EnumsClass, IObservable
     
     protected List<Equipable> _equipables = new List<Equipable>();
     
-    protected virtual void Awake()
+    public virtual void ManualAwake()
     {
         transform.position = new Vector3(transform.position.x, 4f, transform.position.z);
 
@@ -146,14 +147,12 @@ public class Character : EnumsClass, IObservable
         #endregion
 
         highlight = FindObjectOfType<TileHighlight>();
-
-        
-        ConfigureMecha();
     }
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    public virtual void ManualStart()
     {
+        ConfigureMecha();
         Subscribe(TurnManager.Instance);
         _canMove = _legs.GetCurrentHp() > 0;
         _currentSteps = _canMove ? _legs.GetMaxSteps() : 0;
@@ -171,6 +170,7 @@ public class Character : EnumsClass, IObservable
 
         _bodyTransform = _body.transform;
         _legsTransform = _legs.transform;
+        
     }
 
     // Update is called once per frame
@@ -1413,11 +1413,16 @@ public class Character : EnumsClass, IObservable
     // }
 
     #endregion
-    
-    private void ConfigureMecha()
+
+    public void SetEquipment(MechaEquipmentSO equipment)
+    {
+        _mechaEquipment = equipment;
+        Debug.Log("set equipment: " + _mechaEquipment.name);
+    }
+    protected virtual void ConfigureMecha()
     {
         if (!_mechaEquipment) return;
-        
+
         _myName = _mechaEquipment.name;
 
         _body = Instantiate(_mechaEquipment.body.prefab, _bodySpawnPosition);

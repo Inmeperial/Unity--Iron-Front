@@ -33,7 +33,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
     public static TurnManager Instance;
 
-    private void Awake()
+    public void ManualAwake()
     {
         _cameraMovement = FindObjectOfType<CameraMovement>();
         Character[] units = FindObjectsOfType<Character>();
@@ -51,7 +51,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         }
     }
 
-    private void Start()
+    public void ManualStart()
     {
         SeparateByTeam(_allUnits);
         _highlight = FindObjectOfType<TileHighlight>();
