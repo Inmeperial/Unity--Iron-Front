@@ -1,7 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine;
 
 public class WorkshopManager : MonoBehaviour
 {
+    [SerializeField] private string _savePath;
     [SerializeField] private Transform[] _mechas;
     [SerializeField] private MechaEquipmentContainerSO _equipmentContainer;
     
@@ -15,11 +21,16 @@ public class WorkshopManager : MonoBehaviour
     public static event ClickAction OnClickCloseEdit;
     
     public WorkshopMecha[] mechas;
+
+    private void Awake()
+    {
+        SetEquipment();
+    }
+
     private void Start()
     {
         _isEditing = false;
         _mechaIndex = 3;
-        SetEquipment();
     }
 
     private void Update()
@@ -69,6 +80,7 @@ public class WorkshopManager : MonoBehaviour
 
     private void SetEquipment()
     {
+        Load();
         for (int i = 0; i < mechas.Length; i++)
         {
             mechas[i].SetEquipment(_equipmentContainer.GetEquipment(i));
@@ -79,20 +91,91 @@ public class WorkshopManager : MonoBehaviour
     public void UpdateBody(BodySO body)
     {
         mechas[_mechaIndex].ChangeBody(body);
+        _equipmentContainer.equipments[_mechaIndex].body = body;
+        Save();
     }
     
     public void UpdateLeftGun(GunSO gun)
     {
         mechas[_mechaIndex].ChangeLeftGun(gun);
+        _equipmentContainer.equipments[_mechaIndex].leftGun = gun;
+        Save();
     }
     
     public void UpdateRightGun(GunSO gun)
     {
         mechas[_mechaIndex].ChangeRightGun(gun);
+        _equipmentContainer.equipments[_mechaIndex].rightGun = gun;
+        Save();
     }
     
     public void UpdateLegs(LegsSO legs)
     {
         mechas[_mechaIndex].ChangeLegs(legs);
+        _equipmentContainer.equipments[_mechaIndex].legs = legs;
+        Save();
+    }
+
+    void Save()
+    {
+        Debug.Log("save");
+        int amount = _equipmentContainer.equipments.Count;
+        
+        //Array to save al equipments
+        string equipmentSaves = "";
+
+        //Converts al equipments to json/string
+        for (int i = 0; i < amount; i++)
+        {
+            if (i != 0)
+            {
+                equipmentSaves += JsonUtility.ToJson(_equipmentContainer.equipments[i], true);
+                equipmentSaves += '|';
+            }
+            else
+            {
+                equipmentSaves = JsonUtility.ToJson(_equipmentContainer.equipments[i], true);
+                equipmentSaves += '|';
+            }
+            
+        }
+        
+
+        BinaryFormatter formatter = new BinaryFormatter();
+        
+        FileStream file = File.Create(string.Concat(Application.dataPath, _savePath));
+        
+        //Serializes the string of equipments
+        formatter.Serialize(file, equipmentSaves);
+        file.Close();
+    }
+
+    void Load()
+    {
+        if (!File.Exists(string.Concat(Application.dataPath, _savePath))) return;
+        
+        Debug.Log("load");
+        
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file = File.Open(string.Concat(Application.dataPath, _savePath), FileMode.Open);
+        
+        //Get the string of equipments
+        string save = formatter.Deserialize(file).ToString();
+
+        //Separates the string in an array to have each equipment
+        char[] separator = {'|'};
+        string[] allEquipments = save.Split(separator);
+
+        //Length-1 because the last element of the array is an empty string
+        for (int i = 0; i < allEquipments.Length-1; i++)
+        {
+            var equipmentToOverwrite = _equipmentContainer.equipments[i];
+            var savedEquipment = allEquipments[i];
+            
+            //Overwrites the equipment with the saved one
+            JsonUtility.FromJsonOverwrite(savedEquipment, equipmentToOverwrite);
+        }
+        //JsonUtility.FromJsonOverwrite(formatter.Deserialize(file).ToString(), _equipmentContainer);
+        file.Close();
     }
 }
