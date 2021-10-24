@@ -8,7 +8,6 @@ using System.IO;
 [CreateAssetMenu(fileName = "Equipment", menuName = "Create Equipment")]
 public class MechaEquipmentSO : ScriptableObject
 {
-    public string savePath;
     [SerializeField] private ObjectsDatabase _objectsDatabase;
     public string name;
     public BodySO body;
@@ -18,39 +17,39 @@ public class MechaEquipmentSO : ScriptableObject
     public GunSO rightGun;
     public LegsSO legs;
 
-    public void AddBody(int partID)
-    {
-        var part = _objectsDatabase.bodiesSO[partID];
-        body = part;
-    }
-    
-    public void AddArm(int partID, bool isLeft)
-    {
-        var part = _objectsDatabase.armsSO[partID];
-        if (isLeft)
-        {
-            leftArm = part;
-        }
-
-        else
-        {
-            rightArm = part;
-        }
-    }
-
-    public void AddLegs(int partID)
-    {
-        var part = _objectsDatabase.legsSO[partID];
-        legs = part;
-    }
-
-    public void AddGun(int gunID, bool isLeft)
-    {
-        var gun = _objectsDatabase.gunSO[gunID];
-        if (isLeft)
-            leftGun = gun;
-        else rightGun = gun;
-    }
+    // public void AddBody(int partID)
+    // {
+    //     var part = _objectsDatabase.bodiesSO[partID];
+    //     body = part;
+    // }
+    //
+    // public void AddArm(int partID, bool isLeft)
+    // {
+    //     var part = _objectsDatabase.armsSO[partID];
+    //     if (isLeft)
+    //     {
+    //         leftArm = part;
+    //     }
+    //
+    //     else
+    //     {
+    //         rightArm = part;
+    //     }
+    // }
+    //
+    // public void AddLegs(int partID)
+    // {
+    //     var part = _objectsDatabase.legsSO[partID];
+    //     legs = part;
+    // }
+    //
+    // public void AddGun(int gunID, bool isLeft)
+    // {
+    //     var gun = _objectsDatabase.gunSO[gunID];
+    //     if (isLeft)
+    //         leftGun = gun;
+    //     else rightGun = gun;
+    // }
     
     private void OnEnable()
     {
@@ -62,23 +61,5 @@ public class MechaEquipmentSO : ScriptableObject
         _objectsDatabase = Resources.Load<ObjectsDatabase>("Database/Database");
     }
     
-    public void Save()
-    {
-        string saveData = JsonUtility.ToJson(this, true);
-        BinaryFormatter formatter = new BinaryFormatter();
-        
-        FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
-        formatter.Serialize(file, saveData);
-        file.Close();
-    }
-
-    public void Load()
-    {
-        if (!File.Exists(string.Concat(Application.persistentDataPath, savePath))) return;
-        
-        BinaryFormatter formatter = new BinaryFormatter();
-        FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
-        JsonUtility.FromJsonOverwrite(formatter.Deserialize(file).ToString(), this);
-        file.Close();
-    }
+    
 }

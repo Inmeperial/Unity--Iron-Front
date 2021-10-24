@@ -13,6 +13,11 @@ public class WorkshopDatabaseManager : MonoBehaviour
             Instance = this;
         }
         else Destroy(this);
+
+        if (!_objectsDatabase)
+        {
+            LoadDatabase();
+        }
     }
 
     public List<BodySO> GetBodies()
@@ -43,5 +48,10 @@ public class WorkshopDatabaseManager : MonoBehaviour
     public List<ItemSO> GetItems()
     {
         return _objectsDatabase.itemsList;
+    }
+
+    void LoadDatabase()
+    {
+        _objectsDatabase = Resources.Load<ObjectsDatabase>("Database/Database");
     }
 }

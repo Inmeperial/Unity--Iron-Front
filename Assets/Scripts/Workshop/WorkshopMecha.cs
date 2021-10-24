@@ -104,14 +104,6 @@ public class WorkshopMecha : MonoBehaviour
     
     public void ChangeLeftGun(GunSO newGun)
     {
-        // if (_leftArm) Destroy(_leftArm);
-        //
-        // var arm = Instantiate(newArm.prefab, _leftArmSpawnPosition);
-        // arm.transform.localPosition = Vector3.zero;
-        // arm.SetPart(newArm);
-        // arm.SetRightOrLeft("Left");
-        // _leftArm = arm.gameObject;
-        
         if (_leftGun) Destroy(_leftGun);
         
         var gun = Instantiate(newGun.prefab, _leftGunSpawn);
@@ -122,13 +114,6 @@ public class WorkshopMecha : MonoBehaviour
     
     public void ChangeRightGun(GunSO newGun)
     {
-        // if (_rightArm) Destroy(_rightArm);
-        //
-        // var arm = Instantiate(newArm.prefab, _rightArmSpawnPosition);
-        // arm.transform.localPosition = Vector3.zero;
-        // arm.SetPart(newArm);
-        // arm.SetRightOrLeft("Right");
-        // _rightArm = arm.gameObject;
         if (_rightGun) Destroy(_rightGun);
         
         var gun = Instantiate(newGun.prefab, _rightGunSpawn);
