@@ -17,7 +17,7 @@ public class Character : EnumsClass, IObservable
     [SerializeField] protected Transform _raycastToTile;
     //STATS
     
-    protected MechaEquipmentSO _mechaEquipment;
+    [SerializeField] protected MechaEquipmentSO _mechaEquipment;
     public bool gunsOffOnCloseUp;
     
     [Header("Team")]
@@ -1417,7 +1417,6 @@ public class Character : EnumsClass, IObservable
     public void SetEquipment(MechaEquipmentSO equipment)
     {
         _mechaEquipment = equipment;
-        Debug.Log("set equipment: " + _mechaEquipment.name);
     }
     protected virtual void ConfigureMecha()
     {

@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class WorkshopManager : MonoBehaviour
 {
-    [SerializeField] private string _savePath;
-    [SerializeField] private Transform[] _mechas;
     [SerializeField] private MechaEquipmentContainerSO _equipmentContainer;
     
     private int _mechaIndex;
@@ -50,7 +48,7 @@ public class WorkshopManager : MonoBehaviour
     public void PreviousButton()
     {
         if (_mechaIndex == 0)
-            _mechaIndex = _mechas.Length-1;
+            _mechaIndex = mechas.Length-1;
         else _mechaIndex--;
 
         OnClickPrevious?.Invoke(_mechaIndex);
@@ -58,7 +56,7 @@ public class WorkshopManager : MonoBehaviour
     
     public void NextButton()
     {
-        if (_mechaIndex >= _mechas.Length - 1)
+        if (_mechaIndex >= mechas.Length - 1)
             _mechaIndex = 0;
         else _mechaIndex++;
         
@@ -77,17 +75,35 @@ public class WorkshopManager : MonoBehaviour
         OnClickCloseEdit?.Invoke(_mechaIndex);
     }
 
-    public MechaEquipmentSO GetSelectedMechaEquipment()
+    public MechaEquipmentSO GetMechaEquipment(int index)
     {
-        return _equipmentContainer.GetEquipment(_mechaIndex);
+        return mechas[index].GetEquipment();
     }
 
     private void SetEquipment()
     {
-        _equipmentContainer = LoadSaveUtility.LoadEquipment(_equipmentContainer);
+        var loadedEquipment = LoadSaveUtility.LoadEquipment();
+        MechaEquipmentContainerSO equipmentToUse = null;
+
+        if (loadedEquipment == null)
+        {
+            equipmentToUse = ScriptableObject.Instantiate(_equipmentContainer);
+            for (int i = 0; i < _equipmentContainer.equipments.Count; i++)
+            {
+                equipmentToUse.equipments[i] = ScriptableObject.Instantiate(_equipmentContainer.equipments[i]);
+                _equipmentContainer = equipmentToUse;
+            }
+        }
+        else
+        {
+            _equipmentContainer = loadedEquipment;
+            equipmentToUse = loadedEquipment;
+        }
+
+        Debug.Log("eqip: " + _equipmentContainer.name);
         for (int i = 0; i < mechas.Length; i++)
         {
-            mechas[i].SetEquipment(_equipmentContainer.GetEquipment(i));
+            mechas[i].SetEquipment(equipmentToUse.GetEquipment(i));
             mechas[i].SpawnParts();
         }
     }
@@ -95,6 +111,7 @@ public class WorkshopManager : MonoBehaviour
     public void UpdateBody(BodySO body)
     {
         mechas[_mechaIndex].ChangeBody(body);
+        
         _equipmentContainer.equipments[_mechaIndex].body = body;
         LoadSaveUtility.SaveEquipment(_equipmentContainer);
     }

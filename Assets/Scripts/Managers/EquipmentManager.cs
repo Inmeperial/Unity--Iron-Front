@@ -10,7 +10,24 @@ public class EquipmentManager : MonoBehaviour
     {
         var chars = FindObjectsOfType<Character>();
 
-        _equipmentContainer = LoadSaveUtility.LoadEquipment(_equipmentContainer);
+        var loadedEquipment = LoadSaveUtility.LoadEquipment();
+        MechaEquipmentContainerSO equipmentToUse = null;
+
+        if (loadedEquipment == null)
+        {
+            equipmentToUse = ScriptableObject.Instantiate(_equipmentContainer);
+            for (int i = 0; i < _equipmentContainer.equipments.Count; i++)
+            {
+                equipmentToUse.equipments[i] = ScriptableObject.Instantiate(_equipmentContainer.equipments[i]);
+                _equipmentContainer = equipmentToUse;
+            }
+        }
+        else
+        {
+            _equipmentContainer = loadedEquipment;
+            equipmentToUse = loadedEquipment;
+        }
+        
         List<Character> green = new List<Character>();
         foreach (var c in chars)
         {
@@ -19,10 +36,10 @@ public class EquipmentManager : MonoBehaviour
                 green.Add(c);
             }
         }
-
+        
         for (int i = 0; i < green.Count; i++)
         {
-            var equipment = _equipmentContainer.GetEquipment(i);
+            var equipment = equipmentToUse.GetEquipment(i);
             green[i].SetEquipment(equipment);
         }
     }

@@ -13,11 +13,11 @@ public static class LoadSaveUtility
     /// </summary>
     /// <param name="equipmentContainer">The equipment to overwrite with the loaded files.</param>
     /// <returns>Returns the loaded equipment if found, else returns the same equipment.</returns>
-    public static MechaEquipmentContainerSO LoadEquipment(MechaEquipmentContainerSO equipmentContainer)
+    public static MechaEquipmentContainerSO LoadEquipment()
     {
         if (!File.Exists(string.Concat(Application.dataPath, _savePath)))
         {
-            return equipmentContainer;
+            return null;
         }
 
         BinaryFormatter formatter = new BinaryFormatter();
@@ -29,17 +29,21 @@ public static class LoadSaveUtility
         //Separates the string in an array to have each equipment
         char[] separator = {'|'};
         string[] allEquipments = save.Split(separator);
-        
+
+        MechaEquipmentContainerSO newContainer = ScriptableObject.CreateInstance<MechaEquipmentContainerSO>();
+        newContainer.name = "es el del load";
+        newContainer.equipments = new List<MechaEquipmentSO>();
         //Length-1 because the last element of the array is an empty string
         for (int i = 0; i < allEquipments.Length-1; i++)
         {
             var savedEquipment = allEquipments[i];
-            
+            MechaEquipmentSO newEquipment = ScriptableObject.CreateInstance<MechaEquipmentSO>();
             //Overwrites the equipment with the saved one
-            JsonUtility.FromJsonOverwrite(savedEquipment, equipmentContainer.equipments[i]);
+            JsonUtility.FromJsonOverwrite(savedEquipment, newEquipment);
+            newContainer.equipments.Add(newEquipment);
         }
         file.Close();
-        return equipmentContainer;
+        return newContainer;
     }
     
     /// <summary>

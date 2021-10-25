@@ -5,11 +5,7 @@ using UnityEngine.UI;
 
 public class WorkshopUIManager : MonoBehaviour
 {
-   
-   
-   
    [Header("Overview Texts")]
-   [SerializeField] private MechaEquipmentContainerSO _equipmentContainer;
    [SerializeField] private TextMeshProUGUI _overviewBody;
    [SerializeField] private TextMeshProUGUI _overviewLeftArm;
    [SerializeField] private TextMeshProUGUI _overviewRightArm;
@@ -42,7 +38,7 @@ public class WorkshopUIManager : MonoBehaviour
 
    private void UpdateOverviewText(int mechaIndex)
    {
-      var equipmentData = _equipmentContainer.GetEquipment(mechaIndex);
+      var equipmentData = FindObjectOfType<WorkshopManager>().GetMechaEquipment(mechaIndex);
       _overviewBody.text = "Body: \n" + equipmentData.body.partName;
       _overviewLeftArm.text = "Left Arm: \n" + equipmentData.leftArm.partName;
       _overviewRightArm.text = "Right Arm: \n" + equipmentData.rightArm.partName;

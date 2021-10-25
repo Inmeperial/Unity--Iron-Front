@@ -1,9 +1,10 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class WorkshopMecha : MonoBehaviour
 {
-    private MechaEquipmentSO _equipment;
+    [SerializeField] private MechaEquipmentSO _equipment;
 
     [SerializeField] private Transform _bodySpawnPosition;
     [SerializeField] private Transform _leftArmSpawnPosition;
@@ -144,5 +145,10 @@ public class WorkshopMecha : MonoBehaviour
 
         _leftLeg = legs.gameObject;
         _rightLeg = otherLeg.gameObject;
+    }
+
+    public MechaEquipmentSO GetEquipment()
+    {
+        return _equipment;
     }
 }
