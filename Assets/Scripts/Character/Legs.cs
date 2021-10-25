@@ -14,6 +14,7 @@ public class Legs : Parts
 
     private bool _brokenLegs = false;
 
+    private GameObject _otherLeg;
     public int GetMaxSteps()
     {
         return _maxSteps;
@@ -135,5 +136,10 @@ public class Legs : Parts
     {
         if (!_myChar) Debug.Log("sin char");
         return _myChar;
+    }
+
+    public void SetOtherLeg(GameObject leg)
+    {
+        _otherLeg = leg;
     }
 }

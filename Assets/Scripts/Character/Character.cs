@@ -1500,6 +1500,7 @@ public class Character : EnumsClass, IObservable
 
         _legs.transform.localPosition = Vector3.zero;
         _legs.SetPart(_mechaEquipment.legs);
+        _legs.SetOtherLeg(otherLeg.gameObject);
         
         _materialMechaHandler.SetPartGameObject(_body, _leftArm, _rightArm, _legs);
         
