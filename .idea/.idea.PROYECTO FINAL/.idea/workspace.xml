@@ -6,15 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="58a4e8b3-6a44-45fc-a481-3cddbb3bc263" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MechaEquipment.save" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MechaEquipment.save.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TallerScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TallerScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/EquipmentContainer.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/EquipmentContainer.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/EquipmentManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/EquipmentManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/LoadSaveUtility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/LoadSaveUtility.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopMecha.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopMecha.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Legs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Legs.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +77,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Items/Item.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3D9A93B7-1750-44C6-9AAC-AF1A547B0E90/8e/d9fb17db/IEventSystemHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Button.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Meshes/MeshContainer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ED6C4020-915A-41E1-B5EB-5E4C6A560E95/44/cab8644a/GOCondition.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/EquipmentManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://F:/DAVINCI/4TO CUATRI/Modelos y Algoritmos I/Biloni Leandro VJN4A - Final MyA I/Parcial1MyA1/Assets/Scripts/MVC/Model.cs" root0="SKIP_HIGHLIGHTING" />
@@ -120,7 +115,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/Actions/AttackAction.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/Handlers/AnimationMechaHandler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CharacterSelection.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/World/Mortar.cs" />
@@ -142,7 +136,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Camera/WorkshopCamera.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/GunSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/UIManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Character/Legs.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Serialization/ObjectsDatabase.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Editor/DatabaseWindow.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Abilities/AbilitySO.cs" />
@@ -161,16 +154,18 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopDatabaseManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/MechaEquipmentSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/LoadSave.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/EnemyCharacter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/TurnManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/PortraitsController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/InitializationManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/EquipmentManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopMecha.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/LoadSaveUtility.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/EquipmentManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/Legs.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Meshes/MeshContainer.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sOlsvSN0iUpd6MRLO6lGcnlToG" />
