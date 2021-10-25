@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Assault Rifle Arm 3
   m_EditorClassIdentifier: 
   partName: Arm D
+  icon: {fileID: 0}
   ability: {fileID: 11400000, guid: c2e678038ae6305489ae78bbb1e75fa9, type: 2}
   maxHP: 180
-  mesh:
-  - {fileID: -1187652400965878287, guid: 1fdfc96670e7e994181047d0a1adf3fb, type: 3}
-  - {fileID: 6270179268449189568, guid: 1fdfc96670e7e994181047d0a1adf3fb, type: 3}
+  meshPrefab:
+  - {fileID: 734145345254562080, guid: 0590a03025dd9d14ba06c55aecf57df2, type: 3}
+  - {fileID: 5804349547800713743, guid: 54a02e443bdc9524f88eee1376bcb469, type: 3}
   prefab: {fileID: 2814040305092997217, guid: 86341c4faefde4e4a870b640fa86f9ca, type: 3}

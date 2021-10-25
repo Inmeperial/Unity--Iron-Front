@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class Body : Parts
 {
-    
-    public override void SetPart(PartSO data)
-    {
-        base.SetPart(data);
-        var d = data as BodySO;
-        meshFilter[0].mesh = d.mesh[0];
-    }
-
     public override void UpdateHp(float newValue)
     {
         _currentHP = newValue;

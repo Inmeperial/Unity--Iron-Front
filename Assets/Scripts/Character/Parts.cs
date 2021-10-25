@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Parts : MonoBehaviour
 {
-    public MeshFilter[] meshFilter;
+    //public MeshFilter[] meshFilter;
     protected const int MissHit = 0;
     protected const int NormalHit = 1;
     protected const int CriticalHit = 2;

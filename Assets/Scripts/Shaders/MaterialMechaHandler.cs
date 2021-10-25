@@ -127,55 +127,55 @@ public class MaterialMechaHandler : MonoBehaviour
     /// <summary>
     /// Set the selected part material to the second material, needs a part to send (Enum MechaParts)
     /// </summary>
-    public void SetSelectedPartMaterialToBody(MechaParts part, bool isEffectOn)
-    {
-        MeshFilter[] filter = new MeshFilter[0];
-        Material partMaterial = new Material(_bodyMaterial);
-        switch (part)
-        {
-            case MechaParts.Body:
-                filter = _body.meshFilter;
-                partMaterial = _bodyMaterial;
-                break;
-            case MechaParts.Legs:
-                filter = _legs.meshFilter;
-                partMaterial = _legMaterial;
-                break;
-            case MechaParts.RArm:
-                filter = _rightArm.meshFilter;
-                partMaterial = _armMaterial;
-                break;
-            case MechaParts.LArm:
-                filter = _leftArm.meshFilter;
-                partMaterial = _armMaterial;
-                break;
-        }
-
-        MeshRenderer meshRenderer;
-        foreach (var meshFilter in filter)
-        {
-            if (isEffectOn)
-            {
-                meshRenderer = meshFilter.gameObject.GetComponent<MeshRenderer>();
-                meshRenderer.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
-
-                _sharedMaterialsCopy = meshRenderer.sharedMaterials;
-                _sharedMaterialsCopy[1] = selectedMechaPartMaterial;
-                meshRenderer.sharedMaterials = _sharedMaterialsCopy;
-                break;
-            }
-            else
-            {
-                meshRenderer = meshFilter.gameObject.GetComponent<MeshRenderer>();
-                meshRenderer.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
-
-                _sharedMaterialsCopy = meshRenderer.sharedMaterials;
-                _sharedMaterialsCopy[1] = partMaterial;
-                meshRenderer.sharedMaterials = _sharedMaterialsCopy;
-                break;
-
-            }
-        }
+    // public void SetSelectedPartMaterialToBody(MechaParts part, bool isEffectOn)
+    // {
+    //     MeshFilter[] filter = new MeshFilter[0];
+    //     Material partMaterial = new Material(_bodyMaterial);
+    //     switch (part)
+    //     {
+    //         case MechaParts.Body:
+    //             filter = _body.meshFilter;
+    //             partMaterial = _bodyMaterial;
+    //             break;
+    //         case MechaParts.Legs:
+    //             filter = _legs.meshFilter;
+    //             partMaterial = _legMaterial;
+    //             break;
+    //         case MechaParts.RArm:
+    //             filter = _rightArm.meshFilter;
+    //             partMaterial = _armMaterial;
+    //             break;
+    //         case MechaParts.LArm:
+    //             filter = _leftArm.meshFilter;
+    //             partMaterial = _armMaterial;
+    //             break;
+    //     }
+    //
+    //     MeshRenderer meshRenderer;
+    //     foreach (var meshFilter in filter)
+    //     {
+    //         if (isEffectOn)
+    //         {
+    //             meshRenderer = meshFilter.gameObject.GetComponent<MeshRenderer>();
+    //             meshRenderer.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
+    //
+    //             _sharedMaterialsCopy = meshRenderer.sharedMaterials;
+    //             _sharedMaterialsCopy[1] = selectedMechaPartMaterial;
+    //             meshRenderer.sharedMaterials = _sharedMaterialsCopy;
+    //             break;
+    //         }
+    //         else
+    //         {
+    //             meshRenderer = meshFilter.gameObject.GetComponent<MeshRenderer>();
+    //             meshRenderer.enabled = true; //we need this because sometimes unity doesn't make the 2 mesh visible (unity bugs).
+    //
+    //             _sharedMaterialsCopy = meshRenderer.sharedMaterials;
+    //             _sharedMaterialsCopy[1] = partMaterial;
+    //             meshRenderer.sharedMaterials = _sharedMaterialsCopy;
+    //             break;
+    //
+    //         }
+    //     }
         // for (int i = 0; i < transform.childCount; i++)
         // {
         //     _child = transform.GetChild(i);
@@ -204,8 +204,8 @@ public class MaterialMechaHandler : MonoBehaviour
         //         }
         //     }
         // }
-    }
-
+//     }
+//
     #endregion
 }
 

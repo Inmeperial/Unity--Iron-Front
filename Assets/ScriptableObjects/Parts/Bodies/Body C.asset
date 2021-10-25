@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Body C
   m_EditorClassIdentifier: 
   partName: BodyC
+  icon: {fileID: 0}
+  ability: {fileID: 0}
   maxHP: 150
-  mesh:
-  - {fileID: 6981290006637109699, guid: 1fdfc96670e7e994181047d0a1adf3fb, type: 3}
+  meshPrefab:
+  - {fileID: 3149488944165182403, guid: 4c34107999c6b4143bc60a838b8cdd65, type: 3}
   prefab: {fileID: 83717562320576974, guid: c2ea6abfae8876c47ab2a6ccdd935c51, type: 3}

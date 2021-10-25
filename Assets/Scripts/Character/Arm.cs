@@ -5,12 +5,10 @@ using UnityEngine;
 public class Arm : Parts
 {
     private string _location;
-    private Mesh[] _meshes;
     public override void SetPart(PartSO data)
     {
         base.SetPart(data);
         var d = data as ArmSO;
-        _meshes = d.mesh;
     }
 
     public override void UpdateHp(float newValue)
@@ -21,15 +19,6 @@ public class Arm : Parts
     public void SetRightOrLeft(string location)
     {
         _location = location;
-        switch (_location)
-        {
-            case "Left":
-                meshFilter[0].mesh = _meshes[0];
-                break;
-            case "Right":
-                meshFilter[0].mesh = _meshes[1];
-                break;
-        }
     }
     
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
@@ -91,7 +80,6 @@ public class Arm : Parts
                     break;
             }
         }
-        //_myChar.CheckArms();
         _myChar.MakeNotAttackable();
     }
     
@@ -135,8 +123,6 @@ public class Arm : Parts
                 _myChar.GetLeftGun().TurnOff();
             else _myChar.GetRightGun().TurnOff();
         }
-        
-        //_myChar.CheckArms();
         _myChar.MakeNotAttackable();
     }
 }

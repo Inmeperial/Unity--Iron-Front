@@ -6,5 +6,5 @@ public class PartSO : ScriptableObject
     public Sprite icon;
     public AbilitySO ability;
     public float maxHP;
-    public Mesh[] mesh;
+    public GameObject[] meshPrefab;
 }

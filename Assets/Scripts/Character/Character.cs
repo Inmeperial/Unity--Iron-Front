@@ -1292,7 +1292,6 @@ public class Character : EnumsClass, IObservable
         if (c._rotated) return;
         c._rotated = true;
         c.SetInitialRotation(c.transform.rotation);
-        //c.RotateTowardsEnemy(transform.position);
         c.transform.LookAt(transform.position);
         bool _body = c.RayToPartsForAttack(GetBodyPosition(), "Body", true) && this._body.GetCurrentHp() > 0;
         bool _lArm = c.RayToPartsForAttack(GetLArmPosition(), "LArm", true) && _leftArm.GetCurrentHp() > 0;
@@ -1428,8 +1427,10 @@ public class Character : EnumsClass, IObservable
         _body.ManualStart(this);
         _body.transform.localPosition = Vector3.zero;
         _body.SetPart(_mechaEquipment.body);
-        
-        
+        var bodyMesh = Instantiate(_mechaEquipment.body.meshPrefab[0], _body.transform);
+        bodyMesh.transform.localPosition = Vector3.zero;
+
+
         _myUI.SetBodyButtonPart(_materialMechaHandler,MechaParts.Body);
 
         _leftArm = Instantiate(_mechaEquipment.leftArm.prefab, _leftArmSpawnPosition);
@@ -1437,7 +1438,8 @@ public class Character : EnumsClass, IObservable
         _leftArm.transform.localPosition = Vector3.zero;
         _leftArm.SetPart(_mechaEquipment.leftArm);
         _leftArm.SetRightOrLeft("Left");
-        
+        var lArmMesh = Instantiate(_mechaEquipment.leftArm.meshPrefab[0], _leftArm.transform);
+        lArmMesh.transform.localPosition = Vector3.zero;
 
         if (_mechaEquipment.leftGun)
         {
@@ -1460,6 +1462,8 @@ public class Character : EnumsClass, IObservable
         _rightArm.transform.localPosition = Vector3.zero;
         _rightArm.SetPart(_mechaEquipment.rightArm);
         _rightArm.SetRightOrLeft("Right");
+        var rArmMesh = Instantiate(_mechaEquipment.rightArm.meshPrefab[1], _rightArm.transform);
+        rArmMesh.transform.localPosition = Vector3.zero;
         
         if (_mechaEquipment.rightGun)
         {
@@ -1477,30 +1481,16 @@ public class Character : EnumsClass, IObservable
         
         _legs = Instantiate(_mechaEquipment.legs.prefab, _rightLegSpawnPosition);
         _legs.ManualStart(this);
-        //1 is right 0 is left
-        Destroy(_legs.meshFilter[0].gameObject);
-        var otherLeg = Instantiate(_mechaEquipment.legs.prefab, _leftLegSpawnPosition);
-        Destroy(otherLeg.meshFilter[1].gameObject);
-        otherLeg.gameObject.GetComponent<BoxCollider>().enabled = false;
-        _legs.CreateRightLeg(_mechaEquipment.legs.mesh[1]);
-        otherLeg.CreateLeftLeg(_mechaEquipment.legs.mesh[0]);
-        switch (_unitTeam)
-        {
-            //TODO: revisar por que puse un switch?
-            // case Team.Green:
-            //     _legs.CreateRightLeg(_mechaEquipment.legs.mesh[1]);
-            //     otherLeg.CreateLeftLeg(_mechaEquipment.legs.mesh[0]);
-            //     break;
-            // case Team.Red:
-            //     _legs.CreateRightLeg(_mechaEquipment.legs.mesh[1]);
-            //     otherLeg.CreateLeftLeg(_mechaEquipment.legs.mesh[0]);
-            //     break;
-        }
+        var lLeg = Instantiate(_mechaEquipment.legs.meshPrefab[0], _legs.transform);
+        lLeg.transform.localPosition = Vector3.zero;
+        
+        var rLeg = Instantiate(_mechaEquipment.legs.meshPrefab[1], _leftLegSpawnPosition);
+        rLeg.transform.localPosition = Vector3.zero;
         
 
         _legs.transform.localPosition = Vector3.zero;
         _legs.SetPart(_mechaEquipment.legs);
-        _legs.SetOtherLeg(otherLeg.gameObject);
+        _legs.SetOtherLeg(rLeg);
         
         _materialMechaHandler.SetPartGameObject(_body, _leftArm, _rightArm, _legs);
         

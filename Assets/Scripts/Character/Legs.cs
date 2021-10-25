@@ -30,16 +30,6 @@ public class Legs : Parts
         _initiative = d.initiative;
     }
 
-    public void CreateRightLeg(Mesh mesh)
-    {
-        meshFilter[1].mesh = mesh;
-    }
-    
-    public void CreateLeftLeg(Mesh mesh)
-    {
-        meshFilter[0].mesh = mesh;
-    }
-
     public override void UpdateHp(float newValue)
     {
         _currentHP = newValue;
