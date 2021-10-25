@@ -19,6 +19,8 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	public TextMeshProUGUI mechaName;
 	public CustomButton selectionButton;
 	private Character _character;
+	public MasterShaderScript masterShader;
+
 	FramesUI(Image mecha, Image leftGun, Image rightGun, TextMeshProUGUI myName)
 	{
 		mechaImage = mecha;
@@ -85,11 +87,21 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		//TODO: pintar mesh
 		//_character.GetMaterialHandler().SetSelectedPartMaterialToBody()
+
+		// esto es la carita de arriba con el orden de los turnos. activar el fresnel
+
+		//masterShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
+		
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
 		//TODO: pintar mesh
 		//_character.GetMaterialHandler()
+
+		// esto es la carita de arriba con el orden de los turnos. desActivar el fresnel 
+
+		// masterShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+
 	}
 }
