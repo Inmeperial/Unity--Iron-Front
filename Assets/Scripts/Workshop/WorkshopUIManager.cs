@@ -40,8 +40,8 @@ public class WorkshopUIManager : MonoBehaviour
    {
       var equipmentData = FindObjectOfType<WorkshopManager>().GetMechaEquipment(mechaIndex);
       _overviewBody.text = "Body: \n" + equipmentData.body.partName;
-      _overviewLeftArm.text = "Left Arm: \n" + equipmentData.leftGun.gunName;
-      _overviewRightArm.text = "Right Arm: \n" + equipmentData.rightGun.gunName;
+      _overviewLeftArm.text = "Left Gun: \n" + equipmentData.leftGun.gunName;
+      _overviewRightArm.text = "Right Gun: \n" + equipmentData.rightGun.gunName;
       _overviewLegs.text = "Legs: \n" + equipmentData.legs.partName;
    }
    
