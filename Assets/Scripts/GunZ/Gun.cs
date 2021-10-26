@@ -109,8 +109,9 @@ public abstract class Gun : EnumsClass, IGun
     /// <summary>
     /// Set Gun stats from given scriptable object.
     /// </summary>
-    public virtual void SetGun(GunSO data)
+    public virtual void SetGun(GunSO data, Character character)
     {
+        _myChar = character;
         _maxHP = data.maxHp;
         _currentHP = _maxHP;
         _icon = data.gunImage;
@@ -126,6 +127,13 @@ public abstract class Gun : EnumsClass, IGun
         _bodyPartsSelectionQuantity = data.bodyPartsSelectionQuantity;
         _gunSkill = false;
         _ability = data.ability.abilityPrefab;
+        
+        if(data.ability && data.ability.abilityPrefab)
+        {
+            _ability = Instantiate(data.ability.abilityPrefab, transform);
+            _ability.Initialize(_myChar, data.ability);
+            _myChar.AddEquipable(_ability);
+        }
     }
 
     public void ReloadGun()

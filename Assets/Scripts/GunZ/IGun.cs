@@ -18,7 +18,7 @@ public interface IGun
     void IncreaseAvailableBullets();
     void IncreaseAvailableBullets(int quantity);
 
-    void SetGun(GunSO data);
+    void SetGun(GunSO data, Character character);
 
     int GetAvailableSelections();
 

@@ -4,22 +4,20 @@ public class Shield : Gun
 {
     public GameObject interactionPrefabs;
     public float prefabHeight;
-    private Character _character;
     private bool _selected = false;
     private List<GameObject> _instantiated = new List<GameObject>();
-    public override void SetGun(GunSO data)
+    public override void SetGun(GunSO data, Character character)
     {
         _gunType = GunsType.Shield;
         _gun = "Shield";
-        base.SetGun(data);
-        _character = GetCharacter(transform);
+        base.SetGun(data, character);
     }
 
     public override void Ability()
     {
         if (_selected) return;
         
-        List<Tile> t = _character.GetTileBelow().allNeighbours;
+        List<Tile> t = _myChar.GetTileBelow().allNeighbours;
 
         for (int i = 0; i < t.Count; i++)
         {
@@ -65,7 +63,7 @@ public class Shield : Gun
 
     private void Rotate(Transform t)
     {
-        Vector3 position = _character.transform.position;
+        Vector3 position = _myChar.transform.position;
         Vector3 shieldCharVector = (transform.position - position).normalized;
         Vector3 buttonCharVector = (t.position - position).normalized;
         
@@ -81,7 +79,7 @@ public class Shield : Gun
             angle = -180;
         else return;
         
-        _character.transform.RotateAround(_character.transform.position, _character.transform.up, angle);
+        _myChar.transform.RotateAround(_myChar.transform.position, _myChar.transform.up, angle);
         foreach (GameObject prefab in _instantiated)
         {
             Destroy(prefab);
@@ -89,6 +87,6 @@ public class Shield : Gun
         
         _instantiated.Clear();
         _selected = false;
-        _character.DeactivateAttack();
+        _myChar.DeactivateAttack();
     }
 }
