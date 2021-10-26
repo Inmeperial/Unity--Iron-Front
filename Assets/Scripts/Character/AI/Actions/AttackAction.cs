@@ -32,7 +32,7 @@ public class AttackAction : GOAction
 
         _myUnit.OnStartAction();
 
-        if (!_myUnit.LeftArmAlive() && !_myUnit.RightArmAlive())
+        if (!_myUnit.LeftGunAlive() && !_myUnit.RightGunAlive())
         {
             _myUnit.OnEndAction();
             return TaskStatus.COMPLETED;
@@ -51,18 +51,18 @@ public class AttackAction : GOAction
         var initialRotation = _myUnit.InitialRotation;
         _myUnit.transform.LookAt(closestEnemy.transform);
         bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
-        bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LArm",false);
-        bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RArm", false);
+        bool leftGun = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LGun",false);
+        bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RGun", false);
         bool legs = _myUnit.RayToPartsForAttack(closestEnemy.GetLegsPosition(), "Legs", false);
 
         Dictionary<string, float> parts = new Dictionary<string, float>();
         
         if (body)
             parts.Add("Body", closestEnemy.GetBody().GetCurrentHp());
-        if (leftArm)
-            parts.Add("LArm", closestEnemy.GetLeftArm().GetCurrentHp());
+        if (leftGun)
+            parts.Add("LGun", closestEnemy.GetLeftGun().GetCurrentHp());
         if (rightArm)
-            parts.Add("RArm", closestEnemy.GetRightArm().GetCurrentHp());
+            parts.Add("RGun", closestEnemy.GetRightGun().GetCurrentHp());
         if (legs)
             parts.Add("Legs", closestEnemy.GetLegs().GetCurrentHp());
 
@@ -84,11 +84,11 @@ public class AttackAction : GOAction
                 ButtonsUIManager.Instance.AddBulletsToBody(gun.GetAvailableBullets());
                 break;
                 
-            case "LArm":
+            case "LGun":
                 ButtonsUIManager.Instance.AddBulletsToLArm(gun.GetAvailableBullets());
                 break;
             
-            case "RArm":
+            case "RGun":
                 ButtonsUIManager.Instance.AddBulletsToRArm(gun.GetAvailableBullets());
                 break;
             

@@ -147,8 +147,8 @@ public class Grenade : Item
             if (!unit) continue;
             
             unit.GetBody().TakeDamage(GetItemDamage());
-            unit.GetLeftArm().TakeDamage(GetItemDamage());
-            unit.GetRightArm().TakeDamage(GetItemDamage());
+            unit.GetLeftGun().TakeDamage(GetItemDamage());
+            unit.GetRightGun().TakeDamage(GetItemDamage());
             unit.GetLegs().TakeDamage(GetItemDamage());
         }
         UpdateUses();

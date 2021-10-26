@@ -313,8 +313,8 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
             if (unit)
             {
                 unit.GetBody().TakeDamage(_damage);
-                unit.GetLeftArm().TakeDamage(_damage);
-                unit.GetRightArm().TakeDamage(_damage);
+                unit.GetLeftGun().TakeDamage(_damage);
+                unit.GetRightGun().TakeDamage(_damage);
                 unit.GetLegs().TakeDamage(_damage);
                 
                 if (unit.GetBody().GetCurrentHp() <= 0) unit.Dead();

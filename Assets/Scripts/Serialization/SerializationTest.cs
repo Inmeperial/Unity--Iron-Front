@@ -77,19 +77,7 @@ public class SerializationTest : MonoBehaviour
             text.text += "legs ok \n";
         }
         else text.text += "legs null \n";
-        
-        if (equipment.leftArm)
-        {
-            text.text += "leftArm ok \n";
-        }
-        else text.text += "leftArm null \n";
-        
-        if (equipment.rightArm)
-        {
-            text.text += "rightArm ok \n";
-        }
-        else text.text += "rightArm null \n";
-        
+
         if (equipment.leftGun)
         {
             text.text += "leftGun ok \n";

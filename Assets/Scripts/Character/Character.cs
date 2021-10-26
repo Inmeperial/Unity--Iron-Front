@@ -45,14 +45,14 @@ public class Character : EnumsClass, IObservable
 
     //Left Arm
     [SerializeField] protected Transform _leftArmSpawnPosition;
-    protected Arm _leftArm;
+    //protected Arm _leftArm;
     protected Gun _leftGun;
     protected bool _leftGunSelected;
     [SerializeField] protected GameObject _leftGunSpawn;
 
     //Right Arm
     [SerializeField] protected Transform _rightArmSpawnPosition;
-    protected Arm _rightArm;
+    //protected Arm _rightArm;
     protected Gun _rightGun;
     protected bool _rightGunSelected;
     [SerializeField] protected GameObject _rightGunSpawn;
@@ -88,8 +88,8 @@ public class Character : EnumsClass, IObservable
     protected bool _moving = false;
     protected bool _canMove = true;
     protected bool _canAttack = true;
-    protected bool _leftArmAlive;
-    protected bool _rightArmAlive;
+    protected bool _leftGunAlive;
+    protected bool _rightGunAlive;
     protected bool _canBeAttacked = false;
     protected bool _selectingEnemy = false;
     protected bool _selectedForAttack;
@@ -163,7 +163,7 @@ public class Character : EnumsClass, IObservable
         _move.SetMoveSpeed(_legs.GetMoveSpeed());
         _move.SetRotationSpeed(_legs.GetRotationSpeed());
         
-        _myUI.SetLimits(_body.GetMaxHp(), _rightArm.GetMaxHp(), _leftArm.GetMaxHp(), _legs.GetMaxHp());
+        _myUI.SetLimits(_body.GetMaxHp(), _rightGun.GetMaxHp(), _leftGun.GetMaxHp(), _legs.GetMaxHp());
 
         _selected = false;
         _canBeSelected = _body.GetCurrentHp() > 0;
@@ -401,9 +401,9 @@ public class Character : EnumsClass, IObservable
 
         if (CanAttack())
         {
-            if (_rightArmAlive && _rightGun)
+            if (_rightGunAlive && _rightGun)
                 _selectedGun = _rightGun;
-            else if (_leftArmAlive && _leftGun)
+            else if (_leftGunAlive && _leftGun)
                 _selectedGun = _leftGun;
             else _selectedGun = null;
             PaintTilesInAttackRange(_myPositionTile, 0);
@@ -493,11 +493,11 @@ public class Character : EnumsClass, IObservable
                 renderer = _rayForLegs;
                 break;
 
-            case "RArm":
+            case "RGun":
                 renderer = _rayForRightArm;
                 break;
 
-            case "LArm":
+            case "LGun":
                 renderer = _rayForLeftArm;
                 break;
         }
@@ -579,15 +579,15 @@ public class Character : EnumsClass, IObservable
         return _body;
     }
 
-    public Arm GetLeftArm()
-    {
-        return _leftArm;
-    }
-
-    public Arm GetRightArm()
-    {
-        return _rightArm;
-    }
+    // public Arm GetLeftArm()
+    // {
+    //     return _leftArm;
+    // }
+    //
+    // public Arm GetRightArm()
+    // {
+    //     return _rightArm;
+    // }
 
     public Legs GetLegs()
     {
@@ -822,19 +822,19 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Return true if Character Left Arm has more than 0 HP.
     /// </summary>
-    public bool LeftArmAlive()
+    public bool LeftGunAlive()
     {
-        _leftArmAlive = _leftArm.GetCurrentHp() > 0;
-        return _leftArmAlive;
+        _leftGunAlive = _leftGun.GetCurrentHp() > 0;
+        return _leftGunAlive;
     }
 
     /// <summary>
     /// Return true if Character Right Arm has more than 0 HP.
     /// </summary>
-    public bool RightArmAlive()
+    public bool RightGunAlive()
     {
-        _rightArmAlive = _rightArm.GetCurrentHp() > 0;
-        return _rightArmAlive;
+        _rightGunAlive = _rightGun.GetCurrentHp() > 0;
+        return _rightGunAlive;
     }
 
     public bool CanMove()
@@ -945,7 +945,7 @@ public class Character : EnumsClass, IObservable
     //Se pintan los tiles dentro del rango de ataque
     public void PaintTilesInAttackRange(Tile currentTile, int count)
     {
-        if (!_leftArmAlive && !_rightArmAlive) return;
+        if (!_leftGunAlive && !_rightGunAlive) return;
 
         if (_selectedGun == null || count >= _selectedGun.GetAttackRange() ||
             (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
@@ -1246,7 +1246,7 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void CheckArms()
     {
-        if ((!LeftArmAlive() && !RightArmAlive()) || _selectedGun == null)
+        if ((!LeftGunAlive() && !RightGunAlive()) || _selectedGun == null)
             _canAttack = false;
     }
 
@@ -1293,10 +1293,10 @@ public class Character : EnumsClass, IObservable
         c._rotated = true;
         c.SetInitialRotation(c.transform.rotation);
         c.transform.LookAt(transform.position);
-        bool _body = c.RayToPartsForAttack(GetBodyPosition(), "Body", true) && this._body.GetCurrentHp() > 0;
-        bool _lArm = c.RayToPartsForAttack(GetLArmPosition(), "LArm", true) && _leftArm.GetCurrentHp() > 0;
-        bool _rArm = c.RayToPartsForAttack(GetRArmPosition(), "RArm", true) && _rightArm.GetCurrentHp() > 0;
-        bool _legs = c.RayToPartsForAttack(GetLegsPosition(), "Legs", true) && this._legs.GetCurrentHp() > 0;
+        bool body = c.RayToPartsForAttack(GetBodyPosition(), "Body", true) && _body.GetCurrentHp() > 0;
+        bool lArm = c.RayToPartsForAttack(GetLArmPosition(), "LGun", true) && _leftGun.GetCurrentHp() > 0;
+        bool rArm = c.RayToPartsForAttack(GetRArmPosition(), "RGun", true) && _rightGun.GetCurrentHp() > 0;
+        bool legs = c.RayToPartsForAttack(GetLegsPosition(), "Legs", true) && _legs.GetCurrentHp() > 0;
     }
 
     public void ResetRotationAndRays()
@@ -1333,7 +1333,7 @@ public class Character : EnumsClass, IObservable
     public void ShowWorldUI()
     {
         _myUI.SetName(_myName);
-        _myUI.SetWorldUIValues(_body.GetCurrentHp(), _rightArm.GetCurrentHp(), _leftArm.GetCurrentHp(), _legs.GetCurrentHp(), _canMove, _canAttack);
+        _myUI.SetWorldUIValues(_body.GetCurrentHp(), _rightGun.GetCurrentHp(), _leftGun.GetCurrentHp(), _legs.GetCurrentHp(), _canMove, _canAttack);
         _myUI.ContainerActivation(true);
     }
 
@@ -1433,52 +1433,36 @@ public class Character : EnumsClass, IObservable
 
         _myUI.SetBodyButtonPart(_materialMechaHandler,MechaParts.Body);
 
-        _leftArm = Instantiate(_mechaEquipment.leftArm.prefab, _leftArmSpawnPosition);
-        _leftArm.ManualStart(this);
-        _leftArm.transform.localPosition = Vector3.zero;
-        _leftArm.SetPart(_mechaEquipment.leftArm);
-        _leftArm.SetRightOrLeft("Left");
-        var lArmMesh = Instantiate(_mechaEquipment.leftArm.meshPrefab[0], _leftArm.transform);
-        lArmMesh.transform.localPosition = Vector3.zero;
+        var leftArm = Instantiate(_mechaEquipment.body.armsMeshPrefab[0], _leftArmSpawnPosition);
+        leftArm.transform.localPosition = Vector3.zero;
 
-        if (_mechaEquipment.leftGun)
+        _leftGun = Instantiate(_mechaEquipment.leftGun.prefab, _leftGunSpawn.transform);
+
+        if (_leftGun)
         {
-            _leftGun = Instantiate(_mechaEquipment.leftGun.prefab, _leftGunSpawn.transform);
+            _leftGun.transform.localPosition = Vector3.zero;
+            _leftGun.gameObject.tag = "LGun";
+            _leftGun.SetGun(_mechaEquipment.leftGun);
+            _leftGun.StartRoulette();
 
-            if (_leftGun)
-            {
-                _leftGun.transform.localPosition = Vector3.zero;
-                _leftGun.gameObject.tag = "LArm";
-                _leftGun.SetGun(_mechaEquipment.leftGun);
-                _leftGun.StartRoulette();
-                
-                _myUI.SetLeftArmButtonPart(_materialMechaHandler,MechaParts.LArm);
-            } 
+            _myUI.SetLeftArmButtonPart(_materialMechaHandler, MechaParts.LArm);
         }
-        
-        
-        _rightArm = Instantiate(_mechaEquipment.rightArm.prefab, _rightArmSpawnPosition);
-        _rightArm.ManualStart(this);
-        _rightArm.transform.localPosition = Vector3.zero;
-        _rightArm.SetPart(_mechaEquipment.rightArm);
-        _rightArm.SetRightOrLeft("Right");
-        var rArmMesh = Instantiate(_mechaEquipment.rightArm.meshPrefab[1], _rightArm.transform);
-        rArmMesh.transform.localPosition = Vector3.zero;
-        
-        if (_mechaEquipment.rightGun)
+
+
+        var rightArm = Instantiate(_mechaEquipment.body.armsMeshPrefab[1], _rightArmSpawnPosition);
+        rightArm.transform.localPosition = Vector3.zero;
+
+        _rightGun = Instantiate(_mechaEquipment.rightGun.prefab, _rightGunSpawn.transform);
+
+        if (_rightGun)
         {
-            _rightGun = Instantiate(_mechaEquipment.rightGun.prefab, _rightGunSpawn.transform);
-
-            if (_rightGun)
-            {
-                _rightGun.transform.localPosition = Vector3.zero;
-                _rightGun.gameObject.tag = "RArm";
-                _rightGun.SetGun(_mechaEquipment.rightGun);
-                _rightGun.StartRoulette();
-                _myUI.SetRightArmButtonPart(_materialMechaHandler,MechaParts.RArm);
-            } 
+            _rightGun.transform.localPosition = Vector3.zero;
+            _rightGun.gameObject.tag = "RGun";
+            _rightGun.SetGun(_mechaEquipment.rightGun);
+            _rightGun.StartRoulette();
+            _myUI.SetRightArmButtonPart(_materialMechaHandler,MechaParts.RArm);
         }
-        
+
         _legs = Instantiate(_mechaEquipment.legs.prefab, _rightLegSpawnPosition);
         _legs.ManualStart(this);
         var lLeg = Instantiate(_mechaEquipment.legs.meshPrefab[0], _legs.transform);
@@ -1492,15 +1476,15 @@ public class Character : EnumsClass, IObservable
         _legs.SetPart(_mechaEquipment.legs);
         _legs.SetOtherLeg(rLeg);
         
-        _materialMechaHandler.SetPartGameObject(_body, _leftArm, _rightArm, _legs);
+        _materialMechaHandler.SetPartGameObject(_body, _leftGun, _rightGun, _legs);
         
         _myUI.SetLegsButtonPart(_materialMechaHandler, MechaParts.Legs);
         
-        _leftArmAlive = _leftArm.GetCurrentHp() > 0 ? true : false;
+        _leftGunAlive = _leftGun.GetCurrentHp() > 0 ? true : false;
 
-        _rightArmAlive = _rightArm.GetCurrentHp() > 0 ? true : false;
+        _rightGunAlive = _rightGun.GetCurrentHp() > 0 ? true : false;
 
-        if (_rightArmAlive && _rightGun)
+        if (_rightGunAlive && _rightGun)
         {
             _selectedGun = _rightGun;
             if (_selectedGun.GetGunType() == GunsType.Shield)
@@ -1509,7 +1493,7 @@ public class Character : EnumsClass, IObservable
             _rightGunSelected = true;
             _leftGunSelected = false;
         }
-        else if (_leftArmAlive && _leftGun)
+        else if (_leftGunAlive && _leftGun)
         {
             _selectedGun = _leftGun;
             if (_selectedGun.GetGunType() == GunsType.Shield)

@@ -25,10 +25,10 @@ public class WorkshopDatabaseManager : MonoBehaviour
         return _objectsDatabase.bodiesList;
     }
     
-    public List<ArmSO> GetArms()
-    {
-        return _objectsDatabase.armsList;
-    }
+    // public List<ArmSO> GetArms()
+    // {
+    //     return _objectsDatabase.armsList;
+    // }
 
     public List<LegsSO> GetLegs()
     {

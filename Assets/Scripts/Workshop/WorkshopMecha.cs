@@ -37,7 +37,7 @@ public class WorkshopMecha : MonoBehaviour
         _body = Instantiate(_equipment.body.meshPrefab[0], _bodySpawnPosition);
         _body.transform.localPosition = Vector3.zero;
 
-        _leftArm = Instantiate(_equipment.leftArm.meshPrefab[0], _leftArmSpawnPosition);
+        _leftArm = Instantiate(_equipment.body.armsMeshPrefab[0], _leftArmSpawnPosition);
 
         _leftArm.transform.localPosition = Vector3.zero;
 
@@ -54,7 +54,7 @@ public class WorkshopMecha : MonoBehaviour
         }
         
         
-        _rightArm = Instantiate(_equipment.rightArm.meshPrefab[1], _rightArmSpawnPosition);
+        _rightArm = Instantiate(_equipment.body.armsMeshPrefab[1], _rightArmSpawnPosition);
         _rightArm.transform.localPosition = Vector3.zero;
 
         if (_equipment.rightGun)
@@ -80,10 +80,10 @@ public class WorkshopMecha : MonoBehaviour
     {
         if (_body) Destroy(_body);
         
-        var body = Instantiate(newBody.prefab, _bodySpawnPosition);
+        var body = Instantiate(newBody.meshPrefab[0], _bodySpawnPosition);
         body.transform.localPosition = Vector3.zero;
-        body.SetPart(newBody);
-        _body = body.gameObject;
+        //body.SetPart(newBody);
+        _body = body;
     }
     
     public void ChangeLeftGun(GunSO newGun)
@@ -113,12 +113,13 @@ public class WorkshopMecha : MonoBehaviour
             Destroy(_leftLeg);
             Destroy(_rightLeg);
         }
-        var legs = Instantiate(newLegs.prefab, _rightLegSpawnPosition);
-
-        legs.transform.localPosition = Vector3.zero;
-        legs.SetPart(_equipment.legs);
-
-        _leftLeg = legs.gameObject;
+        var leftLeg = Instantiate(newLegs.meshPrefab[0], _leftLegSpawnPosition);
+        leftLeg.transform.localPosition = Vector3.zero;
+        _leftLeg = leftLeg;
+        
+        var rightLeg = Instantiate(newLegs.meshPrefab[1], _rightLegSpawnPosition);
+        rightLeg.transform.localPosition = Vector3.zero;
+        _rightLeg = rightLeg;
     }
 
     public MechaEquipmentSO GetEquipment()

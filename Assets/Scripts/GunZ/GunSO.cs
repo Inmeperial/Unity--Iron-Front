@@ -8,6 +8,7 @@ public class GunSO : ScriptableObject
 {
     public string gunName;
     public Gun prefab;
+    public float maxHp;
     public int maxBullets;
     public Sprite gunImage;
     public int availableBullets;

@@ -31,8 +31,8 @@ public class CheckPartsInSight : GOCondition
         
         _myUnit.RotateTowardsEnemy(closestEnemy.transform);
         bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
-        bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LArm", false);
-        bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RArm", false);
+        bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LGun", false);
+        bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RGun", false);
         bool legs = _myUnit.RayToPartsForAttack(closestEnemy.GetLegsPosition(), "Legs", false);
 
         if (body || leftArm || rightArm || legs)

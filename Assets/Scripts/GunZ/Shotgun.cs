@@ -18,7 +18,7 @@ public class Shotgun : Gun
     public override void Ability()
     {
         string m = _roulette.ExecuteAction(_multipleHitRoulette);
-        _abilityUsed = true;
+        _gunSkill = true;
         switch (m)
         {
             case "Multiple":

@@ -11,9 +11,9 @@ public class MechaEquipmentSO : ScriptableObject
     [SerializeField] private ObjectsDatabase _objectsDatabase;
     public string name;
     public BodySO body;
-    public ArmSO leftArm;
+    //public ArmSO leftArm;
     public GunSO leftGun;
-    public ArmSO rightArm;
+    //public ArmSO rightArm;
     public GunSO rightGun;
     public LegsSO legs;
 

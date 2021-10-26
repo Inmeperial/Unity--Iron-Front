@@ -27,9 +27,7 @@ public class DatabaseWindow : EditorWindow
         if (GUILayout.Button("Populate Database"))
         {
             LoadBodies();
-            
-            LoadArms();
-            
+
             LoadLegs();
             
             LoadGuns();
@@ -61,24 +59,6 @@ public class DatabaseWindow : EditorWindow
         }
     }
 
-    void LoadArms()
-    {
-        _database.armsList.Clear();
-            
-        var armsPaths = AssetDatabase.FindAssets("t:ArmSO", new[] {"Assets/ScriptableObjects/Parts/Arms"});
-            
-        string[] armsFiles = new string[armsPaths.Length];
-            
-        for (int i = 0; i < armsFiles.Length; i++)
-        {
-            armsFiles[i] = AssetDatabase.GUIDToAssetPath(armsPaths[i]);
-                
-            var arm = (ArmSO) AssetDatabase.LoadAssetAtPath(armsFiles[i], typeof(ArmSO));
-                
-            if (!_database.armsList.Contains(arm))
-                _database.armsList.Add(arm);
-        }
-    }
 
     void LoadLegs()
     {

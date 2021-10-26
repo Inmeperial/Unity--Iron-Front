@@ -16,8 +16,8 @@ public class MaterialMechaHandler : MonoBehaviour
     private Material[] _sharedMaterialsCopy;
 
     private Body _body;
-    private Arm _leftArm;
-    private Arm _rightArm;
+    private Gun _leftArm;
+    private Gun _rightArm;
     private Legs _legs;
     void Start()
     {
@@ -59,7 +59,7 @@ public class MaterialMechaHandler : MonoBehaviour
         _legMaterial = legMaterial;
     }
 
-    public void SetPartGameObject(Body body, Arm leftArm, Arm rightArm, Legs legs)
+    public void SetPartGameObject(Body body, Gun leftArm, Gun rightArm, Legs legs)
     {
         _body = body;
         _leftArm = leftArm;

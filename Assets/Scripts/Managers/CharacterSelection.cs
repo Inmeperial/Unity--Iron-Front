@@ -111,7 +111,7 @@ public class CharacterSelection : MonoBehaviour
         {
             if (_selection)
             {
-                if (!_selection.LeftArmAlive() && !_selection.RightArmAlive()) return;
+                if (!_selection.LeftGunAlive() && !_selection.RightGunAlive()) return;
                 
                 if (!_selection.GetLeftGun() && !_selection.GetRightGun()) return;
             }
@@ -124,11 +124,11 @@ public class CharacterSelection : MonoBehaviour
                 bool body = _selection.RayToPartsForAttack(c.GetBodyPosition(), "Body", false) &&
                             c.GetBody().GetCurrentHp() > 0;
                 
-                bool lArm = _selection.RayToPartsForAttack(c.GetLArmPosition(), "LArm", false) &&
-                            c.GetLeftArm().GetCurrentHp() > 0;
+                bool lArm = _selection.RayToPartsForAttack(c.GetLArmPosition(), "LGun", false) &&
+                            c.GetLeftGun().GetCurrentHp() > 0;
                 
-                bool rArm= _selection.RayToPartsForAttack(c.GetRArmPosition(), "RArm", false) &&
-                           c.GetRightArm().GetCurrentHp() > 0;
+                bool rArm= _selection.RayToPartsForAttack(c.GetRArmPosition(), "RGun", false) &&
+                           c.GetRightGun().GetCurrentHp() > 0;
                 
                 bool legs =  _selection.RayToPartsForAttack(c.GetLegsPosition(), "Legs", false) &&
                              c.GetLegs().GetCurrentHp() > 0;

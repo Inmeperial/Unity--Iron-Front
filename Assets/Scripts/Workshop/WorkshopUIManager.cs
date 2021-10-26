@@ -40,14 +40,15 @@ public class WorkshopUIManager : MonoBehaviour
    {
       var equipmentData = FindObjectOfType<WorkshopManager>().GetMechaEquipment(mechaIndex);
       _overviewBody.text = "Body: \n" + equipmentData.body.partName;
-      _overviewLeftArm.text = "Left Arm: \n" + equipmentData.leftArm.partName;
-      _overviewRightArm.text = "Right Arm: \n" + equipmentData.rightArm.partName;
+      _overviewLeftArm.text = "Left Arm: \n" + equipmentData.leftGun.gunName;
+      _overviewRightArm.text = "Right Arm: \n" + equipmentData.rightGun.gunName;
       _overviewLegs.text = "Legs: \n" + equipmentData.legs.partName;
    }
    
    public void UpdatePartsList(string part)
    {
       DestroyWorkshopObjects();
+      _partsDescription.text = "";
       var manager = FindObjectOfType<WorkshopManager>();
       switch (part)
       {
@@ -119,7 +120,7 @@ public class WorkshopUIManager : MonoBehaviour
    public void UpdateAbilitiesList(string part)
    {
       DestroyWorkshopObjects();
-      
+      _abilitiesDescription.text = "";
       List<AbilitySO> abilities = new List<AbilitySO>();
       abilities = WorkshopDatabaseManager.Instance.GetAbilities();
       
@@ -184,7 +185,7 @@ public class WorkshopUIManager : MonoBehaviour
    public void UpdateItemsList()
    {
       DestroyWorkshopObjects();
-      
+      _itemsDescription.text = "";
       var items = WorkshopDatabaseManager.Instance.GetItems();
 
       foreach (var item in items)
