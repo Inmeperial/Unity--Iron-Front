@@ -5,27 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoBehaviour
 {
-    //public KeyCode changeWorkshopKey;
-
-    private void Update()
-    {
-        /*
-		if (Input.GetKeyDown(KeyCode.F1))
-			SceneManager.LoadScene("Level");
-
-		if (Input.GetKeyDown(changeWorkshopKey))
-		{
-			SceneManager.LoadScene("TallerScene");
-		}
-		
-		if (Input.GetKeyDown(KeyCode.F3))
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-		*/
-    }
-
     public void LoadGame()
     {
-        SceneManager.LoadScene("TEST NUEVO PREFAB");
+        SceneManager.LoadScene("Level 1 NUEVO");
     }
 
     public void LoadLevel2()
