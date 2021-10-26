@@ -320,7 +320,7 @@ MonoBehaviour:
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: -1
-  m_FlexibleWidth: 1.13
+  m_FlexibleWidth: 1.37
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
 --- !u!1 &157858018027231694
@@ -757,6 +757,7 @@ MonoBehaviour:
   enemyColor: {r: 1, g: 0, b: 0, a: 1}
   mechaName: {fileID: 1931358546564088868}
   selectionButton: {fileID: 6854599279761661499}
+  masterShader: {fileID: 0}
 --- !u!1 &327361188219201273
 GameObject:
   m_ObjectHideFlags: 0
@@ -1539,7 +1540,7 @@ MonoBehaviour:
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: -1
-  m_FlexibleWidth: 1.13
+  m_FlexibleWidth: 1.37
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
 --- !u!1 &743141672070535146
@@ -1555,7 +1556,7 @@ GameObject:
   - component: {fileID: 6322433235487841461}
   - component: {fileID: 2390343005810077651}
   m_Layer: 5
-  m_Name: Arm Txt
+  m_Name: Gun Txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1606,7 +1607,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Arm
+  m_text: GUN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 37399cad52049954cb173de70ca8983f, type: 2}
   m_sharedMaterial: {fileID: 4440859372323168551, guid: 37399cad52049954cb173de70ca8983f,
@@ -5275,6 +5276,7 @@ MonoBehaviour:
   enemyColor: {r: 1, g: 0, b: 0, a: 1}
   mechaName: {fileID: 1173053764768584748}
   selectionButton: {fileID: 3017867140611861228}
+  masterShader: {fileID: 0}
 --- !u!1 &2372316110565964301
 GameObject:
   m_ObjectHideFlags: 0
@@ -7394,7 +7396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 13
-    m_Right: 21
+    m_Right: 20
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
@@ -8425,6 +8427,7 @@ MonoBehaviour:
   enemyColor: {r: 1, g: 0, b: 0, a: 1}
   mechaName: {fileID: 5408662346340484953}
   selectionButton: {fileID: 2751280509430382242}
+  masterShader: {fileID: 0}
 --- !u!1 &3862218234856784712
 GameObject:
   m_ObjectHideFlags: 0
@@ -8787,6 +8790,7 @@ MonoBehaviour:
   enemyColor: {r: 1, g: 0, b: 0, a: 1}
   mechaName: {fileID: 8827578797732909006}
   selectionButton: {fileID: 8874185928582194084}
+  masterShader: {fileID: 0}
 --- !u!1 &3946195183284613856
 GameObject:
   m_ObjectHideFlags: 0
@@ -10542,6 +10546,7 @@ MonoBehaviour:
   enemyColor: {r: 1, g: 0, b: 0, a: 1}
   mechaName: {fileID: 2426287654252342357}
   selectionButton: {fileID: 668773454910953730}
+  masterShader: {fileID: 0}
 --- !u!1 &5004019952470074584
 GameObject:
   m_ObjectHideFlags: 0
@@ -13411,6 +13416,7 @@ MonoBehaviour:
   enemyColor: {r: 1, g: 0, b: 0, a: 1}
   mechaName: {fileID: 4187297358057812939}
   selectionButton: {fileID: 6113326001228307620}
+  masterShader: {fileID: 0}
 --- !u!1 &6463225706704767522
 GameObject:
   m_ObjectHideFlags: 0
@@ -15223,6 +15229,7 @@ MonoBehaviour:
   enemyColor: {r: 1, g: 0, b: 0, a: 1}
   mechaName: {fileID: 9220287504229008827}
   selectionButton: {fileID: 6486265828373050953}
+  masterShader: {fileID: 0}
 --- !u!1 &7477952517266114435
 GameObject:
   m_ObjectHideFlags: 0
@@ -17637,6 +17644,7 @@ MonoBehaviour:
   enemyColor: {r: 1, g: 0, b: 0, a: 1}
   mechaName: {fileID: 3523521547526666943}
   selectionButton: {fileID: 6207576752103056469}
+  masterShader: {fileID: 0}
 --- !u!1 &8606588140488695954
 GameObject:
   m_ObjectHideFlags: 0
