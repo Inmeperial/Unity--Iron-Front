@@ -126,8 +126,7 @@ public abstract class Gun : EnumsClass, IGun
         _attackRange = data.attackRange;
         _bodyPartsSelectionQuantity = data.bodyPartsSelectionQuantity;
         _gunSkill = false;
-        _ability = data.ability.abilityPrefab;
-        
+
         if(data.ability && data.ability.abilityPrefab)
         {
             _ability = Instantiate(data.ability.abilityPrefab, transform);
