@@ -125,6 +125,7 @@ public abstract class Gun : EnumsClass, IGun
         _attackRange = data.attackRange;
         _bodyPartsSelectionQuantity = data.bodyPartsSelectionQuantity;
         _gunSkill = false;
+        _ability = data.ability.abilityPrefab;
     }
 
     public void ReloadGun()
