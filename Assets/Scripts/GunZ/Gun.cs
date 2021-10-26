@@ -37,7 +37,8 @@ public abstract class Gun : EnumsClass, IGun
     private const int CriticalHit = 2;
 
     protected Ability _ability;
-    
+
+    private bool _abilityCreated;
     [SerializeField] protected GameObject _particleSpawn;
     public void SetRightOrLeft(string location)
     {
@@ -127,11 +128,12 @@ public abstract class Gun : EnumsClass, IGun
         _bodyPartsSelectionQuantity = data.bodyPartsSelectionQuantity;
         _gunSkill = false;
 
-        if(data.ability && data.ability.abilityPrefab)
+        if(!_abilityCreated && data.ability && data.ability.abilityPrefab)
         {
             _ability = Instantiate(data.ability.abilityPrefab, transform);
             _ability.Initialize(_myChar, data.ability);
             _myChar.AddEquipable(_ability);
+            _abilityCreated = true;
         }
     }
 
