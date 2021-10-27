@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4897723308026046535}
   - component: {fileID: 3754569111201237388}
   - component: {fileID: 5736607732135610098}
+  - component: {fileID: -8440768929410375072}
   m_Layer: 0
   m_Name: MechaA LeftArm Mesh
   m_TagString: Untagged
@@ -80,3 +81,28 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &-8440768929410375072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734145345254562080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texturesCuerpo:
+  - {fileID: 2800000, guid: 9aa9d7cf01963df468fb62c84c80877f, type: 3}
+  - {fileID: 2800000, guid: 945ef486776dc1147a2b14c0cab28406, type: 3}
+  - {fileID: 2800000, guid: a4908ea0acdf6dc4fa26ab9efc9c8365, type: 3}
+  textureArmadura:
+  - {fileID: 2800000, guid: 13e29d1fd4647e641b4ed0970b17cdb5, type: 3}
+  - {fileID: 2800000, guid: f9e18c588abdd9f4e8ea24fc10405634, type: 3}
+  - {fileID: 2800000, guid: 4f5ab791a205dd145840f37a6369d817, type: 3}
+  textureArticulaciones:
+  - {fileID: 2800000, guid: 7d758c77d5398304f9306767b1867c07, type: 3}
+  - {fileID: 2800000, guid: 66b6d707950d73147ae14a9f5cc72fe3, type: 3}
+  - {fileID: 2800000, guid: f6ce568f541e36b42bbc5546668ebd3f, type: 3}
+  - {fileID: 2800000, guid: fc196b4c65ceddf4babb457207be0b1f, type: 3}

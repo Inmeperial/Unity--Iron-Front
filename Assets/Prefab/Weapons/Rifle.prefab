@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8919912439531991309}
   - component: {fileID: 2826763945812812895}
   - component: {fileID: 1652545010071582203}
+  - component: {fileID: 173286102529439433}
   m_Layer: 0
   m_Name: Rifle
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 480642109035808872}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2826763945812812895
 MeshFilter:
@@ -78,6 +79,31 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &173286102529439433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2672817470047208098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texturesCuerpo:
+  - {fileID: 2800000, guid: 11e83bb4586b84e4086da88132e35974, type: 3}
+  - {fileID: 2800000, guid: af93befb1188490448e1451c9eb3681b, type: 3}
+  textureArmadura:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  textureArticulaciones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  col: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2772689299772723322
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +134,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 480642109035808872}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4738738967089983568
 MeshFilter:
@@ -185,9 +211,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 8919912439531991309}
   - {fileID: 1298695821986052007}
   - {fileID: 6212134982851672054}
-  - {fileID: 8919912439531991309}
   - {fileID: 3214488327626496667}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -217,7 +243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56871d98712449040bce62e65f803673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponData: {fileID: 11400000, guid: 922e7b88b21b28b4ea6c8fcb896cdd74, type: 2}
   _models:
   - {fileID: 2672817470047208098}
   - {fileID: 2772689299772723322}
@@ -253,7 +278,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 480642109035808872}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3250260034838789671
 MeshFilter:

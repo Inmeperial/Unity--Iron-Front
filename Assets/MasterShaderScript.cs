@@ -7,11 +7,12 @@ public class MasterShaderScript : MonoBehaviour
 {
     //Need to add all the Keys in SwitchTextureEnum by hand , we cant know the strings by code.
 
-    // necesito un for para todos los mesh del mesh renderer. Ponerlo como un array porque las piernas tienen 2 para la der e izq
+    //public TexturesForMasterShader textureForMasterShader;
 
-    public Texture textureBase, textureNormal, textureEmission, textureMask = default;
-    public Texture[] textureAlbedo = new Texture[4];
-    // public Material materialShader = default;
+    public Texture[] texturesCuerpo = new Texture[2];
+    public Texture[] textureArmadura = new Texture[2];
+    public Texture[] textureArticulaciones = new Texture[2];
+    public Color col;
     private string[] _shaderArrayString;
     private Material[] _matArr = default;
 
@@ -28,25 +29,13 @@ public class MasterShaderScript : MonoBehaviour
         for (int i = 0; i < _matArr.Length; i++)
         {
             _matArr[i] = this.GetComponent<Renderer>().materials[i];
-
-            // = materialShader;
-            // Renderer _rend = this.GetComponent<Renderer>().materials[i];
-
-            // Material[] _sharedMaterialsCopy;
-            // _rend.enabled = true;
-
-            _matArr[i].SetTexture("_TextureBase", textureBase);
-            _matArr[i].SetTexture("_TextureNormal", textureNormal);
-            _matArr[i].SetTexture("_TextureEmission", textureEmission);
-            _matArr[i].SetTexture("_TextureMask", textureMask);
         }
 
-        ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        SetTexturesToMaterial(0, texturesCuerpo);
+        SetTexturesToMaterial(1, textureArmadura);
+        SetTexturesToMaterial(2, textureArticulaciones);
 
-        //_material.SetTexture("_TextureBase", textureBase);
-        //_material.SetTexture("_TextureNormal", textureNormal);
-        //_material.SetTexture("_TextureEmission", textureEmission);
-        //_material.SetTexture("_TextureMetallic", textureMetallic);
+        ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
     }
 
     void Update()
@@ -65,21 +54,11 @@ public class MasterShaderScript : MonoBehaviour
         }
     }
 
-    private void SetTextureInShader(StringTextureEnum key)
+    public void SetMechaColor(Color color)
     {
         for (int i = 0; i < _matArr.Length; i++)
         {
-            for (int j = 0; j < _shaderArrayString.Length; j++)
-            {
-                if (_shaderArrayString[j] == key.ToString())
-                {
-                    _matArr[i].EnableKeyword(_shaderArrayString[j]);
-                }
-                else
-                {
-                    _matArr[i].DisableKeyword(_shaderArrayString[j]);
-                }
-            }
+           _matArr[i].SetColor("_ColorAlbedo", color);
         }
     }
 
@@ -102,12 +81,54 @@ public class MasterShaderScript : MonoBehaviour
         }
     }
 
+    private void SetTexturesToMaterial(int matArrayNum, Texture[] arr)
+    {
+        if (arr[0] != null)
+        {
+            _matArr[matArrayNum].SetTexture("_TextureAlbedo", arr[0]);
+        }
+        if (arr[1] != null)
+        {
+            _matArr[matArrayNum].SetTexture("_TextureNormal", arr[1]);
+        }
+        //if (arr[2] != null)
+        //{
+        //    _matArr[matArrayNum].SetTexture("_TextureMask", arr[2]);
+        //}
+        //if (arr.Length > 3)
+        //{
+        //    if (arr[3] != null)
+        //    {
+        //        _matArr[matArrayNum].SetTexture("_TextureEmission", arr[3]);
+        //    }
+        //}
+    }
+
+    private void SetTextureInShader(StringTextureEnum key)
+    {
+        for (int i = 0; i < _matArr.Length; i++)
+        {
+            for (int j = 0; j < _shaderArrayString.Length; j++)
+            {
+                if (_shaderArrayString[j] == key.ToString())
+                {
+                    _matArr[i].EnableKeyword(_shaderArrayString[j]);
+                }
+                else
+                {
+                    _matArr[i].DisableKeyword(_shaderArrayString[j]);
+                }
+            }
+        }
+    }
+
     private enum StringTextureEnum
     {
         _SwitchTexture_Key0,
         _SwitchTexture_Key1,
         _SwitchTexture_Key2
     };
+
 }
 
 public enum SwitchTextureEnum
