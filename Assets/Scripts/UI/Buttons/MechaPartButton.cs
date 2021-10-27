@@ -19,11 +19,12 @@ public class MechaPartButton : CustomButton
     private int _bulletsCount;
     private MaterialMechaHandler _materialHandler;
     private MechaParts _part;
+    private Character _characterSelected;
     public override void OnPointerEnter(PointerEventData eventData)
     {
         //TODO: Resaltar partes
         //_materialHandler.SetSelectedPartMaterialToBody(_part, true);
-        
+        //_characterSelected.SetShaderForPart(SwitchTextureEnum.TextureHighLight, PartsMechaEnum.armL)
         UpdateDamagePreviewSlider();
         
         _damagePreviewSlider.gameObject.SetActive(true);

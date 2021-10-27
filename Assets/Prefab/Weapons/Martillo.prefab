@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8675658335340825131}
   - component: {fileID: 4089590900822642117}
   - component: {fileID: 3817156573740234667}
+  - component: {fileID: 968496812406592619}
   m_Layer: 9
   m_Name: GameObject
   m_TagString: Untagged
@@ -78,6 +79,31 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &968496812406592619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039567301696490403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texturesCuerpo:
+  - {fileID: 2800000, guid: 11e83bb4586b84e4086da88132e35974, type: 3}
+  - {fileID: 2800000, guid: af93befb1188490448e1451c9eb3681b, type: 3}
+  textureArmadura:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  textureArticulaciones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  col: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2899616444058808721
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,7 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77d8c3b51790c043ac04da1473255c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponData: {fileID: 11400000, guid: f59c4b3a26e546146be5cdcc049749e7, type: 2}
   _models:
   - {fileID: 1039567301696490403}
   _particleSpawn: {fileID: 1039567301696490403}

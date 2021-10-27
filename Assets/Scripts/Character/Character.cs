@@ -14,6 +14,8 @@ public class Character : EnumsClass, IObservable
 
     private Equipable _equipable;
 
+    private Dictionary<PartsMechaEnum, GameObject> _partsDictionary = new Dictionary<PartsMechaEnum, GameObject>();
+
     [SerializeField] protected Transform _raycastToTile;
     //STATS
     
@@ -136,6 +138,8 @@ public class Character : EnumsClass, IObservable
         //         _materialMechaHandler.SetHandlerMaterial(_mechaEquipment.body.enemyMaterial, _mechaEquipment.leftArm.enemyMaterial, _mechaEquipment.legs.enemyMaterial);
         //         break;
         // }
+
+        _partsDictionary = GetComponent<GetPartsOfMecha>().GetPartsObj();
 
         _particleMechaHandler = GetComponent<ParticleMechaHandler>();
         _animationMechaHandler = GetComponent<AnimationMechaHandler>();
@@ -1534,5 +1538,31 @@ public class Character : EnumsClass, IObservable
         _myPositionTile = newTile;
         _myPositionTile.MakeTileOccupied();
 	}
-    
+
+    public void SetShaderForAllParts(SwitchTextureEnum texture)
+    {
+        foreach (var item in _partsDictionary)
+        {
+            item.Value.GetComponent<MasterShaderScript>().ConvertEnumToStringEnumForShader(texture);
+        }
+    }
+
+    public void SetShaderForPart(SwitchTextureEnum texture, PartsMechaEnum partEnum)
+    {
+        foreach (var item in _partsDictionary)
+        {
+            if (item.Key == partEnum)
+            {
+                item.Value.GetComponent<MasterShaderScript>().ConvertEnumToStringEnumForShader(texture);
+            }
+        }
+    }
 }
+public enum PartsMechaEnum
+{
+    armL,
+    armR,
+    body,
+    legL,
+    legR
+};
