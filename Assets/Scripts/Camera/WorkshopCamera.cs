@@ -10,8 +10,6 @@ public class WorkshopCamera : MonoBehaviour
     [SerializeField] private Transform[] _mechasToLook;
     [SerializeField] private Transform[] _cameraPositions;
     [SerializeField] private Transform[] _mechaEditCameraPositions;
-    [SerializeField] private float _tpThreshold;
-    [SerializeField] private float _speed;
     private bool _isMoving;
     private CustomButton[] _buttons;
 
@@ -66,19 +64,18 @@ public class WorkshopCamera : MonoBehaviour
     
     IEnumerator StartMovement(Transform t)
     {
+        Vector3 startPos = transform.position;
         Vector3 endPos = t.position;
-        while (_isMoving)
-        {
-            var dir = endPos - transform.position;
-            transform.position += dir.normalized * (_speed * Time.deltaTime);
+        float lerpTime = 0;
+        float duration = .5f;
+        while(lerpTime < duration)
+		{
+            transform.position = Vector3.Lerp(startPos, endPos, lerpTime / duration);
+            lerpTime += Time.deltaTime;
+            yield return null;
+		}
+        transform.position = endPos;
 
-            if (Vector3.Distance(transform.position, endPos) <= _tpThreshold)
-            {
-                transform.position = endPos;
-                _isMoving = false;
-            }
-            yield return new WaitForEndOfFrame();
-        }
 
         ChangeButtonInteraction(true);
 

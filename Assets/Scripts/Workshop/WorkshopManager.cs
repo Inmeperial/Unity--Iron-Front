@@ -19,6 +19,8 @@ public class WorkshopManager : MonoBehaviour
     
     public WorkshopMecha[] mechas;
 
+    private SoundsMenu _soundMenu;
+
     private void Awake()
     {
         SetEquipment();
@@ -28,6 +30,7 @@ public class WorkshopManager : MonoBehaviour
     {
         _isEditing = false;
         _mechaIndex = 3;
+        _soundMenu = GetComponent<SoundsMenu>();
     }
 
     private void Update()
@@ -41,12 +44,13 @@ public class WorkshopManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SceneManager.LoadScene("TEST NUEVO PREFAB");
+            SceneManager.LoadScene("Level 1 NUEVO");
         }
     }
 
     public void PreviousButton()
     {
+        AudioManager.audioManagerInstance.PlaySound(_soundMenu.GetClickSound(), _soundMenu.GetObjectToAddAudioSource());
         if (_mechaIndex == 0)
             _mechaIndex = mechas.Length-1;
         else _mechaIndex--;
@@ -56,6 +60,7 @@ public class WorkshopManager : MonoBehaviour
     
     public void NextButton()
     {
+        AudioManager.audioManagerInstance.PlaySound(_soundMenu.GetClickSound(), _soundMenu.GetObjectToAddAudioSource());
         if (_mechaIndex >= mechas.Length - 1)
             _mechaIndex = 0;
         else _mechaIndex++;
@@ -65,12 +70,14 @@ public class WorkshopManager : MonoBehaviour
 
     public void EditButton()
     {
+        AudioManager.audioManagerInstance.PlaySound(_soundMenu.GetClickSound(), _soundMenu.GetObjectToAddAudioSource());
         _isEditing = true;
         OnClickEdit?.Invoke(_mechaIndex);
     }
 
     public void CloseEditionButton()
     {
+        AudioManager.audioManagerInstance.PlaySound(_soundMenu.GetClickSound(), _soundMenu.GetObjectToAddAudioSource());
         _isEditing = false;
         OnClickCloseEdit?.Invoke(_mechaIndex);
     }
