@@ -8,7 +8,8 @@ public class GetPartsOfMecha : MonoBehaviour
     private Dictionary<PartsMechaEnum, GameObject> _partsDictionary = new Dictionary<PartsMechaEnum, GameObject>();
 
     // falta RIGHT ARM SPAWN y el left para que aparezca en el shader, cambiar el nombre de ahora de armLspawn a arma y usar estos nombres para los faltantes.
-    // los brazos cambian con el body o sino cuando cambia todo el shader del mecha entero. 
+    // los brazos cambian con el body o sino cuando cambia todo el shader del mecha entero.
+    // cambiar el scale del normal, 2.28 para el mecha A y 1.5 para el mecha B, hay que 
 
     // Start is called before the first frame update
     void Start()
