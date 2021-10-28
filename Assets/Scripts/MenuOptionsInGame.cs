@@ -16,7 +16,7 @@ public class MenuOptionsInGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _menuInGameObj = canvasObj.transform.Find("MenuInGame").gameObject;
+        _menuInGameObj = GameObject.Find("CanvasMenuInGame").transform.GetChild(0).transform.GetChild(0).gameObject;
         _optionsObj = _menuInGameObj.transform.Find("PopUpOptionsPanel").gameObject;
         _devObj = _menuInGameObj.transform.Find("PopUpDevPanel").gameObject;
         _textVolume = _optionsObj.transform.Find("GeneralVolume").Find("TextVolumenTotal").gameObject.GetComponent<Text>(); 
