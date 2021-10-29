@@ -82,7 +82,6 @@ public class WorkshopMecha : MonoBehaviour
         
         var body = Instantiate(newBody.meshPrefab[0], _bodySpawnPosition);
         body.transform.localPosition = Vector3.zero;
-        //body.SetPart(newBody);
         _body = body;
     }
     
@@ -92,7 +91,6 @@ public class WorkshopMecha : MonoBehaviour
         
         var gun = Instantiate(newGun.prefab, _leftGunSpawn);
         gun.transform.localPosition = Vector3.zero;
-        gun.SetRightOrLeft("Left");
         _leftGun = gun.gameObject;
     }
     
@@ -102,7 +100,6 @@ public class WorkshopMecha : MonoBehaviour
         
         var gun = Instantiate(newGun.prefab, _rightGunSpawn);
         gun.transform.localPosition = Vector3.zero;
-        gun.SetRightOrLeft("Right");
         _rightGun = gun.gameObject;
     }
     

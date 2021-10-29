@@ -6,6 +6,7 @@ using UnityEngine;
 public class BodySO : PartSO
 {
     public Body prefab;
+    public ItemSO item;
     [Header(" 1 is RightArm")]
     [Header("Mesh GO for arm: 0 is LeftArm,")]
     public GameObject[] armsMeshPrefab;

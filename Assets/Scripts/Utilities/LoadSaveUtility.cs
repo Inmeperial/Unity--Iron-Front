@@ -7,7 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public static class LoadSaveUtility
 {
     private static readonly string _savePath = "/MechaEquipment.save";
-    
+
     /// <summary>
     /// Loads the file that contains the equipment info.
     /// </summary>
@@ -19,7 +19,7 @@ public static class LoadSaveUtility
         {
             return null;
         }
-
+        
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream file = File.Open(string.Concat(Application.dataPath, _savePath), FileMode.Open);
         
@@ -27,8 +27,8 @@ public static class LoadSaveUtility
         string save = formatter.Deserialize(file).ToString();
 
         //Separates the string in an array to have each equipment
-        char[] separator = {'|'};
-        string[] allEquipments = save.Split(separator);
+        char[] equipmentSeparator = {'|'};
+        string[] allEquipments = save.Split(equipmentSeparator);
 
         MechaEquipmentContainerSO newContainer = ScriptableObject.CreateInstance<MechaEquipmentContainerSO>();
         newContainer.name = "es el del load";
@@ -36,10 +36,36 @@ public static class LoadSaveUtility
         //Length-1 because the last element of the array is an empty string
         for (int i = 0; i < allEquipments.Length-1; i++)
         {
-            var savedEquipment = allEquipments[i];
+            //Gets equipment plus parts.
+            string savedEquipment = allEquipments[i];
+            
+            char[] partSeparator = {'_'};
+            
+            //Separates equipment (index 0) AND parts.
+            string[] allParts = savedEquipment.Split(partSeparator);
+            
             MechaEquipmentSO newEquipment = ScriptableObject.CreateInstance<MechaEquipmentSO>();
-            //Overwrites the equipment with the saved one
-            JsonUtility.FromJsonOverwrite(savedEquipment, newEquipment);
+
+            newEquipment.body = ScriptableObject.CreateInstance<BodySO>();
+            newEquipment.leftGun = ScriptableObject.CreateInstance<GunSO>();
+            newEquipment.rightGun = ScriptableObject.CreateInstance<GunSO>();
+            newEquipment.legs = ScriptableObject.CreateInstance<LegsSO>();
+            
+            //Overwrites body data with the saved one.
+            JsonUtility.FromJsonOverwrite(allParts[0], newEquipment.body);
+            
+            //Overwrites left gun data with the saved one.
+            JsonUtility.FromJsonOverwrite(allParts[1], newEquipment.leftGun);
+            
+            //Overwrites right gundata with the saved one.
+            JsonUtility.FromJsonOverwrite(allParts[2], newEquipment.rightGun);
+            
+            //Overwrites legs data with the saved one.
+            JsonUtility.FromJsonOverwrite(allParts[3], newEquipment.legs);
+            
+            //Index 4 is the name of the Mecha.
+            newEquipment.name = allParts[4];
+            
             newContainer.equipments.Add(newEquipment);
         }
         file.Close();
@@ -52,26 +78,43 @@ public static class LoadSaveUtility
     /// <param name="equipmentContainer">Equipment to save.</param>
     public static void SaveEquipment(MechaEquipmentContainerSO equipmentContainer)
     {
-        Debug.Log("save");
         int amount = equipmentContainer.equipments.Count;
         
-        //Array to save al equipments
+        //String to save all equipments
         string equipmentSaves = "";
-
-        //Converts al equipments to json/string
+        
+        //Converts al equipments to json/string.
         for (int i = 0; i < amount; i++)
         {
-            if (i != 0)
+            //Gets parts data and adds a separator to read each part when loading.
+            string body = JsonUtility.ToJson(equipmentContainer.equipments[i].body, true);
+            body += '_';
+            
+            string leftGun = JsonUtility.ToJson(equipmentContainer.equipments[i].leftGun, true);
+            leftGun += '_';
+            
+            string rightGun = JsonUtility.ToJson(equipmentContainer.equipments[i].rightGun, true);
+            rightGun += '_';
+            
+            string legs = JsonUtility.ToJson(equipmentContainer.equipments[i].legs, true);
+            legs += '_';
+            if (i == 0)
             {
-                equipmentSaves += JsonUtility.ToJson(equipmentContainer.equipments[i], true);
-                equipmentSaves += '|';
+                //If it's the first equipment, removes the empty space.
+                equipmentSaves = body;
             }
             else
             {
-                equipmentSaves = JsonUtility.ToJson(equipmentContainer.equipments[i], true);
-                equipmentSaves += '|';
+                equipmentSaves += body;
             }
-            
+
+            equipmentSaves += leftGun;
+            equipmentSaves += rightGun;
+            equipmentSaves += legs;
+            equipmentSaves += equipmentContainer.equipments[i].name;
+
+            //Set the end of this equipment.
+            equipmentSaves += '|';
         }
         
 
@@ -79,7 +122,7 @@ public static class LoadSaveUtility
         
         FileStream file = File.Create(string.Concat(Application.dataPath, _savePath));
         
-        //Serializes the string of equipments
+        //Serializes the string of equipments.
         formatter.Serialize(file, equipmentSaves);
         file.Close();
     }

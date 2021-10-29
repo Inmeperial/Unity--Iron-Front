@@ -1053,6 +1053,7 @@ public class ButtonsUIManager : MonoBehaviour
 
         //Item item = _selectedChar.GetItem();
 
+        //TODO: REVISAR
         List<Equipable> equipables = _selectedChar.GetEquipables();
 
         if (equipables != null && equipables.Count > 0)
@@ -1094,7 +1095,7 @@ public class ButtonsUIManager : MonoBehaviour
                         else button.interactable = false;
                             
                         break;
-                    case EquipableSO.EquipableType.PassiveAbility:
+                    case EquipableSO.EquipableType.Ability:
                         ability = equipment as Ability;
                         if (ability)
                         {

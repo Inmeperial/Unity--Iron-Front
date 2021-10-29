@@ -1,6 +1,5 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,10 +15,14 @@ public class WorkshopManager : MonoBehaviour
     public static event ClickAction OnClickNext;
     public static event ClickAction OnClickEdit;
     public static event ClickAction OnClickCloseEdit;
-    
+
     public WorkshopMecha[] mechas;
 
     private SoundsMenu _soundMenu;
+    
+    [Space]
+    [SerializeField] private WorkshopObjectButton _workshopObjectPrefab;
+    private List<WorkshopObjectButton> _createdObjectButtonList = new List<WorkshopObjectButton>();
 
     private void Awake()
     {
@@ -31,6 +34,7 @@ public class WorkshopManager : MonoBehaviour
         _isEditing = false;
         _mechaIndex = 3;
         _soundMenu = GetComponent<SoundsMenu>();
+        WorkshopUIManager.OnChangeEquippable += UpdateEquippable;
     }
 
     private void Update()
@@ -142,5 +146,74 @@ public class WorkshopManager : MonoBehaviour
         mechas[_mechaIndex].ChangeLegs(legs);
         _equipmentContainer.equipments[_mechaIndex].legs = legs;
         LoadSaveUtility.SaveEquipment(_equipmentContainer);
+    }
+
+    public void UpdateEquippable(EquipableSO equippable, string location)
+    {
+        switch (location) 
+        {
+             case "Body":
+                 _equipmentContainer.equipments[_mechaIndex].body.ability = equippable as AbilitySO;
+                break;
+             
+             case "LeftArm":
+                 _equipmentContainer.equipments[_mechaIndex].leftGun.ability = equippable as AbilitySO;
+                break;
+                
+             case "RightArm":
+                 _equipmentContainer.equipments[_mechaIndex].rightGun.ability = equippable as AbilitySO;
+                break;
+             
+             case "Legs":
+                 _equipmentContainer.equipments[_mechaIndex].legs.ability = equippable as AbilitySO;
+                break;
+             
+             case "Item":
+                 _equipmentContainer.equipments[_mechaIndex].body.item = equippable as ItemSO;
+                 break;
+        } 
+        LoadSaveUtility.SaveEquipment(_equipmentContainer);
+    }
+    
+    public WorkshopObjectButton CreateWorkshopObject(PartSO part, Transform parent)
+    {
+        var obj = Instantiate(_workshopObjectPrefab, parent);
+        obj.transform.localPosition = Vector3.zero;
+        obj.SetObjectName(part.partName);
+        obj.SetObjectSprite(part.icon);
+      
+        _createdObjectButtonList.Add(obj);
+        return obj;
+    }
+   
+    public WorkshopObjectButton CreateWorkshopObject(GunSO gun, Transform parent)
+    {
+        var obj = Instantiate(_workshopObjectPrefab, parent);
+        obj.transform.localPosition = Vector3.zero;
+        obj.SetObjectName(gun.gunName);
+        obj.SetObjectSprite(gun.gunImage);
+      
+        _createdObjectButtonList.Add(obj);
+        return obj;
+    }
+   
+    public WorkshopObjectButton CreateWorkshopObject(EquipableSO equipable, Transform parent)
+    {
+        var obj = Instantiate(_workshopObjectPrefab, parent);
+        obj.transform.localPosition = Vector3.zero;
+        obj.SetObjectName(equipable.equipableName);
+        obj.SetObjectSprite(equipable.equipableIcon);
+        _createdObjectButtonList.Add(obj);
+        return obj;
+    }
+
+    public void DestroyWorkshopObjects()
+    {
+        foreach (var obj in _createdObjectButtonList)
+        {
+            Destroy(obj.gameObject);
+        }
+
+        _createdObjectButtonList = new List<WorkshopObjectButton>();
     }
 }

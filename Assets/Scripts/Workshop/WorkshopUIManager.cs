@@ -11,8 +11,7 @@ public class WorkshopUIManager : MonoBehaviour
    [SerializeField] private TextMeshProUGUI _overviewRightArm;
    [SerializeField] private TextMeshProUGUI _overviewLegs;
 
-   [Space]
-   [SerializeField] private WorkshopObjectButton _workshopObjectPrefab;
+   
    
    [Header("Parts List")]
    [SerializeField] private Transform _partsSpawnParent;
@@ -27,7 +26,10 @@ public class WorkshopUIManager : MonoBehaviour
    [SerializeField] private TextMeshProUGUI _itemsDescription;
    [SerializeField] private Image _itemImage;
 
-   private List<WorkshopObjectButton> _createdObjectButtonList = new List<WorkshopObjectButton>();
+   public delegate void ChangeEquippable(EquipableSO equipableSo, string location);
+
+   public static event ChangeEquippable OnChangeEquippable;
+   
    private void Start()
    {
       WorkshopManager.OnClickPrevious += UpdateOverviewText;
@@ -47,7 +49,10 @@ public class WorkshopUIManager : MonoBehaviour
    
    public void UpdatePartsList(string part)
    {
-      DestroyWorkshopObjects();
+      var workshopManager = FindObjectOfType<WorkshopManager>();
+      
+      workshopManager.DestroyWorkshopObjects();
+      
       _partsDescription.text = "";
       var manager = FindObjectOfType<WorkshopManager>();
       switch (part)
@@ -57,7 +62,7 @@ public class WorkshopUIManager : MonoBehaviour
 
             foreach (var body in bodies)
             {
-               var b =CreateWorkshopObject(body, _partsSpawnParent);
+               var b = workshopManager.CreateWorkshopObject(body, _partsSpawnParent);
                b.SetLeftClick(() =>
                {
                   _partsDescription.text = "HP: " + body.maxHP;
@@ -70,7 +75,7 @@ public class WorkshopUIManager : MonoBehaviour
             var gunsA = WorkshopDatabaseManager.Instance.GetGuns();
             foreach (var gun in gunsA)
             {
-               var a =CreateWorkshopObject(gun, _partsSpawnParent);
+               var a = workshopManager.CreateWorkshopObject(gun, _partsSpawnParent);
                a.SetLeftClick(() =>
                {
                   _partsDescription.text = "Damage: " + gun.damage +
@@ -88,7 +93,7 @@ public class WorkshopUIManager : MonoBehaviour
             var gunsB = WorkshopDatabaseManager.Instance.GetGuns();
             foreach (var gun in gunsB)
             {
-               var a =CreateWorkshopObject(gun, _partsSpawnParent);
+               var a = workshopManager.CreateWorkshopObject(gun, _partsSpawnParent);
                a.SetLeftClick(() =>
                {
                   _partsDescription.text = "Damage: " + gun.damage +
@@ -105,7 +110,7 @@ public class WorkshopUIManager : MonoBehaviour
             var legs = WorkshopDatabaseManager.Instance.GetLegs();
             foreach (var leg in legs)
             {
-               var l =CreateWorkshopObject(leg, _partsSpawnParent);
+               var l = workshopManager.CreateWorkshopObject(leg, _partsSpawnParent);
                l.SetLeftClick(() =>
                {
                   _partsDescription.text = "HP: " + leg.maxHP;
@@ -119,7 +124,10 @@ public class WorkshopUIManager : MonoBehaviour
    //TODO: Funcionalidad de mostrar
    public void UpdateAbilitiesList(string part)
    {
-      DestroyWorkshopObjects();
+      var workshopManager = FindObjectOfType<WorkshopManager>();
+      
+      workshopManager.DestroyWorkshopObjects();
+      
       _abilitiesDescription.text = "";
       List<AbilitySO> abilities = new List<AbilitySO>();
       abilities = WorkshopDatabaseManager.Instance.GetAbilities();
@@ -133,8 +141,12 @@ public class WorkshopUIManager : MonoBehaviour
             {
                if (ability.partSlot == AbilitySO.PartSlot.Body)
                {
-                  var obj = CreateWorkshopObject(ability, _abilitiesSpawnParent);
-                  obj.SetLeftClick(() => _itemsDescription.text = ability.description);
+                  var obj = workshopManager.CreateWorkshopObject(ability, _abilitiesSpawnParent);
+                  obj.SetLeftClick(() =>
+                  {
+                     _itemsDescription.text = ability.description;
+                     OnChangeEquippable?.Invoke(ability, part);
+                  });
                }
             }
             
@@ -146,8 +158,12 @@ public class WorkshopUIManager : MonoBehaviour
             {
                if (ability.partSlot == AbilitySO.PartSlot.Arm)
                {
-                  var obj = CreateWorkshopObject(ability, _abilitiesSpawnParent);
-                  obj.SetLeftClick(() => _itemsDescription.text = ability.description);
+                  var obj = workshopManager.CreateWorkshopObject(ability, _abilitiesSpawnParent);
+                  obj.SetLeftClick(() =>
+                  {
+                     _itemsDescription.text = ability.description;
+                     OnChangeEquippable?.Invoke(ability, part);
+                  });
                }
             }
             break;
@@ -158,8 +174,12 @@ public class WorkshopUIManager : MonoBehaviour
             {
                if (ability.partSlot == AbilitySO.PartSlot.Arm)
                {
-                  var obj = CreateWorkshopObject(ability, _abilitiesSpawnParent);
-                  obj.SetLeftClick(() => _itemsDescription.text = ability.description);
+                  var obj = workshopManager.CreateWorkshopObject(ability, _abilitiesSpawnParent);
+                  obj.SetLeftClick(() =>
+                  {
+                     _itemsDescription.text = ability.description;
+                     OnChangeEquippable?.Invoke(ability, part);
+                  });
                }
             }
             
@@ -171,8 +191,12 @@ public class WorkshopUIManager : MonoBehaviour
             {
                if (ability.partSlot == AbilitySO.PartSlot.Legs)
                {
-                  var obj = CreateWorkshopObject(ability, _abilitiesSpawnParent);
-                  obj.SetLeftClick(() => _itemsDescription.text = ability.description);
+                  var obj = workshopManager.CreateWorkshopObject(ability, _abilitiesSpawnParent);
+                  obj.SetLeftClick(() =>
+                  {
+                     _itemsDescription.text = ability.description;
+                     OnChangeEquippable?.Invoke(ability, part);
+                  });
                }
                   
             }
@@ -184,57 +208,21 @@ public class WorkshopUIManager : MonoBehaviour
    
    public void UpdateItemsList()
    {
-      DestroyWorkshopObjects();
+      var workshopManager = FindObjectOfType<WorkshopManager>();
+      
+      workshopManager.DestroyWorkshopObjects();
+      
       _itemsDescription.text = "";
       var items = WorkshopDatabaseManager.Instance.GetItems();
 
       foreach (var item in items)
       {
-         var obj = CreateWorkshopObject(item, _itemsSpawnParent);
-         obj.SetLeftClick(() => _itemsDescription.text = item.description);
+         var obj = workshopManager.CreateWorkshopObject(item, _itemsSpawnParent);
+         obj.SetLeftClick(() =>
+         {
+            _itemsDescription.text = item.description;
+            OnChangeEquippable?.Invoke(item, "Item");
+         });
       }
-   }
-
-   
-   private WorkshopObjectButton CreateWorkshopObject(PartSO part, Transform parent)
-   {
-      var obj = Instantiate(_workshopObjectPrefab, parent);
-      obj.transform.localPosition = Vector3.zero;
-      obj.SetObjectName(part.partName);
-      obj.SetObjectSprite(part.icon);
-      
-      _createdObjectButtonList.Add(obj);
-      return obj;
-   }
-   
-   private WorkshopObjectButton CreateWorkshopObject(GunSO gun, Transform parent)
-   {
-      var obj = Instantiate(_workshopObjectPrefab, parent);
-      obj.transform.localPosition = Vector3.zero;
-      obj.SetObjectName(gun.gunName);
-      obj.SetObjectSprite(gun.gunImage);
-      
-      _createdObjectButtonList.Add(obj);
-      return obj;
-   }
-   
-   private WorkshopObjectButton CreateWorkshopObject(EquipableSO equipable, Transform parent)
-   {
-      var obj = Instantiate(_workshopObjectPrefab, parent);
-      obj.transform.localPosition = Vector3.zero;
-      obj.SetObjectName(equipable.equipableName);
-      obj.SetObjectSprite(equipable.equipableIcon);
-      _createdObjectButtonList.Add(obj);
-      return obj;
-   }
-
-   private void DestroyWorkshopObjects()
-   {
-      foreach (var obj in _createdObjectButtonList)
-      {
-         Destroy(obj.gameObject);
-      }
-
-      _createdObjectButtonList = new List<WorkshopObjectButton>();
    }
 }

@@ -9,7 +9,7 @@ public abstract class EquipableSO : ScriptableObject
     public enum EquipableType
      {
          Item,
-         PassiveAbility,
+         Ability,
          ActiveAbility
      };
 

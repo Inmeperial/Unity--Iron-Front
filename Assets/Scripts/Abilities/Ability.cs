@@ -18,9 +18,10 @@ public class Ability : Equipable
     }
     public string AbilityStatus()
     {
+        //TODO: REVISAR
         switch (_equipableType)
         {
-            case EquipableSO.EquipableType.PassiveAbility:
+            case EquipableSO.EquipableType.Ability:
                 return _availableUses > 0 ? "Enabled" : "Disabled";
             case EquipableSO.EquipableType.ActiveAbility:
                 if (InCooldown())
