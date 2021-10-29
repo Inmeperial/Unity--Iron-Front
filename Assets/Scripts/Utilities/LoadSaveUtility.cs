@@ -28,7 +28,7 @@ public static class LoadSaveUtility
         string save = formatter.Deserialize(file).ToString();
 
         //Separates the string in an array to have each equipment
-        char[] equipmentSeparator = {'|'};
+        char[] equipmentSeparator = {'#'};
         string[] allEquipments = save.Split(equipmentSeparator);
 
         MechaEquipmentContainerSO newContainer = ScriptableObject.CreateInstance<MechaEquipmentContainerSO>();
@@ -40,7 +40,7 @@ public static class LoadSaveUtility
             //Gets equipment plus parts.
             string savedEquipment = allEquipments[i];
             
-            char[] partSeparator = {'_'};
+            char[] partSeparator = {'|'};
             
             //Separates equipment (index 0) AND parts.
             string[] allParts = savedEquipment.Split(partSeparator);
@@ -89,16 +89,16 @@ public static class LoadSaveUtility
         {
             //Gets parts data and adds a separator to read each part when loading.
             string body = JsonUtility.ToJson(equipmentContainer.equipments[i].body, true);
-            body += '_';
+            body += '|';
             
             string leftGun = JsonUtility.ToJson(equipmentContainer.equipments[i].leftGun, true);
-            leftGun += '_';
+            leftGun += '|';
             
             string rightGun = JsonUtility.ToJson(equipmentContainer.equipments[i].rightGun, true);
-            rightGun += '_';
+            rightGun += '|';
             
             string legs = JsonUtility.ToJson(equipmentContainer.equipments[i].legs, true);
-            legs += '_';
+            legs += '|';
             if (i == 0)
             {
                 //If it's the first equipment, removes the empty space.
@@ -115,7 +115,7 @@ public static class LoadSaveUtility
             equipmentSaves += equipmentContainer.equipments[i].name;
 
             //Set the end of this equipment.
-            equipmentSaves += '|';
+            equipmentSaves += '#';
         }
         
 
