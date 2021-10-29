@@ -7,18 +7,17 @@ using UnityEngine.UI;
 public class MenuOptionsInGame : MonoBehaviour
 {
     public AudioMixer audioMixer = default;
-    public GameObject canvasObj = default;
     private GameObject _optionsObj = default;
     private GameObject _devObj = default;
-    private GameObject _menuInGameObj = default;
+    public GameObject menuInGameObj = default;
     private Text _textVolume = default;
 
     // Start is called before the first frame update
     void Start()
     {
-        _menuInGameObj = GameObject.Find("CanvasMenuInGame").transform.GetChild(0).transform.GetChild(0).gameObject;
-        _optionsObj = _menuInGameObj.transform.Find("PopUpOptionsPanel").gameObject;
-        _devObj = _menuInGameObj.transform.Find("PopUpDevPanel").gameObject;
+        //menuInGameObj = GameObject.Find("CanvasMenuInGame").transform.GetChild(0).transform.GetChild(0).gameObject;
+        _optionsObj = menuInGameObj.transform.Find("PopUpOptionsPanel").gameObject;
+        _devObj = menuInGameObj.transform.Find("PopUpDevPanel").gameObject;
         _textVolume = _optionsObj.transform.Find("GeneralVolume").Find("TextVolumenTotal").gameObject.GetComponent<Text>(); 
     }
 
@@ -27,17 +26,17 @@ public class MenuOptionsInGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (_menuInGameObj.activeSelf)
+            if (menuInGameObj.activeSelf)
             {
                 audioMixer.SetFloat("pitch", 1);
-                _menuInGameObj.SetActive(false);
+                menuInGameObj.SetActive(false);
                 CloseOptionsMenu();
                 CloseDevMenu();
             }
             else
             {
                 audioMixer.SetFloat("pitch", 0.3f);
-                _menuInGameObj.SetActive(true);
+                menuInGameObj.SetActive(true);
             }
         }
     }
