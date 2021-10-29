@@ -111,7 +111,6 @@ public class WorkshopManager : MonoBehaviour
             equipmentToUse = loadedEquipment;
         }
 
-        Debug.Log("eqip: " + _equipmentContainer.name);
         for (int i = 0; i < mechas.Length; i++)
         {
             mechas[i].SetEquipment(equipmentToUse.GetEquipment(i));

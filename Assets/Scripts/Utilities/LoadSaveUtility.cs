@@ -17,7 +17,8 @@ public static class LoadSaveUtility
     {
         if (!File.Exists(string.Concat(Application.dataPath, _savePath)))
         {
-            return null;
+            var defaultEquipment = Resources.Load<MechaEquipmentContainerSO>("Equipment/DefaultContainer");
+            return defaultEquipment;
         }
         
         BinaryFormatter formatter = new BinaryFormatter();
