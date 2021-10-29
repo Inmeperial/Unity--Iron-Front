@@ -30,6 +30,13 @@ public class InitializationManager : MonoBehaviour
         {
             c.ManualStart();
         }
+
+        var getParts = FindObjectsOfType<GetPartsOfMecha>();
+
+        foreach (var g in getParts)
+        {
+            g.ManualStart();
+        }
         
         var turnManager = FindObjectOfType<TurnManager>();
         turnManager.ManualStart();

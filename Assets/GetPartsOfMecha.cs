@@ -12,7 +12,7 @@ public class GetPartsOfMecha : MonoBehaviour
     // cambiar el scale del normal, 2.28 para el mecha A y 1.5 para el mecha B, hay que 
 
     // Start is called before the first frame update
-    void Start()
+    public void ManualStart()
     {
         //for (int i = 0; i < legLSpawn.transform.childCount; i++)
         //{
