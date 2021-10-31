@@ -6,19 +6,19 @@ using UnityEngine.UI;
 
 public class MenuOptionsInGame : MonoBehaviour
 {
-    public AudioMixer audioMixer = default;
-    private GameObject _optionsObj = default;
-    private GameObject _devObj = default;
     public GameObject menuInGameObj = default;
-    private Text _textVolume = default;
+    public GameObject optionsObj = default;
+    public GameObject devObj = default;
+    public Text textVolume = default;
+    public AudioMixer audioMixer = default;
 
     // Start is called before the first frame update
     void Start()
     {
         //menuInGameObj = GameObject.Find("CanvasMenuInGame").transform.GetChild(0).transform.GetChild(0).gameObject;
-        _optionsObj = menuInGameObj.transform.Find("PopUpOptionsPanel").gameObject;
-        _devObj = menuInGameObj.transform.Find("PopUpDevPanel").gameObject;
-        _textVolume = _optionsObj.transform.Find("GeneralVolume").Find("TextVolumenTotal").gameObject.GetComponent<Text>(); 
+        //optionsObj = menuInGameObj.transform.Find("PopUpOptionsPanel").gameObject;
+        //devObj = menuInGameObj.transform.Find("PopUpDevPanel").gameObject;
+        //textVolume = optionsObj.transform.Find("GeneralVolume").Find("TextVolumenTotal").gameObject.GetComponent<Text>(); 
     }
 
     // Update is called once per frame
@@ -45,27 +45,27 @@ public class MenuOptionsInGame : MonoBehaviour
     {
         float numPercentage = vol * 100;
         float volumeToSet = ((((numPercentage * 80) / 100) * -1) + 80) * -1;
-        _textVolume.text = Mathf.RoundToInt(numPercentage) + "%";
+        textVolume.text = Mathf.RoundToInt(numPercentage) + "%";
         audioMixer.SetFloat("volume", volumeToSet);
     }
 
     public void OpenOptionsMenu()
     {
-        _optionsObj.SetActive(true);
+        optionsObj.SetActive(true);
     }
 
     public void CloseOptionsMenu()
     {
-        _optionsObj.SetActive(false);
+        optionsObj.SetActive(false);
     }
 
     public void OpenDevMenu()
     {
-        _devObj.SetActive(true);
+        devObj.SetActive(true);
     }
 
     public void CloseDevMenu()
     {
-        _devObj.SetActive(false);
+        devObj.SetActive(false);
     }
 }
