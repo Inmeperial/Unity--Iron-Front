@@ -6,66 +6,67 @@ using UnityEngine.UI;
 
 public class MenuOptionsInGame : MonoBehaviour
 {
-    public GameObject menuInGameObj = default;
-    public GameObject optionsObj = default;
-    public GameObject devObj = default;
     public Text textVolume = default;
-    public AudioMixer audioMixer = default;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //menuInGameObj = GameObject.Find("CanvasMenuInGame").transform.GetChild(0).transform.GetChild(0).gameObject;
-        //optionsObj = menuInGameObj.transform.Find("PopUpOptionsPanel").gameObject;
-        //devObj = menuInGameObj.transform.Find("PopUpDevPanel").gameObject;
-        //textVolume = optionsObj.transform.Find("GeneralVolume").Find("TextVolumenTotal").gameObject.GetComponent<Text>(); 
-    }
-
-    // Update is called once per frame
+    [SerializeField] private GameObject _menuInGameObj = default;
+    [SerializeField] private GameObject _optionsObj = default;
+    [SerializeField] private GameObject _devObj = default;
+    [SerializeField] private AudioMixer _audioMixer = default;
+    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (menuInGameObj.activeSelf)
+            if (_menuInGameObj.activeSelf)
             {
-                audioMixer.SetFloat("pitch", 1);
-                menuInGameObj.SetActive(false);
-                CloseOptionsMenu();
-                CloseDevMenu();
+                CloseAllMenu();
             }
             else
             {
-                audioMixer.SetFloat("pitch", 0.3f);
-                menuInGameObj.SetActive(true);
+                OpenAllMenu();
             }
         }
     }
 
-    public void SetVolume(float vol)
+    public void CloseAllMenu()
+    {
+        _audioMixer.SetFloat("pitch", 1);
+        _menuInGameObj.SetActive(false);
+        CloseOptionsMenu();
+        CloseDevMenu();
+    }
+
+    private void OpenAllMenu()
+    {
+        _audioMixer.SetFloat("pitch", 0.3f);
+        _menuInGameObj.SetActive(true);
+    }
+
+    public void SetVolume(float vol) //Used on Inspector
     {
         float numPercentage = vol * 100;
         float volumeToSet = ((((numPercentage * 80) / 100) * -1) + 80) * -1;
         textVolume.text = Mathf.RoundToInt(numPercentage) + "%";
-        audioMixer.SetFloat("volume", volumeToSet);
+        _audioMixer.SetFloat("volume", volumeToSet);
     }
 
-    public void OpenOptionsMenu()
+    public void OpenOptionsMenu() //Used on Inspector
     {
-        optionsObj.SetActive(true);
+        _optionsObj.SetActive(true);
     }
 
-    public void CloseOptionsMenu()
+    public void CloseOptionsMenu() //Used on Inspector
     {
-        optionsObj.SetActive(false);
+        _optionsObj.SetActive(false);
     }
 
-    public void OpenDevMenu()
+    public void OpenDevMenu() //Used on Inspector
     {
-        devObj.SetActive(true);
+        _devObj.SetActive(true);
     }
 
-    public void CloseDevMenu()
+    public void CloseDevMenu() //Used on Inspector
     {
-        devObj.SetActive(false);
+        _devObj.SetActive(false);
     }
 }
