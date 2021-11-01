@@ -86,6 +86,12 @@ public class WorkshopManager : MonoBehaviour
         OnClickCloseEdit?.Invoke(_mechaIndex);
     }
 
+    //TODO: asignar al boton cuando esté.
+    public void ApplyChangesButton()
+    {
+        LoadSaveUtility.SaveEquipment(_equipmentContainer);
+    }
+
     public MechaEquipmentSO GetMechaEquipment(int index)
     {
         return mechas[index].GetEquipment();
@@ -215,4 +221,6 @@ public class WorkshopManager : MonoBehaviour
 
         _createdObjectButtonList = new List<WorkshopObjectButton>();
     }
+    
+    
 }

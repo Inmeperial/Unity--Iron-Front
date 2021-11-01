@@ -20,6 +20,10 @@ public class WorkshopUIManager : MonoBehaviour
    [Header("Abilities List")]
    [SerializeField] private Transform _abilitiesSpawnParent;
    [SerializeField] private TextMeshProUGUI _abilitiesDescription;
+   [SerializeField] private Image _bodyAbilityImage;
+   [SerializeField] private Image _leftArmAbilityImage;
+   [SerializeField] private Image _rightArmAbilityImage;
+   [SerializeField] private Image _legsAbilityImage;
    
    [Header("Items List")]
    [SerializeField] private Transform _itemsSpawnParent;
@@ -136,7 +140,6 @@ public class WorkshopUIManager : MonoBehaviour
       {
             
          case "Body":
-
             foreach (var ability in abilities)
             {
                if (ability.partSlot == AbilitySO.PartSlot.Body)
@@ -145,6 +148,7 @@ public class WorkshopUIManager : MonoBehaviour
                   obj.SetLeftClick(() =>
                   {
                      _itemsDescription.text = ability.description;
+                     _bodyAbilityImage.sprite = ability.equipableIcon;
                      OnChangeEquippable?.Invoke(ability, part);
                   });
                }
@@ -162,6 +166,7 @@ public class WorkshopUIManager : MonoBehaviour
                   obj.SetLeftClick(() =>
                   {
                      _itemsDescription.text = ability.description;
+                     _leftArmAbilityImage.sprite = ability.equipableIcon;
                      OnChangeEquippable?.Invoke(ability, part);
                   });
                }
@@ -178,6 +183,7 @@ public class WorkshopUIManager : MonoBehaviour
                   obj.SetLeftClick(() =>
                   {
                      _itemsDescription.text = ability.description;
+                     _rightArmAbilityImage.sprite = ability.equipableIcon;
                      OnChangeEquippable?.Invoke(ability, part);
                   });
                }
@@ -195,6 +201,7 @@ public class WorkshopUIManager : MonoBehaviour
                   obj.SetLeftClick(() =>
                   {
                      _itemsDescription.text = ability.description;
+                     _legsAbilityImage.sprite = ability.equipableIcon;
                      OnChangeEquippable?.Invoke(ability, part);
                   });
                }
@@ -204,8 +211,6 @@ public class WorkshopUIManager : MonoBehaviour
       }
    }
 
-   
-   
    public void UpdateItemsList()
    {
       var workshopManager = FindObjectOfType<WorkshopManager>();
@@ -221,6 +226,7 @@ public class WorkshopUIManager : MonoBehaviour
          obj.SetLeftClick(() =>
          {
             _itemsDescription.text = item.description;
+            _itemImage.sprite = item.equipableIcon;
             OnChangeEquippable?.Invoke(item, "Item");
          });
       }
