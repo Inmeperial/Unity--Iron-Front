@@ -148,7 +148,8 @@ public class WorkshopUIManager : MonoBehaviour
                   obj.SetLeftClick(() =>
                   {
                      _itemsDescription.text = ability.description;
-                     _bodyAbilityImage.sprite = ability.equipableIcon;
+                     if (ability.equipableIcon)
+                        _bodyAbilityImage.sprite = ability.equipableIcon;
                      OnChangeEquippable?.Invoke(ability, part);
                   });
                }
@@ -166,7 +167,8 @@ public class WorkshopUIManager : MonoBehaviour
                   obj.SetLeftClick(() =>
                   {
                      _itemsDescription.text = ability.description;
-                     _leftArmAbilityImage.sprite = ability.equipableIcon;
+                     if (ability.equipableIcon)
+                        _leftArmAbilityImage.sprite = ability.equipableIcon;
                      OnChangeEquippable?.Invoke(ability, part);
                   });
                }
@@ -183,7 +185,8 @@ public class WorkshopUIManager : MonoBehaviour
                   obj.SetLeftClick(() =>
                   {
                      _itemsDescription.text = ability.description;
-                     _rightArmAbilityImage.sprite = ability.equipableIcon;
+                     if (ability.equipableIcon)
+                        _rightArmAbilityImage.sprite = ability.equipableIcon;
                      OnChangeEquippable?.Invoke(ability, part);
                   });
                }
@@ -201,7 +204,8 @@ public class WorkshopUIManager : MonoBehaviour
                   obj.SetLeftClick(() =>
                   {
                      _itemsDescription.text = ability.description;
-                     _legsAbilityImage.sprite = ability.equipableIcon;
+                     if (ability.equipableIcon)
+                        _legsAbilityImage.sprite = ability.equipableIcon;
                      OnChangeEquippable?.Invoke(ability, part);
                   });
                }
@@ -226,7 +230,9 @@ public class WorkshopUIManager : MonoBehaviour
          obj.SetLeftClick(() =>
          {
             _itemsDescription.text = item.description;
-            _itemImage.sprite = item.equipableIcon;
+            //TODO: retirar checkeo cuando haya iconos.
+            if (item.equipableIcon)
+               _itemImage.sprite = item.equipableIcon;
             OnChangeEquippable?.Invoke(item, "Item");
          });
       }
