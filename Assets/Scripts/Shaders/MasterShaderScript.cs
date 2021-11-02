@@ -12,7 +12,7 @@ public class MasterShaderScript : MonoBehaviour
     public Texture[] texturesCuerpo = new Texture[2];
     public Texture[] textureArmadura = new Texture[2];
     public Texture[] textureArticulaciones = new Texture[2];
-    public Color col;
+    public Color colorMecha;
     private string[] _shaderArrayString;
     private Material[] _matArr = default;
 
@@ -36,22 +36,28 @@ public class MasterShaderScript : MonoBehaviour
         SetTexturesToMaterial(2, textureArticulaciones);
 
         ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        SetMechaColor(colorMecha);
     }
 
-    void Update()
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.F1))
+    //    {
+    //        ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.F2))
+    //    {
+    //        ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureFresnel);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.F3))
+    //    {
+    //        ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
+    //    }
+    //}
+
+    public string[] GetArrayStringForShaderSwitch()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-        }
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureFresnel);
-        }
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
-        }
+        return _shaderArrayString;
     }
 
     public void SetMechaColor(Color color)
