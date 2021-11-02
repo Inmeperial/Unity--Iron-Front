@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -81,10 +82,9 @@ public class Character : EnumsClass, IObservable
     protected List<Tile> _path = new List<Tile>();
     public Quaternion InitialRotation { get; private set; } //Cambio Nico
     public Quaternion RotationBeforeAttack { get; private set; }
-    
-    protected bool _legsOvercharged;
 
-    //FLAGS
+
+    #region  Flags
     protected bool _canBeSelected;
     protected bool _selected;
     protected bool _moving = false;
@@ -99,6 +99,11 @@ public class Character : EnumsClass, IObservable
     protected bool _isDead = false;
     protected bool _equipableSelected;
     protected bool _rotated;
+
+    protected bool _overweight;
+    
+    protected bool _legsOvercharged;
+    #endregion
 
     //OTHERS
     public List<GameObject> bodyRenderContainer = new List<GameObject>();
@@ -891,6 +896,11 @@ public class Character : EnumsClass, IObservable
         return _particleMechaHandler.GetBurningSpawnerFromParticleMechaHandler();
     }
 
+    public bool IsOverweight()
+    {
+        return _overweight;
+    }
+
     public MaterialMechaHandler GetMaterialHandler()
     {
         return _materialMechaHandler;
@@ -1480,6 +1490,7 @@ public class Character : EnumsClass, IObservable
         _legs.SetPart(_mechaEquipment.legs);
         _legs.SetOtherLeg(rLeg);
         
+
         _materialMechaHandler.SetPartGameObject(_body, _leftGun, _rightGun, _legs);
         
         _myUI.SetLegsButtonPart(_materialMechaHandler, MechaParts.Legs);
@@ -1556,6 +1567,27 @@ public class Character : EnumsClass, IObservable
                 item.Value.GetComponent<MasterShaderScript>().ConvertEnumToStringEnumForShader(texture);
             }
         }
+    }
+
+    public void CheckWeight()
+    {
+        float totalWeight = 0;
+
+        if (!_body) return;
+
+        if (_leftGun)
+            totalWeight += _leftGun.GetWeight();
+
+        if (_rightGun)
+            totalWeight += _rightGun.GetWeight();
+        
+        totalWeight += _legs.GetWeight();
+
+        if (totalWeight <= _body.GetMaxWeight())
+        {
+            _overweight = false;
+        }
+        else _overweight = true;
     }
 }
 public enum PartsMechaEnum

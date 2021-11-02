@@ -12,6 +12,7 @@ public abstract class Parts : MonoBehaviour
     protected Ability _ability;
     protected float _maxHP;
     protected float _currentHP;
+    protected float _weight;
     public virtual void ManualStart(Character character)
     {
         _myChar = character;
@@ -21,7 +22,8 @@ public abstract class Parts : MonoBehaviour
     {
         _maxHP = data.maxHP;
         _currentHP = _maxHP;
-
+        _weight = data.weight;
+        
         if (!_myChar) return;
         
         if(data.ability && data.ability.abilityPrefab)
@@ -40,6 +42,11 @@ public abstract class Parts : MonoBehaviour
     public float GetCurrentHp()
     {
         return _currentHP;
+    }
+    
+    public float GetWeight()
+    {
+        return _weight;
     }
 
     public abstract void UpdateHp(float value);
