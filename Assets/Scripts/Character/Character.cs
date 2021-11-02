@@ -1588,6 +1588,17 @@ public class Character : EnumsClass, IObservable
             _overweight = false;
         }
         else _overweight = true;
+        
+        Debug.Log("Total weight: " + _body.GetMaxWeight() + " /// Current Weight: " + totalWeight);
+    }
+
+    public void ArmDestroyed(string location)
+    {
+        if (location == "Left")
+            _leftGun = null;
+        else _rightGun = null;
+        
+        CheckWeight();
     }
 }
 public enum PartsMechaEnum

@@ -330,6 +330,7 @@ public abstract class Gun : EnumsClass, IGun
         
         if (_currentHP <= 0)
         {
+            _myChar.ArmDestroyed(_location);
             TurnOff();
             //TODO: revisar switch que parece al pedo
             // switch (_location)
@@ -383,6 +384,7 @@ public abstract class Gun : EnumsClass, IGun
         
         if (_currentHP <= 0)
         {
+            _myChar.ArmDestroyed(_location);
             TurnOff();
             // if (_location == "Left")
             //     _myChar.GetLeftGun().TurnOff();
