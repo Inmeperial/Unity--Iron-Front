@@ -1490,6 +1490,7 @@ public class Character : EnumsClass, IObservable
         _legs.SetPart(_mechaEquipment.legs);
         _legs.SetOtherLeg(rLeg);
         
+        CheckWeight();
 
         _materialMechaHandler.SetPartGameObject(_body, _leftGun, _rightGun, _legs);
         
