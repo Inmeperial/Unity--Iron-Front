@@ -18,15 +18,19 @@ public class PiercingShot : Ability
         //damage = _character.GetLeftGun().GetBulletDamage() * (_character.GetLeftGun().GetAvailableBullets() / 2);//Formulita para hacer el daño dinamico según que arma tiene
 		if (!_highlight)
 			_highlight = FindObjectOfType<TileHighlight>();
-		//_abilityUseRange = _abilityData.pushUseRange;
-		PaintUseTiles(_character.GetMyPositionTile(), 0, Vector3.zero);
+        //_abilityUseRange = _abilityData.pushUseRange;
+        //PaintUseTiles(_character.GetMyPositionTile(), 0, Vector3.zero);//Cambie porque no me pintaba todos los tiles
+        PaintTilesInRange(_character.GetMyPositionTile(), 0, Vector3.forward);
+        PaintTilesInRange(_character.GetMyPositionTile(), 0, -Vector3.forward);
+        PaintTilesInRange(_character.GetMyPositionTile(), 0, Vector3.right);
+        PaintTilesInRange(_character.GetMyPositionTile(), 0, -Vector3.right);
         _character.EquipableSelectionState(true, this);
         _character.DeselectThisUnit();
 	}
 
 	public override void Deselect()
 	{
-        _highlight.ClearTilesInActivationRange(_tilesInRange);
+        _highlight.MortarClearTilesInAttackRange(_tilesInRange);
         _tilesInRange.Clear();
         _charactersToAttack.Clear();
         _character.EquipableSelectionState(false, null);
@@ -94,6 +98,28 @@ public class PiercingShot : Ability
 		}
         _character.DeactivateAttack();
 	}
+
+    private void PaintTilesInRange(Tile currentTile, int count, Vector3 dir)
+	{
+        if(!_tilesInRange.Contains(currentTile))
+            _tilesInRange.Add(currentTile);
+
+        if (count >= _abilityUseRange)
+            return;
+
+        count++;
+
+        RaycastHit hit;
+        Physics.Raycast(currentTile.transform.position, dir, out hit);
+        Tile t = hit.transform.GetComponent<Tile>();
+
+        if (t && t.IsWalkable())
+		{
+            _highlight.MortarPaintTilesInAttackRange(t);
+            PaintTilesInRange(t, count, dir);
+		}
+        return;
+    }
 
     private void PaintUseTiles(Tile currentTile, int count, Vector3 dir)
     {

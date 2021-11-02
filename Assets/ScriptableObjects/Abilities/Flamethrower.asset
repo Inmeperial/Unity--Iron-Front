@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipableType: 2
   equipableName: Flamethrower
+  equipableIcon: {fileID: 21300000, guid: 708ab9010dfc0e34587348cd262f8000, type: 3}
+  description: Does AoE Damage in a cone area.
   maxUses: 0
   cooldown: 3
   pushUseRange: 0
@@ -22,5 +24,3 @@ MonoBehaviour:
   abilityPrefab: {fileID: 5410007677447170726, guid: df67bf8f7d76749469adc7c5c094306e,
     type: 3}
   partSlot: 1
-  abilityType: 0
-  description: Flamethrower

@@ -68,9 +68,12 @@ public class WorkshopCamera : MonoBehaviour
         Vector3 endPos = t.position;
         float lerpTime = 0;
         float duration = .5f;
-        while(lerpTime < duration)
+        
+        while (lerpTime < duration)
 		{
-            transform.position = Vector3.Lerp(startPos, endPos, lerpTime / duration);
+            float smoothness = lerpTime / duration;
+            smoothness = smoothness * smoothness * smoothness * (smoothness * (6f * smoothness - 15f) + 10f);//Cuenta para que frene un poco cuando arranca y cuando termina.
+            transform.position = Vector3.Lerp(startPos, endPos, smoothness);
             lerpTime += Time.deltaTime;
             yield return null;
 		}
