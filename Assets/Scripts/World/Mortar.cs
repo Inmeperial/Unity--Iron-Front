@@ -309,7 +309,7 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
         EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.MortarHit);
         foreach (Tile tile in _tilesToAttack)
         {
-            Character unit = tile.GetCharacterAbove();
+            Character unit = tile.GetUnitAbove();
             if (unit)
             {
                 unit.GetBody().TakeDamage(_damage);

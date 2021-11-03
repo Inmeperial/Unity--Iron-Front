@@ -410,10 +410,11 @@ public class Character : EnumsClass, IObservable
 
         if (CanAttack())
         {
-            if (_rightGunAlive && _rightGun)
-                _selectedGun = _rightGun;
-            else if (_leftGunAlive && _leftGun)
-                _selectedGun = _leftGun;
+            //TODO: alive
+            if (_rightGunAlive && _rightGun) _selectedGun = _rightGun;
+            
+            else if (_leftGunAlive && _leftGun) _selectedGun = _leftGun;
+            
             else _selectedGun = null;
             PaintTilesInAttackRange(_myPositionTile, 0);
             CheckEnemiesInAttackRange();
@@ -833,7 +834,10 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool LeftGunAlive()
     {
+        return _leftGun;
+        //TODO: alive
         _leftGunAlive = _leftGun.GetCurrentHp() > 0;
+        
         return _leftGunAlive;
     }
 
@@ -842,7 +846,9 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool RightGunAlive()
     {
+        //TODO: alive
         _rightGunAlive = _rightGun.GetCurrentHp() > 0;
+        
         return _rightGunAlive;
     }
 
@@ -959,7 +965,10 @@ public class Character : EnumsClass, IObservable
     //Se pintan los tiles dentro del rango de ataque
     public void PaintTilesInAttackRange(Tile currentTile, int count)
     {
+        //TODO: alive
         if (!_leftGunAlive && !_rightGunAlive) return;
+        
+        //if (!_leftGun && !_rightGun) return;
 
         if (_selectedGun == null || count >= _selectedGun.GetAttackRange() ||
             (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
@@ -1073,26 +1082,20 @@ public class Character : EnumsClass, IObservable
         if (_isDead) return;
 
         _legsOvercharged = false;
-        if (_rightGun) _rightGun.Deselect();
-        if (_leftGun) _leftGun.Deselect();
+        if (_rightGun)
+        {
+            _rightGun.Deselect();
+            _rightGun.ReloadGun();
+        }
+
+        if (_leftGun)
+        {
+            _leftGun.Deselect();
+            _leftGun.ReloadGun();
+        }
         _myTurn = false;
         _canMove = true;
-
-        if (_selectedGun)
-        {
-            GunSO data = null;
-
-            if(_selectedGun.GetGunType() == _rightGun.GetGunType())
-            {
-                data = _mechaEquipment.rightGun;
-            }
-            else
-            {
-                data = _mechaEquipment.leftGun;
-            }
-            
-            _selectedGun.SetGun(data, this);
-        }
+        
         _canAttack = true;
         _path.Clear();
         _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps() / 2;
@@ -1120,6 +1123,7 @@ public class Character : EnumsClass, IObservable
         if (_myPositionTile)
         {
             _myPositionTile.MakeTileFree();
+            _myPositionTile.SetUnitAbove(null);
         }
 
         _myPositionTile = _targetTile;
@@ -1496,11 +1500,13 @@ public class Character : EnumsClass, IObservable
         
         _myUI.SetLegsButtonPart(_materialMechaHandler, MechaParts.Legs);
         
+        
+        //TODO: alive
         _leftGunAlive = _leftGun.GetCurrentHp() > 0 ? true : false;
-
+        
         _rightGunAlive = _rightGun.GetCurrentHp() > 0 ? true : false;
 
-        if (_rightGunAlive && _rightGun)
+        if (_rightGun)
         {
             _selectedGun = _rightGun;
             if (_selectedGun.GetGunType() == GunsType.Shield)
@@ -1509,7 +1515,7 @@ public class Character : EnumsClass, IObservable
             _rightGunSelected = true;
             _leftGunSelected = false;
         }
-        else if (_leftGunAlive && _leftGun)
+        else if (_leftGun)
         {
             _selectedGun = _leftGun;
             if (_selectedGun.GetGunType() == GunsType.Shield)
@@ -1547,8 +1553,10 @@ public class Character : EnumsClass, IObservable
 	{
         _myPositionTile.unitAboveSelected = false;
         _myPositionTile.MakeTileFree();
+        _myPositionTile.SetUnitAbove(null);
         _myPositionTile = newTile;
         _myPositionTile.MakeTileOccupied();
+        _myPositionTile.SetUnitAbove(this);
 	}
 
     public void SetShaderForAllParts(SwitchTextureEnum texture)
@@ -1593,11 +1601,20 @@ public class Character : EnumsClass, IObservable
         Debug.Log("Total weight: " + _body.GetMaxWeight() + " /// Current Weight: " + totalWeight);
     }
 
+    //TODO: alive
     public void ArmDestroyed(string location)
     {
-        if (location == "Left")
-            _leftGun = null;
-        else _rightGun = null;
+        // if (location == "Left")
+        // {
+        //     _leftGun = null;
+        //     //_leftGunAlive = false;
+        // }
+        //
+        // else
+        // {
+        //     _rightGun = null;
+        //     //_rightGunAlive = false;
+        // }
         
         CheckWeight();
     }
