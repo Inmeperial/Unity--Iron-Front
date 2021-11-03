@@ -248,7 +248,12 @@ public abstract class Gun : EnumsClass, IGun
 
     public void TurnOff()
     {
-        Destroy(gameObject);
+
+        ModelsOff();
+
+        GetComponent<BoxCollider>().enabled = false;
+
+        //Destroy(gameObject);
         // MeshRenderer[] childs = transform.GetComponentsInChildren<MeshRenderer>();
         // foreach (MeshRenderer m in childs)
         // {
