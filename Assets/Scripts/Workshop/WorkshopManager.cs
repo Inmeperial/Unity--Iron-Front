@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -272,6 +273,9 @@ public class WorkshopManager : MonoBehaviour
 
         _createdObjectButtonList = new List<WorkshopObjectButton>();
     }
-    
-    
+
+    public int GetIndex()
+    {
+        return _mechaIndex;
+    }
 }

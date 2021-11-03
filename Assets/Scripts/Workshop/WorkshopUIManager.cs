@@ -92,7 +92,9 @@ public class WorkshopUIManager : MonoBehaviour
       var workshopManager = FindObjectOfType<WorkshopManager>();
       
       workshopManager.DestroyWorkshopObjects();
-      
+
+      var index = workshopManager.GetIndex();
+
       _partsDescription.text = "";
       var manager = FindObjectOfType<WorkshopManager>();
       switch (part)
@@ -106,7 +108,10 @@ public class WorkshopUIManager : MonoBehaviour
                b.SetLeftClick(() =>
                {
                   _partsDescription.text = "HP: " + body.maxHP;
+                  
                   manager.UpdateBody(body);
+                  
+                  UpdateWeightSlider(index);
                });
             }
             break;
@@ -125,6 +130,8 @@ public class WorkshopUIManager : MonoBehaviour
                                            "\n Attack Range: " + gun.attackRange;
                                            
                   manager.UpdateLeftGun(gun);
+                  
+                  UpdateWeightSlider(index);
                });
             }
             break;
@@ -142,6 +149,8 @@ public class WorkshopUIManager : MonoBehaviour
                                            "\n Crit Chance: " + gun.critChance +
                                            "\n Attack Range: " + gun.attackRange;
                   manager.UpdateRightGun(gun);
+                  
+                  UpdateWeightSlider(index);
                });
             }
             break;
@@ -155,6 +164,8 @@ public class WorkshopUIManager : MonoBehaviour
                {
                   _partsDescription.text = "HP: " + leg.maxHP;
                   manager.UpdateLegs(leg);
+                  
+                  UpdateWeightSlider(index);
                });
             }
             break;
