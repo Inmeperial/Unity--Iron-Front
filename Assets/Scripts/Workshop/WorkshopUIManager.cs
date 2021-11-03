@@ -77,13 +77,13 @@ public class WorkshopUIManager : MonoBehaviour
       if (weight > maxWeight)
       {
          var weightSliderColors = _weightSlider.colors;
-         weightSliderColors.normalColor = Color.red;
+         weightSliderColors.normalColor = _overWeightColor;
          //_weightSlider.colors = weightSliderColors;
       }
       else
       {
          var weightSliderColors = _weightSlider.colors;
-         weightSliderColors.normalColor = Color.white;
+         weightSliderColors.normalColor = _normalWeightColor;
       }
    }
    
