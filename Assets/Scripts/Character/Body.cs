@@ -4,10 +4,20 @@ using UnityEngine;
 
 public class Body : Parts
 {
+    private float _maxWeight;
+    
+    public override void SetPart(PartSO data)
+    {
+        var b = data as BodySO;
+        _maxWeight = b.maxWeight;
+        
+        base.SetPart(data);
+    }
     public override void UpdateHp(float newValue)
     {
         _currentHP = newValue;
     }
+    
 
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void TakeDamage(List<Tuple<int,int>> damages)
@@ -84,6 +94,11 @@ public class Body : Parts
     {
         _myChar.NotSelectable();
         //_myChar.effectsController.PlayParticlesEffect(this.gameObject, "Dead");
+    }
+    
+    public float GetMaxWeight()
+    {
+        return _maxWeight;
     }
 
 }

@@ -314,7 +314,17 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
         if (unit.GetLegs().GetCurrentHp() > 0)
         {
-            newPos = oldPos + 1;
+            if (unit.IsOverweight())
+            {
+                newPos = oldPos + 3;
+
+                if (newPos >= _currentTurnOrder.Count - 1)
+                {
+                    newPos = _currentTurnOrder.Count - 1;
+                }
+            }
+            else newPos = oldPos + 1;
+
             PortraitsController.Instance.MovePortrait(unit, oldPos, newPos);
 
             Character other = _currentTurnOrder[newPos];

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 
@@ -23,6 +24,7 @@ public abstract class Gun : EnumsClass, IGun
     protected int _chanceToHitOtherParts;
     protected int _attackRange;
     protected int _bodyPartsSelectionQuantity;
+    protected float _weight;
 
     protected RouletteWheel _roulette;
     protected Dictionary<string, int> _critRoulette = new Dictionary<string, int>();
@@ -126,6 +128,7 @@ public abstract class Gun : EnumsClass, IGun
         _chanceToHitOtherParts = data.chanceToHitOtherParts;
         _attackRange = data.attackRange;
         _bodyPartsSelectionQuantity = data.bodyPartsSelectionQuantity;
+        _weight = data.weight;
         _gunSkill = false;
 
         if(!_abilityCreated && data.ability && data.ability.abilityPrefab)
@@ -322,19 +325,25 @@ public abstract class Gun : EnumsClass, IGun
                 ui.UpdateRightArmSlider(total, (int)_currentHP);
                 break;
         }
+        
+        _myChar.MakeNotAttackable();
+        
         if (_currentHP <= 0)
         {
-            switch (_location)
-            {
-                case "Left":
-                    _myChar.GetLeftGun().TurnOff();
-                    break;
-                case "Right":
-                    _myChar.GetRightGun().TurnOff();
-                    break;
-            }
+            _myChar.ArmDestroyed(_location);
+            TurnOff();
+            //TODO: revisar switch que parece al pedo
+            // switch (_location)
+            // {
+            //     case "Left":
+            //         _myChar.GetLeftGun().TurnOff();
+            //         break;
+            //     case "Right":
+            //         _myChar.GetRightGun().TurnOff();
+            //         break;
+            // }
         }
-        _myChar.MakeNotAttackable();
+        
     }
     
     //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
@@ -370,14 +379,18 @@ public abstract class Gun : EnumsClass, IGun
 
             if (isActive) ButtonsUIManager.Instance.UpdateRightArmHUD(_currentHP);
         }
-
+        
+        _myChar.MakeNotAttackable();
+        
         if (_currentHP <= 0)
         {
-            if (_location == "Left")
-                _myChar.GetLeftGun().TurnOff();
-            else _myChar.GetRightGun().TurnOff();
+            _myChar.ArmDestroyed(_location);
+            TurnOff();
+            // if (_location == "Left")
+            //     _myChar.GetLeftGun().TurnOff();
+            // else _myChar.GetRightGun().TurnOff();
         }
-        _myChar.MakeNotAttackable();
+        
     }
     
     public float GetMaxHp()
@@ -388,5 +401,10 @@ public abstract class Gun : EnumsClass, IGun
     public float GetCurrentHp()
     {
         return _currentHP;
+    }
+
+    public float GetWeight()
+    {
+        return _weight;
     }
 }

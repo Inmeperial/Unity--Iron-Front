@@ -104,12 +104,13 @@ public class WorkshopManager : MonoBehaviour
 
         if (loadedEquipment == null)
         {
-            equipmentToUse = ScriptableObject.Instantiate(_equipmentContainer);
-            for (int i = 0; i < _equipmentContainer.equipments.Count; i++)
-            {
-                equipmentToUse.equipments[i] = ScriptableObject.Instantiate(_equipmentContainer.equipments[i]);
-                _equipmentContainer = equipmentToUse;
-            }
+            equipmentToUse = _equipmentContainer;
+            // equipmentToUse = ScriptableObject.Instantiate(_equipmentContainer);
+            // for (int i = 0; i < _equipmentContainer.equipments.Count; i++)
+            // {
+            //     equipmentToUse.equipments[i] = ScriptableObject.Instantiate(_equipmentContainer.equipments[i]);
+            //     _equipmentContainer = equipmentToUse;
+            // }
         }
         else
         {
