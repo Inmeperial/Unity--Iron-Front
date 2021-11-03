@@ -13,7 +13,7 @@ public class WorkshopMecha : MonoBehaviour
     [SerializeField] private Transform _rightGunSpawn;
     [SerializeField] private Transform _leftLegSpawnPosition;
     [SerializeField] private Transform _rightLegSpawnPosition;
-
+    
     private GameObject _body;
     private GameObject _leftArm;
     private GameObject _rightArm;
@@ -21,9 +21,13 @@ public class WorkshopMecha : MonoBehaviour
     private GameObject _rightLeg;
     private GameObject _leftGun;
     private GameObject _rightGun;
-    public void SetEquipment(MechaEquipmentSO equipment)
+
+    private int _index;
+
+    public void SetEquipment(MechaEquipmentSO equipment, int index)
     {
         _equipment = equipment;
+        _index = index;
     }
 
     private void Update()
@@ -122,5 +126,10 @@ public class WorkshopMecha : MonoBehaviour
     public MechaEquipmentSO GetEquipment()
     {
         return _equipment;
+    }
+
+    public int GetIndex()
+    {
+        return _index;
     }
 }

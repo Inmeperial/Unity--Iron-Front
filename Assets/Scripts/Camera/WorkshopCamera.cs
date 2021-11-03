@@ -28,6 +28,8 @@ public class WorkshopCamera : MonoBehaviour
         WorkshopManager.OnClickNext += OverviewCameraMove;
         WorkshopManager.OnClickEdit += FocusCameraMove;
         WorkshopManager.OnClickCloseEdit += UnfocusCameraMove;
+        WorkshopManager.OnClickMecha += OverviewCameraMove;
+        WorkshopManager.OnClickSelectedMecha += FocusCameraMove;
     }
 
     public void OverviewCameraMove(int mechaIndex)
@@ -48,7 +50,6 @@ public class WorkshopCamera : MonoBehaviour
 
     public void UnfocusCameraMove(int mechaIndex)
     {
-        Debug.Log("unfocus");
         SetMove();
         var t = _cameraPositions[mechaIndex];
         StartCoroutine(StartMovement(t));

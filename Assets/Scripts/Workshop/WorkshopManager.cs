@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class WorkshopManager : MonoBehaviour
 {
     [SerializeField] private MechaEquipmentContainerSO _equipmentContainer;
-    
+
+    [SerializeField] private LayerMask _characterLayer;
     private int _mechaIndex;
     private bool _isEditing;
 
@@ -16,9 +18,17 @@ public class WorkshopManager : MonoBehaviour
     public static event ClickAction OnClickEdit;
     public static event ClickAction OnClickCloseEdit;
 
+    public static event ClickAction OnClickMecha;
+
+    public static event ClickAction OnClickSelectedMecha;
+
     public WorkshopMecha[] mechas;
 
     private SoundsMenu _soundMenu;
+
+    [SerializeField] private Button _editButton;
+
+    [SerializeField] private Button _closeButton;
     
     [Space]
     [SerializeField] private WorkshopObjectButton _workshopObjectPrefab;
@@ -39,7 +49,30 @@ public class WorkshopManager : MonoBehaviour
 
     private void Update()
     {
-        if (_isEditing) return;
+        if (_isEditing)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                _closeButton.onClick?.Invoke();
+            }
+            return;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            var obj= MouseRay.GetTargetTransform(_characterLayer);
+            
+            if (obj)
+            {
+                var mecha = obj.GetComponent<WorkshopMecha>();
+
+                if (mecha)
+                {
+                    MoveToPosition(mecha.GetIndex());
+                }
+            }
+        }
+        
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             PreviousButton();
 
@@ -86,6 +119,23 @@ public class WorkshopManager : MonoBehaviour
         OnClickCloseEdit?.Invoke(_mechaIndex);
     }
 
+    void MoveToPosition(int index)
+    {
+        AudioManager.audioManagerInstance.PlaySound(_soundMenu.GetClickSound(), _soundMenu.GetObjectToAddAudioSource());
+
+        if (index == _mechaIndex)
+        {
+            OnClickSelectedMecha?.Invoke(index);
+            _editButton.onClick?.Invoke();
+        }
+        else
+        {
+            _mechaIndex = index;
+            OnClickMecha?.Invoke(index); 
+        }
+        
+    }
+
     //TODO: asignar al boton cuando esté.
     public void ApplyChangesButton()
     {
@@ -120,7 +170,7 @@ public class WorkshopManager : MonoBehaviour
 
         for (int i = 0; i < mechas.Length; i++)
         {
-            mechas[i].SetEquipment(equipmentToUse.GetEquipment(i));
+            mechas[i].SetEquipment(equipmentToUse.GetEquipment(i), i);
             mechas[i].SpawnParts();
         }
     }
