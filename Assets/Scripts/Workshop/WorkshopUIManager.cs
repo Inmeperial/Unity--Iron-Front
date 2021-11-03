@@ -18,6 +18,8 @@ public class WorkshopUIManager : MonoBehaviour
    [SerializeField] private TextMeshProUGUI _partsDescription;
    [SerializeField] private Slider _weightSlider;
    [SerializeField] private TextMeshProUGUI _weightText;
+   [SerializeField] private Color _normalWeightColor;
+   [SerializeField] private Color _overWeightColor;
    
    [Header("Abilities List")]
    [SerializeField] private Transform _abilitiesSpawnParent;
