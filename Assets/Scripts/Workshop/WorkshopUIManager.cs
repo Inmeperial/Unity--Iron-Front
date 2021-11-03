@@ -16,6 +16,8 @@ public class WorkshopUIManager : MonoBehaviour
    [Header("Parts List")]
    [SerializeField] private Transform _partsSpawnParent;
    [SerializeField] private TextMeshProUGUI _partsDescription;
+   [SerializeField] private Slider _weightSlider;
+   [SerializeField] private TextMeshProUGUI _weightText;
    
    [Header("Abilities List")]
    [SerializeField] private Transform _abilitiesSpawnParent;
@@ -30,7 +32,7 @@ public class WorkshopUIManager : MonoBehaviour
    [SerializeField] private TextMeshProUGUI _itemsDescription;
    [SerializeField] private Image _itemImage;
 
-   public delegate void ChangeEquippable(EquipableSO equipableSo, string location);
+   public delegate void ChangeEquippable(EquipableSO equippableSo, string location);
 
    public static event ChangeEquippable OnChangeEquippable;
    
@@ -39,6 +41,7 @@ public class WorkshopUIManager : MonoBehaviour
       WorkshopManager.OnClickPrevious += UpdateOverviewText;
       WorkshopManager.OnClickNext += UpdateOverviewText;
       WorkshopManager.OnClickCloseEdit += UpdateOverviewText;
+      WorkshopManager.OnClickEdit += UpdateWeightSlider;
       UpdateOverviewText(3);
    }
 
@@ -49,6 +52,37 @@ public class WorkshopUIManager : MonoBehaviour
       _overviewLeftArm.text = "Left Gun: \n" + equipmentData.leftGun.gunName;
       _overviewRightArm.text = "Right Gun: \n" + equipmentData.rightGun.gunName;
       _overviewLegs.text = "Legs: \n" + equipmentData.legs.partName;
+   }
+
+   public void UpdateWeightSlider(int mechaIndex)
+   {
+      var equipmentData = FindObjectOfType<WorkshopManager>().GetMechaEquipment(mechaIndex);
+      
+      float weight = equipmentData.body.weight + equipmentData.leftGun.weight + equipmentData.rightGun.weight +
+                     equipmentData.legs.weight;
+
+      float maxWeight = equipmentData.body.maxWeight;
+      
+      _weightSlider.minValue = 0;
+      _weightSlider.maxValue = maxWeight;
+
+      
+
+      _weightSlider.value = weight;
+      
+      _weightText.text = weight + "/" + maxWeight;
+
+      if (weight > maxWeight)
+      {
+         var weightSliderColors = _weightSlider.colors;
+         weightSliderColors.normalColor = Color.red;
+         //_weightSlider.colors = weightSliderColors;
+      }
+      else
+      {
+         var weightSliderColors = _weightSlider.colors;
+         weightSliderColors.normalColor = Color.white;
+      }
    }
    
    public void UpdatePartsList(string part)

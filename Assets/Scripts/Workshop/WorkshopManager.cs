@@ -125,7 +125,7 @@ public class WorkshopManager : MonoBehaviour
 
         if (index == _mechaIndex)
         {
-            OnClickSelectedMecha?.Invoke(index);
+            //OnClickSelectedMecha?.Invoke(index);
             _editButton.onClick?.Invoke();
         }
         else

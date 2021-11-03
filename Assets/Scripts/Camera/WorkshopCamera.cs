@@ -29,7 +29,7 @@ public class WorkshopCamera : MonoBehaviour
         WorkshopManager.OnClickEdit += FocusCameraMove;
         WorkshopManager.OnClickCloseEdit += UnfocusCameraMove;
         WorkshopManager.OnClickMecha += OverviewCameraMove;
-        WorkshopManager.OnClickSelectedMecha += FocusCameraMove;
+        //WorkshopManager.OnClickSelectedMecha += FocusCameraMove;
     }
 
     public void OverviewCameraMove(int mechaIndex)
