@@ -82,11 +82,24 @@ public class WorkshopMecha : MonoBehaviour
 
     public void ChangeBody(BodySO newBody)
     {
-        if (_body) Destroy(_body);
+        if (_body && _leftArm && _rightArm)
+        {
+            Destroy(_body);
+            Destroy(_leftArm);
+            Destroy(_rightArm);
+        }
         
         var body = Instantiate(newBody.meshPrefab[0], _bodySpawnPosition);
         body.transform.localPosition = Vector3.zero;
         _body = body;
+
+        var leftArm = Instantiate(newBody.armsMeshPrefab[0], _leftArmSpawnPosition);
+        leftArm.transform.localPosition = Vector3.zero;
+        _leftArm = leftArm;
+        
+        var rightArm = Instantiate(newBody.armsMeshPrefab[1], _rightArmSpawnPosition);
+        rightArm.transform.localPosition = Vector3.zero;
+        _rightArm = rightArm;
     }
     
     public void ChangeLeftGun(GunSO newGun)
