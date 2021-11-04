@@ -17,8 +17,9 @@ public static class LoadSaveUtility
     {
         if (!File.Exists(string.Concat(Application.dataPath, _savePath)))
         {
-            var defaultEquipment = Resources.Load<MechaEquipmentContainerSO>("Equipment/DefaultContainer");
-            return defaultEquipment;
+             var defaultEquipment = Resources.Load<MechaEquipmentContainerSO>("Equipment/DefaultContainer");
+            // return defaultEquipment;
+            SaveEquipment(defaultEquipment);
         }
         
         BinaryFormatter formatter = new BinaryFormatter();
@@ -63,9 +64,15 @@ public static class LoadSaveUtility
             
             //Overwrites legs data with the saved one.
             JsonUtility.FromJsonOverwrite(allParts[3], newEquipment.legs);
+
+            //Overwrites body color.
+            newEquipment.bodyColor = JsonUtility.FromJson<MechaEquipmentSO.ColorData>(allParts[4]);
             
-            //Index 4 is the name of the Mecha.
-            newEquipment.name = allParts[4];
+            //Overwrites legs color.
+            newEquipment.legsColor =JsonUtility.FromJson<MechaEquipmentSO.ColorData>(allParts[5]);
+            
+            //Index 6 is the name of the Mecha.
+            newEquipment.name = allParts[6];
             
             newContainer.equipments.Add(newEquipment);
         }
@@ -99,6 +106,12 @@ public static class LoadSaveUtility
             
             string legs = JsonUtility.ToJson(equipmentContainer.equipments[i].legs, true);
             legs += '|';
+
+            string bodyColor = JsonUtility.ToJson(equipmentContainer.equipments[i].bodyColor, true);
+            bodyColor += '|';
+
+            string legsColor = JsonUtility.ToJson(equipmentContainer.equipments[i].legsColor, true);
+            legsColor += '|';
             if (i == 0)
             {
                 //If it's the first equipment, removes the empty space.
@@ -112,6 +125,8 @@ public static class LoadSaveUtility
             equipmentSaves += leftGun;
             equipmentSaves += rightGun;
             equipmentSaves += legs;
+            equipmentSaves += bodyColor;
+            equipmentSaves += legsColor;
             equipmentSaves += equipmentContainer.equipments[i].name;
 
             //Set the end of this equipment.

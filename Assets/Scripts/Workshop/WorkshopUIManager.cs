@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class WorkshopUIManager : MonoBehaviour
 {
+   [SerializeField] private Button _saveButton;
    [Header("Overview Texts")]
    [SerializeField] private TextMeshProUGUI _overviewBody;
    [SerializeField] private TextMeshProUGUI _overviewLeftArm;
    [SerializeField] private TextMeshProUGUI _overviewRightArm;
    [SerializeField] private TextMeshProUGUI _overviewLegs;
-
    
    
    [Header("Parts List")]
@@ -33,17 +33,43 @@ public class WorkshopUIManager : MonoBehaviour
    [SerializeField] private Transform _itemsSpawnParent;
    [SerializeField] private TextMeshProUGUI _itemsDescription;
    [SerializeField] private Image _itemImage;
+   
+   [Header("Colors")]
+   [SerializeField] private Image _bodyColorImage;
+
+   [SerializeField] private Slider _bodyRedSlider;
+   [SerializeField] private Slider _bodyGreenSlider;
+   [SerializeField] private Slider _bodyBlueSlider;
+   
+   [Space]
+   [SerializeField] private Image _legsColorImage;
+   [SerializeField] private Slider _legsRedSlider;
+   [SerializeField] private Slider _legsGreenSlider;
+   [SerializeField] private Slider _legsBlueSlider;
+
+   [Space] 
+   [SerializeField] private TMP_InputField _nameField;
 
    public delegate void ChangeEquippable(EquipableSO equippableSo, string location);
 
    public static event ChangeEquippable OnChangeEquippable;
    
+   public delegate void ColorChange(Color color);
+
+   public static event ColorChange OnBodyColorChange;
+   public static event ColorChange OnLegsColorChange;
+
+   public delegate void NameChange(string name);
+
+   public static event NameChange OnNameChange;
    private void Start()
    {
       WorkshopManager.OnClickPrevious += UpdateOverviewText;
       WorkshopManager.OnClickNext += UpdateOverviewText;
       WorkshopManager.OnClickCloseEdit += UpdateOverviewText;
       WorkshopManager.OnClickEdit += UpdateWeightSlider;
+      WorkshopManager.OnChangesMade += SaveButtonEnable;
+      WorkshopManager.OnSave += SaveButtonDisable;
       UpdateOverviewText(3);
    }
 
@@ -171,8 +197,7 @@ public class WorkshopUIManager : MonoBehaviour
             break;
       }
    }
-
-   //TODO: Funcionalidad de mostrar
+   
    public void UpdateAbilitiesList(string part)
    {
       var workshopManager = FindObjectOfType<WorkshopManager>();
@@ -283,5 +308,99 @@ public class WorkshopUIManager : MonoBehaviour
             OnChangeEquippable?.Invoke(item, "Item");
          });
       }
+   }
+
+   public void UpdateBodyRedColor()
+   {
+      var color = _bodyColorImage.color;
+      color.r = _bodyRedSlider.value;
+      _bodyColorImage.color = color;
+      OnBodyColorChange?.Invoke(color);
+   }
+
+   public void UpdateBodyGreenColor()
+   {
+      var color = _bodyColorImage.color;
+      color.g = _bodyGreenSlider.value;
+      _bodyColorImage.color = color;
+      OnBodyColorChange?.Invoke(color);
+   }
+   
+   public void UpdateBodyBlueColor()
+   {
+      var color = _bodyColorImage.color;
+      color.b = _bodyBlueSlider.value;
+      _bodyColorImage.color = color;
+      OnBodyColorChange?.Invoke(color);
+   }
+   
+   public void UpdateLegsRedColor()
+   {
+      var color = _legsColorImage.color;
+      color.r = _legsRedSlider.value;
+      _legsColorImage.color = color;
+      OnLegsColorChange?.Invoke(color);
+   }
+
+   public void UpdateLegsGreenColor()
+   {
+      var color = _legsColorImage.color;
+      color.g = _legsGreenSlider.value;
+      _legsColorImage.color = color;
+      OnLegsColorChange?.Invoke(color);
+   }
+   
+   public void UpdateLegsBlueColor()
+   {
+      var color = _legsColorImage.color;
+      color.b = _legsBlueSlider.value;
+      _legsColorImage.color = color;
+      OnLegsColorChange?.Invoke(color);
+   }
+
+   public void UpdateMechaName()
+   {
+      var mechaName = _nameField.text;
+      OnNameChange?.Invoke(mechaName);
+   }
+   
+   public void SetBodyColorSliders()
+   {
+      var workshop = FindObjectOfType<WorkshopManager>();
+      var index = workshop.GetIndex();
+      var color = workshop.GetMechaEquipment(index).bodyColor;
+      _bodyRedSlider.value = color.red;
+      _bodyGreenSlider.value = color.green;
+      _bodyBlueSlider.value = color.blue;
+      _bodyColorImage.color = new Color(color.red, color.green, color.blue);
+   }
+   
+   public void SetLegsColorSliders()
+   {
+      var workshop = FindObjectOfType<WorkshopManager>();
+      var index = workshop.GetIndex();
+      var color = workshop.GetMechaEquipment(index).legsColor;
+      _legsRedSlider.value = color.red;
+      _legsGreenSlider.value = color.green;
+      _legsBlueSlider.value = color.blue;
+      _legsColorImage.color = new Color(color.red, color.green, color.blue, 1);
+   }
+
+   public void SetMechaName()
+   {
+      var workshop = FindObjectOfType<WorkshopManager>();
+      var index = workshop.GetIndex();
+      _nameField.text = workshop.GetMechaEquipment(index).name;
+      
+   }
+
+   public void SaveButtonEnable()
+   {
+      _saveButton.interactable = true;
+   }
+   
+   public void SaveButtonDisable()
+   {
+      _saveButton.interactable = false;
    }
 }

@@ -18,10 +18,11 @@ public class WorkshopManager : MonoBehaviour
     public static event ClickAction OnClickNext;
     public static event ClickAction OnClickEdit;
     public static event ClickAction OnClickCloseEdit;
-
     public static event ClickAction OnClickMecha;
 
-    public static event ClickAction OnClickSelectedMecha;
+    public delegate void Save();
+    public static event Save OnChangesMade;
+    public static event Save OnSave;
 
     public WorkshopMecha[] mechas;
 
@@ -30,7 +31,7 @@ public class WorkshopManager : MonoBehaviour
     [SerializeField] private Button _editButton;
 
     [SerializeField] private Button _closeButton;
-    
+
     [Space]
     [SerializeField] private WorkshopObjectButton _workshopObjectPrefab;
     private List<WorkshopObjectButton> _createdObjectButtonList = new List<WorkshopObjectButton>();
@@ -46,6 +47,9 @@ public class WorkshopManager : MonoBehaviour
         _mechaIndex = 3;
         _soundMenu = GetComponent<SoundsMenu>();
         WorkshopUIManager.OnChangeEquippable += UpdateEquippable;
+        WorkshopUIManager.OnBodyColorChange += UpdateBodyColor;
+        WorkshopUIManager.OnLegsColorChange += UpdateLegsColor;
+        WorkshopUIManager.OnNameChange += UpdateName;
     }
 
     private void Update()
@@ -126,7 +130,6 @@ public class WorkshopManager : MonoBehaviour
 
         if (index == _mechaIndex)
         {
-            //OnClickSelectedMecha?.Invoke(index);
             _editButton.onClick?.Invoke();
         }
         else
@@ -141,6 +144,7 @@ public class WorkshopManager : MonoBehaviour
     public void ApplyChangesButton()
     {
         LoadSaveUtility.SaveEquipment(_equipmentContainer);
+        OnSave?.Invoke();
     }
 
     public MechaEquipmentSO GetMechaEquipment(int index)
@@ -156,12 +160,6 @@ public class WorkshopManager : MonoBehaviour
         if (loadedEquipment == null)
         {
             equipmentToUse = _equipmentContainer;
-            // equipmentToUse = ScriptableObject.Instantiate(_equipmentContainer);
-            // for (int i = 0; i < _equipmentContainer.equipments.Count; i++)
-            // {
-            //     equipmentToUse.equipments[i] = ScriptableObject.Instantiate(_equipmentContainer.equipments[i]);
-            //     _equipmentContainer = equipmentToUse;
-            // }
         }
         else
         {
@@ -181,28 +179,28 @@ public class WorkshopManager : MonoBehaviour
         mechas[_mechaIndex].ChangeBody(body);
         
         _equipmentContainer.equipments[_mechaIndex].body = body;
-        LoadSaveUtility.SaveEquipment(_equipmentContainer);
+        OnChangesMade?.Invoke();
     }
     
     public void UpdateLeftGun(GunSO gun)
     {
         mechas[_mechaIndex].ChangeLeftGun(gun);
         _equipmentContainer.equipments[_mechaIndex].leftGun = gun;
-        LoadSaveUtility.SaveEquipment(_equipmentContainer);
+        OnChangesMade?.Invoke();
     }
     
     public void UpdateRightGun(GunSO gun)
     {
         mechas[_mechaIndex].ChangeRightGun(gun);
         _equipmentContainer.equipments[_mechaIndex].rightGun = gun;
-        LoadSaveUtility.SaveEquipment(_equipmentContainer);
+        OnChangesMade?.Invoke();
     }
     
     public void UpdateLegs(LegsSO legs)
     {
         mechas[_mechaIndex].ChangeLegs(legs);
         _equipmentContainer.equipments[_mechaIndex].legs = legs;
-        LoadSaveUtility.SaveEquipment(_equipmentContainer);
+        OnChangesMade?.Invoke();
     }
 
     public void UpdateEquippable(EquipableSO equippable, string location)
@@ -228,8 +226,34 @@ public class WorkshopManager : MonoBehaviour
              case "Item":
                  _equipmentContainer.equipments[_mechaIndex].body.item = equippable as ItemSO;
                  break;
-        } 
-        LoadSaveUtility.SaveEquipment(_equipmentContainer);
+        }
+        OnChangesMade?.Invoke();
+    }
+
+    public void UpdateBodyColor(Color color)
+    {
+        var c = _equipmentContainer.equipments[_mechaIndex].bodyColor;
+        c.red = color.r;
+        c.green = color.g;
+        c.blue = color.b;
+        _equipmentContainer.equipments[_mechaIndex].bodyColor = c;
+        OnChangesMade?.Invoke();
+    }
+    
+    public void UpdateLegsColor(Color color)
+    {
+        var c =_equipmentContainer.equipments[_mechaIndex].legsColor;
+        c.red = color.r;
+        c.green = color.g;
+        c.blue = color.b;
+        _equipmentContainer.equipments[_mechaIndex].legsColor = c;
+        OnChangesMade?.Invoke();
+    }
+    
+    private void UpdateName(string n)
+    {
+        _equipmentContainer.equipments[_mechaIndex].name = n;
+        OnChangesMade?.Invoke();
     }
     
     public WorkshopObjectButton CreateWorkshopObject(PartSO part, Transform parent)

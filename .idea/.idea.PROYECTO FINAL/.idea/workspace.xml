@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="58a4e8b3-6a44-45fc-a481-3cddbb3bc263" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MechaEquipment.save" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MechaEquipment.save" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Canvas Taller.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefab/Canvas Taller.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TallerScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TallerScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Equipment/MechaEquipmentSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Equipment/MechaEquipmentSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/LoadSaveUtility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/LoadSaveUtility.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" afterDir="false" />
     </list>
@@ -139,11 +142,9 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Others/EquipableSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Abilities/Ability.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ButtonsUIManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Equipment/MechaEquipmentSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/EquipmentManager.cs" />
       <option value="$PROJECT_DIR$/Assets/GetPartsOfMecha.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/InitializationManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/LoadSaveUtility.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/PartSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/BodySO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/GunSO.cs" />
@@ -156,6 +157,8 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/MouseRay.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopMecha.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/LoadSaveUtility.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Equipment/MechaEquipmentSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Camera/WorkshopCamera.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" />
@@ -184,10 +187,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="5828">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="5828" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -222,5 +225,50 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Utilities/LoadSaveUtility.cs</url>
+          <line>74</line>
+          <properties documentPath="E:\PROYECTO FINAL\Assets\Scripts\Utilities\LoadSaveUtility.cs" initialLine="74" containingFunctionPresentation="method 'LoadEquipment'">
+            <startOffsets>
+              <option value="3375" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3407" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Utilities/LoadSaveUtility.cs</url>
+          <line>129</line>
+          <properties documentPath="E:\PROYECTO FINAL\Assets\Scripts\Utilities\LoadSaveUtility.cs" initialLine="129" containingFunctionPresentation="method 'SaveEquipment'">
+            <startOffsets>
+              <option value="5372" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5428" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Utilities/LoadSaveUtility.cs</url>
+          <line>132</line>
+          <properties documentPath="E:\PROYECTO FINAL\Assets\Scripts\Utilities\LoadSaveUtility.cs" initialLine="132" containingFunctionPresentation="method 'SaveEquipment'">
+            <startOffsets>
+              <option value="5487" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5509" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
