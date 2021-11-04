@@ -24,6 +24,11 @@ public class WorkshopMecha : MonoBehaviour
 
     private int _index;
 
+    private MasterShaderScript _bodyShader;
+    private MasterShaderScript _leftArmShader;
+    private MasterShaderScript _rightArmShader;
+    private MasterShaderScript _leftLegShader;
+    private MasterShaderScript _rightLegShader;
     public void SetEquipment(MechaEquipmentSO equipment, int index)
     {
         _equipment = equipment;
@@ -40,43 +45,32 @@ public class WorkshopMecha : MonoBehaviour
     {
         _body = Instantiate(_equipment.body.meshPrefab[0], _bodySpawnPosition);
         _body.transform.localPosition = Vector3.zero;
+        _bodyShader = _body.GetComponent<MasterShaderScript>();
 
         _leftArm = Instantiate(_equipment.body.armsMeshPrefab[0], _leftArmSpawnPosition);
-
         _leftArm.transform.localPosition = Vector3.zero;
+        _leftArmShader = _leftArm.GetComponent<MasterShaderScript>();
+
+        var leftGun = Instantiate(_equipment.leftGun.prefab, _leftGunSpawn.transform);
+        leftGun.transform.localPosition = Vector3.zero;
+        _leftGun = leftGun.gameObject;
 
 
-        if (_equipment.leftGun)
-        {
-            var leftGun = Instantiate(_equipment.leftGun.prefab, _leftGunSpawn.transform);
-
-            if (leftGun)
-            {
-                leftGun.transform.localPosition = Vector3.zero;
-                _leftGun = leftGun.gameObject;
-            } 
-        }
-        
-        
         _rightArm = Instantiate(_equipment.body.armsMeshPrefab[1], _rightArmSpawnPosition);
         _rightArm.transform.localPosition = Vector3.zero;
-
-        if (_equipment.rightGun)
-        {
-            var rightGun = Instantiate(_equipment.rightGun.prefab, _rightGunSpawn.transform);
-
-            if (rightGun)
-            {
-                rightGun.transform.localPosition = Vector3.zero;
-                _rightGun = rightGun.gameObject;
-            } 
-        }
+        _rightArmShader = _rightArm.GetComponent<MasterShaderScript>();
         
+        var rightGun = Instantiate(_equipment.rightGun.prefab, _rightGunSpawn.transform);
+        rightGun.transform.localPosition = Vector3.zero;
+        _rightGun = rightGun.gameObject;
+
         _leftLeg = Instantiate(_equipment.legs.meshPrefab[0], _leftLegSpawnPosition);
         _leftLeg.transform.localPosition = Vector3.zero;
+        _leftLegShader = _leftLeg.GetComponent<MasterShaderScript>();
         
         _rightLeg = Instantiate(_equipment.legs.meshPrefab[1], _rightLegSpawnPosition);
         _rightLeg.transform.localPosition = Vector3.zero;
+        _rightLegShader = _rightLeg.GetComponent<MasterShaderScript>();
 
     }
 
@@ -89,17 +83,17 @@ public class WorkshopMecha : MonoBehaviour
             Destroy(_rightArm);
         }
         
-        var body = Instantiate(newBody.meshPrefab[0], _bodySpawnPosition);
-        body.transform.localPosition = Vector3.zero;
-        _body = body;
+        _body = Instantiate(newBody.meshPrefab[0], _bodySpawnPosition);
+        _body.transform.localPosition = Vector3.zero;
+        _bodyShader = _body.GetComponent<MasterShaderScript>();
 
-        var leftArm = Instantiate(newBody.armsMeshPrefab[0], _leftArmSpawnPosition);
-        leftArm.transform.localPosition = Vector3.zero;
-        _leftArm = leftArm;
+        _leftArm = Instantiate(newBody.armsMeshPrefab[0], _leftArmSpawnPosition);
+        _leftArm.transform.localPosition = Vector3.zero;
+        _leftArmShader = _leftArm.GetComponent<MasterShaderScript>();
         
-        var rightArm = Instantiate(newBody.armsMeshPrefab[1], _rightArmSpawnPosition);
-        rightArm.transform.localPosition = Vector3.zero;
-        _rightArm = rightArm;
+        _rightArm = Instantiate(newBody.armsMeshPrefab[1], _rightArmSpawnPosition);
+        _rightArm.transform.localPosition = Vector3.zero;
+        _rightArmShader = _rightArm.GetComponent<MasterShaderScript>();
     }
     
     public void ChangeLeftGun(GunSO newGun)
@@ -127,13 +121,13 @@ public class WorkshopMecha : MonoBehaviour
             Destroy(_leftLeg);
             Destroy(_rightLeg);
         }
-        var leftLeg = Instantiate(newLegs.meshPrefab[0], _leftLegSpawnPosition);
-        leftLeg.transform.localPosition = Vector3.zero;
-        _leftLeg = leftLeg;
+        _leftLeg = Instantiate(newLegs.meshPrefab[0], _leftLegSpawnPosition);
+        _leftLeg.transform.localPosition = Vector3.zero;
+        _leftLegShader = _leftLeg.GetComponent<MasterShaderScript>();
         
-        var rightLeg = Instantiate(newLegs.meshPrefab[1], _rightLegSpawnPosition);
-        rightLeg.transform.localPosition = Vector3.zero;
-        _rightLeg = rightLeg;
+        _rightLeg = Instantiate(newLegs.meshPrefab[1], _rightLegSpawnPosition);
+        _rightLeg.transform.localPosition = Vector3.zero;
+        _rightLegShader = _rightLeg.GetComponent<MasterShaderScript>();
     }
 
     public MechaEquipmentSO GetEquipment()
@@ -144,5 +138,20 @@ public class WorkshopMecha : MonoBehaviour
     public int GetIndex()
     {
         return _index;
+    }
+
+    public void UpdateBodyColor(Color color)
+    {
+        ///TODO: sacar coment
+        // _bodyShader.SetMechaColor(color);
+        // _leftArmShader.SetMechaColor(color);
+        // _rightArmShader.SetMechaColor(color);
+    }
+    
+    public void UpdateLegsColor(Color color)
+    {
+        ///TODO: sacar coment
+        // _leftLegShader.SetMechaColor(color);
+        // _rightLegShader.SetMechaColor(color);
     }
 }

@@ -237,6 +237,10 @@ public class WorkshopManager : MonoBehaviour
         c.green = color.g;
         c.blue = color.b;
         _equipmentContainer.equipments[_mechaIndex].bodyColor = c;
+        
+        var newColor = new Color(c.red, c.green, c.blue);
+        mechas[_mechaIndex].UpdateBodyColor(newColor);
+        
         OnChangesMade?.Invoke();
     }
     
@@ -247,6 +251,10 @@ public class WorkshopManager : MonoBehaviour
         c.green = color.g;
         c.blue = color.b;
         _equipmentContainer.equipments[_mechaIndex].legsColor = c;
+        
+        var newColor = new Color(c.red, c.green, c.blue);
+        mechas[_mechaIndex].UpdateLegsColor(newColor);
+        
         OnChangesMade?.Invoke();
     }
     
