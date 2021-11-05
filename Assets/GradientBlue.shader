@@ -162,22 +162,22 @@ Shader "GradientBlue"
 }
 /*ASEBEGIN
 Version=17800
-1920;0;1920;1019;2355.718;-246.3967;1.485279;True;False
+0;0;1920;1029;2355.718;-238.9703;1.485279;True;False
 Node;AmplifyShaderEditor.CommentaryNode;72;-1132.57,819.4688;Inherit;False;1256.21;1066.87;Red1;9;70;71;69;68;67;58;56;59;61;;1,1,1,1;0;0
+Node;AmplifyShaderEditor.RangedFloatNode;70;-1079.775,1361.338;Inherit;False;Constant;_PureBlue;PureBlue;3;0;Create;True;0;0;False;0;1;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;1;-1683.955,599.3849;Inherit;False;Property;_Red;Red;0;0;Create;True;0;0;False;0;0;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;2;-1635.923,772.3649;Inherit;False;Property;_Green;Green;1;0;Create;True;0;0;False;0;0;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;3;-1607.703,937.0952;Inherit;False;Property;_Blue;Blue;2;0;Create;True;0;0;False;0;0;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;1;-1683.955,599.3849;Inherit;False;Property;_Red;Red;0;0;Create;True;0;0;False;0;0;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;70;-1079.775,1361.338;Inherit;False;Constant;_PureBlue;PureBlue;3;0;Create;True;0;0;False;0;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.ConditionalIfNode;71;-855.304,968.9861;Inherit;False;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.ConditionalIfNode;69;-850.6954,1214.935;Inherit;False;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.CommentaryNode;54;-1193.4,-8.141068;Inherit;False;1337.324;755.151;Red0;6;52;51;50;27;53;26;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.RangedFloatNode;5;-1532.788,1049.452;Inherit;False;Constant;_Alpha;Alpha;3;0;Create;True;0;0;False;0;1;0;1;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.OneMinusNode;61;-929.4113,854.9565;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.ConditionalIfNode;68;-602.8808,956.886;Inherit;False;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ConditionalIfNode;67;-382.3272,830.6339;Inherit;False;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.Vector4Node;51;-705.0077,246.8901;Inherit;False;Constant;_Vector0;Vector 0;3;0;Create;True;0;0;False;0;0,0,0,0;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.TextureCoordinatesNode;26;-1106.308,41.85893;Inherit;True;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.DynamicAppendNode;50;-713.1394,468.0779;Inherit;True;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.Vector4Node;51;-705.0077,246.8901;Inherit;False;Constant;_Vector0;Vector 0;3;0;Create;True;0;0;False;0;0,0,0,0;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ConditionalIfNode;67;-382.3272,830.6339;Inherit;False;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;52;-444.787,399.7702;Inherit;True;2;2;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;58;-797.3154,1587.339;Inherit;True;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.OneMinusNode;53;-506.415,48.4091;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
@@ -196,12 +196,12 @@ WireConnection;61;0;3;0
 WireConnection;68;0;1;0
 WireConnection;68;2;71;0
 WireConnection;68;3;69;0
-WireConnection;50;0;1;0
-WireConnection;50;1;2;0
-WireConnection;50;3;5;0
 WireConnection;67;0;3;0
 WireConnection;67;2;68;0
 WireConnection;67;3;61;0
+WireConnection;50;0;1;0
+WireConnection;50;1;2;0
+WireConnection;50;3;5;0
 WireConnection;52;0;51;0
 WireConnection;52;1;50;0
 WireConnection;53;0;26;1
@@ -217,4 +217,4 @@ WireConnection;60;0;27;0
 WireConnection;60;1;59;0
 WireConnection;18;0;60;0
 ASEEND*/
-//CHKSM=4167A2528A0DDE4AAEF18B3CEE989477C79CDD42
+//CHKSM=05C7C98A53C853744AC72EDD32E8C2457AE94032
