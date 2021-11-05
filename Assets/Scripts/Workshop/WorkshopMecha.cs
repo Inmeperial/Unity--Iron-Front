@@ -78,11 +78,6 @@ public class WorkshopMecha : MonoBehaviour
 
     public void ChangeBody(BodySO newBody)
     {
-        ColorData colorDataBody;
-        colorDataBody = _equipment.bodyColor;
-
-        Color colorBody = new Color(colorDataBody.red, colorDataBody.green, colorDataBody.blue);
-        
         if (_body && _leftArm && _rightArm)
         {   
             Destroy(_body);
@@ -101,8 +96,14 @@ public class WorkshopMecha : MonoBehaviour
         _rightArm = Instantiate(newBody.armsMeshPrefab[1], _rightArmSpawnPosition);
         _rightArm.transform.localPosition = Vector3.zero;
         _rightArmShader = _rightArm.GetComponent<MasterShaderScript>();
+        
+        ColorData colorData = _equipment.bodyColor;
 
-        UpdateBodyColor(colorBody);
+        Color color = new Color(colorData.red, colorData.green, colorData.blue);
+
+        _bodyShader.colorMecha = color;
+        _leftArmShader.colorMecha = color;
+        _rightArmShader.colorMecha = color;
     }
     
     public void ChangeLeftGun(GunSO newGun)
@@ -125,11 +126,6 @@ public class WorkshopMecha : MonoBehaviour
     
     public void ChangeLegs(LegsSO newLegs)
     {
-        ColorData colorDataLegs;
-        colorDataLegs = _equipment.legsColor;
-
-        Color colorLegs = new Color(colorDataLegs.red, colorDataLegs.green, colorDataLegs.blue);
-
         if (_leftLeg && _rightLeg)
         {
             Destroy(_leftLeg);
@@ -143,7 +139,13 @@ public class WorkshopMecha : MonoBehaviour
         _rightLeg.transform.localPosition = Vector3.zero;
         _rightLegShader = _rightLeg.GetComponent<MasterShaderScript>();
 
-        UpdateLegsColor(colorLegs);
+        
+        ColorData colorData = _equipment.legsColor;
+
+        Color color = new Color(colorData.red, colorData.green, colorData.blue);
+
+        _leftLegShader.colorMecha = color;
+        _rightLegShader.colorMecha = color;
     }
 
     public MechaEquipmentSO GetEquipment()
