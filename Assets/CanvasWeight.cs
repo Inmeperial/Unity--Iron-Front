@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CanvasWeight : MonoBehaviour
 {
     public int currentWeight, maxWeight;
-    public int minZRot, maxZRot;
-    int currentRotation;
+    public Vector3 maxZRot;
+    public TextMeshProUGUI text;
     RectTransform myRect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,12 +20,32 @@ public class CanvasWeight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.W))
+            UpdateRotation();
     }
 
     public void UpdateRotation()
 	{
-        currentRotation = currentWeight / maxWeight;
-        Debug.Log("Current Rot = " + currentRotation);
+        Vector3 RotateTo = (currentWeight * maxZRot) / maxWeight;//tengo que convertir el valor de currentWeight / maxWeight, en una escala donde 0 = minZRot y 1 = maxZRot
+        Debug.Log("Rotate to: " + RotateTo);
+
+        if (RotateTo.z != myRect.rotation.z)
+            StartCoroutine(RotateLerp(Quaternion.Euler(RotateTo), .5f));
 	}
+
+    IEnumerator RotateLerp(Quaternion endValue, float duration)
+	{
+        float lerpTime = 0;
+        Quaternion startValue = myRect.rotation;
+
+        while (lerpTime < duration)
+		{
+            myRect.rotation = Quaternion.Lerp(startValue, endValue, lerpTime / duration);
+            lerpTime += Time.deltaTime;
+            yield return null;
+		}
+        text.text = currentWeight.ToString();
+        myRect.rotation = endValue;
+	}
+
 }
