@@ -314,4 +314,22 @@ public class WorkshopManager : MonoBehaviour
     {
         return _mechaIndex;
     }
+
+    public void StartPartFlicker(string part)
+    {
+        switch (part)
+        {
+            case "Body":
+                break;
+            
+            case "LGun":
+                break;
+                
+            case "RGun":
+                break;
+            
+            case "Legs":
+                break;
+        }
+    }
 }
