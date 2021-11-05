@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 [CreateAssetMenu(fileName = "Equipment", menuName = "Create Equipment")]
 public class MechaEquipmentSO : ScriptableObject
@@ -27,6 +28,18 @@ public class MechaEquipmentSO : ScriptableObject
     void LoadObjectsDatabase()
     {
         _objectsDatabase = Resources.Load<ObjectsDatabase>("Database/Database");
+    }
+
+    public Color GetBodyColor()
+    {
+        Color color = new Color(bodyColor.red, bodyColor.green, bodyColor.blue);
+        return color;
+    }
+    
+    public Color GetLegsColor()
+    {
+        Color color = new Color(legsColor.red, legsColor.green, legsColor.blue);
+        return color;
     }
 
     [Serializable]

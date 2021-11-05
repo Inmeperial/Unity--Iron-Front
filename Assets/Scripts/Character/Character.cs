@@ -1447,12 +1447,16 @@ public class Character : EnumsClass, IObservable
         _body.SetPart(_mechaEquipment.body);
         var bodyMesh = Instantiate(_mechaEquipment.body.meshPrefab[0], _body.transform);
         bodyMesh.transform.localPosition = Vector3.zero;
+        var bodyShader = bodyMesh.GetComponent<MasterShaderScript>();
+        bodyShader.colorMecha = _mechaEquipment.GetBodyColor();
 
 
         _myUI.SetBodyButtonPart(_materialMechaHandler,MechaParts.Body);
 
         var leftArm = Instantiate(_mechaEquipment.body.armsMeshPrefab[0], _leftArmSpawnPosition);
         leftArm.transform.localPosition = Vector3.zero;
+        var leftArmShader = leftArm.GetComponent<MasterShaderScript>();
+        leftArmShader.colorMecha = _mechaEquipment.GetBodyColor();
 
         _leftGun = Instantiate(_mechaEquipment.leftGun.prefab, _leftGunSpawn.transform);
 
@@ -1469,6 +1473,8 @@ public class Character : EnumsClass, IObservable
 
         var rightArm = Instantiate(_mechaEquipment.body.armsMeshPrefab[1], _rightArmSpawnPosition);
         rightArm.transform.localPosition = Vector3.zero;
+        var rightArmShader = rightArm.GetComponent<MasterShaderScript>();
+        rightArmShader.colorMecha = _mechaEquipment.GetBodyColor();
 
         _rightGun = Instantiate(_mechaEquipment.rightGun.prefab, _rightGunSpawn.transform);
 
@@ -1485,9 +1491,13 @@ public class Character : EnumsClass, IObservable
         _legs.ManualStart(this);
         var lLeg = Instantiate(_mechaEquipment.legs.meshPrefab[0], _legs.transform);
         lLeg.transform.localPosition = Vector3.zero;
+        var lLegShader = lLeg.GetComponent<MasterShaderScript>();
+        lLegShader.colorMecha = _mechaEquipment.GetLegsColor();
         
         var rLeg = Instantiate(_mechaEquipment.legs.meshPrefab[1], _leftLegSpawnPosition);
         rLeg.transform.localPosition = Vector3.zero;
+        var rLegShader = rLeg.GetComponent<MasterShaderScript>();
+        rLegShader.colorMecha = _mechaEquipment.GetLegsColor();
         
 
         _legs.transform.localPosition = Vector3.zero;

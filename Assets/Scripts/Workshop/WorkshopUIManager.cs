@@ -135,7 +135,6 @@ public class WorkshopUIManager : MonoBehaviour
 
       while (time < _needleRotationTime)
       {
-         Debug.Log("rotation");
          _needle.rotation = Quaternion.Lerp(needleRot, target, time / _needleRotationTime);
          time += Time.deltaTime;
          yield return new WaitForEndOfFrame();
@@ -399,22 +398,24 @@ public class WorkshopUIManager : MonoBehaviour
    {
       var workshop = FindObjectOfType<WorkshopManager>();
       var index = workshop.GetIndex();
-      var color = workshop.GetMechaEquipment(index).bodyColor;
-      _bodyRedSlider.value = color.red;
-      _bodyGreenSlider.value = color.green;
-      _bodyBlueSlider.value = color.blue;
-      _bodyColorImage.color = new Color(color.red, color.green, color.blue);
+      var color = workshop.GetMechaEquipment(index).GetBodyColor();
+      _bodyColorImage.color = color;
+      _bodyRedSlider.value = color.r;
+      _bodyGreenSlider.value = color.g;
+      _bodyBlueSlider.value = color.b;
+      
    }
    
    public void SetLegsColorSliders()
    {
       var workshop = FindObjectOfType<WorkshopManager>();
       var index = workshop.GetIndex();
-      var color = workshop.GetMechaEquipment(index).legsColor;
-      _legsRedSlider.value = color.red;
-      _legsGreenSlider.value = color.green;
-      _legsBlueSlider.value = color.blue;
-      _legsColorImage.color = new Color(color.red, color.green, color.blue, 1);
+      var color = workshop.GetMechaEquipment(index).GetLegsColor();
+      _legsColorImage.color = color;
+      _legsRedSlider.value = color.r;
+      _legsGreenSlider.value = color.g;
+      _legsBlueSlider.value = color.b;
+      
    }
 
    public void SetMechaName()

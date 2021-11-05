@@ -48,10 +48,12 @@ public class WorkshopMecha : MonoBehaviour
         _body = Instantiate(_equipment.body.meshPrefab[0], _bodySpawnPosition);
         _body.transform.localPosition = Vector3.zero;
         _bodyShader = _body.GetComponent<MasterShaderScript>();
+        _bodyShader.colorMecha = _equipment.GetBodyColor();
 
         _leftArm = Instantiate(_equipment.body.armsMeshPrefab[0], _leftArmSpawnPosition);
         _leftArm.transform.localPosition = Vector3.zero;
         _leftArmShader = _leftArm.GetComponent<MasterShaderScript>();
+        _leftArmShader.colorMecha = _equipment.GetBodyColor();
 
         var leftGun = Instantiate(_equipment.leftGun.prefab, _leftGunSpawn.transform);
         leftGun.transform.localPosition = Vector3.zero;
@@ -61,6 +63,7 @@ public class WorkshopMecha : MonoBehaviour
         _rightArm = Instantiate(_equipment.body.armsMeshPrefab[1], _rightArmSpawnPosition);
         _rightArm.transform.localPosition = Vector3.zero;
         _rightArmShader = _rightArm.GetComponent<MasterShaderScript>();
+        _rightArmShader.colorMecha = _equipment.GetBodyColor();
         
         var rightGun = Instantiate(_equipment.rightGun.prefab, _rightGunSpawn.transform);
         rightGun.transform.localPosition = Vector3.zero;
@@ -69,11 +72,12 @@ public class WorkshopMecha : MonoBehaviour
         _leftLeg = Instantiate(_equipment.legs.meshPrefab[0], _leftLegSpawnPosition);
         _leftLeg.transform.localPosition = Vector3.zero;
         _leftLegShader = _leftLeg.GetComponent<MasterShaderScript>();
+        _leftLegShader.colorMecha = _equipment.GetLegsColor();
         
         _rightLeg = Instantiate(_equipment.legs.meshPrefab[1], _rightLegSpawnPosition);
         _rightLeg.transform.localPosition = Vector3.zero;
         _rightLegShader = _rightLeg.GetComponent<MasterShaderScript>();
-
+        _rightLegShader.colorMecha = _equipment.GetLegsColor();
     }
 
     public void ChangeBody(BodySO newBody)
@@ -97,13 +101,9 @@ public class WorkshopMecha : MonoBehaviour
         _rightArm.transform.localPosition = Vector3.zero;
         _rightArmShader = _rightArm.GetComponent<MasterShaderScript>();
         
-        ColorData colorData = _equipment.bodyColor;
-
-        Color color = new Color(colorData.red, colorData.green, colorData.blue);
-
-        _bodyShader.colorMecha = color;
-        _leftArmShader.colorMecha = color;
-        _rightArmShader.colorMecha = color;
+        _bodyShader.colorMecha = _equipment.GetBodyColor();
+        _leftArmShader.colorMecha = _equipment.GetBodyColor();
+        _rightArmShader.colorMecha = _equipment.GetBodyColor();
     }
     
     public void ChangeLeftGun(GunSO newGun)
@@ -139,13 +139,8 @@ public class WorkshopMecha : MonoBehaviour
         _rightLeg.transform.localPosition = Vector3.zero;
         _rightLegShader = _rightLeg.GetComponent<MasterShaderScript>();
 
-        
-        ColorData colorData = _equipment.legsColor;
-
-        Color color = new Color(colorData.red, colorData.green, colorData.blue);
-
-        _leftLegShader.colorMecha = color;
-        _rightLegShader.colorMecha = color;
+        _leftLegShader.colorMecha = _equipment.GetLegsColor();
+        _rightLegShader.colorMecha = _equipment.GetLegsColor();
     }
 
     public MechaEquipmentSO GetEquipment()
