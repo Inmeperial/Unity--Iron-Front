@@ -9,6 +9,7 @@ public class MasterShaderScript : MonoBehaviour
 
     //public TexturesForMasterShader textureForMasterShader;
 
+    public bool isWeapon = false;
     public MechaEnum mechaEnum;
     public Texture[] texturesCuerpo = new Texture[2];
     public Texture[] textureArmadura = new Texture[2];
@@ -33,6 +34,18 @@ public class MasterShaderScript : MonoBehaviour
         for (int i = 0; i < _matArr.Length; i++)
         {
             _matArr[i] = this.GetComponent<Renderer>().materials[i];
+        }
+        for (int i = 0; i < _matArr.Length; i++)
+        {
+            if (isWeapon)
+            {
+                _matArr[i].SetInt("_isWeapon", 1);
+            }
+            else
+            {
+                _matArr[i].SetInt("_isWeapon", 0);
+            }
+            
         }
         SetMaterialsForMecha();
         ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);

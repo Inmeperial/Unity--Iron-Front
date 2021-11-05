@@ -91,6 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isWeapon: 1
+  mechaEnum: 0
   texturesCuerpo:
   - {fileID: 2800000, guid: 11e83bb4586b84e4086da88132e35974, type: 3}
   - {fileID: 2800000, guid: af93befb1188490448e1451c9eb3681b, type: 3}
@@ -103,7 +105,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  col: {r: 0, g: 0, b: 0, a: 0}
+  colorMecha: {r: 0, g: 0, b: 0, a: 0}
+  materialArticulacion: 0
+  materialCuerpo: 0
+  materialArmadura: 0
 --- !u!1 &2772689299772723322
 GameObject:
   m_ObjectHideFlags: 0
