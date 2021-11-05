@@ -35,6 +35,7 @@ public class CanvasWeight : MonoBehaviour
 
     IEnumerator RotateLerp(Quaternion endValue, float duration)
 	{
+        text.text = currentWeight.ToString();
         float lerpTime = 0;
         Quaternion startValue = myRect.rotation;
 
@@ -44,7 +45,6 @@ public class CanvasWeight : MonoBehaviour
             lerpTime += Time.deltaTime;
             yield return null;
 		}
-        text.text = currentWeight.ToString();
         myRect.rotation = endValue;
 	}
 
