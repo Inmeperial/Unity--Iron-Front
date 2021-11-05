@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -18,6 +19,10 @@ public class WorkshopUIManager : MonoBehaviour
    [SerializeField] private TextMeshProUGUI _partsDescription;
    [SerializeField] private Slider _weightSlider;
    [SerializeField] private TextMeshProUGUI _weightText;
+   [SerializeField] private RectTransform _needle;
+   [SerializeField] private Vector3 _maxRotationMaxWeight;
+   [SerializeField] private Vector3 _maxRotationOverweight;
+   [SerializeField] private float _needleRotationTime;
    [SerializeField] private Color _normalWeightColor;
    [SerializeField] private Color _overWeightColor;
    
@@ -98,19 +103,45 @@ public class WorkshopUIManager : MonoBehaviour
 
       _weightSlider.value = weight;
       
-      _weightText.text = weight + "/" + maxWeight;
+      _weightText.text = weight +"";
 
-      if (weight > maxWeight)
+      StopCoroutine(RotateNeedle(Quaternion.identity));
+
+      Vector3 newRotation = (weight * _maxRotationMaxWeight) / maxWeight;
+
+      if (newRotation.z < _maxRotationOverweight.z)
+         newRotation.z = _maxRotationOverweight.z;
+      
+      Quaternion target = Quaternion.Euler(newRotation);
+
+      StartCoroutine(RotateNeedle(target));
+      // if (weight > maxWeight)
+      // {
+      //    var weightSliderColors = _weightSlider.colors;
+      //    weightSliderColors.normalColor = _overWeightColor;
+      //    //_weightSlider.colors = weightSliderColors;
+      // }
+      // else
+      // {
+      //    var weightSliderColors = _weightSlider.colors;
+      //    weightSliderColors.normalColor = _normalWeightColor;
+      // }
+   }
+
+   IEnumerator RotateNeedle(Quaternion target)
+   {
+      float time = 0;
+      Quaternion needleRot = _needle.rotation;
+
+      while (time < _needleRotationTime)
       {
-         var weightSliderColors = _weightSlider.colors;
-         weightSliderColors.normalColor = _overWeightColor;
-         //_weightSlider.colors = weightSliderColors;
+         Debug.Log("rotation");
+         _needle.rotation = Quaternion.Lerp(needleRot, target, time / _needleRotationTime);
+         time += Time.deltaTime;
+         yield return new WaitForEndOfFrame();
       }
-      else
-      {
-         var weightSliderColors = _weightSlider.colors;
-         weightSliderColors.normalColor = _normalWeightColor;
-      }
+
+      _needle.rotation = target;
    }
    
    public void UpdatePartsList(string part)
