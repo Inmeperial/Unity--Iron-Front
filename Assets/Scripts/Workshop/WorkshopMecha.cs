@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using static MechaEquipmentSO;
 
 public class WorkshopMecha : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class WorkshopMecha : MonoBehaviour
     private MasterShaderScript _rightArmShader;
     private MasterShaderScript _leftLegShader;
     private MasterShaderScript _rightLegShader;
+    
     public void SetEquipment(MechaEquipmentSO equipment, int index)
     {
         _equipment = equipment;
@@ -76,8 +78,13 @@ public class WorkshopMecha : MonoBehaviour
 
     public void ChangeBody(BodySO newBody)
     {
+        ColorData colorDataBody;
+        colorDataBody = _equipment.bodyColor;
+
+        Color colorBody = new Color(colorDataBody.red, colorDataBody.green, colorDataBody.blue);
+        
         if (_body && _leftArm && _rightArm)
-        {
+        {   
             Destroy(_body);
             Destroy(_leftArm);
             Destroy(_rightArm);
@@ -94,6 +101,8 @@ public class WorkshopMecha : MonoBehaviour
         _rightArm = Instantiate(newBody.armsMeshPrefab[1], _rightArmSpawnPosition);
         _rightArm.transform.localPosition = Vector3.zero;
         _rightArmShader = _rightArm.GetComponent<MasterShaderScript>();
+
+        UpdateBodyColor(colorBody);
     }
     
     public void ChangeLeftGun(GunSO newGun)
@@ -116,6 +125,11 @@ public class WorkshopMecha : MonoBehaviour
     
     public void ChangeLegs(LegsSO newLegs)
     {
+        ColorData colorDataLegs;
+        colorDataLegs = _equipment.legsColor;
+
+        Color colorLegs = new Color(colorDataLegs.red, colorDataLegs.green, colorDataLegs.blue);
+
         if (_leftLeg && _rightLeg)
         {
             Destroy(_leftLeg);
@@ -128,6 +142,8 @@ public class WorkshopMecha : MonoBehaviour
         _rightLeg = Instantiate(newLegs.meshPrefab[1], _rightLegSpawnPosition);
         _rightLeg.transform.localPosition = Vector3.zero;
         _rightLegShader = _rightLeg.GetComponent<MasterShaderScript>();
+
+        UpdateLegsColor(colorLegs);
     }
 
     public MechaEquipmentSO GetEquipment()
@@ -143,15 +159,15 @@ public class WorkshopMecha : MonoBehaviour
     public void UpdateBodyColor(Color color)
     {
         ///TODO: sacar coment
-        // _bodyShader.SetMechaColor(color);
-        // _leftArmShader.SetMechaColor(color);
-        // _rightArmShader.SetMechaColor(color);
+        _bodyShader.SetMechaColor(color);
+        _leftArmShader.SetMechaColor(color);
+        _rightArmShader.SetMechaColor(color);
     }
     
     public void UpdateLegsColor(Color color)
     {
         ///TODO: sacar coment
-        // _leftLegShader.SetMechaColor(color);
-        // _rightLegShader.SetMechaColor(color);
+        _leftLegShader.SetMechaColor(color);
+        _rightLegShader.SetMechaColor(color);
     }
 }

@@ -9,10 +9,14 @@ public class MasterShaderScript : MonoBehaviour
 
     //public TexturesForMasterShader textureForMasterShader;
 
+    public MechaEnum mechaEnum;
     public Texture[] texturesCuerpo = new Texture[2];
     public Texture[] textureArmadura = new Texture[2];
     public Texture[] textureArticulaciones = new Texture[2];
     public Color colorMecha;
+    public int materialArticulacion;
+    public int materialCuerpo;
+    public int materialArmadura;
     private string[] _shaderArrayString;
     private Material[] _matArr = default;
 
@@ -30,30 +34,17 @@ public class MasterShaderScript : MonoBehaviour
         {
             _matArr[i] = this.GetComponent<Renderer>().materials[i];
         }
-
-        SetTexturesToMaterial(0, texturesCuerpo);
-        SetTexturesToMaterial(1, textureArmadura);
-        SetTexturesToMaterial(2, textureArticulaciones);
-
+        SetMaterialsForMecha();
         ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
         SetMechaColor(colorMecha);
     }
 
-    //void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.F1))
-    //    {
-    //        ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.F2))
-    //    {
-    //        ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureFresnel);
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.F3))
-    //    {
-    //        ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
-    //    }
-    //}
+    public void SetMaterialsForMecha()
+    {
+        SetTexturesToMaterial(materialCuerpo, texturesCuerpo);
+        SetTexturesToMaterial(materialArmadura, textureArmadura);
+        SetTexturesToMaterial(materialArticulacion, textureArticulaciones);
+    }
 
     public string[] GetArrayStringForShaderSwitch()
     {
@@ -143,3 +134,9 @@ public enum SwitchTextureEnum
     TextureFresnel,
     TextureHighLight
 };
+
+public enum MechaEnum
+{
+    Mecha1,
+    Mecha2
+}

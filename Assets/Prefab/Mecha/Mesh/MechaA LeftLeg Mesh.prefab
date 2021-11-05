@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mechaEnum: 0
   texturesCuerpo:
   - {fileID: 2800000, guid: 9aa9d7cf01963df468fb62c84c80877f, type: 3}
   - {fileID: 2800000, guid: 945ef486776dc1147a2b14c0cab28406, type: 3}
@@ -107,3 +108,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: f6ce568f541e36b42bbc5546668ebd3f, type: 3}
   - {fileID: 2800000, guid: fc196b4c65ceddf4babb457207be0b1f, type: 3}
   colorMecha: {r: 0, g: 0, b: 0, a: 0}
+  materialArticulacion: 2
+  materialCuerpo: 0
+  materialArmadura: 1
