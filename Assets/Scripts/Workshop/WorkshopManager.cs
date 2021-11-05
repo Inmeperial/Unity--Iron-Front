@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -63,21 +64,24 @@ public class WorkshopManager : MonoBehaviour
             return;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (EventSystem.current.IsPointerOverGameObject() == false)
         {
-            var obj= MouseRay.GetTargetTransform(_characterLayer);
-            
-            if (obj)
+            if (Input.GetMouseButtonDown(0))
             {
-                var mecha = obj.GetComponent<WorkshopMecha>();
+                var obj = MouseRay.GetTargetTransform(_characterLayer);
 
-                if (mecha)
+                if (obj)
                 {
-                    MoveToPosition(mecha.GetIndex());
+                    var mecha = obj.GetComponent<WorkshopMecha>();
+
+                    if (mecha)
+                    {
+                        MoveToPosition(mecha.GetIndex());
+                    }
                 }
             }
         }
-        
+
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             PreviousButton();
 
