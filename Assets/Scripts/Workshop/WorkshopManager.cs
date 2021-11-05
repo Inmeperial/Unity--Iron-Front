@@ -317,19 +317,38 @@ public class WorkshopManager : MonoBehaviour
 
     public void StartPartFlicker(string part)
     {
+        EndPartFlicker();
         switch (part)
         {
             case "Body":
+                mechas[_mechaIndex]._bodyShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
+                mechas[_mechaIndex]._leftArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
+                mechas[_mechaIndex]._rightArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
                 break;
             
             case "LGun":
+                //mechas[_mechaIndex]._.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
                 break;
                 
             case "RGun":
+                //mechas[_mechaIndex]._bodyShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
                 break;
             
             case "Legs":
+                mechas[_mechaIndex]._leftLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
+                mechas[_mechaIndex]._rightLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
                 break;
         }
+    }
+
+    public void EndPartFlicker()
+    {
+        mechas[_mechaIndex]._bodyShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        mechas[_mechaIndex]._leftArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        mechas[_mechaIndex]._rightArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        //mechas[_mechaIndex]._.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
+        //mechas[_mechaIndex]._bodyShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
+        mechas[_mechaIndex]._leftLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        mechas[_mechaIndex]._rightLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
     }
 }

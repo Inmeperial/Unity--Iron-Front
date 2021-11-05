@@ -25,11 +25,11 @@ public class WorkshopMecha : MonoBehaviour
 
     private int _index;
 
-    private MasterShaderScript _bodyShader;
-    private MasterShaderScript _leftArmShader;
-    private MasterShaderScript _rightArmShader;
-    private MasterShaderScript _leftLegShader;
-    private MasterShaderScript _rightLegShader;
+    public MasterShaderScript _bodyShader;
+    public MasterShaderScript _leftArmShader;
+    public MasterShaderScript _rightArmShader;
+    public MasterShaderScript _leftLegShader;
+    public MasterShaderScript _rightLegShader;
     
     public void SetEquipment(MechaEquipmentSO equipment, int index)
     {
