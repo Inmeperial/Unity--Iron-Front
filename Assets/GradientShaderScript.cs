@@ -1,29 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GradientShaderScript : MonoBehaviour
 {
-    private Material mat = default;
+    private Material _mat = default;
     
-    void Start()
+    void Awake()
     {
-        mat = this.GetComponent<Renderer>().material;
+        GetMat();
     }
 
     public void SetColorGradientRed(float num)
     {
-        mat.SetFloat("_Red", 0);  
+        GetMat();
+        _mat.SetFloat("_Red", num);  
     }
 
     public void SetColorGradientGreen(float num)
     {
-        mat.SetFloat("_Green", 0);
+        GetMat();
+        _mat.SetFloat("_Green", num);
     }
 
     public void SetColorGradientBlue(float num)
     {
-        mat.SetFloat("_Blue", 0);
+        GetMat();
+        _mat.SetFloat("_Blue", num);
+    }
+
+    void GetMat()
+    {
+        if (!_mat)
+        {
+            var mat = this.GetComponent<Image>().material;
+
+            _mat = new Material(mat); 
+        }
     }
 
 }

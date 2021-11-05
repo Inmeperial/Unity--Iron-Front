@@ -45,12 +45,18 @@ public class WorkshopUIManager : MonoBehaviour
    [SerializeField] private Slider _bodyRedSlider;
    [SerializeField] private Slider _bodyGreenSlider;
    [SerializeField] private Slider _bodyBlueSlider;
-   
+   private GradientShaderScript _bodyRedShader;
+   private GradientShaderScript _bodyGreenShader;
+   private GradientShaderScript _bodyBlueShader;
+
    [Space]
    [SerializeField] private Image _legsColorImage;
    [SerializeField] private Slider _legsRedSlider;
    [SerializeField] private Slider _legsGreenSlider;
    [SerializeField] private Slider _legsBlueSlider;
+   private GradientShaderScript _legsRedShader;
+   private GradientShaderScript _legsGreenShader;
+   private GradientShaderScript _legsBlueShader;
 
    [Space] 
    [SerializeField] private TMP_InputField _nameField;
@@ -76,6 +82,14 @@ public class WorkshopUIManager : MonoBehaviour
       WorkshopManager.OnChangesMade += SaveButtonEnable;
       WorkshopManager.OnSave += SaveButtonDisable;
       UpdateOverviewText(3);
+
+      _bodyRedShader = _bodyRedSlider.GetComponentInChildren<GradientShaderScript>();
+      _bodyGreenShader = _bodyGreenSlider.GetComponentInChildren<GradientShaderScript>();
+      _bodyBlueShader = _bodyBlueSlider.GetComponentInChildren<GradientShaderScript>();
+      
+      _legsRedShader = _legsRedSlider.GetComponentInChildren<GradientShaderScript>();
+      _legsGreenShader = _legsGreenSlider.GetComponentInChildren<GradientShaderScript>();
+      _legsBlueShader = _legsBlueSlider.GetComponentInChildren<GradientShaderScript>();
    }
 
    private void UpdateOverviewText(int mechaIndex)
@@ -345,6 +359,7 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _bodyColorImage.color;
       color.r = _bodyRedSlider.value;
       _bodyColorImage.color = color;
+      _bodyRedShader.SetColorGradientRed(color.r);
       OnBodyColorChange?.Invoke(color);
    }
 
@@ -353,6 +368,7 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _bodyColorImage.color;
       color.g = _bodyGreenSlider.value;
       _bodyColorImage.color = color;
+      _bodyGreenShader.SetColorGradientGreen(color.g);
       OnBodyColorChange?.Invoke(color);
    }
    
@@ -361,6 +377,7 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _bodyColorImage.color;
       color.b = _bodyBlueSlider.value;
       _bodyColorImage.color = color;
+      _bodyBlueShader.SetColorGradientBlue(color.b);
       OnBodyColorChange?.Invoke(color);
    }
    
@@ -369,6 +386,7 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _legsColorImage.color;
       color.r = _legsRedSlider.value;
       _legsColorImage.color = color;
+      _legsRedShader.SetColorGradientRed(color.r);
       OnLegsColorChange?.Invoke(color);
    }
 
@@ -377,6 +395,7 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _legsColorImage.color;
       color.g = _legsGreenSlider.value;
       _legsColorImage.color = color;
+      _legsBlueShader.SetColorGradientGreen(color.g);
       OnLegsColorChange?.Invoke(color);
    }
    
@@ -385,6 +404,7 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _legsColorImage.color;
       color.b = _legsBlueSlider.value;
       _legsColorImage.color = color;
+      _legsBlueShader.SetColorGradientBlue(color.b);
       OnLegsColorChange?.Invoke(color);
    }
 
@@ -403,7 +423,9 @@ public class WorkshopUIManager : MonoBehaviour
       _bodyRedSlider.value = color.r;
       _bodyGreenSlider.value = color.g;
       _bodyBlueSlider.value = color.b;
-      
+      _bodyRedShader.SetColorGradientRed(color.r);
+      _bodyGreenShader.SetColorGradientGreen(color.g);
+      _bodyBlueShader.SetColorGradientBlue(color.b);
    }
    
    public void SetLegsColorSliders()
@@ -415,7 +437,9 @@ public class WorkshopUIManager : MonoBehaviour
       _legsRedSlider.value = color.r;
       _legsGreenSlider.value = color.g;
       _legsBlueSlider.value = color.b;
-      
+      _legsRedShader.SetColorGradientRed(color.r);
+      _legsGreenShader.SetColorGradientGreen(color.g);
+      _legsBlueShader.SetColorGradientBlue(color.b);
    }
 
    public void SetMechaName()
