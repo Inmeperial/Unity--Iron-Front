@@ -359,7 +359,10 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _bodyColorImage.color;
       color.r = _bodyRedSlider.value;
       _bodyColorImage.color = color;
-      _bodyRedShader.SetColorGradientRed(color.r);
+      //_bodyRedShader.SetColorGradientRed(color.r);
+      _bodyRedShader.SetColor(color);
+      _bodyGreenShader.SetColor(color);
+      _bodyBlueShader.SetColor(color);
       OnBodyColorChange?.Invoke(color);
    }
 
@@ -368,7 +371,10 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _bodyColorImage.color;
       color.g = _bodyGreenSlider.value;
       _bodyColorImage.color = color;
-      _bodyGreenShader.SetColorGradientGreen(color.g);
+      //_bodyGreenShader.SetColorGradientGreen(color.g);
+      _bodyRedShader.SetColor(color);
+      _bodyGreenShader.SetColor(color);
+      _bodyBlueShader.SetColor(color);
       OnBodyColorChange?.Invoke(color);
    }
    
@@ -377,7 +383,10 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _bodyColorImage.color;
       color.b = _bodyBlueSlider.value;
       _bodyColorImage.color = color;
-      _bodyBlueShader.SetColorGradientBlue(color.b);
+      //_bodyBlueShader.SetColorGradientBlue(color.b);
+      _bodyRedShader.SetColor(color);
+      _bodyGreenShader.SetColor(color);
+      _bodyBlueShader.SetColor(color);
       OnBodyColorChange?.Invoke(color);
    }
    
@@ -386,7 +395,10 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _legsColorImage.color;
       color.r = _legsRedSlider.value;
       _legsColorImage.color = color;
-      _legsRedShader.SetColorGradientRed(color.r);
+      //_legsRedShader.SetColorGradientRed(color.r);
+      _legsRedShader.SetColor(color);
+      _legsGreenShader.SetColor(color);
+      _legsBlueShader.SetColor(color);
       OnLegsColorChange?.Invoke(color);
    }
 
@@ -395,7 +407,10 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _legsColorImage.color;
       color.g = _legsGreenSlider.value;
       _legsColorImage.color = color;
-      _legsBlueShader.SetColorGradientGreen(color.g);
+      //_legsGreenShader.SetColorGradientGreen(color.g);
+      _legsRedShader.SetColor(color);
+      _legsGreenShader.SetColor(color);
+      _legsBlueShader.SetColor(color);
       OnLegsColorChange?.Invoke(color);
    }
    
@@ -404,7 +419,10 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _legsColorImage.color;
       color.b = _legsBlueSlider.value;
       _legsColorImage.color = color;
-      _legsBlueShader.SetColorGradientBlue(color.b);
+      //_legsBlueShader.SetColorGradientBlue(color.b);
+      _legsRedShader.SetColor(color);
+      _legsGreenShader.SetColor(color);
+      _legsBlueShader.SetColor(color);
       OnLegsColorChange?.Invoke(color);
    }
 
@@ -423,9 +441,9 @@ public class WorkshopUIManager : MonoBehaviour
       _bodyRedSlider.value = color.r;
       _bodyGreenSlider.value = color.g;
       _bodyBlueSlider.value = color.b;
-      _bodyRedShader.SetColorGradientRed(color.r);
-      _bodyGreenShader.SetColorGradientGreen(color.g);
-      _bodyBlueShader.SetColorGradientBlue(color.b);
+      _bodyRedShader.SetColor(color);
+      _bodyGreenShader.SetColor(color);
+      _bodyBlueShader.SetColor(color);
    }
    
    public void SetLegsColorSliders()
@@ -437,9 +455,9 @@ public class WorkshopUIManager : MonoBehaviour
       _legsRedSlider.value = color.r;
       _legsGreenSlider.value = color.g;
       _legsBlueSlider.value = color.b;
-      _legsRedShader.SetColorGradientRed(color.r);
-      _legsGreenShader.SetColorGradientGreen(color.g);
-      _legsBlueShader.SetColorGradientBlue(color.b);
+      _legsRedShader.SetColor(color);
+      _legsGreenShader.SetColor(color);
+      _legsBlueShader.SetColor(color);
    }
 
    public void SetMechaName()

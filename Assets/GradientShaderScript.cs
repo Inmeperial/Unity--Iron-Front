@@ -12,6 +12,14 @@ public class GradientShaderScript : MonoBehaviour
         GetMat();
     }
 
+    public void SetColor(Color color)
+    {
+        GetMat();
+        _mat.SetFloat("_Red", color.r);
+        _mat.SetFloat("_Green", color.g); 
+        _mat.SetFloat("_Blue", color.b);
+    }
+
     public void SetColorGradientRed(float num)
     {
         GetMat();
@@ -34,9 +42,9 @@ public class GradientShaderScript : MonoBehaviour
     {
         if (!_mat)
         {
-            var mat = this.GetComponent<Image>().material;
-
-            _mat = new Material(mat); 
+            var image = this.GetComponent<Image>();
+            _mat = new Material(image.material);
+            image.material = _mat;
         }
     }
 
