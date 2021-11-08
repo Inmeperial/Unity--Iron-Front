@@ -1856,6 +1856,55 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2046942675727691160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3017765419669115582}
+  - component: {fileID: 6051770221130283513}
+  m_Layer: 5
+  m_Name: Active Button Color Change
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3017765419669115582
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046942675727691160}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4787533123163319040}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6051770221130283513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046942675727691160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1612b38e9a3830440ae7bbf3558a6302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _partsTabButton: {fileID: 4787533123173622288}
 --- !u!1 &2198260896743499424
 GameObject:
   m_ObjectHideFlags: 0
@@ -4607,7 +4656,7 @@ GameObject:
   - component: {fileID: 4787533122925982912}
   - component: {fileID: 4787533122925982915}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Body Ability Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4724,7 +4773,7 @@ GameObject:
   - component: {fileID: 4787533122962943912}
   - component: {fileID: 4787533122962943915}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: R Gun Ability Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4940,7 +4989,7 @@ GameObject:
   - component: {fileID: 4787533122990620706}
   - component: {fileID: 4787533122990620709}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: L Gun Parts Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5073,6 +5122,28 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533122990620709}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: SetColorToActive
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533122990620709}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5409,6 +5480,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_MethodName: CloseEditionButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: DeactivatePartsButtonColor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5975,7 +6057,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -540}
+  m_AnchoredPosition: {x: 100, y: -539.72754}
   m_SizeDelta: {x: 200, y: 360}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4787533123141935122
@@ -6161,6 +6243,7 @@ RectTransform:
   - {fileID: 4787533124399405802}
   - {fileID: 4668831579209604627}
   - {fileID: 470424137094638116}
+  - {fileID: 3017765419669115582}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6242,7 +6325,7 @@ GameObject:
   - component: {fileID: 4787533123173622289}
   - component: {fileID: 4787533123173622288}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Parts Tab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6402,7 +6485,29 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 4787533123665673174}
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: ChangeTabColors
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533123173622288}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: DeactivatePartsButtonColor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5151116342940256931}
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -6412,17 +6517,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 5558887686054870323}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 5151116342940256931}
         m_MethodName: SetActive
@@ -8128,7 +8222,7 @@ GameObject:
   - component: {fileID: 4787533123448354653}
   - component: {fileID: 4787533123448354652}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: L Gun Ability Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8266,6 +8360,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: SetColorToActive
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533123448354652}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: ChangeAbilityIconColor
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533124229612449}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &4787533123500441212
 GameObject:
   m_ObjectHideFlags: 0
@@ -8279,7 +8395,7 @@ GameObject:
   - component: {fileID: 4787533123500441211}
   - component: {fileID: 4787533123500441210}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Abilities Tab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8439,16 +8555,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 4787533124440508112}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: ChangeTabColors
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533123500441210}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: DeactivatePartsButtonColor
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 5558887686054870323}
         m_MethodName: SetActive
@@ -8474,7 +8601,7 @@ GameObject:
   - component: {fileID: 4787533123522052432}
   - component: {fileID: 4787533123522052435}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Body Parts Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8607,6 +8734,28 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533123522052435}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: SetColorToActive
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533123522052435}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8930,7 +9079,7 @@ GameObject:
   - component: {fileID: 4787533123541441218}
   - component: {fileID: 4787533123541441221}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Body Ability Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9063,6 +9212,28 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: SetColorToActive
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533123541441221}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: ChangeAbilityIconColor
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533122925982912}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9589,7 +9760,7 @@ GameObject:
   - component: {fileID: 4787533123626253908}
   - component: {fileID: 4787533123626253911}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: R Gun Ability Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9722,6 +9893,28 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: SetColorToActive
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533123626253911}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: ChangeAbilityIconColor
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533122962943912}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10557,7 +10750,7 @@ GameObject:
   - component: {fileID: 4787533123914866844}
   - component: {fileID: 4787533123914866847}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: Legs Parts Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10690,6 +10883,28 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533123914866847}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: SetColorToActive
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533123914866847}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11894,7 +12109,7 @@ GameObject:
   - component: {fileID: 4787533124229612449}
   - component: {fileID: 4787533124229612448}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: L Gun Ability Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12011,7 +12226,7 @@ GameObject:
   - component: {fileID: 4787533124267877369}
   - component: {fileID: 4787533124267877368}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: Legs Ability Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12128,7 +12343,7 @@ GameObject:
   - component: {fileID: 4787533124269415284}
   - component: {fileID: 4787533124269415287}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: Legs Ability Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12266,6 +12481,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: SetColorToActive
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533124269415287}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: ChangeAbilityIconColor
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533124267877369}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &4787533124399405805
 GameObject:
   m_ObjectHideFlags: 0
@@ -12336,7 +12573,7 @@ GameObject:
   - component: {fileID: 4787533124416926192}
   - component: {fileID: 4787533124416926195}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Item Tab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12488,6 +12725,28 @@ MonoBehaviour:
       - m_Target: {fileID: 5558887686054870323}
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: ChangeTabColors
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533124416926195}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: DeactivatePartsButtonColor
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -12883,6 +13142,17 @@ MonoBehaviour:
       - m_Target: {fileID: 5151116342940256931}
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: SelectPartsTab
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -13353,7 +13623,7 @@ GameObject:
   - component: {fileID: 4787533124796796697}
   - component: {fileID: 4787533124796796696}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: R Gun Parts Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13486,6 +13756,28 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533124796796696}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: SetColorToActive
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4787533124796796696}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13668,6 +13960,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_MethodName: CloseEditionButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: DeactivatePartsButtonColor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14421,6 +14724,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: SelectPartsTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &4787533124952465859
 GameObject:
   m_ObjectHideFlags: 0
@@ -14522,7 +14836,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -855}
+  m_AnchoredPosition: {x: 960, y: -854.4551}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1794451036768016946
@@ -14709,7 +15023,7 @@ GameObject:
   - component: {fileID: 4443225197164348938}
   - component: {fileID: 1228113747881791293}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: Customize Tab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14860,6 +15174,28 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 4787533124399405803}
         m_MethodName: PlayTheSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: ChangeTabColors
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1228113747881791293}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6051770221130283513}
+        m_MethodName: DeactivatePartsButtonColor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
