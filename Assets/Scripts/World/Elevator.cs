@@ -58,11 +58,13 @@ public class Elevator : MonoBehaviour
             {
                 end.y = _height;
                 _active = true;
+                _tileBelow.RemoveFromNeighbour();
             }
             else
             {
                 end.y = _startingHeight;
                 _active = false;
+                _tileBelow.AddToNeighbour();
             }
 
             yield return new WaitForSeconds(2);
