@@ -1542,20 +1542,6 @@ public class Character : EnumsClass, IObservable
             _rightGunSelected = false;
             _leftGunSelected = false;
         }
-
-        //TODO: remover despues
-        // if (itemSOData)
-        // {
-        //     switch (itemSOData.itemType)
-        //     {
-        //         case ItemSO.ItemType.Grenade:
-        //             _equipable = Instantiate(itemPrefab, transform);
-        //             break;
-        //     }
-        //
-        //     _equipable.Initialize(this, itemSOData);
-        //     _equipables.Add(_equipable);
-        // }
     }
     
     //Funcion de Nico para el push/pull
@@ -1607,25 +1593,10 @@ public class Character : EnumsClass, IObservable
             _overweight = false;
         }
         else _overweight = true;
-        
-        Debug.Log("Total weight: " + _body.GetMaxWeight() + " /// Current Weight: " + totalWeight);
     }
-
-    //TODO: alive
+    
     public void ArmDestroyed(string location)
     {
-        // if (location == "Left")
-        // {
-        //     _leftGun = null;
-        //     //_leftGunAlive = false;
-        // }
-        //
-        // else
-        // {
-        //     _rightGun = null;
-        //     //_rightGunAlive = false;
-        // }
-        
         CheckWeight();
     }
 }
