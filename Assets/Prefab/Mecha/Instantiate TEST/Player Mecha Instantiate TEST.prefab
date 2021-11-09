@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8ead686a30e3c4d98f6a1e81d8b8f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSOData: {fileID: 0}
-  itemPrefab: {fileID: 0}
   _raycastToTile: {fileID: 5039077744643655393}
   _mechaEquipment: {fileID: 11400000, guid: bb67f7b610dc7c443a41d01fc5815fa5, type: 2}
   gunsOffOnCloseUp: 1
@@ -555,6 +553,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6934495486686929071, guid: 209f0d0c942a9874eabb880cebb4ea6c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Legs
       objectReference: {fileID: 0}
     - target: {fileID: 7241184060916662716, guid: 209f0d0c942a9874eabb880cebb4ea6c,
         type: 3}

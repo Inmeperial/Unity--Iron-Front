@@ -178,8 +178,8 @@ public class Character : EnumsClass, IObservable
         _canBeSelected = _body.GetCurrentHp() > 0;
 
         _bodyTransform = _body.transform;
-        _legsTransform = _legs.transform;
-        
+        _legsTransform = _raycastToTile;
+
     }
 
     // Update is called once per frame
@@ -490,7 +490,8 @@ public class Character : EnumsClass, IObservable
 
         Physics.Raycast(position, dir, out RaycastHit hit, 1000f);
         Transform hitObj = hit.collider.transform;
-        bool goodHit = hitObj.gameObject.CompareTag(tagToCheck) && hitObj.position == partPosition;
+        //bool goodHit = hitObj.gameObject.CompareTag(tagToCheck) && hitObj.position == partPosition;
+        bool goodHit = hitObj.gameObject.CompareTag(tagToCheck);
 
         LineRenderer renderer = null;
         switch (tagToCheck)
