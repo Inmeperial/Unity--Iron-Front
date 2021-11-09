@@ -26,15 +26,12 @@ public class WorkshopUIManager : MonoBehaviour
    [Header("Parts List")]
    [SerializeField] private Transform _partsSpawnParent;
    [SerializeField] private TextMeshProUGUI _partsDescription;
-   [SerializeField] private Slider _weightSlider;
    [SerializeField] private TextMeshProUGUI _weightText;
    [SerializeField] private RectTransform _needle;
    [SerializeField] private Vector3 _maxRotationMaxWeight;
    [SerializeField] private Vector3 _maxRotationOverweight;
    [SerializeField] private float _needleRotationTime;
-   [SerializeField] private Color _normalWeightColor;
-   [SerializeField] private Color _overWeightColor;
-   
+
    [Header("Abilities List")]
    [SerializeField] private Transform _abilitiesSpawnParent;
    [SerializeField] private TextMeshProUGUI _abilitiesDescription;
@@ -140,14 +137,7 @@ public class WorkshopUIManager : MonoBehaviour
                      equipmentData.legs.weight;
 
       float maxWeight = equipmentData.body.maxWeight;
-      
-      _weightSlider.minValue = 0;
-      _weightSlider.maxValue = maxWeight;
 
-      
-
-      _weightSlider.value = weight;
-      
       _weightText.text = weight +"";
 
       StopCoroutine(RotateNeedle(Quaternion.identity));
@@ -160,17 +150,6 @@ public class WorkshopUIManager : MonoBehaviour
       Quaternion target = Quaternion.Euler(newRotation);
 
       StartCoroutine(RotateNeedle(target));
-      // if (weight > maxWeight)
-      // {
-      //    var weightSliderColors = _weightSlider.colors;
-      //    weightSliderColors.normalColor = _overWeightColor;
-      //    //_weightSlider.colors = weightSliderColors;
-      // }
-      // else
-      // {
-      //    var weightSliderColors = _weightSlider.colors;
-      //    weightSliderColors.normalColor = _normalWeightColor;
-      // }
    }
 
    IEnumerator RotateNeedle(Quaternion target)
@@ -208,7 +187,9 @@ public class WorkshopUIManager : MonoBehaviour
                var b = workshopManager.CreateWorkshopObject(body, _partsSpawnParent);
                b.SetLeftClick(() =>
                {
-                  _partsDescription.text = "HP: " + body.maxHP;
+                  _partsDescription.text = "HP: " + body.maxHP +
+                                           "\n Weight: " + body.weight +
+                                           "\n MaxWeight: " + body.maxWeight;
                   
                   manager.UpdateBody(body);
                   
@@ -226,9 +207,10 @@ public class WorkshopUIManager : MonoBehaviour
                {
                   _partsDescription.text = "Damage: " + gun.damage +
                                            "\n HitChance:" + gun.hitChance +
-                                           "\n Crit Multiplier: " + gun.critMultiplier +
-                                           "\n Crit Chance: " + gun.critChance +
-                                           "\n Attack Range: " + gun.attackRange;
+                                           // "\n Crit Multiplier: " + gun.critMultiplier +
+                                           // "\n Crit Chance: " + gun.critChance +
+                                           "\n Attack Range: " + gun.attackRange +
+                                           "\n Weight: " + gun.weight;
                                            
                   manager.UpdateLeftGun(gun);
                   
@@ -246,9 +228,10 @@ public class WorkshopUIManager : MonoBehaviour
                {
                   _partsDescription.text = "Damage: " + gun.damage +
                                            "\n HitChance:" + gun.hitChance +
-                                           "\n Crit Multiplier: " + gun.critMultiplier +
-                                           "\n Crit Chance: " + gun.critChance +
-                                           "\n Attack Range: " + gun.attackRange;
+                                           // "\n Crit Multiplier: " + gun.critMultiplier +
+                                           // "\n Crit Chance: " + gun.critChance +
+                                           "\n Attack Range: " + gun.attackRange +
+                                           "\n Weight: " + gun.weight;
                   manager.UpdateRightGun(gun);
                   
                   UpdateWeightSlider(index);
@@ -263,7 +246,9 @@ public class WorkshopUIManager : MonoBehaviour
                var l = workshopManager.CreateWorkshopObject(leg, _partsSpawnParent);
                l.SetLeftClick(() =>
                {
-                  _partsDescription.text = "HP: " + leg.maxHP;
+                  _partsDescription.text = "HP: " + leg.maxHP +
+                                           "\n Steps: " + leg.maxSteps +
+                                           "\n Weight: " + leg.weight;
                   manager.UpdateLegs(leg);
                   
                   UpdateWeightSlider(index);

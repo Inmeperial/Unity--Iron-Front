@@ -304,7 +304,7 @@ public class Tile : MonoBehaviour
         AddToNeighbour();
     }
 
-    void RemoveFromNeighbour()
+    public void RemoveFromNeighbour()
     {
         for (int i = 0; i < 4; i++)
         {
@@ -332,7 +332,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    void AddToNeighbour()
+    public void AddToNeighbour()
     {
         for (int i = 0; i < 4; i++)
         {
