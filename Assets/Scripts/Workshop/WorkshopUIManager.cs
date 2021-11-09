@@ -27,6 +27,7 @@ public class WorkshopUIManager : MonoBehaviour
    [SerializeField] private Transform _partsSpawnParent;
    [SerializeField] private TextMeshProUGUI _partsDescription;
    [SerializeField] private TextMeshProUGUI _weightText;
+    private Color _weightTextColor;//Guardo el color para cambiarlo si esta en overweight o no
    [SerializeField] private RectTransform _needle;
    [SerializeField] private Vector3 _maxRotationMaxWeight;
    [SerializeField] private Vector3 _maxRotationOverweight;
@@ -96,6 +97,8 @@ public class WorkshopUIManager : MonoBehaviour
       _legsRedShader = _legsRedSlider.GetComponentInChildren<GradientShaderScript>();
       _legsGreenShader = _legsGreenSlider.GetComponentInChildren<GradientShaderScript>();
       _legsBlueShader = _legsBlueSlider.GetComponentInChildren<GradientShaderScript>();
+
+      _weightTextColor = _weightText.color;//Me guardo el color inicial del texto
    }
 
    private void UpdateOverviewText(int mechaIndex)
@@ -138,7 +141,9 @@ public class WorkshopUIManager : MonoBehaviour
 
       float maxWeight = equipmentData.body.maxWeight;
 
-      _weightText.text = weight +"";
+      _weightText.text = weight + "";
+
+      _weightText.color = weight > maxWeight ? Color.red : _weightTextColor;//Le cambio el color del texto si llega al overweight 
 
       StopCoroutine(RotateNeedle(Quaternion.identity));
 
@@ -487,10 +492,12 @@ public class WorkshopUIManager : MonoBehaviour
    public void SaveButtonEnable()
    {
       _saveButton.interactable = true;
+      _saveButton.gameObject.SetActive(true);
    }
-   
-   public void SaveButtonDisable()
-   {
+
+    public void SaveButtonDisable()
+    {
       _saveButton.interactable = false;
-   }
+      _saveButton.gameObject.SetActive(false);
+    }
 }
