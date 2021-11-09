@@ -207,8 +207,8 @@ public class WorkshopUIManager : MonoBehaviour
                {
                   _partsDescription.text = "Damage: " + gun.damage +
                                            "\n HitChance:" + gun.hitChance +
-                                           "\n Crit Multiplier: " + gun.critMultiplier +
-                                           "\n Crit Chance: " + gun.critChance +
+                                           // "\n Crit Multiplier: " + gun.critMultiplier +
+                                           // "\n Crit Chance: " + gun.critChance +
                                            "\n Attack Range: " + gun.attackRange +
                                            "\n Weight: " + gun.weight;
                                            
@@ -228,8 +228,8 @@ public class WorkshopUIManager : MonoBehaviour
                {
                   _partsDescription.text = "Damage: " + gun.damage +
                                            "\n HitChance:" + gun.hitChance +
-                                           "\n Crit Multiplier: " + gun.critMultiplier +
-                                           "\n Crit Chance: " + gun.critChance +
+                                           // "\n Crit Multiplier: " + gun.critMultiplier +
+                                           // "\n Crit Chance: " + gun.critChance +
                                            "\n Attack Range: " + gun.attackRange +
                                            "\n Weight: " + gun.weight;
                   manager.UpdateRightGun(gun);
