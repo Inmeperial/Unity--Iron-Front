@@ -7,11 +7,20 @@ using UnityEngine.UI;
 public class WorkshopUIManager : MonoBehaviour
 {
    [SerializeField] private Button _saveButton;
-   [Header("Overview Texts")]
+   [SerializeField] private Sprite _noneIcon;
+   
+   [Header("Overview Texts")] 
+   [SerializeField] private TextMeshProUGUI _overviewName;
    [SerializeField] private TextMeshProUGUI _overviewBody;
+   [SerializeField] private Image _overviewBodyAbility;
    [SerializeField] private TextMeshProUGUI _overviewLeftArm;
+   [SerializeField] private Image _overviewLeftArmAbility;
    [SerializeField] private TextMeshProUGUI _overviewRightArm;
+   [SerializeField] private Image _overviewRightArmAbility;
    [SerializeField] private TextMeshProUGUI _overviewLegs;
+   [SerializeField] private Image _overviewLegsAbility;
+   [SerializeField] private Image _overviewItem;
+   
    
    
    [Header("Parts List")]
@@ -38,7 +47,7 @@ public class WorkshopUIManager : MonoBehaviour
    [SerializeField] private Transform _itemsSpawnParent;
    [SerializeField] private TextMeshProUGUI _itemsDescription;
    [SerializeField] private Image _itemImage;
-   
+
    [Header("Colors")]
    [SerializeField] private Image _bodyColorImage;
 
@@ -95,10 +104,32 @@ public class WorkshopUIManager : MonoBehaviour
    private void UpdateOverviewText(int mechaIndex)
    {
       var equipmentData = FindObjectOfType<WorkshopManager>().GetMechaEquipment(mechaIndex);
+
+      _overviewName.text = equipmentData.name;
+      
       _overviewBody.text = "Body: \n" + equipmentData.body.partName;
+      if (equipmentData.body.ability)
+         _overviewBodyAbility.sprite = equipmentData.body.ability.equipableIcon;
+      else _overviewBodyAbility.sprite = _noneIcon;
+      
       _overviewLeftArm.text = "Left Gun: \n" + equipmentData.leftGun.gunName;
+      if (equipmentData.leftGun.ability)
+         _overviewLeftArmAbility.sprite = equipmentData.leftGun.ability.equipableIcon;
+      else _overviewLeftArmAbility.sprite = _noneIcon;
+      
       _overviewRightArm.text = "Right Gun: \n" + equipmentData.rightGun.gunName;
+      if (equipmentData.rightGun.ability)
+         _overviewRightArmAbility.sprite = equipmentData.rightGun.ability.equipableIcon;
+      else _overviewRightArmAbility.sprite = _noneIcon;
+      
       _overviewLegs.text = "Legs: \n" + equipmentData.legs.partName;
+      if (equipmentData.legs.ability)
+         _overviewLegsAbility.sprite = equipmentData.legs.ability.equipableIcon;
+      else _overviewLegsAbility.sprite = _noneIcon;
+
+      if (equipmentData.body.item)
+         _overviewItem.sprite = equipmentData.body.item.equipableIcon;
+      else _overviewItem.sprite = _noneIcon;
    }
 
    public void UpdateWeightSlider(int mechaIndex)
