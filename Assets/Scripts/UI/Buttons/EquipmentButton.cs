@@ -3,24 +3,34 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class EquipmentButton : CustomButton
 {
     private TextMeshProUGUI _buttonText;
     private Character _character;
+    private Image _buttonImage;
 
     protected override void Start()
     {
         _buttonText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        _buttonImage = GetComponent<Image>();
     }
 
-    public void SetItemButtonName(string name)
+    public void SetButtonName(string name)
     {
         if (!_buttonText)
         {
             _buttonText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         }
         _buttonText.text = name;
+    }
+
+    public void SetButtonIcon(Sprite sprite)
+    {
+        //TODO: remover desp
+        if (sprite)
+            _buttonImage.sprite = sprite;
     }
 
     public void AddLeftClick(UnityAction action)

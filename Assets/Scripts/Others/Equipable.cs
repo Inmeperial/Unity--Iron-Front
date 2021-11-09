@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
 using UnityEngine;
 
 public abstract class Equipable : MonoBehaviour
@@ -12,6 +14,7 @@ public abstract class Equipable : MonoBehaviour
     protected int _currentCooldown;
     protected Character _character;
     protected EquipmentButton _button;
+    protected Sprite _icon;
     public abstract void Initialize(Character character, EquipableSO data);
 
     public abstract void Select();
@@ -30,5 +33,10 @@ public abstract class Equipable : MonoBehaviour
     public void SetButton(EquipmentButton button)
     {
         _button = button;
+    }
+
+    public Sprite GetIcon()
+    {
+        return _icon;
     }
 }

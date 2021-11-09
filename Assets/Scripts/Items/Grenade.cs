@@ -152,7 +152,7 @@ public class Grenade : Item
             unit.GetLegs().TakeDamage(GetItemDamage());
         }
         UpdateUses();
-        _button.SetItemButtonName(_itemData.equipableName + " x" + _availableUses);
+        _button.SetButtonName(_itemData.equipableName + " x" + _availableUses);
         _button.OnRightClick?.Invoke();
         _button.interactable = false;
     }

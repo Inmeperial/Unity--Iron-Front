@@ -1066,59 +1066,55 @@ public class ButtonsUIManager : MonoBehaviour
                 }
                 
                 var button = equipmentButtons[i];
-                var equipment = equipables[i];
                 
+                var equipment = equipables[i];
+
                 equipment.SetButton(button);
+                
+                button.SetButtonIcon(equipment.GetIcon());
+                //button.SetButtonName(equipment.GetEquipableName());
+                button.SetCharacter(_selectedChar);
+
+                button.ClearLeftClick();
+                button.AddLeftClick(equipment.Select);
+                
+                button.ClearRightClick();
+                button.AddRightClick(equipment.Deselect);
+
+                button.interactable = true;
+                
                 button.gameObject.SetActive(true);
-                Ability ability;
-                switch (equipment.GetEquipableType())
-                {
-                    case EquipableSO.EquipableType.Item:
-                        var item = equipment as Item;
-                        if (item)
-                        {
-                            button.SetItemButtonName(item.GetEquipableName() + " x" + item.GetItemUses());
-
-                            if (item.GetItemUses() > 0)
-                            {
-                                button.ClearLeftClick();
-                                button.AddLeftClick(item.Select);
-                                
-                                button.ClearRightClick();
-                                button.AddRightClick(item.Deselect);
-
-                                button.SetCharacter(_selectedChar);
-                                button.interactable = true;
-                            }
-                            
-                        }
-                        else button.interactable = false;
-                            
-                        break;
-                    case EquipableSO.EquipableType.Ability:
-                        ability = equipment as Ability;
-                        if (ability)
-                        {
-                            button.SetItemButtonName(ability.GetEquipableName() + " " + ability.AbilityStatus());
-                            button.interactable = false;
-                        }
-                        break;
-                    case EquipableSO.EquipableType.ActiveAbility:
-                        ability = equipment as Ability;
-                        if (ability)
-                        {
-                            button.SetItemButtonName(ability.GetEquipableName() + " " + ability.AbilityStatus());
-                            button.ClearLeftClick();
-                            button.AddLeftClick(ability.Select);
-
-                            button.ClearRightClick();
-                            button.AddRightClick(ability.Deselect);
-
-                            button.SetCharacter(_selectedChar);
-                            button.interactable = true;
-                        }
-                        break;
-                }
+                // Ability ability;
+                // switch (equipment.GetEquipableType())
+                // {
+                //     case EquipableSO.EquipableType.Item:
+                //         var item = equipment as Item;
+                //         if (item)
+                //         {
+                //             if (item.GetItemUses() > 0)
+                //             {
+                //
+                //                 button.interactable = true;
+                //             }
+                //         }
+                //         else button.interactable = false;
+                //             
+                //         break;
+                //     case EquipableSO.EquipableType.Ability:
+                //         ability = equipment as Ability;
+                //         if (ability)
+                //         {
+                //             button.interactable = false;
+                //         }
+                //         break;
+                //     case EquipableSO.EquipableType.ActiveAbility:
+                //         ability = equipment as Ability;
+                //         if (ability)
+                //         {
+                //             button.interactable = true;
+                //         }
+                //         break;
+                // }
             }
         }
     }

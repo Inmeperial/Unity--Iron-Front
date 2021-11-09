@@ -11,6 +11,7 @@ public class Ability : Equipable
     public override void Initialize(Character character, EquipableSO data)
     {
         _character = character;
+        _icon = data.equipableIcon;
         _abilityData = data as AbilitySO;
         _partSlot = _abilityData.partSlot;
         //TODO: remover despues
