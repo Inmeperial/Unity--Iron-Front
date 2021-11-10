@@ -50,22 +50,12 @@ public class MenuOptionsInGame : MonoBehaviour
         _audioMixer.SetFloat("volume", volumeToSet);
     }
 
-    public void OpenOptionsMenu() //Used on Inspector
-    {
-        _optionsObj.SetActive(true);
-    }
-
-    public void CloseOptionsMenu() //Used on Inspector
+    public void CloseOptionsMenu()
     {
         _optionsObj.SetActive(false);
     }
 
-    public void OpenDevMenu() //Used on Inspector
-    {
-        _devObj.SetActive(true);
-    }
-
-    public void CloseDevMenu() //Used on Inspector
+    public void CloseDevMenu()
     {
         _devObj.SetActive(false);
     }
