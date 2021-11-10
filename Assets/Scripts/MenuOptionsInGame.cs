@@ -52,11 +52,13 @@ public class MenuOptionsInGame : MonoBehaviour
 
     public void CloseOptionsMenu()
     {
-        _optionsObj.SetActive(false);
+        if (_optionsObj)
+            _optionsObj.SetActive(false);
     }
 
     public void CloseDevMenu()
     {
-        _devObj.SetActive(false);
+        if (_devObj)
+            _devObj.SetActive(false);
     }
 }

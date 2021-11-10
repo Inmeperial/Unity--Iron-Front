@@ -1282,6 +1282,8 @@ public class Character : EnumsClass, IObservable
     {
         if (Cursor.lockState == CursorLockMode.Locked) return;
         
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+        
         if (!_selectedForAttack && _canBeSelected)
             ShowWorldUI();
         
@@ -1293,6 +1295,8 @@ public class Character : EnumsClass, IObservable
 
     private void OnMouseExit()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+        
         HideWorldUI();
         
         if (_canBeAttacked)

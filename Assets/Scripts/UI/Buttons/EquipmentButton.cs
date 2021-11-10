@@ -29,7 +29,9 @@ public class EquipmentButton : CustomButton
     public void SetButtonIcon(Sprite sprite)
     {
         //TODO: remover desp
-        if (sprite)
+        if (!_buttonImage)
+            _buttonImage = GetComponent<Image>();
+        if (sprite && _buttonImage)
             _buttonImage.sprite = sprite;
     }
 

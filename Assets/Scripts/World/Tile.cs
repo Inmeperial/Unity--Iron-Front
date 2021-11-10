@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Experimental.VFX.Utility;
 
 
@@ -172,11 +173,15 @@ public class Tile : MonoBehaviour
     private void OnMouseOver()
     {
         if (Cursor.lockState == CursorLockMode.Locked) return;
+        
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+        
         MouseOverColor();
     }
 
     private void OnMouseExit()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
         EndMouseOverColor();
     }
 
