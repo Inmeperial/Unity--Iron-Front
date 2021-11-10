@@ -327,11 +327,11 @@ public class WorkshopManager : MonoBehaviour
                 break;
             
             case "LGun":
-                //mechas[_mechaIndex]._.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
+                //mechas[_mechaIndex]._leftGunShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureFresnel);//Aca
                 break;
                 
             case "RGun":
-                //mechas[_mechaIndex]._bodyShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureHighLight);
+                //mechas[_mechaIndex]._rightGunShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureFresnel);//Aca
                 break;
             
             case "Legs":

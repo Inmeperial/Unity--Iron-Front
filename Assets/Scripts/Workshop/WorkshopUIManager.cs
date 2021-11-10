@@ -284,7 +284,7 @@ public class WorkshopUIManager : MonoBehaviour
                   var obj = workshopManager.CreateWorkshopObject(ability, _abilitiesSpawnParent);
                   obj.SetLeftClick(() =>
                   {
-                     _itemsDescription.text = ability.description;
+                     _abilitiesDescription.text = ability.description;
                      if (ability.equipableIcon)
                         _bodyAbilityImage.sprite = ability.equipableIcon;
                      OnChangeEquippable?.Invoke(ability, part);
@@ -303,7 +303,7 @@ public class WorkshopUIManager : MonoBehaviour
                   var obj = workshopManager.CreateWorkshopObject(ability, _abilitiesSpawnParent);
                   obj.SetLeftClick(() =>
                   {
-                     _itemsDescription.text = ability.description;
+                     _abilitiesDescription.text = ability.description;
                      if (ability.equipableIcon)
                         _leftArmAbilityImage.sprite = ability.equipableIcon;
                      OnChangeEquippable?.Invoke(ability, part);
@@ -321,7 +321,7 @@ public class WorkshopUIManager : MonoBehaviour
                   var obj = workshopManager.CreateWorkshopObject(ability, _abilitiesSpawnParent);
                   obj.SetLeftClick(() =>
                   {
-                     _itemsDescription.text = ability.description;
+                     _abilitiesDescription.text = ability.description;
                      if (ability.equipableIcon)
                         _rightArmAbilityImage.sprite = ability.equipableIcon;
                      OnChangeEquippable?.Invoke(ability, part);
@@ -340,7 +340,7 @@ public class WorkshopUIManager : MonoBehaviour
                   var obj = workshopManager.CreateWorkshopObject(ability, _abilitiesSpawnParent);
                   obj.SetLeftClick(() =>
                   {
-                     _itemsDescription.text = ability.description;
+                     _abilitiesDescription.text = ability.description;
                      if (ability.equipableIcon)
                         _legsAbilityImage.sprite = ability.equipableIcon;
                      OnChangeEquippable?.Invoke(ability, part);
