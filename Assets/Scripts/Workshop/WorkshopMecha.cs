@@ -27,9 +27,9 @@ public class WorkshopMecha : MonoBehaviour
 
     public MasterShaderScript _bodyShader;
     public MasterShaderScript _leftArmShader;
-    //public MasterShaderScript _leftGunShader;//Aca
+    public MasterShaderScript _leftGunShader;
     public MasterShaderScript _rightArmShader;
-    //public MasterShaderScript _rightGunShader;//Aca
+    public MasterShaderScript _rightGunShader;
     public MasterShaderScript _leftLegShader;
     public MasterShaderScript _rightLegShader;
     
@@ -60,7 +60,7 @@ public class WorkshopMecha : MonoBehaviour
         var leftGun = Instantiate(_equipment.leftGun.prefab, _leftGunSpawn.transform);
         leftGun.transform.localPosition = Vector3.zero;
         _leftGun = leftGun.gameObject;
-        //_leftGunShader = _leftGun.GetComponent<MasterShaderScript>();//Aca
+        _leftGunShader = _leftGun.GetComponent<MasterShaderScript>();
 
 
         _rightArm = Instantiate(_equipment.body.armsMeshPrefab[1], _rightArmSpawnPosition);
@@ -71,7 +71,7 @@ public class WorkshopMecha : MonoBehaviour
         var rightGun = Instantiate(_equipment.rightGun.prefab, _rightGunSpawn.transform);
         rightGun.transform.localPosition = Vector3.zero;
         _rightGun = rightGun.gameObject;
-        //_rightGunShader = _rightGun.GetComponent<MasterShaderScript>();//Aca
+        _rightGunShader = _rightGun.GetComponent<MasterShaderScript>();
 
         _leftLeg = Instantiate(_equipment.legs.meshPrefab[0], _leftLegSpawnPosition);
         _leftLeg.transform.localPosition = Vector3.zero;
@@ -159,7 +159,6 @@ public class WorkshopMecha : MonoBehaviour
 
     public void UpdateBodyColor(Color color)
     {
-        ///TODO: sacar coment
         _bodyShader.SetMechaColor(color);
         _leftArmShader.SetMechaColor(color);
         _rightArmShader.SetMechaColor(color);
@@ -167,7 +166,6 @@ public class WorkshopMecha : MonoBehaviour
     
     public void UpdateLegsColor(Color color)
     {
-        ///TODO: sacar coment
         _leftLegShader.SetMechaColor(color);
         _rightLegShader.SetMechaColor(color);
     }

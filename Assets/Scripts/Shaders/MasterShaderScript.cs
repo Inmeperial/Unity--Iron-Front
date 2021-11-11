@@ -23,7 +23,7 @@ public class MasterShaderScript : MonoBehaviour
 
     void Start()
     {
-        _shaderArrayString = new string[Enum.GetNames(typeof(SwitchTextureEnum)).Length];
+        _shaderArrayString = new string[Enum.GetNames(typeof(StringTextureEnum)).Length];
 
         _shaderArrayString[0] = StringTextureEnum._SwitchTexture_Key0.ToString();
         _shaderArrayString[1] = StringTextureEnum._SwitchTexture_Key1.ToString();
@@ -45,11 +45,12 @@ public class MasterShaderScript : MonoBehaviour
             {
                 _matArr[i].SetInt("_isWeapon", 0);
             }
-            
         }
+
         SetMaterialsForMecha();
         ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
         SetMechaColor(colorMecha);
+        SetOutLine(false);
     }
 
     public void SetMaterialsForMecha()
@@ -68,7 +69,7 @@ public class MasterShaderScript : MonoBehaviour
     {
         for (int i = 0; i < _matArr.Length; i++)
         {
-           _matArr[i].SetColor("_ColorAlbedo", color);
+            _matArr[i].SetColor("_ColorAlbedo", color);
         }
     }
 
@@ -85,10 +86,29 @@ public class MasterShaderScript : MonoBehaviour
             case SwitchTextureEnum.TextureHighLight:
                 SetTextureInShader(StringTextureEnum._SwitchTexture_Key2);
                 break;
+            case SwitchTextureEnum.TextureOutLine:
+                SetOutLine(true);
+                break;
             default:
                 SetTextureInShader(StringTextureEnum._SwitchTexture_Key0);
                 break;
         }
+    }
+
+    private void SetOutLine(bool key)
+    {
+        for (int i = 0; i < _matArr.Length; i++)
+        {
+            if (key)
+            {
+                _matArr[i].SetInt("_isOutLineOn", 1);
+            }
+            else
+            {
+                _matArr[i].SetInt("_isOutLineOn", 0);
+            }
+        }
+
     }
 
     private void SetTexturesToMaterial(int matArrayNum, Texture[] arr)
@@ -116,6 +136,7 @@ public class MasterShaderScript : MonoBehaviour
 
     private void SetTextureInShader(StringTextureEnum key)
     {
+        SetOutLine(false);
         for (int i = 0; i < _matArr.Length; i++)
         {
             for (int j = 0; j < _shaderArrayString.Length; j++)
@@ -145,7 +166,8 @@ public enum SwitchTextureEnum
 {
     TextureClean,
     TextureFresnel,
-    TextureHighLight
+    TextureHighLight,
+    TextureOutLine
 };
 
 public enum MechaEnum
