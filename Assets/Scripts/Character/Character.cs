@@ -103,6 +103,8 @@ public class Character : EnumsClass, IObservable
     protected bool _overweight;
     
     protected bool _legsOvercharged;
+
+    protected bool _isOnElevator;
     #endregion
 
     //OTHERS
@@ -188,11 +190,15 @@ public class Character : EnumsClass, IObservable
         if (_isDead) return;
         
         if (_unitTeam == Team.Red) return;
-        
-        if (_selected && !_moving && _canMove && !_selectingEnemy && Input.GetMouseButtonDown(0))
+
+        if (!_isOnElevator)
         {
-            GetTargetToMove();
+            if (_selected && !_moving && _canMove && !_selectingEnemy && Input.GetMouseButtonDown(0))
+            {
+                GetTargetToMove();
+            }
         }
+        
 
         if (!_selected && _equipables.Count > 0 && _equipableSelected)
         {
@@ -299,19 +305,22 @@ public class Character : EnumsClass, IObservable
         {
             if (_canAttack)
             {
-                PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
-                CheckEnemiesInAttackRange();
+                if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
+                {
+                    PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+                    CheckEnemiesInAttackRange(); 
+                }
             }
         }
         else
         {
-            if (_canAttack)
+            if (!_isOnElevator && _canAttack)
             {
                 _selectedGun.Ability();
             }
         }
 
-        if (_canMove)
+        if (!_isOnElevator && _canMove)
         {
             PaintTilesInMoveRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
         }
@@ -344,19 +353,22 @@ public class Character : EnumsClass, IObservable
         {
             if (_canAttack)
             {
-                PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
-                CheckEnemiesInAttackRange();
+                if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
+                {
+                    PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+                    CheckEnemiesInAttackRange(); 
+                }
             }
         }
         else
         {
-            if (_canAttack)
+            if (!_isOnElevator && _canAttack)
             {
                 _selectedGun.Ability();
             }
         }
 
-        if (_canMove)
+        if (!_isOnElevator && _canMove)
         {
             PaintTilesInMoveRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
         }
@@ -408,7 +420,7 @@ public class Character : EnumsClass, IObservable
             _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
         }
 
-        if (CanAttack())
+        if (_canAttack)
         {
             //TODO: alive
             if (_rightGunAlive && _rightGun) _selectedGun = _rightGun;
@@ -416,11 +428,15 @@ public class Character : EnumsClass, IObservable
             else if (_leftGunAlive && _leftGun) _selectedGun = _leftGun;
             
             else _selectedGun = null;
-            PaintTilesInAttackRange(_myPositionTile, 0);
-            CheckEnemiesInAttackRange();
-        }
 
-        if (_canMove)
+            if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
+            {
+                PaintTilesInAttackRange(_myPositionTile, 0);
+                CheckEnemiesInAttackRange();
+            }
+        }
+        
+        if (!_isOnElevator && _canMove)
         {
             if (!_legsOvercharged)
                 _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
@@ -923,6 +939,7 @@ public class Character : EnumsClass, IObservable
     public virtual void SetTurn(bool state)
     {
         _myTurn = state;
+        NotifyObserver("AboveTurn");
     }
 
     /// <summary>
@@ -1603,6 +1620,26 @@ public class Character : EnumsClass, IObservable
     public void ArmDestroyed(string location)
     {
         CheckWeight();
+    }
+
+    public void OnEnterElevator(Elevator elevator)
+    {
+        Subscribe(elevator);
+    }
+
+    public void OnExitElevator(Elevator elevator)
+    {
+        Unsubscribe(elevator);
+    }
+    public void CharacterElevatedState(bool state, int extraRange, int extraCrit)
+    {
+        _isOnElevator = state;
+        
+        _leftGun.ModifyRange(extraRange);
+        _leftGun.ModifyCritChance(extraCrit);
+        
+        _rightGun.ModifyRange(extraRange);
+        _rightGun.ModifyCritChance(extraCrit);
     }
 }
 public enum PartsMechaEnum

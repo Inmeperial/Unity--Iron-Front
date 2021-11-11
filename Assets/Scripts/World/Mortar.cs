@@ -279,7 +279,8 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
 
     public void Notify(string action)
     {
-        _actionsDic[action]();
+        if (_actionsDic.ContainsKey(action))
+            _actionsDic[action]();
     }
 
     private void CheckAttack()

@@ -62,6 +62,13 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         {
             Subscribe(mortar);
         }
+
+        Elevator[] elevators = FindObjectsOfType<Elevator>();
+
+        foreach (Elevator elevator in elevators)
+        {
+            Subscribe(elevator);
+        }
         SetFirstTurn();
 
         _actualCharacter = _currentTurnOrder[0];
@@ -402,7 +409,8 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     
     public void Notify(string action)
     {
-        _actionsDic[action]();
+        if (_actionsDic.ContainsKey(action))
+            _actionsDic[action]();
     }
     
     public void Subscribe(IObserver observer)

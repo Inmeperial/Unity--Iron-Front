@@ -146,7 +146,24 @@ public abstract class Gun : EnumsClass, IGun
         _gunSkill = false;
     }
 
+    /// <summary>
+    /// Modify gun range.
+    /// </summary>
+    /// <param name="extraRange">The amount of range to modify. If negative, it decrease.</param>
+    public void ModifyRange(int extraRange)
+    {
+        _attackRange += extraRange;
+    }
     
+    /// <summary>
+    /// Modify gun range.
+    /// </summary>
+    /// <param name="extraChance">The amount of range to modify. If negative, it decrease.</param>
+    public void ModifyCritChance(int extraChance)
+    {
+        _critChance += extraChance;
+    }
+
     /// <summary>
     /// Reduce this gun available bullets by the amount of this gun bullets per click.  
     /// </summary>
