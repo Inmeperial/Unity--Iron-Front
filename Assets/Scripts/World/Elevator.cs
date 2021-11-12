@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
 using UnityEngine;
 
 public class Elevator : MonoBehaviour, IObserver
@@ -17,30 +18,36 @@ public class Elevator : MonoBehaviour, IObserver
     private float _currentHp;
     
     [Header("Others")]
+    [SerializeField] private Transform _platform;
+    [SerializeField] private GameObject _button;
+    [SerializeField] private TextMeshProUGUI _buttonText;
+    
     public LayerMask block;
-    [SerializeField] private float _height;
-    private float _startingHeight;
+    [SerializeField] private float _platformMaxHeight;
+    private Vector3 _startingPos;
     [SerializeField] private float _movementDuration;
 
     private bool _active;
 
     private Tile _tileBelow;
 
-    [SerializeField] private bool _canInteract;
+    private bool _canInteract;
+
+    private bool _isMoving;
     
     private delegate void Execute();
     Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
 
     private Character _aboveCharacter;
-    
+
     
     // Start is called before the first frame update
     void Start()
     {
         _currentHp = _maxHp;
         _canInteract = true;
-        _startingHeight = transform.position.y;
-        
+        _startingPos = _platform.position;
+        _button.SetActive(false);
         var coll = Physics.OverlapBox(transform.position, new Vector3(0.5f, 0.5f, 0.5f));
         
         foreach (var tile in coll)
@@ -72,76 +79,92 @@ public class Elevator : MonoBehaviour, IObserver
     private void OnTriggerEnter(Collider other)
     {
         if (_currentHp <= 0) return;
-        
-        _aboveCharacter = other.GetComponent<Character>();
 
-        if (!_aboveCharacter) return;
+        if (_isMoving) return;
         
+        StartCoroutine(CheckCharacterDelay());
+    }
+
+    IEnumerator CheckCharacterDelay()
+    {
+        yield return new WaitUntil(() => _tileBelow.GetUnitAbove() != null);
+
+        _aboveCharacter = _tileBelow.GetUnitAbove();
+
         if (_aboveCharacter.CanAttack())
         {
             _aboveCharacter.OnEnterElevator(this);
-            ActivateUpButton();
+            ActivateButton();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (_currentHp <= 0) return;
+
+        if (_isMoving) return;
         
         if (!_aboveCharacter) return;
         
         _aboveCharacter.OnExitElevator(this);
         _aboveCharacter = null;
+        DeactivateButton();
     }
 
     public void StartMovement()
     {
         StartCoroutine(Move());
-        DeactivateUpButton();
+        DeactivateButton();
     }
     IEnumerator Move()
     {
         if (!_canInteract) yield break;
-        
-        Vector3 start = transform.position;
-        Vector3 end = start;
+
+        _isMoving = true;
+        Vector3 start;
+        Vector3 end;
         float time = 0;
 
-        //TODO: Borrar desp el getunitabove
-        _aboveCharacter = _tileBelow.GetUnitAbove();
-        if (_aboveCharacter)
+        _aboveCharacter.transform.parent = _platform.transform;
+        if (!_active)
         {
-            _aboveCharacter.transform.parent = transform;
-            if (!_active)
-            {
-                end.y = _height;
-                _active = true;
-                _tileBelow.RemoveFromNeighbour();
-                _canInteract = false;
-                _aboveCharacter.CharacterElevatedState(true, _extraRange, _extraCrit);
-            }
-            else
-            {
-                end.y = _startingHeight;
-                _active = false;
-                _tileBelow.AddToNeighbour();
-                _canInteract = false;
-                _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
-                _aboveCharacter.SelectThisUnit();
-            }
+            start = _startingPos;
+            end = start;
+            end.y += _platformMaxHeight;
+            _active = true;
+            _tileBelow.RemoveFromNeighbour();
+            _canInteract = false;
+        }
+        else
+        {
+            start = _platform.position;
+            end = _startingPos;
+            _active = false;
+            _tileBelow.AddToNeighbour();
+            _canInteract = false;
+        }
 
-            yield return new WaitForSeconds(2);
-        
-            while (time <= _movementDuration)
-            {
-                time += Time.deltaTime;
-                var normalizedTime = time / _movementDuration;
-                transform.position = Vector3.Lerp(start, end, normalizedTime);
-                yield return new WaitForEndOfFrame();
-            }
-            DeactivateButton();
-            if (!_active)
-                _aboveCharacter.transform.parent = null;
+        while (time <= _movementDuration)
+        {
+            time += Time.deltaTime;
+            var normalizedTime = time / _movementDuration;
+            _platform.position = Vector3.Lerp(start, end, normalizedTime);
+            yield return new WaitForEndOfFrame();
+        }
+
+        _isMoving = false;
+        if (!_active)
+        {
+            _aboveCharacter.transform.parent = null; 
+            _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
+            _aboveCharacter.SelectThisUnit();
+        }
+        else
+        {
+            _aboveCharacter.CharacterElevatedState(true, _extraRange, _extraCrit);
+            _aboveCharacter.ResetTilesInAttackRange();
+            yield return new WaitForEndOfFrame();
+            _aboveCharacter.PaintTilesInAttackRange(_tileBelow, 0);
         }
     }
 
@@ -152,43 +175,22 @@ public class Elevator : MonoBehaviour, IObserver
 
     private void ActivateButton()
     {
+        if (_currentHp <= 0) return;
+        
         if (_active)
         {
-            DeactivateUpButton();
-            ActivateDownButton();
+            _buttonText.text = "DOWN";
         }
         else
         {
-            DeactivateDownButton();
-            ActivateUpButton();
+            _buttonText.text = "UP";
         }
+        _button.SetActive(true);
     }
     
     private void DeactivateButton()
     {
-        DeactivateDownButton();
-        DeactivateUpButton();
-    }
-    private void ActivateUpButton()
-    {
-        if (_currentHp <= 0) return;
-        //TODO: Activar boton
-    }
-
-    private void DeactivateUpButton()
-    {
-        //TODO: DesactivarBoton
-    }
-    
-    private void ActivateDownButton()
-    {
-        if (_currentHp <= 0) return;
-        //TODO: Activar boton
-    }
-
-    private void DeactivateDownButton()
-    {
-        //TODO: DesactivarBoton
+        _button.SetActive(false);
     }
     public void Notify(string action)
     {

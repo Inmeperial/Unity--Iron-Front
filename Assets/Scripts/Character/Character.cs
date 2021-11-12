@@ -422,7 +422,6 @@ public class Character : EnumsClass, IObservable
 
         if (_canAttack)
         {
-            //TODO: alive
             if (_rightGunAlive && _rightGun) _selectedGun = _rightGun;
             
             else if (_leftGunAlive && _leftGun) _selectedGun = _leftGun;
