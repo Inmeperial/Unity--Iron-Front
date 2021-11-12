@@ -51,10 +51,14 @@ public class ButtonActiveColorScritp : MonoBehaviour
 
 	public void DeactivatePartsButtonColor()
 	{
-		var tempColors = _currentSelectedPart.colors;
-		tempColors.normalColor = _partNormalColor;
-		_currentSelectedPart.colors = tempColors;
-		_partText.color = Color.black;
+		if (_currentSelectedPart)
+		{
+			var tempColors = _currentSelectedPart.colors;
+			tempColors.normalColor = _partNormalColor;
+			_currentSelectedPart.colors = tempColors;
+			_partText.color = Color.black;
+		}
+		
 
 		if (_currentSelectedAbilityIcon)
 		{
