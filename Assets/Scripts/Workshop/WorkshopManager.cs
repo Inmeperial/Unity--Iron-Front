@@ -321,22 +321,22 @@ public class WorkshopManager : MonoBehaviour
         switch (part)
         {
             case "Body":
-                mechas[_mechaIndex]._bodyShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-                mechas[_mechaIndex]._leftArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-                mechas[_mechaIndex]._rightArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+                mechas[_mechaIndex]._bodyShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureFresnel);
+                mechas[_mechaIndex]._leftArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureFresnel);
+                mechas[_mechaIndex]._rightArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureFresnel);
                 break;
             
             case "LGun":
-                mechas[_mechaIndex]._leftGunShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+                mechas[_mechaIndex]._leftGunShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureFresnel);
                 break;
                 
             case "RGun":
-                mechas[_mechaIndex]._rightGunShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+                mechas[_mechaIndex]._rightGunShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureFresnel);
                 break;
             
             case "Legs":
-                mechas[_mechaIndex]._leftLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-                mechas[_mechaIndex]._rightLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+                mechas[_mechaIndex]._leftLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureFresnel);
+                mechas[_mechaIndex]._rightLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureFresnel);
                 break;
         }
     }
