@@ -37,10 +37,19 @@ public class CloseUpCamera : MonoBehaviour
 		//Calcular el height según la distancia de las dos unidades y, clampearla en un min y max
 		float distanceHeight = Vector3.Distance(enemyPosToLerp, playerPosToLerp);
 		float clampedHeight = Mathf.Clamp(distanceHeight, minHeight, maxHeight);
-		enemyPosToLerp.y = clampedHeight;
+
+        float heightRelation = 0;
+
+        if (enemyPosToLerp.y < playerPosToLerp.y)
+            heightRelation = enemyPosToLerp.y / playerPosToLerp.y;
+        
+        else if (enemyPosToLerp.y > playerPosToLerp.y)
+            heightRelation = playerPosToLerp.y / enemyPosToLerp.y;
+
+        enemyPosToLerp.y = clampedHeight;
 		playerPosToLerp.y = clampedHeight;
 		
-		Vector3 destination = Vector3.Lerp(enemyPosToLerp, playerPosToLerp, lerp);
+		Vector3 destination = Vector3.Lerp(enemyPosToLerp, playerPosToLerp, lerp - heightRelation);
 		destination.z += moveBackInZ;
         StartCoroutine(Move(destination, enemyPosToLerp, callback));
     }

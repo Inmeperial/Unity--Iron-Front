@@ -478,7 +478,7 @@ public class ButtonsUIManager : MonoBehaviour
     /// </summary>
     private void Attack()
     {
-        _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform);
+        _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform, _selectedChar.transform.position.y);
         _selectedChar.SetInitialRotation(_selectedChar.transform.rotation);
 
         Gun gun = _selectedChar.GetSelectedGun();
@@ -1190,7 +1190,7 @@ public class ButtonsUIManager : MonoBehaviour
                 if (_selectedChar.GetRightGun()) _selectedChar.GetRightGun().ModelsOff();
             }
             //_selectedChar.RotateTowardsEnemy(_selectedEnemy.transform.position, ActivateParts);
-            _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform);
+            _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform, _selectedChar.transform.position.y);
             ActivateParts();
         }
     }

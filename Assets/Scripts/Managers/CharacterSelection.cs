@@ -104,7 +104,7 @@ public class CharacterSelection : MonoBehaviour
             if (_enemySelection)
             {
                 //_selection.RotateTowardsEnemy(_enemySelection.transform.position);
-                _selection.RotateTowardsEnemy(_enemySelection.transform);
+                _selection.RotateTowardsEnemy(_enemySelection.transform, _selection.transform.position.y);
             }
         }
         else if (c.GetUnitTeam() != TurnManager.Instance.GetActiveTeam() && c.CanBeAttacked())
@@ -119,7 +119,7 @@ public class CharacterSelection : MonoBehaviour
             if (_selection.CanAttack())
             {
                 _selection.SetRotationBeforeAttack(_selection.transform.rotation);
-                _selection.RotateTowardsEnemy(c.transform);
+                _selection.RotateTowardsEnemy(c.transform, _selection.transform.position.y);
                 //_selection.RotateTowardsEnemy(_enemySelection.transform.position);
                 bool body = _selection.RayToPartsForAttack(c.GetBodyPosition(), "Body", false) &&
                             c.GetBody().GetCurrentHp() > 0;

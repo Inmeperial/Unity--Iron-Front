@@ -477,11 +477,13 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Rotate Character towards enemy.
     /// </summary>
-    public void RotateTowardsEnemy(Transform t)
+    public void RotateTowardsEnemy(Transform t, float height)
     {
         // _move.SetPosToRotate(pos);
         // _move.StartRotation();
-        transform.LookAt(t);
+        var pos = transform.position;
+        pos.y = height;
+        transform.LookAt(pos);
     }
 
     /// <summary>
