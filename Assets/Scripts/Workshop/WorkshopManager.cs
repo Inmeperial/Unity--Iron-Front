@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
@@ -20,10 +21,6 @@ public class WorkshopManager : MonoBehaviour
     public static event ClickAction OnClickEdit;
     public static event ClickAction OnClickCloseEdit;
     public static event ClickAction OnClickMecha;
-
-    public delegate void Save();
-    public static event Save OnChangesMade;
-    public static event Save OnSave;
 
     public WorkshopMecha[] mechas;
 
@@ -148,7 +145,6 @@ public class WorkshopManager : MonoBehaviour
     public void ApplyChangesButton()
     {
         LoadSaveUtility.SaveEquipment(_equipmentContainer);
-        OnSave?.Invoke();
     }
 
     public MechaEquipmentSO GetMechaEquipment(int index)
@@ -183,28 +179,46 @@ public class WorkshopManager : MonoBehaviour
         mechas[_mechaIndex].ChangeBody(body);
         
         _equipmentContainer.equipments[_mechaIndex].body = body;
-        OnChangesMade?.Invoke();
+        
+        //StartPartFlicker("Body");
+        StartCoroutine(PartFlickerDelay("Body"));
+        ApplyChangesButton();
     }
     
     public void UpdateLeftGun(GunSO gun)
     {
         mechas[_mechaIndex].ChangeLeftGun(gun);
         _equipmentContainer.equipments[_mechaIndex].leftGun = gun;
-        OnChangesMade?.Invoke();
+        
+        //StartPartFlicker("LGun");
+        StartCoroutine(PartFlickerDelay("LGun"));
+        ApplyChangesButton();
     }
     
     public void UpdateRightGun(GunSO gun)
     {
         mechas[_mechaIndex].ChangeRightGun(gun);
         _equipmentContainer.equipments[_mechaIndex].rightGun = gun;
-        OnChangesMade?.Invoke();
+        
+        //StartPartFlicker("RGun");
+        StartCoroutine(PartFlickerDelay("RGun"));
+        ApplyChangesButton();
     }
     
     public void UpdateLegs(LegsSO legs)
     {
         mechas[_mechaIndex].ChangeLegs(legs);
         _equipmentContainer.equipments[_mechaIndex].legs = legs;
-        OnChangesMade?.Invoke();
+        
+        StartCoroutine(PartFlickerDelay("Legs"));
+        ApplyChangesButton();
+    }
+
+    IEnumerator PartFlickerDelay(string part)
+    {
+        yield return new WaitForEndOfFrame();
+        StartPartFlicker(part);
+        
     }
 
     public void UpdateEquippable(EquipableSO equippable, string location)
@@ -231,7 +245,7 @@ public class WorkshopManager : MonoBehaviour
                  _equipmentContainer.equipments[_mechaIndex].body.item = equippable as ItemSO;
                  break;
         }
-        OnChangesMade?.Invoke();
+        ApplyChangesButton();
     }
 
     public void UpdateBodyColor(Color color)
@@ -245,7 +259,7 @@ public class WorkshopManager : MonoBehaviour
         var newColor = new Color(c.red, c.green, c.blue);
         mechas[_mechaIndex].UpdateBodyColor(newColor);
         
-        OnChangesMade?.Invoke();
+        ApplyChangesButton();
     }
     
     public void UpdateLegsColor(Color color)
@@ -259,13 +273,13 @@ public class WorkshopManager : MonoBehaviour
         var newColor = new Color(c.red, c.green, c.blue);
         mechas[_mechaIndex].UpdateLegsColor(newColor);
         
-        OnChangesMade?.Invoke();
+        ApplyChangesButton();
     }
     
     private void UpdateName(string n)
     {
         _equipmentContainer.equipments[_mechaIndex].name = n;
-        OnChangesMade?.Invoke();
+        ApplyChangesButton();
     }
     
     public WorkshopObjectButton CreateWorkshopObject(PartSO part, Transform parent)

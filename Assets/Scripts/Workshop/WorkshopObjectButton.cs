@@ -6,7 +6,7 @@ public class WorkshopObjectButton : CustomButton
 {
     [SerializeField] private TextMeshProUGUI _objectName;
     [SerializeField] private Image _objectImage;
-    private TextMeshProUGUI _description;
+    //private TextMeshProUGUI _description;
 
     public void SetObjectName(string name)
     {
@@ -20,10 +20,10 @@ public class WorkshopObjectButton : CustomButton
         _objectImage.sprite = sprite;
     }
     
-    public void SetDescriptionTextField(TextMeshProUGUI textField)
-    {
-        _description = textField;
-    }
+    // public void SetDescriptionTextField(TextMeshProUGUI textField)
+    // {
+    //     _description = textField;
+    // }
 
     public void SetLeftClick(UnityAction action)
     {

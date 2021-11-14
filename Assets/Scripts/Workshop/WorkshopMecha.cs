@@ -117,6 +117,7 @@ public class WorkshopMecha : MonoBehaviour
         var gun = Instantiate(newGun.prefab, _leftGunSpawn);
         gun.transform.localPosition = Vector3.zero;
         _leftGun = gun.gameObject;
+        _leftGunShader = _leftGun.transform.GetChild(0).GetComponent<MasterShaderScript>();
     }
     
     public void ChangeRightGun(GunSO newGun)
@@ -126,6 +127,7 @@ public class WorkshopMecha : MonoBehaviour
         var gun = Instantiate(newGun.prefab, _rightGunSpawn);
         gun.transform.localPosition = Vector3.zero;
         _rightGun = gun.gameObject;
+        _rightGunShader = _rightGun.transform.GetChild(0).GetComponent<MasterShaderScript>();
     }
     
     public void ChangeLegs(LegsSO newLegs)

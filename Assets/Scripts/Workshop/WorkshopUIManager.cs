@@ -52,18 +52,12 @@ public class WorkshopUIManager : MonoBehaviour
    [SerializeField] private Slider _bodyRedSlider;
    [SerializeField] private Slider _bodyGreenSlider;
    [SerializeField] private Slider _bodyBlueSlider;
-   private GradientShaderScript _bodyRedShader;
-   private GradientShaderScript _bodyGreenShader;
-   private GradientShaderScript _bodyBlueShader;
 
    [Space]
    [SerializeField] private Image _legsColorImage;
    [SerializeField] private Slider _legsRedSlider;
    [SerializeField] private Slider _legsGreenSlider;
    [SerializeField] private Slider _legsBlueSlider;
-   private GradientShaderScript _legsRedShader;
-   private GradientShaderScript _legsGreenShader;
-   private GradientShaderScript _legsBlueShader;
 
    [Space] 
    [SerializeField] private TMP_InputField _nameField;
@@ -86,17 +80,7 @@ public class WorkshopUIManager : MonoBehaviour
       WorkshopManager.OnClickNext += UpdateOverviewText;
       WorkshopManager.OnClickCloseEdit += UpdateOverviewText;
       WorkshopManager.OnClickEdit += UpdateWeightSlider;
-      WorkshopManager.OnChangesMade += SaveButtonEnable;
-      WorkshopManager.OnSave += SaveButtonDisable;
       UpdateOverviewText(3);
-
-      _bodyRedShader = _bodyRedSlider.GetComponentInChildren<GradientShaderScript>();
-      _bodyGreenShader = _bodyGreenSlider.GetComponentInChildren<GradientShaderScript>();
-      _bodyBlueShader = _bodyBlueSlider.GetComponentInChildren<GradientShaderScript>();
-      
-      _legsRedShader = _legsRedSlider.GetComponentInChildren<GradientShaderScript>();
-      _legsGreenShader = _legsGreenSlider.GetComponentInChildren<GradientShaderScript>();
-      _legsBlueShader = _legsBlueSlider.GetComponentInChildren<GradientShaderScript>();
 
       _weightTextColor = _weightText.color;//Me guardo el color inicial del texto
    }
@@ -182,13 +166,15 @@ public class WorkshopUIManager : MonoBehaviour
 
       _partsDescription.text = "";
       var manager = FindObjectOfType<WorkshopManager>();
+      var currentMechaEquipment = manager.GetMechaEquipment(index);
       switch (part)
       {
          case "Body":
             var bodies = WorkshopDatabaseManager.Instance.GetBodies();
-
             foreach (var body in bodies)
             {
+               
+               
                var b = workshopManager.CreateWorkshopObject(body, _partsSpawnParent);
                b.SetLeftClick(() =>
                {
@@ -196,10 +182,17 @@ public class WorkshopUIManager : MonoBehaviour
                                            "\n Weight: " + body.weight +
                                            "\n MaxWeight: " + body.maxWeight;
                   
+                  b.Select();
+                  
                   manager.UpdateBody(body);
                   
                   UpdateWeightSlider(index);
                });
+               
+               if (currentMechaEquipment.body.partName == body.partName)
+               {
+                  b.Select();
+               }
             }
             break;
          
@@ -212,15 +205,20 @@ public class WorkshopUIManager : MonoBehaviour
                {
                   _partsDescription.text = "Damage: " + gun.damage +
                                            "\n HitChance:" + gun.hitChance +
-                                           // "\n Crit Multiplier: " + gun.critMultiplier +
-                                           // "\n Crit Chance: " + gun.critChance +
                                            "\n Attack Range: " + gun.attackRange +
                                            "\n Weight: " + gun.weight;
                                            
+                  a.Select();
+                  
                   manager.UpdateLeftGun(gun);
                   
                   UpdateWeightSlider(index);
                });
+               
+               if (currentMechaEquipment.leftGun.gunName == gun.gunName)
+               {
+                  a.Select();
+               }
             }
             break;
             
@@ -233,14 +231,20 @@ public class WorkshopUIManager : MonoBehaviour
                {
                   _partsDescription.text = "Damage: " + gun.damage +
                                            "\n HitChance:" + gun.hitChance +
-                                           // "\n Crit Multiplier: " + gun.critMultiplier +
-                                           // "\n Crit Chance: " + gun.critChance +
                                            "\n Attack Range: " + gun.attackRange +
                                            "\n Weight: " + gun.weight;
+                  
+                  a.Select();
+                  
                   manager.UpdateRightGun(gun);
                   
                   UpdateWeightSlider(index);
                });
+
+               if (currentMechaEquipment.rightGun.gunName == gun.gunName)
+               {
+                  a.Select();
+               }
             }
             break;
          
@@ -254,10 +258,18 @@ public class WorkshopUIManager : MonoBehaviour
                   _partsDescription.text = "HP: " + leg.maxHP +
                                            "\n Steps: " + leg.maxSteps +
                                            "\n Weight: " + leg.weight;
+                  
+                  l.Select();
+                  
                   manager.UpdateLegs(leg);
                   
                   UpdateWeightSlider(index);
                });
+
+               if (currentMechaEquipment.legs.partName == leg.partName)
+               {
+                  l.Select();
+               }
             }
             break;
       }
@@ -272,6 +284,9 @@ public class WorkshopUIManager : MonoBehaviour
       _abilitiesDescription.text = "";
       List<AbilitySO> abilities = new List<AbilitySO>();
       abilities = WorkshopDatabaseManager.Instance.GetAbilities();
+
+      var index = workshopManager.GetIndex();
+      var currentMechaEquipment = workshopManager.GetMechaEquipment(index);
       
       switch (part)
       {
@@ -287,8 +302,16 @@ public class WorkshopUIManager : MonoBehaviour
                      _abilitiesDescription.text = ability.description;
                      if (ability.equipableIcon)
                         _bodyAbilityImage.sprite = ability.equipableIcon;
+                     
+                     obj.Select();
+
                      OnChangeEquippable?.Invoke(ability, part);
                   });
+                  
+                  if (currentMechaEquipment.body.ability.equipableName == ability.equipableName)
+                  {
+                     obj.Select();
+                  }
                }
             }
             
@@ -306,8 +329,15 @@ public class WorkshopUIManager : MonoBehaviour
                      _abilitiesDescription.text = ability.description;
                      if (ability.equipableIcon)
                         _leftArmAbilityImage.sprite = ability.equipableIcon;
+                     
+                     obj.Select();
                      OnChangeEquippable?.Invoke(ability, part);
                   });
+                  
+                  if (currentMechaEquipment.leftGun.ability.equipableName == ability.equipableName)
+                  {
+                     obj.Select();
+                  }
                }
             }
             break;
@@ -324,8 +354,16 @@ public class WorkshopUIManager : MonoBehaviour
                      _abilitiesDescription.text = ability.description;
                      if (ability.equipableIcon)
                         _rightArmAbilityImage.sprite = ability.equipableIcon;
+                     
+                     obj.Select();
+                     
                      OnChangeEquippable?.Invoke(ability, part);
                   });
+                  
+                  if (currentMechaEquipment.rightGun.ability.equipableName == ability.equipableName)
+                  {
+                     obj.Select();
+                  }
                }
             }
             
@@ -343,8 +381,16 @@ public class WorkshopUIManager : MonoBehaviour
                      _abilitiesDescription.text = ability.description;
                      if (ability.equipableIcon)
                         _legsAbilityImage.sprite = ability.equipableIcon;
+                     
+                     obj.Select();
+                     
                      OnChangeEquippable?.Invoke(ability, part);
                   });
+                  
+                  if (currentMechaEquipment.legs.ability.equipableName == ability.equipableName)
+                  {
+                     obj.Select();
+                  }
                }
                   
             }
@@ -361,6 +407,9 @@ public class WorkshopUIManager : MonoBehaviour
       _itemsDescription.text = "";
       var items = WorkshopDatabaseManager.Instance.GetItems();
 
+      var index = workshopManager.GetIndex();
+      var currentMechaEquipment = workshopManager.GetMechaEquipment(index);
+      
       foreach (var item in items)
       {
          var obj = workshopManager.CreateWorkshopObject(item, _itemsSpawnParent);
@@ -370,8 +419,16 @@ public class WorkshopUIManager : MonoBehaviour
             //TODO: retirar checkeo cuando haya iconos.
             if (item.equipableIcon)
                _itemImage.sprite = item.equipableIcon;
+            
+            obj.Select();
+            
             OnChangeEquippable?.Invoke(item, "Item");
          });
+         
+         if (currentMechaEquipment.body.item.equipableName == item.equipableName)
+         {
+            obj.Select();
+         }
       }
    }
 
@@ -380,10 +437,6 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _bodyColorImage.color;
       color.r = _bodyRedSlider.value;
       _bodyColorImage.color = color;
-      //_bodyRedShader.SetColorGradientRed(color.r);
-      _bodyRedShader.SetColor(color);
-      _bodyGreenShader.SetColor(color);
-      _bodyBlueShader.SetColor(color);
       OnBodyColorChange?.Invoke(color);
    }
 
@@ -392,10 +445,6 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _bodyColorImage.color;
       color.g = _bodyGreenSlider.value;
       _bodyColorImage.color = color;
-      //_bodyGreenShader.SetColorGradientGreen(color.g);
-      _bodyRedShader.SetColor(color);
-      _bodyGreenShader.SetColor(color);
-      _bodyBlueShader.SetColor(color);
       OnBodyColorChange?.Invoke(color);
    }
    
@@ -404,10 +453,6 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _bodyColorImage.color;
       color.b = _bodyBlueSlider.value;
       _bodyColorImage.color = color;
-      //_bodyBlueShader.SetColorGradientBlue(color.b);
-      _bodyRedShader.SetColor(color);
-      _bodyGreenShader.SetColor(color);
-      _bodyBlueShader.SetColor(color);
       OnBodyColorChange?.Invoke(color);
    }
    
@@ -416,10 +461,6 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _legsColorImage.color;
       color.r = _legsRedSlider.value;
       _legsColorImage.color = color;
-      //_legsRedShader.SetColorGradientRed(color.r);
-      _legsRedShader.SetColor(color);
-      _legsGreenShader.SetColor(color);
-      _legsBlueShader.SetColor(color);
       OnLegsColorChange?.Invoke(color);
    }
 
@@ -428,10 +469,6 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _legsColorImage.color;
       color.g = _legsGreenSlider.value;
       _legsColorImage.color = color;
-      //_legsGreenShader.SetColorGradientGreen(color.g);
-      _legsRedShader.SetColor(color);
-      _legsGreenShader.SetColor(color);
-      _legsBlueShader.SetColor(color);
       OnLegsColorChange?.Invoke(color);
    }
    
@@ -440,10 +477,6 @@ public class WorkshopUIManager : MonoBehaviour
       var color = _legsColorImage.color;
       color.b = _legsBlueSlider.value;
       _legsColorImage.color = color;
-      //_legsBlueShader.SetColorGradientBlue(color.b);
-      _legsRedShader.SetColor(color);
-      _legsGreenShader.SetColor(color);
-      _legsBlueShader.SetColor(color);
       OnLegsColorChange?.Invoke(color);
    }
 
@@ -462,9 +495,6 @@ public class WorkshopUIManager : MonoBehaviour
       _bodyRedSlider.value = color.r;
       _bodyGreenSlider.value = color.g;
       _bodyBlueSlider.value = color.b;
-      _bodyRedShader.SetColor(color);
-      _bodyGreenShader.SetColor(color);
-      _bodyBlueShader.SetColor(color);
    }
    
    public void SetLegsColorSliders()
@@ -476,9 +506,6 @@ public class WorkshopUIManager : MonoBehaviour
       _legsRedSlider.value = color.r;
       _legsGreenSlider.value = color.g;
       _legsBlueSlider.value = color.b;
-      _legsRedShader.SetColor(color);
-      _legsGreenShader.SetColor(color);
-      _legsBlueShader.SetColor(color);
    }
 
    public void SetMechaName()
@@ -488,16 +515,4 @@ public class WorkshopUIManager : MonoBehaviour
       _nameField.text = workshop.GetMechaEquipment(index).name;
       
    }
-
-   public void SaveButtonEnable()
-   {
-      _saveButton.interactable = true;
-      _saveButton.gameObject.SetActive(true);
-   }
-
-    public void SaveButtonDisable()
-    {
-      _saveButton.interactable = false;
-      _saveButton.gameObject.SetActive(false);
-    }
 }
