@@ -7,8 +7,6 @@
     <list default="true" id="58a4e8b3-6a44-45fc-a481-3cddbb3bc263" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/MechaEquipment.save" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MechaEquipment.save" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Workshop/WorkshopObject.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefab/Workshop/WorkshopObject.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopObjectButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopObjectButton.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" afterDir="false" />
     </list>
@@ -71,6 +69,7 @@
     <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/EventSystem/EventData/PointerEventData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ED6C4020-915A-41E1-B5EB-5E4C6A560E95/fe/ddba10e0/Brick.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Items/ItemSO.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/EventSystem/EventData/BaseEventData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Abilities/LegsOvercharge.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/A278EBD4-4AB0-472B-B8E6-38263E06CD61/b7/d1ebc7af/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Items/Item.cs" root0="FORCE_HIGHLIGHTING" />
@@ -78,6 +77,7 @@
     <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Button.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ED6C4020-915A-41E1-B5EB-5E4C6A560E95/44/cab8644a/GOCondition.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/EquipmentManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/EventSystem/InputModules/BaseInputModule.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://F:/DAVINCI/4TO CUATRI/Modelos y Algoritmos I/Biloni Leandro VJN4A - Final MyA I/Parcial1MyA1/Assets/Scripts/MVC/Model.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://F:/DAVINCI/3ER CUATRI/Programacion II/Asteroid Tunnel/Assets/Scripts/Console.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://F:/DAVINCI/4TO CUATRI/Motores II/Biloni Leandro - TP2 Motores/Assets/Editor/GameObjectsWindow.cs" root0="SKIP_HIGHLIGHTING" />
@@ -107,12 +107,12 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/LoadSaveUtility.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../TP Redes/Assets/Scripts/Character.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../TP Redes/Assets/Scripts/ScreenManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5B380071-BA07-43FE-A03F-F1E60A1D451C/84/cf959b26/IDeselectHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ED6C4020-915A-41E1-B5EB-5E4C6A560E95/1c/68bd1616/BrickConfigurator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ED6C4020-915A-41E1-B5EB-5E4C6A560E95/17/d60b4e82/GOAction.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Character/ArmSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/MechaEquipmentSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Serialization/ObjectsDatabase.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Shaders/MaterialMechaHandler.cs" />
@@ -158,11 +158,12 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/Conditions/CheckPartsInSight.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CharacterSelection.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Camera/CloseUpCamera.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopMecha.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopObjectButton.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Shaders/MasterShaderScript.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopMecha.cs" />
+      <option value="C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Selectable.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopObjectButton.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sOlsvSN0iUpd6MRLO6lGcnlToG" />

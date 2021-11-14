@@ -114,6 +114,8 @@ public class WorkshopUIManager : MonoBehaviour
       if (equipmentData.body.item)
          _overviewItem.sprite = equipmentData.body.item.equipableIcon;
       else _overviewItem.sprite = _noneIcon;
+      
+      AbilitiesTabSetAbilitiesIcons();
    }
 
    public void UpdateWeightSlider(int mechaIndex)
@@ -287,7 +289,7 @@ public class WorkshopUIManager : MonoBehaviour
 
       var index = workshopManager.GetIndex();
       var currentMechaEquipment = workshopManager.GetMechaEquipment(index);
-      
+
       switch (part)
       {
             
@@ -307,10 +309,13 @@ public class WorkshopUIManager : MonoBehaviour
 
                      OnChangeEquippable?.Invoke(ability, part);
                   });
-                  
-                  if (currentMechaEquipment.body.ability.equipableName == ability.equipableName)
+
+                  if (currentMechaEquipment.body.ability)
                   {
-                     obj.Select();
+                     if (currentMechaEquipment.body.ability.equipableName == ability.equipableName)
+                     {
+                        obj.Select();
+                     }
                   }
                }
             }
@@ -334,9 +339,12 @@ public class WorkshopUIManager : MonoBehaviour
                      OnChangeEquippable?.Invoke(ability, part);
                   });
                   
-                  if (currentMechaEquipment.leftGun.ability.equipableName == ability.equipableName)
+                  if (currentMechaEquipment.leftGun.ability)
                   {
-                     obj.Select();
+                     if (currentMechaEquipment.leftGun.ability.equipableName == ability.equipableName)
+                     {
+                        obj.Select();
+                     }
                   }
                }
             }
@@ -359,10 +367,13 @@ public class WorkshopUIManager : MonoBehaviour
                      
                      OnChangeEquippable?.Invoke(ability, part);
                   });
-                  
-                  if (currentMechaEquipment.rightGun.ability.equipableName == ability.equipableName)
+
+                  if (currentMechaEquipment.rightGun.ability)
                   {
-                     obj.Select();
+                     if (currentMechaEquipment.rightGun.ability.equipableName == ability.equipableName)
+                     {
+                        obj.Select();
+                     }
                   }
                }
             }
@@ -386,11 +397,15 @@ public class WorkshopUIManager : MonoBehaviour
                      
                      OnChangeEquippable?.Invoke(ability, part);
                   });
-                  
-                  if (currentMechaEquipment.legs.ability.equipableName == ability.equipableName)
+
+                  if (currentMechaEquipment.legs.ability)
                   {
-                     obj.Select();
+                     if (currentMechaEquipment.legs.ability.equipableName == ability.equipableName)
+                     {
+                        obj.Select();
+                     }
                   }
+                  
                }
                   
             }
@@ -424,10 +439,13 @@ public class WorkshopUIManager : MonoBehaviour
             
             OnChangeEquippable?.Invoke(item, "Item");
          });
-         
-         if (currentMechaEquipment.body.item.equipableName == item.equipableName)
+
+         if (currentMechaEquipment.body.item)
          {
-            obj.Select();
+            if (currentMechaEquipment.body.item.equipableName == item.equipableName)
+            {
+               obj.Select();
+            }
          }
       }
    }
@@ -485,8 +503,32 @@ public class WorkshopUIManager : MonoBehaviour
       var mechaName = _nameField.text;
       OnNameChange?.Invoke(mechaName);
    }
+
+   public void CopyBodyColorToLegs()
+   {
+      _legsColorImage.color = _bodyColorImage.color;
+      _legsRedSlider.value = _bodyRedSlider.value;
+      _legsGreenSlider.value = _bodyGreenSlider.value;
+      _legsBlueSlider.value = _bodyBlueSlider.value;
+      
+      UpdateLegsRedColor();
+      UpdateLegsGreenColor();
+      UpdateLegsBlueColor();
+   }
+
+   public void CopyLegsColorToBody()
+   {
+      _bodyColorImage.color = _legsColorImage.color;
+      _bodyRedSlider.value = _legsRedSlider.value;
+      _bodyGreenSlider.value = _legsGreenSlider.value;
+      _bodyBlueSlider.value = _legsBlueSlider.value;
+      
+      UpdateBodyRedColor();
+      UpdateBodyGreenColor();
+      UpdateBodyBlueColor();
+   }
    
-   public void SetBodyColorSliders()
+   public void CustomizeTabSetBodyColorSliders()
    {
       var workshop = FindObjectOfType<WorkshopManager>();
       var index = workshop.GetIndex();
@@ -497,7 +539,7 @@ public class WorkshopUIManager : MonoBehaviour
       _bodyBlueSlider.value = color.b;
    }
    
-   public void SetLegsColorSliders()
+   public void CustomizeTabSetLegsColorSliders()
    {
       var workshop = FindObjectOfType<WorkshopManager>();
       var index = workshop.GetIndex();
@@ -508,11 +550,43 @@ public class WorkshopUIManager : MonoBehaviour
       _legsBlueSlider.value = color.b;
    }
 
-   public void SetMechaName()
+   public void CustomizeTabSetMechaName()
    {
       var workshop = FindObjectOfType<WorkshopManager>();
       var index = workshop.GetIndex();
       _nameField.text = workshop.GetMechaEquipment(index).name;
+   }
+
+   public void AbilitiesTabSetAbilitiesIcons()
+   {
+      var workshopManager = FindObjectOfType<WorkshopManager>();
       
+      var index = workshopManager.GetIndex();
+      
+      var currentMechaEquipment = workshopManager.GetMechaEquipment(index);
+
+      if (currentMechaEquipment.body.ability)
+      {
+         _bodyAbilityImage.sprite = currentMechaEquipment.body.ability.equipableIcon;
+      }
+      else _bodyAbilityImage.sprite = _noneIcon;
+      
+      if (currentMechaEquipment.leftGun.ability)
+      {
+         _leftArmAbilityImage.sprite = currentMechaEquipment.leftGun.ability.equipableIcon;
+      }
+      else _leftArmAbilityImage.sprite = _noneIcon;
+      
+      if (currentMechaEquipment.rightGun.ability)
+      {
+         _rightArmAbilityImage.sprite = currentMechaEquipment.rightGun.ability.equipableIcon;
+      }
+      else _rightArmAbilityImage.sprite = _noneIcon;
+      
+      if (currentMechaEquipment.legs.ability)
+      {
+         _legsAbilityImage.sprite = currentMechaEquipment.legs.ability.equipableIcon;
+      }
+      else _legsAbilityImage.sprite = _noneIcon;
    }
 }
