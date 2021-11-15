@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -30,5 +31,11 @@ public class WorkshopObjectButton : CustomButton
     {
         OnLeftClick.RemoveAllListeners();
         OnLeftClick.AddListener(action);
+    }
+
+    public override void OnDeselect(BaseEventData eventData)
+    {
+        FindObjectOfType<NotSelectable>().previousSelection = this;
+        base.OnDeselect(eventData);
     }
 }
