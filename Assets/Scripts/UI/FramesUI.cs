@@ -10,8 +10,9 @@ using UnityEngine.EventSystems;
 public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 	public Image mechaImage;
-	public Image leftGunIcon;
-	public Image rightGunIcon;
+	// public Image leftGunIcon;
+	// public Image rightGunIcon;
+	public Image overWeight;
 	public Image colorBorder;
 	public Image colorNamePlate;
 	public Color playerColor;
@@ -21,19 +22,31 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	public MasterShaderScript masterShader;
 	public Character _characterSelected;
 
-	FramesUI(Image mecha, Image leftGun, Image rightGun, TextMeshProUGUI myName)
+	// FramesUI(Image mecha, Image leftGun, Image rightGun, TextMeshProUGUI myName)
+	// {
+	// 	mechaImage = mecha;
+	// 	leftGunIcon = leftGun;
+	// 	rightGunIcon = rightGun;
+	// 	mechaName = myName;
+	// }
+	
+	FramesUI(Image mecha, TextMeshProUGUI myName)
 	{
 		mechaImage = mecha;
-		leftGunIcon = leftGun;
-		rightGunIcon = rightGun;
 		mechaName = myName;
 	}
 
-	public void ChangeData(Image newMechaImage, Image newMechaLeftIcon, Image newMechaRightIcon, TextMeshProUGUI newMechaName)
+	// public void ChangeData(Image newMechaImage, Image newMechaLeftIcon, Image newMechaRightIcon, TextMeshProUGUI newMechaName)
+	// {
+	// 	mechaImage = newMechaImage;
+	// 	leftGunIcon = newMechaLeftIcon;
+	// 	rightGunIcon = newMechaRightIcon;
+	// 	mechaName.text = newMechaName.text;
+	// }
+	
+	public void ChangeData(Image newMechaImage, TextMeshProUGUI newMechaName)
 	{
 		mechaImage = newMechaImage;
-		leftGunIcon = newMechaLeftIcon;
-		rightGunIcon = newMechaRightIcon;
 		mechaName.text = newMechaName.text;
 	}
 
@@ -60,6 +73,8 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	public FramesUI SetCharacter(Character character)
 	{
 		_characterSelected = character;
+
+		_characterSelected.OnOverweight += OverweightIconState;
 		return this;
 	}
 	public FramesUI SetSprite(Sprite sprite)
@@ -81,6 +96,11 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		colorNamePlate.color = color;
 		
 		return this;
+	}
+
+	public void OverweightIconState(bool state)
+	{
+		overWeight.gameObject.SetActive(state);
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)

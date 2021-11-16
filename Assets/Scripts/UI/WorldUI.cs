@@ -11,6 +11,7 @@ public class WorldUI : MonoBehaviour
     [SerializeField] private GameObject _statusContainer;
     [SerializeField] private float _showDuration;
     [SerializeField] private TextMeshProUGUI _turnOrderText;
+    [SerializeField] private GameObject _overweightIcon;
     
     [Header("Body")]
     [SerializeField] private Slider _bodyHpSlider;
@@ -49,7 +50,7 @@ public class WorldUI : MonoBehaviour
         ButtonsContainerSetActive(false);
     }
 
-    public void SetWorldUIValues(float bodyCurr, float rArmCurr, float lArmCurr, float legsCurr, bool moveStatus, bool attackStatus)
+    public void SetWorldUIValues(float bodyCurr, float rArmCurr, float lArmCurr, float legsCurr, bool moveStatus, bool attackStatus, bool overweightStatus)
     {
         SetBodySlider(bodyCurr);
         SetLeftArmSlider(lArmCurr);
@@ -57,6 +58,7 @@ public class WorldUI : MonoBehaviour
         SetLegsSlider(legsCurr);
         MoveActionIcon(moveStatus);
         AttackActionIcon(attackStatus);
+        OverweightIcon(overweightStatus);
     }
     
     public void DeactivateWorldUI()
@@ -245,6 +247,11 @@ public class WorldUI : MonoBehaviour
     private void AttackActionIcon(bool status)
     {
         _attackActionIcon.SetActive(status);
+    }
+
+    public void OverweightIcon(bool status)
+    {
+        _overweightIcon.SetActive(status);
     }
 
     public void SetName(string name)

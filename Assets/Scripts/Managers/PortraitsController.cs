@@ -190,7 +190,6 @@ public class PortraitsController : MonoBehaviour
             portrait.RemoveButtonRightClickListeners();
             portrait.AddButtonRightClickListener(rightButtonAction);
         }
-
         return portrait;
     }
 }

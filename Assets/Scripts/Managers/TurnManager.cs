@@ -306,6 +306,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             count++;
             _currentTurnOrder.Add(c);
             PortraitsController.Instance.AddCharAndFrame(Tuple.Create(c,p));
+            c.CheckWeight();
         }
     }
 

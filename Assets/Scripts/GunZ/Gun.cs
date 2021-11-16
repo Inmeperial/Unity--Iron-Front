@@ -410,9 +410,6 @@ public abstract class Gun : EnumsClass, IGun
         {
             _myChar.ArmDestroyed(_location, _ability);
             TurnOff();
-            // if (_location == "Left")
-            //     _myChar.GetLeftGun().TurnOff();
-            // else _myChar.GetRightGun().TurnOff();
         }
         
     }

@@ -40,7 +40,8 @@ public class TurnOrderManager : MonoBehaviour
 			var tempFrame = tempFramesList[0];
 			var changedFrame = framesList[i]; 
 			framesList[i] = tempFrame;
-			changedFrame.ChangeData(tempFrame.mechaImage, tempFrame.leftGunIcon, tempFrame.rightGunIcon, tempFrame.mechaName);
+			//changedFrame.ChangeData(tempFrame.mechaImage, tempFrame.leftGunIcon, tempFrame.rightGunIcon, tempFrame.mechaName);
+			changedFrame.ChangeData(tempFrame.mechaImage, tempFrame.mechaName);
 			//framesList[i].ChangeName(tempFrame.mechaName);
 			tempFramesList.RemoveAt(0);
 		}

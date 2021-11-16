@@ -9,10 +9,6 @@ using UnityEngine.EventSystems;
 [SelectionBase]
 public class Character : EnumsClass, IObservable
 {
-    //TODO: remover despues
-    // public ItemSO itemSOData;
-    // public Item itemPrefab;
-
     private Equipable _equipable;
 
     private Dictionary<PartsMechaEnum, GameObject> _partsDictionary = new Dictionary<PartsMechaEnum, GameObject>();
@@ -101,6 +97,9 @@ public class Character : EnumsClass, IObservable
     protected bool _rotated;
 
     protected bool _overweight;
+    
+    public delegate void Overweight(bool state);
+    public event Overweight OnOverweight;
     
     protected bool _legsOvercharged;
 
@@ -1374,7 +1373,7 @@ public class Character : EnumsClass, IObservable
     public void ShowWorldUI()
     {
         _myUI.SetName(_myName);
-        _myUI.SetWorldUIValues(_body.GetCurrentHp(), _rightGun.GetCurrentHp(), _leftGun.GetCurrentHp(), _legs.GetCurrentHp(), _canMove, _canAttack);
+        _myUI.SetWorldUIValues(_body.GetCurrentHp(), _rightGun.GetCurrentHp(), _leftGun.GetCurrentHp(), _legs.GetCurrentHp(), _canMove, _canAttack, _overweight);
         _myUI.ContainerActivation(true);
     }
 
@@ -1616,6 +1615,8 @@ public class Character : EnumsClass, IObservable
             _overweight = false;
         }
         else _overweight = true;
+        
+        OnOverweight?.Invoke(_overweight);
     }
     
     public void ArmDestroyed(string location, Ability ability)
