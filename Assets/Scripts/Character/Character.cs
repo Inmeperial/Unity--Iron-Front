@@ -245,6 +245,8 @@ public class Character : EnumsClass, IObservable
     {
         if (_rightGunSelected)
         {
+            if(!_rightGun) return;
+            
             switch (_rightGun.GetGunType())
             {
                 case GunsType.None:
@@ -267,6 +269,8 @@ public class Character : EnumsClass, IObservable
         }
         else if (_leftGunSelected)
         {
+            if (_leftGun) return;
+            
             switch (_leftGun.GetGunType())
             {
                 case GunsType.None:

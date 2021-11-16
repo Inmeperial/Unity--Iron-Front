@@ -520,27 +520,34 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_bulletsForLGun > 0)
         {
-            List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForLGun);
-            _selectedEnemy.GetLeftGun().TakeDamage(d);
-            _bulletsForLGun = 0;
-                
-            if (gun.SkillUsed() == false)
+            if (_selectedEnemy.GetLeftGun())
             {
-                gun.Ability();
+                List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForLGun);
+                _selectedEnemy.GetLeftGun().TakeDamage(d);
+                _bulletsForLGun = 0;
+                
+                if (gun.SkillUsed() == false)
+                {
+                    gun.Ability();
+                }
+                _selectedChar.DeactivateAttack(); 
             }
-            _selectedChar.DeactivateAttack();
         }
 
         if (_bulletsForRGun > 0)
         {
-            List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForRGun);
-            _selectedEnemy.GetRightGun().TakeDamage(d);
-            _bulletsForRGun = 0;
-            if (gun.SkillUsed() == false)
+            if (_selectedEnemy.GetRightGun())
             {
-                gun.Ability();
+                List<Tuple<int,int>> d = gun.DamageCalculation(_bulletsForRGun);
+                _selectedEnemy.GetRightGun().TakeDamage(d);
+                _bulletsForRGun = 0;
+                if (gun.SkillUsed() == false)
+                {
+                    gun.Ability();
+                }
+                _selectedChar.DeactivateAttack(); 
             }
-            _selectedChar.DeactivateAttack();
+            
         }
 
         if (_bulletsForLegs > 0)
