@@ -257,6 +257,8 @@ public class ButtonsUIManager : MonoBehaviour
         
         Gun gun = _selectedChar.GetSelectedGun();
         
+        if (!gun) return;
+        
         if (_partsSelected > gun.GetAvailableSelections()) return;
         
         if (_bulletsForLGun == 0)
@@ -320,6 +322,8 @@ public class ButtonsUIManager : MonoBehaviour
         
         Gun gun = _selectedChar.GetSelectedGun();
 
+        if (!gun) return;
+        
         if (_partsSelected > gun.GetAvailableSelections()) return;
         
         if (_bulletsForRGun == 0)

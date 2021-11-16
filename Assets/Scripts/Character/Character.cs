@@ -1511,6 +1511,7 @@ public class Character : EnumsClass, IObservable
             _leftGun.transform.localPosition = Vector3.zero;
             _leftGun.gameObject.tag = "LGun";
             _leftGun.SetGun(_mechaEquipment.leftGun, this);
+            _leftGun.SetRightOrLeft("Left");
             _leftGun.StartRoulette();
 
             _myUI.SetLeftArmButtonPart(_materialMechaHandler, MechaParts.LArm);
@@ -1529,6 +1530,7 @@ public class Character : EnumsClass, IObservable
             _rightGun.transform.localPosition = Vector3.zero;
             _rightGun.gameObject.tag = "RGun";
             _rightGun.SetGun(_mechaEquipment.rightGun, this);
+            _rightGun.SetRightOrLeft("Right");
             _rightGun.StartRoulette();
             _myUI.SetRightArmButtonPart(_materialMechaHandler,MechaParts.RArm);
         }

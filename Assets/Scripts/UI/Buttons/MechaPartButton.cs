@@ -69,7 +69,6 @@ public class MechaPartButton : CustomButton
 
     public void UpdateDamagePreviewSlider()
     {
-        Debug.Log("update damage preview");
         Character selectedCharacter = CharacterSelection.Instance.GetSelectedCharacter();
 
         Gun gun = selectedCharacter.GetSelectedGun();
