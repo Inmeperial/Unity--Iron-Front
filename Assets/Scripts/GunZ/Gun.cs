@@ -291,7 +291,7 @@ public abstract class Gun : EnumsClass, IGun
             m.gameObject.SetActive(false);
         }
 
-        enabled = false;
+        gameObject.SetActive(false);
     }
     
     public void ModelsOn()

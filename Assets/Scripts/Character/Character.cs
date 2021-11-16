@@ -851,9 +851,10 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool LeftGunAlive()
     {
-        return _leftGun;
         //TODO: alive
-        _leftGunAlive = _leftGun.GetCurrentHp() > 0;
+        if (_leftGun)
+            _leftGunAlive = _leftGun.GetCurrentHp() > 0;
+        else _leftGunAlive = false;
         
         return _leftGunAlive;
     }
@@ -864,7 +865,9 @@ public class Character : EnumsClass, IObservable
     public bool RightGunAlive()
     {
         //TODO: alive
-        _rightGunAlive = _rightGun.GetCurrentHp() > 0;
+        if (_rightGun)
+            _rightGunAlive = _rightGun.GetCurrentHp() > 0;
+        else _rightGunAlive = false;
         
         return _rightGunAlive;
     }
@@ -1534,9 +1537,13 @@ public class Character : EnumsClass, IObservable
         
         
         //TODO: alive
-        _leftGunAlive = _leftGun.GetCurrentHp() > 0 ? true : false;
-        
-        _rightGunAlive = _rightGun.GetCurrentHp() > 0 ? true : false;
+        if (_leftGun)
+            _leftGunAlive = _leftGun.GetCurrentHp() > 0 ? true : false;
+        else _leftGunAlive = false;
+
+        if (_rightGun)
+            _rightGunAlive = _rightGun.GetCurrentHp() > 0 ? true : false;
+        else _rightGunAlive = false;
 
         if (_rightGun)
         {
@@ -1621,6 +1628,17 @@ public class Character : EnumsClass, IObservable
     
     public void ArmDestroyed(string location, Ability ability)
     {
+        if (location == "Right")
+        {
+            _rightGunAlive = false;
+            _rightGun = null;
+        }
+        else
+        {
+            _leftGunAlive = false;
+            _leftGun = null;
+        }
+        
         if (ability && _equipables.Contains(ability))
         {
             _equipables.Remove(ability);
