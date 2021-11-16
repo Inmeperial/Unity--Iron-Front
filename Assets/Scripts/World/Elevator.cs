@@ -171,6 +171,7 @@ public class Elevator : MonoBehaviour, IObserver
     private void CanInteractAgain()
     {
         _canInteract = true;
+        _button.SetActive(false);
     }
 
     private void ActivateButton()
