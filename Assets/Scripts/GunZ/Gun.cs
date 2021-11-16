@@ -290,6 +290,8 @@ public abstract class Gun : EnumsClass, IGun
         {
             m.gameObject.SetActive(false);
         }
+
+        enabled = false;
     }
     
     public void ModelsOn()
@@ -352,7 +354,7 @@ public abstract class Gun : EnumsClass, IGun
         
         if (_currentHP <= 0)
         {
-            _myChar.ArmDestroyed(_location);
+            _myChar.ArmDestroyed(_location, _ability);
             TurnOff();
             //TODO: revisar switch que parece al pedo
             // switch (_location)
@@ -406,7 +408,7 @@ public abstract class Gun : EnumsClass, IGun
         
         if (_currentHP <= 0)
         {
-            _myChar.ArmDestroyed(_location);
+            _myChar.ArmDestroyed(_location, _ability);
             TurnOff();
             // if (_location == "Left")
             //     _myChar.GetLeftGun().TurnOff();

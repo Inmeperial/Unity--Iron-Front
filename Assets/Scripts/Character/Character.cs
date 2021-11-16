@@ -1618,8 +1618,12 @@ public class Character : EnumsClass, IObservable
         else _overweight = true;
     }
     
-    public void ArmDestroyed(string location)
+    public void ArmDestroyed(string location, Ability ability)
     {
+        if (ability && _equipables.Contains(ability))
+        {
+            _equipables.Remove(ability);
+        }
         CheckWeight();
     }
 
