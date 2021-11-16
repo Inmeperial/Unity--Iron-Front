@@ -454,11 +454,11 @@ public class ButtonsUIManager : MonoBehaviour
         WorldUI ui = _selectedEnemy.GetMyUI();
 
         float rightGunHP = 0;
-        if (_selectedChar.GetRightGun())
+        if (_selectedEnemy.GetRightGun())
             rightGunHP = _selectedEnemy.GetRightGun().GetCurrentHp();
         
         float leftGunHP = 0;
-        if (_selectedChar.GetLeftGun())
+        if (_selectedEnemy.GetLeftGun())
             leftGunHP = _selectedEnemy.GetLeftGun().GetCurrentHp();
         
         ui.SetLimits(_selectedEnemy.GetBody().GetMaxHp(), rightGunHP, leftGunHP, _selectedEnemy.GetLegs().GetMaxHp());
