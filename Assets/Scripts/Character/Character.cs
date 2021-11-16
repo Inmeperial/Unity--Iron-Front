@@ -173,7 +173,17 @@ public class Character : EnumsClass, IObservable
         _move.SetMoveSpeed(_legs.GetMoveSpeed());
         _move.SetRotationSpeed(_legs.GetRotationSpeed());
         
-        _myUI.SetLimits(_body.GetMaxHp(), _rightGun.GetMaxHp(), _leftGun.GetMaxHp(), _legs.GetMaxHp());
+        float rightGunHP = 0;
+
+        if (_rightGun)
+            rightGunHP = _rightGun.GetCurrentHp();
+        
+        float leftGunHP = 0;
+
+        if (_leftGun)
+            leftGunHP = _leftGun.GetCurrentHp();
+        
+        _myUI.SetLimits(_body.GetMaxHp(), rightGunHP, leftGunHP, _legs.GetMaxHp());
 
         _selected = false;
         _canBeSelected = _body.GetCurrentHp() > 0;
@@ -1336,9 +1346,10 @@ public class Character : EnumsClass, IObservable
         c._rotated = true;
         c.SetInitialRotation(c.transform.rotation);
         c.transform.LookAt(transform.position);
+        
         bool body = c.RayToPartsForAttack(GetBodyPosition(), "Body", true) && _body.GetCurrentHp() > 0;
-        bool lArm = c.RayToPartsForAttack(GetLArmPosition(), "LGun", true) && _leftGun.GetCurrentHp() > 0;
-        bool rArm = c.RayToPartsForAttack(GetRArmPosition(), "RGun", true) && _rightGun.GetCurrentHp() > 0;
+        bool lArm = c.RayToPartsForAttack(GetLArmPosition(), "LGun", true) && _leftGun;
+        bool rArm = c.RayToPartsForAttack(GetRArmPosition(), "RGun", true) && _rightGun;
         bool legs = c.RayToPartsForAttack(GetLegsPosition(), "Legs", true) && _legs.GetCurrentHp() > 0;
     }
 
@@ -1376,7 +1387,17 @@ public class Character : EnumsClass, IObservable
     public void ShowWorldUI()
     {
         _myUI.SetName(_myName);
-        _myUI.SetWorldUIValues(_body.GetCurrentHp(), _rightGun.GetCurrentHp(), _leftGun.GetCurrentHp(), _legs.GetCurrentHp(), _canMove, _canAttack, _overweight);
+        float rightGunHP = 0;
+
+        if (_rightGun)
+            rightGunHP = _rightGun.GetCurrentHp();
+        
+        float leftGunHP = 0;
+
+        if (_leftGun)
+            leftGunHP = _leftGun.GetCurrentHp();
+        
+        _myUI.SetWorldUIValues(_body.GetCurrentHp(), rightGunHP, leftGunHP, _legs.GetCurrentHp(), _canMove, _canAttack, _overweight);
         _myUI.ContainerActivation(true);
     }
 
@@ -1658,12 +1679,18 @@ public class Character : EnumsClass, IObservable
     public void CharacterElevatedState(bool state, int extraRange, int extraCrit)
     {
         _isOnElevator = state;
-        
-        _leftGun.ModifyRange(extraRange);
-        _leftGun.ModifyCritChance(extraCrit);
-        
-        _rightGun.ModifyRange(extraRange);
-        _rightGun.ModifyCritChance(extraCrit);
+
+        if (_leftGun)
+        {
+            _leftGun.ModifyRange(extraRange);
+            _leftGun.ModifyCritChance(extraCrit);  
+        }
+
+        if (_rightGun)
+        {
+            _rightGun.ModifyRange(extraRange);
+            _rightGun.ModifyCritChance(extraCrit); 
+        }
     }
 }
 public enum PartsMechaEnum

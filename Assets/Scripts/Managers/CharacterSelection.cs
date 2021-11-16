@@ -125,10 +125,10 @@ public class CharacterSelection : MonoBehaviour
                             c.GetBody().GetCurrentHp() > 0;
                 
                 bool lArm = _selection.RayToPartsForAttack(c.GetLArmPosition(), "LGun", false) &&
-                            c.GetLeftGun().GetCurrentHp() > 0;
+                            c.GetLeftGun();
                 
                 bool rArm= _selection.RayToPartsForAttack(c.GetRArmPosition(), "RGun", false) &&
-                           c.GetRightGun().GetCurrentHp() > 0;
+                           c.GetRightGun();
                 
                 bool legs =  _selection.RayToPartsForAttack(c.GetLegsPosition(), "Legs", false) &&
                              c.GetLegs().GetCurrentHp() > 0;
