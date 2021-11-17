@@ -425,13 +425,19 @@ public class Character : EnumsClass, IObservable
         _path.Clear();
         highlight.PathLinesClear();
         _targetTile = null;
-        _myPositionTile = GetTileBelow();
-        if (_myPositionTile)
+
+        if (!_isOnElevator)
         {
-            _myPositionTile.unitAboveSelected = true;
-            _myPositionTile.MakeTileFree();
-            _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
+            _myPositionTile = GetTileBelow();
+            if (_myPositionTile)
+            {
+                _myPositionTile.unitAboveSelected = true;
+                _myPositionTile.MakeTileFree();
+                _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
+            }
         }
+
+
 
         if (_canAttack)
         {
@@ -441,7 +447,12 @@ public class Character : EnumsClass, IObservable
             
             else _selectedGun = null;
 
-            if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
+            if (_isOnElevator && _selectedGun.GetAttackRange() > 1)
+            {
+                PaintTilesInAttackRange(_myPositionTile, 0);
+                CheckEnemiesInAttackRange();
+            }
+            else if (!_isOnElevator)
             {
                 PaintTilesInAttackRange(_myPositionTile, 0);
                 CheckEnemiesInAttackRange();
@@ -466,7 +477,10 @@ public class Character : EnumsClass, IObservable
     {
         _selected = false;
         _selectingEnemy = false;
-        _myPositionTile = GetTileBelow();
+        
+        if (!_isOnElevator)
+            _myPositionTile = GetTileBelow();
+        
         if (_myPositionTile)
         {
             _myPositionTile.MakeTileOccupied();
@@ -565,9 +579,28 @@ public class Character : EnumsClass, IObservable
         }
         
         return false;
-
     }
 
+    public bool RayToElevator(Vector3 colliderPosition)
+    {
+        Vector3 position = _rayForBody.gameObject.transform.position;
+        Vector3 dir = (colliderPosition - position).normalized;
+
+        Physics.Raycast(position, dir, out RaycastHit hit, 1000f);
+
+        bool goodHit = hit.collider.transform.parent.GetComponent<Elevator>();
+
+        if (goodHit)
+        {
+            Debug.DrawRay(position, dir * 20f, Color.green, 10f);
+        }
+        else
+        {
+            Debug.DrawRay(position, dir * 20f, Color.red, 10f);  
+            
+        }
+        return goodHit;
+    }
     private void RaysOff()
     {
         _rayForBody.positionCount = 0;
@@ -939,6 +972,11 @@ public class Character : EnumsClass, IObservable
     public bool IsOverweight()
     {
         return _overweight;
+    }
+
+    public bool IsOnElevator()
+    {
+        return _isOnElevator;
     }
 
     public MaterialMechaHandler GetMaterialHandler()
@@ -1697,6 +1735,29 @@ public class Character : EnumsClass, IObservable
             _rightGun.ModifyRange(extraRange);
             _rightGun.ModifyCritChance(extraCrit); 
         }
+    }
+
+    public void TakeFallDamage(float dmgPercentage)
+    {
+        var legsDamage = _legs.GetMaxHp() * dmgPercentage / 100;
+        _legs.TakeDamage((int)legsDamage);
+
+        if (_leftGun)
+        {
+            var lGunDamage = _leftGun.GetMaxHp() * dmgPercentage / 100;
+            _leftGun.TakeDamage((int)lGunDamage);
+        }
+
+
+        if (_rightGun)
+        {
+            var rGunDamage = _rightGun.GetMaxHp() * dmgPercentage / 100;
+            _rightGun.TakeDamage((int)rGunDamage);
+        }
+            
+        var bodyDamage = _body.GetMaxHp() * dmgPercentage / 100;
+        _body.TakeDamage((int)bodyDamage);
+        GetComponent<Rigidbody>().isKinematic = true;
     }
 }
 public enum PartsMechaEnum

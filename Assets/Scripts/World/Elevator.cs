@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 
 public class Elevator : MonoBehaviour, IObserver
 {
-    [Header("Stats")] 
-    [SerializeField] private int _extraRange;
+    [Header("Stats")] [SerializeField] private int _extraRange;
 
     [SerializeField] private int _extraCrit;
 
     [SerializeField] private float _maxHp;
 
-    private float _currentHp;
-    
+    [SerializeField] private float _currentHp;
+
+    [SerializeField] private int _fallDamagePercentage;
+
     [Header("Others")]
     [SerializeField] private Transform _platform;
     [SerializeField] private GameObject _button;
@@ -26,6 +25,8 @@ public class Elevator : MonoBehaviour, IObserver
     [SerializeField] private float _platformMaxHeight;
     private Vector3 _startingPos;
     [SerializeField] private float _movementDuration;
+    [SerializeField] private float _fallMovementDuration;
+    [SerializeField] private float _timeToDestroy;
 
     private bool _active;
 
@@ -34,13 +35,16 @@ public class Elevator : MonoBehaviour, IObserver
     private bool _canInteract;
 
     private bool _isMoving;
-    
+
     private delegate void Execute();
     Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
 
     private Character _aboveCharacter;
 
+    [SerializeField] private GameObject _colliderForAttack;
+
     
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,6 +86,8 @@ public class Elevator : MonoBehaviour, IObserver
 
         if (_isMoving) return;
         
+        if (!_canInteract) return;
+        
         StartCoroutine(CheckCharacterDelay());
     }
 
@@ -91,11 +97,8 @@ public class Elevator : MonoBehaviour, IObserver
 
         _aboveCharacter = _tileBelow.GetUnitAbove();
 
-        if (_aboveCharacter.CanAttack())
-        {
-            _aboveCharacter.OnEnterElevator(this);
-            ActivateButton();
-        }
+        _aboveCharacter.OnEnterElevator(this);
+        ActivateButton();
     }
 
     private void OnTriggerExit(Collider other)
@@ -134,6 +137,7 @@ public class Elevator : MonoBehaviour, IObserver
             _active = true;
             _tileBelow.RemoveFromNeighbour();
             _canInteract = false;
+            _colliderForAttack.SetActive(true);
         }
         else
         {
@@ -142,6 +146,7 @@ public class Elevator : MonoBehaviour, IObserver
             _active = false;
             _tileBelow.AddToNeighbour();
             _canInteract = false;
+            _colliderForAttack.SetActive(false);
         }
 
         while (time <= _movementDuration)
@@ -155,6 +160,7 @@ public class Elevator : MonoBehaviour, IObserver
         _isMoving = false;
         if (!_active)
         {
+            
             _aboveCharacter.transform.parent = null; 
             _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
             _aboveCharacter.SelectThisUnit();
@@ -208,11 +214,45 @@ public class Elevator : MonoBehaviour, IObserver
             float hp = _currentHp - damages[i].Item1;
             _currentHp = hp > 0 ? hp : 0;
         }
+
+        if (_currentHp <= 0)
+        {
+            TurnManager.Instance.Unsubscribe(this);
+            _colliderForAttack.SetActive(false);
+            _aboveCharacter.transform.parent = null; 
+            _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
+            _aboveCharacter.GetComponent<Rigidbody>().isKinematic = false;
+            //TODO: fall damage
+            StartCoroutine(Fall());
+        }
     }
 
     public void TakeDamage(int damage)
     {
         float hp = _currentHp - damage;
         _currentHp = hp > 0 ? hp : 0;
+    }
+
+    public GameObject GetColliderForAttack()
+    {
+        return _colliderForAttack;
+    }
+
+    IEnumerator Fall()
+    {
+        float time = 0;
+        var startPos = _platform.position;
+        var endPos = _startingPos;
+        while (time <= _fallMovementDuration)
+        {
+            time += Time.deltaTime;
+            var normalizedTime = time / _fallMovementDuration;
+            _platform.position = Vector3.Lerp(startPos, endPos, normalizedTime);
+            yield return new WaitForEndOfFrame();
+        }
+
+        yield return new WaitForSeconds(_timeToDestroy);
+        _aboveCharacter.TakeFallDamage(_fallDamagePercentage);
+        Destroy(gameObject);
     }
 }

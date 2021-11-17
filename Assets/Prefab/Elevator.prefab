@@ -383,6 +383,50 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &6059492266324130449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 795154199891036524}
+  - component: {fileID: 4896608451989600492}
+  m_Layer: 0
+  m_Name: ColliderForAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &795154199891036524
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059492266324130449}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6827703362863139325}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4896608451989600492
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059492266324130449}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 5, z: 5}
+  m_Center: {x: 0.48, y: 1.74, z: -0.63}
 --- !u!1 &6427563719296404093
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,6 +614,7 @@ Transform:
   m_Children:
   - {fileID: 1998002594357535953}
   - {fileID: 6827703363321564079}
+  - {fileID: 795154199891036524}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -588,6 +633,7 @@ MonoBehaviour:
   _extraRange: 1
   _extraCrit: 10
   _maxHp: 100
+  _currentHp: 0
   _platform: {fileID: 4069682038708761435}
   _button: {fileID: 3066146920897560703}
   _buttonText: {fileID: 315442959340596635}
@@ -596,7 +642,9 @@ MonoBehaviour:
     m_Bits: 256
   _platformMaxHeight: 5
   _movementDuration: 3
-  _aboveCharacter: {fileID: 0}
+  _fallMovementDuration: 1
+  _timeToDestroy: 2
+  _colliderForAttack: {fileID: 6059492266324130449}
 --- !u!65 &1270346154630003376
 BoxCollider:
   m_ObjectHideFlags: 0

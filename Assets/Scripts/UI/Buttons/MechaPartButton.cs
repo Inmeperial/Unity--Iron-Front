@@ -17,8 +17,6 @@ public class MechaPartButton : CustomButton
     [SerializeField] private TextMeshProUGUI _bulletsCountText;
     
     private int _bulletsCount;
-    private MaterialMechaHandler _materialHandler;
-    private MechaParts _part;
     private Character _characterSelected;
     public override void OnPointerEnter(PointerEventData eventData)
     {
@@ -92,6 +90,6 @@ public class MechaPartButton : CustomButton
     public void SetPart(MaterialMechaHandler handler, MechaParts part)
     {
         //_materialHandler = handler;
-        _part = part;
+        //_part = part;
     }
 }

@@ -29,6 +29,7 @@ public class Tile : MonoBehaviour
     public bool inPreviewRange;
     public bool unitAboveSelected;
     private LandMine _mine;
+    [SerializeField] private Elevator _elevator;
     private void Awake()
     {
         _isFree = true;
@@ -39,9 +40,9 @@ public class Tile : MonoBehaviour
         inPreviewRange = false;
         unitAboveSelected = false;
         Collider[] colliders = Physics.OverlapSphere(transform.position, 3f);
-        foreach (Collider o in colliders)
+        foreach (Collider collider in colliders)
         {
-            _mine = o.GetComponent<LandMine>();
+            _mine = collider.GetComponent<LandMine>();
             if (_mine) break;
         }
     }
@@ -412,5 +413,10 @@ public class Tile : MonoBehaviour
     public LandMine GetMineAbove()
     {
         return _mine;
+    }
+
+    public Elevator GetElevatorAbove()
+    {
+        return _elevator;
     }
 }

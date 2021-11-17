@@ -210,11 +210,15 @@ public class EnemyCharacter : Character
 
     public void SetClosestEnemy(Character character)
     {
+        if (character)
+            Debug.Log("closest: " + character.GetCharacterName());
         _closestEnemy = character;
     }
 
     public Character GetClosestEnemy()
     {
+        if (_closestEnemy)
+            Debug.Log("closest: " + _closestEnemy.GetCharacterName());
         return _closestEnemy;
     }
 
