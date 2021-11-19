@@ -631,9 +631,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _extraRange: 1
-  _extraCrit: 10
+  _extraCrit: 20
   _maxHp: 100
   _currentHp: 0
+  _fallDamagePercentage: 70
   _platform: {fileID: 4069682038708761435}
   _button: {fileID: 3066146920897560703}
   _buttonText: {fileID: 315442959340596635}
@@ -641,7 +642,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _platformMaxHeight: 5
-  _movementDuration: 3
+  _movementDuration: 2
   _fallMovementDuration: 1
   _timeToDestroy: 2
   _colliderForAttack: {fileID: 6059492266324130449}
