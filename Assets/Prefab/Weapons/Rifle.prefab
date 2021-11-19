@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 6212134982851672054}
   - component: {fileID: 4738738967089983568}
   - component: {fileID: 6212017398759282397}
+  - component: {fileID: 956900180037898402}
   m_Layer: 0
   m_Name: Percutor
   m_TagString: Untagged
@@ -187,6 +188,33 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &956900180037898402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2772689299772723322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWeapon: 1
+  mechaEnum: 0
+  texturesCuerpo:
+  - {fileID: 0}
+  - {fileID: 0}
+  textureArmadura:
+  - {fileID: 0}
+  - {fileID: 0}
+  textureArticulaciones:
+  - {fileID: 0}
+  - {fileID: 0}
+  colorMecha: {r: 0, g: 0, b: 0, a: 0}
+  materialArticulacion: 0
+  materialCuerpo: 0
+  materialArmadura: 0
 --- !u!1 &3526543544967395963
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +292,7 @@ GameObject:
   - component: {fileID: 1298695821986052007}
   - component: {fileID: 3250260034838789671}
   - component: {fileID: 826382849792466041}
+  - component: {fileID: 6708911608133495425}
   m_Layer: 0
   m_Name: Mira Rifle
   m_TagString: Untagged
@@ -331,6 +360,33 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &6708911608133495425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6802157846513249451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWeapon: 1
+  mechaEnum: 0
+  texturesCuerpo:
+  - {fileID: 0}
+  - {fileID: 0}
+  textureArmadura:
+  - {fileID: 0}
+  - {fileID: 0}
+  textureArticulaciones:
+  - {fileID: 0}
+  - {fileID: 0}
+  colorMecha: {r: 0, g: 0, b: 0, a: 0}
+  materialArticulacion: 0
+  materialCuerpo: 0
+  materialArmadura: 0
 --- !u!1 &8036293781312516499
 GameObject:
   m_ObjectHideFlags: 0

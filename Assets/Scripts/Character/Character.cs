@@ -1671,6 +1671,7 @@ public class Character : EnumsClass, IObservable
             if (item.Key == partEnum)
             {
                 item.Value.GetComponent<MasterShaderScript>().ConvertEnumToStringEnumForShader(texture);
+                Debug.Log("asd");
             }
         }
     }
@@ -1772,9 +1773,11 @@ public class Character : EnumsClass, IObservable
 }
 public enum PartsMechaEnum
 {
+    body,
+    weaponL,
+    weaponR,
     armL,
     armR,
-    body,
     legL,
     legR
 };

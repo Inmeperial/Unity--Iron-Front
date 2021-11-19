@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 3500243231950763393}
   - component: {fileID: 6678710681121024299}
   - component: {fileID: 464711250120077120}
+  - component: {fileID: 360990064768384705}
   m_Layer: 0
   m_Name: Tambor recarga
   m_TagString: Untagged
@@ -214,6 +215,33 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &360990064768384705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8510019456189541868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWeapon: 1
+  mechaEnum: 0
+  texturesCuerpo:
+  - {fileID: 0}
+  - {fileID: 0}
+  textureArmadura:
+  - {fileID: 0}
+  - {fileID: 0}
+  textureArticulaciones:
+  - {fileID: 0}
+  - {fileID: 0}
+  colorMecha: {r: 0, g: 0, b: 0, a: 0}
+  materialArticulacion: 0
+  materialCuerpo: 0
+  materialArmadura: 0
 --- !u!1 &8859632217980217494
 GameObject:
   m_ObjectHideFlags: 0
