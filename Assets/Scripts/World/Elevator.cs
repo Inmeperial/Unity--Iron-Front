@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour, IObserver
 {
+    protected const int MissHit = 0;
+    protected const int NormalHit = 1;
+    protected const int CriticalHit = 2;
+    
     [Header("Stats")] [SerializeField] private int _extraRange;
 
     [SerializeField] private int _extraCrit;
@@ -213,6 +217,24 @@ public class Elevator : MonoBehaviour, IObserver
             total += damages[i].Item1;
             float hp = _currentHp - damages[i].Item1;
             _currentHp = hp > 0 ? hp : 0;
+            
+            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
+            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
+            int item = damages[i].Item2;
+            switch (item)
+            {
+                case MissHit:
+                    EffectsController.Instance.CreateDamageText("Miss", 0, _platform.position, i == damages.Count - 1 ? true : false);
+                    break;
+
+                case NormalHit:
+                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 1, _platform.position, i == damages.Count - 1 ? true : false);
+                    break;
+
+                case CriticalHit:
+                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 2, _platform.position, i == damages.Count - 1 ? true : false);
+                    break;
+            }
         }
 
         if (_currentHp <= 0)
@@ -222,6 +244,8 @@ public class Elevator : MonoBehaviour, IObserver
             _aboveCharacter.transform.parent = null; 
             _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
             _aboveCharacter.GetComponent<Rigidbody>().isKinematic = false;
+            
+            
             //TODO: fall damage
             StartCoroutine(Fall());
         }
@@ -231,6 +255,21 @@ public class Elevator : MonoBehaviour, IObserver
     {
         float hp = _currentHp - damage;
         _currentHp = hp > 0 ? hp : 0;
+        
+        if (_currentHp <= 0)
+        {
+            TurnManager.Instance.Unsubscribe(this);
+            _colliderForAttack.SetActive(false);
+            _aboveCharacter.transform.parent = null; 
+            _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
+            _aboveCharacter.GetComponent<Rigidbody>().isKinematic = false;
+            
+            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
+            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
+            EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position, true);
+            //TODO: fall damage
+            StartCoroutine(Fall());
+        }
     }
 
     public GameObject GetColliderForAttack()

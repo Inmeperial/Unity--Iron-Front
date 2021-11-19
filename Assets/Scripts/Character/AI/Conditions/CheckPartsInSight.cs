@@ -29,7 +29,7 @@ public class CheckPartsInSight : GOCondition
 
         if (!closestEnemy) return false;
         
-        _myUnit.RotateTowardsEnemy(closestEnemy.transform, _myUnit.transform.position.y);
+        _myUnit.RotateTowardsEnemy(closestEnemy.transform);
         bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
         bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LGun", false);
         bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RGun", false);

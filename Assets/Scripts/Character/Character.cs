@@ -126,11 +126,13 @@ public class Character : EnumsClass, IObservable
     [HideInInspector] public TileHighlight highlight;
     
     protected List<Equipable> _equipables = new List<Equipable>();
-    
+
+    protected float _startingHeight;
     public virtual void ManualAwake()
     {
         transform.position = new Vector3(transform.position.x, 4f, transform.position.z);
 
+        _startingHeight = transform.position.y;
         #region GetComponents
 
         _materialMechaHandler = GetComponent<MaterialMechaHandler>();
@@ -428,7 +430,9 @@ public class Character : EnumsClass, IObservable
 
         if (!_isOnElevator)
         {
-            _myPositionTile = GetTileBelow();
+            if (!_myPositionTile)
+                _myPositionTile = GetTileBelow();
+            
             if (_myPositionTile)
             {
                 _myPositionTile.unitAboveSelected = true;
@@ -504,12 +508,11 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Rotate Character towards enemy.
     /// </summary>
-    public void RotateTowardsEnemy(Transform t, float height)
+    /// <param name="target">Target to look at.</param>
+    public void RotateTowardsEnemy(Transform target)
     {
-        // _move.SetPosToRotate(pos);
-        // _move.StartRotation();
-        var pos = transform.position;
-        pos.y = height;
+        var pos = target.position;
+        pos.y = transform.position.y;
         transform.LookAt(pos);
     }
 
@@ -994,7 +997,7 @@ public class Character : EnumsClass, IObservable
     public virtual void SetTurn(bool state)
     {
         _myTurn = state;
-        NotifyObserver("AboveTurn");
+        if (_myTurn) NotifyObserver("AboveTurn");
     }
 
     /// <summary>
@@ -1046,6 +1049,8 @@ public class Character : EnumsClass, IObservable
         if (_selectedGun == null || count >= _selectedGun.GetAttackRange() ||
             (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
             return;
+        
+        if (_isOnElevator && _selectedGun.GetGunType() == GunsType.Melee) return;
 
         _tilesForAttackChecked[currentTile] = count;
 
@@ -1387,7 +1392,9 @@ public class Character : EnumsClass, IObservable
         if (c._rotated) return;
         c._rotated = true;
         c.SetInitialRotation(c.transform.rotation);
-        c.transform.LookAt(transform.position);
+        var posToLook = transform.position;
+        posToLook.y = c.transform.position.y;
+        c.transform.LookAt(posToLook);
         
         bool body = c.RayToPartsForAttack(GetBodyPosition(), "Body", true) && _body.GetCurrentHp() > 0;
         bool lArm = c.RayToPartsForAttack(GetLArmPosition(), "LGun", true) && _leftGun;
@@ -1758,6 +1765,9 @@ public class Character : EnumsClass, IObservable
         var bodyDamage = _body.GetMaxHp() * dmgPercentage / 100;
         _body.TakeDamage((int)bodyDamage);
         GetComponent<Rigidbody>().isKinematic = true;
+        
+        var pos = transform.position;
+        pos.y = _startingHeight;
     }
 }
 public enum PartsMechaEnum

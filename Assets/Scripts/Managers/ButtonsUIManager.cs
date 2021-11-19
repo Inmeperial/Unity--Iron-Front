@@ -491,7 +491,7 @@ public class ButtonsUIManager : MonoBehaviour
     /// </summary>
     private void Attack()
     {
-        _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform, _selectedChar.transform.position.y);
+        _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform);
         _selectedChar.SetInitialRotation(_selectedChar.transform.rotation);
 
         Gun gun = _selectedChar.GetSelectedGun();
@@ -663,6 +663,8 @@ public class ButtonsUIManager : MonoBehaviour
     public void UnitSwapToLeftGun()
     {
         if (!_selectedChar || !_selectedChar.LeftGunAlive() || !_selectedChar.GetLeftGun()) return;
+        
+        if (_selectedChar.IsOnElevator() && _selectedChar.GetLeftGun().GetGunType() == EnumsClass.GunsType.Melee) return;
         
         AudioManager.audioManagerInstance.PlaySound(_soundsMenuManager.GetClickSound(), _soundsMenuManager.GetObjectToAddAudioSource());
         BodyClear();
@@ -1238,7 +1240,7 @@ public class ButtonsUIManager : MonoBehaviour
                 if (_selectedChar.GetRightGun()) _selectedChar.GetRightGun().ModelsOff();
             }
             //_selectedChar.RotateTowardsEnemy(_selectedEnemy.transform.position, ActivateParts);
-            _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform, _selectedChar.transform.position.y);
+            _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform);
             ActivateParts();
         }
     }
