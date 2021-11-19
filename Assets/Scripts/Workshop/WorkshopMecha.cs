@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEngine;
-using static MechaEquipmentSO;
+﻿using UnityEngine;
 
 public class WorkshopMecha : MonoBehaviour
 {

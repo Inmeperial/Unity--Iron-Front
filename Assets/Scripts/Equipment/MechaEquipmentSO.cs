@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 [CreateAssetMenu(fileName = "Equipment", menuName = "Create Equipment")]
 public class MechaEquipmentSO : ScriptableObject

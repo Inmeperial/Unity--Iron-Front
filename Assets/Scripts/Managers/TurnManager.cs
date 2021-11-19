@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 public class TurnManager : EnumsClass, IObservable, IObserver
 {

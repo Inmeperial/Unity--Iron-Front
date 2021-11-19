@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using BBUnity.Actions;
-using UnityEngine;
+﻿using BBUnity.Actions;
 
 using Pada1.BBCore;
 using Pada1.BBCore.Tasks;

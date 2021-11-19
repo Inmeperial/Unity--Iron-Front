@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class AssaultRifle : Gun
+﻿public class AssaultRifle : Gun
 {
     public override void SetGun(GunSO data, Character character)
     {
