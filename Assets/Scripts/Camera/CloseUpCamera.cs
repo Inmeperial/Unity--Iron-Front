@@ -40,17 +40,26 @@ public class CloseUpCamera : MonoBehaviour
 
         float heightRelation = 0;
 
-        if (enemyPosToLerp.y < playerPosToLerp.y)
-            heightRelation = enemyPosToLerp.y / playerPosToLerp.y;
-        
-        else if (enemyPosToLerp.y > playerPosToLerp.y)
-            heightRelation = playerPosToLerp.y / enemyPosToLerp.y;
+        bool elevated = false;
 
+        if (enemyPosToLerp.y < playerPosToLerp.y)
+        {
+            heightRelation = enemyPosToLerp.y / playerPosToLerp.y;
+            elevated = true;
+        }
+        else if (enemyPosToLerp.y > playerPosToLerp.y)
+        {
+            heightRelation = playerPosToLerp.y / enemyPosToLerp.y;
+            elevated = true;
+        }
+        
         enemyPosToLerp.y = clampedHeight;
 		playerPosToLerp.y = clampedHeight;
 		
 		Vector3 destination = Vector3.Lerp(enemyPosToLerp, playerPosToLerp, lerp - heightRelation);
-		destination.z += moveBackInZ;
+        
+        if (elevated) destination.z += moveBackInZ;
+        
         StartCoroutine(Move(destination, enemyPosToLerp, callback));
     }
 
