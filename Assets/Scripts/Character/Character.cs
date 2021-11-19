@@ -482,7 +482,7 @@ public class Character : EnumsClass, IObservable
         _selected = false;
         _selectingEnemy = false;
         
-        if (!_isOnElevator)
+        if (!_isOnElevator && !_myPositionTile)
             _myPositionTile = GetTileBelow();
         
         if (_myPositionTile)
