@@ -1769,6 +1769,7 @@ public class Character : EnumsClass, IObservable
         
         var pos = transform.position;
         pos.y = _startingHeight;
+        transform.position = pos;
     }
 }
 public enum PartsMechaEnum
