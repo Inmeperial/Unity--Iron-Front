@@ -91,6 +91,8 @@ public class Elevator : MonoBehaviour, IObserver
         if (_isMoving) return;
         
         if (!_canInteract) return;
+
+        if (_aboveCharacter && !_aboveCharacter.IsMyTurn()) return;
         
         StartCoroutine(CheckCharacterDelay());
     }
