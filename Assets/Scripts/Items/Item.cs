@@ -5,12 +5,13 @@ public class Item : Equipable
     protected ItemSO _itemData;
     //TODO: remover despues
     //protected ItemSO.ItemType _itemType;
-    public override void Initialize(Character character, EquipableSO data)
+    public override void Initialize(Character character, EquipableSO data, Location location)
     {
         _character = character;
         _itemData = data as ItemSO;
         _availableUses = _itemData.maxUses;
         //_itemType = _itemData.itemType;
+        _location = location;
     }
 
     public override void Select()

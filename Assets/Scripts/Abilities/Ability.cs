@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class Ability : Equipable
 {
+    
     protected AbilitySO _abilityData;
     protected AbilitySO.PartSlot _partSlot;
 
-    public override void Initialize(Character character, EquipableSO data)
+    public override void Initialize(Character character, EquipableSO data, Location location)
     {
         _character = character;
         _icon = data.equipableIcon;
@@ -14,6 +15,7 @@ public class Ability : Equipable
         _partSlot = _abilityData.partSlot;
         //TODO: remover despues
         _equipableType = _abilityData.equipableType;
+        _location = location;
     }
     public string AbilityStatus()
     {

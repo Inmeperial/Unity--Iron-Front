@@ -1537,7 +1537,7 @@ public class Character : EnumsClass, IObservable
         _body = Instantiate(_mechaEquipment.body.prefab, _bodySpawnPosition);
         _body.ManualStart(this);
         _body.transform.localPosition = Vector3.zero;
-        _body.SetPart(_mechaEquipment.body);
+        _body.SetPart(_mechaEquipment.body, Equipable.Location.Body);
         var bodyMesh = Instantiate(_mechaEquipment.body.meshPrefab[0], _body.transform);
         bodyMesh.transform.localPosition = Vector3.zero;
         var bodyShader = bodyMesh.GetComponent<MasterShaderScript>();
@@ -1557,7 +1557,7 @@ public class Character : EnumsClass, IObservable
         {
             _leftGun.transform.localPosition = Vector3.zero;
             _leftGun.gameObject.tag = "LGun";
-            _leftGun.SetGun(_mechaEquipment.leftGun, this);
+            _leftGun.SetGun(_mechaEquipment.leftGun, this, Equipable.Location.LeftGun);
             _leftGun.SetRightOrLeft("Left");
             _leftGun.StartRoulette();
 
@@ -1576,7 +1576,7 @@ public class Character : EnumsClass, IObservable
         {
             _rightGun.transform.localPosition = Vector3.zero;
             _rightGun.gameObject.tag = "RGun";
-            _rightGun.SetGun(_mechaEquipment.rightGun, this);
+            _rightGun.SetGun(_mechaEquipment.rightGun, this, Equipable.Location.RightGun);
             _rightGun.SetRightOrLeft("Right");
             _rightGun.StartRoulette();
             _myUI.SetRightArmButtonPart(_materialMechaHandler,MechaParts.RArm);
@@ -1596,7 +1596,7 @@ public class Character : EnumsClass, IObservable
         
 
         _legs.transform.localPosition = Vector3.zero;
-        _legs.SetPart(_mechaEquipment.legs);
+        _legs.SetPart(_mechaEquipment.legs, Equipable.Location.Legs);
         _legs.SetOtherLeg(rLeg);
         
         CheckWeight();

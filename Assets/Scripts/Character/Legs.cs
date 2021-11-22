@@ -19,9 +19,9 @@ public class Legs : Parts
         return _maxSteps;
     }
 
-    public override void SetPart(PartSO data)
+    public override void SetPart(PartSO data, Equipable.Location location)
     {
-        base.SetPart(data);
+        base.SetPart(data, location);
         var d = data as LegsSO;
         _maxSteps = d.maxSteps;
         _moveSpeed = d.moveSpeed;

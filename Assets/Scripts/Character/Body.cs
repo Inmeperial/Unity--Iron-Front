@@ -6,12 +6,12 @@ public class Body : Parts
 {
     private float _maxWeight;
     
-    public override void SetPart(PartSO data)
+    public override void SetPart(PartSO data, Equipable.Location location)
     {
         var b = data as BodySO;
         _maxWeight = b.maxWeight;
         
-        base.SetPart(data);
+        base.SetPart(data, location);
     }
     public override void UpdateHp(float newValue)
     {

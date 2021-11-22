@@ -7,8 +7,21 @@
     <list default="true" id="58a4e8b3-6a44-45fc-a481-3cddbb3bc263" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/MechaEquipment.save" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MechaEquipment.save" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Database/Database.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Database/Database.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Others/EquipableSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Others/EquipableSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/Ability.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/Ability.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Abilities/PiercingShot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Abilities/PiercingShot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Body.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Body.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Legs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Legs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Parts.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Parts.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GunZ/AssaultRifle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GunZ/AssaultRifle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GunZ/Gun.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GunZ/Gun.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GunZ/Melee.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GunZ/Melee.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GunZ/Rifle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GunZ/Rifle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GunZ/Shield.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GunZ/Shield.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GunZ/Shotgun.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GunZ/Shotgun.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Items/Grenade.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Items/Grenade.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Items/Item.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Items/Item.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Others/Equipable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Others/Equipable.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,17 +135,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Others/IObservable.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Others/IObserver.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/PathFinding/AStar.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/PathFinding/AStarAgent.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/PathFinding/IPathCreator.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/PathFinding/ShortPathfind.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/PathFinding/WaypointsPathfinding.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Buttons/EquipmentButton.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Buttons/MechaPartButton.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Billboard.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Shaders/LandMineShaderControl.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Shaders/MasterShaderForThisObjectScript.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Shaders/MaterialMechaHandler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Shaders/TileMaterialhandler.cs" />
@@ -163,16 +165,27 @@
       <option value="$PROJECT_DIR$/Assets/ColorChangeSlider.cs" />
       <option value="$PROJECT_DIR$/Assets/GradientShaderScript.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Abilities/Defend.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Abilities/Ability.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Others/Equipable.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Character/Parts.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Abilities/LegsOvercharge.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Others/EquipableSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Shaders/MasterShaderScript.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/InitializationManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Abilities/SelfDestruct.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Abilities/SmokeScreen.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Others/Equipable.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Abilities/Ability.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/Parts.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/Body.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/Legs.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/AssaultRifle.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/Gun.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/Melee.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/Rifle.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/Shield.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/Shotgun.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Items/Item.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Items/Grenade.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Abilities/PiercingShot.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sOlsvSN0iUpd6MRLO6lGcnlToG" />
