@@ -23,4 +23,9 @@ public abstract class EquipableSO : ScriptableObject
     public int pushDistance;
 
     [Space] public bool ES_PARA_DEJAR_UN_ESPACIO;
+
+    [Header("Self Destruct")] 
+    public float selfDestructDamageRange;
+
+    public int selfDestructDamage;
 }
