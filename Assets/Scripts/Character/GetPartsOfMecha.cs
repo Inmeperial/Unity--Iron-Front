@@ -23,7 +23,7 @@ public class GetPartsOfMecha : MonoBehaviour
 
         if (chestSpawn != null)
         {
-            _partsDictionary.Add(PartsMechaEnum.body, chestSpawn.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject);
+            _partsDictionary.Add(PartsMechaEnum.body, chestSpawn.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject); // Last GetChild = 1 coz smokeScreen prefab creation.
         }
 
         if (armLSpawn != null)

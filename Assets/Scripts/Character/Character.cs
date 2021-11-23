@@ -1685,7 +1685,10 @@ public class Character : EnumsClass, IObservable
     {
         foreach (var item in _partsDictionary)
         {
-            item.Value.GetComponent<MasterShaderScript>().ConvertEnumToStringEnumForShader(texture);
+            if (item.Value.GetComponent<MasterShaderScript>() !=  null)
+            {
+                item.Value.GetComponent<MasterShaderScript>().ConvertEnumToStringEnumForShader(texture);
+            }
         }
     }
 
