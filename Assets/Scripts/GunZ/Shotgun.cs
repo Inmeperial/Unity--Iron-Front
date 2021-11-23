@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Shotgun : Gun
@@ -8,11 +7,11 @@ public class Shotgun : Gun
 
     private readonly string[] _parts = { "Body", "LArm", "RArm", "Legs" };
     
-    public override void SetGun(GunSO data, Character character)
+    public override void SetGun(GunSO data, Character character, Equipable.Location location)
     {
         _gunType = GunsType.Shotgun;
         _gun = "Shotgun";
-        base.SetGun(data, character);
+        base.SetGun(data, character, location);
     }
     
     public override void Ability()

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Push : Ability
@@ -13,9 +12,16 @@ public class Push : Ability
     private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
     bool collides;
     Character collidingUnit;
-    [SerializeField] int collisionDamage = 50;
-    [SerializeField] int pushDamage = 25;
-    [SerializeField] float pushLerpDuration = .75f;
+    
+    private PushSO _abilityData;
+
+    public override void Initialize(Character character, EquipableSO data, Location location)
+    {
+        base.Initialize(character, data, location);
+	    
+        _abilityData = data as PushSO;
+    }
+    
     public override void Select()
     {
         if (InCooldown() || !_character.CanAttack()) return;
@@ -74,18 +80,18 @@ public class Push : Ability
     void PushAction(Tile tileBeignPushedTo, Character enemy)
 	{
         //Hago un Lerp del enemy hacia el tileBeignPushedTo
-        StartCoroutine(LerpPush(enemy.transform, tileBeignPushedTo.transform.position, pushLerpDuration));
+        StartCoroutine(LerpPush(enemy.transform, tileBeignPushedTo.transform.position, _abilityData.pushLerpDuration));
         enemy.ChangeMyPosTile(tileBeignPushedTo);
-        enemy.GetBody().TakeDamage(pushDamage);
+        enemy.GetBody().TakeDamage(_abilityData.pushDamage);
         enemy.SetHurtAnimation();
         if (collides)
 		{
-            enemy.GetBody().TakeDamage(collisionDamage);
+            enemy.GetBody().TakeDamage(_abilityData.collisionDamage);
             enemy.SetHurtAnimation();
             if (collidingUnit)
             {
                 //Hacer daño a la otra unidad
-                collidingUnit.GetBody().TakeDamage(collisionDamage);
+                collidingUnit.GetBody().TakeDamage(_abilityData.collisionDamage);
                 collidingUnit.SetHurtAnimation();
             }
         }

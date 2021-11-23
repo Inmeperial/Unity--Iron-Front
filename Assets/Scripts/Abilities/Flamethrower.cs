@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Flamethrower : Ability
 {
-    [SerializeField]private int damage;
-	[SerializeField]private float range;
-	[SerializeField]private float angle;
-    [SerializeField] private LayerMask gridMask;
-    [SerializeField] private LayerMask characterMask;
-    [SerializeField] private Material lineMaterial;
+    
     private TileHighlight _highlight;
     private Vector3 _position;
     private Vector3 _mouseDir;
@@ -19,6 +13,15 @@ public class Flamethrower : Ability
     private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
     private LineRenderer _lineRenderer;
 
+    private FlamethrowerSO _abilityData;
+
+    public override void Initialize(Character character, EquipableSO data, Location location)
+    {
+	    base.Initialize(character, data, location);
+	    
+	    _abilityData = data as FlamethrowerSO;
+    }
+    
     public override void Select()
 	{
         if (InCooldown() || !_character.CanAttack()) return;
@@ -28,7 +31,7 @@ public class Flamethrower : Ability
         }
         if (!_lineRenderer) _lineRenderer = gameObject.AddComponent<LineRenderer>();
         _lineRenderer.positionCount = 11;
-        _lineRenderer.material = lineMaterial;
+        _lineRenderer.material = _abilityData.lineMaterial;
         _mainCam = Camera.main;
         _position = _character.transform.position;
         _character.EquipableSelectionState(true, this);
@@ -46,9 +49,10 @@ public class Flamethrower : Ability
 
 	public override void Use(Action callback = null)
 	{
+		var data = _abilityData as FlamethrowerSO;
         //Consigo las direcciones
         Ray ray = _mainCam.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit raycastHit, 1000, gridMask))
+        if(Physics.Raycast(ray, out RaycastHit raycastHit, 1000, _abilityData.gridMask))
 		{
             _mouseDir = raycastHit.point;
 		}
@@ -56,7 +60,8 @@ public class Flamethrower : Ability
 
         var dir = _facingDir.normalized;
         dir.y = 0;
-        
+        var angle = _abilityData.angle;
+        var range = _abilityData.range;
         //Pongo los vertices del line renderer para mostrar el area donde esta el ataque.
         _lineRenderer.SetPosition(0, _position);//Necesary
 		_lineRenderer.SetPosition(1, _position + Quaternion.Euler(0, angle / 2, 0) * dir * range);//Necesary
@@ -75,7 +80,7 @@ public class Flamethrower : Ability
 		{
             //Ataco a todas las unidades que esten en el area de ataque
             List<Character> charactersHitted = new List<Character>();
-            var collisions = Physics.OverlapSphere(_position, range, characterMask);
+            var collisions = Physics.OverlapSphere(_position, range, _abilityData.characterMask);
             foreach (var item in collisions)
             {
                 if (Vector3.Angle(_facingDir, (item.transform.position - _position)) > angle / 2) continue;
@@ -103,7 +108,7 @@ public class Flamethrower : Ability
         foreach (var item in charactersToDamage)
         {
             if (item == _character) continue;
-            item.GetBody().TakeDamage(damage);
+            item.GetBody().TakeDamage(_abilityData.damage);
             item.SetHurtAnimation();
         }
         _character.DeactivateAttack();
@@ -125,10 +130,17 @@ public class Flamethrower : Ability
 
     private void OnDrawGizmos()
     {
+	    var range = _abilityData.range;
+	    var angle = _abilityData.angle;
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(_position, _facingDir.normalized * range);
         Gizmos.DrawWireSphere(_position, range);
         Gizmos.DrawRay(_position, Quaternion.Euler(0, angle / 2, 0) * _facingDir.normalized * range);
         Gizmos.DrawRay(_position, Quaternion.Euler(0, -angle / 2, 0) * _facingDir.normalized * range);
+    }
+    
+    public override string GetEquipableName()
+    {
+	    return _abilityData.equipableName;
     }
 }

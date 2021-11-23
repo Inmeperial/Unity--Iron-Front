@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,9 +14,9 @@ public class Grenade : Item
     private Tile _tile;
 
 
-    public override void Initialize(Character character, EquipableSO data)
+    public override void Initialize(Character character, EquipableSO data, Location location)
     {
-        base.Initialize(character, data);
+        base.Initialize(character, data, location);
         _highlight = FindObjectOfType<TileHighlight>();
     }
     public override void Select()

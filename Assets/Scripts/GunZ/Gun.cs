@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 
-public abstract class Gun : EnumsClass, IGun
+public abstract class Gun : EnumsClass
 {
     [SerializeField] protected GameObject[] _models;
     protected Character _myChar;
@@ -112,7 +110,7 @@ public abstract class Gun : EnumsClass, IGun
     /// <summary>
     /// Set Gun stats from given scriptable object.
     /// </summary>
-    public virtual void SetGun(GunSO data, Character character)
+    public virtual void SetGun(GunSO data, Character character, Equipable.Location location)
     {
         _myChar = character;
         _maxHP = data.maxHp;
@@ -134,7 +132,7 @@ public abstract class Gun : EnumsClass, IGun
         if(!_abilityCreated && data.ability && data.ability.abilityPrefab)
         {
             _ability = Instantiate(data.ability.abilityPrefab, transform);
-            _ability.Initialize(_myChar, data.ability);
+            _ability.Initialize(_myChar, data.ability, location);
             _myChar.AddEquipable(_ability);
             _abilityCreated = true;
         }

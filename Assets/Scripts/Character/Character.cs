@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -104,6 +102,8 @@ public class Character : EnumsClass, IObservable
     protected bool _legsOvercharged;
 
     protected bool _isOnElevator;
+
+    protected bool _movementReduced;
     #endregion
 
     //OTHERS
@@ -465,9 +465,24 @@ public class Character : EnumsClass, IObservable
         
         if (!_isOnElevator && _canMove)
         {
-            if (!_legsOvercharged)
-                _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
-            else _currentSteps = _legs.GetMaxSteps() * 2;
+            if (_legsOvercharged)
+            {
+                if (_movementReduced && _myTurn)
+                {
+                    _currentSteps *= 2;
+                    _movementReduced = false;
+                }
+                else
+                {
+                    _currentSteps = _legs.GetMaxSteps() * 2;
+                }
+            }
+
+            else if (_movementReduced && _myTurn)
+                _movementReduced = false;
+            
+            else  _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
+            
             
             PaintTilesInMoveRange(_myPositionTile, 0);
             AddTilesInMoveRange();
@@ -482,7 +497,7 @@ public class Character : EnumsClass, IObservable
         _selected = false;
         _selectingEnemy = false;
         
-        if (!_isOnElevator)
+        if (!_isOnElevator && !_myPositionTile)
             _myPositionTile = GetTileBelow();
         
         if (_myPositionTile)
@@ -516,10 +531,13 @@ public class Character : EnumsClass, IObservable
         transform.LookAt(pos);
     }
 
+    //TODO: Borrar
     /// <summary>
     /// Rotate Character towards enemy and execute callback when finished.
     /// </summary>
-    public void RotateTowardsEnemy(Vector3 pos, Action callback)
+    /// <param name="pos">Position to rotate at.</param>
+    /// <param name="callback"></param>
+    private void RotateTowardsEnemy(Vector3 pos, Action callback)
     {
         _move.SetPosToRotate(pos);
         _move.StartRotation(callback);
@@ -749,10 +767,13 @@ public class Character : EnumsClass, IObservable
 
 
     /// <summary>
-    /// Return the Tile below the Character.
+    /// Return the Tile where the Character is.
     /// </summary>
     public Tile GetMyPositionTile()
     {
+        if (!_myPositionTile)
+            _myPositionTile = GetTileBelow();
+        
         return _myPositionTile;
     }
 
@@ -766,9 +787,9 @@ public class Character : EnumsClass, IObservable
     }
 
     /// <summary>
-    /// Return the Tile below the Character.
+    /// Raycast to get the tile the character is.
     /// </summary>
-    public Tile GetTileBelow()
+    private Tile GetTileBelow()
     {
         RaycastHit hit;
         var pos = _raycastToTile.position;
@@ -1539,7 +1560,7 @@ public class Character : EnumsClass, IObservable
         _body = Instantiate(_mechaEquipment.body.prefab, _bodySpawnPosition);
         _body.ManualStart(this);
         _body.transform.localPosition = Vector3.zero;
-        _body.SetPart(_mechaEquipment.body);
+        _body.SetPart(_mechaEquipment.body, Equipable.Location.Body);
         var bodyMesh = Instantiate(_mechaEquipment.body.meshPrefab[0], _body.transform);
         bodyMesh.transform.localPosition = Vector3.zero;
         var bodyShader = bodyMesh.GetComponent<MasterShaderScript>();
@@ -1559,7 +1580,7 @@ public class Character : EnumsClass, IObservable
         {
             _leftGun.transform.localPosition = Vector3.zero;
             _leftGun.gameObject.tag = "LGun";
-            _leftGun.SetGun(_mechaEquipment.leftGun, this);
+            _leftGun.SetGun(_mechaEquipment.leftGun, this, Equipable.Location.LeftGun);
             _leftGun.SetRightOrLeft("Left");
             _leftGun.StartRoulette();
 
@@ -1578,7 +1599,7 @@ public class Character : EnumsClass, IObservable
         {
             _rightGun.transform.localPosition = Vector3.zero;
             _rightGun.gameObject.tag = "RGun";
-            _rightGun.SetGun(_mechaEquipment.rightGun, this);
+            _rightGun.SetGun(_mechaEquipment.rightGun, this, Equipable.Location.RightGun);
             _rightGun.SetRightOrLeft("Right");
             _rightGun.StartRoulette();
             _myUI.SetRightArmButtonPart(_materialMechaHandler,MechaParts.RArm);
@@ -1598,7 +1619,7 @@ public class Character : EnumsClass, IObservable
         
 
         _legs.transform.localPosition = Vector3.zero;
-        _legs.SetPart(_mechaEquipment.legs);
+        _legs.SetPart(_mechaEquipment.legs, Equipable.Location.Legs);
         _legs.SetOtherLeg(rLeg);
         
         CheckWeight();
@@ -1671,6 +1692,7 @@ public class Character : EnumsClass, IObservable
             if (item.Key == partEnum)
             {
                 item.Value.GetComponent<MasterShaderScript>().ConvertEnumToStringEnumForShader(texture);
+                Debug.Log("asd");
             }
         }
     }
@@ -1768,13 +1790,25 @@ public class Character : EnumsClass, IObservable
         
         var pos = transform.position;
         pos.y = _startingHeight;
+        transform.position = pos;
+    }
+
+    public void MovementReduction(int amount)
+    {
+        _movementReduced = true;
+        
+        _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
+
+        _currentSteps -= amount;
     }
 }
 public enum PartsMechaEnum
 {
+    body,
+    weaponL,
+    weaponR,
     armL,
     armR,
-    body,
     legL,
     legR
 };

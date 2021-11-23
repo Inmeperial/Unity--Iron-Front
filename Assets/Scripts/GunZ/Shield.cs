@@ -6,18 +6,18 @@ public class Shield : Gun
     public float prefabHeight;
     private bool _selected = false;
     private List<GameObject> _instantiated = new List<GameObject>();
-    public override void SetGun(GunSO data, Character character)
+    public override void SetGun(GunSO data, Character character, Equipable.Location location)
     {
         _gunType = GunsType.Shield;
         _gun = "Shield";
-        base.SetGun(data, character);
+        base.SetGun(data, character, location);
     }
 
     public override void Ability()
     {
         if (_selected) return;
         
-        List<Tile> t = _myChar.GetTileBelow().allNeighbours;
+        List<Tile> t = _myChar.GetMyPositionTile().allNeighbours;
 
         for (int i = 0; i < t.Count; i++)
         {

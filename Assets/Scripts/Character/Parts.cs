@@ -18,7 +18,7 @@ public abstract class Parts : MonoBehaviour
         _myChar = character;
     }
 
-    public virtual void SetPart(PartSO data)
+    public virtual void SetPart(PartSO data, Equipable.Location location)
     {
         _maxHP = data.maxHP;
         _currentHP = _maxHP;
@@ -29,7 +29,7 @@ public abstract class Parts : MonoBehaviour
         if(data.ability && data.ability.abilityPrefab)
         {
             _ability = Instantiate(data.ability.abilityPrefab, transform);
-            _ability.Initialize(_myChar, data.ability);
+            _ability.Initialize(_myChar, data.ability, location);
             _myChar.AddEquipable(_ability);
         }
     }
@@ -48,8 +48,6 @@ public abstract class Parts : MonoBehaviour
     {
         return _weight;
     }
-
-    public abstract void UpdateHp(float value);
 
     public abstract void TakeDamage(List<Tuple<int, int>> damages);
 

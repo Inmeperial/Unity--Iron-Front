@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,19 +19,14 @@ public class Legs : Parts
         return _maxSteps;
     }
 
-    public override void SetPart(PartSO data)
+    public override void SetPart(PartSO data, Equipable.Location location)
     {
-        base.SetPart(data);
+        base.SetPart(data, location);
         var d = data as LegsSO;
         _maxSteps = d.maxSteps;
         _moveSpeed = d.moveSpeed;
         _rotationSpeed = d.rotationSpeed;
         _initiative = d.initiative;
-    }
-
-    public override void UpdateHp(float newValue)
-    {
-        _currentHP = newValue;
     }
 
     public int GetLegsInitiative()
@@ -54,7 +48,7 @@ public class Legs : Parts
         {
             total += damages[i].Item1;
             float hp = _currentHP - damages[i].Item1;
-            UpdateHp(hp > 0 ? hp : 0);
+            _currentHP = hp > 0 ? hp : 0;
             //_myChar.SetCharacterMove(_currentHP > 0 ? true : false);
             EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
             EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);

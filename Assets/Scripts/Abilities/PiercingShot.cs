@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,12 +8,34 @@ public class PiercingShot : Ability
 	private int _abilityUseRange;
     private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
     private List<Character> _charactersToAttack = new List<Character>();
-    [SerializeField]private int damage = 70;
+
+    private PiercingShotSO _abilityData;
+
+    public override void Initialize(Character character, EquipableSO data, Location location)
+    {
+        base.Initialize(character, data, location);
+	    
+        _abilityData = data as PiercingShotSO;
+    }
+    
 	public override void Select()
 	{
 		if (InCooldown() || !_character.CanAttack()) return;
 		Debug.Log("Pinto tiles de piercing shot");
-        _abilityUseRange = _character.GetRightGun().GetAttackRange();//Estaría bueno conseguir el rango del arma que tenga la habilidad.
+        
+        switch (_location)
+        {
+            case Location.LeftGun:
+                var left = _character.GetLeftGun();
+                if (left) _abilityUseRange = left.GetAttackRange();
+                break;
+            
+            case Location.RightGun:
+                var right = _character.GetRightGun();
+                if (right) _abilityUseRange = right.GetAttackRange();
+                break;
+        }
+        //_abilityUseRange = _character.GetRightGun().GetAttackRange();//Estaría bueno conseguir el rango del arma que tenga la habilidad.
         //damage = _character.GetLeftGun().GetBulletDamage() * (_character.GetLeftGun().GetAvailableBullets() / 2);//Formulita para hacer el daño dinamico según que arma tiene
 		if (!_highlight)
 			_highlight = FindObjectOfType<TileHighlight>();
@@ -46,7 +67,7 @@ public class PiercingShot : Ability
             Debug.Log("Piercing Shooting");
             var selectedTile = MouseRay.GetTargetTransform(_character.block).GetComponent<Tile>();
             if (!selectedTile || !_tilesInRange.Contains(selectedTile)) return;
-            var characterTilePos = _character.GetTileBelow().transform.position;
+            var characterTilePos = _character.GetMyPositionTile().transform.position;
             var dir = selectedTile.transform.position - characterTilePos;
             RaycastHit hit;
             Physics.Raycast(characterTilePos, dir, out hit);
@@ -93,7 +114,7 @@ public class PiercingShot : Ability
 	{
         foreach(var attackedCharacter in _charactersToAttack)
 		{
-            attackedCharacter.GetBody().TakeDamage(damage);
+            attackedCharacter.GetBody().TakeDamage(_abilityData.damage);
             attackedCharacter.SetHurtAnimation();
 		}
         _character.DeactivateAttack();

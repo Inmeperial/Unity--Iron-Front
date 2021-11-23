@@ -5,19 +5,25 @@ using UnityEngine;
 public class Body : Parts
 {
     private float _maxWeight;
-    
-    public override void SetPart(PartSO data)
+
+    private bool _smokeScreenAvailable;
+    private float _smokeScreenHpPercentage;
+    private bool _smokeScreenActive;
+    public override void SetPart(PartSO data, Equipable.Location location)
     {
-        var b = data as BodySO;
-        _maxWeight = b.maxWeight;
+        var d = data as BodySO;
+        _maxWeight = d.maxWeight;
         
-        base.SetPart(data);
+        base.SetPart(data, location);
+
+        if (_ability && _ability.GetAbilityEnum() == Ability.Abilities.SmokeScreen)
+        {
+            _smokeScreenAvailable = true;
+            var smokeData = d.ability as SmokeScreenSO;
+            _smokeScreenHpPercentage = smokeData.hpPercentageForSmokeActivation;
+        }
     }
-    public override void UpdateHp(float newValue)
-    {
-        _currentHP = newValue;
-    }
-    
+
 
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void TakeDamage(List<Tuple<int,int>> damages)
@@ -54,10 +60,15 @@ public class Body : Parts
             }
         }
         
+        
+        
         ui.ContainerActivation(true);
         ui.UpdateBodySlider(total, (int)_currentHP);
         _myChar.MakeNotAttackable();
+
+        CheckSmokeScreen();
         
+            
         if (_currentHP <= 0)
             _myChar.Dead();
     }
@@ -86,6 +97,8 @@ public class Body : Parts
         ui.UpdateBodySlider(damage, (int)_currentHP);
         _myChar.MakeNotAttackable();
         
+        CheckSmokeScreen();
+        
         if (_currentHP <= 0)
             _myChar.Dead();
     }
@@ -101,4 +114,28 @@ public class Body : Parts
         return _maxWeight;
     }
 
+    public bool IsSmokeScreenActive()
+    {
+        return _smokeScreenActive;
+    }
+
+    private void CheckSmokeScreen()
+    {
+        if (_smokeScreenAvailable)
+        {
+            if (_currentHP > 0)
+            {
+                var hpPerc = _currentHP * 100 / _maxHP;
+
+                if (hpPerc <= _smokeScreenHpPercentage)
+                {
+                    Debug.Log("activo smokescreen");
+                    _smokeScreenAvailable = false;
+                    _smokeScreenActive = true;
+
+                    _ability.Use();
+                }
+            }  
+        }
+    }
 }

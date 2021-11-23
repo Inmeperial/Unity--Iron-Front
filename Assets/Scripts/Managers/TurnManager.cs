@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 public class TurnManager : EnumsClass, IObservable, IObserver
 {
@@ -283,7 +282,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
     public Tile GetUnitTile(Character unit)
     {
-        return unit.GetTileBelow();
+        return unit.GetMyPositionTile();
     }
 
     private void SetFirstTurn()

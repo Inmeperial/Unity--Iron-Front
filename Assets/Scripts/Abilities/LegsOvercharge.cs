@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LegsOvercharge : Ability
 {
+    
+    private LegsOverChargeSO _abilityData;
+
+    public override void Initialize(Character character, EquipableSO data, Location location)
+    {
+        base.Initialize(character, data, location);
+	    
+        _abilityData = data as LegsOverChargeSO;
+    }
     public override void Select()
     {
         _character.DeselectThisUnit();

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cd3250a760fba44cafed71cb735ec8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b6b7090c8cdfa54d92307395b52e9a6, type: 3}
   m_Name: Flamethrower
   m_EditorClassIdentifier: 
   equipableType: 2
@@ -18,9 +18,16 @@ MonoBehaviour:
   description: Does AoE Damage in a cone area.
   maxUses: 0
   cooldown: 3
-  pushUseRange: 0
-  pushDistance: 0
-  ES_PARA_DEJAR_UN_ESPACIO: 0
   abilityPrefab: {fileID: 5410007677447170726, guid: df67bf8f7d76749469adc7c5c094306e,
     type: 3}
   partSlot: 1
+  damage: 0
+  range: 0
+  angle: 0
+  gridMask:
+    serializedVersion: 2
+    m_Bits: 256
+  characterMask:
+    serializedVersion: 2
+    m_Bits: 512
+  lineMaterial: {fileID: 2100000, guid: 544ec0d13e684214dbe912be1ebe6ad8, type: 2}

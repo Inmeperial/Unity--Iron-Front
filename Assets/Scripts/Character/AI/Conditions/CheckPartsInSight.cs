@@ -1,10 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Pada1.BBCore;
+﻿using Pada1.BBCore;
 using BBUnity.Conditions;
-using Pada1.BBCore.Tasks;
-using UnityEngine;
-using TaskStatus = System.Threading.Tasks.TaskStatus;
 
 [Condition("Iron Front/AI Conditions/CheckPartsInSight")]
 [Help("Checks which enemy parts are in sight for attack.")]
