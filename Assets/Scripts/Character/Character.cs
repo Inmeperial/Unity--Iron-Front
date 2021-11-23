@@ -514,10 +514,13 @@ public class Character : EnumsClass, IObservable
         transform.LookAt(pos);
     }
 
+    //TODO: Borrar
     /// <summary>
     /// Rotate Character towards enemy and execute callback when finished.
     /// </summary>
-    public void RotateTowardsEnemy(Vector3 pos, Action callback)
+    /// <param name="pos">Position to rotate at.</param>
+    /// <param name="callback"></param>
+    private void RotateTowardsEnemy(Vector3 pos, Action callback)
     {
         _move.SetPosToRotate(pos);
         _move.StartRotation(callback);
@@ -747,10 +750,13 @@ public class Character : EnumsClass, IObservable
 
 
     /// <summary>
-    /// Return the Tile below the Character.
+    /// Return the Tile where the Character is.
     /// </summary>
     public Tile GetMyPositionTile()
     {
+        if (!_myPositionTile)
+            _myPositionTile = GetTileBelow();
+        
         return _myPositionTile;
     }
 
@@ -764,9 +770,9 @@ public class Character : EnumsClass, IObservable
     }
 
     /// <summary>
-    /// Return the Tile below the Character.
+    /// Raycast to get the tile the character is.
     /// </summary>
-    public Tile GetTileBelow()
+    private Tile GetTileBelow()
     {
         RaycastHit hit;
         var pos = _raycastToTile.position;

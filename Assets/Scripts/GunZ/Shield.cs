@@ -17,7 +17,7 @@ public class Shield : Gun
     {
         if (_selected) return;
         
-        List<Tile> t = _myChar.GetTileBelow().allNeighbours;
+        List<Tile> t = _myChar.GetMyPositionTile().allNeighbours;
 
         for (int i = 0; i < t.Count; i++)
         {

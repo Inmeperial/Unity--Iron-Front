@@ -36,7 +36,7 @@ public class CripplingShot : Ability
 		}
 		if (!_highlight)
 			_highlight = FindObjectOfType<TileHighlight>();
-		PaintTilesInRange(_character.GetTileBelow(), 0);
+		PaintTilesInRange(_character.GetMyPositionTile(), 0);
 		_character.EquipableSelectionState(true, this);
 		_character.DeselectThisUnit();
 	}
@@ -59,14 +59,13 @@ public class CripplingShot : Ability
 			_enemy = MouseRay.GetTargetTransform(LayerMask.NameToLayer("Character")).GetComponent<EnemyCharacter>();
 			//Agregar lo de la rotación y el rayo a las piernas
 			if (!_enemy) return;
+			_character.RotateTowardsEnemy(_enemy.transform);
 			var dir = _enemy.GetLegsPosition() - _character.transform.position;
-			
 			//Si puede ver las piernas, le dispara, hace daño y evita que se mueva el proximo turno
-			if(Physics.Raycast(_character.transform.position, dir, LayerMask.NameToLayer("Character")))
+			if (_character.RayToPartsForAttack(_enemy.GetLegsPosition(), "Legs", true))
 			{
 				_enemy.GetLegs().TakeDamage(_abilityData.damage);
 				_enemy.SetHurtAnimation();
-				//_enemy.DeactivateMove();//New
 				_character.DeactivateAttack();
 
 				Deselect();
@@ -74,7 +73,6 @@ public class CripplingShot : Ability
 
 			if (callback != null)
 				callback();
-			
 		}
 
 		if (Input.GetMouseButtonDown(1))

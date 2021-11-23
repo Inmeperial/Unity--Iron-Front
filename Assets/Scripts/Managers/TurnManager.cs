@@ -282,7 +282,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
     public Tile GetUnitTile(Character unit)
     {
-        return unit.GetTileBelow();
+        return unit.GetMyPositionTile();
     }
 
     private void SetFirstTurn()
