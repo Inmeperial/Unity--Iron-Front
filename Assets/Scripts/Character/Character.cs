@@ -170,6 +170,10 @@ public class Character : EnumsClass, IObservable
         _currentSteps = _canMove ? _legs.GetMaxSteps() : 0;
 
         _myPositionTile = GetTileBelow();
+        if (!_myPositionTile)
+        {
+            Debug.Log("Sin tile " + _mechaEquipment.name);
+        }
         _myPositionTile.MakeTileOccupied();
         _myPositionTile.SetUnitAbove(this);
         _move.SetMoveSpeed(_legs.GetMoveSpeed());

@@ -56,7 +56,7 @@ public class SelfDestruct : Ability
             
             foreach (var tile in _tilesInAttackRange)
             {
-                var characterAbove = tile.GetCharacterAbove();
+                var characterAbove = tile.GetUnitAbove();
 
                 if (characterAbove && characterAbove != _character)
                 {

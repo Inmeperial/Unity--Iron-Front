@@ -398,6 +398,7 @@ public class Tile : MonoBehaviour
         }
     }
 
+    //TODO: Remover si funciona bien el resto
     public Character GetCharacterAbove()
     {
         Physics.Raycast(transform.position, transform.up, out RaycastHit hit, 3, characterMask);

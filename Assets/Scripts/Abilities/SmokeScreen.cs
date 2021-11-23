@@ -24,12 +24,19 @@ public class SmokeScreen : Ability
     public override void Deselect()
     {
         Debug.Log("deselect ability");
-        Destroy(_smokeObject);
+        
     }
 
     public override void Use(Action callback = null)
     {
         Debug.Log("use ability");
         _smokeObject = Instantiate(_abilityData.smokeScreenObject, _character.transform);
+        StartCoroutine(DestroySmoke());
+    }
+
+    IEnumerator DestroySmoke()
+    {
+        yield return new WaitUntil(() => _character.IsMyTurn());
+        Destroy(_smokeObject);
     }
 }
