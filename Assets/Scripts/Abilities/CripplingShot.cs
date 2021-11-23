@@ -65,6 +65,7 @@ public class CripplingShot : Ability
 			if (_character.RayToPartsForAttack(_enemy.GetLegsPosition(), "Legs", true))
 			{
 				_enemy.GetLegs().TakeDamage(_abilityData.damage);
+				_enemy.MovementReduction(_abilityData.stepsReduction);
 				_enemy.SetHurtAnimation();
 				_character.DeactivateAttack();
 

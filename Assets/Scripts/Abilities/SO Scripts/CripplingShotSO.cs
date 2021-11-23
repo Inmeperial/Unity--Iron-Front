@@ -6,4 +6,5 @@ using UnityEngine;
 public class CripplingShotSO : AbilitySO
 {
     public int damage;
+    public int stepsReduction;
 }

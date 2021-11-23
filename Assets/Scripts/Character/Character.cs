@@ -102,6 +102,8 @@ public class Character : EnumsClass, IObservable
     protected bool _legsOvercharged;
 
     protected bool _isOnElevator;
+
+    protected bool _movementReduced;
     #endregion
 
     //OTHERS
@@ -463,9 +465,24 @@ public class Character : EnumsClass, IObservable
         
         if (!_isOnElevator && _canMove)
         {
-            if (!_legsOvercharged)
-                _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
-            else _currentSteps = _legs.GetMaxSteps() * 2;
+            if (_legsOvercharged)
+            {
+                if (_movementReduced && _myTurn)
+                {
+                    _currentSteps *= 2;
+                    _movementReduced = false;
+                }
+                else
+                {
+                    _currentSteps = _legs.GetMaxSteps() * 2;
+                }
+            }
+
+            else if (_movementReduced && _myTurn)
+                _movementReduced = false;
+            
+            else  _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
+            
             
             PaintTilesInMoveRange(_myPositionTile, 0);
             AddTilesInMoveRange();
@@ -1774,6 +1791,15 @@ public class Character : EnumsClass, IObservable
         var pos = transform.position;
         pos.y = _startingHeight;
         transform.position = pos;
+    }
+
+    public void MovementReduction(int amount)
+    {
+        _movementReduced = true;
+        
+        _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
+
+        _currentSteps -= amount;
     }
 }
 public enum PartsMechaEnum
