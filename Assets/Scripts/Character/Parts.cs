@@ -28,7 +28,7 @@ public abstract class Parts : MonoBehaviour
         
         if(data.ability && data.ability.abilityPrefab)
         {
-            _ability = Instantiate(data.ability.abilityPrefab, transform);
+            _ability = Instantiate(data.ability.abilityPrefab, transform.GetChild(0));
             _ability.Initialize(_myChar, data.ability, location);
             _myChar.AddEquipable(_ability);
         }
