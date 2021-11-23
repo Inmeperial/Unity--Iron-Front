@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cd3250a760fba44cafed71cb735ec8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f520082ca45eb04094d0692070c5412, type: 3}
   m_Name: PiercingShot
   m_EditorClassIdentifier: 
   equipableType: 2
@@ -18,9 +18,7 @@ MonoBehaviour:
   description: Does Damage to all units in a straight line.
   maxUses: 0
   cooldown: 2
-  pushUseRange: 0
-  pushDistance: 0
-  ES_PARA_DEJAR_UN_ESPACIO: 0
   abilityPrefab: {fileID: 4887648641423547763, guid: de0c340cb1cb8f349b62240f5ba84be7,
     type: 3}
   partSlot: 1
+  damage: 0

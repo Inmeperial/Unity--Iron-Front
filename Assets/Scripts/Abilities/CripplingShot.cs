@@ -6,14 +6,34 @@ using UnityEngine;
 public class CripplingShot : Ability
 {
 	private TileHighlight _highlight;
-	private int _attackRange;
-	[SerializeField] int _damage;
+	private int _abilityUseRange;
 	private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
 	private EnemyCharacter _enemy;
+	
+	private CripplingShotSO _abilityData;
+
+	public override void Initialize(Character character, EquipableSO data, Location location)
+	{
+		base.Initialize(character, data, location);
+	    
+		_abilityData = data as CripplingShotSO;
+	}
+	
 	public override void Select()
 	{
 		if (InCooldown() || !_character.CanAttack()) return;
-		_attackRange = 4;//_character.GetRightGun().GetAttackRange();
+		switch (_location)
+		{
+			case Location.LeftGun:
+				var left = _character.GetLeftGun();
+				if (left) _abilityUseRange = left.GetAttackRange();
+				break;
+            
+			case Location.RightGun:
+				var right = _character.GetRightGun();
+				if (right) _abilityUseRange = right.GetAttackRange();
+				break;
+		}
 		if (!_highlight)
 			_highlight = FindObjectOfType<TileHighlight>();
 		PaintTilesInRange(_character.GetTileBelow(), 0);
@@ -44,7 +64,7 @@ public class CripplingShot : Ability
 			//Si puede ver las piernas, le dispara, hace daño y evita que se mueva el proximo turno
 			if(Physics.Raycast(_character.transform.position, dir, LayerMask.NameToLayer("Character")))
 			{
-				_enemy.GetLegs().TakeDamage(_damage);
+				_enemy.GetLegs().TakeDamage(_abilityData.damage);
 				_enemy.SetHurtAnimation();
 				//_enemy.DeactivateMove();//New
 				_character.DeactivateAttack();
@@ -100,7 +120,7 @@ public class CripplingShot : Ability
 	void PaintTilesInRange(Tile currentTile, int count)
 	{
 		
-		if (count >= _attackRange || !currentTile) return;
+		if (count >= _abilityUseRange || !currentTile) return;
 
 		foreach (var item in currentTile.allNeighbours)
 		{

@@ -49,8 +49,6 @@ public abstract class Parts : MonoBehaviour
         return _weight;
     }
 
-    public abstract void UpdateHp(float value);
-
     public abstract void TakeDamage(List<Tuple<int, int>> damages);
 
     public abstract void TakeDamage(int damage);

@@ -8,6 +8,16 @@ public class SelfDestruct : Ability
     private HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
     private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
     private TileHighlight _highlight;
+    
+    private SelfDestructSO _abilityData;
+
+    public override void Initialize(Character character, EquipableSO data, Location location)
+    {
+        base.Initialize(character, data, location);
+	    
+        _abilityData = data as SelfDestructSO;
+    }
+    
     public override void Select()
     {
         _character.DeselectThisUnit();
@@ -73,7 +83,7 @@ public class SelfDestruct : Ability
 
     private void PaintTilesInAttackRange(Tile currentTile, int count)
     {
-        if (count >= _abilityData.selfDestructDamageRange) return;
+        if (count >= _abilityData.selfDestructRange) return;
         
         if ((_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
             return;

@@ -182,7 +182,7 @@ public class WorkshopMecha : MonoBehaviour
 
     public MasterShaderScript[] GetRightWeaponArray()
     {
-        return _leftWeaponArr;
+        return _rightWeaponArr;
     }
 
     public MechaEquipmentSO GetEquipment()

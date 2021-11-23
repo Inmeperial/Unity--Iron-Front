@@ -1,39 +1,31 @@
 ﻿using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Ability : Equipable
 {
-    
-    protected AbilitySO _abilityData;
-    protected AbilitySO.PartSlot _partSlot;
-
+    //Agregar nuevas al final, sino se modifican en el prefab
+    public enum Abilities
+    {
+        CripplingShot,
+        Flamethrower,
+        IncendiaryAmmo,
+        LegsOvercharge,
+        PiercingShot,
+        Push,
+        SelfDestruct,
+        SmokeScreen
+    }
+    [SerializeField] protected Abilities _ability;
     public override void Initialize(Character character, EquipableSO data, Location location)
     {
         _character = character;
         _icon = data.equipableIcon;
-        _abilityData = data as AbilitySO;
-        _partSlot = _abilityData.partSlot;
-        //TODO: remover despues
-        _equipableType = _abilityData.equipableType;
         _location = location;
     }
     public string AbilityStatus()
     {
-        //TODO: REVISAR
-        switch (_equipableType)
-        {
-            case EquipableSO.EquipableType.Ability:
-                return _availableUses > 0 ? "Enabled" : "Disabled";
-            case EquipableSO.EquipableType.ActiveAbility:
-                if (InCooldown())
-                {
-                    return "In Cooldown. Remaining: " + _currentCooldown;
-                }
-        
-                return "x" + _availableUses;
-        }
-
-        return "EMPTY";
+        return "";
     }
 
     protected virtual bool InCooldown()
@@ -41,7 +33,6 @@ public class Ability : Equipable
         return false;
     }
 
-    
 
     public override void Select()
     {
@@ -60,6 +51,11 @@ public class Ability : Equipable
 
     public override string GetEquipableName()
     {
-        return _abilityData.equipableName;
+        return "";
+    }
+
+    public Abilities GetAbilityEnum()
+    {
+        return _ability;
     }
 }

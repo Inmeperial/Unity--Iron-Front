@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cd3250a760fba44cafed71cb735ec8d, type: 3}
+  m_Script: {fileID: 11500000, guid: bc69cc6ffe66e154ea98291231c42798, type: 3}
   m_Name: CripplingShot
   m_EditorClassIdentifier: 
   equipableType: 2
@@ -18,11 +18,6 @@ MonoBehaviour:
   description: Does damage to a enemy legs and prevents it from moving for 1 turn.
   maxUses: 0
   cooldown: 2
-  pushUseRange: 0
-  pushDistance: 0
-  ES_PARA_DEJAR_UN_ESPACIO: 0
-  selfDestructDamageRange: 0
-  selfDestructDamage: 0
-  abilityPrefab: {fileID: 1041280731769332020, guid: deba87c1d2b56d14983595e924be3ae5,
-    type: 3}
+  abilityPrefab: {fileID: 0}
   partSlot: 1
+  damage: 0

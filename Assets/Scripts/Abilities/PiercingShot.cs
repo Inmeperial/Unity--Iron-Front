@@ -8,7 +8,16 @@ public class PiercingShot : Ability
 	private int _abilityUseRange;
     private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
     private List<Character> _charactersToAttack = new List<Character>();
-    [SerializeField]private int damage = 70;
+
+    private PiercingShotSO _abilityData;
+
+    public override void Initialize(Character character, EquipableSO data, Location location)
+    {
+        base.Initialize(character, data, location);
+	    
+        _abilityData = data as PiercingShotSO;
+    }
+    
 	public override void Select()
 	{
 		if (InCooldown() || !_character.CanAttack()) return;
@@ -105,7 +114,7 @@ public class PiercingShot : Ability
 	{
         foreach(var attackedCharacter in _charactersToAttack)
 		{
-            attackedCharacter.GetBody().TakeDamage(damage);
+            attackedCharacter.GetBody().TakeDamage(_abilityData.damage);
             attackedCharacter.SetHurtAnimation();
 		}
         _character.DeactivateAttack();
