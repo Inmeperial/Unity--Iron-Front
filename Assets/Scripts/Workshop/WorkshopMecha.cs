@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WorkshopMecha : MonoBehaviour
 {
@@ -31,16 +33,34 @@ public class WorkshopMecha : MonoBehaviour
     public MasterShaderScript _leftLegShader;
     public MasterShaderScript _rightLegShader;
 
-    public void SetEquipment(MechaEquipmentSO equipment, int index)
+    private void Start()
     {
-        _equipment = equipment;
-        _index = index;
+        var animator = GetComponent<Animator>();
+        
+        var randomStart = Random.Range(0, animator.GetCurrentAnimatorStateInfo(0).length);
+        
+        animator.Play("Iddle", 0, randomStart);
+        
+        Debug.Log("default speed: " + animator.speed);
+
+        var randomSpeed = Random.Range(0.8f, 1.2f);
+
+        animator.speed = randomSpeed;
+        
+        Debug.Log("new speed: " + animator.speed);
     }
+
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.X))
             SpawnParts();
+    }
+    
+    public void SetEquipment(MechaEquipmentSO equipment, int index)
+    {
+        _equipment = equipment;
+        _index = index;
     }
 
     public void SpawnParts()
