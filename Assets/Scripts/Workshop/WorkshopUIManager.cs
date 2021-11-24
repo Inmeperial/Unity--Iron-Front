@@ -71,6 +71,10 @@ public class WorkshopUIManager : MonoBehaviour
    public static event ColorChange OnBodyColorChange;
    public static event ColorChange OnLegsColorChange;
 
+   public static event ColorChange OnCopyColorToAllBodies;
+   
+   public static event ColorChange OnCopyColorToAllLegs;
+
    public delegate void NameChange(string name);
 
    public static event NameChange OnNameChange;
@@ -166,7 +170,7 @@ public class WorkshopUIManager : MonoBehaviour
 
       var index = workshopManager.GetIndex();
 
-      _partsDescription.text = "";
+      
       var manager = FindObjectOfType<WorkshopManager>();
       var currentMechaEquipment = manager.GetMechaEquipment(index);
       switch (part)
@@ -194,6 +198,9 @@ public class WorkshopUIManager : MonoBehaviour
                if (currentMechaEquipment.body.partName == body.partName)
                {
                   b.Select();
+                  _partsDescription.text = "HP: " + body.maxHP +
+                                           "\n Weight: " + body.weight +
+                                           "\n MaxWeight: " + body.maxWeight;
                }
             }
             break;
@@ -220,6 +227,10 @@ public class WorkshopUIManager : MonoBehaviour
                if (currentMechaEquipment.leftGun.gunName == gun.gunName)
                {
                   a.Select();
+                  _partsDescription.text = "Damage: " + gun.damage +
+                                           "\n HitChance:" + gun.hitChance +
+                                           "\n Attack Range: " + gun.attackRange +
+                                           "\n Weight: " + gun.weight;
                }
             }
             break;
@@ -246,6 +257,10 @@ public class WorkshopUIManager : MonoBehaviour
                if (currentMechaEquipment.rightGun.gunName == gun.gunName)
                {
                   a.Select();
+                  _partsDescription.text = "Damage: " + gun.damage +
+                                           "\n HitChance:" + gun.hitChance +
+                                           "\n Attack Range: " + gun.attackRange +
+                                           "\n Weight: " + gun.weight;
                }
             }
             break;
@@ -271,6 +286,9 @@ public class WorkshopUIManager : MonoBehaviour
                if (currentMechaEquipment.legs.partName == leg.partName)
                {
                   l.Select();
+                  _partsDescription.text = "HP: " + leg.maxHP +
+                                           "\n Steps: " + leg.maxSteps +
+                                           "\n Weight: " + leg.weight;
                }
             }
             break;
@@ -315,6 +333,7 @@ public class WorkshopUIManager : MonoBehaviour
                      if (currentMechaEquipment.body.ability.equipableName == ability.equipableName)
                      {
                         obj.Select();
+                        _abilitiesDescription.text = ability.description;
                      }
                   }
                }
@@ -344,6 +363,7 @@ public class WorkshopUIManager : MonoBehaviour
                      if (currentMechaEquipment.leftGun.ability.equipableName == ability.equipableName)
                      {
                         obj.Select();
+                        _abilitiesDescription.text = ability.description;
                      }
                   }
                }
@@ -373,6 +393,7 @@ public class WorkshopUIManager : MonoBehaviour
                      if (currentMechaEquipment.rightGun.ability.equipableName == ability.equipableName)
                      {
                         obj.Select();
+                        _abilitiesDescription.text = ability.description;
                      }
                   }
                }
@@ -403,6 +424,7 @@ public class WorkshopUIManager : MonoBehaviour
                      if (currentMechaEquipment.legs.ability.equipableName == ability.equipableName)
                      {
                         obj.Select();
+                        _abilitiesDescription.text = ability.description;
                      }
                   }
                   
@@ -445,6 +467,7 @@ public class WorkshopUIManager : MonoBehaviour
             if (currentMechaEquipment.body.item.equipableName == item.equipableName)
             {
                obj.Select();
+               _itemsDescription.text = item.description;
             }
          }
       }
@@ -526,6 +549,12 @@ public class WorkshopUIManager : MonoBehaviour
       UpdateBodyRedColor();
       UpdateBodyGreenColor();
       UpdateBodyBlueColor();
+   }
+
+   public void CopyColorToAll()
+   {
+      OnCopyColorToAllBodies?.Invoke(_bodyColorImage.color);
+      OnCopyColorToAllLegs?.Invoke(_legsColorImage.color);
    }
    
    public void CustomizeTabSetBodyColorSliders()

@@ -45,8 +45,11 @@ public class WorkshopManager : MonoBehaviour
         WorkshopUIManager.OnChangeEquippable += UpdateEquippable;
         WorkshopUIManager.OnBodyColorChange += UpdateBodyColor;
         WorkshopUIManager.OnLegsColorChange += UpdateLegsColor;
+        WorkshopUIManager.OnCopyColorToAllBodies += CopyColorToAllBodies;
+        WorkshopUIManager.OnCopyColorToAllLegs += CopyColorToAllLegs;
         WorkshopUIManager.OnNameChange += UpdateName;
     }
+
 
     private void Update()
     {
@@ -271,6 +274,40 @@ public class WorkshopManager : MonoBehaviour
         var newColor = new Color(c.red, c.green, c.blue);
         mechas[_mechaIndex].UpdateLegsColor(newColor);
         
+        ApplyChangesButton();
+    }
+
+    public void CopyColorToAllBodies(Color color)
+    {
+        for (int i = 0; i < mechas.Length; i++)
+        {
+            var c =_equipmentContainer.equipments[i].bodyColor;
+            c.red = color.r;
+            c.green = color.g;
+            c.blue = color.b;
+            _equipmentContainer.equipments[i].bodyColor = c;
+        
+            var newColor = new Color(c.red, c.green, c.blue);
+            mechas[i].UpdateBodyColor(newColor);
+        }
+        
+        ApplyChangesButton();
+    }
+    
+    
+    private void CopyColorToAllLegs(Color color)
+    {
+        for (int i = 0; i < mechas.Length; i++)
+        {
+            var c =_equipmentContainer.equipments[i].legsColor;
+            c.red = color.r;
+            c.green = color.g;
+            c.blue = color.b;
+            _equipmentContainer.equipments[i].legsColor = c;
+        
+            var newColor = new Color(c.red, c.green, c.blue);
+            mechas[i].UpdateLegsColor(newColor);
+        }
         ApplyChangesButton();
     }
     
