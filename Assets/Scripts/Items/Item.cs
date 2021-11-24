@@ -2,15 +2,10 @@
 
 public class Item : Equipable
 {
-    protected ItemSO _itemData;
-    //TODO: remover despues
-    //protected ItemSO.ItemType _itemType;
     public override void Initialize(Character character, EquipableSO data, Location location)
     {
         _character = character;
-        _itemData = data as ItemSO;
-        _availableUses = _itemData.maxUses;
-        //_itemType = _itemData.itemType;
+        _availableUses = data.maxUses;
         _location = location;
     }
 
@@ -31,35 +26,9 @@ public class Item : Equipable
 
     public override string GetEquipableName()
     {
-        return _itemData.equipableName;
+        return "";
     }
 
-
-    public int GetItemDamage()
-    {
-        return _itemData.damage;
-    }
-    
-    public int GetItemAoE()
-    {
-        return _itemData.areaOfEffect;
-    }
-
-    public int GetItemDuration()
-    {
-        return _itemData.duration;;
-    }
-
-    public int GetItemRange()
-    {
-        return _itemData.useRange;
-    }
-
-    public int GetMaxUses()
-    {
-        return _itemData.maxUses;
-    }
-    
     public int GetItemUses()
     {
         return _availableUses;

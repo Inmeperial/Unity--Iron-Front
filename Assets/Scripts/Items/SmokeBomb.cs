@@ -29,7 +29,7 @@ public class SmokeBomb : Item, IObserver
 
 	private void PaintTilesInSelectionRange(Tile currentTile, int count)
 	{
-		if (count >= GetItemRange()) return;
+		if (count >= _data.useRange) return;
 
 		foreach (var item in currentTile.allNeighbours)
 		{
