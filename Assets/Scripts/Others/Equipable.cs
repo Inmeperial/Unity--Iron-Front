@@ -10,6 +10,7 @@ public abstract class Equipable : MonoBehaviour
         RightGun,
         Legs
     }
+    
     //TODO: remover despues
     protected EquipableSO.EquipableType _equipableType;
     protected int _availableUses;

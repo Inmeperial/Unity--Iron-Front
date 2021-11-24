@@ -12,11 +12,12 @@ public class Grenade : Item
     
     private TileHighlight _highlight;
     private Tile _tile;
-
+    protected GrenadeSO _itemData;
 
     public override void Initialize(Character character, EquipableSO data, Location location)
     {
         base.Initialize(character, data, location);
+        _itemData = data as GrenadeSO;
         _highlight = FindObjectOfType<TileHighlight>();
     }
     public override void Select()
@@ -50,31 +51,23 @@ public class Grenade : Item
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("granada hice click");
             var selection = MouseRay.GetTargetTransform(_character.block);
 
             if (selection == null)
             {
-                Debug.Log("selectoin null");
                 return;
             }
             
-            Debug.Log("selection: " + selection.gameObject.name);
             if (!IsValidBlock(selection))
             {
-                Debug.Log("no es valid");
                 return;
             }
-                
-            Debug.Log("Selection: " + selection.name);
 
             var newTile = selection.GetComponent<Tile>();
         
             if (!newTile) return;
-            Debug.Log("granada tengo tile");
             if (_tile != null && newTile == _tile)
             {
-                Debug.Log("granada ataco");    
                 Attack();
                 if (callback != null)
                     callback();
@@ -84,7 +77,6 @@ public class Grenade : Item
                 _highlight.ClearTilesInPreview(_tilesInAttackRange);
                 _tilesForAttackChecked.Clear();
                 _tilesInAttackRange.Clear();
-                Debug.Log("granada tile seleccionada");
                 _tile = newTile;
 
                 PaintAoeTiles(_tile, 0); 
@@ -95,7 +87,7 @@ public class Grenade : Item
     
     private void PaintAoeTiles(Tile currentTile, int count)
     {
-        if (count >= GetItemAoE() || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
+        if (count >= _itemData.areaOfEffect || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
             return;
         
         _tilesForAttackChecked[currentTile] = count;
@@ -118,7 +110,7 @@ public class Grenade : Item
 
     private void PaintTilesInSelectionRange(Tile currentTile, int count)
     {
-        if (count >= GetItemRange() || (_tilesForSelectionChecked.ContainsKey(currentTile) && _tilesForSelectionChecked[currentTile] <= count))
+        if (count >= _itemData.useRange || (_tilesForSelectionChecked.ContainsKey(currentTile) && _tilesForSelectionChecked[currentTile] <= count))
             return;
         
         _tilesForSelectionChecked[currentTile] = count;
@@ -145,15 +137,15 @@ public class Grenade : Item
             var unit = tile.GetUnitAbove();
             if (!unit) continue;
             
-            unit.GetBody().TakeDamage(GetItemDamage());
+            unit.GetBody().TakeDamage(_itemData.damage);
             
             if (unit.GetLeftGun())
-                unit.GetLeftGun().TakeDamage(GetItemDamage());
+                unit.GetLeftGun().TakeDamage(_itemData.damage);
             
             if (unit.GetRightGun())
-                unit.GetRightGun().TakeDamage(GetItemDamage());
+                unit.GetRightGun().TakeDamage(_itemData.damage);
             
-            unit.GetLegs().TakeDamage(GetItemDamage());
+            unit.GetLegs().TakeDamage(_itemData.damage);
         }
         UpdateUses();
         _button.SetButtonName(_itemData.equipableName + " x" + _availableUses);
@@ -163,18 +155,14 @@ public class Grenade : Item
     
     private bool IsValidBlock(Transform target)
     {
-        Debug.Log("if event");
         if (EventSystem.current.IsPointerOverGameObject()) return false;
-
-        Debug.Log("if target");
+        
         if (!target) return false;
-
-        Debug.Log("if layermask");
+        
         if (LayerMask.LayerToName(target.gameObject.layer) != "GridBlock") return false;
 
         var t = target.GetComponent<Tile>();
         
-        Debug.Log("return contains");
         return _tilesInSelectionRange.Contains(t);
     }
 }
