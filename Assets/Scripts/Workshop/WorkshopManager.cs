@@ -19,6 +19,7 @@ public class WorkshopManager : MonoBehaviour
     public static event ClickAction OnClickEdit;
     public static event ClickAction OnClickCloseEdit;
     public static event ClickAction OnClickMecha;
+    public static event ClickAction OnClickArrows;//Nico
 
     public WorkshopMecha[] mechas;
 
@@ -99,16 +100,17 @@ public class WorkshopManager : MonoBehaviour
             _mechaIndex = mechas.Length-1;
         else _mechaIndex--;
 
+        
         OnClickPrevious?.Invoke(_mechaIndex);
     }
-    
+   
     public void NextButton()
     {
         AudioManager.audioManagerInstance.PlaySound(_soundMenu.GetClickSound(), _soundMenu.GetObjectToAddAudioSource());
         if (_mechaIndex >= mechas.Length - 1)
             _mechaIndex = 0;
         else _mechaIndex++;
-        
+
         OnClickNext?.Invoke(_mechaIndex);
     }
 
@@ -433,5 +435,12 @@ public class WorkshopManager : MonoBehaviour
                 _rightWeaponArr[i].ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
             }
         }
+    }
+
+    //Nico
+    public void DeselectButton(Button button)
+	{
+        button.interactable = false;
+        button.interactable = true;
     }
 }

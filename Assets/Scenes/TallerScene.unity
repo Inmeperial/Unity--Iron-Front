@@ -2797,6 +2797,18 @@ Transform:
   m_Father: {fileID: 309455825}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+--- !u!114 &415132767 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 727165685514520345, guid: 267db140ba747ca4b838f643d2d16005,
+    type: 3}
+  m_PrefabInstance: {fileID: 4787533122833197446}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &415349434
 GameObject:
   m_ObjectHideFlags: 0
@@ -6478,6 +6490,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1071356520}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1084552351 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4787533123128424264, guid: 267db140ba747ca4b838f643d2d16005,
+    type: 3}
+  m_PrefabInstance: {fileID: 4787533122833197446}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1120922050
 GameObject:
   m_ObjectHideFlags: 0
@@ -7806,6 +7830,18 @@ Transform:
   m_Father: {fileID: 309455825}
   m_RootOrder: 55
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
+--- !u!114 &1253985957 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4787533123821711022, guid: 267db140ba747ca4b838f643d2d16005,
+    type: 3}
+  m_PrefabInstance: {fileID: 4787533122833197446}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1256381537
 GameObject:
   m_ObjectHideFlags: 0
@@ -13075,6 +13111,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26fd380a8a1eb441a59c278ec1e7943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1812798045 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5076412776440078761, guid: 267db140ba747ca4b838f643d2d16005,
+    type: 3}
+  m_PrefabInstance: {fileID: 4787533122833197446}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1820895530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16314,6 +16362,31 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CopyLegsColorToBody
       objectReference: {fileID: 0}
+    - target: {fileID: 727165685514520345, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 670964388}
+    - target: {fileID: 727165685514520345, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeselectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 727165685514520345, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 727165685514520345, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.UI.Button, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 727165685514520345, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 415132767}
     - target: {fileID: 1024398030859834024, guid: 267db140ba747ca4b838f643d2d16005,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -17509,6 +17582,31 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 670964388}
+    - target: {fileID: 4787533123128424264, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 670964388}
+    - target: {fileID: 4787533123128424264, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeselectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787533123128424264, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787533123128424264, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.UI.Button, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787533123128424264, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1084552351}
     - target: {fileID: 4787533123128424266, guid: 267db140ba747ca4b838f643d2d16005,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -18474,6 +18572,31 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 670964388}
+    - target: {fileID: 4787533123821711022, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 670964388}
+    - target: {fileID: 4787533123821711022, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeselectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787533123821711022, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787533123821711022, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.UI.Button, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787533123821711022, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1253985957}
     - target: {fileID: 4787533123882749035, guid: 267db140ba747ca4b838f643d2d16005,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -19364,6 +19487,31 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CopyBodyColorToLegs
       objectReference: {fileID: 0}
+    - target: {fileID: 5076412776440078761, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 670964388}
+    - target: {fileID: 5076412776440078761, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeselectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076412776440078761, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076412776440078761, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.UI.Button, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076412776440078761, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1812798045}
     - target: {fileID: 5111933894468909506, guid: 267db140ba747ca4b838f643d2d16005,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
