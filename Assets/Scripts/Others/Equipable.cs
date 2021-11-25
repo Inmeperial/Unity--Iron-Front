@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public abstract class Equipable : MonoBehaviour
@@ -14,7 +15,7 @@ public abstract class Equipable : MonoBehaviour
     //TODO: remover despues
     protected EquipableSO.EquipableType _equipableType;
     protected int _availableUses;
-    protected int _currentCooldown;
+    
     protected Character _character;
     protected EquipmentButton _button;
     protected Sprite _icon;
@@ -43,4 +44,18 @@ public abstract class Equipable : MonoBehaviour
     {
         return _icon;
     }
+    
+    public int GetAvailableUses()
+    {
+        return _availableUses;
+    }
+    
+    protected virtual void UpdateButtonText(string text, EquipableSO data)
+    {
+        _button.SetButtonText(text, data.buttonTextFontSize);
+    }
+
+    public abstract void UpdateEquipableState();
+
+    public abstract bool CanBeUsed();
 }

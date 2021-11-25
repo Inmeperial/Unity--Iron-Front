@@ -15,18 +15,22 @@ public class EquipmentButton : CustomButton
         _buttonImage = GetComponent<Image>();
     }
 
-    public void SetButtonName(string name)
+    public void SetButtonText(string text, int fontSize)
     {
         if (!_buttonText)
         {
             _buttonText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         }
-        _buttonText.text = name;
+
+        if (_buttonText)
+        {
+            _buttonText.fontSize = fontSize;
+            _buttonText.text = text; 
+        }
     }
 
     public void SetButtonIcon(Sprite sprite)
     {
-        //TODO: remover desp
         if (!_buttonImage)
             _buttonImage = GetComponent<Image>();
         if (sprite && _buttonImage)

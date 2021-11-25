@@ -47,10 +47,16 @@ public class RepairKit : Item
 
 			//Para que solo puedas curar aliados
 			var unitTeam = selectedUnit.GetUnitTeam();
-			if (unitTeam == EnumsClass.Team.Red) return;
+			//if (unitTeam == EnumsClass.Team.Red) return;
+			//Lo cambio por si en algun momento la IA lo usa
+			if (unitTeam != _character.GetUnitTeam()) return;
 
 			RepairUnit(selectedUnit);
 
+			ItemUsed();
+			UpdateButtonText(_availableUses.ToString(), _data);
+			_button.interactable = false;
+			
 			if (callback != null)
 				callback();
 			Deselect();

@@ -77,6 +77,16 @@ public class SelfDestruct : Ability
                 
                 if (mine) mine.DestroyMine();
             }
+            
+            AbilityUsed(_abilityData);
+            UpdateButtonText(_availableUses.ToString(), _abilityData);
+            _button.interactable = false;
+            
+            Deselect();
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
             Deselect();
         }
     }

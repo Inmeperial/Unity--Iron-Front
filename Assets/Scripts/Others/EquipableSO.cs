@@ -6,8 +6,8 @@ public abstract class EquipableSO : ScriptableObject
     public enum EquipableType
      {
          Item,
-         Ability,
-         ActiveAbility
+         Active,
+         Passive
      };
 
     public EquipableType equipableType;
@@ -16,5 +16,5 @@ public abstract class EquipableSO : ScriptableObject
     public string description;
     public int maxUses;
     public int cooldown;
-
+    public int buttonTextFontSize;
 }

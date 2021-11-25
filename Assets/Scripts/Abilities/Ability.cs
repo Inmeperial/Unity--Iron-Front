@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Ability : Equipable
 {
+    protected bool _inCooldown;
+    protected int _currentCooldown;
     //Agregar nuevas al final, sino se modifican en el prefab
     public enum Abilities
     {
@@ -23,16 +25,6 @@ public class Ability : Equipable
         _icon = data.equipableIcon;
         _location = location;
     }
-    public string AbilityStatus()
-    {
-        return "";
-    }
-
-    protected virtual bool InCooldown()
-    {
-        return false;
-    }
-
 
     public override void Select()
     {
@@ -52,6 +44,25 @@ public class Ability : Equipable
     public override string GetEquipableName()
     {
         return "";
+    }
+
+    protected void AbilityUsed(AbilitySO data)
+    {
+        _inCooldown = true;
+        _currentCooldown = data.cooldown;
+    }
+
+    public override void UpdateEquipableState()
+    {
+        _currentCooldown--;
+        
+        if (_currentCooldown <= 0)
+            _inCooldown = false;
+    }
+
+    public override bool CanBeUsed()
+    {
+        return !_inCooldown;
     }
 
     public Abilities GetAbilityEnum()

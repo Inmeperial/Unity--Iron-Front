@@ -81,7 +81,11 @@ public class Grenade : Item
 
                 PaintAoeTiles(_tile, 0); 
             }
+        }
 
+        if (Input.GetMouseButtonDown(1))
+        {
+            Deselect();
         }
     }
     
@@ -122,7 +126,6 @@ public class Grenade : Item
                 if (!tile.HasTileAbove() && tile.IsWalkable())
                 {
                     _tilesInSelectionRange.Add(tile);
-                    Debug.Log("tile: " + tile.name);
                     _highlight.MortarPaintTilesInActivationRange(tile);
                 }
             }
@@ -147,10 +150,11 @@ public class Grenade : Item
             
             unit.GetLegs().TakeDamage(_itemData.damage);
         }
-        UpdateUses();
-        _button.SetButtonName(_itemData.equipableName + " x" + _availableUses);
-        _button.OnRightClick?.Invoke();
+        ItemUsed();
+        UpdateButtonText(_availableUses.ToString(), _itemData);
         _button.interactable = false;
+        Deselect();
+        
     }
     
     private bool IsValidBlock(Transform target)

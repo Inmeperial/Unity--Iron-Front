@@ -1205,6 +1205,11 @@ public class Character : EnumsClass, IObservable
         _enemiesInRange.Clear();
         _canBeAttacked = false;
         pathCreator.ResetPath();
+
+        foreach (var equipable in _equipables)
+        {
+            equipable.UpdateEquipableState();
+        }
     }
 
     public void ClearTargetTile()

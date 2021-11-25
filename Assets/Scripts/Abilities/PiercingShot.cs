@@ -20,7 +20,7 @@ public class PiercingShot : Ability
     
 	public override void Select()
 	{
-		if (InCooldown() || !_character.CanAttack()) return;
+		if (_inCooldown || !_character.CanAttack()) return;
 		Debug.Log("Pinto tiles de piercing shot");
         
         switch (_location)
@@ -73,9 +73,15 @@ public class PiercingShot : Ability
             Physics.Raycast(characterTilePos, dir, out hit);
             var firstTile = hit.transform.GetComponent<Tile>();
             GetCharactersInAttackDirection(firstTile, dir, 0);
+            
             ShootTheShot();
+            
             if (callback != null)
                 callback();
+            
+            AbilityUsed(_abilityData);
+            UpdateButtonText(_availableUses.ToString(), _abilityData);
+            _button.interactable = false;
             Deselect();
 		}
 

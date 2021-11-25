@@ -2,6 +2,7 @@
 
 public class Item : Equipable
 {
+    protected bool _itemUsed;
     public override void Initialize(Character character, EquipableSO data, Location location)
     {
         _character = character;
@@ -29,14 +30,26 @@ public class Item : Equipable
         return "";
     }
 
-    public int GetItemUses()
-    {
-        return _availableUses;
-    }
-    
-    protected virtual void UpdateUses()
+    protected void ItemUsed()
     {
         _availableUses--;
+        _itemUsed = true;
+    }
+    public override void UpdateEquipableState()
+    {
+        _itemUsed = false;
     }
 
+    public override bool CanBeUsed()
+    {
+        if (_itemUsed)
+            return false;
+
+        if (_availableUses <= 0)
+            return false;
+        
+        if (_availableUses > 0 && !_itemUsed)
+            return true;
+        return false;
+    }
 }

@@ -24,7 +24,7 @@ public class Flamethrower : Ability
     
     public override void Select()
 	{
-        if (InCooldown() || !_character.CanAttack()) return;
+        if (_inCooldown || !_character.CanAttack()) return;
         if (!_highlight)
         {
             _highlight = FindObjectOfType<TileHighlight>();
@@ -89,8 +89,13 @@ public class Flamethrower : Ability
                 charactersHitted.Add(tempChar);
             }
             DamageCharacters(charactersHitted);
+            
             if (callback != null)
                 callback();
+            
+            AbilityUsed(_abilityData);
+            UpdateButtonText(_availableUses.ToString(), _abilityData);
+            _button.interactable = false;
             Deselect();
         }
 

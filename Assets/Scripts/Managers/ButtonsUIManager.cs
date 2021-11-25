@@ -53,6 +53,7 @@ public class ButtonsUIManager : MonoBehaviour
     public Button rightWeaponBar;
     //public EquipmentButton equipmentButton;
     public EquipmentButton[] equipmentButtons;
+    public Sprite noneIcon;
 
     [Header("Player Stats")]
     public TextMeshProUGUI playerBodyCurrHp;
@@ -114,7 +115,7 @@ public class ButtonsUIManager : MonoBehaviour
         foreach (var button in equipmentButtons)
         {
             button.interactable = false;
-            button.gameObject.SetActive(false);
+            //button.gameObject.SetActive(false);
         }
         
         playerHudContainer.SetActive(false);
@@ -1081,79 +1082,60 @@ public class ButtonsUIManager : MonoBehaviour
         else
         {
             if (_selectedChar.RightGunAlive()) rightGunTypeText.text = "No gun";
-            else rightGunTypeText.text = "Arm Destroyed";
-            rightGunHitsText.text = "";
-			rightGunDamageText.text = "";
-			rightGunHitChanceText.text = "";
-            rightWeaponBar.enabled = false;
-            rightWeaponCircle.transform.parent.GetComponent<Button>().enabled = false;
-        }
 
-        //Item item = _selectedChar.GetItem();
+            else
+            {
+                rightGunTypeText.text = "Arm Destroyed";
+                rightGunHitsText.text = "";
+                rightGunDamageText.text = "";
+                rightGunHitChanceText.text = "";
+                rightWeaponBar.enabled = false;
+                rightWeaponCircle.transform.parent.GetComponent<Button>().enabled = false;
+            }
+            
+        }
 
         //TODO: REVISAR
         List<Equipable> equipables = _selectedChar.GetEquipables();
 
-        if (equipables != null && equipables.Count > 0)
+        
+        for (int i = 0; i < equipmentButtons.Length; i++)
         {
-            for (int i = 0; i < equipmentButtons.Length; i++)
+            var button = equipmentButtons[i];
+            
+            if (equipables.Count < 1)
             {
-                if (i > equipables.Count-1)
-                {
-                    return;
-                }
-                
-                var button = equipmentButtons[i];
-                
-                var equipment = equipables[i];
-
-                equipment.SetButton(button);
-                
-                button.SetButtonIcon(equipment.GetIcon());
-                //button.SetButtonName(equipment.GetEquipableName());
-                button.SetCharacter(_selectedChar);
-
-                button.ClearLeftClick();
-                button.AddLeftClick(equipment.Select);
-                
-                button.ClearRightClick();
-                button.AddRightClick(equipment.Deselect);
-
-                button.interactable = true;
-                
-                button.gameObject.SetActive(true);
-                // Ability ability;
-                // switch (equipment.GetEquipableType())
-                // {
-                //     case EquipableSO.EquipableType.Item:
-                //         var item = equipment as Item;
-                //         if (item)
-                //         {
-                //             if (item.GetItemUses() > 0)
-                //             {
-                //
-                //                 button.interactable = true;
-                //             }
-                //         }
-                //         else button.interactable = false;
-                //             
-                //         break;
-                //     case EquipableSO.EquipableType.Ability:
-                //         ability = equipment as Ability;
-                //         if (ability)
-                //         {
-                //             button.interactable = false;
-                //         }
-                //         break;
-                //     case EquipableSO.EquipableType.ActiveAbility:
-                //         ability = equipment as Ability;
-                //         if (ability)
-                //         {
-                //             button.interactable = true;
-                //         }
-                //         break;
-                // }
+                button.interactable = false;
+                button.SetButtonIcon(noneIcon);
+                continue;
             }
+            
+            if (i > equipables.Count-1) return;
+
+            var equipment = equipables[i];
+
+            equipment.SetButton(button);
+            
+            button.SetButtonIcon(equipment.GetIcon());
+            
+            button.SetCharacter(_selectedChar);
+
+            button.ClearLeftClick();
+            button.AddLeftClick(equipment.Select);
+            
+            button.ClearRightClick();
+            button.AddRightClick(equipment.Deselect);
+
+            if (equipment.GetEquipableType() == EquipableSO.EquipableType.Passive)
+                button.interactable = false;
+            
+            else if (equipment.GetEquipableType() == EquipableSO.EquipableType.Item && equipment.GetAvailableUses() <= 0)
+                button.interactable = false;
+            
+            else if (equipment.CanBeUsed() == false)
+                button.interactable = false;
+            
+            else button.interactable = true;
         }
     }
 

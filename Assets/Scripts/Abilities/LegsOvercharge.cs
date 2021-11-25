@@ -19,6 +19,10 @@ public class LegsOvercharge : Ability
         _character.LegsOverchargeActivate();
         _character.IncreaseAvailableSteps(_character.GetLegs().GetMaxSteps());
         _button.OnRightClick?.Invoke();
+        
+        AbilityUsed(_abilityData);
+        UpdateButtonText(_availableUses.ToString(), _abilityData);
+        _button.interactable = false;
     }
 
     public override void Deselect()

@@ -24,7 +24,7 @@ public class Push : Ability
     
     public override void Select()
     {
-        if (InCooldown() || !_character.CanAttack()) return;
+        if (_inCooldown || !_character.CanAttack()) return;
         Debug.Log("pinto tiles push");
         if (!_highlight)
         {
@@ -63,8 +63,13 @@ public class Push : Ability
 
             var tileToPushTo = GetTileToPushTo(selectedTile, (selectedUnit.transform.position - _character.transform.position).normalized, 0);
             PushAction(tileToPushTo, selectedUnit);
+            
             if (callback != null)
                 callback();
+            
+            AbilityUsed(_abilityData);
+            UpdateButtonText(_availableUses.ToString(), _abilityData);
+            _button.interactable = false;
             Deselect();
         }
 

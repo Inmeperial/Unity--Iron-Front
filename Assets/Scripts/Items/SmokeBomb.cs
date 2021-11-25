@@ -64,6 +64,11 @@ public class SmokeBomb : Item, IObserver
 			StartCoroutine(LifeSpan());
 			if (callback != null)
 				callback();
+			
+			ItemUsed();
+			UpdateButtonText(_availableUses.ToString(), _data);
+			_button.interactable = false;
+			
 			Deselect();
 		}
 

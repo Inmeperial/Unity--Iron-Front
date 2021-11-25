@@ -21,7 +21,7 @@ public class CripplingShot : Ability
 	
 	public override void Select()
 	{
-		if (InCooldown() || !_character.CanAttack()) return;
+		if (_inCooldown || !_character.CanAttack()) return;
 		switch (_location)
 		{
 			case Location.LeftGun:
@@ -68,6 +68,10 @@ public class CripplingShot : Ability
 				_enemy.MovementReduction(_abilityData.stepsReduction);
 				_enemy.SetHurtAnimation();
 				_character.DeactivateAttack();
+				
+				AbilityUsed(_abilityData);
+				UpdateButtonText(_availableUses.ToString(), _abilityData);
+				_button.interactable = false;
 
 				Deselect();
 			}
