@@ -22,6 +22,13 @@ public class Body : Parts
             var smokeData = d.ability as SmokeScreenSO;
             _smokeScreenHpPercentage = smokeData.hpPercentageForSmokeActivation;
         }
+        
+        if (d.item && d.item.itemPrefab)
+        {
+            _item = Instantiate(d.item.itemPrefab, _myChar.transform);
+            _item.Initialize(_myChar, d.item, location);
+            _myChar.AddEquipable(_item);
+        }
     }
 
 

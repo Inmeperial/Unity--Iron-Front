@@ -1098,7 +1098,7 @@ public class ButtonsUIManager : MonoBehaviour
         //TODO: REVISAR
         List<Equipable> equipables = _selectedChar.GetEquipables();
 
-        
+        Debug.Log("equipables: " + equipables.Count);
         for (int i = 0; i < equipmentButtons.Length; i++)
         {
             var button = equipmentButtons[i];
@@ -1114,6 +1114,8 @@ public class ButtonsUIManager : MonoBehaviour
 
             var equipment = equipables[i];
 
+            Debug.Log(equipment.GetEquipableName());
+            Debug.Log(_selectedChar.GetCharacterName());
             equipment.SetButton(button);
             
             button.SetButtonIcon(equipment.GetIcon());
@@ -1126,16 +1128,34 @@ public class ButtonsUIManager : MonoBehaviour
             button.ClearRightClick();
             button.AddRightClick(equipment.Deselect);
 
-            if (equipment.GetEquipableType() == EquipableSO.EquipableType.Passive)
-                button.interactable = false;
             
-            else if (equipment.GetEquipableType() == EquipableSO.EquipableType.Item && equipment.GetAvailableUses() <= 0)
+            if (equipment.GetEquipableType() == EquipableSO.EquipableType.Passive)
+            {
                 button.interactable = false;
+                Debug.Log("false pasive");
+            }
+                
+            
+            else if (equipment.GetEquipableType() == EquipableSO.EquipableType.Item &&
+                     equipment.GetAvailableUses() <= 0)
+            {
+                button.interactable = false;
+                Debug.Log("false item no use");
+            }
+                
             
             else if (equipment.CanBeUsed() == false)
+            {
                 button.interactable = false;
-            
-            else button.interactable = true;
+                Debug.Log("false equipable no use");
+            }
+
+
+            else
+            {
+                button.interactable = true;
+                Debug.Log("true");
+            }
         }
     }
 

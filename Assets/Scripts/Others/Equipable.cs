@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public abstract class Equipable : MonoBehaviour
@@ -15,7 +14,7 @@ public abstract class Equipable : MonoBehaviour
     //TODO: remover despues
     protected EquipableSO.EquipableType _equipableType;
     protected int _availableUses;
-    
+    protected string _equipableName;
     protected Character _character;
     protected EquipmentButton _button;
     protected Sprite _icon;
@@ -33,7 +32,10 @@ public abstract class Equipable : MonoBehaviour
         return _equipableType;
     }
 
-    public abstract string GetEquipableName();
+    public virtual string GetEquipableName()
+    {
+        return _equipableName;
+    }
 
     public void SetButton(EquipmentButton button)
     {

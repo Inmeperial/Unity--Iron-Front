@@ -10,6 +10,7 @@ public abstract class Parts : MonoBehaviour
     protected const int CriticalHit = 2;
     protected Character _myChar;
     protected Ability _ability;
+    protected Item _item;
     protected float _maxHP;
     protected float _currentHP;
     protected float _weight;

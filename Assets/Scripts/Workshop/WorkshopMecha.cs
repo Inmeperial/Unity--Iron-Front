@@ -40,14 +40,10 @@ public class WorkshopMecha : MonoBehaviour
         var randomStart = Random.Range(0, animator.GetCurrentAnimatorStateInfo(0).length);
         
         animator.Play("Iddle", 0, randomStart);
-        
-        Debug.Log("default speed: " + animator.speed);
 
         var randomSpeed = Random.Range(0.8f, 1.2f);
 
         animator.speed = randomSpeed;
-        
-        Debug.Log("new speed: " + animator.speed);
     }
 
 

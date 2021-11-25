@@ -24,6 +24,8 @@ public class Ability : Equipable
         _character = character;
         _icon = data.equipableIcon;
         _location = location;
+        _equipableType = data.equipableType;
+        _equipableName = data.equipableName;
     }
 
     public override void Select()
@@ -39,11 +41,6 @@ public class Ability : Equipable
     public override void Use(Action callback = null)
     {
         Debug.Log("use ability");
-    }
-
-    public override string GetEquipableName()
-    {
-        return "";
     }
 
     protected void AbilityUsed(AbilitySO data)

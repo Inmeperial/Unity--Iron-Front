@@ -8,6 +8,8 @@ public class Item : Equipable
         _character = character;
         _availableUses = data.maxUses;
         _location = location;
+        _equipableType = data.equipableType;
+        _equipableName = data.equipableName;
     }
 
     public override void Select()
@@ -23,11 +25,6 @@ public class Item : Equipable
     public override void Use(Action callback = null)
     {
         
-    }
-
-    public override string GetEquipableName()
-    {
-        return "";
     }
 
     protected void ItemUsed()
