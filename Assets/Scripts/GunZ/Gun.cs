@@ -268,14 +268,6 @@ public abstract class Gun : EnumsClass
         ModelsOff();
 
         GetComponent<BoxCollider>().enabled = false;
-
-        //Destroy(gameObject);
-        // MeshRenderer[] childs = transform.GetComponentsInChildren<MeshRenderer>();
-        // foreach (MeshRenderer m in childs)
-        // {
-        //     if (m) m.enabled = false;
-        // }
-        // GetComponent<BoxCollider>().enabled = false;
     }
 
     public GameObject GetParticleSpawn()
@@ -311,8 +303,8 @@ public abstract class Gun : EnumsClass
             total += damages[i].Item1;
             float hp = _currentHP - damages[i].Item1;
             _currentHP = hp > 0 ? hp : 0;
-            EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.Damage);
-            EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.Hit);
+            EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.Damage);
+            //EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.Hit);
 
             int item = damages[i].Item2;
             switch (item)
@@ -353,17 +345,6 @@ public abstract class Gun : EnumsClass
         {
             _myChar.ArmDestroyed(_location, _ability);
             gameObject.SetActive(false);
-            //TurnOff();
-            //TODO: revisar switch que parece al pedo
-            // switch (_location)
-            // {
-            //     case "Left":
-            //         _myChar.GetLeftGun().TurnOff();
-            //         break;
-            //     case "Right":
-            //         _myChar.GetRightGun().TurnOff();
-            //         break;
-            // }
         }
         
     }
@@ -376,8 +357,8 @@ public abstract class Gun : EnumsClass
         float hp = _currentHP - damage;
         _currentHP = hp > 0 ? hp : 0;
 
-        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
-        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
+        EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.Damage);
+        //EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
 
         Vector3 pos = transform.position;
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, pos, true);

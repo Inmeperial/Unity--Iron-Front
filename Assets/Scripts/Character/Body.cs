@@ -48,8 +48,8 @@ public class Body : Parts
             float hp = _currentHP - damages[i].Item1;
             _currentHP = hp > 0 ? hp : 0;
 
-            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
-            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
+            EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.Damage);
+            //EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
             int item = damages[i].Item2;
             switch (item)
             {
@@ -94,8 +94,8 @@ public class Body : Parts
         bool isActive = CharacterSelection.Instance.IsActiveCharacter(_myChar);
         if (isActive) ButtonsUIManager.Instance.UpdateBodyHUD(_currentHP);
         
-        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
-        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
+        EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.Damage);
+        //EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
         
         Vector3 bodyPos = transform.position;
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, bodyPos, true);
