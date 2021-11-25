@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5370b50706ef63644971868b76d8be6a, type: 3}
+  m_Name: MineItem
+  m_EditorClassIdentifier: 
+  equipableType: 0
+  equipableName: Mine
+  equipableIcon: {fileID: 21300000, guid: 56750d4b75ced194e9f9346d4601d75d, type: 3}
+  description: Create a mine in a unoccupied tile up to 3 spaces away.
+  maxUses: 2
+  cooldown: 1
+  itemPrefab: {fileID: 5845280891398707801, guid: 0b9a1bebacfd73b4293d415e16c6b3dc,
+    type: 3}
+  duration: 0
+  areaOfEffect: 0
+  useRange: 4
+  minePefab: {fileID: 4750529651639803752, guid: 4ebc58e26fd48b24d985e401eb024dfa,
+    type: 3}

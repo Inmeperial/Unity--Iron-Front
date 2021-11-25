@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipableType: 0
   equipableName: Grenade
-  equipableIcon: {fileID: 21300000, guid: 17d04630834eb334285d588ecc5a7c49, type: 3}
-  description: Grenade
+  equipableIcon: {fileID: 21300000, guid: fcd1e38b5e8c6fc41be2ce03c172a348, type: 3}
+  description: Throw a damaging granade.
   maxUses: 1
   cooldown: 0
   itemPrefab: {fileID: 5281978026040603763, guid: b2158f51a6c0cbd40a177c33e5d0eda9,
     type: 3}
   duration: 1
-  areaOfEffect: 3
-  useRange: 2
-  damage: 100
+  areaOfEffect: 2
+  useRange: 3
+  damage: 50
