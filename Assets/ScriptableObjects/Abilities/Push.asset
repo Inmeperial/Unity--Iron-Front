@@ -17,13 +17,14 @@ MonoBehaviour:
   equipableIcon: {fileID: 21300000, guid: 7158e0b864fb5594f90aebb6874c233e, type: 3}
   description: Pushes a enemy unit 2 tiles doing extra damage if it collides with
     something.
-  maxUses: 0
+  maxUses: 100
   cooldown: 2
+  buttonTextFontSize: 500
   abilityPrefab: {fileID: -6263865123460809979, guid: 93b98519eaf64534e854a05cc738982a,
     type: 3}
   partSlot: 1
   collisionDamage: 50
   pushDamage: 25
   pushLerpDuration: 0.75
-  pushUseRange: 0
-  pushDistance: 0
+  pushUseRange: 1
+  pushDistance: 3
