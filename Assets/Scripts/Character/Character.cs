@@ -1627,7 +1627,7 @@ public class Character : EnumsClass, IObservable
         
         var rLeg = Instantiate(_mechaEquipment.legs.meshPrefab[1], _leftLegSpawnPosition);
         rLeg.transform.localPosition = Vector3.zero;
-        _legs.SetParticleSpawner(rLeg.transform.GetChild(0).gameObject);
+        _legs.SetParticleSpawner(rLeg.transform.GetChild(1).gameObject);
         var rLegShader = rLeg.GetComponent<MasterShaderScript>();
         rLegShader.colorMecha = _mechaEquipment.GetLegsColor();
         
