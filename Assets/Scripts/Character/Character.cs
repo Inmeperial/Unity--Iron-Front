@@ -1572,6 +1572,7 @@ public class Character : EnumsClass, IObservable
         _body.SetPart(_mechaEquipment.body, Equipable.Location.Body);
         var bodyMesh = Instantiate(_mechaEquipment.body.meshPrefab[0], _body.transform);
         bodyMesh.transform.localPosition = Vector3.zero;
+        _body.SetParticleSpawner(bodyMesh.transform.GetChild(0));
         var bodyShader = bodyMesh.GetComponent<MasterShaderScript>();
         bodyShader.colorMecha = _mechaEquipment.GetBodyColor();
 
@@ -1584,6 +1585,7 @@ public class Character : EnumsClass, IObservable
         leftArmShader.colorMecha = _mechaEquipment.GetBodyColor();
 
         _leftGun = Instantiate(_mechaEquipment.leftGun.prefab, _leftGunSpawn.transform);
+        
 
         if (_leftGun)
         {
@@ -1616,13 +1618,16 @@ public class Character : EnumsClass, IObservable
 
         _legs = Instantiate(_mechaEquipment.legs.prefab, _rightLegSpawnPosition);
         _legs.ManualStart(this);
+        
         var lLeg = Instantiate(_mechaEquipment.legs.meshPrefab[0], _legs.transform);
         lLeg.transform.localPosition = Vector3.zero;
+        _legs.SetParticleSpawner(lLeg.transform.GetChild(0));
         var lLegShader = lLeg.GetComponent<MasterShaderScript>();
         lLegShader.colorMecha = _mechaEquipment.GetLegsColor();
         
         var rLeg = Instantiate(_mechaEquipment.legs.meshPrefab[1], _leftLegSpawnPosition);
         rLeg.transform.localPosition = Vector3.zero;
+        _legs.SetParticleSpawner(rLeg.transform.GetChild(0));
         var rLegShader = rLeg.GetComponent<MasterShaderScript>();
         rLegShader.colorMecha = _mechaEquipment.GetLegsColor();
         

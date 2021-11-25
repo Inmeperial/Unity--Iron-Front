@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class Gun : EnumsClass
 {
     [SerializeField] protected GameObject[] _models;
+    [SerializeField] protected GameObject _damageParticleSpawner;
     protected Character _myChar;
     protected float _maxHP;
     protected float _currentHP;

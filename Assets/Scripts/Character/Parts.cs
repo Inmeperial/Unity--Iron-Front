@@ -14,6 +14,7 @@ public abstract class Parts : MonoBehaviour
     protected float _maxHP;
     protected float _currentHP;
     protected float _weight;
+    protected List<Transform> _particleSpawner = new List<Transform>();
     public virtual void ManualStart(Character character)
     {
         _myChar = character;
@@ -57,5 +58,10 @@ public abstract class Parts : MonoBehaviour
     public Ability GetAbility()
     {
         return _ability;
+    }
+
+    public void SetParticleSpawner(Transform t)
+    {
+        _particleSpawner.Add(t);
     }
 }
