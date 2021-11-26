@@ -38,7 +38,7 @@ public class MineItem : Item
 		{
 			var selectedTile = MouseRay.GetTargetTransform(_character.block).GetComponent<Tile>();
 			if (!selectedTile || !_tilesInRange.Contains(selectedTile)) return;
-			Instantiate(_data.minePefab, selectedTile.transform.position + Vector3.up, Quaternion.identity);
+			Instantiate(_data.minePefab, selectedTile.transform.position + Vector3.up * 2, Quaternion.Euler(-90, 0, 0));
 			
 			ItemUsed();
 			UpdateButtonText(_availableUses.ToString(), _data);

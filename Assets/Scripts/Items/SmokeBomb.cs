@@ -9,7 +9,7 @@ public class SmokeBomb : Item, IObserver
 	private GameObject _smokeScreen;
 	private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
 	private TileHighlight _highlight;
-	private int _turnsLived;
+	[SerializeField]private int _turnsLived;
 	private delegate void Execute();
 	private Dictionary<string, Execute> _actionDic = new Dictionary<string, Execute>();
 	public override void Initialize(Character character, EquipableSO data, Location location)
@@ -76,6 +76,7 @@ public class SmokeBomb : Item, IObserver
 			Deselect();
 		
 	}
+
 	private void UpdateLifeSpam()
 	{
 		_turnsLived++;
