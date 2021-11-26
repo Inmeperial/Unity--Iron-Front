@@ -84,7 +84,7 @@ public class EffectsController : MonoBehaviour
 
             case EnumsClass.ParticleActionType.Damage:
                 effect = Instantiate(_damageEffect, obj.transform.position, transform.rotation, transform);
-                particle = effect.GetComponent<ParticleSystem>();
+                particle = effect.transform.GetChild(0).GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
@@ -156,15 +156,15 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
-            case EnumsClass.ParticleActionType.Hit:
-                effect = Instantiate(_hitMechaEffect, obj.transform.position, transform.rotation, transform);
-                effect.transform.SetParent(obj.transform);
-                particle = effect.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
-                particle.time = 0f;
-                particle.Play();
-                AudioManager.audioManagerInstance.PlaySound(_rifleSound, this.gameObject);
-                StartCoroutine(DestroyEffect(effect, particle.main.duration));
-                break;
+            //case EnumsClass.ParticleActionType.Hit:
+            //    effect = Instantiate(_hitMechaEffect, obj.transform.position, transform.rotation, transform);
+            //    effect.transform.SetParent(obj.transform);
+            //    particle = effect.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
+            //    particle.time = 0f;
+            //    particle.Play();
+            //    AudioManager.audioManagerInstance.PlaySound(_rifleSound, this.gameObject);
+            //    StartCoroutine(DestroyEffect(effect, particle.main.duration));
+            //    break;
 
             case EnumsClass.ParticleActionType.MortarHit:
                 effect = Instantiate(_dustEffect, obj.transform.position, obj.transform.rotation, transform);
