@@ -11,7 +11,17 @@ public class Bridge : MonoBehaviour
 
     [SerializeField] private List<Tile> _bridgeTiles;
 
+    [SerializeField] private List<Character> _bridgeEnemies = new List<Character>();
+
     private Vector3 _startPosition;
+
+    private void Awake()
+    {
+        foreach (var enemy in _bridgeEnemies)
+        {
+            enemy.DisableUnit();
+        }
+    }
 
     private void Start()
     {
@@ -50,6 +60,15 @@ public class Bridge : MonoBehaviour
         {
             tile.gameObject.SetActive(true);
             tile.AddToNeighbour();
+        }
+
+        foreach (var character in _bridgeEnemies)
+        {
+            character.EnableUnit();
+            
+            var portrait = PortraitsController.Instance.GetCharacterPortrait(character);
+
+            if (portrait) portrait.selectionButton.interactable = true;
         }
     }
 }

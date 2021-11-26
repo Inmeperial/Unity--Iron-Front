@@ -71,7 +71,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         SetFirstTurn();
 
         _actualCharacter = _currentTurnOrder[0];
-        
+
         _activeTeam = _actualCharacter.GetUnitTeam();
         
         _actionsDic.Add("GreenDead", GreenUnitDied);
@@ -192,7 +192,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
         _actualCharacter = _currentTurnOrder[0];
 
-        while (_actualCharacter.GetBody().GetCurrentHp() <= 0)
+        while (_actualCharacter.GetBody().GetCurrentHp() <= 0 || !_actualCharacter.IsUnitEnabled())
         {
             MoveToLast();
             yield return new WaitForSeconds(1);
@@ -306,6 +306,14 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             _currentTurnOrder.Add(c);
             PortraitsController.Instance.AddCharAndFrame(Tuple.Create(c,p));
             c.CheckWeight();
+
+            if (!c.IsUnitEnabled())
+            {
+                Debug.Log(c.GetCharacterName());
+                p.selectionButton.interactable = false;   
+                Debug.Log(p.selectionButton.interactable);
+            }
+                
         }
     }
 
@@ -366,8 +374,29 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             Tuple<Character, float> t = Tuple.Create(character, character.GetCharacterInitiative());
             unitsList.Add(t);
         }
-        
-        return unitsList.OrderByDescending(x => x.Item2).ToList();
+        var ordered = unitsList.OrderByDescending(x => x.Item2).ToList();
+        List<Tuple<Character, float>> orderedWithEnabled = new List<Tuple<Character, float>>();
+
+        int disabledCount = 0;
+
+        foreach (var t in ordered)
+        {
+            if (t.Item1.IsUnitEnabled())
+            {
+                if (disabledCount == 0)
+                    orderedWithEnabled.Add(t);
+                else orderedWithEnabled.Insert(orderedWithEnabled.Count - disabledCount, t);
+            }
+                
+            else
+            {
+                if (orderedWithEnabled.Count > 1)
+                    orderedWithEnabled.Insert(orderedWithEnabled.Count-1, t);
+                else orderedWithEnabled.Add(t);
+                disabledCount++;
+            }
+        }
+        return orderedWithEnabled;
     }
 
     public int GetMyTurn(Character unit)

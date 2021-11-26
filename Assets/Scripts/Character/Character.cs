@@ -93,8 +93,10 @@ public class Character : EnumsClass, IObservable
     protected bool _isDead = false;
     protected bool _equipableSelected;
     protected bool _rotated;
-
+    private bool _unitEnabled = true;
+    
     protected bool _overweight;
+    
     
     public delegate void Overweight(bool state);
     public event Overweight OnOverweight;
@@ -204,6 +206,8 @@ public class Character : EnumsClass, IObservable
     {
         if (_isDead) return;
         
+        if (!_unitEnabled) return;
+
         if (_unitTeam == Team.Red) return;
 
         if (!_isOnElevator)
@@ -882,6 +886,11 @@ public class Character : EnumsClass, IObservable
     public bool IsDead()
     {
         return _isDead;
+    }
+
+    public bool IsUnitEnabled()
+    {
+        return _unitEnabled;
     }
 
     /// <summary>
@@ -1817,6 +1826,16 @@ public class Character : EnumsClass, IObservable
         _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
 
         _currentSteps -= amount;
+    }
+    
+    public void DisableUnit()
+    {
+        _unitEnabled = false;
+    }
+
+    public void EnableUnit()
+    {
+        _unitEnabled = true;
     }
 }
 public enum PartsMechaEnum

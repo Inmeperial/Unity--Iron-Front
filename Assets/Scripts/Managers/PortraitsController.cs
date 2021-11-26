@@ -50,9 +50,10 @@ public class PortraitsController : MonoBehaviour
     }
     public void ActivatePortraitsButtons()
     {
-        foreach (FramesUI portrait in _portraits)
+        foreach (Tuple<Character, FramesUI> c in _charAndFramesList)
         {
-            portrait.selectionButton.interactable = true;
+            if (c.Item1.IsUnitEnabled())
+                c.Item2.selectionButton.interactable = true;
         }
     }
     
@@ -167,6 +168,17 @@ public class PortraitsController : MonoBehaviour
     public List<FramesUI> GetPortraits()
     {
         return _portraits;
+    }
+
+    public FramesUI GetCharacterPortrait(Character character)
+    {
+        foreach (var t in _charAndFramesList)
+        {
+            if (t.Item1 == character)
+                return t.Item2;
+        }
+
+        return null;
     }
 
     public List<RectTransform> GetPortraitsRectPosition()

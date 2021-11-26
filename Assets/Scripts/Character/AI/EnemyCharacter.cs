@@ -24,7 +24,6 @@ public class EnemyCharacter : Character
         if (_behaviorExecutor)
             _behaviorExecutor.paused = true;
     }
-
     public override void SelectThisUnit()
     {
         base.SelectThisUnit();
@@ -286,4 +285,6 @@ public class EnemyCharacter : Character
             _mechaEquipment = _equipment;
         base.ConfigureMecha();
     }
+
+    
 }
