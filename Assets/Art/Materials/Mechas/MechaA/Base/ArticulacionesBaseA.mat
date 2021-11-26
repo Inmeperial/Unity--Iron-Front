@@ -10,7 +10,7 @@ Material:
   m_Name: ArticulacionesBaseA
   m_Shader: {fileID: 4800000, guid: 16f7a23e2a2538143a91ab1b96d95b6a, type: 3}
   m_ShaderKeywords: _EMISSION _NORMALMAP
-  m_LightmapFlags: 6
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Mecha_ArticulacionesyDetalles_2_Emissive:
+        m_Texture: {fileID: 2800000, guid: fc196b4c65ceddf4babb457207be0b1f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _TextureAlbedo:
         m_Texture: {fileID: 2800000, guid: 7d758c77d5398304f9306767b1867c07, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -28,6 +32,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureNormal:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -42,4 +50,7 @@ Material:
     m_Floats:
     - _Cutoff: 0.5
     - __dirty: 0
-    m_Colors: []
+    - _isOutLineOn: 0
+    - _isWeapon: 0
+    m_Colors:
+    - _ColorAlbedo: {r: 1, g: 1, b: 1, a: 0}

@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b5bd9377b89bd4fa5363d53d9fe496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSOData: {fileID: 0}
-  itemPrefab: {fileID: 0}
   _raycastToTile: {fileID: 1979807009162587837}
   _mechaEquipment: {fileID: 11400000, guid: ef9386d2e2b26e6419f7a7d235506045, type: 2}
   gunsOffOnCloseUp: 0
@@ -44,6 +42,7 @@ MonoBehaviour:
   - {fileID: 8254362140287223682}
   soundHit: {fileID: 8300000, guid: 66ef0b1a0895d6f4399a8266eca32680, type: 3}
   highlight: {fileID: 0}
+  _equipment: {fileID: 0}
   _delayAfterAction: 3
   checkedParts: 0
 --- !u!114 &5367064005186602611
@@ -561,6 +560,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577267749250972326, guid: 209f0d0c942a9874eabb880cebb4ea6c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577267749250972326, guid: 209f0d0c942a9874eabb880cebb4ea6c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577267749250972326, guid: 209f0d0c942a9874eabb880cebb4ea6c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.049999278
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577267749250972326, guid: 209f0d0c942a9874eabb880cebb4ea6c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577267749250972326, guid: 209f0d0c942a9874eabb880cebb4ea6c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577267749250972326, guid: 209f0d0c942a9874eabb880cebb4ea6c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577267749250972327, guid: 209f0d0c942a9874eabb880cebb4ea6c,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 6615432407571086460, guid: 209f0d0c942a9874eabb880cebb4ea6c,
         type: 3}
