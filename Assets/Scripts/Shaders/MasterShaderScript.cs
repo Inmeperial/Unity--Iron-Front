@@ -53,9 +53,9 @@ public class MasterShaderScript : MonoBehaviour
 
     public void SetMaterialsForMecha()
     {
-        SetTexturesToMaterial(materialCuerpo, texturesCuerpo);
-        SetTexturesToMaterial(materialArmadura, textureArmadura);
-        SetTexturesToMaterial(materialArticulacion, textureArticulaciones);
+        SetTexturesToMaterial(materialCuerpo, texturesCuerpo, false);
+        SetTexturesToMaterial(materialArmadura, textureArmadura, false);
+        SetTexturesToMaterial(materialArticulacion, textureArticulaciones, true);
     }
 
     public string[] GetArrayStringForShaderSwitch()
@@ -109,7 +109,7 @@ public class MasterShaderScript : MonoBehaviour
 
     }
 
-    private void SetTexturesToMaterial(int matArrayNum, Texture[] arr)
+    private void SetTexturesToMaterial(int matArrayNum, Texture[] arr, bool setEmission)
     {
         if (arr[0] != null)
         {
@@ -118,6 +118,12 @@ public class MasterShaderScript : MonoBehaviour
         if (arr[1] != null)
         {
             _matArr[matArrayNum].SetTexture("_TextureNormal", arr[1]);
+        }
+        if (setEmission && !isWeapon)
+        {
+            _matArr[matArrayNum].SetInt("_IsEmissionON", 1);
+            _matArr[matArrayNum].SetTexture("_TextureEmission", arr[2]);
+            
         }
         //if (arr[2] != null)
         //{
