@@ -17,7 +17,7 @@ public class SmokeBomb : Item, IObserver
 		base.Initialize(character, data, location);
 		_data = data as SmokeBombSO;
 		_highlight = FindObjectOfType<TileHighlight>();
-		_actionDic.Add("End Turn", UpdateLifeSpam);
+		_actionDic.Add("EndTurn", UpdateLifeSpam);
 	}
 
 	public override void Select()
@@ -84,8 +84,11 @@ public class SmokeBomb : Item, IObserver
 
 	private IEnumerator LifeSpan()
 	{
+		TurnManager.Instance.Subscribe(this);
 		yield return new WaitUntil(() => _turnsLived >= _data.duration);
 		
+		TurnManager.Instance.Unsubscribe(this);
+
 		Destroy(_smokeScreen);
 	}
 
