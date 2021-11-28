@@ -112,10 +112,10 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            ForceEndTurn();
-        }
+        // if (Input.GetKeyDown(KeyCode.Backspace))
+        // {
+        //     ForceEndTurn();
+        // }
     }
 
     private void ForceEndTurn()

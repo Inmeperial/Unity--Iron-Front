@@ -72,17 +72,6 @@ public class Elevator : MonoBehaviour, IObserver
         _actionsDic.Add("AboveTurn", ActivateButton);
     }
 
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            StartMovement();
-        }
-    }
-
     //TODO: hacer el popup del boton para activar
     private void OnTriggerEnter(Collider other)
     {
