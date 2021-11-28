@@ -39,7 +39,8 @@ public class Push : Ability
 
     public override void Deselect()
     {
-        _highlight.ClearTilesInActivationRange(_tilesInRange);
+        if(_tilesInRange.Count != 0)
+            _highlight.ClearTilesInActivationRange(_tilesInRange);
         _tilesInRange.Clear();
         _character.EquipableSelectionState(false, null);
         _character.SelectThisUnit();

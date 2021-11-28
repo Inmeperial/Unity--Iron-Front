@@ -28,10 +28,14 @@ public class SelfDestruct : Ability
 
     public override void Deselect()
     {
-        _highlight.ClearTilesInPreview(_tilesInAttackRange);
-        _highlight.ClearTilesInActivationRange(_tilesInAttackRange);
-        _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
-        _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
+        if(_tilesInAttackRange.Count != 0)
+		{
+            _highlight.ClearTilesInPreview(_tilesInAttackRange);
+            _highlight.ClearTilesInActivationRange(_tilesInAttackRange);
+            _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
+            _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
+        }
+        
         _tilesInAttackRange.Clear();
         _tilesForAttackChecked.Clear();
         _character.SelectThisUnit();

@@ -20,6 +20,7 @@ public class Flamethrower : Ability
 	    base.Initialize(character, data, location);
 	    
 	    _abilityData = data as FlamethrowerSO;
+        if (!_lineRenderer) _lineRenderer = gameObject.AddComponent<LineRenderer>();
     }
     
     public override void Select()
@@ -29,7 +30,7 @@ public class Flamethrower : Ability
         {
             _highlight = FindObjectOfType<TileHighlight>();
         }
-        if (!_lineRenderer) _lineRenderer = gameObject.AddComponent<LineRenderer>();
+        
         _lineRenderer.positionCount = 11;
         _lineRenderer.material = _abilityData.lineMaterial;
         _mainCam = Camera.main;
@@ -40,7 +41,8 @@ public class Flamethrower : Ability
 
 	public override void Deselect()
 	{
-        _highlight.MortarClearTilesInAttackRange(_tilesInRange);
+        if(_tilesInRange.Count != 0)
+            _highlight.MortarClearTilesInAttackRange(_tilesInRange);
         _tilesInRange.Clear();
         _lineRenderer.positionCount = 0;
         _character.EquipableSelectionState(false, null);
@@ -132,17 +134,6 @@ public class Flamethrower : Ability
             _tilesInRange.Remove(tileToChange);
             tileToChange.MortarEndCanBeAttackedColor();
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-	    var range = _abilityData.range;
-	    var angle = _abilityData.angle;
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay(_position, _facingDir.normalized * range);
-        Gizmos.DrawWireSphere(_position, range);
-        Gizmos.DrawRay(_position, Quaternion.Euler(0, angle / 2, 0) * _facingDir.normalized * range);
-        Gizmos.DrawRay(_position, Quaternion.Euler(0, -angle / 2, 0) * _facingDir.normalized * range);
     }
     
     public override string GetEquipableName()
