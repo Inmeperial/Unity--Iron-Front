@@ -647,6 +647,9 @@ public class ButtonsUIManager : MonoBehaviour
         
         CharacterSelection.Instance.ActivateCharacterSelection(true);
 
+        if (_selectedChar)
+            CharacterSelection.Instance.SelectionWithDelay(_selectedChar);
+        
         DeactivateBodyPartsContainer();
 
         if (TurnManager.Instance.GetActiveTeam() == EnumsClass.Team.Green)

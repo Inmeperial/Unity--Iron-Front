@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CharacterSelection : MonoBehaviour
@@ -195,5 +196,17 @@ public class CharacterSelection : MonoBehaviour
     {
         if (_selection) return character == _selection;
         return false;
+    }
+
+    public void SelectionWithDelay(Character character)
+    {
+        StartCoroutine(SelectionDelay(character));
+    }
+
+    IEnumerator SelectionDelay(Character character)
+    {
+        yield return new WaitForEndOfFrame();
+        
+        Selection(character);
     }
 }

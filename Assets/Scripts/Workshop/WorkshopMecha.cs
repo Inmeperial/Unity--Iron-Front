@@ -46,13 +46,6 @@ public class WorkshopMecha : MonoBehaviour
         animator.speed = randomSpeed;
     }
 
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.X))
-            SpawnParts();
-    }
-    
     public void SetEquipment(MechaEquipmentSO equipment, int index)
     {
         _equipment = equipment;

@@ -1752,7 +1752,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 379.5398, y: -359.63202}
+  m_AnchoredPosition: {x: 379.5398, y: -358.74365}
   m_SizeDelta: {x: 160, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1387874079334567245
@@ -5128,7 +5128,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8757054415226119760}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7424487118405731097}
+        m_MethodName: LoadMap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2660547329291929843
 GameObject:
   m_ObjectHideFlags: 0
@@ -7328,7 +7339,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7955752848855802689}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7424487118405731097}
+        m_MethodName: ReloadLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3946195183284613856
 GameObject:
   m_ObjectHideFlags: 0
@@ -9192,6 +9214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd14718fc209a45429ae8aaf76f40349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _winPanel: {fileID: 4060163892124892629}
+  _losePanel: {fileID: 3718117435252703342}
   _currentTurnOrder: []
   waitForMortarAttack: 3
 --- !u!1 &5682944921409485148
@@ -10254,7 +10278,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6357377139931831856}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7424487118405731097}
+        m_MethodName: LoadMap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6262962569331772227
 GameObject:
   m_ObjectHideFlags: 0
@@ -10363,7 +10398,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 379.5398, y: -359.63202}
+  m_AnchoredPosition: {x: 379.5398, y: -358.74365}
   m_SizeDelta: {x: 160, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6195329736340715964
