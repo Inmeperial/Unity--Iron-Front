@@ -27,7 +27,7 @@ public abstract class EnumsClass: MonoBehaviour
     public enum ParticleActionType
     { 
         Damage,
-        Attack,
+        FlameThrower,
         Mine,
         ShootGun,
         AssaultRifle,

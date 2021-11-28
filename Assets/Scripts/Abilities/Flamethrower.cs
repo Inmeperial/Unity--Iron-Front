@@ -79,6 +79,7 @@ public class Flamethrower : Ability
         if (Input.GetMouseButtonDown(0))
 		{
             //Ataco a todas las unidades que esten en el area de ataque
+            EffectsController.Instance.PlayParticlesEffect(_character.GetBurningSpawner(), EnumsClass.ParticleActionType.FlameThrower);
             List<Character> charactersHitted = new List<Character>();
             var collisions = Physics.OverlapSphere(_position, range, _abilityData.characterMask);
             foreach (var item in collisions)

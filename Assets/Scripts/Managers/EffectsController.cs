@@ -13,7 +13,7 @@ public class EffectsController : MonoBehaviour
     //private Camera mainCamera;
 
     [Header("Particles")]
-    [SerializeField] private GameObject _attackEffect;
+    [SerializeField] private GameObject _flameThrowerEffect;
     [SerializeField] private GameObject _damageEffect;
     [SerializeField] private GameObject _mineExplosionEffect;
     [SerializeField] private GameObject _shootGunEffect;
@@ -26,6 +26,7 @@ public class EffectsController : MonoBehaviour
 
 
     [Header("Sounds")]
+    [SerializeField] private AudioClip _flameThrowerSound;
     [SerializeField] private AudioClip _shootGunSound;
     [SerializeField] private AudioClip _assaultRifleSound;
     [SerializeField] private AudioClip _assaultRifleFinalShootSound;
@@ -74,13 +75,14 @@ public class EffectsController : MonoBehaviour
         ParticleSystem particle;
         switch (type)
         {
-            //case EnumsClass.ParticleActionType.Attack: //not called
-            //    effect = Instantiate(_attackEffect, obj.transform.position, transform.rotation, transform);
-            //    particle = effect.GetComponent<ParticleSystem>();
-            //    particle.time = 0f;
-            //    particle.Play();
-            //    StartCoroutine(DestroyEffect(effect, particle.main.duration));
-            //    break;
+            case EnumsClass.ParticleActionType.FlameThrower:
+                effect = Instantiate(_flameThrowerEffect, obj.transform.position, obj.transform.rotation, obj.transform);
+                particle = effect.GetComponent<ParticleSystem>();
+                particle.time = 0f;
+                particle.Play();
+                AudioManager.audioManagerInstance.PlaySound(_flameThrowerSound, this.gameObject);
+                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                break;
 
             case EnumsClass.ParticleActionType.Damage:
                 effect = Instantiate(_damageEffect, obj.transform.position, transform.rotation, transform);

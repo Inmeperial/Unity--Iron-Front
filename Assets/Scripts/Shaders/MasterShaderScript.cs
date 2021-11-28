@@ -9,9 +9,9 @@ public class MasterShaderScript : MonoBehaviour
 
     public bool isWeapon = false;
     public MechaEnum mechaEnum;
-    public Texture[] texturesCuerpo = new Texture[2];
-    public Texture[] textureArmadura = new Texture[2];
-    public Texture[] textureArticulaciones = new Texture[2];
+    public Texture[] texturesCuerpo = new Texture[3];
+    public Texture[] textureArmadura = new Texture[3];
+    public Texture[] textureArticulaciones = new Texture[4];
     public Color colorMecha;
     public int materialArticulacion;
     public int materialCuerpo;
@@ -119,11 +119,19 @@ public class MasterShaderScript : MonoBehaviour
         {
             _matArr[matArrayNum].SetTexture("_TextureNormal", arr[1]);
         }
-        if (setEmission && !isWeapon)
+        if (!isWeapon)
         {
-            _matArr[matArrayNum].SetInt("_IsEmissionON", 1);
-            _matArr[matArrayNum].SetTexture("_TextureEmission", arr[2]);
-            
+            if (arr[2] != null)
+            {
+                _matArr[matArrayNum].SetTexture("_MaskAlbedo", arr[2]);
+            }
+
+            if (setEmission)
+            {
+                _matArr[matArrayNum].SetInt("_IsEmissionON", 1);
+                _matArr[matArrayNum].SetTexture("_TextureEmission", arr[3]);
+            }
+
         }
         //if (arr[2] != null)
         //{
