@@ -169,7 +169,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Cursor.lockState == CursorLockMode.Locked) return;
+        if (TurnManager.Instance.GetActiveTeam() == EnumsClass.Team.Red) return;
         
         if (EventSystem.current.IsPointerOverGameObject()) return;
         

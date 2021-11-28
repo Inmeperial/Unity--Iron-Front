@@ -7,6 +7,7 @@ public class Item : Equipable
     {
         _character = character;
         _availableUses = data.maxUses;
+        _icon = data.equipableIcon;
         _location = location;
         _equipableType = data.equipableType;
         _equipableName = data.equipableName;

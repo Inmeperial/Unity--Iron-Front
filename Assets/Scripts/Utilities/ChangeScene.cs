@@ -37,16 +37,12 @@ public class ChangeScene : MonoBehaviour
     public void Win()
     {
         menuOptions.CloseAllMenu();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         SceneManager.LoadScene("Win");
     }
 
     public void Defeat()
     {
         menuOptions.CloseAllMenu();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         SceneManager.LoadScene("Defeat");
     }
 

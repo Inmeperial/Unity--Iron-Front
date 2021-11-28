@@ -408,6 +408,11 @@ public abstract class Gun : EnumsClass
         return _weight;
     }
 
+    public Ability GetAbility()
+    {
+        return _ability;
+    }
+
     public void Heal(int value)
     {
         _currentHP += value;

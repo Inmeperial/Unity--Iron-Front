@@ -9482,12 +9482,11 @@ MonoBehaviour:
   rightWeaponCircle: {fileID: 6262962569331772227}
   leftWeaponBar: {fileID: 1125373559271943500}
   rightWeaponBar: {fileID: 2804876751312710529}
-  equipmentButtons:
-  - {fileID: 915494750023088789}
-  - {fileID: 1369788826679332717}
-  - {fileID: 1270472230162463518}
-  - {fileID: 483942465007602054}
-  - {fileID: 5140342094341341973}
+  bodyEquipmentButton: {fileID: 915494750023088789}
+  leftGunEquipmentButton: {fileID: 1369788826679332717}
+  rightGunEquipmentButton: {fileID: 1270472230162463518}
+  legsEquipmentButton: {fileID: 483942465007602054}
+  itemEquipmentButton: {fileID: 5140342094341341973}
   noneIcon: {fileID: 21300000, guid: 74309bd532d3c164fb88eb7d81374ade, type: 3}
   playerBodyCurrHp: {fileID: 1695923762599544170}
   playerBodySlider: {fileID: 3449432524510837758}

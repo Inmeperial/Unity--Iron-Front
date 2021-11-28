@@ -38,8 +38,8 @@ public class CharacterSelection : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Cursor.lockState == CursorLockMode.Locked) return;
-        
+        if (TurnManager.Instance.GetActiveTeam() == EnumsClass.Team.Red) return;
+
         if (EventSystem.current.IsPointerOverGameObject() == false)
         {
             if (Input.GetMouseButtonDown(0) && _canSelectUnit && MouseRay.CheckIfType(charMask))

@@ -232,6 +232,7 @@ public class Character : EnumsClass, IObservable
     {
         _moving = true;
         ButtonsUIManager.Instance.DeactivateBodyPartsContainer();
+        ButtonsUIManager.Instance.DeactivateEquipablesButtons();
         TurnManager.Instance.UnitIsMoving();
         highlight.characterMoving = true;
         if (_myPositionTile)
@@ -1262,6 +1263,7 @@ public class Character : EnumsClass, IObservable
         PaintTilesInAttackRange(_myPositionTile, 0);
         CheckEnemiesInAttackRange();
 
+        ButtonsUIManager.Instance.ActivateEquipablesButtons();
     }
 
     /// <summary>
@@ -1396,8 +1398,6 @@ public class Character : EnumsClass, IObservable
 
     private void OnMouseOver()
     {
-        if (Cursor.lockState == CursorLockMode.Locked) return;
-        
         if (EventSystem.current.IsPointerOverGameObject()) return;
         
         if (!_selectedForAttack && _canBeSelected)

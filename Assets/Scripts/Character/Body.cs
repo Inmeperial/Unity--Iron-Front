@@ -145,4 +145,9 @@ public class Body : Parts
             }  
         }
     }
+
+    public Item GetItem()
+    {
+        return _item;
+    }
 }

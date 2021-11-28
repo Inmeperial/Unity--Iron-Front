@@ -52,7 +52,12 @@ public class ButtonsUIManager : MonoBehaviour
     public Button leftWeaponBar;
     public Button rightWeaponBar;
     //public EquipmentButton equipmentButton;
-    public EquipmentButton[] equipmentButtons;
+    public EquipmentButton bodyEquipmentButton;
+    public EquipmentButton leftGunEquipmentButton;
+    public EquipmentButton rightGunEquipmentButton;
+    public EquipmentButton legsEquipmentButton;
+    public EquipmentButton itemEquipmentButton;
+    private Dictionary<EquipmentButton, bool> _equipmentButtonsPreviousState = new Dictionary<EquipmentButton, bool>();
     public Sprite noneIcon;
 
     [Header("Player Stats")]
@@ -112,12 +117,12 @@ public class ButtonsUIManager : MonoBehaviour
     
     private void Start()
     {
-        foreach (var button in equipmentButtons)
-        {
-            button.interactable = false;
-            //button.gameObject.SetActive(false);
-        }
-        
+        bodyEquipmentButton.interactable = false;
+        leftGunEquipmentButton.interactable = false;
+        rightGunEquipmentButton.interactable = false;
+        legsEquipmentButton.interactable = false;
+        itemEquipmentButton.interactable = false;
+
         playerHudContainer.SetActive(false);
         _buttonBodySelected = false;
         _buttonLArmSelected = false;
@@ -129,8 +134,6 @@ public class ButtonsUIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Cursor.lockState == CursorLockMode.Locked) return;
-        
         if (EventSystem.current.IsPointerOverGameObject() == false)
         {
             if (_selectedChar && _selectedChar.IsMoving() == false && _selectedEnemy &&
@@ -1098,56 +1101,77 @@ public class ButtonsUIManager : MonoBehaviour
         }
 
         //TODO: REVISAR
-        List<Equipable> equipables = _selectedChar.GetEquipables();
 
-        for (int i = 0; i < equipmentButtons.Length; i++)
+        var body = _selectedChar.GetBody();
+        ConfigureEquipmentButton(bodyEquipmentButton, body.GetAbility());
+
+        var leftGun = _selectedChar.GetLeftGun();
+
+        if (leftGun)
         {
-            var button = equipmentButtons[i];
-            
-            button.Reset();
-            
-            if (equipables.Count < 1)
-            {
-                button.interactable = false;
-                button.SetButtonIcon(noneIcon);
-                continue;
-            }
-            
-            if (i > equipables.Count-1) return;
+            ConfigureEquipmentButton(leftGunEquipmentButton, leftGun.GetAbility());
+        }
+        else ConfigureEquipmentButton(leftGunEquipmentButton, null);
+        
+        var rightGun = _selectedChar.GetRightGun();
+        
+        if (rightGun)
+        {
+            ConfigureEquipmentButton(rightGunEquipmentButton, rightGun.GetAbility());
+        }
+        else ConfigureEquipmentButton(rightGunEquipmentButton, null);
 
-            var equipment = equipables[i];
+        var legs = _selectedChar.GetLegs();
+        
+        ConfigureEquipmentButton(legsEquipmentButton, legs.GetAbility());
 
-            equipment.SetButton(button);
-            
-            button.SetButtonIcon(equipment.GetIcon());
-            
-            button.SetCharacter(_selectedChar);
-            
-            button.AddLeftClick(equipment.Select);
-            
-            button.AddRightClick(equipment.Deselect);
+        if (body.GetItem())
+        {
+            ConfigureEquipmentButton(itemEquipmentButton, body.GetItem());
+        }
+        else ConfigureEquipmentButton(itemEquipmentButton, null);
+    }
 
-            
-            if (equipment.GetEquipableType() == EquipableSO.EquipableType.Passive)
-            {
-                button.interactable = false;
-            }
+    void ConfigureEquipmentButton(EquipmentButton button, Equipable equipable)
+    {
+        button.Reset();
 
-            else if (equipment.GetEquipableType() == EquipableSO.EquipableType.Item &&
-                     equipment.GetAvailableUses() <= 0)
-            {
-                button.interactable = false;
-            }
+        if (equipable == null)
+        {
+            button.interactable = false;
+            button.SetButtonIcon(noneIcon);
+            return;
+        }
+        
+        equipable.SetButton(button);
+
+        button.SetButtonIcon(equipable.GetIcon());
+        
+        button.SetCharacter(_selectedChar);
             
-            else if (equipment.CanBeUsed() == false)
-            {
-                button.interactable = false;
-            }
+        button.AddLeftClick(equipable.Select);
             
-            else
-            {
-                button.interactable = true;
-            }
+        button.AddRightClick(equipable.Deselect);
+        
+        if (equipable.GetEquipableType() == EquipableSO.EquipableType.Passive)
+        {
+            button.interactable = false;
+        }
+
+        else if (equipable.GetEquipableType() == EquipableSO.EquipableType.Item &&
+                 equipable.GetAvailableUses() <= 0)
+        {
+            button.interactable = false;
+        }
+            
+        else if (equipable.CanBeUsed() == false)
+        {
+            button.interactable = false;
+        }
+            
+        else
+        {
+            button.interactable = true;
         }
     }
 
@@ -1321,11 +1345,6 @@ public class ButtonsUIManager : MonoBehaviour
         buttonExecuteAttack.interactable = false;
     }
 
-    public void EquipmentButtonState(EquipmentButton button, bool state)
-    {
-        button.interactable = state;
-    }
-
     public void RightWeaponCircleState(bool state)
     {
         rightWeaponCircle.transform.parent.gameObject.SetActive(state);
@@ -1343,4 +1362,32 @@ public class ButtonsUIManager : MonoBehaviour
         leftWeaponBar.enabled = state;
     }
     #endregion
+
+    public void DeactivateEquipablesButtons()
+    {
+        _equipmentButtonsPreviousState.Clear();
+        
+        _equipmentButtonsPreviousState.Add(bodyEquipmentButton, bodyEquipmentButton.IsInteractable());
+        bodyEquipmentButton.interactable = false;
+        
+        _equipmentButtonsPreviousState.Add(leftGunEquipmentButton, leftGunEquipmentButton.IsInteractable());
+        leftGunEquipmentButton.interactable = false;
+        
+        _equipmentButtonsPreviousState.Add(rightGunEquipmentButton, rightGunEquipmentButton.IsInteractable());
+        rightGunEquipmentButton.interactable = false;
+        
+        _equipmentButtonsPreviousState.Add(legsEquipmentButton, legsEquipmentButton.IsInteractable());
+        legsEquipmentButton.interactable = false;
+        
+        _equipmentButtonsPreviousState.Add(itemEquipmentButton, itemEquipmentButton.IsInteractable());
+        itemEquipmentButton.interactable = false;
+    }
+
+    public void ActivateEquipablesButtons()
+    {
+        foreach (var kv in _equipmentButtonsPreviousState)
+        {
+            kv.Key.interactable = kv.Value;
+        }
+    }
 }
