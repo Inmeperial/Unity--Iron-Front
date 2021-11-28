@@ -1150,8 +1150,46 @@ public class ButtonsUIManager : MonoBehaviour
         button.SetCharacter(_selectedChar);
             
         button.AddLeftClick(equipable.Select);
+        
+        //This deactivates all buttons except the clicked one
+        button.AddLeftClick(() =>
+        {
+            _equipmentButtonsPreviousState.Clear();
+            
+            if (button != bodyEquipmentButton)
+            {
+                _equipmentButtonsPreviousState.Add(bodyEquipmentButton, bodyEquipmentButton.IsInteractable());
+                bodyEquipmentButton.interactable = false;
+            }
+            
+            if (button != leftGunEquipmentButton)
+            {
+                _equipmentButtonsPreviousState.Add(leftGunEquipmentButton, leftGunEquipmentButton.IsInteractable());
+                leftGunEquipmentButton.interactable = false;
+            }
+            
+            if (button != rightGunEquipmentButton)
+            {
+                _equipmentButtonsPreviousState.Add(rightGunEquipmentButton, rightGunEquipmentButton.IsInteractable());
+                rightGunEquipmentButton.interactable = false;
+            }
+            
+            if (button != legsEquipmentButton)
+            {
+                _equipmentButtonsPreviousState.Add(legsEquipmentButton, legsEquipmentButton.IsInteractable());
+                legsEquipmentButton.interactable = false;
+            }
+            
+            if (button != itemEquipmentButton)
+            {
+                _equipmentButtonsPreviousState.Add(itemEquipmentButton, itemEquipmentButton.IsInteractable());
+                itemEquipmentButton.interactable = false;
+            }
+        });
             
         button.AddRightClick(equipable.Deselect);
+        
+        button.AddRightClick(ActivateEquipablesButtons);
         
         if (equipable.GetEquipableType() == EquipableSO.EquipableType.Passive)
         {
@@ -1389,5 +1427,7 @@ public class ButtonsUIManager : MonoBehaviour
         {
             kv.Key.interactable = kv.Value;
         }
+        
+        _equipmentButtonsPreviousState.Clear();
     }
 }
