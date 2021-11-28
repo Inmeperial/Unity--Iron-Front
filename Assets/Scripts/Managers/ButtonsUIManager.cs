@@ -1120,11 +1120,9 @@ public class ButtonsUIManager : MonoBehaviour
             button.SetButtonIcon(equipment.GetIcon());
             
             button.SetCharacter(_selectedChar);
-
-            button.ClearLeftClick();
+            
             button.AddLeftClick(equipment.Select);
             
-            button.ClearRightClick();
             button.AddRightClick(equipment.Deselect);
 
             
