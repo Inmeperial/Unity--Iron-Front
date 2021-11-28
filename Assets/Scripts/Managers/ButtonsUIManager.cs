@@ -451,6 +451,8 @@ public class ButtonsUIManager : MonoBehaviour
         var cam = FindObjectOfType<CloseUpCamera>();
         WorldUI ui = _selectedEnemy.GetMyUI();
 
+        ui.ResetButtons();
+        
         float rightGunHP = 0;
         if (_selectedEnemy.GetRightGun())
             rightGunHP = _selectedEnemy.GetRightGun().GetCurrentHp();

@@ -1585,9 +1585,6 @@ public class Character : EnumsClass, IObservable
         var bodyShader = bodyMesh.GetComponent<MasterShaderScript>();
         bodyShader.colorMecha = _mechaEquipment.GetBodyColor();
 
-
-        _myUI.SetBodyButtonPart(_materialMechaHandler,MechaParts.Body);
-
         var leftArm = Instantiate(_mechaEquipment.body.armsMeshPrefab[0], _leftArmSpawnPosition);
         leftArm.transform.localPosition = Vector3.zero;
         var leftArmShader = leftArm.GetComponent<MasterShaderScript>();
@@ -1603,8 +1600,6 @@ public class Character : EnumsClass, IObservable
             _leftGun.SetGun(_mechaEquipment.leftGun, this, Equipable.Location.LeftGun);
             _leftGun.SetRightOrLeft("Left");
             _leftGun.StartRoulette();
-
-            _myUI.SetLeftArmButtonPart(_materialMechaHandler, MechaParts.LArm);
         }
 
 
@@ -1622,7 +1617,6 @@ public class Character : EnumsClass, IObservable
             _rightGun.SetGun(_mechaEquipment.rightGun, this, Equipable.Location.RightGun);
             _rightGun.SetRightOrLeft("Right");
             _rightGun.StartRoulette();
-            _myUI.SetRightArmButtonPart(_materialMechaHandler,MechaParts.RArm);
         }
 
         _legs = Instantiate(_mechaEquipment.legs.prefab, _rightLegSpawnPosition);
@@ -1649,7 +1643,7 @@ public class Character : EnumsClass, IObservable
 
         _materialMechaHandler.SetPartGameObject(_body, _leftGun, _rightGun, _legs);
         
-        _myUI.SetLegsButtonPart(_materialMechaHandler, MechaParts.Legs);
+        _myUI.SetPartsButtonCharacter(this);
         
         
         //TODO: alive

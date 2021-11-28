@@ -14,14 +14,25 @@ public class MechaPartButton : CustomButton
     
     private int _bulletsCount;
     private Character _characterSelected;
+    private PartsMechaEnum _partEnum;
     public override void OnPointerEnter(PointerEventData eventData)
     {
-        //TODO: Resaltar partes
-        //_materialHandler.SetSelectedPartMaterialToBody(_part, true);
-        //_characterSelected.SetShaderForPart(SwitchTextureEnum.TextureHighLight, PartsMechaEnum.armL)
         UpdateDamagePreviewSlider();
         
         _damagePreviewSlider.gameObject.SetActive(true);
+
+        _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureFresnel, _partEnum);
+
+        if (_partEnum == PartsMechaEnum.body)
+        {
+            _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.armL);
+            _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.armR);
+        }
+        
+        if (_partEnum == PartsMechaEnum.legL)
+        {
+            _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.legR);
+        }
     }
     
     public override void OnPointerExit(PointerEventData eventData)
@@ -29,8 +40,18 @@ public class MechaPartButton : CustomButton
         if (_bulletsCount <= 0)
         {
             _damagePreviewSlider.gameObject.SetActive(false);
-            //TODO: Resaltar partes off
-            //_materialHandler.SetSelectedPartMaterialToBody(_part, false);
+            _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
+            
+            if (_partEnum == PartsMechaEnum.body)
+            {
+                _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armL);
+                _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armR);
+            }
+            
+            if (_partEnum == PartsMechaEnum.legL)
+            {
+                _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.legR);
+            }
         }
             
     }
@@ -38,6 +59,23 @@ public class MechaPartButton : CustomButton
     protected override void PressRight()
     {
         base.PressRight();
+
+        if (_bulletsCount <= 0)
+        {
+            _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
+            
+            if (_partEnum == PartsMechaEnum.body)
+            {
+                _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armL);
+                _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armR);
+            }
+            
+            if (_partEnum == PartsMechaEnum.legL)
+            {
+                _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.legR);
+            }
+        }
+        
         UpdateDamagePreviewSlider();
     }
 
@@ -83,9 +121,27 @@ public class MechaPartButton : CustomButton
         _bulletsCount = value;
     }
 
-    public void SetPart(MaterialMechaHandler handler, MechaParts part)
+    public void SetCharacter(Character character, PartsMechaEnum part)
     {
-        //_materialHandler = handler;
-        //_part = part;
+        _characterSelected = character;
+        _partEnum = part;
+    }
+
+    public void ResetButton()
+    {
+        _bulletsCount = 0;
+        _bulletsCountText.text = "0";
+        _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
+        
+        if (_partEnum == PartsMechaEnum.body)
+        {
+            _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armL);
+            _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armR);
+        }
+
+        if (_partEnum == PartsMechaEnum.legL)
+        {
+            _characterSelected.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.legR);
+        }
     }
 }

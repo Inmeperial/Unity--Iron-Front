@@ -387,23 +387,20 @@ public class WorldUI : MonoBehaviour
         _legsButton.SetBulletsCount(count);
     }
 
-    public void SetBodyButtonPart(MaterialMechaHandler handler, MechaParts part)
+    public void SetPartsButtonCharacter(Character character)
     {
-        _bodyButton.SetPart(handler, part);
+        _bodyButton.SetCharacter(character, PartsMechaEnum.body);
+        _leftArmButton.SetCharacter(character, PartsMechaEnum.weaponL);
+        _rightArmButton.SetCharacter(character, PartsMechaEnum.weaponR);
+        _legsButton.SetCharacter(character, PartsMechaEnum.legL);
     }
-    
-    public void SetLeftArmButtonPart(MaterialMechaHandler handler, MechaParts part)
+
+    public void ResetButtons()
     {
-        _leftArmButton.SetPart(handler, part);
-    }
-    public void SetRightArmButtonPart(MaterialMechaHandler handler, MechaParts part)
-    {
-        _rightArmButton.SetPart(handler, part);
-    }
-    
-    public void SetLegsButtonPart(MaterialMechaHandler handler, MechaParts part)
-    {
-        _legsButton.SetPart(handler, part);
+        _bodyButton.ResetButton();
+        _leftArmButton.ResetButton();
+        _rightArmButton.ResetButton();
+        _legsButton.ResetButton();
     }
 
     #endregion
