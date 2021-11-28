@@ -111,6 +111,7 @@ public class Character : EnumsClass, IObservable
     //OTHERS
     public List<GameObject> bodyRenderContainer = new List<GameObject>();
     protected HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
+    public List<Tile> listaDeTiles = new List<Tile>();
     protected Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
     protected Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();
     protected List<Character> _enemiesInRange = new List<Character>();
@@ -331,7 +332,8 @@ public class Character : EnumsClass, IObservable
             {
                 if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
                 {
-                    PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+                    if (_unitTeam == Team.Green) PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+                    else PaintTilesInAttackRange(_myPositionTile, 0);
                     CheckEnemiesInAttackRange(); 
                 }
             }
@@ -346,7 +348,8 @@ public class Character : EnumsClass, IObservable
 
         if (!_isOnElevator && _canMove)
         {
-            PaintTilesInMoveRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+            if (_unitTeam == Team.Green) PaintTilesInMoveRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+            else PaintTilesInMoveRange(_myPositionTile, 0);
         }
     }
 
@@ -379,7 +382,10 @@ public class Character : EnumsClass, IObservable
             {
                 if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
                 {
-                    PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+                    if (_unitTeam == Team.Green) PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+                    else PaintTilesInAttackRange(_myPositionTile, 0);
+                    
+
                     CheckEnemiesInAttackRange(); 
                 }
             }
@@ -394,7 +400,8 @@ public class Character : EnumsClass, IObservable
 
         if (!_isOnElevator && _canMove)
         {
-            PaintTilesInMoveRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+            if (_unitTeam == Team.Green) PaintTilesInMoveRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+            else PaintTilesInMoveRange(_myPositionTile, 0);
         }
     }
 
@@ -429,7 +436,6 @@ public class Character : EnumsClass, IObservable
     {
         if (_isDead) return;
 
-
         _selected = true;
         InitialRotation = transform.rotation; //Cambio Nico
         ResetInRangeLists();
@@ -459,7 +465,7 @@ public class Character : EnumsClass, IObservable
             else if (_leftGunAlive && _leftGun) _selectedGun = _leftGun;
             
             else _selectedGun = null;
-
+            
             if (_isOnElevator && _selectedGun.GetAttackRange() > 1)
             {
                 PaintTilesInAttackRange(_myPositionTile, 0);
@@ -1101,6 +1107,7 @@ public class Character : EnumsClass, IObservable
                 if (!tile.HasTileAbove() && tile.IsWalkable())
                 {
                     _tilesInAttackRange.Add(tile);
+                    listaDeTiles.Add(tile);
                     tile.inAttackRange = true;
                     if (tile.inMoveRange)
                     {
@@ -1155,6 +1162,7 @@ public class Character : EnumsClass, IObservable
     {
         highlight.ClearTilesInAttackRange(_tilesInAttackRange);
         _tilesInAttackRange.Clear();
+        listaDeTiles.Clear();
         _tilesForAttackChecked.Clear();
     }
 
@@ -1352,14 +1360,15 @@ public class Character : EnumsClass, IObservable
         }
 
         _enemiesInRange.Clear();
+
         foreach (Tile item in _tilesInAttackRange)
         {
             if (!item.IsFree())
             {
                 Character unit = item.GetUnitAbove();
-
+                
                 if (unit.GetUnitTeam() == _unitTeam) continue;
-
+                
                 if (unit.IsDead()) continue;
                 TurnManager.Instance.UnitCanBeAttacked(unit);
                 _enemiesInRange.Add(unit);

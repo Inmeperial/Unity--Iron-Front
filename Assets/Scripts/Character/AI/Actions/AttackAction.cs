@@ -98,7 +98,6 @@ public class AttackAction : GOAction
                 
                 case "DEFAULT":
                     _myUnit.transform.rotation = initialRotation;
-                    Debug.Log("sin partes para atacar");
                     break;
             }
             if (partToAttack != "DEFAULT")

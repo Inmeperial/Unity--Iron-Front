@@ -2,6 +2,7 @@
 
 using Pada1.BBCore;
 using Pada1.BBCore.Tasks;
+using UnityEngine;
 
 [Action("Iron Front/AI Actions/Find Closest Enemy")]
 public class FindClosestEnemy : GOAction

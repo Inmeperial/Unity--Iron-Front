@@ -86,11 +86,13 @@ public class WorkshopUIManager : MonoBehaviour
       WorkshopManager.OnClickNext -= UpdateOverviewText;
       WorkshopManager.OnClickCloseEdit -= UpdateOverviewText;
       WorkshopManager.OnClickEdit -= UpdateWeightSlider;
+      WorkshopManager.OnClickMecha -= UpdateOverviewText;
       
       WorkshopManager.OnClickPrevious += UpdateOverviewText;
       WorkshopManager.OnClickNext += UpdateOverviewText;
       WorkshopManager.OnClickCloseEdit += UpdateOverviewText;
       WorkshopManager.OnClickEdit += UpdateWeightSlider;
+      WorkshopManager.OnClickMecha += UpdateOverviewText;
       UpdateOverviewText(3);
 
       _weightTextColor = _weightText.color;//Me guardo el color inicial del texto
@@ -632,5 +634,6 @@ public class WorkshopUIManager : MonoBehaviour
       WorkshopManager.OnClickNext -= UpdateOverviewText;
       WorkshopManager.OnClickCloseEdit -= UpdateOverviewText;
       WorkshopManager.OnClickEdit -= UpdateWeightSlider;
+      WorkshopManager.OnClickMecha -= UpdateOverviewText;
    }
 }

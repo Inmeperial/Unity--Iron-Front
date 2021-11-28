@@ -1,5 +1,6 @@
 ﻿using Pada1.BBCore;
 using BBUnity.Conditions;
+using UnityEngine;
 
 [Condition("Iron Front/AI Conditions/CheckPartsInSight")]
 [Help("Checks which enemy parts are in sight for attack.")]
@@ -21,9 +22,9 @@ public class CheckPartsInSight : GOCondition
         
 
         Character closestEnemy = _myUnit.GetClosestEnemy();
-
-        if (!closestEnemy) return false;
         
+        if (!closestEnemy) return false;
+
         _myUnit.RotateTowardsEnemy(closestEnemy.transform);
         bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
         bool leftArm = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LGun", false);
