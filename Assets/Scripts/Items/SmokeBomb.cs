@@ -25,6 +25,10 @@ public class SmokeBomb : Item, IObserver
 		_character.DeselectThisUnit();
 		_character.EquipableSelectionState(true, this);
 		PaintTilesInSelectionRange(_character.GetMyPositionTile(), 0);
+		if (!_smokeScreen)
+			_smokeScreen = Instantiate(_data.smokeGameObject);
+		else
+			_smokeScreen.SetActive(true);
 	}
 
 	private void PaintTilesInSelectionRange(Tile currentTile, int count)
@@ -52,14 +56,17 @@ public class SmokeBomb : Item, IObserver
 
 	public override void Use(Action callback = null)
 	{
+		var selectedTile = MouseRay.GetTargetTransform(_character.block).GetComponent<Tile>();
+		if (!selectedTile || !_tilesInRange.Contains(selectedTile)) return;
+		_smokeScreen.transform.position = selectedTile.transform.position;
+
 		if (Input.GetMouseButtonDown(0))
 		{
 			//Creo la esfera con el radio y le agrego el collider
 			//Para saber la posición donde crear la esfera necesito saber el tile que estoy tocando con un raycast
-			var selectedTile = MouseRay.GetTargetTransform(_character.block).GetComponent<Tile>();
-			if (!selectedTile || !_tilesInRange.Contains(selectedTile)) return;
+			
 			_turnsLived = 0;
-			_smokeScreen = Instantiate(_data.smokeGameObject, selectedTile.transform.position, Quaternion.identity);
+			//_smokeScreen = Instantiate(_data.smokeGameObject, selectedTile.transform.position, Quaternion.identity);
 			//Tengo en cuenta el transcurso de los turnos para saber cuando muere el efecto.
 			StartCoroutine(LifeSpan());
 			if (callback != null)
@@ -73,7 +80,10 @@ public class SmokeBomb : Item, IObserver
 		}
 
 		if (Input.GetMouseButtonDown(1))
+		{
+			_smokeScreen.SetActive(false);
 			Deselect();
+		}
 		
 	}
 
