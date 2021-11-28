@@ -203,7 +203,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1898471817}
-        m_MethodName: FirstTimePlayingLoad
+        m_MethodName: MenuLoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1176,9 +1176,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1898471814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80ecfd73a81c920489771a644067c4a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 43f8b33f65404664a9e2d9228e380170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuOptions: {fileID: 0}
 --- !u!1 &1993210879
 GameObject:
   m_ObjectHideFlags: 0
