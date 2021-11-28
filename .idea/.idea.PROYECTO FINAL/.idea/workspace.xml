@@ -6,16 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="58a4e8b3-6a44-45fc-a481-3cddbb3bc263" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MechaEquipment.save" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MechaEquipment.save" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/AI/Actions/AttackAction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/AI/Actions/AttackAction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/AI/Actions/FindClosestEnemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/AI/Actions/FindClosestEnemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/AI/Behaviors/AttackBehavior.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/AI/Behaviors/AttackBehavior.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/AI/Conditions/CheckEnemiesInRange.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/AI/Conditions/CheckEnemiesInRange.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/AI/Conditions/CheckPartsInSight.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/AI/Conditions/CheckPartsInSight.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/AI/EnemyCharacter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/AI/EnemyCharacter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ButtonsUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ButtonsUIManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Quixel/3D_Plants/NatureTreeLog.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/TurnManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/TurnManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,18 +164,18 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Items/Item.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Camera/WorkshopCamera.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CharacterSelection.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/TurnManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ChangeScene.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/World/Tile.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/MouseEnable.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/Conditions/CheckPartsInSight.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/Actions/AttackAction.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ButtonsUIManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/Actions/FindClosestEnemy.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/Conditions/CheckEnemiesInRange.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/EnemyCharacter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/Actions/FindClosestEnemy.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/Conditions/CheckEnemiesInRange.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/Conditions/CheckPartsInSight.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/Actions/AttackAction.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/TurnManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sOlsvSN0iUpd6MRLO6lGcnlToG" />
@@ -252,45 +244,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/ButtonsUIManager.cs</url>
-          <line>501</line>
-          <properties documentPath="E:\PROYECTO FINAL\Assets\Scripts\Managers\ButtonsUIManager.cs" initialLine="500" containingFunctionPresentation="method 'Attack'">
-            <startOffsets>
-              <option value="16005" />
-            </startOffsets>
-            <endOffsets>
-              <option value="16027" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/ButtonsUIManager.cs</url>
-          <line>502</line>
-          <properties documentPath="E:\PROYECTO FINAL\Assets\Scripts\Managers\ButtonsUIManager.cs" initialLine="501" containingFunctionPresentation="method 'Attack'">
-            <startOffsets>
-              <option value="16036" />
-            </startOffsets>
-            <endOffsets>
-              <option value="16070" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/ButtonsUIManager.cs</url>
-          <line>506</line>
-          <properties documentPath="E:\PROYECTO FINAL\Assets\Scripts\Managers\ButtonsUIManager.cs" initialLine="505" containingFunctionPresentation="method 'Attack'">
-            <startOffsets>
-              <option value="16203" />
-            </startOffsets>
-            <endOffsets>
-              <option value="16242" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Character/Body.cs</url>
           <line>37</line>
           <properties documentPath="E:\PROYECTO FINAL\Assets\Scripts\Character\Body.cs" initialLine="37" containingFunctionPresentation="method 'TakeDamage'">
@@ -341,19 +294,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/ButtonsUIManager.cs</url>
-          <line>529</line>
-          <properties documentPath="E:\PROYECTO FINAL\Assets\Scripts\Managers\ButtonsUIManager.cs" initialLine="528" containingFunctionPresentation="method 'Attack'">
-            <startOffsets>
-              <option value="16847" />
-            </startOffsets>
-            <endOffsets>
-              <option value="16889" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/GunZ/Gun.cs</url>
@@ -575,58 +515,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Character/Character.cs</url>
-          <line>1101</line>
-          <properties documentPath="E:\PROYECTO FINAL\Assets\Scripts\Character\Character.cs" initialLine="1106" containingFunctionPresentation="method 'PaintTilesInAttackRange'">
-            <startOffsets>
-              <option value="29540" />
-            </startOffsets>
-            <endOffsets>
-              <option value="29588" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Character/Character.cs</url>
-          <line>1119</line>
-          <properties documentPath="E:\PROYECTO FINAL\Assets\Scripts\Character\Character.cs" initialLine="1123" containingFunctionPresentation="method 'PaintTilesInAttackRange'">
-            <startOffsets>
-              <option value="30159" />
-            </startOffsets>
-            <endOffsets>
-              <option value="30200" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Character/Character.cs</url>
-          <line>1107</line>
-          <properties documentPath="E:\PROYECTO FINAL\Assets\Scripts\Character\Character.cs" initialLine="1112" containingFunctionPresentation="method 'PaintTilesInAttackRange'">
-            <startOffsets>
-              <option value="29767" />
-            </startOffsets>
-            <endOffsets>
-              <option value="29797" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Character/Character.cs</url>
-          <line>1103</line>
-          <properties documentPath="E:\PROYECTO FINAL\Assets\Scripts\Character\Character.cs" initialLine="1108" containingFunctionPresentation="method 'PaintTilesInAttackRange'">
-            <startOffsets>
-              <option value="29611" />
-            </startOffsets>
-            <endOffsets>
-              <option value="29651" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

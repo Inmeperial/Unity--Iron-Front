@@ -6,13 +6,14 @@ using System.Linq;
 
 public class TurnManager : EnumsClass, IObservable, IObserver
 {
+    [SerializeField] private GameObject _winPanel;
+    [SerializeField] private GameObject _losePanel;
     private List<Character> _greenTeam = new List<Character>();
     private int _greenDeadCount;
     private List<Character> _redTeam = new List<Character>();
     private int _redDeadCount;
     private Character[] _allUnits;
     private TileHighlight _highlight;
-    private ButtonsUIManager _buttonsUIManager;
 
     private Team _activeTeam;
 
@@ -411,7 +412,8 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         Debug.Log("green dead");
         _greenDeadCount++;
         if (_greenDeadCount < _greenTeam.Count) return;
-        FindObjectOfType<ChangeScene>().Defeat();
+        //FindObjectOfType<ChangeScene>().Defeat();
+        _losePanel.SetActive(true);
     }
 
     private void RedUnitDied()
@@ -419,7 +421,8 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         Debug.Log("red dead");
         _redDeadCount++;
         if (_redDeadCount < _redTeam.Count) return;
-        FindObjectOfType<ChangeScene>().Win();
+        //FindObjectOfType<ChangeScene>().Win();
+        _winPanel.SetActive(true);
     }
 
     public void SetMortarAttack(bool state)
