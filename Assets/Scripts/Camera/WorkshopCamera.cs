@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class WorkshopCamera : MonoBehaviour
@@ -8,6 +9,7 @@ public class WorkshopCamera : MonoBehaviour
     [SerializeField] private Transform[] _cameraPositions;
     [SerializeField] private Transform[] _mechaEditCameraPositions;
     private bool _isMoving;
+    private bool _coroutineRunning;
     private CustomButton[] _buttons;
 
     private void Awake()
@@ -21,12 +23,19 @@ public class WorkshopCamera : MonoBehaviour
     private void Start()
     {
         _buttons = FindObjectsOfType<CustomButton>();
+        
+        //Removes them if they exist
+        WorkshopManager.OnClickPrevious -= OverviewCameraMove;
+        WorkshopManager.OnClickNext -= OverviewCameraMove;
+        WorkshopManager.OnClickEdit -= FocusCameraMove;
+        WorkshopManager.OnClickCloseEdit -= UnfocusCameraMove;
+        WorkshopManager.OnClickMecha -= OverviewCameraMove;
+
         WorkshopManager.OnClickPrevious += OverviewCameraMove;
         WorkshopManager.OnClickNext += OverviewCameraMove;
         WorkshopManager.OnClickEdit += FocusCameraMove;
         WorkshopManager.OnClickCloseEdit += UnfocusCameraMove;
         WorkshopManager.OnClickMecha += OverviewCameraMove;
-        //WorkshopManager.OnClickSelectedMecha += FocusCameraMove;
     }
 
     public void OverviewCameraMove(int mechaIndex)
@@ -57,11 +66,12 @@ public class WorkshopCamera : MonoBehaviour
     {
         _isMoving = true;
         ChangeButtonInteraction(false);
-        StopAllCoroutines();
+        if (_coroutineRunning) StopAllCoroutines();
     }
     
     IEnumerator StartMovement(Transform t)
     {
+        _coroutineRunning = true;
         Vector3 startPos = transform.position;
         Vector3 endPos = t.position;
         float lerpTime = 0;
@@ -84,15 +94,18 @@ public class WorkshopCamera : MonoBehaviour
         {
             transform.LookAt(t.GetChild(0));
         }
+        _coroutineRunning = false;
     }
     
     IEnumerator LookWhileMoving(Transform t)
     {
+        _coroutineRunning = true;
         while (_isMoving)
         {
             transform.LookAt(t);
             yield return new WaitForEndOfFrame();
         }
+        _coroutineRunning = false;
     }
     
     void ChangeButtonInteraction(bool state)
@@ -101,5 +114,14 @@ public class WorkshopCamera : MonoBehaviour
         {
             button.interactable = state;
         }
+    }
+
+    private void OnDisable()
+    {
+        WorkshopManager.OnClickPrevious -= OverviewCameraMove;
+        WorkshopManager.OnClickNext -= OverviewCameraMove;
+        WorkshopManager.OnClickEdit -= FocusCameraMove;
+        WorkshopManager.OnClickCloseEdit -= UnfocusCameraMove;
+        WorkshopManager.OnClickMecha -= OverviewCameraMove;
     }
 }

@@ -61,4 +61,11 @@ public class EquipmentButton : CustomButton
     {
         _character = character;
     }
+
+    public void Reset()
+    {
+        ClearRightClick();
+        ClearLeftClick();
+        _character = null;
+    }
 }

@@ -6,11 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="58a4e8b3-6a44-45fc-a481-3cddbb3bc263" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PROYECTO FINAL/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/AI/EnemyCharacter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/AI/EnemyCharacter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/PortraitsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/PortraitsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/TurnManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/TurnManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/World/Bridge.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/World/Bridge.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechaEquipment.save" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MechaEquipment.save" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Camera/WorkshopCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Camera/WorkshopCamera.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ButtonsUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ButtonsUIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Buttons/EquipmentButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Buttons/EquipmentButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +129,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/InitializationManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/AssaultRifle.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/Melee.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/Rifle.cs" />
@@ -149,11 +149,8 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CharacterSelection.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/World/Tile.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Abilities/SmokeScreen.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Items/GrenadeSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Items/ItemSO.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Buttons/EquipmentButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Others/EquipableSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Items/MineItem.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Items/RepairKit.cs" />
@@ -168,7 +165,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopMecha.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Others/Equipable.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Items/Item.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ButtonsUIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Abilities/Ability.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GunZ/Gun.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/Parts.cs" />
@@ -176,9 +172,14 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/Legs.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/AI/EnemyCharacter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/PortraitsController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/World/Bridge.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/TurnManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/PortraitsController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopUIManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Workshop/WorkshopManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Camera/WorkshopCamera.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Buttons/EquipmentButton.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ButtonsUIManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sOlsvSN0iUpd6MRLO6lGcnlToG" />
@@ -204,10 +205,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="20932">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="20932" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />

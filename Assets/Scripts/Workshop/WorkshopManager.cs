@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -43,6 +44,15 @@ public class WorkshopManager : MonoBehaviour
         _isEditing = false;
         _mechaIndex = 3;
         _soundMenu = GetComponent<SoundsMenu>();
+        
+        //Removes them in case they exist
+        WorkshopUIManager.OnChangeEquippable -= UpdateEquippable;
+        WorkshopUIManager.OnBodyColorChange -= UpdateBodyColor;
+        WorkshopUIManager.OnLegsColorChange -= UpdateLegsColor;
+        WorkshopUIManager.OnCopyColorToAllBodies -= CopyColorToAllBodies;
+        WorkshopUIManager.OnCopyColorToAllLegs -= CopyColorToAllLegs;
+        WorkshopUIManager.OnNameChange -= UpdateName;
+        
         WorkshopUIManager.OnChangeEquippable += UpdateEquippable;
         WorkshopUIManager.OnBodyColorChange += UpdateBodyColor;
         WorkshopUIManager.OnLegsColorChange += UpdateLegsColor;
@@ -442,5 +452,15 @@ public class WorkshopManager : MonoBehaviour
 	{
         button.interactable = false;
         button.interactable = true;
+    }
+
+    private void OnDisable()
+    {
+        WorkshopUIManager.OnChangeEquippable -= UpdateEquippable;
+        WorkshopUIManager.OnBodyColorChange -= UpdateBodyColor;
+        WorkshopUIManager.OnLegsColorChange -= UpdateLegsColor;
+        WorkshopUIManager.OnCopyColorToAllBodies -= CopyColorToAllBodies;
+        WorkshopUIManager.OnCopyColorToAllLegs -= CopyColorToAllLegs;
+        WorkshopUIManager.OnNameChange -= UpdateName;
     }
 }

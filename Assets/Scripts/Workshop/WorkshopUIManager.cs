@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -80,6 +81,12 @@ public class WorkshopUIManager : MonoBehaviour
    public static event NameChange OnNameChange;
    private void Start()
    {
+      //Removes them if they exist
+      WorkshopManager.OnClickPrevious -= UpdateOverviewText;
+      WorkshopManager.OnClickNext -= UpdateOverviewText;
+      WorkshopManager.OnClickCloseEdit -= UpdateOverviewText;
+      WorkshopManager.OnClickEdit -= UpdateWeightSlider;
+      
       WorkshopManager.OnClickPrevious += UpdateOverviewText;
       WorkshopManager.OnClickNext += UpdateOverviewText;
       WorkshopManager.OnClickCloseEdit += UpdateOverviewText;
@@ -617,5 +624,13 @@ public class WorkshopUIManager : MonoBehaviour
          _legsAbilityImage.sprite = currentMechaEquipment.legs.ability.equipableIcon;
       }
       else _legsAbilityImage.sprite = _noneIcon;
+   }
+
+   private void OnDisable()
+   {
+      WorkshopManager.OnClickPrevious -= UpdateOverviewText;
+      WorkshopManager.OnClickNext -= UpdateOverviewText;
+      WorkshopManager.OnClickCloseEdit -= UpdateOverviewText;
+      WorkshopManager.OnClickEdit -= UpdateWeightSlider;
    }
 }
