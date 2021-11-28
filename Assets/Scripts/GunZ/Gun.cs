@@ -407,4 +407,14 @@ public abstract class Gun : EnumsClass
     {
         return _weight;
     }
+
+    public void Heal(int value)
+    {
+        _currentHP += value;
+
+        if (_currentHP >= _maxHP)
+            _currentHP = _maxHP;
+        
+        //TODO: Texto de curacion
+    }
 }

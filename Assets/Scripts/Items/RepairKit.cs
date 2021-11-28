@@ -68,56 +68,70 @@ public class RepairKit : Item
 
 	private void RepairUnit(Character unitToRepair)
 	{
-		if(unitToRepair.GetBody().GetCurrentHp() > 0)
+		var body = unitToRepair.GetBody();
+		
+		if(body.GetCurrentHp() > 0)
 		{
 			//Cantidad de curacion
-			var bodyHealAmmount = unitToRepair.GetBody().GetMaxHp() * _data.healPercentage / 100;
+			var bodyHealAmount = body.GetMaxHp() * _data.healPercentage / 100;
+			
+			body.Heal((int)bodyHealAmount);
 			
 			//Chequear si la cantidad de curacion excederia la vida maxima, si es el caso sumar hasta llegar a la vida maxima y no pasarse.
-			if(unitToRepair.GetBody().GetCurrentHp() + bodyHealAmmount > unitToRepair.GetBody().GetMaxHp())
-				bodyHealAmmount = unitToRepair.GetBody().GetMaxHp() - unitToRepair.GetBody().GetCurrentHp();
+			// if(unitToRepair.GetBody().GetCurrentHp() + bodyHealAmmount > unitToRepair.GetBody().GetMaxHp())
+			// 	bodyHealAmmount = unitToRepair.GetBody().GetMaxHp() - unitToRepair.GetBody().GetCurrentHp();
 
 			//Take Damage con un menos para sumarlo en vez de restarlo
-			unitToRepair.GetBody().TakeDamage(-Mathf.RoundToInt(bodyHealAmmount));
+			//unitToRepair.GetBody().TakeDamage(-Mathf.RoundToInt(bodyHealAmmount));
 		}
 
-		if (unitToRepair.GetLeftGun().GetCurrentHp() > 0)
+		var leftGun = unitToRepair.GetLeftGun();
+		if (leftGun)
 		{
 			//Cantidad de curacion
-			var leftGunHealAmmount = unitToRepair.GetLeftGun().GetMaxHp() * _data.healPercentage / 100;
+			var leftGunHealAmount = leftGun.GetMaxHp() * _data.healPercentage / 100;
+
+			leftGun.Heal((int)leftGunHealAmount);
 
 			//Chequear si la cantidad de curacion excederia la vida maxima, si es el caso sumar hasta llegar a la vida maxima y no pasarse.
-			if (unitToRepair.GetLeftGun().GetCurrentHp() + leftGunHealAmmount > unitToRepair.GetLeftGun().GetMaxHp())
-				leftGunHealAmmount = unitToRepair.GetLeftGun().GetMaxHp() - unitToRepair.GetLeftGun().GetCurrentHp();
-
-			//Take Damage con un menos para sumarlo en vez de restarlo
-			unitToRepair.GetLeftGun().TakeDamage(-Mathf.RoundToInt(leftGunHealAmmount));
+			// if (unitToRepair.GetLeftGun().GetCurrentHp() + leftGunHealAmmount > unitToRepair.GetLeftGun().GetMaxHp())
+			// 	leftGunHealAmmount = unitToRepair.GetLeftGun().GetMaxHp() - unitToRepair.GetLeftGun().GetCurrentHp();
+			//
+			// //Take Damage con un menos para sumarlo en vez de restarlo
+			// unitToRepair.GetLeftGun().TakeDamage(-Mathf.RoundToInt(leftGunHealAmmount));
 		}
 
-		if (unitToRepair.GetRightGun().GetCurrentHp() > 0)
+		var rightGun = unitToRepair.GetRightGun();
+		
+		if (rightGun)
 		{
 			//Cantidad de curacion
-			var rightGunHealAmmount = unitToRepair.GetRightGun().GetMaxHp() * _data.healPercentage / 100;
+			var rightGunHealAmount = rightGun.GetMaxHp() * _data.healPercentage / 100;
+			rightGun.Heal((int)rightGunHealAmount);
 
 			//Chequear si la cantidad de curacion excederia la vida maxima, si es el caso sumar hasta llegar a la vida maxima y no pasarse.
-			if (unitToRepair.GetRightGun().GetCurrentHp() + rightGunHealAmmount > unitToRepair.GetRightGun().GetMaxHp())
-				rightGunHealAmmount = unitToRepair.GetRightGun().GetMaxHp() - unitToRepair.GetRightGun().GetCurrentHp();
-
-			//Take Damage con un menos para sumarlo en vez de restarlo
-			unitToRepair.GetRightGun().TakeDamage(-Mathf.RoundToInt(rightGunHealAmmount));
+			// if (unitToRepair.GetRightGun().GetCurrentHp() + rightGunHealAmmount > unitToRepair.GetRightGun().GetMaxHp())
+			// 	rightGunHealAmmount = unitToRepair.GetRightGun().GetMaxHp() - unitToRepair.GetRightGun().GetCurrentHp();
+			//
+			// //Take Damage con un menos para sumarlo en vez de restarlo
+			// unitToRepair.GetRightGun().TakeDamage(-Mathf.RoundToInt(rightGunHealAmmount));
 		}
 
-		if (unitToRepair.GetLegs().GetCurrentHp() > 0)
+		var legs = unitToRepair.GetLegs();
+		
+		if (legs.GetCurrentHp() > 0)
 		{
 			//Cantidad de curacion
-			var rightGunHealAmmount = unitToRepair.GetLegs().GetMaxHp() * _data.healPercentage / 100;
+			var rightGunHealAmount = legs.GetMaxHp() * _data.healPercentage / 100;
 
+			legs.Heal((int)rightGunHealAmount);
+			
 			//Chequear si la cantidad de curacion excederia la vida maxima, si es el caso sumar hasta llegar a la vida maxima y no pasarse.
-			if (unitToRepair.GetLegs().GetCurrentHp() + rightGunHealAmmount > unitToRepair.GetLegs().GetMaxHp())
-				rightGunHealAmmount = unitToRepair.GetLegs().GetMaxHp() - unitToRepair.GetLegs().GetCurrentHp();
-
-			//Take Damage con un menos para sumarlo en vez de restarlo
-			unitToRepair.GetLegs().TakeDamage(-Mathf.RoundToInt(rightGunHealAmmount));
+			// if (unitToRepair.GetLegs().GetCurrentHp() + rightGunHealAmount > unitToRepair.GetLegs().GetMaxHp())
+			// 	rightGunHealAmount = unitToRepair.GetLegs().GetMaxHp() - unitToRepair.GetLegs().GetCurrentHp();
+			//
+			// //Take Damage con un menos para sumarlo en vez de restarlo
+			// unitToRepair.GetLegs().TakeDamage(-Mathf.RoundToInt(rightGunHealAmount));
 		}
 		
 	}

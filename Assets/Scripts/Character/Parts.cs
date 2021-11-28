@@ -55,6 +55,16 @@ public abstract class Parts : MonoBehaviour
 
     public abstract void TakeDamage(int damage);
 
+    public void Heal(int value)
+    {
+        _currentHP += value;
+
+        if (_currentHP >= _maxHP)
+            _currentHP = _maxHP;
+        
+        //TODO: Texto de curacion
+    }
+
     public Ability GetAbility()
     {
         return _ability;
