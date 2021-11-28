@@ -1001,6 +1001,11 @@ public class Character : EnumsClass, IObservable
         _equipable = equipable;
     }
 
+    public Equipable GetSelectedEquipable()
+    {
+        return _equipable;
+    }
+
     public GameObject GetBurningSpawner()
     {
 

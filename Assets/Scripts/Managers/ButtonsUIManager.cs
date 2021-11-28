@@ -1154,6 +1154,8 @@ public class ButtonsUIManager : MonoBehaviour
         //This deactivates all buttons except the clicked one
         button.AddLeftClick(() =>
         {
+            //TODO: descomentar si hace falta
+            //_selectedChar.GetSelectedEquipable().Deselect();
             _equipmentButtonsPreviousState.Clear();
             
             if (button != bodyEquipmentButton)
