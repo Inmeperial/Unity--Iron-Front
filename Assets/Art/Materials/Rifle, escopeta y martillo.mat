@@ -10,7 +10,7 @@ Material:
   m_Name: Rifle, escopeta y martillo
   m_Shader: {fileID: 4800000, guid: 16f7a23e2a2538143a91ab1b96d95b6a, type: 3}
   m_ShaderKeywords: _NORMALMAP
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -43,6 +43,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 11e83bb4586b84e4086da88132e35974, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MaskAlbedo:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -57,6 +61,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _TextureAlbedo:
         m_Texture: {fileID: 2800000, guid: 11e83bb4586b84e4086da88132e35974, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureEmission:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureNormal:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureNormal1:
@@ -75,6 +87,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _IsEmissionON: 0
     - _Metallic: 0
     - _Mode: 0
     - _NormalScale: 2.28
@@ -86,6 +99,9 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - __dirty: 0
+    - _isOutLineOn: 0
+    - _isWeapon: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorAlbedo: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

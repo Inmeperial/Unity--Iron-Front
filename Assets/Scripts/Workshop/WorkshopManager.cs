@@ -96,11 +96,6 @@ public class WorkshopManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             NextButton();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SceneManager.LoadScene("Level 1 NUEVO");
-        }
     }
 
     public void PreviousButton()
