@@ -51,7 +51,8 @@ public class PiercingShot : Ability
 
 	public override void Deselect()
 	{
-        _highlight.MortarClearTilesInAttackRange(_tilesInRange);
+        if(_tilesInRange.Count != 0)
+            _highlight.MortarClearTilesInAttackRange(_tilesInRange);
         _tilesInRange.Clear();
         _charactersToAttack.Clear();
         _character.EquipableSelectionState(false, null);
