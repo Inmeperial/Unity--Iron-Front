@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class WorkshopUIManager : MonoBehaviour
 {
-   private readonly int NAME_MAX_CHARS = 10;
+   private readonly int NAME_MAX_CHARS = 9;
    [SerializeField] private Button _saveButton;
    [SerializeField] private Sprite _noneIcon;
    
@@ -456,7 +456,7 @@ public class WorkshopUIManager : MonoBehaviour
 
       var index = workshopManager.GetIndex();
       var currentMechaEquipment = workshopManager.GetMechaEquipment(index);
-      
+
       foreach (var item in items)
       {
          var obj = workshopManager.CreateWorkshopObject(item, _itemsSpawnParent);
@@ -642,6 +642,27 @@ public class WorkshopUIManager : MonoBehaviour
          _legsAbilityImage.sprite = currentMechaEquipment.legs.ability.equipableIcon;
       }
       else _legsAbilityImage.sprite = _noneIcon;
+   }
+
+   public void ItemsTabSetItemIcon()
+   {
+      var workshopManager = FindObjectOfType<WorkshopManager>();
+      
+      var index = workshopManager.GetIndex();
+      
+      var currentMechaEquipment = workshopManager.GetMechaEquipment(index);
+
+      var item = currentMechaEquipment.body.item;
+
+      if (item)
+      {
+         var icon = item.equipableIcon;
+      
+         if (icon)
+            _itemImage.sprite = icon;
+      }
+      
+      else _itemImage.sprite = _noneIcon;
    }
 
    private void OnDisable()
