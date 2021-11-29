@@ -13,6 +13,7 @@ public class EffectsController : MonoBehaviour
     private Vector3 _cameraInitialPosition;
 
     [Header("Particles")]
+    [SerializeField] private GameObject _handGranadeEffect;
     [SerializeField] private GameObject _flameThrowerEffect;
     [SerializeField] private GameObject _damageEffect;
     [SerializeField] private GameObject _mineExplosionEffect;
@@ -26,6 +27,7 @@ public class EffectsController : MonoBehaviour
 
 
     [Header("Sounds")]
+    [SerializeField] private AudioClip _handGranadeSound;
     [SerializeField] private AudioClip _movingBridgeSound;
     [SerializeField] private AudioClip _hammerPreparationSound;
     [SerializeField] private AudioClip _hammerSwingSound;
@@ -80,37 +82,30 @@ public class EffectsController : MonoBehaviour
         switch (type)
         {
             case EnumsClass.ParticleActionType.MovingBridge:
-                //effect = Instantiate(_flameThrowerEffect, obj.transform.position, obj.transform.rotation, obj.transform);
-                //particle = effect.GetComponent<ParticleSystem>();
-                //particle.time = 0f;
-                //particle.Play();
                 AudioManager.audioManagerInstance.PlaySound(_movingBridgeSound, obj);
-                //StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
+
             case EnumsClass.ParticleActionType.HammerPreparation:
-                //effect = Instantiate(_flameThrowerEffect, obj.transform.position, obj.transform.rotation, obj.transform);
-                //particle = effect.GetComponent<ParticleSystem>();
-                //particle.time = 0f;
-                //particle.Play();
                 AudioManager.audioManagerInstance.PlaySound(_hammerPreparationSound, this.gameObject);
-                //StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
+
             case EnumsClass.ParticleActionType.HammerSwing:
-                //effect = Instantiate(_flameThrowerEffect, obj.transform.position, obj.transform.rotation, obj.transform);
-                //particle = effect.GetComponent<ParticleSystem>();
-                //particle.time = 0f;
-                //particle.Play();
                 AudioManager.audioManagerInstance.PlaySound(_hammerSwingSound, this.gameObject);
-                //StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
+
             case EnumsClass.ParticleActionType.HammerHit:
-                //effect = Instantiate(_flameThrowerEffect, obj.transform.position, obj.transform.rotation, obj.transform);
-                //particle = effect.GetComponent<ParticleSystem>();
-                //particle.time = 0f;
-                //particle.Play();
                 AudioManager.audioManagerInstance.PlaySound(_hammerHitSound, this.gameObject);
-                //StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
+
+            case EnumsClass.ParticleActionType.HandGranade:
+                effect = Instantiate(_handGranadeEffect, obj.transform.position, obj.transform.rotation, obj.transform);
+                particle = effect.GetComponent<ParticleSystem>();
+                particle.time = 0f;
+                particle.Play();
+                AudioManager.audioManagerInstance.PlaySound(_handGranadeSound, this.gameObject);
+                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                break;
+
             case EnumsClass.ParticleActionType.FlameThrower:
                 effect = Instantiate(_flameThrowerEffect, obj.transform.position, obj.transform.rotation, obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();
@@ -185,16 +180,6 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
-            //case EnumsClass.ParticleActionType.Hit:
-            //    effect = Instantiate(_hitMechaEffect, obj.transform.position, transform.rotation, transform);
-            //    effect.transform.SetParent(obj.transform);
-            //    particle = effect.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
-            //    particle.time = 0f;
-            //    particle.Play();
-            //    AudioManager.audioManagerInstance.PlaySound(_rifleSound, this.gameObject);
-            //    StartCoroutine(DestroyEffect(effect, particle.main.duration));
-            //    break;
-
             case EnumsClass.ParticleActionType.MortarHit:
                 effect = Instantiate(_dustEffect, obj.transform.position, obj.transform.rotation, obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();
@@ -205,7 +190,7 @@ public class EffectsController : MonoBehaviour
                 break;
         }
     }
-    
+
     /// <summary>
     /// Creates the Damage Text in world. type: 
     /// </summary>

@@ -150,7 +150,7 @@ public class Grenade : Item
             
             unit.GetLegs().TakeDamage(_itemData.damage);
 
-            EffectsController.Instance.PlayParticlesEffect(tile.gameObject, EnumsClass.ParticleActionType.MortarHit);
+            EffectsController.Instance.PlayParticlesEffect(tile.gameObject, EnumsClass.ParticleActionType.HandGranade);
         }
         ItemUsed();
         UpdateButtonText(_availableUses.ToString(), _itemData);
