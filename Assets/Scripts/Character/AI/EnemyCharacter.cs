@@ -97,11 +97,16 @@ public class EnemyCharacter : Character
             
             distance = p.Count;
 
+            if (distance <= 0) continue;
+            
             _targetTile = p[0];
         }
         
         //Clears previous calculated paths
         pathCreator.ResetPath();
+
+        if (_targetTile == null) 
+            return false;
         
         if (_targetTile == _myPositionTile)
             return false;

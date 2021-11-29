@@ -43,7 +43,7 @@ public class MoveAction : GOAction
             return TaskStatus.FAILED;
         }
         
-        return TaskStatus.COMPLETED;
+        return TaskStatus.FAILED;
     }
 
     public void MakeItFail()
