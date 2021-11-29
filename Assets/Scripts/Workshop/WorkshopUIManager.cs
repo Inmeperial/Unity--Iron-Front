@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class WorkshopUIManager : MonoBehaviour
 {
+   private readonly int NAME_MAX_CHARS = 10;
    [SerializeField] private Button _saveButton;
    [SerializeField] private Sprite _noneIcon;
    
@@ -533,6 +534,21 @@ public class WorkshopUIManager : MonoBehaviour
    public void UpdateMechaName()
    {
       var mechaName = _nameField.text;
+
+      if (mechaName.Length >= NAME_MAX_CHARS)
+      {
+         char[] chars = new char[NAME_MAX_CHARS];
+         var nameAsCharArray = mechaName.ToCharArray();
+
+         for (int i = 0; i < NAME_MAX_CHARS; i++)
+         {
+            chars[i] = nameAsCharArray[i];
+         }
+
+         mechaName = new string(chars);
+         _nameField.text = mechaName;
+      }
+      
       OnNameChange?.Invoke(mechaName);
    }
 
