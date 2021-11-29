@@ -545,18 +545,6 @@ public class Character : EnumsClass, IObservable
         transform.LookAt(pos);
     }
 
-    //TODO: Borrar
-    /// <summary>
-    /// Rotate Character towards enemy and execute callback when finished.
-    /// </summary>
-    /// <param name="pos">Position to rotate at.</param>
-    /// <param name="callback"></param>
-    private void RotateTowardsEnemy(Vector3 pos, Action callback)
-    {
-        _move.SetPosToRotate(pos);
-        _move.StartRotation(callback);
-    }
-
     /// <summary>
     /// Cast a ray to given position. Returns true if collided tag is the same as given tag, false if not.
     /// </summary>
@@ -941,7 +929,6 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool LeftGunAlive()
     {
-        //TODO: alive
         if (_leftGun)
             _leftGunAlive = _leftGun.GetCurrentHp() > 0;
         else _leftGunAlive = false;
@@ -954,7 +941,6 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool RightGunAlive()
     {
-        //TODO: alive
         if (_rightGun)
             _rightGunAlive = _rightGun.GetCurrentHp() > 0;
         else _rightGunAlive = false;
@@ -1086,10 +1072,7 @@ public class Character : EnumsClass, IObservable
     //Se pintan los tiles dentro del rango de ataque
     public void PaintTilesInAttackRange(Tile currentTile, int count)
     {
-        //TODO: alive
         if (!_leftGunAlive && !_rightGunAlive) return;
-        
-        //if (!_leftGun && !_rightGun) return;
 
         if (_selectedGun == null || count >= _selectedGun.GetAttackRange() ||
             (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
@@ -1668,7 +1651,6 @@ public class Character : EnumsClass, IObservable
         _myUI.SetPartsButtonCharacter(this);
         
         
-        //TODO: alive
         if (_leftGun)
             _leftGunAlive = _leftGun.GetCurrentHp() > 0 ? true : false;
         else _leftGunAlive = false;

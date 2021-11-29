@@ -62,7 +62,8 @@ public abstract class Parts : MonoBehaviour
         if (_currentHP >= _maxHP)
             _currentHP = _maxHP;
         
-        //TODO: Texto de curacion
+        var pos = transform.position;
+        EffectsController.Instance.CreateDamageText(value.ToString(), 3, pos, true);
     }
 
     public Ability GetAbility()

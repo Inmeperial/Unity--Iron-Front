@@ -398,14 +398,14 @@ public class Tile : MonoBehaviour
         }
     }
 
-    //TODO: Remover si funciona bien el resto
-    public Character GetCharacterAbove()
-    {
-        Physics.Raycast(transform.position, transform.up, out RaycastHit hit, 3, characterMask);
-        if (hit.transform)
-            return hit.transform.GetComponent<Character>();
-        return null;
-    }
+    //TODO: Descomentar si hace falta
+    // public Character GetCharacterAbove()
+    // {
+    //     Physics.Raycast(transform.position, transform.up, out RaycastHit hit, 3, characterMask);
+    //     if (hit.transform)
+    //         return hit.transform.GetComponent<Character>();
+    //     return null;
+    // }
 
     public LandMine GetMineAbove()
     {

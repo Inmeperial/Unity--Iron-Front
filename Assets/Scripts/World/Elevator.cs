@@ -71,8 +71,7 @@ public class Elevator : MonoBehaviour, IObserver
         _actionsDic.Add("EndTurn", CanInteractAgain);
         _actionsDic.Add("AboveTurn", ActivateButton);
     }
-
-    //TODO: hacer el popup del boton para activar
+    
     private void OnTriggerEnter(Collider other)
     {
         if (_currentHp <= 0) return;
@@ -236,8 +235,6 @@ public class Elevator : MonoBehaviour, IObserver
             _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
             _aboveCharacter.GetComponent<Rigidbody>().isKinematic = false;
             
-            
-            //TODO: fall damage
             StartCoroutine(Fall());
         }
     }
@@ -258,7 +255,7 @@ public class Elevator : MonoBehaviour, IObserver
             EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
             EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
             EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position, true);
-            //TODO: fall damage
+
             StartCoroutine(Fall());
         }
     }

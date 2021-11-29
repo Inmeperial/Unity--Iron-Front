@@ -1105,8 +1105,6 @@ public class ButtonsUIManager : MonoBehaviour
             
         }
 
-        //TODO: REVISAR
-
         var body = _selectedChar.GetBody();
         ConfigureEquipmentButton(bodyEquipmentButton, body.GetAbility());
 

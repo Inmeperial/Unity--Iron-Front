@@ -12,6 +12,8 @@ public class DamageText : MonoBehaviour
     [SerializeField] private float _criticalHitFontSize;
     [SerializeField] private Color _missColor;
     [SerializeField] private float _missFontSize;
+    [SerializeField] private Color _healColor;
+    [SerializeField] private float _healFontSize;
     private TextMeshPro _text;
     private Color _color;
 
@@ -32,7 +34,7 @@ public class DamageText : MonoBehaviour
     /// Set text that will be shown.
     /// </summary>
     /// <param name="text">Text to show.</param>
-    /// <param name="type">Miss: 0 - Normal: 1 - Critical: 2.</param>
+    /// <param name="type">Miss: 0 - Normal: 1 - Critical: 2 - Heal: 3.</param>
     /// <param name="order">Order in layer.</param>
     public void SetText(string text, int type, int order)
     {
@@ -55,6 +57,11 @@ public class DamageText : MonoBehaviour
             case 2:
                 _text.fontSize = _criticalHitFontSize;
                 _text.color  = _criticalHitColor;
+                break;
+            
+            case 3:
+                _text.fontSize = _healFontSize;
+                _text.color = _healColor;
                 break;
         }
         _color = _text.color;
