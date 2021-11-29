@@ -745,6 +745,8 @@ public class ButtonsUIManager : MonoBehaviour
             Character[] units = TurnManager.Instance.GetAllUnits();
             foreach (Character unit in units)
             {
+                if (unit.IsDead()) continue;
+                
                 if (!unit.IsSelectedForAttack() && unit.CanBeSelected())
                 {
                     unit.ShowWorldUI();

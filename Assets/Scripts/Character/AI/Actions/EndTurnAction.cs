@@ -23,7 +23,7 @@ public class EndTurnAction : GOAction
         }
         
         ButtonsUIManager.Instance.EndTurn();
-        _myUnit.OnStartAction();
+        _myUnit.OnStartAction(null);
         return TaskStatus.COMPLETED;
     }
 }

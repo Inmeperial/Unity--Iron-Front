@@ -7,8 +7,6 @@ using UnityEngine.EventSystems;
 public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 	public Image mechaImage;
-	// public Image leftGunIcon;
-	// public Image rightGunIcon;
 	public Image overWeight;
 	public Image colorBorder;
 	public Image colorNamePlate;
@@ -16,31 +14,14 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	public Color enemyColor;
 	public TextMeshProUGUI mechaName;
 	public CustomButton selectionButton;
-	public MasterShaderScript masterShader;
 	public Character _characterSelected;
 
-	// FramesUI(Image mecha, Image leftGun, Image rightGun, TextMeshProUGUI myName)
-	// {
-	// 	mechaImage = mecha;
-	// 	leftGunIcon = leftGun;
-	// 	rightGunIcon = rightGun;
-	// 	mechaName = myName;
-	// }
-	
 	FramesUI(Image mecha, TextMeshProUGUI myName)
 	{
 		mechaImage = mecha;
 		mechaName = myName;
 	}
 
-	// public void ChangeData(Image newMechaImage, Image newMechaLeftIcon, Image newMechaRightIcon, TextMeshProUGUI newMechaName)
-	// {
-	// 	mechaImage = newMechaImage;
-	// 	leftGunIcon = newMechaLeftIcon;
-	// 	rightGunIcon = newMechaRightIcon;
-	// 	mechaName.text = newMechaName.text;
-	// }
-	
 	public void ChangeData(Image newMechaImage, TextMeshProUGUI newMechaName)
 	{
 		mechaImage = newMechaImage;
@@ -102,13 +83,13 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		//TODO: pintar mesh
+		if (_characterSelected.IsDead()) return;
 		_characterSelected.SetShaderForAllParts(SwitchTextureEnum.TextureFresnel);
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
-		//TODO: pintar mesh
+		if (_characterSelected.IsDead()) return;
 		_characterSelected.SetShaderForAllParts(SwitchTextureEnum.TextureClean);
 	}
 }
