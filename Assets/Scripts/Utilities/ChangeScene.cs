@@ -4,15 +4,15 @@ using UnityEngine.SceneManagement;
 public class ChangeScene : MonoBehaviour
 {
     [SerializeField] public MenuOptionsInGame menuOptions = default;
-    static bool _firstTimePlaying = false;
+    public static bool _firstTimePlaying = false;
 
 
     public void MenuLoadScene()
     {
         if (!_firstTimePlaying)
         {
-            LoadLevel1();
             _firstTimePlaying = true;
+            LoadLevel1();
         }
         else
             LoadMap();
