@@ -38,7 +38,6 @@ public class EnemyCharacter : Character
 
     public override void SelectThisUnit()
     {
-        Debug.Log("select");
         if (_myTurn)
         {
             StartCoroutine(DelayStart());
@@ -243,13 +242,11 @@ public class EnemyCharacter : Character
         if (_moving) return;
         if (_path.Count > 0)
         {
-            Debug.Log("move enemy");
             _camera.MoveTo(_path[_path.Count-1].transform);
             Move();
         }
         else
         {
-            Debug.Log("cancel move enemy");
             _canMove = false;
             OnEndAction();
         }
@@ -266,6 +263,7 @@ public class EnemyCharacter : Character
     {
         _behaviorExecutor.paused = true;
         checkedParts = false;
+        StopAllCoroutines();
         StartCoroutine(FailSafe(action));
     }
 
@@ -273,7 +271,6 @@ public class EnemyCharacter : Character
     {
         _failSafeRunning = false;
         _behaviorExecutor.paused = false;
-        Debug.Log("stop failsafe on end action");
     }
 
     public void ForceEnd()
@@ -313,8 +310,7 @@ public class EnemyCharacter : Character
     IEnumerator FailSafe(Action action)
     {
         if (_failSafeRunning) yield return null;
-
-        Debug.Log("start failsafe");
+        
         _failSafeRunning = true;
 
         float time = 0f;
@@ -322,6 +318,7 @@ public class EnemyCharacter : Character
         while (_failSafeRunning && time <= 5)
         {
             time += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
 
         if (_failSafeRunning && time >= 5)
@@ -329,6 +326,5 @@ public class EnemyCharacter : Character
             action?.Invoke();
         }
         _failSafeRunning = false;
-        Debug.Log("stop failsafe routine");
     }
 }

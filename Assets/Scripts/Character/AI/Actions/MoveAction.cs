@@ -48,7 +48,6 @@ public class MoveAction : GOAction
 
     public void MakeItFail()
     {
-        Debug.Log("fail");
         _fail = true;
     }
 }
