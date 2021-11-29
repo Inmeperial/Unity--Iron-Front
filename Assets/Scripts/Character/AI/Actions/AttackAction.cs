@@ -92,18 +92,22 @@ public class AttackAction : GOAction
             switch (partToAttack)
             {
                 case "Body":
+                    Debug.Log("attack");
                     ButtonsUIManager.Instance.AddBulletsToBody(gun.GetAvailableBullets());
                     break;
                     
                 case "LGun":
+                    Debug.Log("attack");
                     ButtonsUIManager.Instance.AddBulletsToLArm(gun.GetAvailableBullets());
                     break;
                 
                 case "RGun":
+                    Debug.Log("attack");
                     ButtonsUIManager.Instance.AddBulletsToRArm(gun.GetAvailableBullets());
                     break;
                 
                 case "Legs":
+                    Debug.Log("attack");
                     ButtonsUIManager.Instance.AddBulletsToLegs(gun.GetAvailableBullets());
                     break;
                 
@@ -127,6 +131,7 @@ public class AttackAction : GOAction
                 _myUnit.Shoot();
                 _myUnit.DeactivateAttack();
                 _myUnit.OnEndActionWithDelay(0);
+                Debug.Log("attack");
             }
             else
             {
@@ -140,6 +145,7 @@ public class AttackAction : GOAction
         //     return TaskStatus.FAILED;
         // }
         
+        if (_myUnit.CanAttack()) return TaskStatus.FAILED;
         return TaskStatus.COMPLETED;
     }
     

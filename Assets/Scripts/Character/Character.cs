@@ -1544,29 +1544,7 @@ public class Character : EnumsClass, IObservable
     public void OnUseEquipable()
     {
         EquipableSelectionState(false, null);
-        // ButtonsUIManager.Instance.equipmentButton.OnRightClick?.Invoke();
-        // ButtonsUIManager.Instance.EquipmentButtonState(false);
-        // ButtonsUIManager.Instance.UpdateItemButtonName();
     }
-    
-    // public void StartItemUpdate()
-    // {
-    //     StartCoroutine(ItemUpdate());
-    // }
-    //
-    // IEnumerator ItemUpdate()
-    // {
-    //     while (true)
-    //     {
-    //         _item.Use();
-    //         yield return new WaitForEndOfFrame();
-    //     }
-    // }
-    //
-    // public void StopItemUpdate()
-    // {
-    //     StopCoroutine(ItemUpdate());
-    // }
 
     #endregion
 
