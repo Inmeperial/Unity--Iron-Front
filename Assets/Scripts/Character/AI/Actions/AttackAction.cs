@@ -139,11 +139,11 @@ public class AttackAction : GOAction
             }
         }
         
-        // if (_fail)
-        // {
-        //     _fail = false;
-        //     return TaskStatus.FAILED;
-        // }
+        if (_fail)
+        {
+            _fail = false;
+            return TaskStatus.FAILED;
+        }
         
         if (_myUnit.CanAttack()) return TaskStatus.FAILED;
         return TaskStatus.COMPLETED;
