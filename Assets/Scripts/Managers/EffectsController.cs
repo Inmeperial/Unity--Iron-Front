@@ -27,6 +27,7 @@ public class EffectsController : MonoBehaviour
 
 
     [Header("Sounds")]
+    [SerializeField] private AudioClip _smokeBombSound;
     [SerializeField] private AudioClip _handGranadeSound;
     [SerializeField] private AudioClip _movingBridgeSound;
     [SerializeField] private AudioClip _hammerPreparationSound;
@@ -96,13 +97,26 @@ public class EffectsController : MonoBehaviour
             case EnumsClass.ParticleActionType.HammerHit:
                 AudioManager.audioManagerInstance.PlaySound(_hammerHitSound, this.gameObject);
                 break;
+            
+            case EnumsClass.ParticleActionType.SmokeBomb:
+                AudioManager.audioManagerInstance.PlaySound(_smokeBombSound, obj);
+                break;
+
+            case EnumsClass.ParticleActionType.RepairKit:
+                effect = Instantiate(_hitMechaEffect, obj.transform.position, obj.transform.rotation, obj.transform);
+                particle = effect.transform.GetChild(0).GetComponent<ParticleSystem>();
+                particle.time = 0f;
+                particle.Play();
+                AudioManager.audioManagerInstance.PlaySound(_flameThrowerSound, obj);
+                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                break;
 
             case EnumsClass.ParticleActionType.HandGranade:
                 effect = Instantiate(_handGranadeEffect, obj.transform.position, obj.transform.rotation, obj.transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
-                AudioManager.audioManagerInstance.PlaySound(_handGranadeSound, this.gameObject);
+                AudioManager.audioManagerInstance.PlaySound(_handGranadeSound, obj);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 

@@ -39,6 +39,7 @@ public class RepairKit : Item
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
+			EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.RepairKit);
 			var selectedTile = MouseRay.GetTargetTransform(_character.block);
 		
 			if (!selectedTile) return;
