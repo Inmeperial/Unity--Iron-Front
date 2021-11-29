@@ -46,8 +46,12 @@ public class AttackAction : GOAction
         var initialRotation = _myUnit.InitialRotation;
         _myUnit.RotateTowardsEnemy(closestEnemy.transform);
         var gun = _myUnit.GetSelectedGun();
-        
-        if (gun.GetAvailableBullets() <= 0) return TaskStatus.COMPLETED;
+
+        if (gun.GetAvailableBullets() <= 0)
+        {
+            Debug.Log("0 BULLETS");
+            return TaskStatus.COMPLETED;
+        }
         
         if (!closestEnemy.IsOnElevator())
         {
