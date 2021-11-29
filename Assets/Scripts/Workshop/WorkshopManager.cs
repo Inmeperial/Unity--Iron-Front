@@ -148,8 +148,7 @@ public class WorkshopManager : MonoBehaviour
         }
         
     }
-
-    //TODO: asignar al boton cuando esté.
+    
     public void ApplyChangesButton()
     {
         LoadSaveUtility.SaveEquipment(_equipmentContainer);

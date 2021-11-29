@@ -420,6 +420,7 @@ public abstract class Gun : EnumsClass
         if (_currentHP >= _maxHP)
             _currentHP = _maxHP;
         
-        //TODO: Texto de curacion
+        var pos = transform.position;
+        EffectsController.Instance.CreateDamageText(value.ToString(), 3, pos, true);
     }
 }
