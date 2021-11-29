@@ -39,12 +39,17 @@ public class RepairKit : Item
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			var selectedTile = MouseRay.GetTargetTransform(_character.block).GetComponent<Tile>();
+			var selectedTile = MouseRay.GetTargetTransform(_character.block);
+		
 			if (!selectedTile) return;
-				
-			if (!_tilesInRange.Contains(selectedTile)) return;
+		
+			var tile = selectedTile.GetComponent<Tile>();
+
+			if (!tile) return;
+		
+			if (!_tilesInRange.Contains(tile)) return;
 			
-			var selectedUnit = selectedTile.GetUnitAbove();
+			var selectedUnit = tile.GetUnitAbove();
 			if (!selectedUnit) return;
 
 			//Para que solo puedas curar aliados

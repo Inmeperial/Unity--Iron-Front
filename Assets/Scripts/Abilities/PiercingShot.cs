@@ -66,8 +66,16 @@ public class PiercingShot : Ability
 		if (Input.GetMouseButtonDown(0))
 		{
             Debug.Log("Piercing Shooting");
-            var selectedTile = MouseRay.GetTargetTransform(_character.block).GetComponent<Tile>();
-            if (!selectedTile || !_tilesInRange.Contains(selectedTile)) return;
+            var selectedTile = MouseRay.GetTargetTransform(_character.block);
+		
+            if (!selectedTile) return;
+		
+            var tile = selectedTile.GetComponent<Tile>();
+
+            if (!tile) return;
+		
+            if (!_tilesInRange.Contains(tile)) return;
+            
             var characterTilePos = _character.GetMyPositionTile().transform.position;
             var dir = selectedTile.transform.position - characterTilePos;
             RaycastHit hit;

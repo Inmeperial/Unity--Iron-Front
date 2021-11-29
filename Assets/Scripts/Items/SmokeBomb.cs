@@ -56,8 +56,16 @@ public class SmokeBomb : Item, IObserver
 
 	public override void Use(Action callback = null)
 	{
-		var selectedTile = MouseRay.GetTargetTransform(_character.block).GetComponent<Tile>();
-		if (!selectedTile || !_tilesInRange.Contains(selectedTile)) return;
+		var selectedTile = MouseRay.GetTargetTransform(_character.block);
+		
+		if (!selectedTile) return;
+		
+		var tile = selectedTile.GetComponent<Tile>();
+
+		if (!tile) return;
+		
+		if (!_tilesInRange.Contains(tile)) return;
+		
 		_smokeScreen.transform.position = selectedTile.transform.position;
 
 		if (Input.GetMouseButtonDown(0))

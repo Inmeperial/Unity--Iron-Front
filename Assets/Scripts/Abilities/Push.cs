@@ -52,17 +52,24 @@ public class Push : Ability
 		if (Input.GetMouseButtonDown(0))
 		{
             Debug.Log("Pushing");
-            var selection = MouseRay.GetTargetTransform(_character.block);
-            var selectedTile = selection.GetComponent<Tile>();
-            if (!selectedTile || !_tilesInRange.Contains(selectedTile)) return;
-            var selectedUnit = selectedTile.GetUnitAbove();
+            var selectedTile = MouseRay.GetTargetTransform(_character.block);
+		
+            if (!selectedTile) return;
+		
+            var tile = selectedTile.GetComponent<Tile>();
+
+            if (!tile) return;
+		
+            if (!_tilesInRange.Contains(tile)) return;
+            
+            var selectedUnit = tile.GetUnitAbove();
             if (!selectedUnit) return;
 
             //Para que solo puedas empujar enemigos
             var unitTeam = selectedUnit.GetUnitTeam();
             if (unitTeam == EnumsClass.Team.Green) return;
 
-            var tileToPushTo = GetTileToPushTo(selectedTile, (selectedUnit.transform.position - _character.transform.position).normalized, 0);
+            var tileToPushTo = GetTileToPushTo(tile, (selectedUnit.transform.position - _character.transform.position).normalized, 0);
             PushAction(tileToPushTo, selectedUnit);
             
             if (callback != null)

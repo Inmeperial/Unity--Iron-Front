@@ -45,8 +45,15 @@ public class SelfDestruct : Ability
     {
         if (Input.GetMouseButtonDown(0))
         {
-            var selectedTile = MouseRay.GetTargetTransform(_character.block).GetComponent<Tile>();
-            if (!selectedTile || !_tilesInAttackRange.Contains(selectedTile)) return;
+            var selectedTile = MouseRay.GetTargetTransform(_character.block);
+		
+            if (!selectedTile) return;
+		
+            var t = selectedTile.GetComponent<Tile>();
+
+            if (!t) return;
+		
+            if (!_tilesInAttackRange.Contains(t)) return;
             Debug.Log("use self destruct");
 
             _character.SetHurtAnimation();
