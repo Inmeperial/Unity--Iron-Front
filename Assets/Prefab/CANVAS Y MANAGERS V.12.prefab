@@ -10071,9 +10071,14 @@ MonoBehaviour:
     type: 3}
   _dustEffect: {fileID: 8441390100520462814, guid: e014bc2f174e25541904274ef8048be8,
     type: 3}
+  _movingBridgeSound: {fileID: 8300000, guid: 873278d1e402def44b2bd0a1d2ea772b, type: 3}
+  _hammerPreparationSound: {fileID: 8300000, guid: a9d7cf3b5014cbd49bea5e37c11fcf3d,
+    type: 3}
+  _hammerSwingSound: {fileID: 8300000, guid: f6212ce266283274783f3f1c6b5275aa, type: 3}
+  _hammerHitSound: {fileID: 8300000, guid: 576cfb77c76381a4ebad1899bc050d15, type: 3}
   _flameThrowerSound: {fileID: 8300000, guid: bc3bd4f57a39bff41bb7032b2e90912f, type: 3}
   _shootGunSound: {fileID: 8300000, guid: 7b6f7d57e21b97b4cbbde01f3fd53182, type: 3}
-  _assaultRifleSound: {fileID: 8300000, guid: c51f17a48568de24a90d87d9569b3ce5, type: 3}
+  _assaultRifleSound: {fileID: 8300000, guid: 0638495dd4dd3ca4c9f4e53d36897017, type: 3}
   _assaultRifleFinalShootSound: {fileID: 8300000, guid: 0638495dd4dd3ca4c9f4e53d36897017,
     type: 3}
   _rifleSound: {fileID: 8300000, guid: c51f17a48568de24a90d87d9569b3ce5, type: 3}
@@ -14930,6 +14935,11 @@ PrefabInstance:
       value: MenuInGame
       objectReference: {fileID: 0}
     - target: {fileID: 4969709269835933199, guid: 2d705c298c7151b46afa9fbff830458b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4969709270266017102, guid: 2d705c298c7151b46afa9fbff830458b,
         type: 3}
       propertyPath: m_IsActive
       value: 0

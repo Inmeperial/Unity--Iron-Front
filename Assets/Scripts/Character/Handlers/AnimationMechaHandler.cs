@@ -7,7 +7,7 @@ public class AnimationMechaHandler : MonoBehaviour
     private AudioMechaHandler _audioMechaHandler;
     private Character _character;
     private bool _deadAnimIsActive;
-
+    //The AnimatorTrue check if they are really called in the animator or just here, hammer is not.
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -254,7 +254,7 @@ public class AnimationMechaHandler : MonoBehaviour
         {
             gun = _character.GetLeftGun();
         }
-        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
+        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.HammerPreparation);
     }
 
     public void SetParticleSwingAttackHammer(int num) //call in Animaton
@@ -272,7 +272,7 @@ public class AnimationMechaHandler : MonoBehaviour
         {
             gun = _character.GetLeftGun();
         }
-        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
+        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.HammerSwing);
     }
 
     public void SetParticleLandAttackHammer(int num) //call in Animaton
@@ -290,7 +290,7 @@ public class AnimationMechaHandler : MonoBehaviour
         {
             gun = _character.GetLeftGun();
         }
-        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.ShootGun);
+        if (gun) _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.HammerHit);
     }
 
     #endregion

@@ -37,24 +37,26 @@ public class Bridge : MonoBehaviour
     public void StartMovement()
     {
         Debug.Log("start movement");
+        EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.MovingBridge);
         StartCoroutine(Move());
     }
 
     IEnumerator Move()
     {
         float time = 0;
-        
+
         Debug.Log("move");
         while (time <= _movementDuration)
         {
             Debug.Log("moving");
             time += Time.deltaTime;
             var normalizedTime = time / _movementDuration;
-            
+
             transform.position = Vector3.Lerp(_startPosition, _limit.position, normalizedTime);
 
             yield return new WaitForEndOfFrame();
         }
+        AudioManager.audioManagerInstance.StopSoundWithFadeOut(this.gameObject.GetComponent<AudioSource>().clip, this.gameObject);
 
         foreach (var tile in _bridgeTiles)
         {
@@ -65,7 +67,7 @@ public class Bridge : MonoBehaviour
         foreach (var character in _bridgeEnemies)
         {
             character.EnableUnit();
-            
+
             var portrait = PortraitsController.Instance.GetCharacterPortrait(character);
 
             if (portrait) portrait.selectionButton.interactable = true;

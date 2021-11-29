@@ -25,7 +25,11 @@ public abstract class EnumsClass: MonoBehaviour
     };
 
     public enum ParticleActionType
-    { 
+    {
+        MovingBridge,
+        HammerPreparation,
+        HammerSwing,
+        HammerHit,
         Damage,
         FlameThrower,
         Mine,

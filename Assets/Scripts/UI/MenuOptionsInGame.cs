@@ -10,7 +10,7 @@ public class MenuOptionsInGame : MonoBehaviour
     [SerializeField] private GameObject _optionsObj = default;
     [SerializeField] private GameObject _devObj = default;
     [SerializeField] private AudioMixer _audioMixer = default;
-    
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -42,10 +42,11 @@ public class MenuOptionsInGame : MonoBehaviour
 
     public void SetVolume(float vol) //Used on Inspector
     {
-        float numPercentage = vol * 100;
-        float volumeToSet = ((((numPercentage * 80) / 100) * -1) + 80) * -1;
-        textVolume.text = Mathf.RoundToInt(numPercentage) + "%";
-        _audioMixer.SetFloat("volume", volumeToSet);
+        //float numPercentage = vol * 100;
+        //float volumeToSet = ((((numPercentage * 30) / 100) * -1) + 30) * -1;
+        //textVolume.text = Mathf.RoundToInt(numPercentage) + "%";
+        //_audioMixer.SetFloat("volume", volumeToSet);
+        _audioMixer.SetFloat("volume", vol);
     }
 
     public void CloseOptionsMenu()

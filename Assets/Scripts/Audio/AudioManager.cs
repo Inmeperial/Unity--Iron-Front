@@ -12,8 +12,7 @@ public class AudioManager : MonoBehaviour
     private Sound[] _environmentalSounds;
     [SerializeField]
     private Sound[] _environmentalFXSounds;
-
-
+    
     public static AudioManager audioManagerInstance;
     private bool _isFadeOutOn = false;
     private AudioSource _aSourceActualSound;
@@ -114,7 +113,7 @@ public class AudioManager : MonoBehaviour
 
     public void StopSoundWithFadeOut(AudioClip aSource, GameObject target)
     {
-        var audioSArray = GetComponents<AudioSource>();
+        var audioSArray = target.GetComponents<AudioSource>();
         for (int i = 0; i < audioSArray.Length; i++)
         {
             if (audioSArray[i].clip == aSource)
@@ -159,14 +158,6 @@ public class AudioManager : MonoBehaviour
 
     private void PlayFXSound(AudioSource aSource, Sound sound)
     {
-        //sound.source = aSource;
-        //sound.source.clip = sound.clip;
-        //sound.source.volume = sound.volume;
-        //sound.source.loop = sound.loop;
-        //sound.source.playOnAwake = true;
-        //sound.source.spatialBlend = 0;
-        //sound.source.Play();
-
         aSource.clip = sound.clip;
         aSource.volume = sound.volume;
         aSource.loop = sound.loop;
@@ -178,14 +169,6 @@ public class AudioManager : MonoBehaviour
 
     private void PlayEnvironmentalSound(AudioSource aSource, Sound sound)
     {
-        //sound.source = aSource;
-        //sound.source.clip = sound.clip;
-        //sound.source.volume = sound.volume;
-        //sound.source.loop = sound.loop;
-        //sound.source.playOnAwake = true;
-        //sound.source.spatialBlend = 0;
-        //sound.source.Play();
-
         aSource.clip = sound.clip;
         aSource.volume = sound.volume;
         aSource.loop = sound.loop;
@@ -197,17 +180,6 @@ public class AudioManager : MonoBehaviour
 
     private void PlayEnvironmentalFXSound(AudioSource aSource, Sound sound)
     {
-        //sound.source = aSource;
-        //sound.source.clip = sound.clip;
-        //sound.source.volume = sound.volume;
-        //sound.source.loop = sound.loop;
-        //sound.source.spatialBlend = 1;
-        //sound.source.minDistance = 5f;
-        //sound.source.maxDistance = 130f;
-        //sound.source.rolloffMode = AudioRolloffMode.Linear;
-        //sound.source.playOnAwake = true;
-        //sound.source.Play();
-
         aSource.clip = sound.clip;
         aSource.volume = sound.volume;
         aSource.loop = sound.loop;
@@ -226,12 +198,10 @@ public class AudioManager : MonoBehaviour
         var targetAudio = target.GetComponent<AudioSource>();
         if (targetAudio)
         {
-            //Debug.Log("target tiene audiosource " + target.name);
             audioSource = targetAudio;
         }
         else
         {
-            //Debug.Log("creo audiosource: " + target.name);
             audioSource = target.AddComponent<AudioSource>();
         }
         return audioSource;

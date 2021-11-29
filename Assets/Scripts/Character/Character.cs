@@ -280,7 +280,7 @@ public class Character : EnumsClass, IObservable
         }
         else if (_leftGunSelected)
         {
-            if (_leftGun) return;
+            if (!_leftGun) return;
             
             switch (_leftGun.GetGunType())
             {
