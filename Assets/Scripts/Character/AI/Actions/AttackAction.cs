@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using BBUnity.Actions;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ using Pada1.BBCore.Tasks;
 public class AttackAction : GOAction
 {
     private EnemyCharacter _myUnit;
+    
+    private bool _fail;
 
     public override void OnStart()
     {
@@ -28,7 +31,7 @@ public class AttackAction : GOAction
             }
         }
 
-        _myUnit.OnStartAction();
+        _myUnit.OnStartAction(MakeItFail);
 
         if (!_myUnit.LeftGunAlive() && !_myUnit.RightGunAlive())
         {
@@ -60,24 +63,26 @@ public class AttackAction : GOAction
             
             bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
             bool leftGun = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LGun",false);
-            bool rightArm = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RGun", false);
+            bool rightGun = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RGun", false);
             bool legs = _myUnit.RayToPartsForAttack(closestEnemy.GetLegsPosition(), "Legs", false);
 
             Dictionary<string, float> parts = new Dictionary<string, float>();
             
-            if (body)
+            if (body && closestEnemy.GetBody().GetCurrentHp() > 0)
                 parts.Add("Body", closestEnemy.GetBody().GetCurrentHp());
-            if (leftGun)
+            if (leftGun && closestEnemy.GetLeftGun().GetCurrentHp() > 0)
                 parts.Add("LGun", closestEnemy.GetLeftGun().GetCurrentHp());
-            if (rightArm)
+            if (rightGun && closestEnemy.GetRightGun().GetCurrentHp() > 0)
                 parts.Add("RGun", closestEnemy.GetRightGun().GetCurrentHp());
-            if (legs)
+            if (legs && closestEnemy.GetLegs().GetCurrentHp() > 0)
                 parts.Add("Legs", closestEnemy.GetLegs().GetCurrentHp());
 
             string partToAttack = "DEFAULT";
             float lowest = 100000; 
             foreach (var part in parts)
             {
+                if (part.Value <= 0) continue;
+                
                 if (part.Value <= lowest)
                 {
                     lowest = part.Value;
@@ -129,8 +134,18 @@ public class AttackAction : GOAction
             }
         }
         
-        
+        if (_fail)
+        {
+            _fail = false;
+            return TaskStatus.FAILED;
+        }
         
         return TaskStatus.COMPLETED;
+    }
+    
+    public void MakeItFail()
+    {
+        Debug.Log("fail");
+        _fail = true;
     }
 }

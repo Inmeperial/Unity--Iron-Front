@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,7 +16,8 @@ public class EnemyCharacter : Character
     public bool checkedEnemy;
 
     private CameraMovement _camera;
-    
+
+    private bool _failSafeRunning;
     public override void ManualAwake()
     {
         base.ManualAwake();
@@ -254,15 +256,18 @@ public class EnemyCharacter : Character
         _behaviorExecutor.paused = false;
     }
 
-    public void OnStartAction()
+    public void OnStartAction(Action action)
     {
         _behaviorExecutor.paused = true;
         checkedParts = false;
+        StartCoroutine(FailSafe(action));
     }
 
     public void OnEndAction()
     {
+        _failSafeRunning = false;
         _behaviorExecutor.paused = false;
+        Debug.Log("stop failsafe on end action");
     }
 
     public void ForceEnd()
@@ -299,5 +304,25 @@ public class EnemyCharacter : Character
         base.ConfigureMecha();
     }
 
-    
+    IEnumerator FailSafe(Action action)
+    {
+        if (_failSafeRunning) yield return null;
+
+        Debug.Log("start failsafe");
+        _failSafeRunning = true;
+
+        float time = 0f;
+
+        while (_failSafeRunning && time <= 5)
+        {
+            time += Time.deltaTime;
+        }
+
+        if (_failSafeRunning && time >= 5)
+        {
+            action?.Invoke();
+        }
+        _failSafeRunning = false;
+        Debug.Log("stop failsafe routine");
+    }
 }

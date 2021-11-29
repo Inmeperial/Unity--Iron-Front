@@ -2,6 +2,7 @@
 
 using Pada1.BBCore;
 using Pada1.BBCore.Tasks;
+using UnityEngine;
 
 [Action("Iron Front/AI Actions/Move")]
 [Help("Enemy AI will move towards the closest enemy depending on its move range.")]
@@ -9,6 +10,7 @@ public class MoveAction : GOAction
 {
     private EnemyCharacter _myUnit;
 
+    private bool _fail;
     public override void OnStart()
     {
         
@@ -27,16 +29,26 @@ public class MoveAction : GOAction
             }
         }
 
-        _myUnit.OnStartAction();
+        _myUnit.OnStartAction(MakeItFail);
         if (!_myUnit.IsMoving() && _myUnit.FoundPath())
         {
             _myUnit.EnemyMove();
         }
             
         else _myUnit.OnEndAction();
+
+        if (_fail)
+        {
+            _fail = false;
+            return TaskStatus.FAILED;
+        }
         
         return TaskStatus.COMPLETED;
+    }
 
-
+    public void MakeItFail()
+    {
+        Debug.Log("fail");
+        _fail = true;
     }
 }

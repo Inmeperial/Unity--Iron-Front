@@ -1314,6 +1314,8 @@ public class Character : EnumsClass, IObservable
         _canBeSelected = false;
         _isDead = true;
         PortraitsController.Instance.DeadPortrait(this);
+        _animationMechaHandler.SetIsDeadAnimatorTrue();
+        EffectsController.Instance.PlayParticlesEffect(GetBurningSpawner(), EnumsClass.ParticleActionType.Dead);
         NotifyObserver(_unitTeam == Team.Green ? "GreenDead" : "RedDead");
     }
 

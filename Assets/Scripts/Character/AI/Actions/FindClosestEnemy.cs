@@ -9,6 +9,7 @@ public class FindClosestEnemy : GOAction
 {
     private EnemyCharacter _myUnit;
 
+    private bool _fail;
     public override void OnStart()
     {
         
@@ -43,7 +44,7 @@ public class FindClosestEnemy : GOAction
             return TaskStatus.FAILED;
 
 
-        _myUnit.OnStartAction();
+        _myUnit.OnStartAction(MakeItFail);
         var enemy = _myUnit.CalculateClosestEnemy();
 
         if (!enemy)
@@ -54,6 +55,18 @@ public class FindClosestEnemy : GOAction
         _myUnit.SetClosestEnemy(enemy);
         _myUnit.OnEndAction();
         
-        return TaskStatus.FAILED;
+        if (_fail)
+        {
+            _fail = false;
+            return TaskStatus.FAILED;
+        }
+        
+        return TaskStatus.COMPLETED;
+    }
+    
+    public void MakeItFail()
+    {
+        Debug.Log("fail");
+        _fail = true;
     }
 }
