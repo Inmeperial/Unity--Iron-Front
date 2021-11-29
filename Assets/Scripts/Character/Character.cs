@@ -1315,8 +1315,12 @@ public class Character : EnumsClass, IObservable
         _isDead = true;
         PortraitsController.Instance.DeadPortrait(this);
         _animationMechaHandler.SetIsDeadAnimatorTrue();
-        EffectsController.Instance.PlayParticlesEffect(GetBurningSpawner(), EnumsClass.ParticleActionType.Dead);
+        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Dead);
         NotifyObserver(_unitTeam == Team.Green ? "GreenDead" : "RedDead");
+        var myPortrait = PortraitsController.Instance.GetCharacterPortrait(this);
+        myPortrait.RemoveButtonLeftClickListeners();
+        myPortrait.RemoveButtonRightClickListeners();
+        _myUI.DeactivateWorldUI();
     }
 
     /// <summary>
@@ -1412,6 +1416,7 @@ public class Character : EnumsClass, IObservable
 
     private void OnMouseOver()
     {
+        if (_isDead) return;
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
         if (!_selectedForAttack && _canBeSelected)
@@ -1427,6 +1432,7 @@ public class Character : EnumsClass, IObservable
 
     private void OnMouseExit()
     {
+        if (_isDead) return;
         if (EventSystem.current.IsPointerOverGameObject()) return;
         
         HideWorldUI();
