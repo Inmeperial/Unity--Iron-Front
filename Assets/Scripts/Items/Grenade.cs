@@ -149,6 +149,8 @@ public class Grenade : Item
                 unit.GetRightGun().TakeDamage(_itemData.damage);
             
             unit.GetLegs().TakeDamage(_itemData.damage);
+
+            EffectsController.Instance.PlayParticlesEffect(tile.gameObject, EnumsClass.ParticleActionType.MortarHit);
         }
         ItemUsed();
         UpdateButtonText(_availableUses.ToString(), _itemData);

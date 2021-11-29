@@ -123,7 +123,8 @@ public class PiercingShot : Ability
 		{
             attackedCharacter.GetBody().TakeDamage(_abilityData.damage);
             attackedCharacter.SetHurtAnimation();
-		}
+            EffectsController.Instance.PlayParticlesEffect(attackedCharacter.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
+        }
         _character.DeactivateAttack();
 	}
 

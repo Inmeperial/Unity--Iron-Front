@@ -90,15 +90,19 @@ public class Push : Ability
         enemy.ChangeMyPosTile(tileBeignPushedTo);
         enemy.GetBody().TakeDamage(_abilityData.pushDamage);
         enemy.SetHurtAnimation();
+        EffectsController.Instance.PlayParticlesEffect(enemy.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
         if (collides)
 		{
             enemy.GetBody().TakeDamage(_abilityData.collisionDamage);
             enemy.SetHurtAnimation();
+            EffectsController.Instance.PlayParticlesEffect(enemy.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
+
             if (collidingUnit)
             {
                 //Hacer daño a la otra unidad
                 collidingUnit.GetBody().TakeDamage(_abilityData.collisionDamage);
                 collidingUnit.SetHurtAnimation();
+                EffectsController.Instance.PlayParticlesEffect(collidingUnit.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
             }
         }
         _character.DeactivateAttack();
@@ -144,13 +148,13 @@ public class Push : Ability
             {
                 return GetTileToPushTo(t, dir, count);
             }
-            else if (!t.IsWalkable() || !t.IsFree())
+            else if (t && !t.IsWalkable() || !t.IsFree())
             {
                 collides = true;
                 collidingUnit = t.GetUnitAbove();
                 return currentTile;
-
             }
+            return currentTile;
         }
         return currentTile;
     }

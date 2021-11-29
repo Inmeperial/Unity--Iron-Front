@@ -49,6 +49,7 @@ public class SelfDestruct : Ability
             if (!selectedTile || !_tilesInAttackRange.Contains(selectedTile)) return;
             Debug.Log("use self destruct");
 
+            _character.SetHurtAnimation();
             _character.GetBody().TakeDamage((int)_character.GetBody().GetMaxHp());
             _character.GetLegs().TakeDamage((int)_character.GetLegs().GetMaxHp());
 
@@ -57,13 +58,16 @@ public class SelfDestruct : Ability
             
             var myLGun = _character.GetLeftGun();
             if (myLGun) myLGun.TakeDamage((int)myLGun.GetMaxHp());
-            
+            EffectsController.Instance.PlayParticlesEffect(_character.GetBurningSpawner(), EnumsClass.ParticleActionType.MortarHit);
+
             foreach (var tile in _tilesInAttackRange)
             {
                 var characterAbove = tile.GetUnitAbove();
 
                 if (characterAbove && characterAbove != _character)
                 {
+                    characterAbove.SetHurtAnimation();
+
                     characterAbove.GetBody().TakeDamage(_abilityData.selfDestructDamage);
                     
                     characterAbove.GetLegs().TakeDamage(_abilityData.selfDestructDamage);
@@ -75,6 +79,8 @@ public class SelfDestruct : Ability
                     var rGun = characterAbove.GetRightGun();
                     
                     if (rGun) rGun.TakeDamage(_abilityData.selfDestructDamage);
+
+                    EffectsController.Instance.PlayParticlesEffect(characterAbove.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
                 }
 
                 var mine = tile.GetMineAbove();
