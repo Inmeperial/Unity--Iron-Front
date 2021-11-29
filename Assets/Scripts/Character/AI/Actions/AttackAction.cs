@@ -134,11 +134,11 @@ public class AttackAction : GOAction
             }
         }
         
-        if (_fail)
-        {
-            _fail = false;
-            return TaskStatus.FAILED;
-        }
+        // if (_fail)
+        // {
+        //     _fail = false;
+        //     return TaskStatus.FAILED;
+        // }
         
         return TaskStatus.COMPLETED;
     }
