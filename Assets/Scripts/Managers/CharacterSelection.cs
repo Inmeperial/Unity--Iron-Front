@@ -12,6 +12,7 @@ public class CharacterSelection : MonoBehaviour
     ButtonsUIManager _buttonsManager;
     private bool _canSelectUnit;
     private Character _enemySelection;
+    private bool _selectingWithDelay;
     
     public bool playerSelected;
 
@@ -200,13 +201,17 @@ public class CharacterSelection : MonoBehaviour
 
     public void SelectionWithDelay(Character character)
     {
-        StartCoroutine(SelectionDelay(character));
+        if (!_selectingWithDelay)
+            StartCoroutine(SelectionDelay(character));
     }
 
     IEnumerator SelectionDelay(Character character)
     {
+        _selectingWithDelay = true;
         yield return new WaitForEndOfFrame();
-        
-        Selection(character);
+        if (character.IsMyTurn())
+            Selection(character);
+
+        _selectingWithDelay = false;
     }
 }

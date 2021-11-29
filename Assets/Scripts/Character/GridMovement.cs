@@ -9,7 +9,7 @@ public class GridMovement : MonoBehaviour
     private float _watchdogCounter;
     private bool _forcedForward;
     private bool _checkedDirToLast;
-    private List<Tile> _tilesList = new List<Tile>();
+    [SerializeField] private List<Tile> _tilesList = new List<Tile>();
     int _tilesIndex;
     Character _character;
     private float _moveSpeed;
@@ -47,8 +47,16 @@ public class GridMovement : MonoBehaviour
     /// </summary>
     public void StartMovement(List<Tile> tilesList)
     {
+        if (_move) return;
+        
         _forcedForward = false;
-        _tilesList = tilesList;
+
+        _tilesList = new List<Tile>();
+        foreach (var t in tilesList)
+        {
+            _tilesList.Add(t);
+        }
+        //_tilesList = tilesList;
         _tilesIndex = 1;
         _move = true;
     }
@@ -100,7 +108,6 @@ public class GridMovement : MonoBehaviour
         }
         else
         {
-
             Vector3 forwardDir = Vector3.zero;
             Vector3 last = Vector3.zero;
             Vector3 preLast = Vector3.zero;

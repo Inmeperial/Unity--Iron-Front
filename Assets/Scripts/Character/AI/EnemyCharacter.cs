@@ -11,6 +11,8 @@ public class EnemyCharacter : Character
     [SerializeField] private float _delayAfterAction;
     [HideInInspector]
     public bool checkedParts;
+    [HideInInspector]
+    public bool checkedEnemy;
 
     private CameraMovement _camera;
     
@@ -24,15 +26,27 @@ public class EnemyCharacter : Character
         if (_behaviorExecutor)
             _behaviorExecutor.paused = true;
     }
+
+    public override void NewTurn()
+    {
+        base.NewTurn();
+        _closestEnemy = null;
+        checkedEnemy = false;
+    }
+
     public override void SelectThisUnit()
     {
-        base.SelectThisUnit();
-        _closestEnemy = null;
+        Debug.Log("select");
         if (_myTurn)
         {
             StartCoroutine(DelayStart());
         }
         else _behaviorExecutor.paused = true;
+        
+        if (!_canAttack && !_canMove) return;
+        base.SelectThisUnit();
+        _closestEnemy = null;
+        
     }
 
     IEnumerator DelayStart()
@@ -208,6 +222,7 @@ public class EnemyCharacter : Character
 
     public void SetClosestEnemy(Character character)
     {
+        checkedEnemy = true;
         _closestEnemy = character;
     }
 
@@ -221,11 +236,13 @@ public class EnemyCharacter : Character
         if (_moving) return;
         if (_path.Count > 0)
         {
+            Debug.Log("move enemy");
             _camera.MoveTo(_path[_path.Count-1].transform);
             Move();
         }
         else
         {
+            Debug.Log("cancel move enemy");
             _canMove = false;
             OnEndAction();
         }

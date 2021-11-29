@@ -494,7 +494,6 @@ public class ButtonsUIManager : MonoBehaviour
     /// </summary>
     private void Attack()
     {
-        Debug.Log("attack");
         _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform);
         _selectedChar.SetInitialRotation(_selectedChar.transform.rotation);
 
@@ -572,7 +571,7 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedChar.GetUnitTeam() == EnumsClass.Team.Green)
             ActivateEndTurnButton();
         DeselectActions();
-        CharacterSelection.Instance.Selection(_selectedChar);
+        //CharacterSelection.Instance.Selection(_selectedChar);
     }
 
     public void EndTurn()

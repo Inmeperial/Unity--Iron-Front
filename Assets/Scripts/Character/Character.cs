@@ -70,7 +70,7 @@ public class Character : EnumsClass, IObservable
     public IPathCreator pathCreator;
     protected GridMovement _move;
     public LayerMask block;
-    protected List<Tile> _tilesInMoveRange = new List<Tile>();
+    [SerializeField] protected List<Tile> _tilesInMoveRange = new List<Tile>();
     protected Tile _myPositionTile;
     protected Tile _targetTile;
     protected List<Tile> _path = new List<Tile>();
@@ -111,7 +111,6 @@ public class Character : EnumsClass, IObservable
     //OTHERS
     public List<GameObject> bodyRenderContainer = new List<GameObject>();
     protected HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
-    public List<Tile> listaDeTiles = new List<Tile>();
     protected Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
     protected Dictionary<Tile, int> _tilesForMoveChecked = new Dictionary<Tile, int>();
     protected List<Character> _enemiesInRange = new List<Character>();
@@ -1107,7 +1106,6 @@ public class Character : EnumsClass, IObservable
                 if (!tile.HasTileAbove() && tile.IsWalkable())
                 {
                     _tilesInAttackRange.Add(tile);
-                    listaDeTiles.Add(tile);
                     tile.inAttackRange = true;
                     if (tile.inMoveRange)
                     {
@@ -1162,7 +1160,6 @@ public class Character : EnumsClass, IObservable
     {
         highlight.ClearTilesInAttackRange(_tilesInAttackRange);
         _tilesInAttackRange.Clear();
-        listaDeTiles.Clear();
         _tilesForAttackChecked.Clear();
     }
 
@@ -1257,7 +1254,8 @@ public class Character : EnumsClass, IObservable
             _myPositionTile.SetUnitAbove(null);
         }
 
-        _myPositionTile = _targetTile;
+        if (_targetTile) _myPositionTile = _targetTile;
+        else _targetTile = GetTileBelow();
         _myPositionTile.MakeTileOccupied();
         _myPositionTile.SetUnitAbove(this);
         _myPositionTile.unitAboveSelected = true;
@@ -1413,12 +1411,14 @@ public class Character : EnumsClass, IObservable
     private void OnMouseOver()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
-        
+
         if (!_selectedForAttack && _canBeSelected)
             ShowWorldUI();
         
         if (_canBeAttacked && !_selectedForAttack)
         {
+            if (TurnManager.Instance.GetActiveTeam() == Team.Red) return;
+            
             RotateWithRays();
         }
     }
@@ -1726,7 +1726,6 @@ public class Character : EnumsClass, IObservable
             if (item.Key == partEnum)
             {
                 item.Value.GetComponent<MasterShaderScript>().ConvertEnumToStringEnumForShader(texture);
-                Debug.Log("asd");
             }
         }
     }

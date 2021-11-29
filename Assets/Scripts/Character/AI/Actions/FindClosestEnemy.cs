@@ -35,7 +35,9 @@ public class FindClosestEnemy : GOAction
 
         if (!_myUnit.CanMove() && !_myUnit.CanAttack())
             return TaskStatus.FAILED;
-        
+
+        if (_myUnit.checkedEnemy)
+            return TaskStatus.FAILED;
         
         if (_myUnit.GetClosestEnemy() != null)
             return TaskStatus.FAILED;
@@ -52,6 +54,6 @@ public class FindClosestEnemy : GOAction
         _myUnit.SetClosestEnemy(enemy);
         _myUnit.OnEndAction();
         
-        return TaskStatus.COMPLETED;
+        return TaskStatus.FAILED;
     }
 }
