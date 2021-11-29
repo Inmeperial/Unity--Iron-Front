@@ -46,6 +46,9 @@ public class AttackAction : GOAction
         var initialRotation = _myUnit.InitialRotation;
         _myUnit.RotateTowardsEnemy(closestEnemy.transform);
         var gun = _myUnit.GetSelectedGun();
+        
+        if (gun.GetAvailableBullets() <= 0) return TaskStatus.COMPLETED;
+        
         if (!closestEnemy.IsOnElevator())
         {
             ButtonsUIManager.Instance.SetPlayerCharacter(_myUnit);
@@ -77,7 +80,6 @@ public class AttackAction : GOAction
                     partToAttack = part.Key;
                 }
             }
-
             switch (partToAttack)
             {
                 case "Body":
