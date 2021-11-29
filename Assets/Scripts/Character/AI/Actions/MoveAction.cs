@@ -43,6 +43,9 @@ public class MoveAction : GOAction
             return TaskStatus.FAILED;
         }
         
+        if (_myUnit.CanAttack())
+            return TaskStatus.COMPLETED;
+        
         return TaskStatus.FAILED;
     }
 

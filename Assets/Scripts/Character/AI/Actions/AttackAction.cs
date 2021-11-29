@@ -145,8 +145,8 @@ public class AttackAction : GOAction
             return TaskStatus.FAILED;
         }
         
-        if (_myUnit.CanAttack()) return TaskStatus.FAILED;
-        return TaskStatus.COMPLETED;
+        if (_myUnit.CanMove()) return TaskStatus.COMPLETED;
+        return TaskStatus.FAILED;
     }
     
     public void MakeItFail()
