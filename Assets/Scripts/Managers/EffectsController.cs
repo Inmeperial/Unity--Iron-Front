@@ -204,14 +204,37 @@ public class EffectsController : MonoBehaviour
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
         }
+    }
+    
+    /// <summary>
+    /// Creates the Damage Text in world. type: 
+    /// </summary>
+    /// <param name="text">Text that will be shown.</param>
+    /// <param name="type">Miss: 0 - Normal: 1 - Critical: 2 - Heal: 3.</param>
+    /// <param name="position">The position it will spawn.</param>
+    public void CreateDamageText(string text, int type, Vector3 position)
+    {
+        Tuple<string, int, Vector3> myText = Tuple.Create(text, type, position);
 
+        GameObject obj = new GameObject();
+        //Creo un objeto vacio que mire a la camara en la posicion donde va a crearse el texto 
+        GameObject rot = Instantiate(obj, myText.Item3, Quaternion.identity);
+        Destroy(obj);
+        rot.transform.LookAt(rot.transform.position + _cam.transform.forward);
+        rot.name = "name: " + myText.Item1;
+        //Uso la rotacion del objeto vacio para que el texto se instancie con esa rotacion
+        GameObject tObj = Instantiate(_damageText, myText.Item3 + new Vector3(0, 0, 0), rot.transform.rotation);
+        DamageText t = tObj.GetComponent<DamageText>();
+        t.SetText(myText.Item1, myText.Item2, 0);
+        Destroy(rot);
+        StartCoroutine(DestroyEffect(tObj, t.GetDuration()));
     }
 
     /// <summary>
     /// Creates the Damage Text in world. type: 
     /// </summary>
     /// <param name="text">Text that will be shown.</param>
-    /// <param name="type">Miss: 0 - Normal: 1 - Critical: 2.</param>
+    /// <param name="type">Miss: 0 - Normal: 1 - Critical: 2 - Heal: 3.</param>
     /// <param name="position">The position it will spawn.</param>
     /// <param name="last">Is the last text to spawn?</param>
     public void CreateDamageText(string text, int type, Vector3 position, bool last)

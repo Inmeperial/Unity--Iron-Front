@@ -343,6 +343,7 @@ public abstract class Gun : EnumsClass
         
         if (_currentHP <= 0)
         {
+            EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.Mine);
             _myChar.ArmDestroyed(_location, _ability);
             gameObject.SetActive(false);
         }
@@ -361,7 +362,7 @@ public abstract class Gun : EnumsClass
         //EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
 
         Vector3 pos = transform.position;
-        EffectsController.Instance.CreateDamageText(damage.ToString(), 1, pos, true);
+        EffectsController.Instance.CreateDamageText(damage.ToString(), 1, pos);
         
         WorldUI ui = _myChar.GetMyUI();
         ui.ContainerActivation(true);
@@ -387,6 +388,7 @@ public abstract class Gun : EnumsClass
         
         if (_currentHP <= 0)
         {
+            EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.Mine);
             _myChar.ArmDestroyed(_location, _ability);
             TurnOff();
         }
@@ -413,14 +415,16 @@ public abstract class Gun : EnumsClass
         return _ability;
     }
 
-    public void Heal(int value)
+    public void Heal(int healAmount)
     {
-        _currentHP += value;
-
         if (_currentHP >= _maxHP)
+        {
+            healAmount = (int)_maxHP - (int)_currentHP;
             _currentHP = _maxHP;
+        }
+        else _currentHP += healAmount;
         
         var pos = transform.position;
-        EffectsController.Instance.CreateDamageText(value.ToString(), 3, pos, true);
+        EffectsController.Instance.CreateDamageText(healAmount.ToString(), 3, pos);
     }
 }

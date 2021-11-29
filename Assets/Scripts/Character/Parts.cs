@@ -55,15 +55,17 @@ public abstract class Parts : MonoBehaviour
 
     public abstract void TakeDamage(int damage);
 
-    public void Heal(int value)
+    public void Heal(int healAmount)
     {
-        _currentHP += value;
-
         if (_currentHP >= _maxHP)
+        {
+            healAmount = (int)_maxHP - (int)_currentHP;
             _currentHP = _maxHP;
+        }
+        else _currentHP += healAmount;
         
         var pos = transform.position;
-        EffectsController.Instance.CreateDamageText(value.ToString(), 3, pos, true);
+        EffectsController.Instance.CreateDamageText(healAmount.ToString(), 3, pos);
     }
 
     public Ability GetAbility()
