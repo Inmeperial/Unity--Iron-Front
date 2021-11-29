@@ -40,7 +40,9 @@ public class RepairKit : Item
 		if (Input.GetMouseButtonDown(0))
 		{
 			var selectedTile = MouseRay.GetTargetTransform(_character.block).GetComponent<Tile>();
-			if (!selectedTile || !_tilesInRange.Contains(selectedTile)) return;
+			if (!selectedTile) return;
+				
+			if (!_tilesInRange.Contains(selectedTile)) return;
 			
 			var selectedUnit = selectedTile.GetUnitAbove();
 			if (!selectedUnit) return;
