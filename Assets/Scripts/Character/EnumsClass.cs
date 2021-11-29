@@ -26,6 +26,8 @@ public abstract class EnumsClass: MonoBehaviour
 
     public enum ParticleActionType
     {
+        RepairKit,
+        SmokeBomb,
         HandGranade,
         MovingBridge,
         HammerPreparation,
