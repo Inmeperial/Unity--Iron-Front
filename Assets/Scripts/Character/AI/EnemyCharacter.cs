@@ -253,6 +253,7 @@ public class EnemyCharacter : Character
     public override void ReachedEnd()
     {
         base.ReachedEnd();
+        _failSafeRunning = false;
         _behaviorExecutor.paused = false;
     }
 
