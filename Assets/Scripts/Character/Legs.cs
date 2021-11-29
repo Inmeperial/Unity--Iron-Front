@@ -73,6 +73,13 @@ public class Legs : Parts
         ui.UpdateLegsSlider(total, _currentHP);
         _myChar.MakeNotAttackable();
         TurnManager.Instance.ReducePosition(_myChar);
+        
+        if (_currentHP <= 0 && !_brokenLegs)
+        {
+            EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.Mine);
+            EffectsController.Instance.PlayParticlesEffect(_particleSpawner[1], EnumsClass.ParticleActionType.Mine);
+            HalfSteps();
+        }
     }
 
     public override void TakeDamage(int damage)
@@ -89,6 +96,8 @@ public class Legs : Parts
         _currentHP = hp > 0 ? hp : 0;
         if (_currentHP <= 0 && !_brokenLegs)
         {
+            EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.Mine);
+            EffectsController.Instance.PlayParticlesEffect(_particleSpawner[1], EnumsClass.ParticleActionType.Mine);
             HalfSteps();
         }
 
@@ -99,7 +108,7 @@ public class Legs : Parts
         EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.Damage);
         EffectsController.Instance.PlayParticlesEffect(_particleSpawner[1], EnumsClass.ParticleActionType.Damage);
         //EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
-        EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position, true);
+        EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position);
     }
 
     public float GetRotationSpeed()

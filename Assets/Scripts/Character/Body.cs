@@ -98,7 +98,7 @@ public class Body : Parts
         //EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
         
         Vector3 bodyPos = transform.position;
-        EffectsController.Instance.CreateDamageText(damage.ToString(), 1, bodyPos, true);
+        EffectsController.Instance.CreateDamageText(damage.ToString(), 1, bodyPos);
 
         ui.ContainerActivation(true);
         ui.UpdateBodySlider(damage, (int)_currentHP);
