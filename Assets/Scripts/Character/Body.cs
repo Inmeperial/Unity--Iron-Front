@@ -150,4 +150,10 @@ public class Body : Parts
     {
         return _item;
     }
+
+    public override void Heal(int healAmount)
+    {
+        base.Heal(healAmount);
+        ButtonsUIManager.Instance.UpdateBodyHUD(_currentHP);
+    }
 }

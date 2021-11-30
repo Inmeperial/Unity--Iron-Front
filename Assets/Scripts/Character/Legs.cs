@@ -137,4 +137,10 @@ public class Legs : Parts
     {
         _otherLeg = leg;
     }
+    
+    public override void Heal(int healAmount)
+    {
+        base.Heal(healAmount);
+        ButtonsUIManager.Instance.UpdateLegsHUD(_currentHP);
+    }
 }

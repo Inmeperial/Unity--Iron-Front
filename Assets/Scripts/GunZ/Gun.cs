@@ -426,5 +426,16 @@ public abstract class Gun : EnumsClass
         
         var pos = transform.position;
         EffectsController.Instance.CreateDamageText(healAmount.ToString(), 3, pos);
+
+        switch (_location)
+        {
+            case "Left":
+                ButtonsUIManager.Instance.UpdateLeftArmHUD(_currentHP);
+                break;
+            
+            case "Right":
+                ButtonsUIManager.Instance.UpdateRightArmHUD(_currentHP);
+                break;
+        }
     }
 }

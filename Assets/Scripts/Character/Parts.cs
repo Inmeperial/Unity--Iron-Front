@@ -55,7 +55,7 @@ public abstract class Parts : MonoBehaviour
 
     public abstract void TakeDamage(int damage);
 
-    public void Heal(int healAmount)
+    public virtual void Heal(int healAmount)
     {
         if (_currentHP >= _maxHP)
         {
