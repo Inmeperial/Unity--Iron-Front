@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 1791931121315896205}
   - component: {fileID: 7564490013902161093}
   - component: {fileID: 3506449211831587153}
-  - component: {fileID: 6149117481149496646}
+  - component: {fileID: 5884757811371695568}
   m_Layer: 5
   m_Name: BtnLoadLevel (2)
   m_TagString: Untagged
@@ -613,7 +613,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6149117481149496646
+--- !u!114 &5884757811371695568
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -622,7 +622,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4287983138229423497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 60343f933719e9a44b3fe0d601f1e954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -633,9 +633,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0, b: 0, a: 1}
-    m_HighlightedColor: {r: 0.6792453, g: 0.022427924, b: 0.022427924, a: 1}
-    m_PressedColor: {r: 0.41509432, g: 0.0058739656, b: 0.0058739656, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -653,20 +653,13 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 3506449211831587153}
-  m_OnClick:
+  OnLeftClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: LoadGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  OnRightClick:
+    m_PersistentCalls:
+      m_Calls: []
+  _levelName: Level 3
 --- !u!1 &4500158997552063822
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286,7 +1279,7 @@ GameObject:
   - component: {fileID: 4969709269797069483}
   - component: {fileID: 4969709269797069462}
   - component: {fileID: 4969709269797069481}
-  - component: {fileID: 4969709269797069480}
+  - component: {fileID: 2572320057609820271}
   m_Layer: 5
   m_Name: BtnLoadResetLevel
   m_TagString: Untagged
@@ -1350,7 +1343,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4969709269797069480
+--- !u!114 &2572320057609820271
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1359,7 +1352,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4969709269797069482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ba28900a7313fc49a788abcd9699779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -1390,20 +1383,12 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 4969709269797069481}
-  m_OnClick:
+  OnLeftClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ReloadLevel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  OnRightClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4969709269811903702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,7 +1400,7 @@ GameObject:
   - component: {fileID: 4969709269811903703}
   - component: {fileID: 4969709269811903698}
   - component: {fileID: 4969709269811903701}
-  - component: {fileID: 4969709269811903700}
+  - component: {fileID: 5111253278866874240}
   m_Layer: 5
   m_Name: BtnLoadWorkshop
   m_TagString: Untagged
@@ -1479,7 +1464,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4969709269811903700
+--- !u!114 &5111253278866874240
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1488,7 +1473,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4969709269811903702}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: dc6b72102e999e64980c9d773409645d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -1519,20 +1504,13 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 4969709269811903701}
-  m_OnClick:
+  OnLeftClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: LoadWorkShop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  OnRightClick:
+    m_PersistentCalls:
+      m_Calls: []
+  _workshopSceneName: TallerScene
 --- !u!1 &4969709269835933199
 GameObject:
   m_ObjectHideFlags: 0
@@ -2926,7 +2904,7 @@ GameObject:
   - component: {fileID: 9059851984682321614}
   - component: {fileID: 5467134785661409926}
   - component: {fileID: 3702626507426038372}
-  - component: {fileID: 6750405785523036370}
+  - component: {fileID: 5972695431773761387}
   m_Layer: 5
   m_Name: BtnExit
   m_TagString: Untagged
@@ -2990,7 +2968,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6750405785523036370
+--- !u!114 &5972695431773761387
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2999,7 +2977,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5390857002675297486}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 48136d42e1c73274b84e824582df8d17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -3030,20 +3008,12 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 3702626507426038372}
-  m_OnClick:
+  OnLeftClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
+  OnRightClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6227909595031585356
 GameObject:
   m_ObjectHideFlags: 0
@@ -3520,7 +3490,7 @@ GameObject:
   - component: {fileID: 6902468307298402455}
   - component: {fileID: 480488026605424132}
   - component: {fileID: 905655513113103513}
-  - component: {fileID: 6180175912025818285}
+  - component: {fileID: 2439274777658815318}
   m_Layer: 5
   m_Name: BtnLoadLevel
   m_TagString: Untagged
@@ -3584,7 +3554,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6180175912025818285
+--- !u!114 &2439274777658815318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3593,7 +3563,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7504374837481369502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 60343f933719e9a44b3fe0d601f1e954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -3604,9 +3574,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.9333334, g: 0.87843144, b: 0, a: 1}
-    m_HighlightedColor: {r: 0.8396226, g: 0.7913979, b: 0.019802418, a: 1}
-    m_PressedColor: {r: 0.8018868, g: 0.75716454, b: 0.04160734, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -3624,20 +3594,13 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 905655513113103513}
-  m_OnClick:
+  OnLeftClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: LoadGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  OnRightClick:
+    m_PersistentCalls:
+      m_Calls: []
+  _levelName: Level 1 NUEVO
 --- !u!1 &7566138411220349852
 GameObject:
   m_ObjectHideFlags: 0
@@ -4087,7 +4050,7 @@ GameObject:
   - component: {fileID: 6940002495352002374}
   - component: {fileID: 8073078548510935297}
   - component: {fileID: 2970340194655947565}
-  - component: {fileID: 6812531787403065665}
+  - component: {fileID: 717989348655696643}
   m_Layer: 5
   m_Name: BtnLoadLevel (1)
   m_TagString: Untagged
@@ -4151,7 +4114,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6812531787403065665
+--- !u!114 &717989348655696643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4160,7 +4123,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8709788260847805943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 60343f933719e9a44b3fe0d601f1e954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -4171,9 +4134,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0.5921569, b: 0, a: 1}
-    m_HighlightedColor: {r: 0.7924528, g: 0.48907503, b: 0.048593827, a: 1}
-    m_PressedColor: {r: 0.6415094, g: 0.37987423, b: 0, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -4191,17 +4154,10 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2970340194655947565}
-  m_OnClick:
+  OnLeftClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: LoadGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  OnRightClick:
+    m_PersistentCalls:
+      m_Calls: []
+  _levelName: Level 2

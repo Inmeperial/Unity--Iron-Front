@@ -1,48 +1,68 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class ChangeScene : MonoBehaviour
 {
-    [SerializeField] public MenuOptionsInGame menuOptions = default;
     public static bool _firstTimePlaying = false;
 
+    public static ChangeScene Instance;
 
-    public void MenuLoadScene()
+    [SerializeField] private static bool _firstLoad = true;
+    private void Awake()
     {
-        if (!_firstTimePlaying)
+        if (Instance != null)
         {
-            _firstTimePlaying = true;
-            LoadLevel1();
+            Destroy(gameObject);
         }
         else
-            LoadMap();
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+        if (_firstLoad)
+        {
+            _firstLoad = false;
+
+            if (SceneManager.GetActiveScene().name == "LoadScreen")
+            {
+                Debug.Log("load menu");
+                LoadScene("Menu"); 
+            }
+        }
+        else _firstLoad = false;
     }
+    // public void MenuLoadScene()
+    // {
+    //     if (!_firstTimePlaying)
+    //     {
+    //         _firstTimePlaying = true;
+    //         LoadLevel1();
+    //     }
+    //     else
+    //         LoadMap();
+    // }
 
     public void LoadLevel1()
     {
-        if(menuOptions)
-            menuOptions.CloseAllMenu();
         SceneManager.LoadScene("Level 1 NUEVO");
     }
 
     public void LoadLevel2()
     {
-        if (menuOptions)
-            menuOptions.CloseAllMenu();
         SceneManager.LoadScene("Level 2");
     }
 
     public void LoadLevel3()
     {
-        if (menuOptions)
-            menuOptions.CloseAllMenu();
+        
         SceneManager.LoadScene("Level 3");
     }
 
     public void LoadWorkShop()
     {
-        if (menuOptions)
-            menuOptions.CloseAllMenu();
         SceneManager.LoadScene("TallerScene");
     }
 
@@ -53,16 +73,45 @@ public class ChangeScene : MonoBehaviour
 
     public void ReloadLevel()
     {
-        if (menuOptions)
-            menuOptions.CloseAllMenu();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void Quit()
     {
-        if (menuOptions)
-            menuOptions.CloseAllMenu();
         Debug.Log("Bye");
         Application.Quit();
     }
+
+    public void LoadScene(string scene)
+    {
+        StartCoroutine(LoadSceneAsync(scene));
+    }
+    IEnumerator LoadSceneAsync(string sceneToLoad)
+    {
+        yield return null;
+
+        AsyncOperation loadScreen = SceneManager.LoadSceneAsync("LoadScreen");
+        Debug.Log("load screen");
+        yield return new WaitUntil(() => loadScreen.isDone);
+        
+        AsyncOperation ao = SceneManager.LoadSceneAsync(sceneToLoad);
+        ao.allowSceneActivation = false;
+
+        float progress = 0;
+        while (!ao.isDone)
+        {
+            progress = ao.progress / 1;
+
+            if (ao.progress >= 0.9f)
+            {
+                ao.allowSceneActivation = true;
+                 
+                //fill amount100
+                ao.allowSceneActivation = true;
+            }
+                 
+
+            yield return null;
+        }
+    } 
 }

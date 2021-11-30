@@ -1557,7 +1557,9 @@ public class Character : EnumsClass, IObservable
         if (!_mechaEquipment) return;
 
         _myName = _mechaEquipment.name;
-
+        
+        _myUI.SetName(_myName);
+        
         _body = Instantiate(_mechaEquipment.body.prefab, _bodySpawnPosition);
         _body.ManualStart(this);
         _body.transform.localPosition = Vector3.zero;

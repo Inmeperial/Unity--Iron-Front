@@ -47,7 +47,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
     }
 
