@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class ChangeScene : MonoBehaviour
 {
@@ -93,19 +94,31 @@ public class ChangeScene : MonoBehaviour
         AsyncOperation loadScreen = SceneManager.LoadSceneAsync("LoadScreen");
         Debug.Log("load screen");
         yield return new WaitUntil(() => loadScreen.isDone);
+
+        Slider slider = FindObjectOfType<Slider>();
+        
+        if (slider)
+            Debug.Log("hay slider");
         
         AsyncOperation ao = SceneManager.LoadSceneAsync(sceneToLoad);
         ao.allowSceneActivation = false;
 
-        float progress = 0;
+        
         while (!ao.isDone)
         {
-            progress = ao.progress / 1;
+            float progress = Mathf.Clamp01(ao.progress / 0.9f);
+            if (slider)
+            {
+                Debug.Log(progress);
+                UpdateLoadingBar(slider, progress);
+            }
+            //progress = ao.progress / 1;
 
             if (ao.progress >= 0.9f)
             {
-                ao.allowSceneActivation = true;
-                 
+                if (slider)
+                    UpdateLoadingBar(slider, progress);
+
                 //fill amount100
                 ao.allowSceneActivation = true;
             }
@@ -113,5 +126,10 @@ public class ChangeScene : MonoBehaviour
 
             yield return null;
         }
-    } 
+    }
+
+    void UpdateLoadingBar(Slider slider, float value)
+    {
+        slider.value = value;
+    }
 }
