@@ -5,19 +5,7 @@ public class TurnOrderManager : MonoBehaviour
 {
 	public List<FramesUI> framesList = new List<FramesUI>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-	
-	}
-
-    // Update is called once per frame
-    void Update()
-    {
-		if (Input.GetKeyDown(KeyCode.C)) ChangeOrder();
-    }
-
-	private void ChangeOrder()
+ 	private void ChangeOrder()
 	{
 		int positionToChange = UnityEngine.Random.Range(0, framesList.Count-1);
 		List<FramesUI> tempFramesList = new List<FramesUI>();
