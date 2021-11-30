@@ -15,11 +15,12 @@ MonoBehaviour:
   equipableType: 1
   equipableName: Piercing Shot
   equipableIcon: {fileID: 21300000, guid: d2187335ad891dd4b98b1a92f2593377, type: 3}
-  description: Does Damage to all units in a straight line.
-  maxUses: 10
+  description: Does 100Dmg to all units in a straight line, range depends on equiped
+    weapon.
+  maxUses: 100
   cooldown: 2
   buttonTextFontSize: 500
   abilityPrefab: {fileID: 4887648641423547763, guid: de0c340cb1cb8f349b62240f5ba84be7,
     type: 3}
   partSlot: 1
-  damage: 75
+  damage: 100

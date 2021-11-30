@@ -76,8 +76,8 @@ public class Legs : Parts
         
         if (_currentHP <= 0 && !_brokenLegs)
         {
-            EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.Mine);
-            EffectsController.Instance.PlayParticlesEffect(_particleSpawner[1], EnumsClass.ParticleActionType.Mine);
+            EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.MortarHit);
+            EffectsController.Instance.PlayParticlesEffect(_particleSpawner[1], EnumsClass.ParticleActionType.MortarHit);
             HalfSteps();
         }
     }

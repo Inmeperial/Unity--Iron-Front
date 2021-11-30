@@ -40,7 +40,7 @@ public class SmokeBomb : Item, IObserver
 			if (!_tilesInRange.Contains(item))
 			{
 				_tilesInRange.Add(item);
-				_highlight.MortarPaintTilesInActivationRange(item);
+				_highlight.MortarPaintTilesInAttackRange(item);
 			}
 			PaintTilesInSelectionRange(item, count + 1);
 		}
@@ -48,7 +48,7 @@ public class SmokeBomb : Item, IObserver
 
 	public override void Deselect()
 	{
-		_highlight.ClearTilesInActivationRange(_tilesInRange);
+		_highlight.MortarClearTilesInAttackRange(_tilesInRange);
 		_tilesInRange.Clear();
 		_character.EquipableSelectionState(false, null);
 		_character.SelectThisUnit();

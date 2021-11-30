@@ -26,7 +26,7 @@ public class MineItem : Item
 
 	public override void Deselect()
 	{
-		_highlight.ClearTilesInActivationRange(_tilesInRange);
+		_highlight.MortarClearTilesInAttackRange(_tilesInRange);
 		_tilesInRange.Clear();
 		_character.EquipableSelectionState(false, null);
 		_character.SelectThisUnit();
@@ -73,7 +73,7 @@ public class MineItem : Item
 				if (item && item.IsWalkable() && !item.GetUnitAbove())
 				{
 					_tilesInRange.Add(item);
-					_highlight.MortarPaintTilesInActivationRange(item);
+					_highlight.MortarPaintTilesInAttackRange(item);
 				}
 			}
 			PaintTilesInRange(item, count + 1);

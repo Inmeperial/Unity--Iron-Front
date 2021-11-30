@@ -40,7 +40,7 @@ public class Push : Ability
     public override void Deselect()
     {
         if(_tilesInRange.Count != 0)
-            _highlight.ClearTilesInActivationRange(_tilesInRange);
+            _highlight.MortarClearTilesInAttackRange(_tilesInRange);
         _tilesInRange.Clear();
         _character.EquipableSelectionState(false, null);
         _character.SelectThisUnit();
@@ -100,15 +100,15 @@ public class Push : Ability
         EffectsController.Instance.PlayParticlesEffect(enemy.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
         if (collides)
 		{
-            enemy.GetBody().TakeDamage(_abilityData.collisionDamage);
             enemy.SetHurtAnimation();
+            enemy.GetBody().TakeDamage(_abilityData.collisionDamage);
             EffectsController.Instance.PlayParticlesEffect(enemy.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
 
             if (collidingUnit)
             {
                 //Hacer daño a la otra unidad
-                collidingUnit.GetBody().TakeDamage(_abilityData.collisionDamage);
                 collidingUnit.SetHurtAnimation();
+                collidingUnit.GetBody().TakeDamage(_abilityData.collisionDamage);
                 EffectsController.Instance.PlayParticlesEffect(collidingUnit.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
             }
         }
@@ -150,18 +150,18 @@ public class Push : Ability
         if (nextHit.transform)
         {
             Tile t = nextHit.transform.GetComponent<Tile>();
+            if (!t) return currentTile;
 
             if (t && t.IsWalkable() && t.IsFree())
             {
                 return GetTileToPushTo(t, dir, count);
             }
-            else if (t && !t.IsWalkable() || !t.IsFree())
+            else if (!t.IsWalkable() || !t.IsFree())
             {
                 collides = true;
                 collidingUnit = t.GetUnitAbove();
                 return currentTile;
             }
-            return currentTile;
         }
         return currentTile;
     }
@@ -193,7 +193,7 @@ public class Push : Ability
     
                 if (t && t.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
+                    _highlight.MortarPaintTilesInAttackRange(t);
                     PaintUseTiles(t, count, forwardHit.transform.forward);                    
                 }
             }
@@ -204,7 +204,7 @@ public class Push : Ability
     
                 if (t && t.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
+                    _highlight.MortarPaintTilesInAttackRange(t);
                     PaintUseTiles(t, count, leftHit.transform.right * -1);                    
                 }
             }
@@ -215,7 +215,7 @@ public class Push : Ability
     
                 if (t && t.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
+                    _highlight.MortarPaintTilesInAttackRange(t);
                     PaintUseTiles(t, count, rightHit.transform.right);                    
                 }
             }
@@ -226,7 +226,7 @@ public class Push : Ability
     
                 if (t && t.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
+                    _highlight.MortarPaintTilesInAttackRange(t);
                     PaintUseTiles(t, count, backHit.transform.forward * -1);                    
                 }
             }
@@ -245,7 +245,7 @@ public class Push : Ability
     
                 if (t && t.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
+                    _highlight.MortarPaintTilesInAttackRange(t);
                     PaintUseTiles(t, count, forwardHit.transform.forward);                    
                 }
             }
@@ -265,7 +265,7 @@ public class Push : Ability
     
                 if (t && t.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
+                    _highlight.MortarPaintTilesInAttackRange(t);
                     PaintUseTiles(t, count, leftHit.transform.right * -1);                    
                 }
             }
@@ -285,7 +285,7 @@ public class Push : Ability
     
                 if (t && t.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
+                    _highlight.MortarPaintTilesInAttackRange(t);
                     PaintUseTiles(t, count, rightHit.transform.right);                    
                 }
             }
@@ -305,7 +305,7 @@ public class Push : Ability
     
                 if (t && t.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
+                    _highlight.MortarPaintTilesInAttackRange(t);
                     PaintUseTiles(t, count, backHit.transform.forward * -1);                    
                 }
             }

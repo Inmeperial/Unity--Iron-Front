@@ -343,7 +343,7 @@ public abstract class Gun : EnumsClass
         
         if (_currentHP <= 0)
         {
-            EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.Mine);
+            EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.MortarHit);
             _myChar.ArmDestroyed(_location, _ability);
             gameObject.SetActive(false);
         }
@@ -388,7 +388,7 @@ public abstract class Gun : EnumsClass
         
         if (_currentHP <= 0)
         {
-            EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.Mine);
+            EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.MortarHit);
             _myChar.ArmDestroyed(_location, _ability);
             TurnOff();
         }

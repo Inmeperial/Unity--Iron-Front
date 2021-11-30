@@ -29,7 +29,7 @@ public class RepairKit : Item
 	
 	public override void Deselect()
 	{
-		_highlight.ClearTilesInActivationRange(_tilesInRange);
+		_highlight.MortarClearTilesInAttackRange(_tilesInRange);
 		_tilesInRange.Clear();
 		_character.EquipableSelectionState(false, null);
 		_character.SelectThisUnit();
@@ -160,7 +160,7 @@ public class RepairKit : Item
 
 		if (t && t.IsWalkable())
 		{
-			_highlight.MortarPaintTilesInActivationRange(t);
+			_highlight.MortarPaintTilesInAttackRange(t);
 			PaintTilesInRange(t, count, dir);
 		}
 		return;

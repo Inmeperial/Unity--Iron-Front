@@ -129,8 +129,8 @@ public class PiercingShot : Ability
 	{
         foreach(var attackedCharacter in _charactersToAttack)
 		{
-            attackedCharacter.GetBody().TakeDamage(_abilityData.damage);
             attackedCharacter.SetHurtAnimation();
+            attackedCharacter.GetBody().TakeDamage(_abilityData.damage);
             EffectsController.Instance.PlayParticlesEffect(attackedCharacter.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
         }
         _character.DeactivateAttack();
