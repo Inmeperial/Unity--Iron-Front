@@ -90,7 +90,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5592694233599639217
 RectTransform:
   m_ObjectHideFlags: 0
@@ -105,10 +105,10 @@ RectTransform:
   m_Father: {fileID: 1832393763689980364}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.14349954}
-  m_AnchoredPosition: {x: 18.5, y: 9.599999}
-  m_SizeDelta: {x: -37, y: 0.80000114}
+  m_AnchorMin: {x: 0.6705917, y: 0.16000001}
+  m_AnchorMax: {x: 1, y: 0.34387174}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &139003041872086616
 CanvasRenderer:
@@ -283,7 +283,6 @@ MonoBehaviour:
   enemyColor: {r: 1, g: 0, b: 0, a: 0.4}
   mechaName: {fileID: 855788626242376089}
   selectionButton: {fileID: 740545306729758195}
-  masterShader: {fileID: 0}
   _characterSelected: {fileID: 0}
 --- !u!1 &6728546302240892050
 GameObject:
