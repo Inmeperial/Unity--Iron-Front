@@ -42,9 +42,14 @@ public class MoveAction : GOAction
             _fail = false;
             return TaskStatus.FAILED;
         }
-        
+
         if (_myUnit.CanAttack())
+        {
+            if (!_myUnit.IsMoving())
+                _myUnit.SetCharacterMove(false);
             return TaskStatus.COMPLETED;
+        }
+            
         
         return TaskStatus.FAILED;
     }
