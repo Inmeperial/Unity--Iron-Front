@@ -1821,6 +1821,14 @@ public class Character : EnumsClass, IObservable
     {
         _unitEnabled = true;
     }
+
+    private void OnEnable()
+    {
+        if (_isDead)
+        {
+            _animationMechaHandler.SetIsDeadAnimatorTrue();
+        }
+    }
 }
 public enum PartsMechaEnum
 {
