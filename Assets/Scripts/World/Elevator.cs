@@ -81,7 +81,7 @@ public class Elevator : MonoBehaviour, IObserver
         if (!_canInteract) return;
 
         if (_aboveCharacter && !_aboveCharacter.IsMyTurn()) return;
-        
+
         StartCoroutine(CheckCharacterDelay());
     }
 
@@ -92,6 +92,7 @@ public class Elevator : MonoBehaviour, IObserver
         _aboveCharacter = _tileBelow.GetUnitAbove();
 
         _aboveCharacter.OnEnterElevator(this);
+        
         ActivateButton();
     }
 
@@ -110,6 +111,7 @@ public class Elevator : MonoBehaviour, IObserver
 
     public void StartMovement()
     {
+        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.MovingBridge);
         StartCoroutine(Move());
         DeactivateButton();
     }
@@ -166,6 +168,8 @@ public class Elevator : MonoBehaviour, IObserver
             yield return new WaitForEndOfFrame();
             _aboveCharacter.PaintTilesInAttackRange(_tileBelow, 0);
         }
+        AudioManager.audioManagerInstance.StopSoundWithFadeOut(this.gameObject.GetComponent<AudioSource>().clip, this.gameObject);
+
     }
 
     private void CanInteractAgain()
@@ -209,7 +213,6 @@ public class Elevator : MonoBehaviour, IObserver
             _currentHp = hp > 0 ? hp : 0;
             
             EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
-            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
             int item = damages[i].Item2;
             switch (item)
             {
@@ -253,7 +256,7 @@ public class Elevator : MonoBehaviour, IObserver
             _aboveCharacter.GetComponent<Rigidbody>().isKinematic = false;
             
             EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
-            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
+            
             EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position, true);
 
             StartCoroutine(Fall());

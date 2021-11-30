@@ -82,6 +82,15 @@ public class EffectsController : MonoBehaviour
         ParticleSystem particle;
         switch (type)
         {
+            case EnumsClass.ParticleActionType.ElevatorDestroy:
+                effect = Instantiate(_handGranadeEffect, obj.transform.position, obj.transform.rotation, obj.transform);
+                particle = effect.transform.GetChild(0).GetComponent<ParticleSystem>();
+                particle.time = 0f;
+                particle.Play();
+                AudioManager.audioManagerInstance.PlaySound(_movingBridgeSound, obj);
+                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                break;
+
             case EnumsClass.ParticleActionType.MovingBridge:
                 AudioManager.audioManagerInstance.PlaySound(_movingBridgeSound, obj);
                 break;
@@ -130,7 +139,7 @@ public class EffectsController : MonoBehaviour
                 break;
 
             case EnumsClass.ParticleActionType.Damage:
-                effect = Instantiate(_damageEffect, obj.transform.position, transform.rotation, obj.transform);
+                effect = Instantiate(_damageEffect, obj.transform.position, transform.rotation, this.transform);
                 particle = effect.transform.GetChild(0).GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
@@ -200,6 +209,7 @@ public class EffectsController : MonoBehaviour
                 particle.time = 0f;
                 particle.Play();
                 ShakeIt();
+                AudioManager.audioManagerInstance.PlaySound(_mineSound, obj);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
         }

@@ -26,6 +26,7 @@ public abstract class EnumsClass: MonoBehaviour
 
     public enum ParticleActionType
     {
+        ElevatorDestroy,
         RepairKit,
         SmokeBomb,
         HandGranade,
@@ -41,7 +42,6 @@ public abstract class EnumsClass: MonoBehaviour
         AssaultRifleFinalShot,
         Rifle,
         Dead,
-        Hit,
         MortarHit
     };
 }
