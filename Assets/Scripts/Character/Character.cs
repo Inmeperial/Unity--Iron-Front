@@ -1028,7 +1028,12 @@ public class Character : EnumsClass, IObservable
     public virtual void SetTurn(bool state)
     {
         _myTurn = state;
-        if (_myTurn) NotifyObserver("AboveTurn");
+        if (_myTurn)
+        {
+            NotifyObserver("AboveTurn");
+            if (_body.IsSmokeScreenActive())
+                _body.DeactivateSmokeScreen();
+        }
     }
 
     /// <summary>

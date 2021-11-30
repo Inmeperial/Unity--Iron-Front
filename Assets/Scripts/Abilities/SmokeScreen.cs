@@ -23,8 +23,7 @@ public class SmokeScreen : Ability
 
     public override void Deselect()
     {
-        Debug.Log("deselect ability");
-        
+        Destroy(_smokeObject);
     }
 
     public override void Use(Action callback = null)
@@ -37,6 +36,7 @@ public class SmokeScreen : Ability
     IEnumerator DestroySmoke()
     {
         yield return new WaitUntil(() => _character.IsMyTurn());
-        Destroy(_smokeObject);
+        
+        if (_smokeObject) Destroy(_smokeObject);
     }
 }

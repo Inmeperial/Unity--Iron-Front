@@ -156,4 +156,10 @@ public class Body : Parts
         base.Heal(healAmount);
         ButtonsUIManager.Instance.UpdateBodyHUD(_currentHP);
     }
+
+    public void DeactivateSmokeScreen()
+    {
+        _smokeScreenActive = false;
+        _ability.Deselect();
+    }
 }
