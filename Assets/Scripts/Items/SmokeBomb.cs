@@ -70,6 +70,7 @@ public class SmokeBomb : Item, IObserver
 
 		if (Input.GetMouseButtonDown(0))
 		{
+			Debug.Log("asd");
 			EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.SmokeBomb);
 			//Creo la esfera con el radio y le agrego el collider
 			//Para saber la posición donde crear la esfera necesito saber el tile que estoy tocando con un raycast

@@ -108,7 +108,7 @@ public class EffectsController : MonoBehaviour
                 break;
             
             case EnumsClass.ParticleActionType.SmokeBomb:
-                AudioManager.audioManagerInstance.PlaySound(_smokeBombSound, obj);
+                AudioManager.audioManagerInstance.PlaySound(_smokeBombSound, this.gameObject);
                 break;
 
             case EnumsClass.ParticleActionType.RepairKit:
