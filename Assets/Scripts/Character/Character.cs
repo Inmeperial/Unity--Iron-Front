@@ -1628,7 +1628,7 @@ public class Character : EnumsClass, IObservable
 
         _materialMechaHandler.SetPartGameObject(_body, _leftGun, _rightGun, _legs);
         
-        _myUI.SetPartsButtonCharacter(this);
+        //_myUI.SetPartsButtonCharacter(this);
         
         
         if (_leftGun)

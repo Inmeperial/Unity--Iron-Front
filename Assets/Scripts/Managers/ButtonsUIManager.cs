@@ -7,6 +7,10 @@ using UnityEngine.EventSystems;
 
 public class ButtonsUIManager : MonoBehaviour
 {
+    public MechaPartButton bodyButton;
+    public MechaPartButton leftGunButton;
+    public MechaPartButton rightGunButton;
+    public MechaPartButton legsButton;
     [Header("Important Buttons")]
     public Button buttonExecuteAttack;
     public float attackDelay;
@@ -130,6 +134,11 @@ public class ButtonsUIManager : MonoBehaviour
         _buttonLegsSelected = false;
         
         _soundsMenuManager = FindObjectOfType<SoundsMenu>();
+        
+        bodyButton.ButtonEnabling(false, () => { },() => { });
+        leftGunButton.ButtonEnabling(false, () => { },() => { });
+        rightGunButton.ButtonEnabling(false, () => { },() => { });
+        legsButton.ButtonEnabling(false, () => { },() => { });
     }
 
     private void Update()
@@ -203,7 +212,8 @@ public class ButtonsUIManager : MonoBehaviour
         _bulletsForBody += gun.GetBulletsPerClick();
         DestroyImage(gun.GetBulletsPerClick());
         gun.ReduceAvailableBullets();
-        _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
+        //_selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
+        bodyButton.SetBulletsCount(_bulletsForBody);
         buttonExecuteAttack.interactable = true;
         buttonExecuteAttack.gameObject.SetActive(true);
         _buttonBodySelected = true;
@@ -219,7 +229,8 @@ public class ButtonsUIManager : MonoBehaviour
         Gun gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets();
         _bulletsForBody = _bulletsForBody > 0 ? (_bulletsForBody - gun.GetBulletsPerClick()) : 0;
-        _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
+        //_selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
+        bodyButton.SetBulletsCount(_bulletsForBody);
         CheckIfCanExecuteAttack();
         CreateImage(gun.GetBulletsPerClick());
         if (_bulletsForBody == 0)
@@ -244,7 +255,8 @@ public class ButtonsUIManager : MonoBehaviour
         _bulletsForBody = 0;
         _buttonBodySelected = false;
         if (_selectedEnemy)
-            _selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
+            //_selectedEnemy.GetMyUI().SetBodyCount(_bulletsForBody);
+            bodyButton.SetBulletsCount(_bulletsForBody);
         if (_partsSelected > 0)
             _partsSelected--;
         CheckIfCanExecuteAttack();
@@ -268,7 +280,8 @@ public class ButtonsUIManager : MonoBehaviour
         }
         _bulletsForLGun += gun.GetBulletsPerClick();
         DestroyImage(gun.GetBulletsPerClick());
-        _selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLGun);
+        //_selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLGun);
+        leftGunButton.SetBulletsCount(_bulletsForLGun);
         gun.ReduceAvailableBullets();
 
         buttonExecuteAttack.interactable = true;
@@ -285,7 +298,8 @@ public class ButtonsUIManager : MonoBehaviour
         Gun gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets();
         _bulletsForLGun = _bulletsForLGun > 0 ? (_bulletsForLGun - gun.GetBulletsPerClick()) : 0;
-        _selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLGun);
+        //_selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLGun);
+        leftGunButton.SetBulletsCount(_bulletsForLGun);
         CheckIfCanExecuteAttack();
         CreateImage(gun.GetBulletsPerClick());
         if (_bulletsForLGun == 0)
@@ -307,7 +321,8 @@ public class ButtonsUIManager : MonoBehaviour
         DestroyImage(gun.GetMaxBullets());
         _bulletsForLGun = 0;
         if (_selectedEnemy)
-            _selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLGun);
+            //_selectedEnemy.GetMyUI().SetLeftArmCount(_bulletsForLGun);
+            leftGunButton.SetBulletsCount(_bulletsForLGun);
         _buttonLArmSelected = false;
         if (_partsSelected > 0)
             _partsSelected--;
@@ -333,7 +348,8 @@ public class ButtonsUIManager : MonoBehaviour
         }
         _bulletsForRGun += gun.GetBulletsPerClick();
         DestroyImage(gun.GetBulletsPerClick());
-        _selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRGun);
+        //_selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRGun);
+        rightGunButton.SetBulletsCount(_bulletsForRGun);
         gun.ReduceAvailableBullets();
         buttonExecuteAttack.interactable = true;
         buttonExecuteAttack.gameObject.SetActive(true);
@@ -349,7 +365,8 @@ public class ButtonsUIManager : MonoBehaviour
         Gun gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets();
         _bulletsForRGun = _bulletsForRGun > 0 ? (_bulletsForRGun - gun.GetBulletsPerClick()) : 0;
-        _selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRGun);
+        //_selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRGun);
+        rightGunButton.SetBulletsCount(_bulletsForRGun);
         CreateImage(gun.GetBulletsPerClick());
         CheckIfCanExecuteAttack();
         if (_bulletsForRGun == 0)
@@ -371,7 +388,8 @@ public class ButtonsUIManager : MonoBehaviour
         DestroyImage(gun.GetMaxBullets());
         _bulletsForRGun = 0;
         if (_selectedEnemy)
-            _selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRGun);
+            //_selectedEnemy.GetMyUI().SetRightArmCount(_bulletsForRGun);
+            rightGunButton.SetBulletsCount(_bulletsForRGun);
 
         _buttonRArmSelected = false;
         if (_partsSelected > 0)
@@ -395,7 +413,8 @@ public class ButtonsUIManager : MonoBehaviour
         }
         _bulletsForLegs += gun.GetBulletsPerClick();
         DestroyImage(gun.GetBulletsPerClick());
-        _selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
+        //_selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
+        legsButton.SetBulletsCount(_bulletsForLegs);
 
         gun.ReduceAvailableBullets();
         buttonExecuteAttack.interactable = true;
@@ -412,7 +431,8 @@ public class ButtonsUIManager : MonoBehaviour
         Gun gun = _selectedChar.GetSelectedGun();
         gun.IncreaseAvailableBullets();
         _bulletsForLegs = _bulletsForLegs > 0 ? (_bulletsForLegs - gun.GetBulletsPerClick()) : 0;
-        _selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
+        //_selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
+        legsButton.SetBulletsCount(_bulletsForLegs);
         CreateImage(gun.GetBulletsPerClick());
         CheckIfCanExecuteAttack();
         if (_bulletsForLegs == 0)
@@ -434,7 +454,8 @@ public class ButtonsUIManager : MonoBehaviour
         DestroyImage(gun.GetMaxBullets());
         _bulletsForLegs = 0;
         if (_selectedEnemy)
-            _selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
+            //_selectedEnemy.GetMyUI().SetLegsCount(_bulletsForLegs);
+            legsButton.SetBulletsCount(_bulletsForLegs);
         _buttonLegsSelected = false;
         if (_partsSelected > 0)
             _partsSelected--;
@@ -454,7 +475,11 @@ public class ButtonsUIManager : MonoBehaviour
         var cam = FindObjectOfType<CloseUpCamera>();
         WorldUI ui = _selectedEnemy.GetMyUI();
 
-        ui.ResetButtons();
+        //ui.ResetButtons();
+        bodyButton.ResetButton();
+        rightGunButton.ResetButton();
+        leftGunButton.ResetButton();
+        legsButton.ResetButton();
         
         float rightGunHP = 0;
         if (_selectedEnemy.GetRightGun())
@@ -829,22 +854,26 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (_buttonBodySelected == false)
             {
-                ui.BodyEnabling(false);
+                //ui.BodyEnabling(false);
+                bodyButton.ButtonEnabling(false, () => { }, () => {});
             }
 
             if (_buttonLArmSelected == false)
             {
-                ui.LeftArmEnabling(false);
+                //ui.LeftArmEnabling(false);
+                leftGunButton.ButtonEnabling(false, () => { }, () => {});
             }
 
             if (_buttonRArmSelected == false)
             {
-                ui.RightArmEnabling(false);
+                //ui.RightArmEnabling(false);
+                rightGunButton.ButtonEnabling(false, () => { }, () => {});
             }
 
             if (_buttonLegsSelected == false)
             {
-                ui.LegsEnabling(false);
+                //ui.LegsEnabling(false);
+                legsButton.ButtonEnabling(false, () => { }, () => {});
             }
             buttonExecuteAttack.interactable = true;
             buttonExecuteAttack.gameObject.SetActive(true);
@@ -853,22 +882,26 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (!_buttonBodySelected && _bodyInsight)
             {
-                ui.BodyEnabling(true, this);
+                //ui.BodyEnabling(true, this);
+                bodyButton.ButtonEnabling(true, BodyMinus, BodySelection);
             }
 
             if (!_buttonLArmSelected && _lArmInsight)
             {
-                ui.LeftArmEnabling(true, this);
+                //ui.LeftArmEnabling(true, this);
+                leftGunButton.ButtonEnabling(true, LeftArmMinus, LeftArmSelection);
             }
 
             if (!_buttonRArmSelected && _rArmInsight)
             {
-                ui.RightArmEnabling(true, this);
+                //ui.RightArmEnabling(true, this);
+                rightGunButton.ButtonEnabling(true, RightArmMinus, RightArmSelection);
             }
 
             if (!_buttonLegsSelected && _legsInsight)
             {
-                ui.LegsEnabling(true, this);
+                //ui.LegsEnabling(true, this);
+                legsButton.ButtonEnabling(true, LegsMinus, LegsSelection);
             }
 
             if (_partsSelected <= 0)
@@ -1352,30 +1385,111 @@ public class ButtonsUIManager : MonoBehaviour
         }
         _selectedChar.RaysOffDelay();
 
-        WorldUI ui = _selectedEnemy.GetMyUI();
-        ui.ButtonsEnabling(_bodyInsight, _lArmInsight, _rArmInsight, _legsInsight, this);
+        //WorldUI ui = _selectedEnemy.GetMyUI();
+        //ui.ButtonsEnabling(_bodyInsight, _lArmInsight, _rArmInsight, _legsInsight, this);
         
         
-        ui.SetBodyHpText(_selectedEnemy.GetBody().GetCurrentHp());
+        //ui.SetBodyHpText(_selectedEnemy.GetBody().GetCurrentHp());
 
-        if (_selectedEnemy.GetLeftGun())
-            ui.SetLeftArmHpText(_selectedEnemy.GetLeftGun().GetCurrentHp());
-        else ui.SetLeftArmHpText(0);
+        if (_bodyInsight)
+        {
+            bodyButton.SetCharacter(_selectedEnemy, PartsMechaEnum.body);
+            bodyButton.SetHpText(_selectedEnemy.GetBody().GetCurrentHp().ToString());
+            bodyButton.UpdateHpSlider(_selectedEnemy.GetBody().GetCurrentHp());
+            bodyButton.ButtonEnabling(true, BodyMinus, BodySelection);
+        }
+        else
+        {
+            bodyButton.SetCharacter(null, PartsMechaEnum.body);
+            bodyButton.SetHpText("0");
+            bodyButton.UpdateHpSlider(0);
+            bodyButton.ButtonEnabling(false, () => { },() => { });
+        }
 
-        if (_selectedEnemy.GetRightGun())
-            ui.SetRightArmHpText(_selectedEnemy.GetRightGun().GetCurrentHp());
-        else ui.SetRightArmHpText(0);
+        if (_lArmInsight)
+        {
+            if (_selectedEnemy.GetLeftGun())
+            {
+                //ui.SetLeftArmHpText(_selectedEnemy.GetLeftGun().GetCurrentHp());
+                leftGunButton.SetCharacter(_selectedEnemy, PartsMechaEnum.weaponL);
+                leftGunButton.SetHpText(_selectedEnemy.GetLeftGun().GetCurrentHp().ToString());
+                leftGunButton.UpdateHpSlider(_selectedEnemy.GetLeftGun().GetCurrentHp());
+                leftGunButton.ButtonEnabling(true, LeftArmMinus, LeftArmSelection);
+            }
+        }
+        else
+        {
+            //ui.SetLeftArmHpText(0);
+            leftGunButton.SetCharacter(null, PartsMechaEnum.weaponL);
+            leftGunButton.SetHpText("0");
+            leftGunButton.UpdateHpSlider(0);
+            leftGunButton.ButtonEnabling(false, () => { },() => { });
+        }
 
-        ui.SetLegsHpText(_selectedEnemy.GetLegs().GetCurrentHp());
+        if (_rArmInsight)
+        {
+            if (_selectedEnemy.GetRightGun())
+            {
+                //ui.SetRightArmHpText(_selectedEnemy.GetRightGun().GetCurrentHp());
+                rightGunButton.SetCharacter(_selectedEnemy, PartsMechaEnum.weaponR);
+                rightGunButton.SetHpText(_selectedEnemy.GetRightGun().GetCurrentHp().ToString());
+                rightGunButton.UpdateHpSlider(_selectedEnemy.GetRightGun().GetCurrentHp());
+                rightGunButton.ButtonEnabling(true, RightArmMinus, RightArmSelection);
+            }
+        }
+        else
+        {
+            //ui.SetRightArmHpText(0);
+            rightGunButton.SetCharacter(null, PartsMechaEnum.weaponR);
+            rightGunButton.SetHpText("0");
+            rightGunButton.UpdateHpSlider(0);
+            rightGunButton.ButtonEnabling(false, () => { },() => { });
+        }
 
-        ui.ButtonsContainerSetActive(true);
+        //ui.SetLegsHpText(_selectedEnemy.GetLegs().GetCurrentHp());
+
+        if (_legsInsight)
+        {
+            legsButton.SetCharacter(_selectedEnemy, PartsMechaEnum.legL);
+            legsButton.SetHpText(_selectedEnemy.GetLegs().GetCurrentHp().ToString());
+            legsButton.UpdateHpSlider(_selectedEnemy.GetLegs().GetCurrentHp());
+            legsButton.ButtonEnabling(true, LegsMinus, LegsSelection);
+        }
+        else
+        {
+            legsButton.SetCharacter(null, default);
+            legsButton.SetHpText("0");
+            legsButton.UpdateHpSlider(0);
+            legsButton.ButtonEnabling(false, () => { },() => { });
+        }
+       
+
+        //ui.ButtonsContainerSetActive(true);
         SetAttackHUD();
     }
 
     public void DeactivateBodyPartsContainer()
     {
         if (_selectedEnemy)
-            _selectedEnemy.GetMyUI().ButtonsContainerSetActive(false);
+        {
+            //_selectedEnemy.GetMyUI().ButtonsContainerSetActive(false);
+            bodyButton.SetCharacter(null, default);
+            bodyButton.SetHpText("0");
+            bodyButton.ButtonEnabling(false, () => { },() => { });
+            
+            leftGunButton.SetCharacter(null, default);
+            leftGunButton.SetHpText("0");
+            leftGunButton.ButtonEnabling(false, () => { },() => { });
+            
+            rightGunButton.SetCharacter(null, default);
+            rightGunButton.SetHpText("0");
+            rightGunButton.ButtonEnabling(false, () => { },() => { });
+            
+            legsButton.SetCharacter(null, default);
+            legsButton.SetHpText("0");
+            legsButton.ButtonEnabling(false, () => { },() => { });
+        }
+            
     }
 
     public void ActivateExecuteAttackButton()

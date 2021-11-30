@@ -267,141 +267,140 @@ public class WorldUI : MonoBehaviour
     }
 
     //Activa el objeto de los botones y su interaccion
-    public void ButtonsEnabling(bool body, bool leftArm, bool rightArm, bool legs, ButtonsUIManager mng = null)
-    {
-        BodyEnabling(body, mng);
-        LeftArmEnabling(leftArm, mng);
-        RightArmEnabling(rightArm, mng);
-        LegsEnabling(legs, mng);
-    }
+    // public void ButtonsEnabling(bool body, bool leftArm, bool rightArm, bool legs, ButtonsUIManager mng = null)
+    // {
+    //     BodyEnabling(body, mng);
+    //     LeftArmEnabling(leftArm, mng);
+    //     RightArmEnabling(rightArm, mng);
+    //     LegsEnabling(legs, mng);
+    // }
     
-    public void BodyEnabling(bool status, ButtonsUIManager mng = null)
-    {
-        //_bodyButton.transform.position += -_bodyButton.transform.forward * _forwardMultiplier; 
-        _bodyButton.gameObject.SetActive(status);
-        _bodyButton.interactable = status;
-        if (mng)
-        {
-            _bodyButton.OnRightClick.RemoveAllListeners();
-            _bodyButton.OnLeftClick.RemoveAllListeners();
-            _bodyButton.OnRightClick.AddListener(mng.BodyMinus);
-            _bodyButton.OnLeftClick.AddListener(mng.BodySelection); 
-        }
-        
-        _bodyButton.SetBulletsCount(0);
-    }
-    
-    public void LeftArmEnabling(bool status, ButtonsUIManager mng = null)
-    {
-        //_leftArmButton.transform.position += -_leftArmButton.transform.forward * _forwardMultiplier;
-        _leftArmButton.gameObject.SetActive(status);
-        _leftArmButton.interactable = status;
-        if (mng)
-        {
-            _leftArmButton.OnRightClick.RemoveAllListeners();
-            _leftArmButton.OnLeftClick.RemoveAllListeners();
-            _leftArmButton.OnRightClick.AddListener(mng.LeftArmMinus);
-            _leftArmButton.OnLeftClick.AddListener(mng.LeftArmSelection);
-        }
+    // public void BodyEnabling(bool status, ButtonsUIManager mng = null)
+    // {
+    //     _bodyButton.gameObject.SetActive(status);
+    //     _bodyButton.interactable = status;
+    //     if (mng)
+    //     {
+    //         _bodyButton.OnRightClick.RemoveAllListeners();
+    //         _bodyButton.OnLeftClick.RemoveAllListeners();
+    //         _bodyButton.OnRightClick.AddListener(mng.BodyMinus);
+    //         _bodyButton.OnLeftClick.AddListener(mng.BodySelection); 
+    //     }
+    //     
+    //     _bodyButton.SetBulletsCount(0);
+    // }
+    //
+    // public void LeftArmEnabling(bool status, ButtonsUIManager mng = null)
+    // {
+    //     //_leftArmButton.transform.position += -_leftArmButton.transform.forward * _forwardMultiplier;
+    //     _leftArmButton.gameObject.SetActive(status);
+    //     _leftArmButton.interactable = status;
+    //     if (mng)
+    //     {
+    //         _leftArmButton.OnRightClick.RemoveAllListeners();
+    //         _leftArmButton.OnLeftClick.RemoveAllListeners();
+    //         _leftArmButton.OnRightClick.AddListener(mng.LeftArmMinus);
+    //         _leftArmButton.OnLeftClick.AddListener(mng.LeftArmSelection);
+    //     }
+    //
+    //     _leftArmButton.SetBulletsCount(0);
+    // }
+    //
+    // public void RightArmEnabling(bool status, ButtonsUIManager mng = null)
+    // {
+    //     //_rightArmButton.transform.position += -_rightArmButton.transform.forward * _forwardMultiplier;
+    //     _rightArmButton.gameObject.SetActive(status);
+    //     _rightArmButton.interactable = status;
+    //     
+    //     if (mng)
+    //     {
+    //         _rightArmButton.OnRightClick.RemoveAllListeners();
+    //         _rightArmButton.OnLeftClick.RemoveAllListeners();
+    //         _rightArmButton.OnRightClick.AddListener(mng.RightArmMinus);
+    //         _rightArmButton.OnLeftClick.AddListener(mng.RightArmSelection);
+    //     }
+    //
+    //     _rightArmButton.SetBulletsCount(0);
+    // }
+    // public void LegsEnabling(bool status, ButtonsUIManager mng = null)
+    // {
+    //     //_legsButton.transform.position += -_legsButton.transform.forward * _forwardMultiplier;
+    //     _legsButton.gameObject.SetActive(status);
+    //     _legsButton.interactable = status;
+    //     if (mng)
+    //     {
+    //         _legsButton.OnRightClick.RemoveAllListeners();
+    //         _legsButton.OnLeftClick.RemoveAllListeners();
+    //         _legsButton.OnRightClick.AddListener(mng.LegsMinus);
+    //         _legsButton.OnLeftClick.AddListener(mng.LegsSelection);
+    //     }
+    //     
+    //     _legsButton.SetBulletsCount(0);
+    // }
 
-        _leftArmButton.SetBulletsCount(0);
-    }
-    
-    public void RightArmEnabling(bool status, ButtonsUIManager mng = null)
-    {
-        //_rightArmButton.transform.position += -_rightArmButton.transform.forward * _forwardMultiplier;
-        _rightArmButton.gameObject.SetActive(status);
-        _rightArmButton.interactable = status;
-        
-        if (mng)
-        {
-            _rightArmButton.OnRightClick.RemoveAllListeners();
-            _rightArmButton.OnLeftClick.RemoveAllListeners();
-            _rightArmButton.OnRightClick.AddListener(mng.RightArmMinus);
-            _rightArmButton.OnLeftClick.AddListener(mng.RightArmSelection);
-        }
-
-        _rightArmButton.SetBulletsCount(0);
-    }
-    public void LegsEnabling(bool status, ButtonsUIManager mng = null)
-    {
-        //_legsButton.transform.position += -_legsButton.transform.forward * _forwardMultiplier;
-        _legsButton.gameObject.SetActive(status);
-        _legsButton.interactable = status;
-        if (mng)
-        {
-            _legsButton.OnRightClick.RemoveAllListeners();
-            _legsButton.OnLeftClick.RemoveAllListeners();
-            _legsButton.OnRightClick.AddListener(mng.LegsMinus);
-            _legsButton.OnLeftClick.AddListener(mng.LegsSelection);
-        }
-        
-        _legsButton.SetBulletsCount(0);
-    }
-
-    public void SetBodyHpText(float hp)
-    {
-        var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
-        _bodyButton.SetHpText(h.ToString());
-        _bodyButton.UpdateHpSlider(h);
-    }
-    
-    public void SetLeftArmHpText(float hp)
-    {
-        var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
-        _leftArmButton.SetHpText(h.ToString());
-        _leftArmButton.UpdateHpSlider(h);
-    }
-    
-    public void SetRightArmHpText(float hp)
-    {
-        var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
-        _rightArmButton.SetHpText(h.ToString());
-        _rightArmButton.UpdateHpSlider(h);
-    }
-    
-    public void SetLegsHpText(float hp)
-    {
-        var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
-        _legsButton.SetHpText(h.ToString());
-        _legsButton.UpdateHpSlider(h);
-    }
-
-    public void SetBodyCount(int count)
-    {
-        _bodyButton.SetBulletsCount(count);
-    }
-    
-    public void SetLeftArmCount(int count)
-    {
-        _leftArmButton.SetBulletsCount(count);
-    }
-    
-    public void SetRightArmCount(int count)
-    {
-        _rightArmButton.SetBulletsCount(count);
-    }
-    
-    public void SetLegsCount(int count)
-    {
-        _legsButton.SetBulletsCount(count);
-    }
-
-    public void SetPartsButtonCharacter(Character character)
-    {
-        _bodyButton.SetCharacter(character, PartsMechaEnum.body);
-        _leftArmButton.SetCharacter(character, PartsMechaEnum.weaponL);
-        _rightArmButton.SetCharacter(character, PartsMechaEnum.weaponR);
-        _legsButton.SetCharacter(character, PartsMechaEnum.legL);
-    }
-
-    public void ResetButtons()
-    {
-        _bodyButton.ResetButton();
-        _leftArmButton.ResetButton();
-        _rightArmButton.ResetButton();
-        _legsButton.ResetButton();
-    }
+    // public void SetBodyHpText(float hp)
+    // {
+    //     var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
+    //     _bodyButton.SetHpText(h.ToString());
+    //     _bodyButton.UpdateHpSlider(h);
+    // }
+    //
+    // public void SetLeftArmHpText(float hp)
+    // {
+    //     var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
+    //     _leftArmButton.SetHpText(h.ToString());
+    //     _leftArmButton.UpdateHpSlider(h);
+    // }
+    //
+    // public void SetRightArmHpText(float hp)
+    // {
+    //     var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
+    //     _rightArmButton.SetHpText(h.ToString());
+    //     _rightArmButton.UpdateHpSlider(h);
+    // }
+    //
+    // public void SetLegsHpText(float hp)
+    // {
+    //     var h = Mathf.FloorToInt(hp > 0 ? hp : 0);
+    //     _legsButton.SetHpText(h.ToString());
+    //     _legsButton.UpdateHpSlider(h);
+    // }
+    //
+    // public void SetBodyCount(int count)
+    // {
+    //     _bodyButton.SetBulletsCount(count);
+    // }
+    //
+    // public void SetLeftArmCount(int count)
+    // {
+    //     _leftArmButton.SetBulletsCount(count);
+    // }
+    //
+    // public void SetRightArmCount(int count)
+    // {
+    //     _rightArmButton.SetBulletsCount(count);
+    // }
+    //
+    // public void SetLegsCount(int count)
+    // {
+    //     _legsButton.SetBulletsCount(count);
+    // }
+    //
+    // public void SetPartsButtonCharacter(Character character)
+    // {
+    //     // _bodyButton.SetCharacter(character, PartsMechaEnum.body);
+    //     // _leftArmButton.SetCharacter(character, PartsMechaEnum.weaponL);
+    //     // _rightArmButton.SetCharacter(character, PartsMechaEnum.weaponR);
+    //     // _legsButton.SetCharacter(character, PartsMechaEnum.legL);
+    // }
+    //
+    // public void ResetButtons()
+    // {
+    //     _bodyButton.ResetButton();
+    //     _leftArmButton.ResetButton();
+    //     _rightArmButton.ResetButton();
+    //     _legsButton.ResetButton();
+    // }
 
     #endregion
 }
