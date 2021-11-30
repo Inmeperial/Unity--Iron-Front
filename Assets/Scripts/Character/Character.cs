@@ -1706,6 +1706,8 @@ public class Character : EnumsClass, IObservable
 
         if (!_body) return;
 
+        totalWeight += _body.GetWeight();
+
         if (_leftGun)
             totalWeight += _leftGun.GetWeight();
 
