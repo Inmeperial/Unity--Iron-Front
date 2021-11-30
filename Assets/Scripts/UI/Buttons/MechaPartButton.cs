@@ -138,6 +138,7 @@ public class MechaPartButton : CustomButton
     {
         _bulletsCount = 0;
         _bulletsCountText.text = "0";
+        if (!_characterSelectedToAttack) return;
         _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
         
         if (_partEnum == PartsMechaEnum.body)
