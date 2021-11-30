@@ -147,7 +147,7 @@ public class EffectsController : MonoBehaviour
                 break;
 
             case EnumsClass.ParticleActionType.Mine:
-                effect = Instantiate(_mineExplosionEffect, obj.transform.position, obj.transform.rotation, obj.transform);
+                effect = Instantiate(_mineExplosionEffect, obj.transform.position, obj.transform.rotation, this.transform);
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
