@@ -99,6 +99,8 @@ public class SmokeBomb : Item, IObserver
 	private void UpdateLifeSpam()
 	{
 		_turnsLived++;
+		Debug.Log("turns lived: " + _turnsLived);
+		Debug.Log("data duration: " + _data.duration);
 	}
 
 	private IEnumerator LifeSpan()
@@ -106,6 +108,7 @@ public class SmokeBomb : Item, IObserver
 		TurnManager.Instance.Subscribe(this);
 		yield return new WaitUntil(() => _turnsLived >= _data.duration);
 		
+		Debug.Log("me toca destruirme");
 		TurnManager.Instance.Unsubscribe(this);
 
 		Destroy(_smokeScreen);

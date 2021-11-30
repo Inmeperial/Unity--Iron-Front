@@ -87,25 +87,25 @@ public class WorldUI : MonoBehaviour
         _bodyHpSlider.minValue = 0;
         _bodyDamageSlider.maxValue = bodyMax;
         _bodyDamageSlider.minValue = 0;
-        _bodyButton.SetSlider(0, bodyMax);
+        //_bodyButton.SetSlider(0, bodyMax);
 
         _rightArmHpSlider.maxValue = rArmMax;
         _rightArmHpSlider.minValue = 0;
         _rightArmDamageSlider.maxValue = rArmMax;
         _rightArmDamageSlider.minValue = 0;
-        _rightArmButton.SetSlider(0, rArmMax);
+        //_rightArmButton.SetSlider(0, rArmMax);
 
         _leftArmHpSlider.maxValue = lArmMax;
         _leftArmHpSlider.minValue = 0;
         _leftArmDamageSlider.maxValue = lArmMax;
         _leftArmDamageSlider.minValue = 0;
-        _leftArmButton.SetSlider(0, lArmMax);
+        //_leftArmButton.SetSlider(0, lArmMax);
 
         _legsHpSlider.maxValue = legsMax;
         _legsHpSlider.minValue = 0;
         _legsDamageSlider.maxValue = legsMax;
         _legsDamageSlider.minValue = 0;
-        _legsButton.SetSlider(0, legsMax);
+        //_legsButton.SetSlider(0, legsMax);
     }
     
     #region WorldCanvas
