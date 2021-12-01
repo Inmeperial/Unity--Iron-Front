@@ -14,6 +14,7 @@ public class EffectsController : MonoBehaviour
     private Vector3 _cameraInitialPosition;
 
     [Header("Particles")]
+    [SerializeField] private GameObject _destroyPartEffect;
     [SerializeField] private GameObject _handGranadeEffect;
     [SerializeField] private GameObject _flameThrowerEffect;
     [SerializeField] private GameObject _damageEffect;
@@ -83,6 +84,15 @@ public class EffectsController : MonoBehaviour
         ParticleSystem particle;
         switch (type)
         {
+            case EnumsClass.ParticleActionType.DestroyPart:
+                effect = Instantiate(_destroyPartEffect, obj.transform.position, transform.rotation, this.transform);
+                particle = effect.transform.GetChild(0).GetComponent<ParticleSystem>();
+                particle.time = 0f;
+                particle.Play();
+                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                AudioManager.audioManagerInstance.PlaySound(_mineSound, this.gameObject);
+                break;
+
             case EnumsClass.ParticleActionType.ElevatorDestroy:
                 effect = Instantiate(_handGranadeEffect, obj.transform.position, obj.transform.rotation, obj.transform);
                 particle = effect.transform.GetChild(0).GetComponent<ParticleSystem>();
