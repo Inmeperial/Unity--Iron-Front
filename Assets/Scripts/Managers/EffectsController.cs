@@ -117,7 +117,7 @@ public class EffectsController : MonoBehaviour
                 particle = effect.transform.GetChild(0).GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
-                AudioManager.audioManagerInstance.PlaySound(_flameThrowerSound, obj);
+                AudioManager.audioManagerInstance.PlaySound(_flameThrowerSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
