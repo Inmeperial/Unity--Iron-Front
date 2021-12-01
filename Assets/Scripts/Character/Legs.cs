@@ -43,7 +43,8 @@ public class Legs : Parts
         WorldUI ui = _myChar.GetMyUI();
         ui.SetLegsSlider(_currentHP);
         int total = 0;
-        Vector3 legsPos = transform.position;
+        
+        Vector3 legsMidPosition = Vector3.Lerp(_particleSpawner[0].transform.position, _particleSpawner[1].transform.position, 0.5f);
         for (int i = 0; i < damages.Count; i++)
         {
             total += damages[i].Item1;
@@ -57,15 +58,15 @@ public class Legs : Parts
             switch (item)
             {
                 case MissHit:
-                    EffectsController.Instance.CreateDamageText("Miss", 0, legsPos, i == damages.Count - 1 ? true : false);
+                    EffectsController.Instance.CreateDamageText("Miss", 0, legsMidPosition, i == damages.Count - 1 ? true : false);
                     break;
 
                 case NormalHit:
-                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 1, legsPos, i == damages.Count - 1 ? true : false);
+                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 1, legsMidPosition, i == damages.Count - 1 ? true : false);
                     break;
 
                 case CriticalHit:
-                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 2, legsPos, i == damages.Count - 1 ? true : false);
+                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 2, legsMidPosition, i == damages.Count - 1 ? true : false);
                     break;
             }
         }
@@ -108,7 +109,9 @@ public class Legs : Parts
         EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.Damage);
         EffectsController.Instance.PlayParticlesEffect(_particleSpawner[1], EnumsClass.ParticleActionType.Damage);
         //EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
-        EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position);
+        
+        Vector3 legsMidPosition = Vector3.Lerp(_particleSpawner[0].transform.position, _particleSpawner[1].transform.position, 0.5f);
+        EffectsController.Instance.CreateDamageText(damage.ToString(), 1,legsMidPosition);
     }
 
     public float GetRotationSpeed()
@@ -141,6 +144,8 @@ public class Legs : Parts
     public override void Heal(int healAmount)
     {
         base.Heal(healAmount);
+        Vector3 legsMidPosition = Vector3.Lerp(_particleSpawner[0].transform.position, _particleSpawner[1].transform.position, 0.5f);
+        EffectsController.Instance.CreateDamageText(healAmount.ToString(), 3, legsMidPosition);
         ButtonsUIManager.Instance.UpdateLegsHUD(_currentHP);
     }
 }

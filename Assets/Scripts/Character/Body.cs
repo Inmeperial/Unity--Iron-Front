@@ -41,7 +41,6 @@ public class Body : Parts
         WorldUI ui = _myChar.GetMyUI();
         ui.SetBodySlider(_currentHP);
         int total = 0;
-        Vector3 bodyPos = transform.position;
         for (int i = 0; i < damages.Count; i++)
         {
             total += damages[i].Item1;
@@ -54,15 +53,15 @@ public class Body : Parts
             switch (item)
             {
                 case MissHit:
-                    EffectsController.Instance.CreateDamageText("Miss", 0, bodyPos, i == damages.Count - 1 ? true : false);
+                    EffectsController.Instance.CreateDamageText("Miss", 0, _particleSpawner[0].transform.position, i == damages.Count - 1 ? true : false);
                     break;
                    
                 case NormalHit:
-                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 1, bodyPos, i == damages.Count - 1 ? true : false);
+                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 1, _particleSpawner[0].transform.position, i == damages.Count - 1 ? true : false);
                     break;
                
                 case CriticalHit:
-                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 2, bodyPos, i == damages.Count - 1 ? true : false);
+                    EffectsController.Instance.CreateDamageText(damages[i].Item1.ToString(), 2, _particleSpawner[0].transform.position, i == damages.Count - 1 ? true : false);
                     break;
             }
         }
@@ -97,8 +96,7 @@ public class Body : Parts
         EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.Damage);
         //EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
         
-        Vector3 bodyPos = transform.position;
-        EffectsController.Instance.CreateDamageText(damage.ToString(), 1, bodyPos);
+        EffectsController.Instance.CreateDamageText(damage.ToString(), 1, _particleSpawner[0].transform.position);
 
         ui.ContainerActivation(true);
         ui.UpdateBodySlider(damage, (int)_currentHP);
@@ -109,12 +107,12 @@ public class Body : Parts
         if (_currentHP <= 0)
             _myChar.Dead();
     }
-
-    public void MechaDeath()
-    {
-        _myChar.NotSelectable();
-        //_myChar.effectsController.PlayParticlesEffect(this.gameObject, "Dead");
-    }
+    
+    // public void MechaDeath()
+    // {
+    //     _myChar.NotSelectable();
+    //     //_myChar.effectsController.PlayParticlesEffect(this.gameObject, "Dead");
+    // }
     
     public float GetMaxWeight()
     {
@@ -154,6 +152,7 @@ public class Body : Parts
     public override void Heal(int healAmount)
     {
         base.Heal(healAmount);
+        EffectsController.Instance.CreateDamageText(healAmount.ToString(), 3, _particleSpawner[0].transform.position);
         ButtonsUIManager.Instance.UpdateBodyHUD(_currentHP);
     }
 

@@ -63,9 +63,6 @@ public abstract class Parts : MonoBehaviour
             _currentHP = _maxHP;
         }
         else _currentHP += healAmount;
-        
-        var pos = transform.position;
-        EffectsController.Instance.CreateDamageText(healAmount.ToString(), 3, _particleSpawner[0].transform.position);
     }
 
     public Ability GetAbility()
