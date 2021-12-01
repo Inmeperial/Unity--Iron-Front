@@ -126,7 +126,7 @@ public class EffectsController : MonoBehaviour
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
-                AudioManager.audioManagerInstance.PlaySound(_handGranadeSound, obj);
+                AudioManager.audioManagerInstance.PlaySound(_handGranadeSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
@@ -213,7 +213,7 @@ public class EffectsController : MonoBehaviour
                 particle.time = 0f;
                 particle.Play();
                 ShakeIt();
-                AudioManager.audioManagerInstance.PlaySound(_mineSound, obj);
+                AudioManager.audioManagerInstance.PlaySound(_mineSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
         }
