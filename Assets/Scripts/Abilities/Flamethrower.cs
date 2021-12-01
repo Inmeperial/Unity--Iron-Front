@@ -77,11 +77,15 @@ public class Flamethrower : Ability
 		_lineRenderer.SetPosition(9, _position + Quaternion.Euler(0, -angle / 2, 0) * dir * range);//Necesary
         _lineRenderer.SetPosition(10, _position);//Necesary
 
+        _character.transform.LookAt(_mouseDir);
+        var rot = _character.transform.eulerAngles;
+        rot.x = 0;
+        _character.transform.eulerAngles = rot;
 
         if (Input.GetMouseButtonDown(0))
 		{
             //Ataco a todas las unidades que esten en el area de ataque
-            EffectsController.Instance.PlayParticlesEffect(_character.GetBurningSpawner(), EnumsClass.ParticleActionType.FlameThrower);
+            EffectsController.Instance.PlayParticlesEffect(_character.gameObject, EnumsClass.ParticleActionType.FlameThrower);
             List<Character> charactersHitted = new List<Character>();
             var collisions = Physics.OverlapSphere(_position, range, _abilityData.characterMask);
             foreach (var item in collisions)

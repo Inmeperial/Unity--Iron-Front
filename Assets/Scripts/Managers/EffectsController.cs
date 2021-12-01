@@ -9,7 +9,7 @@ public class EffectsController : MonoBehaviour
     // We need to add a return in the effect switch coz if we need to stop it from the place in the code that we are using it, we need to know what sound is playing.
 
     [Header("Camera Shake")]
-    [SerializeField]  private float _shakeMagnetude = 0.05f, _shakeTime = 0.5f;
+    [SerializeField] private float _shakeMagnetude = 0.05f, _shakeTime = 0.5f;
 
     private Vector3 _cameraInitialPosition;
 
@@ -107,7 +107,7 @@ public class EffectsController : MonoBehaviour
             case EnumsClass.ParticleActionType.HammerHit:
                 AudioManager.audioManagerInstance.PlaySound(_hammerHitSound, this.gameObject);
                 break;
-            
+
             case EnumsClass.ParticleActionType.SmokeBomb:
                 AudioManager.audioManagerInstance.PlaySound(_smokeBombSound, this.gameObject);
                 break;
