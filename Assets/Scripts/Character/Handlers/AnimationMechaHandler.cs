@@ -34,7 +34,12 @@ public class AnimationMechaHandler : MonoBehaviour
 
     public void SetIsDeadAnimatorTrue()
     {
-        if (_deadAnimIsActive) return;
+        if (_deadAnimIsActive)
+        {
+            var deadAnimationLength = _animator.GetCurrentAnimatorStateInfo(0).length;
+            _animator.Play("Death2", 0,deadAnimationLength);
+            return;
+        }
 
         //_audioMechaHandler.SetPlayMechaExplosion();
         _deadAnimIsActive = true;
