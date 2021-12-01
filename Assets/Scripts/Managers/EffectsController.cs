@@ -9,7 +9,8 @@ public class EffectsController : MonoBehaviour
     // We need to add a return in the effect switch coz if we need to stop it from the place in the code that we are using it, we need to know what sound is playing.
 
     [Header("Camera Shake")]
-    public float shakeMagnetude = 0.05f, shakeTime = 0.5f;
+    [SerializeField]  private float _shakeMagnetude = 0.05f, _shakeTime = 0.5f;
+
     private Vector3 _cameraInitialPosition;
 
     [Header("Particles")]
@@ -131,11 +132,14 @@ public class EffectsController : MonoBehaviour
 
             case EnumsClass.ParticleActionType.FlameThrower:
                 effect = Instantiate(_flameThrowerEffect, obj.transform.position, obj.transform.rotation, obj.transform);
-                particle = effect.GetComponent<ParticleSystem>();
-                particle.time = 0f;
-                particle.Play();
+                for (int i = 0; i < _flameThrowerEffect.transform.childCount; i++)
+                {
+                    particle = effect.transform.GetChild(i).GetComponent<ParticleSystem>();
+                    particle.time = 0f;
+                    particle.Play();
+                    StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                }
                 AudioManager.audioManagerInstance.PlaySound(_flameThrowerSound, this.gameObject);
-                StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
             case EnumsClass.ParticleActionType.Damage:
@@ -301,7 +305,7 @@ public class EffectsController : MonoBehaviour
     {
         _cameraInitialPosition = _cam.transform.position;
         InvokeRepeating("StartCameraShaking", 0f, 0.005f);
-        Invoke("StopCameraShaking", shakeTime);
+        Invoke("StopCameraShaking", _shakeTime);
     }
 
     private void StopCameraShaking()
@@ -312,8 +316,8 @@ public class EffectsController : MonoBehaviour
 
     private void StartCameraShaking()
     {
-        float cameraShakingOffsetX = Random.value * shakeMagnetude * 2 - shakeMagnetude;
-        float cameraShakingOffsetY = Random.value * shakeMagnetude * 2 - shakeMagnetude;
+        float cameraShakingOffsetX = Random.value * _shakeMagnetude * 2 - _shakeMagnetude;
+        float cameraShakingOffsetY = Random.value * _shakeMagnetude * 2 - _shakeMagnetude;
         Vector3 cameraIntermadiatePosition = _cam.transform.position;
         cameraIntermadiatePosition.x += cameraShakingOffsetX;
         cameraIntermadiatePosition.y += cameraShakingOffsetY;
