@@ -17,7 +17,7 @@ public class SmokeBomb : Item, IObserver
 		base.Initialize(character, data, location);
 		_data = data as SmokeBombSO;
 		_highlight = FindObjectOfType<TileHighlight>();
-		_actionDic.Add("EndTurn", UpdateLifeSpam);
+		_actionDic.Add("EndTurn", UpdateLifeSpan);
 	}
 
 	public override void Select()
@@ -70,15 +70,14 @@ public class SmokeBomb : Item, IObserver
 
 		if (Input.GetMouseButtonDown(0))
 		{
-			Debug.Log("asd");
 			EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.SmokeBomb);
+			TurnManager.Instance.Subscribe(this);
 			//Creo la esfera con el radio y le agrego el collider
 			//Para saber la posición donde crear la esfera necesito saber el tile que estoy tocando con un raycast
 
 			_turnsLived = 0;
 			//_smokeScreen = Instantiate(_data.smokeGameObject, selectedTile.transform.position, Quaternion.identity);
 			//Tengo en cuenta el transcurso de los turnos para saber cuando muere el efecto.
-			StartCoroutine(LifeSpan());
 			if (callback != null)
 				callback();
 			
@@ -97,24 +96,24 @@ public class SmokeBomb : Item, IObserver
 		
 	}
 
-	private void UpdateLifeSpam()
+	private void UpdateLifeSpan()
 	{
 		_turnsLived++;
-		Debug.Log("turns lived: " + _turnsLived);
-		Debug.Log("data duration: " + _data.duration);
+
+		if (_turnsLived >= _data.duration)
+		{
+			StartCoroutine(DestroyDelay());
+		}
 	}
 
-	private IEnumerator LifeSpan()
+	//Para evitar que se destruya en el mismo frame que se hace el notify, sino da error al modificar la coleccion del turn manager mientras se la usa.
+	IEnumerator DestroyDelay()
 	{
-		TurnManager.Instance.Subscribe(this);
-		yield return new WaitUntil(() => _turnsLived >= _data.duration);
-		
-		Debug.Log("me toca destruirme");
+		yield return new WaitForEndOfFrame();
 		TurnManager.Instance.Unsubscribe(this);
 
 		Destroy(_smokeScreen);
 	}
-
 	public void Notify(string action)
 	{
 		if (_actionDic.ContainsKey(action))

@@ -92,22 +92,18 @@ public class AttackAction : GOAction
             switch (partToAttack)
             {
                 case "Body":
-                    Debug.Log("attack");
                     ButtonsUIManager.Instance.AddBulletsToBody(gun.GetAvailableBullets());
                     break;
                     
                 case "LGun":
-                    Debug.Log("attack");
                     ButtonsUIManager.Instance.AddBulletsToLArm(gun.GetAvailableBullets());
                     break;
                 
                 case "RGun":
-                    Debug.Log("attack");
                     ButtonsUIManager.Instance.AddBulletsToRArm(gun.GetAvailableBullets());
                     break;
                 
                 case "Legs":
-                    Debug.Log("attack");
                     ButtonsUIManager.Instance.AddBulletsToLegs(gun.GetAvailableBullets());
                     break;
                 

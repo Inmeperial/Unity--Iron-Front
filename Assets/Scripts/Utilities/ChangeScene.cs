@@ -92,14 +92,10 @@ public class ChangeScene : MonoBehaviour
         yield return null;
 
         AsyncOperation loadScreen = SceneManager.LoadSceneAsync("LoadScreen");
-        Debug.Log("load screen");
         yield return new WaitUntil(() => loadScreen.isDone);
 
         Slider slider = FindObjectOfType<Slider>();
-        
-        if (slider)
-            Debug.Log("hay slider");
-        
+
         AsyncOperation ao = SceneManager.LoadSceneAsync(sceneToLoad);
         ao.allowSceneActivation = false;
 
@@ -112,14 +108,12 @@ public class ChangeScene : MonoBehaviour
                 Debug.Log(progress);
                 UpdateLoadingBar(slider, progress);
             }
-            //progress = ao.progress / 1;
 
             if (ao.progress >= 0.9f)
             {
                 if (slider)
                     UpdateLoadingBar(slider, progress);
-
-                //fill amount100
+                
                 ao.allowSceneActivation = true;
             }
                  
