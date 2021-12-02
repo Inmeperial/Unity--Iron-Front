@@ -409,20 +409,31 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
     private void GreenUnitDied()
     {
-        Debug.Log("green dead");
         _greenDeadCount++;
         if (_greenDeadCount < _greenTeam.Count) return;
-        //FindObjectOfType<ChangeScene>().Defeat();
-        _losePanel.SetActive(true);
+        StartCoroutine(EndPanelDelayActivation("Lose"));
     }
 
     private void RedUnitDied()
     {
-        Debug.Log("red dead");
         _redDeadCount++;
         if (_redDeadCount < _redTeam.Count) return;
-        //FindObjectOfType<ChangeScene>().Win();
-        _winPanel.SetActive(true);
+        StartCoroutine(EndPanelDelayActivation("Win"));
+    }
+
+    IEnumerator EndPanelDelayActivation(string panel)
+    {
+        yield return new WaitForSeconds(1);
+
+        if (panel == "Win")
+        {
+            _winPanel.SetActive(true);
+        }
+
+        if (panel == "Lose")
+        {
+            _losePanel.SetActive(true);
+        }
     }
 
     public void SetMortarAttack(bool state)
