@@ -15,12 +15,14 @@ MonoBehaviour:
   equipableType: 0
   equipableName: RepairKit
   equipableIcon: {fileID: 21300000, guid: 3dce900347eac0a4283523803723048b, type: 3}
-  description: Repairs up to 15% of the total health for the user or a nearby ally.
+  description: 'Repairs up to 20% of the total health for the user or a nearby ally.
+    Uses: 1'
   maxUses: 1
   cooldown: 1
+  buttonTextFontSize: 0
   itemPrefab: {fileID: 6282442800253608195, guid: 224dfa5fcbf76934da620260f9d3c2a3,
     type: 3}
   duration: 0
   areaOfEffect: 0
   useRange: 1
-  healPercentage: 15
+  healPercentage: 20

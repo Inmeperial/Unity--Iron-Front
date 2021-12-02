@@ -1302,8 +1302,6 @@ public class Character : EnumsClass, IObservable
         _canBeSelected = false;
         _isDead = true;
         PortraitsController.Instance.DeadPortrait(this);
-        _animationMechaHandler.SetIsDeadAnimatorTrue();
-        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Dead);
         NotifyObserver(_unitTeam == Team.Green ? "GreenDead" : "RedDead");
         var myPortrait = PortraitsController.Instance.GetCharacterPortrait(this);
         myPortrait.RemoveButtonLeftClickListeners();
