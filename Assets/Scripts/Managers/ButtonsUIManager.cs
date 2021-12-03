@@ -1179,10 +1179,12 @@ public class ButtonsUIManager : MonoBehaviour
             return;
         }
         
+        
+        
         equipable.SetButton(button);
 
         button.SetButtonIcon(equipable.GetIcon());
-        
+
         button.SetCharacter(_selectedChar);
             
         button.AddLeftClick(equipable.Select);
@@ -1229,6 +1231,8 @@ public class ButtonsUIManager : MonoBehaviour
         
         button.AddRightClick(ActivateEquipablesButtons);
         
+            
+        
         if (equipable.GetEquipableType() == EquipableSO.EquipableType.Passive)
         {
             button.interactable = false;
@@ -1248,6 +1252,11 @@ public class ButtonsUIManager : MonoBehaviour
         else
         {
             button.interactable = true;
+        }
+        
+        if (_selectedChar.GetUnitTeam() == EnumsClass.Team.Red)
+        {
+            button.interactable = false;
         }
     }
 
