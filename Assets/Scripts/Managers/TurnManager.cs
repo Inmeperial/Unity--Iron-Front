@@ -8,6 +8,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 {
     [SerializeField] private GameObject _winPanel;
     [SerializeField] private GameObject _losePanel;
+    [SerializeField] private float _endPanelDelay;
     private List<Character> _greenTeam = new List<Character>();
     private int _greenDeadCount;
     private List<Character> _redTeam = new List<Character>();
@@ -32,6 +33,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     private delegate void Execute();
     Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
     public static TurnManager Instance;
+    
 
     public void ManualAwake()
     {
@@ -423,7 +425,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
     IEnumerator EndPanelDelayActivation(string panel)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(_endPanelDelay);
 
         var enemies = FindObjectsOfType<EnemyCharacter>();
 

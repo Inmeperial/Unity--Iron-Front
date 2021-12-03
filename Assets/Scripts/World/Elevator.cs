@@ -81,6 +81,8 @@ public class Elevator : MonoBehaviour, IObserver
         if (!_canInteract) return;
 
         if (_aboveCharacter && !_aboveCharacter.IsMyTurn()) return;
+        
+        if (_aboveCharacter.GetUnitTeam() == EnumsClass.Team.Red) return;
 
         StartCoroutine(CheckCharacterDelay());
     }

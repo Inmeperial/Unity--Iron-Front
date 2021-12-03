@@ -9236,6 +9236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _winPanel: {fileID: 4060163892124892629}
   _losePanel: {fileID: 3718117435252703342}
+  _endPanelDelay: 5
   _currentTurnOrder: []
   waitForMortarAttack: 3
 --- !u!1 &5682944921409485148
@@ -15005,6 +15006,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: LoadLevel2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962988342248387425, guid: 2d705c298c7151b46afa9fbff830458b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.10000038
       objectReference: {fileID: 0}
     - target: {fileID: 7898259410883298891, guid: 2d705c298c7151b46afa9fbff830458b,
         type: 3}
