@@ -112,24 +112,6 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         _cameraMovement.MoveTo(_actualCharacter.transform, toDo, _actualCharacter.transform);
     }
 
-    private void Update()
-    {
-        // if (Input.GetKeyDown(KeyCode.Backspace))
-        // {
-        //     ForceEndTurn();
-        // }
-    }
-
-    private void ForceEndTurn()
-    {
-        if (_actualCharacter.GetUnitTeam() == Team.Red)
-        {
-            EnemyCharacter ai = _actualCharacter as EnemyCharacter;
-            
-            if (ai) ai.ForceEnd();
-        }
-        EndTurn();
-    }
 
     public void UnitIsMoving()
     {
@@ -336,8 +318,16 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
             PortraitsController.Instance.MovePortrait(unit, oldPos, newPos);
 
+            //var othersTurns = newPos - oldPos;
+
+            for (int i = newPos; i > oldPos; i--)
+            {
+
+                PortraitsController.Instance.MovePortrait(_currentTurnOrder[i], i, i-1);
+            }
+
             Character other = _currentTurnOrder[newPos];
-            PortraitsController.Instance.MovePortrait(other, newPos, oldPos);
+            //PortraitsController.Instance.MovePortrait(other, newPos, oldPos);
             _currentTurnOrder.RemoveAt(oldPos);
             _currentTurnOrder.Insert(newPos, unit);
         }
