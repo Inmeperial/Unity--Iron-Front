@@ -105,7 +105,6 @@ public class ChangeScene : MonoBehaviour
             float progress = Mathf.Clamp01(ao.progress / 0.9f);
             if (slider)
             {
-                Debug.Log(progress);
                 UpdateLoadingBar(slider, progress);
             }
 

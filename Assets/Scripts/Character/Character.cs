@@ -558,24 +558,41 @@ public class Character : EnumsClass, IObservable
         Physics.Raycast(position, dir, out RaycastHit hit, 1000f);
         Transform hitObj = hit.collider.transform;
         //bool goodHit = hitObj.gameObject.CompareTag(tagToCheck) && hitObj.position == partPosition;
-        bool goodHit = hitObj.gameObject.CompareTag(tagToCheck);
+        bool goodHit = false;
 
         LineRenderer renderer = null;
         switch (tagToCheck)
         {
             case "Body":
+                if (hitObj.gameObject.CompareTag(tagToCheck) && hitObj.GetComponent<Body>().GetCharacter().GetUnitTeam() != _unitTeam)
+                {
+                    goodHit = true;
+                }
                 renderer = _rayForBody;
                 break;
 
             case "Legs":
+                if (hitObj.gameObject.CompareTag(tagToCheck) && hitObj.GetComponent<Legs>().GetCharacter().GetUnitTeam() != _unitTeam)
+                {
+                    goodHit = true;
+                }
                 renderer = _rayForLegs;
                 break;
 
             case "RGun":
+                if (hitObj.gameObject.CompareTag(tagToCheck) && hitObj.GetComponent<Gun>().GetCharacter().GetUnitTeam() != _unitTeam)
+                {
+                    goodHit = true;
+                    
+                }
                 renderer = _rayForRightArm;
                 break;
 
             case "LGun":
+                if (hitObj.gameObject.CompareTag(tagToCheck) && hitObj.GetComponent<Gun>().GetCharacter().GetUnitTeam() != _unitTeam)
+                {
+                    goodHit = true;
+                }
                 renderer = _rayForLeftArm;
                 break;
         }

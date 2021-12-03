@@ -74,4 +74,9 @@ public abstract class Parts : MonoBehaviour
     {
         _particleSpawner.Add(spawner);
     }
+
+    public Character GetCharacter()
+    {
+        return _myChar;
+    }
 }

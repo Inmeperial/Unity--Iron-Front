@@ -178,7 +178,6 @@ public class Tile : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
         EndMouseOverColor();
     }
 

@@ -5,7 +5,7 @@ public class ParticleMechaHandler : MonoBehaviour
     [SerializeField] private GameObject spawnerMechaBurning;
     public GameObject[] arrParticleObj;
     private ParticleSystem[] _arrPartSystem;
-
+    private bool _dead;
     void Start()
     {
         if (arrParticleObj != null)
@@ -45,6 +45,8 @@ public class ParticleMechaHandler : MonoBehaviour
 
     public void SetMachineOff()
     {
+        if (_dead) return;
+        
         if (_arrPartSystem != null)
         {
             for (int i = 0; i < _arrPartSystem.Length; i++)
@@ -56,6 +58,7 @@ public class ParticleMechaHandler : MonoBehaviour
             }
         }
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Dead);
+        _dead = true;
     }
 
     public void SetParticleWeapon(GameObject objGunParticleSpawn, EnumsClass.ParticleActionType type)

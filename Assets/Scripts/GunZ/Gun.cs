@@ -438,4 +438,9 @@ public abstract class Gun : EnumsClass
                 break;
         }
     }
+    
+    public Character GetCharacter()
+    {
+        return _myChar;
+    }
 }
