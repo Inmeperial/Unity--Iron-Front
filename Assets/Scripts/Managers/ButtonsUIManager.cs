@@ -1397,6 +1397,7 @@ public class ButtonsUIManager : MonoBehaviour
             bodyButton.SetHpText(_selectedEnemy.GetBody().GetCurrentHp().ToString());
             bodyButton.SetSlider(0, _selectedEnemy.GetBody().GetMaxHp());
             bodyButton.UpdateHpSlider(_selectedEnemy.GetBody().GetCurrentHp());
+            bodyButton.UpdateDamagePreviewSlider();
             bodyButton.ButtonEnabling(true, BodyMinus, BodySelection);
         }
         else
@@ -1417,6 +1418,7 @@ public class ButtonsUIManager : MonoBehaviour
                 leftGunButton.SetHpText(_selectedEnemy.GetLeftGun().GetCurrentHp().ToString());
                 leftGunButton.SetSlider(0, _selectedEnemy.GetLeftGun().GetMaxHp());
                 leftGunButton.UpdateHpSlider(_selectedEnemy.GetLeftGun().GetCurrentHp());
+                leftGunButton.UpdateDamagePreviewSlider();
                 leftGunButton.ButtonEnabling(true, LeftArmMinus, LeftArmSelection);
             }
         }
@@ -1439,6 +1441,7 @@ public class ButtonsUIManager : MonoBehaviour
                 rightGunButton.SetHpText(_selectedEnemy.GetRightGun().GetCurrentHp().ToString());
                 rightGunButton.SetSlider(0, _selectedEnemy.GetRightGun().GetMaxHp());
                 rightGunButton.UpdateHpSlider(_selectedEnemy.GetRightGun().GetCurrentHp());
+                rightGunButton.UpdateDamagePreviewSlider();
                 rightGunButton.ButtonEnabling(true, RightArmMinus, RightArmSelection);
             }
         }
@@ -1460,6 +1463,7 @@ public class ButtonsUIManager : MonoBehaviour
             legsButton.SetHpText(_selectedEnemy.GetLegs().GetCurrentHp().ToString());
             legsButton.SetSlider(0, _selectedEnemy.GetLegs().GetMaxHp());
             legsButton.UpdateHpSlider(_selectedEnemy.GetLegs().GetCurrentHp());
+            legsButton.UpdateDamagePreviewSlider();
             legsButton.ButtonEnabling(true, LegsMinus, LegsSelection);
         }
         else
