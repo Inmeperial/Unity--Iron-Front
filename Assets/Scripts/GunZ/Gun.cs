@@ -106,6 +106,46 @@ public abstract class Gun : EnumsClass
     {
         return _icon;
     }
+    
+    public float GetMaxHp()
+    {
+        return _maxHP;
+    }
+
+    public float GetCurrentHp()
+    {
+        return _currentHP;
+    }
+
+    public float GetWeight()
+    {
+        return _weight;
+    }
+
+    public Ability GetAbility()
+    {
+        return _ability;
+    }
+
+    public Character GetCharacter()
+    {
+        return _myChar;
+    }
+    
+    public GameObject GetParticleSpawn()
+    {
+        return _particleSpawn;
+    }
+    
+    public bool SkillUsed()
+    {
+        return _gunSkill;
+    }
+    
+    public string GetLocation()
+    {
+        return _location;
+    }
     #endregion
     
     /// <summary>
@@ -155,9 +195,9 @@ public abstract class Gun : EnumsClass
     }
     
     /// <summary>
-    /// Modify gun range.
+    /// Modify critical chance.
     /// </summary>
-    /// <param name="extraChance">The amount of range to modify. If negative, it decrease.</param>
+    /// <param name="extraChance">The amount of critical chance to modify. If negative, it decrease.</param>
     public void ModifyCritChance(int extraChance)
     {
         _critChance += extraChance;
@@ -257,10 +297,7 @@ public abstract class Gun : EnumsClass
     /// <summary>
     /// Return true if the Gun ability was used, false if not.
     /// </summary>
-    public bool SkillUsed()
-    {
-        return _gunSkill;
-    }
+
 
     public void TurnOff()
     {
@@ -270,10 +307,7 @@ public abstract class Gun : EnumsClass
         GetComponent<BoxCollider>().enabled = false;
     }
 
-    public GameObject GetParticleSpawn()
-    {
-        return _particleSpawn;
-    }
+
 
     public void ModelsOff()
     {
@@ -394,26 +428,6 @@ public abstract class Gun : EnumsClass
         }
         
     }
-    
-    public float GetMaxHp()
-    {
-        return _maxHP;
-    }
-
-    public float GetCurrentHp()
-    {
-        return _currentHP;
-    }
-
-    public float GetWeight()
-    {
-        return _weight;
-    }
-
-    public Ability GetAbility()
-    {
-        return _ability;
-    }
 
     public void Heal(int healAmount)
     {
@@ -439,8 +453,5 @@ public abstract class Gun : EnumsClass
         }
     }
     
-    public Character GetCharacter()
-    {
-        return _myChar;
-    }
+
 }

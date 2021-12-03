@@ -254,54 +254,103 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void Shoot()
     {
-        if (_rightGunSelected)
+        if (_selectedGun)
         {
-            if(!_rightGun) return;
-            
-            switch (_rightGun.GetGunType())
+            if (_selectedGun.GetLocation() == "Right")
             {
-                case GunsType.None:
-                    break;
-                case GunsType.AssaultRifle:
-                    _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
-                    break;
-                case GunsType.Melee:
-                    _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
-                    break;
-                case GunsType.Rifle:
-                    _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
-                    break;
-                case GunsType.Shield:
-                    break;
-                case GunsType.Shotgun:
-                    _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
-                    break;
+                switch (_rightGun.GetGunType())
+                {
+                    case GunsType.None:
+                        break;
+                    case GunsType.AssaultRifle:
+                        _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
+                        break;
+                    case GunsType.Melee:
+                        _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
+                        break;
+                    case GunsType.Rifle:
+                        _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
+                        break;
+                    case GunsType.Shield:
+                        break;
+                    case GunsType.Shotgun:
+                        _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
+                        break;
+                }
+            }
+            else if (_selectedGun.GetLocation() == "Left")
+            {
+                switch (_leftGun.GetGunType())
+                {
+                    case GunsType.None:
+                        break;
+                    case GunsType.AssaultRifle:
+                        _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
+                        break;
+                    case GunsType.Melee:
+                        _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
+                        break;
+                    case GunsType.Rifle:
+                        _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
+                        break;
+                    case GunsType.Shield:
+                        break;
+                    case GunsType.Shotgun:
+                        _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
+                        break;
+                }
             }
         }
-        else if (_leftGunSelected)
-        {
-            if (!_leftGun) return;
-            
-            switch (_leftGun.GetGunType())
-            {
-                case GunsType.None:
-                    break;
-                case GunsType.AssaultRifle:
-                    _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
-                    break;
-                case GunsType.Melee:
-                    _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
-                    break;
-                case GunsType.Rifle:
-                    _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
-                    break;
-                case GunsType.Shield:
-                    break;
-                case GunsType.Shotgun:
-                    _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
-                    break;
-            }
-        }
+        
+        
+        // if (_rightGunSelected)
+        // {
+        //     if(!_rightGun) return;
+        //     
+        //     switch (_rightGun.GetGunType())
+        //     {
+        //         case GunsType.None:
+        //             break;
+        //         case GunsType.AssaultRifle:
+        //             _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
+        //             break;
+        //         case GunsType.Melee:
+        //             _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
+        //             break;
+        //         case GunsType.Rifle:
+        //             _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
+        //             break;
+        //         case GunsType.Shield:
+        //             break;
+        //         case GunsType.Shotgun:
+        //             _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
+        //             break;
+        //     }
+        // }
+        // else if (_leftGunSelected)
+        // {
+        //     if (!_leftGun) return;
+        //     
+        //     switch (_leftGun.GetGunType())
+        //     {
+        //         case GunsType.None:
+        //             break;
+        //         case GunsType.AssaultRifle:
+        //             _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
+        //             break;
+        //         case GunsType.Melee:
+        //             _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
+        //             break;
+        //         case GunsType.Rifle:
+        //             _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
+        //             break;
+        //         case GunsType.Shield:
+        //             break;
+        //         case GunsType.Shotgun:
+        //             _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
+        //             break;
+        //     }
+        // }
     }
 
     /// <summary>

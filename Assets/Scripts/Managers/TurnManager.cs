@@ -425,6 +425,13 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     {
         yield return new WaitForSeconds(1);
 
+        var enemies = FindObjectsOfType<EnemyCharacter>();
+
+        foreach (var enemy in enemies)
+        {
+            enemy.DisableUnit();
+        }
+        
         if (panel == "Win")
         {
             _winPanel.SetActive(true);
