@@ -39,16 +39,7 @@ public class MenuOptionsInGame : MonoBehaviour
         _audioMixer.SetFloat("pitch", 0.3f);
         _menuInGameObj.SetActive(true);
     }
-
-    public void SetVolume(float vol) //Used on Inspector
-    {
-        //float numPercentage = vol * 100;
-        //float volumeToSet = ((((numPercentage * 30) / 100) * -1) + 30) * -1;
-        //textVolume.text = Mathf.RoundToInt(numPercentage) + "%";
-        //_audioMixer.SetFloat("volume", volumeToSet);
-        _audioMixer.SetFloat("volume", vol);
-    }
-
+    
     public void CloseOptionsMenu()
     {
         if (_optionsObj)

@@ -1520,6 +1520,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4969709269835933196}
+  - component: {fileID: 8997620017784390839}
   m_Layer: 5
   m_Name: MenuInGame
   m_TagString: Untagged
@@ -1548,6 +1549,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 602, y: 338}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8997620017784390839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4969709269835933199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0527f7d5762629f4cbf28a6df46f5260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioMixer: {fileID: 24100000, guid: ea43ca31e47576d48a025dd3280c1d27, type: 2}
 --- !u!1 &4969709269937626362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1966,14 +1980,14 @@ MonoBehaviour:
   m_FillRect: {fileID: 4969709271093702249}
   m_HandleRect: {fileID: 4969709270274373874}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8997620017784390839}
         m_MethodName: SetVolume
         m_Mode: 0
         m_Arguments:
@@ -3358,7 +3372,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.5, y: 0.099999905}
+  m_AnchoredPosition: {x: 1.5, y: 0.10000038}
   m_SizeDelta: {x: -0.76999664, y: -5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4850224076055872658
