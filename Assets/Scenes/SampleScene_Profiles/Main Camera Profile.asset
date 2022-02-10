@@ -112,6 +112,22 @@ MonoBehaviour:
   enabled:
     overrideState: 1
     value: 1
+--- !u!114 &-2119450412254833754
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fbb3e3d2bb9f244ca0cdce3aadbefdb, type: 3}
+  m_Name: ToonPPSSettings
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +148,23 @@ MonoBehaviour:
   - {fileID: 4625477649668894650}
   - {fileID: 5788579362969664084}
   - {fileID: -3967351815034513797}
+  - {fileID: 52379209801020072}
+--- !u!114 &52379209801020072
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a430ba24d65c704ba01312e4bd2a467, type: 3}
+  m_Name: TerminatorPPSSettings
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
 --- !u!114 &1507017179423316816
 MonoBehaviour:
   m_ObjectHideFlags: 3
