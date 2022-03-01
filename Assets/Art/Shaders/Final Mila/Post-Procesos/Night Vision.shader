@@ -83,7 +83,7 @@ Shader "Nigth Vision"
 				float4 ase_ppsScreenPosFragNorm = float4(i.texcoordStereo,0,1);
 
 				float2 uv_MainTex = i.texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;
-				float4 color5 = IsGammaSpace() ? float4(0.2306426,0.6698113,0.3143435,0) : float4(0.04346795,0.4061945,0.08054288,0);
+				float4 color5 = IsGammaSpace() ? float4(0.2306426,0.6698113,0.3143435,0) : float4(0.04346796,0.4061945,0.0805429,0);
 				
 
 				float4 color = ( tex2D( _MainTex, uv_MainTex ) * color5 );
@@ -99,15 +99,16 @@ Shader "Nigth Vision"
 }
 /*ASEBEGIN
 Version=17800
-33;238;1807;781;999.5;390;1;True;False
+0;279;1807;740;1473.5;369.5;1;True;True
 Node;AmplifyShaderEditor.TemplateShaderPropertyNode;3;-591.5,-232;Inherit;False;0;0;_MainTex;Pass;0;5;SAMPLER2D;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SamplerNode;2;-395.5,-166;Inherit;True;Property;_TextureSample0;Texture Sample 0;0;0;Create;True;0;0;False;0;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.ColorNode;5;-299.5,181;Inherit;False;Constant;_Color0;Color 0;0;0;Create;True;0;0;False;0;0.2306426,0.6698113,0.3143435,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;4;-46.5,52;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.TemplateShaderPropertyNode;6;-774.5,0.5;Inherit;False;0;0;;Shader;0;5;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;300,10;Float;False;True;-1;2;ASEMaterialInspector;0;2;Nigth Vision;32139be9c1eb75640a847f011acf3bcf;True;SubShader 0 Pass 0;0;0;SubShader 0 Pass 0;1;False;False;False;True;2;False;-1;False;False;True;2;False;-1;True;7;False;-1;False;False;False;0;False;False;False;False;False;False;False;False;False;False;True;2;0;;0;0;Standard;0;0;1;True;False;;0
 WireConnection;2;0;3;0
 WireConnection;4;0;2;0
 WireConnection;4;1;5;0
 WireConnection;1;0;4;0
 ASEEND*/
-//CHKSM=E95DA4428658646FC44C40E7E0516103531DBBBD
+//CHKSM=B0F317856CE40A443FA38EAADBEFD23F861C052B
