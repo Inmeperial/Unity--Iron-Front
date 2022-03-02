@@ -10,7 +10,7 @@ Material:
   m_Name: Base
   m_Shader: {fileID: 4800000, guid: 2c7deac8303703d47893784d34904e6b, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -20,5 +20,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
+    - _Float0: -0.34
+    - _Float1: 11.73
+    - _Float2: 0
+    - _Float3: 1
+    - _Intensity: 1.07
     - __dirty: 0
     m_Colors: []
