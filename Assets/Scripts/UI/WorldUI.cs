@@ -8,7 +8,7 @@ public class WorldUI : MonoBehaviour
     [Header("Status")]
     [SerializeField] private GameObject _statusContainer;
     [SerializeField] private float _showDuration;
-    [SerializeField] private TextMeshProUGUI _turnOrderText;
+    [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private GameObject _overweightIcon;
     
     [Header("Body")]
@@ -254,7 +254,7 @@ public class WorldUI : MonoBehaviour
 
     public void SetName(string name)
     {
-        _turnOrderText.text = name;
+        _nameText.text = name;
     }
 #endregion
 

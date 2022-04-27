@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class WorkshopManager : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private WorkshopUIManager _workshopUIManager;
     [SerializeField] private MechaEquipmentContainerSO _equipmentContainer;
 
     [SerializeField] private LayerMask _characterLayer;
@@ -15,12 +17,12 @@ public class WorkshopManager : MonoBehaviour
     private bool _isEditing;
 
     public delegate void ClickAction(int mechaIndex);
-    public static event ClickAction OnClickPrevious;
-    public static event ClickAction OnClickNext;
-    public static event ClickAction OnClickEdit;
-    public static event ClickAction OnClickCloseEdit;
-    public static event ClickAction OnClickMecha;
-    public static event ClickAction OnClickArrows;//Nico
+    public event ClickAction OnClickPrevious;
+    public event ClickAction OnClickNext;
+    public event ClickAction OnClickEdit;
+    public event ClickAction OnClickCloseEdit;
+    public event ClickAction OnClickMecha;
+    public event ClickAction OnClickArrows;//Nico
 
     public WorkshopMecha[] mechas;
 
@@ -44,21 +46,13 @@ public class WorkshopManager : MonoBehaviour
         _isEditing = false;
         _mechaIndex = 3;
         _soundMenu = GetComponent<SoundsMenu>();
-        
-        //Removes them in case they exist
-        WorkshopUIManager.OnChangeEquippable -= UpdateEquippable;
-        WorkshopUIManager.OnBodyColorChange -= UpdateBodyColor;
-        WorkshopUIManager.OnLegsColorChange -= UpdateLegsColor;
-        WorkshopUIManager.OnCopyColorToAllBodies -= CopyColorToAllBodies;
-        WorkshopUIManager.OnCopyColorToAllLegs -= CopyColorToAllLegs;
-        WorkshopUIManager.OnNameChange -= UpdateName;
-        
-        WorkshopUIManager.OnChangeEquippable += UpdateEquippable;
-        WorkshopUIManager.OnBodyColorChange += UpdateBodyColor;
-        WorkshopUIManager.OnLegsColorChange += UpdateLegsColor;
-        WorkshopUIManager.OnCopyColorToAllBodies += CopyColorToAllBodies;
-        WorkshopUIManager.OnCopyColorToAllLegs += CopyColorToAllLegs;
-        WorkshopUIManager.OnNameChange += UpdateName;
+
+        _workshopUIManager.OnChangeEquippable += UpdateEquippable;
+        _workshopUIManager.OnBodyColorChange += UpdateBodyColor;
+        _workshopUIManager.OnLegsColorChange += UpdateLegsColor;
+        _workshopUIManager.OnCopyColorToAllBodies += CopyColorToAllBodies;
+        _workshopUIManager.OnCopyColorToAllLegs += CopyColorToAllLegs;
+        _workshopUIManager.OnNameChange += UpdateName;
     }
 
 
@@ -448,13 +442,13 @@ public class WorkshopManager : MonoBehaviour
         button.interactable = true;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        WorkshopUIManager.OnChangeEquippable -= UpdateEquippable;
-        WorkshopUIManager.OnBodyColorChange -= UpdateBodyColor;
-        WorkshopUIManager.OnLegsColorChange -= UpdateLegsColor;
-        WorkshopUIManager.OnCopyColorToAllBodies -= CopyColorToAllBodies;
-        WorkshopUIManager.OnCopyColorToAllLegs -= CopyColorToAllLegs;
-        WorkshopUIManager.OnNameChange -= UpdateName;
+        _workshopUIManager.OnChangeEquippable -= UpdateEquippable;
+        _workshopUIManager.OnBodyColorChange -= UpdateBodyColor;
+        _workshopUIManager.OnLegsColorChange -= UpdateLegsColor;
+        _workshopUIManager.OnCopyColorToAllBodies -= CopyColorToAllBodies;
+        _workshopUIManager.OnCopyColorToAllLegs -= CopyColorToAllLegs;
+        _workshopUIManager.OnNameChange -= UpdateName;
     }
 }

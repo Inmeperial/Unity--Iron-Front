@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WorkshopCamera : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private WorkshopManager _workshopManager;
     [SerializeField] private Transform _startPosition;
     [SerializeField] private Transform[] _mechasToLook;
     [SerializeField] private Transform[] _cameraPositions;
@@ -20,19 +22,12 @@ public class WorkshopCamera : MonoBehaviour
     private void Start()
     {
         _buttons = FindObjectsOfType<CustomButton>();
-        
-        //Removes them if they exist
-        WorkshopManager.OnClickPrevious -= OverviewCameraMove;
-        WorkshopManager.OnClickNext -= OverviewCameraMove;
-        WorkshopManager.OnClickEdit -= FocusCameraMove;
-        WorkshopManager.OnClickCloseEdit -= UnfocusCameraMove;
-        WorkshopManager.OnClickMecha -= OverviewCameraMove;
 
-        WorkshopManager.OnClickPrevious += OverviewCameraMove;
-        WorkshopManager.OnClickNext += OverviewCameraMove;
-        WorkshopManager.OnClickEdit += FocusCameraMove;
-        WorkshopManager.OnClickCloseEdit += UnfocusCameraMove;
-        WorkshopManager.OnClickMecha += OverviewCameraMove;
+        _workshopManager.OnClickPrevious += OverviewCameraMove;
+        _workshopManager.OnClickNext += OverviewCameraMove;
+        _workshopManager.OnClickEdit += FocusCameraMove;
+        _workshopManager.OnClickCloseEdit += UnfocusCameraMove;
+        _workshopManager.OnClickMecha += OverviewCameraMove;
     }
 
     public void OverviewCameraMove(int mechaIndex)
@@ -109,12 +104,12 @@ public class WorkshopCamera : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        WorkshopManager.OnClickPrevious -= OverviewCameraMove;
-        WorkshopManager.OnClickNext -= OverviewCameraMove;
-        WorkshopManager.OnClickEdit -= FocusCameraMove;
-        WorkshopManager.OnClickCloseEdit -= UnfocusCameraMove;
-        WorkshopManager.OnClickMecha -= OverviewCameraMove;
+        _workshopManager.OnClickPrevious -= OverviewCameraMove;
+        _workshopManager.OnClickNext -= OverviewCameraMove;
+        _workshopManager.OnClickEdit -= FocusCameraMove;
+        _workshopManager.OnClickCloseEdit -= UnfocusCameraMove;
+        _workshopManager.OnClickMecha -= OverviewCameraMove;
     }
 }
