@@ -51,6 +51,12 @@ public static class LoadSaveUtility
             newEquipment.leftGun = ScriptableObject.CreateInstance<GunSO>();
             newEquipment.rightGun = ScriptableObject.CreateInstance<GunSO>();
             newEquipment.legs = ScriptableObject.CreateInstance<LegsSO>();
+
+            newEquipment.bodyAbility = ScriptableObject.CreateInstance<BodyAbilitySO>();
+            newEquipment.leftGunAbility = ScriptableObject.CreateInstance<WeaponAbilitySO>();
+            newEquipment.rightGunAbility = ScriptableObject.CreateInstance<WeaponAbilitySO>();
+            newEquipment.legsAbility = ScriptableObject.CreateInstance<LegsAbilitySO>();
+            newEquipment.item = ScriptableObject.CreateInstance<ItemSO>();
             
             //Overwrites body data with the saved one.
             JsonUtility.FromJsonOverwrite(allParts[0], newEquipment.body);
@@ -64,14 +70,24 @@ public static class LoadSaveUtility
             //Overwrites legs data with the saved one.
             JsonUtility.FromJsonOverwrite(allParts[3], newEquipment.legs);
 
+            JsonUtility.FromJsonOverwrite(allParts[4], newEquipment.bodyAbility);
+
+            JsonUtility.FromJsonOverwrite(allParts[5], newEquipment.leftGunAbility);
+
+            JsonUtility.FromJsonOverwrite(allParts[6], newEquipment.rightGunAbility);
+
+            JsonUtility.FromJsonOverwrite(allParts[7], newEquipment.legsAbility);
+
+            JsonUtility.FromJsonOverwrite(allParts[8], newEquipment.item);
+
             //Overwrites body color.
-            newEquipment.bodyColor = JsonUtility.FromJson<MechaEquipmentSO.ColorData>(allParts[4]);
+            newEquipment.bodyColor = JsonUtility.FromJson<MechaEquipmentSO.ColorData>(allParts[9]);
             
             //Overwrites legs color.
-            newEquipment.legsColor =JsonUtility.FromJson<MechaEquipmentSO.ColorData>(allParts[5]);
+            newEquipment.legsColor =JsonUtility.FromJson<MechaEquipmentSO.ColorData>(allParts[10]);
             
             //Index 6 is the name of the Mecha.
-            newEquipment.name = allParts[6];
+            newEquipment.mechaName = allParts[11];
             
             newContainer.equipments.Add(newEquipment);
         }
@@ -96,15 +112,30 @@ public static class LoadSaveUtility
             //Gets parts data and adds a separator to read each part when loading.
             string body = JsonUtility.ToJson(equipmentContainer.equipments[i].body, true);
             body += '|';
-            
+
+            string bodyAbility = JsonUtility.ToJson(equipmentContainer.equipments[i].bodyAbility, true);
+            bodyAbility += '|';
+
+            string item = JsonUtility.ToJson(equipmentContainer.equipments[i].item, true);
+            item += '|';
+
             string leftGun = JsonUtility.ToJson(equipmentContainer.equipments[i].leftGun, true);
             leftGun += '|';
             
+            string leftGunAbility = JsonUtility.ToJson(equipmentContainer.equipments[i].leftGunAbility, true);
+            leftGunAbility += '|';
+
             string rightGun = JsonUtility.ToJson(equipmentContainer.equipments[i].rightGun, true);
             rightGun += '|';
+
+            string rightGunAbility = JsonUtility.ToJson(equipmentContainer.equipments[i].rightGunAbility, true);
+            rightGunAbility += '|';
             
             string legs = JsonUtility.ToJson(equipmentContainer.equipments[i].legs, true);
             legs += '|';
+
+            string legsAbility = JsonUtility.ToJson(equipmentContainer.equipments[i].legsAbility, true);
+            legsAbility += '|';
 
             string bodyColor = JsonUtility.ToJson(equipmentContainer.equipments[i].bodyColor, true);
             bodyColor += '|';
@@ -120,13 +151,22 @@ public static class LoadSaveUtility
             {
                 equipmentSaves += body;
             }
+            //BODY == 0
+            equipmentSaves += leftGun; // == 1
+            equipmentSaves += rightGun; // == 2
+            equipmentSaves += legs; // == 3
 
-            equipmentSaves += leftGun;
-            equipmentSaves += rightGun;
-            equipmentSaves += legs;
-            equipmentSaves += bodyColor;
-            equipmentSaves += legsColor;
-            equipmentSaves += equipmentContainer.equipments[i].name;
+            equipmentSaves += bodyAbility; // == 4
+            equipmentSaves += leftGunAbility; // == 5
+            equipmentSaves += rightGunAbility; // == 6
+            equipmentSaves += legsAbility; // == 7
+
+            equipmentSaves += item; // == 8
+
+            equipmentSaves += bodyColor; // == 9
+            equipmentSaves += legsColor; // == 10
+
+            equipmentSaves += equipmentContainer.equipments[i].mechaName; // == 11
 
             //Set the end of this equipment.
             equipmentSaves += '#';

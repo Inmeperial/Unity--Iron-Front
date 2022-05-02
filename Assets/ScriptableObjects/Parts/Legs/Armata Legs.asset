@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: Armata Legs
   m_EditorClassIdentifier: 
   partName: Armata Legs
+  skinnedMeshRenderer: {fileID: -7272046681976261708, guid: adcf4e5687e0dfd459366f0e648cf0ae,
+    type: 3}
   icon: {fileID: 0}
-  ability: {fileID: 0}
   maxHP: 185
   weight: 80
-  meshPrefab:
-  - {fileID: 3228622739159011248, guid: f6add4cd75e62834eb216119cbac4456, type: 3}
-  - {fileID: 5893835236062791163, guid: 40026cc05f08dfa418a36f7702bc5a31, type: 3}
-  prefab: {fileID: 7923405173933734124, guid: afb20e2bf72816549845cf0dc4c29083, type: 3}
+  masterShader: {fileID: 4234647731408850771, guid: df099ea2362d9f746b6171dec33ee2df,
+    type: 3}
+  bodyMaterial: {fileID: 2100000, guid: c0b469480a7b48f4ba2a45c69674307f, type: 2}
+  jointsMaterial: {fileID: 2100000, guid: 0b038f7c18ec08149afb87990da9103f, type: 2}
+  armorMaterial: {fileID: 2100000, guid: fe89e8dcd89e3244a9e3cb2eb6cbd669, type: 2}
   maxSteps: 4
   moveSpeed: 10
   rotationSpeed: 5

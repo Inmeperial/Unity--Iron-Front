@@ -166,7 +166,7 @@ public class Character : EnumsClass, IObservable
     // Start is called before the first frame update
     public virtual void ManualStart()
     {
-        ConfigureMecha();
+        //ConfigureMecha();
         Subscribe(TurnManager.Instance);
         _canMove = _legs.GetCurrentHp() > 0;
         _currentSteps = _canMove ? _legs.GetMaxSteps() : 0;
@@ -174,7 +174,7 @@ public class Character : EnumsClass, IObservable
         _myPositionTile = GetTileBelow();
         if (!_myPositionTile)
         {
-            Debug.Log("Sin tile " + _mechaEquipment.name);
+            Debug.Log("Sin tile " + _mechaEquipment.mechaName);
         }
         _myPositionTile.MakeTileOccupied();
         _myPositionTile.SetUnitAbove(this);
@@ -1621,7 +1621,7 @@ public class Character : EnumsClass, IObservable
     {
         _mechaEquipment = equipment;
     }
-    protected virtual void ConfigureMecha()
+    /*protected virtual void ConfigureMecha()
     {
         if (!_mechaEquipment) return;
 
@@ -1734,7 +1734,7 @@ public class Character : EnumsClass, IObservable
             _rightGunSelected = false;
             _leftGunSelected = false;
         }
-    }
+    }*/
     
     //Funcion de Nico para el push/pull
     public void ChangeMyPosTile(Tile newTile)

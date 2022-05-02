@@ -5,7 +5,7 @@ using UnityEngine;
 public class LoadMapButton : CustomButton
 {
     [SerializeField] private string _mapSceneName;
-    void Start()
+    protected override void Start()
     {
         base.Start();
 
@@ -15,13 +15,17 @@ public class LoadMapButton : CustomButton
     IEnumerator ConfigureButton()
     {
         yield return null;
-        var changeScene = FindObjectOfType<ChangeScene>();
+        ChangeScene changeScene = FindObjectOfType<ChangeScene>();
+
+        WaitForSeconds wait = new WaitForSeconds(0.5f);
 
         while (!changeScene)
         {
             changeScene = FindObjectOfType<ChangeScene>();
+
+            yield return wait;
         }
-        
+
         OnLeftClick.RemoveAllListeners();
         
         MenuOptionsInGame menuOptions = FindObjectOfType<MenuOptionsInGame>();

@@ -36,6 +36,9 @@ public class WorkshopManager : MonoBehaviour
     [SerializeField] private WorkshopObjectButton _workshopObjectPrefab;
     private List<WorkshopObjectButton> _createdObjectButtonList = new List<WorkshopObjectButton>();
 
+    [Header("Test")]
+    public bool useForTest;
+
     private void Awake()
     {
         SetEquipment();
@@ -79,7 +82,7 @@ public class WorkshopManager : MonoBehaviour
 
                     if (mecha)
                     {
-                        MoveToPosition(mecha.GetIndex());
+                        MoveToPosition(mecha.GetPositionIndex());
                     }
                 }
             }
@@ -155,7 +158,10 @@ public class WorkshopManager : MonoBehaviour
 
     private void SetEquipment()
     {
-        var loadedEquipment = LoadSaveUtility.LoadEquipment();
+        MechaEquipmentContainerSO loadedEquipment = LoadSaveUtility.LoadEquipment();
+
+        if (useForTest) loadedEquipment = null;
+
         MechaEquipmentContainerSO equipmentToUse = null;
 
         if (loadedEquipment == null)
@@ -224,28 +230,28 @@ public class WorkshopManager : MonoBehaviour
 
     public void UpdateEquippable(EquipableSO equippable, string location)
     {
-        switch (location) 
-        {
-             case "Body":
-                 _equipmentContainer.equipments[_mechaIndex].body.ability = equippable as AbilitySO;
-                break;
+        //switch (location) 
+        //{
+        //     case "Body":
+        //         _equipmentContainer.equipments[_mechaIndex].body.ability = equippable as AbilitySO;
+        //        break;
              
-             case "LeftArm":
-                 _equipmentContainer.equipments[_mechaIndex].leftGun.ability = equippable as AbilitySO;
-                break;
+        //     case "LeftArm":
+        //         _equipmentContainer.equipments[_mechaIndex].leftGun.ability = equippable as AbilitySO;
+        //        break;
                 
-             case "RightArm":
-                 _equipmentContainer.equipments[_mechaIndex].rightGun.ability = equippable as AbilitySO;
-                break;
+        //     case "RightArm":
+        //         _equipmentContainer.equipments[_mechaIndex].rightGun.ability = equippable as AbilitySO;
+        //        break;
              
-             case "Legs":
-                 _equipmentContainer.equipments[_mechaIndex].legs.ability = equippable as AbilitySO;
-                break;
+        //     case "Legs":
+        //         _equipmentContainer.equipments[_mechaIndex].legs.ability = equippable as AbilitySO;
+        //        break;
              
-             case "Item":
-                 _equipmentContainer.equipments[_mechaIndex].body.item = equippable as ItemSO;
-                 break;
-        }
+        //     case "Item":
+        //         _equipmentContainer.equipments[_mechaIndex].body.item = equippable as ItemSO;
+        //         break;
+        //}
         ApplyChangesButton();
     }
 
@@ -313,7 +319,7 @@ public class WorkshopManager : MonoBehaviour
     
     private void UpdateName(string n)
     {
-        _equipmentContainer.equipments[_mechaIndex].name = n;
+        _equipmentContainer.equipments[_mechaIndex].mechaName = n;
         ApplyChangesButton();
     }
     
@@ -370,14 +376,14 @@ public class WorkshopManager : MonoBehaviour
         switch (part)
         {
             case "Body":
-                mechas[_mechaIndex]._bodyShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-                mechas[_mechaIndex]._leftArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-                mechas[_mechaIndex]._rightArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+                mechas[_mechaIndex].GetBodyShader().ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+                //mechas[_mechaIndex]._leftArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+                //mechas[_mechaIndex]._rightArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
                 break;
             
             case "LGun":
-                MasterShaderScript[] _leftWeaponArr = new MasterShaderScript[mechas[_mechaIndex].GetLeftWeaponArray().Length];
-                _leftWeaponArr = mechas[_mechaIndex].GetLeftWeaponArray();
+                MasterShaderScript[] _leftWeaponArr = new MasterShaderScript[mechas[_mechaIndex].GetLeftWeaponShaderArray().Length];
+                _leftWeaponArr = mechas[_mechaIndex].GetLeftWeaponShaderArray();
                 for (int i = 0; i < _leftWeaponArr.Length; i++)
                 {
                     if (_leftWeaponArr[i] != null)
@@ -388,8 +394,8 @@ public class WorkshopManager : MonoBehaviour
                 break;
                 
             case "RGun":
-                MasterShaderScript[] _rightWeaponArr = new MasterShaderScript[mechas[_mechaIndex].GetRightWeaponArray().Length];
-                _rightWeaponArr = mechas[_mechaIndex].GetRightWeaponArray();
+                MasterShaderScript[] _rightWeaponArr = new MasterShaderScript[mechas[_mechaIndex].GetRightWeaponShaderArray().Length];
+                _rightWeaponArr = mechas[_mechaIndex].GetRightWeaponShaderArray();
                 for (int i = 0; i < _rightWeaponArr.Length; i++)
                 {
                     if (_rightWeaponArr[i] != null)
@@ -400,22 +406,24 @@ public class WorkshopManager : MonoBehaviour
                 break;
             
             case "Legs":
-                mechas[_mechaIndex]._leftLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-                mechas[_mechaIndex]._rightLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+                //mechas[_mechaIndex]._leftLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+                //mechas[_mechaIndex]._rightLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+                mechas[_mechaIndex].GetLegsShader().ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
                 break;
         }
     }
 
     public void EndPartFlicker()
     {
-        mechas[_mechaIndex]._bodyShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-        mechas[_mechaIndex]._leftArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-        mechas[_mechaIndex]._rightArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-        mechas[_mechaIndex]._leftLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-        mechas[_mechaIndex]._rightLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        mechas[_mechaIndex].GetBodyShader().ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        mechas[_mechaIndex].GetLegsShader().ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        //mechas[_mechaIndex]._leftArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        //mechas[_mechaIndex]._rightArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        //mechas[_mechaIndex]._leftLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        //mechas[_mechaIndex]._rightLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
 
-        MasterShaderScript[] _leftWeaponArr = new MasterShaderScript[mechas[_mechaIndex].GetLeftWeaponArray().Length];
-        _leftWeaponArr = mechas[_mechaIndex].GetLeftWeaponArray();
+        MasterShaderScript[] _leftWeaponArr = new MasterShaderScript[mechas[_mechaIndex].GetLeftWeaponShaderArray().Length];
+        _leftWeaponArr = mechas[_mechaIndex].GetLeftWeaponShaderArray();
         for (int i = 0; i < _leftWeaponArr.Length; i++)
         {
             if (_leftWeaponArr[i] != null)
@@ -424,8 +432,8 @@ public class WorkshopManager : MonoBehaviour
             }
         }
         
-        MasterShaderScript[] _rightWeaponArr = new MasterShaderScript[mechas[_mechaIndex].GetRightWeaponArray().Length];
-        _rightWeaponArr = mechas[_mechaIndex].GetRightWeaponArray();
+        MasterShaderScript[] _rightWeaponArr = new MasterShaderScript[mechas[_mechaIndex].GetRightWeaponShaderArray().Length];
+        _rightWeaponArr = mechas[_mechaIndex].GetRightWeaponShaderArray();
         for (int i = 0; i < _rightWeaponArr.Length; i++)
         {
             if (_rightWeaponArr[i] != null)

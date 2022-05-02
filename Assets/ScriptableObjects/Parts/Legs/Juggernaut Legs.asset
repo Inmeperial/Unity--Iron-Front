@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: Juggernaut Legs
   m_EditorClassIdentifier: 
   partName: Juggernaut Legs
+  skinnedMeshRenderer: {fileID: 1003587213148239087, guid: df594b147dfcd624b8240bc4236a84d2,
+    type: 3}
   icon: {fileID: 0}
-  ability: {fileID: 0}
   maxHP: 250
   weight: 100
-  meshPrefab:
-  - {fileID: 7714769054126428776, guid: 2cf3d9c7d242e504c8b0682c97be1989, type: 3}
-  - {fileID: 8177326389447994539, guid: 73a5d96094fa57348b95556871e73915, type: 3}
-  prefab: {fileID: 7923405173933734124, guid: afb20e2bf72816549845cf0dc4c29083, type: 3}
+  masterShader: {fileID: 578818384908101686, guid: 5fca07001c2ca05449a0feb163a8e955,
+    type: 3}
+  bodyMaterial: {fileID: 2100000, guid: c0b469480a7b48f4ba2a45c69674307f, type: 2}
+  jointsMaterial: {fileID: 2100000, guid: 0b038f7c18ec08149afb87990da9103f, type: 2}
+  armorMaterial: {fileID: 2100000, guid: fe89e8dcd89e3244a9e3cb2eb6cbd669, type: 2}
   maxSteps: 3
   moveSpeed: 10
   rotationSpeed: 5

@@ -3,9 +3,12 @@
 public class PartSO : ScriptableObject
 {
     public string partName;
+    public SkinnedMeshRenderer skinnedMeshRenderer;
     public Sprite icon;
-    public AbilitySO ability;
     public float maxHP;
     public float weight;
-    public GameObject[] meshPrefab;
+    public MasterShaderScript masterShader;
+    public Material bodyMaterial;
+    public Material jointsMaterial;
+    public Material armorMaterial;
 }

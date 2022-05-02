@@ -13,15 +13,14 @@ MonoBehaviour:
   m_Name: Juggernaut Body
   m_EditorClassIdentifier: 
   partName: Juggernaut Body
+  skinnedMeshRenderer: {fileID: -6125663883363883726, guid: df594b147dfcd624b8240bc4236a84d2,
+    type: 3}
   icon: {fileID: 0}
-  ability: {fileID: 0}
   maxHP: 400
   weight: 250
-  meshPrefab:
-  - {fileID: 7974283107622790125, guid: 097778f0ceed6b8458b2b8f50873a826, type: 3}
+  masterShader: {fileID: 855147753075030618, guid: 89595bdadf3a7cc46a3c1b881cae0b97,
+    type: 3}
+  bodyMaterial: {fileID: 2100000, guid: c0b469480a7b48f4ba2a45c69674307f, type: 2}
+  jointsMaterial: {fileID: 2100000, guid: 0b038f7c18ec08149afb87990da9103f, type: 2}
+  armorMaterial: {fileID: 2100000, guid: fe89e8dcd89e3244a9e3cb2eb6cbd669, type: 2}
   maxWeight: 550
-  prefab: {fileID: 83717562320576974, guid: c2ea6abfae8876c47ab2a6ccdd935c51, type: 3}
-  item: {fileID: 0}
-  armsMeshPrefab:
-  - {fileID: 6424818899074305271, guid: 7da1c18353ec66f4fbc450736e4f89d7, type: 3}
-  - {fileID: 8445045648735566339, guid: eefa849eb38d3ee4ba5dee5ae28fd2ff, type: 3}

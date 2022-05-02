@@ -19,7 +19,7 @@ public class MasterShaderScript : MonoBehaviour
     private string[] _shaderArrayString;
     private Material[] _matArr = default;
 
-    void Start()
+    public void Initialize()
     {
         _shaderArrayString = new string[Enum.GetNames(typeof(StringTextureEnum)).Length];
 
@@ -27,11 +27,12 @@ public class MasterShaderScript : MonoBehaviour
         _shaderArrayString[1] = StringTextureEnum._SwitchTexture_Key1.ToString();
         _shaderArrayString[2] = StringTextureEnum._SwitchTexture_Key2.ToString();
 
-        _matArr = new Material[this.GetComponent<Renderer>().materials.Length];
+        Material[] mats = GetComponent<SkinnedMeshRenderer>().materials;
+        _matArr = new Material[mats.Length];
 
         for (int i = 0; i < _matArr.Length; i++)
         {
-            _matArr[i] = this.GetComponent<Renderer>().materials[i];
+            _matArr[i] = mats[i];
         }
         for (int i = 0; i < _matArr.Length; i++)
         {
@@ -45,7 +46,7 @@ public class MasterShaderScript : MonoBehaviour
             }
         }
 
-        SetMaterialsForMecha();
+        //SetMaterialsForMecha();
         ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
         SetMechaColor(colorMecha);
         SetOutLine(false);
@@ -164,6 +165,30 @@ public class MasterShaderScript : MonoBehaviour
             }
         }
     }
+
+    public void SetData(MasterShaderScript prefab, Material bodyMat, Material jointsMat, Material armorMat)
+    {
+        isWeapon = prefab.isWeapon;
+        mechaEnum = prefab.mechaEnum;
+        texturesCuerpo = prefab.texturesCuerpo;
+        textureArmadura = prefab.textureArmadura;
+        textureArticulaciones = prefab.textureArticulaciones;
+        colorMecha = prefab.colorMecha;
+        materialArticulacion = prefab.materialArticulacion;
+        materialCuerpo = prefab.materialCuerpo;
+        materialArmadura = prefab.materialArmadura;
+
+        SkinnedMeshRenderer renderer = GetComponent<SkinnedMeshRenderer>();
+
+        Material[] orderedMaterials = new Material[3];
+
+        orderedMaterials[materialCuerpo] = bodyMat;
+        orderedMaterials[materialArmadura] = armorMat;
+        orderedMaterials[materialArticulacion] = jointsMat;
+
+        renderer.materials = orderedMaterials;
+        Initialize();
+}
 
     private enum StringTextureEnum
     {

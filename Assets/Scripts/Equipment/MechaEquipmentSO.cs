@@ -4,36 +4,30 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Equipment", menuName = "Create Equipment")]
 public class MechaEquipmentSO : ScriptableObject
 {
-    [SerializeField] private ObjectsDatabase _objectsDatabase;
-    public string name;
+    public string mechaName;
     public BodySO body;
+    public BodyAbilitySO bodyAbility;
+    public ItemSO item;
     public GunSO leftGun;
+    public WeaponAbilitySO leftGunAbility;
     public GunSO rightGun;
+    public WeaponAbilitySO rightGunAbility;
     public LegsSO legs;
+    public LegsAbilitySO legsAbility;
     //public Color bodyColor;
     //public Color legsColor;
     public ColorData bodyColor;
     public ColorData legsColor;
 
-    private void OnEnable()
-    {
-        LoadObjectsDatabase(); 
-    }
-    
-    void LoadObjectsDatabase()
-    {
-        _objectsDatabase = Resources.Load<ObjectsDatabase>("Database/Database");
-    }
-
     public Color GetBodyColor()
     {
-        Color color = new Color(bodyColor.red, bodyColor.green, bodyColor.blue);
+        Color color = new Color(bodyColor.red, bodyColor.green, bodyColor.blue, 1);
         return color;
     }
     
     public Color GetLegsColor()
     {
-        Color color = new Color(legsColor.red, legsColor.green, legsColor.blue);
+        Color color = new Color(legsColor.red, legsColor.green, legsColor.blue, 1);
         return color;
     }
 

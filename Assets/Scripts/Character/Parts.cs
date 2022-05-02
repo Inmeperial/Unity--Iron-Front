@@ -28,12 +28,12 @@ public abstract class Parts : MonoBehaviour
         
         if (!_myChar) return;
         
-        if(data.ability && data.ability.abilityPrefab)
-        {
-            _ability = Instantiate(data.ability.abilityPrefab, _myChar.transform);
-            _ability.Initialize(_myChar, data.ability, location);
-            _myChar.AddEquipable(_ability);
-        }
+        //if(data.ability && data.ability.abilityPrefab)
+        //{
+        //    _ability = Instantiate(data.ability.abilityPrefab, _myChar.transform);
+        //    _ability.Initialize(_myChar, data.ability, location);
+        //    _myChar.AddEquipable(_ability);
+        //}
     }
 
     public float GetMaxHp()

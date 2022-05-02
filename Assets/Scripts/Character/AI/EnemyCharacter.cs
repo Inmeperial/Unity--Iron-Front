@@ -300,12 +300,12 @@ public class EnemyCharacter : Character
         OnEndAction();
     }
 
-    protected override void ConfigureMecha()
-    {
-        if (!_mechaEquipment)
-            _mechaEquipment = _equipment;
-        base.ConfigureMecha();
-    }
+    //protected override void ConfigureMecha()
+    //{
+    //    if (!_mechaEquipment)
+    //        _mechaEquipment = _equipment;
+    //    base.ConfigureMecha();
+    //}
 
     IEnumerator FailSafe(Action action)
     {

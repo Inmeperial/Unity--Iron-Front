@@ -27,7 +27,8 @@ Transform:
   m_LocalPosition: {x: -1.4992787, y: 0.00000019378662, z: 0}
   m_LocalScale: {x: 0.99999994, y: 1.0000001, z: 0.9999999}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7276125906017238173}
   m_Father: {fileID: 7062789810047968088}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -184,8 +185,40 @@ Transform:
   m_LocalPosition: {x: -1.4633992, y: -0.00000009689331, z: 0}
   m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4844900308017487751}
   m_Father: {fileID: 4968037746153357559}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2604398975977115010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4844900308017487751}
+  m_Layer: 9
+  m_Name: Right Weapon Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4844900308017487751
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2604398975977115010}
+  m_LocalRotation: {x: 0.5058648, y: 0.49406576, z: 0.50586474, w: -0.49406552}
+  m_LocalPosition: {x: -0.49267972, y: 0.035314467, z: 0.023243686}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 849047103213983583}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3638982370885179536
@@ -198,8 +231,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4225009877933936589}
   - component: {fileID: 6116565493012040280}
+  - component: {fileID: 829758760017453107}
   m_Layer: 0
-  m_Name: BrazoDerechoA
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,9 +274,9 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4309859850662032359, guid: adcf4e5687e0dfd459366f0e648cf0ae, type: 3}
-  - {fileID: -1562806997816385014, guid: adcf4e5687e0dfd459366f0e648cf0ae, type: 3}
-  - {fileID: 4313955211140616591, guid: adcf4e5687e0dfd459366f0e648cf0ae, type: 3}
+  - {fileID: 2100000, guid: c0dbd7180e63ef54f94b91e7300072f2, type: 2}
+  - {fileID: 2100000, guid: 4fe1b43765b131248b8b69a3be7cbf70, type: 2}
+  - {fileID: 2100000, guid: 6fb946ff51919e04693f67688bf2d152, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -285,6 +319,37 @@ SkinnedMeshRenderer:
     m_Center: {x: -1.0004525, y: -0.5072297, z: -0.0009223223}
     m_Extent: {x: 1.7220914, y: 1.593794, z: 2.295704}
   m_DirtyAABB: 0
+--- !u!114 &829758760017453107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3638982370885179536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWeapon: 0
+  mechaEnum: 0
+  texturesCuerpo:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  textureArmadura:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  textureArticulaciones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  colorMecha: {r: 0, g: 0, b: 0, a: 0}
+  materialArticulacion: 0
+  materialCuerpo: 0
+  materialArmadura: 0
 --- !u!1 &4493874865691726965
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +439,6 @@ GameObject:
   - component: {fileID: 4177776327118438493}
   - component: {fileID: 2190823162591154697}
   - component: {fileID: 8749060389116621769}
-  - component: {fileID: 7426183548428729765}
   - component: {fileID: 6230159210037984054}
   - component: {fileID: 8013412325478160603}
   m_Layer: 0
@@ -442,26 +506,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
---- !u!95 &7426183548428729765
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4895781825193943902}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 887d94c7550ffdc489722b5580219e41, type: 3}
-  m_Controller: {fileID: 9100000, guid: 72b9f2fafb6fab947ae08ee9f3c4141b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!82 &6230159210037984054
 AudioSource:
   m_ObjectHideFlags: 0
@@ -565,24 +609,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4895781825193943902}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c26fd380a8a1eb441a59c278ec1e7943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _equipment: {fileID: 0}
-  _bodySpawnPosition: {fileID: 0}
-  _leftArmSpawnPosition: {fileID: 0}
-  _rightArmSpawnPosition: {fileID: 0}
-  _leftGunSpawn: {fileID: 0}
-  _rightGunSpawn: {fileID: 0}
-  _leftLegSpawnPosition: {fileID: 0}
-  _rightLegSpawnPosition: {fileID: 0}
-  _bodyShader: {fileID: 0}
-  _leftArmShader: {fileID: 0}
-  _rightArmShader: {fileID: 0}
-  _leftLegShader: {fileID: 0}
-  _rightLegShader: {fileID: 0}
+  _animator: {fileID: 2209150189340356023}
+  _bodySkinnedMeshRenderer: {fileID: 6116565493012040280}
+  _legsSkinnedMeshRenderer: {fileID: 8833563416622406721}
+  _leftGunSpawn: {fileID: 7276125906017238173}
+  _rightGunSpawn: {fileID: 4844900308017487751}
+  _bodyShader: {fileID: 829758760017453107}
+  _legsShader: {fileID: 432456819951824707}
 --- !u!1 &5112275285180098726
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,6 +687,37 @@ Transform:
   m_Father: {fileID: 1220257417569646516}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5592633011911122824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7276125906017238173}
+  m_Layer: 9
+  m_Name: Left Weapon Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7276125906017238173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592633011911122824}
+  m_LocalRotation: {x: -0.5058648, y: -0.49406576, z: -0.5058648, w: 0.49406546}
+  m_LocalPosition: {x: -0.4896532, y: 0.16355002, z: -0.026620336}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3006767452572337372}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5840285140655174471
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,8 +728,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6079292102521269100}
   - component: {fileID: 8833563416622406721}
+  - component: {fileID: 432456819951824707}
   m_Layer: 0
-  m_Name: PiernaDerechaA
+  m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -700,9 +771,9 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4309859850662032359, guid: adcf4e5687e0dfd459366f0e648cf0ae, type: 3}
-  - {fileID: -1562806997816385014, guid: adcf4e5687e0dfd459366f0e648cf0ae, type: 3}
-  - {fileID: 4313955211140616591, guid: adcf4e5687e0dfd459366f0e648cf0ae, type: 3}
+  - {fileID: 2100000, guid: c0dbd7180e63ef54f94b91e7300072f2, type: 2}
+  - {fileID: 2100000, guid: 4fe1b43765b131248b8b69a3be7cbf70, type: 2}
+  - {fileID: 2100000, guid: 6fb946ff51919e04693f67688bf2d152, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -741,6 +812,37 @@ SkinnedMeshRenderer:
     m_Center: {x: -1.2722825, y: 0.9750148, z: 1.0608512}
     m_Extent: {x: 1.7910239, y: 1.4386748, z: 1.7162238}
   m_DirtyAABB: 0
+--- !u!114 &432456819951824707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5840285140655174471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWeapon: 0
+  mechaEnum: 0
+  texturesCuerpo:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  textureArmadura:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  textureArticulaciones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  colorMecha: {r: 0, g: 0, b: 0, a: 0}
+  materialArticulacion: 0
+  materialCuerpo: 0
+  materialArmadura: 0
 --- !u!1 &6237842588438346454
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,6 +915,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6906020835168947325}
+  - component: {fileID: 2209150189340356023}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -839,6 +942,26 @@ Transform:
   m_Father: {fileID: 7352449988085434398}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2209150189340356023
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7140123930920480573}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 887d94c7550ffdc489722b5580219e41, type: 3}
+  m_Controller: {fileID: 9100000, guid: 72b9f2fafb6fab947ae08ee9f3c4141b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7205009450708251371
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +1052,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7873126556402979492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 76.52, y: -4.46, z: 6.52}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
