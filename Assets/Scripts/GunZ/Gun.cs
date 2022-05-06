@@ -170,13 +170,13 @@ public abstract class Gun : EnumsClass
         _weight = data.weight;
         _gunSkill = false;
 
-        if(!_abilityCreated && data.ability && data.ability.abilityPrefab)
-        {
-            _ability = Instantiate(data.ability.abilityPrefab, _myChar.transform);
-            _ability.Initialize(_myChar, data.ability, location);
-            _myChar.AddEquipable(_ability);
-            _abilityCreated = true;
-        }
+        //if(!_abilityCreated && data.ability && data.ability.abilityPrefab)
+        //{
+        //    _ability = Instantiate(data.ability.abilityPrefab, _myChar.transform);
+        //    _ability.Initialize(_myChar, data.ability, location);
+        //    _myChar.AddEquipable(_ability);
+        //    _abilityCreated = true;
+        //}
     }
 
     public void ReloadGun()

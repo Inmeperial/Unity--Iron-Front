@@ -1,6 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
+//using Random = UnityEngine.Random;
 
 public class WorkshopMecha : MonoBehaviour
 {
@@ -12,11 +12,6 @@ public class WorkshopMecha : MonoBehaviour
     [SerializeField] private Transform _leftGunSpawn;
     [SerializeField] private Transform _rightGunSpawn;
 
-    //private GameObject _body;
-    //private GameObject _leftArm;
-    //private GameObject _rightArm;
-    //private GameObject _leftLeg;
-    //private GameObject _rightLeg;
     private GameObject _leftGun;
     private GameObject _rightGun;
 
@@ -24,8 +19,8 @@ public class WorkshopMecha : MonoBehaviour
 
     [SerializeField] private MasterShaderScript _bodyShader;
     [SerializeField] private MasterShaderScript _legsShader; 
-    private MasterShaderScript[] _rightWeaponArr = default;
-    private MasterShaderScript[] _leftWeaponArr = default;
+    private List<MasterShaderScript> _rightWeaponList = new List<MasterShaderScript>();
+    private List<MasterShaderScript> _leftWeaponList = new List<MasterShaderScript>();
 
     private void Start()
     {        
@@ -48,57 +43,68 @@ public class WorkshopMecha : MonoBehaviour
     {
         BodySO body = _equipment.body;
 
-        SkinnedMeshRenderer updatedBodyMesh = PartMeshChange.UpdateMeshRenderer(_bodySkinnedMeshRenderer, body.skinnedMeshRenderer, transform.parent);
-        _bodySkinnedMeshRenderer = updatedBodyMesh;
+        ChangeBody(body);
+        //SkinnedMeshRenderer updatedBodyMesh = PartMeshChange.UpdateMeshRenderer(_bodySkinnedMeshRenderer, body.skinnedMeshRenderer, transform.parent);
+        //_bodySkinnedMeshRenderer = updatedBodyMesh;
         //_body = Instantiate(_equipment.body.meshPrefab[0], _bodySpawnPosition);
         //_body.transform.localPosition = Vector3.zero;
-        
-        _bodyShader.SetData(body.masterShader, body.bodyMaterial, body.jointsMaterial, body.armorMaterial);
-        _bodyShader.colorMecha = _equipment.GetBodyColor();
-        UpdateBodyColor(_equipment.GetBodyColor());
+
+        //_bodyShader.SetData(body.masterShader, body.bodyMaterial, body.jointsMaterial, body.armorMaterial);
+        //_bodyShader.colorMecha = _equipment.GetBodyColor();
+        //UpdateBodyColor(_equipment.GetBodyColor());
 
         //_leftArm = Instantiate(_equipment.body.armsMeshPrefab[0], _leftArmSpawnPosition);
         //_leftArm.transform.localPosition = Vector3.zero;
         //_leftArmShader = _leftArm.GetComponent<MasterShaderScript>();
         //_leftArmShader.colorMecha = _equipment.GetBodyColor();
 
-        Gun leftGun = Instantiate(_equipment.leftGun.prefab, _leftGunSpawn);
-        leftGun.transform.localPosition = Vector3.zero;
-        _leftGun = leftGun.gameObject;
+        GunSO leftGun = _equipment.leftGun;
+        ChangeLeftGun(leftGun);
+
+        //Gun leftGun = Instantiate(_equipment.leftGun.prefab, _leftGunSpawn);
+        //leftGun.transform.localPosition = Vector3.zero;
+        //_leftGun = leftGun.gameObject;
+
 
         //_rightArm = Instantiate(_equipment.body.armsMeshPrefab[1], _rightArmSpawnPosition);
         //_rightArm.transform.localPosition = Vector3.zero;
         //_rightArmShader = _rightArm.GetComponent<MasterShaderScript>();
         //_rightArmShader.colorMecha = _equipment.GetBodyColor();
 
-        Gun rightGun = Instantiate(_equipment.rightGun.prefab, _rightGunSpawn.transform);
-        rightGun.transform.localPosition = Vector3.zero;
-        _rightGun = rightGun.gameObject;
+        GunSO rightGun = _equipment.rightGun;
+        ChangeRightGun(rightGun);
+
+        //Gun rightGun = Instantiate(_equipment.rightGun.prefab, _rightGunSpawn.transform);
+        //rightGun.transform.localPosition = Vector3.zero;
+        //_rightGun = rightGun.gameObject;
 
         LegsSO legs = _equipment.legs;
-        SkinnedMeshRenderer updatedLegsMesh = PartMeshChange.UpdateMeshRenderer(_legsSkinnedMeshRenderer, legs.skinnedMeshRenderer, transform.parent);
-        _legsSkinnedMeshRenderer = updatedLegsMesh;
+        ChangeLegs(legs);
+        //SkinnedMeshRenderer updatedLegsMesh = PartMeshChange.UpdateMeshRenderer(_legsSkinnedMeshRenderer, legs.skinnedMeshRenderer, transform.parent);
+        //_legsSkinnedMeshRenderer = updatedLegsMesh;
 
-        _legsShader.SetData(legs.masterShader, legs.bodyMaterial, legs.jointsMaterial, legs.armorMaterial);
-        _legsShader.colorMecha = _equipment.GetLegsColor();
-        UpdateLegsColor(_equipment.GetLegsColor());
+        //_legsShader.SetData(legs.masterShader, legs.bodyMaterial, legs.jointsMaterial, legs.armorMaterial);
+        //_legsShader.colorMecha = _equipment.GetLegsColor();
+        //UpdateLegsColor(_equipment.GetLegsColor());
 
         //_leftLeg = Instantiate(_equipment.legs.meshPrefab[0], _leftLegSpawnPosition);
         //_leftLeg.transform.localPosition = Vector3.zero;
         //_leftLegShader = _leftLeg.GetComponent<MasterShaderScript>();
         //_leftLegShader.colorMecha = _equipment.GetLegsColor();
 
-        SetLeftWeaponArray();
-        SetRightWeaponArray();
-
         //_rightLeg = Instantiate(_equipment.legs.meshPrefab[1], _rightLegSpawnPosition);
         //_rightLeg.transform.localPosition = Vector3.zero;
         //_rightLegShader = _rightLeg.GetComponent<MasterShaderScript>();
         //_rightLegShader.colorMecha = _equipment.GetLegsColor();
     }
-
     public void ChangeBody(BodySO newBody)
     {
+        SkinnedMeshRenderer updatedBodyMesh = PartMeshChange.UpdateMeshRenderer(_bodySkinnedMeshRenderer, newBody.skinnedMeshRenderer, transform.parent);
+        _bodySkinnedMeshRenderer = updatedBodyMesh;
+
+        _bodyShader.SetData(newBody.masterShader, newBody.bodyMaterial, newBody.jointsMaterial, newBody.armorMaterial);
+        _bodyShader.colorMecha = _equipment.GetBodyColor();
+        UpdateBodyColor(_equipment.GetBodyColor());
         //if (_body && _leftArm && _rightArm)
         //{
         //    Destroy(_body);
@@ -125,26 +131,34 @@ public class WorkshopMecha : MonoBehaviour
 
     public void ChangeLeftGun(GunSO newGun)
     {
-        //if (_leftGun) Destroy(_leftGun);
+        if (_leftGun) Destroy(_leftGun);
 
-        //var gun = Instantiate(newGun.prefab, _leftGunSpawn);
-        //gun.transform.localPosition = Vector3.zero;
-        //_leftGun = gun.gameObject;
-        //SetLeftWeaponArray();
+        Gun leftGun = Instantiate(newGun.prefab, _leftGunSpawn);
+        leftGun.transform.localPosition = Vector3.zero;
+        _leftGun = leftGun.gameObject;
+
+        SetLeftWeaponArray();
     }
 
     public void ChangeRightGun(GunSO newGun)
     {
-        //if (_rightGun) Destroy(_rightGun);
+        if (_rightGun) Destroy(_rightGun);
 
-        //var gun = Instantiate(newGun.prefab, _rightGunSpawn);
-        //gun.transform.localPosition = Vector3.zero;
-        //_rightGun = gun.gameObject;
-        //SetRightWeaponArray();
+        Gun rightGun = Instantiate(newGun.prefab, _rightGunSpawn.transform);
+        rightGun.transform.localPosition = Vector3.zero;
+        _rightGun = rightGun.gameObject;
+        SetRightWeaponArray();
     }
 
     public void ChangeLegs(LegsSO newLegs)
     {
+        SkinnedMeshRenderer updatedLegsMesh = PartMeshChange.UpdateMeshRenderer(_legsSkinnedMeshRenderer, newLegs.skinnedMeshRenderer, transform.parent);
+        _legsSkinnedMeshRenderer = updatedLegsMesh;
+
+        _legsShader.SetData(newLegs.masterShader, newLegs.bodyMaterial, newLegs.jointsMaterial, newLegs.armorMaterial);
+        _legsShader.colorMecha = _equipment.GetLegsColor();
+        UpdateLegsColor(_equipment.GetLegsColor());
+
         //if (_leftLeg && _rightLeg)
         //{
         //    Destroy(_leftLeg);
@@ -164,33 +178,29 @@ public class WorkshopMecha : MonoBehaviour
 
     private void SetLeftWeaponArray()
     {
-        _leftWeaponArr = new MasterShaderScript[_leftGun.transform.childCount];
+        _leftWeaponList = new List<MasterShaderScript>();
 
         for (int i = 0; i < _leftGun.transform.childCount; i++)
         {
             Transform child = _leftGun.transform.GetChild(i);
 
             MasterShaderScript masterShader = child.GetComponent<MasterShaderScript>();
-            if (masterShader != null)
-            {
-                _leftWeaponArr[i] = masterShader;
-            }
+
+            if (masterShader != null) _leftWeaponList.Add(masterShader);
         }
     }
 
     private void SetRightWeaponArray()
     {
-        _rightWeaponArr = new MasterShaderScript[_rightGun.transform.childCount];
+        _rightWeaponList = new List<MasterShaderScript>();
 
         for (int i = 0; i < _rightGun.transform.childCount; i++)
         {
             Transform child = _rightGun.transform.GetChild(i);
 
             MasterShaderScript masterShader = child.GetComponent<MasterShaderScript>();
-            if (masterShader != null)
-            {
-                _rightWeaponArr[i] = masterShader;
-            }
+
+            if (masterShader != null) _rightWeaponList.Add(masterShader);
         }
     }
 
@@ -203,14 +213,14 @@ public class WorkshopMecha : MonoBehaviour
     {
         return _legsShader;
     }
-    public MasterShaderScript[] GetLeftWeaponShaderArray()
+    public List<MasterShaderScript> GetLeftWeaponShaderList()
     {
-        return _leftWeaponArr;
+        return _leftWeaponList;
     }
 
-    public MasterShaderScript[] GetRightWeaponShaderArray()
+    public List<MasterShaderScript> GetRightWeaponShaderList()
     {
-        return _rightWeaponArr;
+        return _rightWeaponList;
     }
 
     public MechaEquipmentSO GetEquipment()
@@ -237,9 +247,9 @@ public class WorkshopMecha : MonoBehaviour
         //_rightLegShader.SetMechaColor(color);
     }
 
-    private enum WeaponSide
-    {
-        rightSide,
-        leftSide
-    };
+    //private enum WeaponSide
+    //{
+    //    rightSide,
+    //    leftSide
+    //};
 }

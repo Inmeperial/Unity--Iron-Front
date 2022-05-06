@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Flamethrower", menuName = "Create Ability/Flamethrower")]
-public class FlamethrowerSO : WeaponAbilitySO
+public class FlamethrowerSO : GunAbilitySO
 {
     public int damage;
     public float range;

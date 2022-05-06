@@ -17,6 +17,6 @@ public class GunSO : ScriptableObject
     public int chanceToHitOtherParts;
     public int attackRange;
     public int bodyPartsSelectionQuantity;
-    public AbilitySO ability;
+    //public AbilitySO ability;
     public float weight;
 }

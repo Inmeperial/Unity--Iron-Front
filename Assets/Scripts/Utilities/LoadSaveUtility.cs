@@ -53,8 +53,8 @@ public static class LoadSaveUtility
             newEquipment.legs = ScriptableObject.CreateInstance<LegsSO>();
 
             newEquipment.bodyAbility = ScriptableObject.CreateInstance<BodyAbilitySO>();
-            newEquipment.leftGunAbility = ScriptableObject.CreateInstance<WeaponAbilitySO>();
-            newEquipment.rightGunAbility = ScriptableObject.CreateInstance<WeaponAbilitySO>();
+            newEquipment.leftGunAbility = ScriptableObject.CreateInstance<GunAbilitySO>();
+            newEquipment.rightGunAbility = ScriptableObject.CreateInstance<GunAbilitySO>();
             newEquipment.legsAbility = ScriptableObject.CreateInstance<LegsAbilitySO>();
             newEquipment.item = ScriptableObject.CreateInstance<ItemSO>();
             

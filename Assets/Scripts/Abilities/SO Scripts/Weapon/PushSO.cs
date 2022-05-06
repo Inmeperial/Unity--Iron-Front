@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Push", menuName = "Create Ability/Push")]
-public class PushSO : WeaponAbilitySO
+public class PushSO : GunAbilitySO
 {
     public int collisionDamage = 50;
     public int pushDamage = 25;

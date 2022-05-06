@@ -9,9 +9,9 @@ public class MechaEquipmentSO : ScriptableObject
     public BodyAbilitySO bodyAbility;
     public ItemSO item;
     public GunSO leftGun;
-    public WeaponAbilitySO leftGunAbility;
+    public GunAbilitySO leftGunAbility;
     public GunSO rightGun;
-    public WeaponAbilitySO rightGunAbility;
+    public GunAbilitySO rightGunAbility;
     public LegsSO legs;
     public LegsAbilitySO legsAbility;
     //public Color bodyColor;

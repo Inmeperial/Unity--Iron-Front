@@ -112,7 +112,8 @@ public class ChangeScene : MonoBehaviour
             {
                 if (slider)
                     UpdateLoadingBar(slider, progress);
-                
+
+                Debug.Log("Scene finished loading");
                 ao.allowSceneActivation = true;
             }
                  

@@ -14,7 +14,7 @@ public class NotSelectable : Selectable
     IEnumerator Delay()
     {
         yield return new WaitForEndOfFrame();
-        if (previousSelection)
-            previousSelection.Select();
+
+        if (previousSelection) previousSelection.Select();
     }
 }

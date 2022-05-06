@@ -16,8 +16,6 @@ public class WorkshopObjectButton : CustomButton
 
     public void SetObjectSprite(Sprite sprite)
     {
-        //TODO: sacar cuando haya sprite
-        if (!sprite) return;
         _objectImage.sprite = sprite;
     }
     

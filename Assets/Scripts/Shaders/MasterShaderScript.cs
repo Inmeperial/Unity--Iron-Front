@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MasterShaderScript : MonoBehaviour
@@ -17,7 +18,7 @@ public class MasterShaderScript : MonoBehaviour
     public int materialCuerpo;
     public int materialArmadura;
     private string[] _shaderArrayString;
-    private Material[] _matArr = default;
+    private List<Material> _matList = new List<Material>();
 
     public void Initialize()
     {
@@ -27,22 +28,22 @@ public class MasterShaderScript : MonoBehaviour
         _shaderArrayString[1] = StringTextureEnum._SwitchTexture_Key1.ToString();
         _shaderArrayString[2] = StringTextureEnum._SwitchTexture_Key2.ToString();
 
-        Material[] mats = GetComponent<SkinnedMeshRenderer>().materials;
-        _matArr = new Material[mats.Length];
+        Material[] mats = GetComponent<Renderer>().materials;
+        _matList = new List<Material>();
 
-        for (int i = 0; i < _matArr.Length; i++)
+        for (int i = 0; i < mats.Length; i++)
         {
-            _matArr[i] = mats[i];
+            _matList.Add(mats[i]);
         }
-        for (int i = 0; i < _matArr.Length; i++)
+        for (int i = 0; i < _matList.Count; i++)
         {
             if (isWeapon)
             {
-                _matArr[i].SetInt("_isWeapon", 1);
+                _matList[i].SetInt("_isWeapon", 1);
             }
             else
             {
-                _matArr[i].SetInt("_isWeapon", 0);
+                _matList[i].SetInt("_isWeapon", 0);
             }
         }
 
@@ -66,9 +67,9 @@ public class MasterShaderScript : MonoBehaviour
 
     public void SetMechaColor(Color color)
     {
-        for (int i = 0; i < _matArr.Length; i++)
+        for (int i = 0; i < _matList.Count; i++)
         {
-            _matArr[i].SetColor("_ColorAlbedo", color);
+            _matList[i].SetColor("_ColorAlbedo", color);
         }
     }
 
@@ -96,15 +97,26 @@ public class MasterShaderScript : MonoBehaviour
 
     private void SetOutLine(bool key)
     {
-        for (int i = 0; i < _matArr.Length; i++)
+
+        //if (_matArr == null || _matArr.Length < 1)
+        //{
+        //    if (_matArr == null)
+        //        Debug.Log("null");
+        //    return;
+        //}
+        
+
+        for (int i = 0; i < _matList.Count; i++)
         {
+            
+
             if (key)
             {
-                _matArr[i].SetInt("_isOutLineOn", 1);
+                _matList[i].SetInt("_isOutLineOn", 1);
             }
             else
             {
-                _matArr[i].SetInt("_isOutLineOn", 0);
+                _matList[i].SetInt("_isOutLineOn", 0);
             }
         }
 
@@ -114,23 +126,23 @@ public class MasterShaderScript : MonoBehaviour
     {
         if (arr[0] != null)
         {
-            _matArr[matArrayNum].SetTexture("_TextureAlbedo", arr[0]);
+            _matList[matArrayNum].SetTexture("_TextureAlbedo", arr[0]);
         }
         if (arr[1] != null)
         {
-            _matArr[matArrayNum].SetTexture("_TextureNormal", arr[1]);
+            _matList[matArrayNum].SetTexture("_TextureNormal", arr[1]);
         }
         if (!isWeapon)
         {
             if (arr[2] != null)
             {
-                _matArr[matArrayNum].SetTexture("_MaskAlbedo", arr[2]);
+                _matList[matArrayNum].SetTexture("_MaskAlbedo", arr[2]);
             }
 
             if (setEmission)
             {
-                _matArr[matArrayNum].SetInt("_IsEmissionON", 1);
-                _matArr[matArrayNum].SetTexture("_TextureEmission", arr[3]);
+                _matList[matArrayNum].SetInt("_IsEmissionON", 1);
+                _matList[matArrayNum].SetTexture("_TextureEmission", arr[3]);
             }
 
         }
@@ -150,17 +162,17 @@ public class MasterShaderScript : MonoBehaviour
     private void SetTextureInShader(StringTextureEnum key)
     {
         SetOutLine(false);
-        for (int i = 0; i < _matArr.Length; i++)
+        for (int i = 0; i < _matList.Count; i++)
         {
             for (int j = 0; j < _shaderArrayString.Length; j++)
             {
                 if (_shaderArrayString[j] == key.ToString())
                 {
-                    _matArr[i].EnableKeyword(_shaderArrayString[j]);
+                    _matList[i].EnableKeyword(_shaderArrayString[j]);
                 }
                 else
                 {
-                    _matArr[i].DisableKeyword(_shaderArrayString[j]);
+                    _matList[i].DisableKeyword(_shaderArrayString[j]);
                 }
             }
         }
