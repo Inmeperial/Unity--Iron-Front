@@ -193,10 +193,31 @@ public class MasterShaderScript : MonoBehaviour
         SkinnedMeshRenderer renderer = GetComponent<SkinnedMeshRenderer>();
 
         Material[] orderedMaterials = new Material[3];
-
+        
         orderedMaterials[materialCuerpo] = bodyMat;
         orderedMaterials[materialArmadura] = armorMat;
         orderedMaterials[materialArticulacion] = jointsMat;
+
+        foreach (Material material in orderedMaterials)
+        {
+            material.EnableKeyword("_TextureNormal");
+            material.EnableKeyword("_MaskAlbedo");
+            material.EnableKeyword("_TextureEmission");
+        }
+
+
+        //prefab.texturesXXX[1] is NormalMap
+        orderedMaterials[materialCuerpo].SetTexture("_TextureNormal", prefab.texturesCuerpo[1]);
+        orderedMaterials[materialArmadura].SetTexture("_TextureNormal", prefab.textureArmadura[1]);
+        orderedMaterials[materialArticulacion].SetTexture("_TextureNormal", prefab.textureArticulaciones[1]);
+
+        //prefab.texturesXXX[2] is MaskMap
+        orderedMaterials[materialCuerpo].SetTexture("_MaskAlbedo", prefab.texturesCuerpo[2]);
+        orderedMaterials[materialArmadura].SetTexture("_MaskAlbedo", prefab.textureArmadura[2]);
+        orderedMaterials[materialArticulacion].SetTexture("_MaskAlbedo", prefab.textureArticulaciones[2]);
+
+        //prefab.texturesXXX[3] is Emission
+        orderedMaterials[materialArticulacion].SetTexture("_TextureEmission", prefab.textureArticulaciones[3]);
 
         renderer.materials = orderedMaterials;
         Initialize();

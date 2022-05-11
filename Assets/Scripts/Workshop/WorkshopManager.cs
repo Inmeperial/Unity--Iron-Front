@@ -9,33 +9,30 @@ using UnityEngine.UI;
 public class WorkshopManager : MonoBehaviour
 {
     [Header("References")]
+    public WorkshopMecha[] mechas;
     [SerializeField] private WorkshopUIManager _workshopUIManager;
     [SerializeField] private WorkshopObjectButtonCreator _workshopObjectButtonCreator;
     [SerializeField] private MechaEquipmentContainerSO _equipmentContainer;
 
     [SerializeField] private LayerMask _characterLayer;
-    [SerializeField] private int _mechaIndex;
-    private bool _isEditing;
-
-    public delegate void ClickAction(int mechaIndex);
-    public event ClickAction OnClickPrevious;
-    public event ClickAction OnClickNext;
-    public event ClickAction OnClickEdit;
-    public event ClickAction OnClickCloseEdit;
-    public event ClickAction OnClickMecha;
-    public event ClickAction OnClickArrows;//Nico
-
-    public WorkshopMecha[] mechas;
-
-    private SoundsMenu _soundMenu;
 
     [SerializeField] private Button _editButton;
 
     [SerializeField] private Button _closeButton;
 
-    [Space]
+    public Action<int> OnClickPrevious;
+    public Action<int> OnClickNext;
+    public Action<int> OnClickEdit;
+    public Action<int> OnClickCloseEdit;
+    public Action<int> OnClickMecha;
+    public Action<int> OnClickArrows;//Nico
+
+    private SoundsMenu _soundMenu;
     
     private List<WorkshopObjectButton> _createdObjectButtonList = new List<WorkshopObjectButton>();
+
+    private int _mechaIndex;
+    private bool _isEditing;
 
     [Header("Test")]
     public bool useForTest;
