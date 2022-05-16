@@ -41,10 +41,17 @@ public class WorldUI : MonoBehaviour
     [SerializeField] private MechaPartButton _legsButton;
     #endregion
 
+    private bool _isToggledOn;
+    public bool IsToggledOn => _isToggledOn;
+
+    private bool _isActive;
+    public bool IsActive => _isActive;
+
+
     // Start is called before the first frame update
     private void Start()
     {
-        DeactivateWorldUI();
+        Hide();
         ButtonsContainerSetActive(false);
     }
 
@@ -59,12 +66,13 @@ public class WorldUI : MonoBehaviour
         OverweightIcon(overweightStatus);
     }
     
-    public void DeactivateWorldUI()
+    public void Hide()
     {
+        _isActive = false;
         _statusContainer.SetActive(false);
     }
     
-    public void DeactivateWorldUIWithTimer()
+    public void HideWithTimer()
     {
         StartCoroutine(DeactivateUI(_showDuration));
     }
@@ -75,9 +83,10 @@ public class WorldUI : MonoBehaviour
         _statusContainer.SetActive(false);
     }
     
-    public void ContainerActivation(bool status)
+    public void Show()
     {
-        _statusContainer.SetActive(status);
+        _isActive = true;
+        _statusContainer.SetActive(true);
     }
     
     public void SetLimits(float bodyMax, float rArmMax, float lArmMax, float legsMax)
@@ -106,6 +115,11 @@ public class WorldUI : MonoBehaviour
         _legsDamageSlider.maxValue = legsMax;
         _legsDamageSlider.minValue = 0;
         //_legsButton.SetSlider(0, legsMax);
+    }
+
+    public void Toggle(bool state)
+    {
+        _isToggledOn = state;
     }
     
     #region WorldCanvas

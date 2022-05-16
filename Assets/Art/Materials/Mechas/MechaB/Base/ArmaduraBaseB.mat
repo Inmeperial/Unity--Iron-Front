@@ -11,7 +11,11 @@ Material:
   m_Shader: {fileID: 4800000, guid: 16f7a23e2a2538143a91ab1b96d95b6a, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
+  - TextureNormal
+  - _MaskAlbedo
   - _NORMALMAP
+  - _TextureEmission
+  - _TextureNormal
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -70,7 +74,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureNormal:
-        m_Texture: {fileID: 2800000, guid: 4f5ab791a205dd145840f37a6369d817, type: 3}
+        m_Texture: {fileID: 2800000, guid: d383d33f79b84004983c5707f17c6c06, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureNormal1:

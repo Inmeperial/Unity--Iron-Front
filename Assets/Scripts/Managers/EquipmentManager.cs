@@ -6,9 +6,9 @@ public class EquipmentManager : MonoBehaviour
     [SerializeField] private MechaEquipmentContainerSO _equipmentContainer;
     public void ManualAwake()
     {
-        var chars = FindObjectsOfType<Character>();
+        Character[] chars = FindObjectsOfType<Character>();
 
-        var loadedEquipment = LoadSaveUtility.LoadEquipment();
+        MechaEquipmentContainerSO loadedEquipment = LoadSaveUtility.LoadEquipment();
         MechaEquipmentContainerSO equipmentToUse = null;
 
         if (loadedEquipment == null)
@@ -28,17 +28,17 @@ public class EquipmentManager : MonoBehaviour
         }
         
         List<Character> green = new List<Character>();
-        foreach (var c in chars)
+        foreach (Character character in chars)
         {
-            if (c.GetUnitTeam() == EnumsClass.Team.Green)
+            if (character.GetUnitTeam() == EnumsClass.Team.Green)
             {
-                green.Add(c);
+                green.Add(character);
             }
         }
         
         for (int i = 0; i < green.Count; i++)
         {
-            var equipment = equipmentToUse.GetEquipment(i);
+            MechaEquipmentSO equipment = equipmentToUse.GetEquipment(i);
             green[i].SetEquipment(equipment);
         }
     }

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Parts : MonoBehaviour
+public abstract class Parts : MonoBehaviour, IChangeableShader
 {
-    //public MeshFilter[] meshFilter;
+    [SerializeField] protected SkinnedMeshRenderer _skinnedMeshRenderer;
+    [SerializeField] protected List<GameObject> _particleSpawner = new List<GameObject>();
+    [SerializeField] protected MasterShaderScript _masterShader;
     protected const int MissHit = 0;
     protected const int NormalHit = 1;
     protected const int CriticalHit = 2;
@@ -14,19 +16,23 @@ public abstract class Parts : MonoBehaviour
     protected float _maxHP;
     protected float _currentHP;
     protected float _weight;
-    protected List<GameObject> _particleSpawner = new List<GameObject>();
-    public virtual void ManualStart(Character character)
+
+    public virtual void SetPart(Character character, PartSO data, Color partColor, Equipable.Location location)
     {
         _myChar = character;
-    }
-
-    public virtual void SetPart(PartSO data, Equipable.Location location)
-    {
         _maxHP = data.maxHP;
         _currentHP = _maxHP;
         _weight = data.weight;
+
+        if (!_myChar)
+            return;
+
+        SkinnedMeshRenderer updatedMesh = PartMeshChange.UpdateMeshRenderer(_skinnedMeshRenderer, data.skinnedMeshRenderer, _myChar.transform.parent);
+        _skinnedMeshRenderer = updatedMesh;
+
+        _masterShader.SetData(data.masterShader, data.bodyMaterial, data.jointsMaterial, data.armorMaterial);
+        _masterShader.SetMechaColor(partColor);
         
-        if (!_myChar) return;
         
         //if(data.ability && data.ability.abilityPrefab)
         //{
@@ -57,12 +63,12 @@ public abstract class Parts : MonoBehaviour
 
     public virtual void Heal(int healAmount)
     {
-        if (_currentHP >= _maxHP)
-        {
-            healAmount = (int)_maxHP - (int)_currentHP;
+        float finalHP = _currentHP + healAmount;  
+
+        if (finalHP >= _maxHP)
             _currentHP = _maxHP;
-        }
-        else _currentHP += healAmount;
+        else 
+            _currentHP = finalHP;
     }
 
     public Ability GetAbility()
@@ -70,13 +76,10 @@ public abstract class Parts : MonoBehaviour
         return _ability;
     }
 
-    public void SetParticleSpawner(GameObject spawner)
-    {
-        _particleSpawner.Add(spawner);
-    }
-
     public Character GetCharacter()
     {
         return _myChar;
     }
+
+    public void SetShader(SwitchTextureEnum textureEnum) => _masterShader.ConvertEnumToStringEnumForShader(textureEnum);
 }

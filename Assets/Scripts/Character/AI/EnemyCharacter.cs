@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class EnemyCharacter : Character
 {
-    [Header("AI")] 
-    [SerializeField] private MechaEquipmentSO _equipment;
+    [Header("AI")]
+    [SerializeField] private float _delayAfterAction;
+
     private BehaviorExecutor _behaviorExecutor;
     private Character _closestEnemy;
-    [SerializeField] private float _delayAfterAction;
+    
     [HideInInspector]
     public bool checkedParts;
     [HideInInspector]
@@ -18,9 +19,9 @@ public class EnemyCharacter : Character
     private CameraMovement _camera;
 
     private bool _failSafeRunning;
-    public override void ManualAwake()
+    public override void Awake()
     {
-        base.ManualAwake();
+        base.Awake();
 
         _camera = FindObjectOfType<CameraMovement>();
         _behaviorExecutor = GetComponent<BehaviorExecutor>();
@@ -39,12 +40,13 @@ public class EnemyCharacter : Character
     public override void SelectThisUnit()
     {
         if (_myTurn)
-        {
             StartCoroutine(DelayStart());
-        }
-        else _behaviorExecutor.paused = true;
+        else
+            _behaviorExecutor.paused = true;
         
-        if (!_canAttack && !_canMove) return;
+        if (!_canAttack && !_canMove)
+            return;
+
         base.SelectThisUnit();
         _closestEnemy = null;
         
@@ -73,36 +75,39 @@ public class EnemyCharacter : Character
         
         Tile closestTileToEnemy = ClosestTileToEnemy(_closestEnemy);
 
-        if (!closestTileToEnemy) return false;
+        if (!closestTileToEnemy)
+            return false;
         
         int distance = 0;
 
         //Finds the farthest tile I can reach in my movement range.
         for (int i = 0; i < _tilesInMoveRange.Count; i++)
         {
-            pathCreator.ResetPath();
-            pathCreator.Calculate(_tilesInMoveRange[i], closestTileToEnemy, 1000);
+            _waypointsPathfinding.ResetPath();
+            _waypointsPathfinding.Calculate(_tilesInMoveRange[i], closestTileToEnemy, 1000);
 
-            List<Tile> p = pathCreator.GetPath();
+            List<Tile> path = _waypointsPathfinding.GetPath();
             
             if (i == 0)
             {
-                distance = p.Count;
-                _targetTile = p[0];
+                distance = path.Count;
+                _targetTile = path[0];
                 continue;
             }
 
-            if (p.Count >= distance) continue;
+            if (path.Count >= distance)
+                continue;
             
-            distance = p.Count;
+            distance = path.Count;
 
-            if (distance <= 0) continue;
+            if (distance <= 0) 
+                continue;
             
-            _targetTile = p[0];
+            _targetTile = path[0];
         }
-        
+
         //Clears previous calculated paths
-        pathCreator.ResetPath();
+        _waypointsPathfinding.ResetPath();
 
         if (_targetTile == null) 
             return false;
@@ -113,54 +118,60 @@ public class EnemyCharacter : Character
         _currentSteps = _legs.GetMaxSteps();
         
         //Calculates shortest path.
-        pathCreator.Calculate(_myPositionTile, _targetTile, _currentSteps);
-        _path = pathCreator.GetPath();
+        _waypointsPathfinding.Calculate(_myPositionTile, _targetTile, _currentSteps);
+        _path = _waypointsPathfinding.GetPath();
         
-        highlight.PathPreview(_path);
-        highlight.CreatePathLines(_path);
+        TileHighlight.Instance.PathPreview(_path);
+        TileHighlight.Instance.CreatePathLines(_path);
         return true;
     }
     
     public Character CalculateClosestEnemy()
     {
-        if (!_canAttack && !_canMove) return _closestEnemy;
-        if (_closestEnemy != null) return _closestEnemy;
+        if (!_canAttack && !_canMove)
+            return _closestEnemy;
+        if (_closestEnemy != null)
+            return _closestEnemy;
         
         Character closestEnemy = null;
-        
+
         List<Tile> path = new List<Tile>();
         
-        var enemies = GetEnemyTeam();
+        List<Character> enemies = GetEnemyTeam();
         
         for (int i = 0; i < enemies.Count; i++)
         {
 
             Tile tile = ClosestTileToEnemy(enemies[i]);
-            if (!tile) continue;
-            
-            pathCreator.ResetPath();
-            pathCreator.Calculate(_myPositionTile, tile, 1000);
 
-            List<Tile> p = pathCreator.GetPath();
+            if (!tile)
+                continue;
 
-            if (p.Count == 0) continue;
+            _waypointsPathfinding.ResetPath();
+            _waypointsPathfinding.Calculate(_myPositionTile, tile, 1000);
+
+            List<Tile> pathToEnemyClosestTile = _waypointsPathfinding.GetPath();
+
+            if (pathToEnemyClosestTile.Count == 0) 
+                continue;
             
             if (path.Count == 0)
             {
-                foreach (var t in p)
-                {
+                foreach (Tile t in pathToEnemyClosestTile)
                     path.Add(t);
-                }
+
                 closestEnemy = enemies[i];
                 continue;
             }
 
-            if (p.Count >= path.Count) continue;
+            if (pathToEnemyClosestTile.Count >= path.Count)
+                continue;
+
             path.Clear();
-            foreach (var t in p)
-            {
+
+            foreach (Tile t in pathToEnemyClosestTile)
                 path.Add(t);
-            }
+
             closestEnemy = enemies[i];
         }
         _currentSteps = _legs.GetMaxSteps();
@@ -174,36 +185,41 @@ public class EnemyCharacter : Character
         Tile closest = null;
         int distance = 0;
 
-        if (!character) return null;
+        if (!character) 
+            return null;
         
         Tile enemyTile = character.GetMyPositionTile();
 
-        if (!enemyTile) return null;
+        if (!enemyTile) 
+            return null;
         
         for (int i = 0; i < enemyTile.neighboursForMove.Count; i++)
         {
             for (int j = 0; j < _tilesInMoveRange.Count; j++)
             {
-                pathCreator.ResetPath();
-                
-                pathCreator.Calculate(_tilesInMoveRange[j], enemyTile.neighboursForMove[i], 1000);
-                List<Tile> p = pathCreator.GetPath();
+                _waypointsPathfinding.ResetPath();
+
+                _waypointsPathfinding.Calculate(_tilesInMoveRange[j], enemyTile.neighboursForMove[i], 1000);
+                List<Tile> path = _waypointsPathfinding.GetPath();
             
-                if (p.Count == 0) continue;
+                if (path.Count == 0)
+                    continue;
                 
                 //if (i == 0 && j == 0)
                 if (distance == 0)
                 {
-                    distance = p.Count;
+                    distance = path.Count;
                 
-                    closest = p[p.Count-1];
+                    closest = path[path.Count-1];
                     continue;
                 }
 
-                if (p.Count >= distance) continue;
-                distance = p.Count;
+                if (path.Count >= distance)
+                    continue;
+
+                distance = path.Count;
                 
-                closest = p[p.Count-1];
+                closest = path[path.Count-1];
             }
         }
 
@@ -216,12 +232,10 @@ public class EnemyCharacter : Character
         
         List<Character> enemyTeam = new List<Character>();
 
-        foreach (Character c in units)
+        foreach (Character unit in units)
         {
-            if (!c.IsDead() && c.GetUnitTeam() != _unitTeam)
-            {
-                enemyTeam.Add(c);
-            }
+            if (!unit.IsDead() && unit.GetUnitTeam() != _unitTeam)
+                enemyTeam.Add(unit);
         }
         return enemyTeam;
     }
@@ -232,14 +246,13 @@ public class EnemyCharacter : Character
         _closestEnemy = character;
     }
 
-    public Character GetClosestEnemy()
-    {
-        return _closestEnemy;
-    }
+    public Character GetClosestEnemy() => _closestEnemy;
 
     public void EnemyMove()
     {
-        if (_moving) return;
+        if (_moving)
+            return;
+
         if (_path.Count > 0)
         {
             _camera.MoveTo(_path[_path.Count-1].transform);
@@ -287,9 +300,8 @@ public class EnemyCharacter : Character
     public void OnEndActionWithDelay(float time)
     {
         if (time <= 0)
-        {
             time = _delayAfterAction;
-        }
+
         StartCoroutine(EndDelay(time));
     }
 
@@ -309,7 +321,8 @@ public class EnemyCharacter : Character
 
     IEnumerator FailSafe(Action action)
     {
-        if (_failSafeRunning) yield return null;
+        if (_failSafeRunning) 
+            yield return null;
         
         _failSafeRunning = true;
 
@@ -322,9 +335,8 @@ public class EnemyCharacter : Character
         }
 
         if (_failSafeRunning && time >= 5)
-        {
             action?.Invoke();
-        }
+
         _failSafeRunning = false;
     }
 }

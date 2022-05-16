@@ -9,12 +9,14 @@ public class Body : Parts
     private bool _smokeScreenAvailable;
     private float _smokeScreenHpPercentage;
     private bool _smokeScreenActive;
-    public override void SetPart(PartSO data, Equipable.Location location)
+    public override void SetPart(Character character, PartSO data, Color partColor, Equipable.Location location)
     {
-        var d = data as BodySO;
-        _maxWeight = d.maxWeight;
+        base.SetPart(character, data, partColor, location);
+
+        BodySO bodyData = data as BodySO;
+        _maxWeight = bodyData.maxWeight;
         
-        base.SetPart(data, location);
+        
 
         //if (_ability && _ability.GetAbilityEnum() == Ability.Abilities.SmokeScreen)
         //{
@@ -68,7 +70,7 @@ public class Body : Parts
         
         
         
-        ui.ContainerActivation(true);
+        ui.Show();
         ui.UpdateBodySlider(total, (int)_currentHP);
         _myChar.MakeNotAttackable();
 
@@ -98,7 +100,7 @@ public class Body : Parts
         
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, _particleSpawner[0].transform.position);
 
-        ui.ContainerActivation(true);
+        ui.Show();
         ui.UpdateBodySlider(damage, (int)_currentHP);
         _myChar.MakeNotAttackable();
         

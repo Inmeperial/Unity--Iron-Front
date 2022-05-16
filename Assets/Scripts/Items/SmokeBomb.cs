@@ -56,7 +56,7 @@ public class SmokeBomb : Item, IObserver
 
 	public override void Use(Action callback = null)
 	{
-		var selectedTile = MouseRay.GetTargetTransform(_character.block);
+		var selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 		
 		if (!selectedTile) return;
 		

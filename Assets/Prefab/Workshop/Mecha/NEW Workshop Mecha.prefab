@@ -331,6 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _renderer: {fileID: 6116565493012040280}
   isWeapon: 0
   mechaEnum: 0
   texturesCuerpo:
@@ -350,7 +351,6 @@ MonoBehaviour:
   materialArticulacion: 0
   materialCuerpo: 0
   materialArmadura: 0
-  _matArr: []
 --- !u!1 &4493874865691726965
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,6 +794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _renderer: {fileID: 8833563416622406721}
   isWeapon: 0
   mechaEnum: 0
   texturesCuerpo:
@@ -813,7 +814,6 @@ MonoBehaviour:
   materialArticulacion: 0
   materialCuerpo: 0
   materialArmadura: 0
-  _matArr: []
 --- !u!1 &6237842588438346454
 GameObject:
   m_ObjectHideFlags: 0

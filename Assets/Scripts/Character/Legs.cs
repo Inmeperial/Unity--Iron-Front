@@ -13,20 +13,19 @@ public class Legs : Parts
 
     private bool _brokenLegs = false;
 
-    private GameObject _otherLeg;
     public int GetMaxSteps()
     {
         return _maxSteps;
     }
 
-    public override void SetPart(PartSO data, Equipable.Location location)
+    public override void SetPart(Character character, PartSO data, Color partColor, Equipable.Location location)
     {
-        base.SetPart(data, location);
-        var d = data as LegsSO;
-        _maxSteps = d.maxSteps;
-        _moveSpeed = d.moveSpeed;
-        _rotationSpeed = d.rotationSpeed;
-        _initiative = d.initiative;
+        base.SetPart(character, data, partColor, location);
+        LegsSO legsData = data as LegsSO;
+        _maxSteps = legsData.maxSteps;
+        _moveSpeed = legsData.moveSpeed;
+        _rotationSpeed = legsData.rotationSpeed;
+        _initiative = legsData.initiative;
     }
 
     public int GetLegsInitiative()
@@ -70,7 +69,7 @@ public class Legs : Parts
                     break;
             }
         }
-        ui.ContainerActivation(true);
+        ui.Show();
         ui.UpdateLegsSlider(total, _currentHP);
         _myChar.MakeNotAttackable();
         TurnManager.Instance.ReducePosition(_myChar);
@@ -90,9 +89,9 @@ public class Legs : Parts
 
         WorldUI ui = _myChar.GetMyUI();
         ui.SetLegsSlider(_currentHP);
-        ui.ContainerActivation(true);
+        ui.Show();
         ui.UpdateLegsSlider(damage, _currentHP);
-        ui.DeactivateWorldUIWithTimer();
+        ui.HideWithTimer();
         float hp = _currentHP - damage;
         _currentHP = hp > 0 ? hp : 0;
         if (_currentHP <= 0 && !_brokenLegs)
@@ -128,17 +127,6 @@ public class Legs : Parts
     {
         _maxSteps /= 2;
         _brokenLegs = true;
-    }
-
-    public Character GetCharacter()
-    {
-        if (!_myChar) Debug.Log("sin char");
-        return _myChar;
-    }
-
-    public void SetOtherLeg(GameObject leg)
-    {
-        _otherLeg = leg;
     }
     
     public override void Heal(int healAmount)

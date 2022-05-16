@@ -4,38 +4,39 @@ public class InitializationManager : MonoBehaviour
 {
     private void Awake()
     {
-        var characters = FindObjectsOfType<Character>();
+        //var characters = FindObjectsOfType<Character>();
 
-        foreach (var c in characters)
-        {
-            c.ManualAwake();
-        }
+        //foreach (var c in characters)
+        //{
+        //    c.ManualAwake();
+        //}
         
         FindObjectOfType<EquipmentManager>().ManualAwake();
 
-        var turnManager = FindObjectOfType<TurnManager>();
+        TurnManager turnManager = FindObjectOfType<TurnManager>();
         turnManager.ManualAwake();
-        
-        
+
     }
 
     private void Start()
     {
-        var characters = FindObjectsOfType<Character>();
+        Character[] characters = FindObjectsOfType<Character>();
         
-        foreach (var c in characters)
+        foreach (Character character in characters)
         {
-            c.ManualStart();
+            character.ManualStart();
         }
 
-        var getParts = FindObjectsOfType<GetPartsOfMecha>();
+        //GetPartsOfMecha[] getParts = FindObjectsOfType<GetPartsOfMecha>();
 
-        foreach (var g in getParts)
-        {
-            g.ManualStart();
-        }
-        
-        var turnManager = FindObjectOfType<TurnManager>();
-        turnManager.ManualStart();
+        //foreach (var g in getParts)
+        //{
+        //    g.ManualStart();
+        //}
+
+        //TurnManager turnManager = FindObjectOfType<TurnManager>();
+
+        //turnManager.ManualStart();
+        TurnManager.Instance.ManualStart();
     }
 }

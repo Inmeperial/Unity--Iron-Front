@@ -12,24 +12,16 @@ public class AudioMechaHandler : MonoBehaviour
     //    AudioManager.audioManagerInstance.PlaySound(_soundMechaExplosion, this.gameObject);
     //}
 
-    public void SetPlayMotorStart()
-    {
-        AudioManager.audioManagerInstance.PlaySound(_soundMotorStart, this.gameObject);
-    }
+    public void SetPlayMotorStart() => AudioManager.audioManagerInstance.PlaySound(_soundMotorStart, this.gameObject);
 
     //public void SetPlayHit()
     //{
     //    AudioManager.audioManagerInstance.PlaySound(_soundHit, this.gameObject);
     //}
 
-    public void SetPlayWalk() //call in Animaton
-    {
-        AudioManager.audioManagerInstance.PlaySound(_soundWalk, this.gameObject);
-    }
+    //call in Animaton
+    public void SetPlayWalk() => AudioManager.audioManagerInstance.PlaySound(_soundWalk, this.gameObject);
 
-    public void SetMuteWalk()
-    {
-        AudioManager.audioManagerInstance.StopSoundWithFadeOut(_soundMotorStart, gameObject);
-    }
-    
+    public void SetMuteWalk() => AudioManager.audioManagerInstance.StopSoundWithFadeOut(_soundMotorStart, gameObject);
+
 }

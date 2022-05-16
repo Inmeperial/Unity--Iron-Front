@@ -33,7 +33,6 @@ public class TurnManager : EnumsClass, IObservable, IObserver
     private delegate void Execute();
     Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
     public static TurnManager Instance;
-    
 
     public void ManualAwake()
     {

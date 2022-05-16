@@ -63,7 +63,7 @@ public class WorkshopMecha : MonoBehaviour
         _bodySkinnedMeshRenderer = updatedBodyMesh;
 
         _bodyShader.SetData(newBody.masterShader, newBody.bodyMaterial, newBody.jointsMaterial, newBody.armorMaterial);
-        _bodyShader.colorMecha = _equipment.GetBodyColor();
+        //_bodyShader.colorMecha = _equipment.GetBodyColor();
         UpdateBodyColor(_equipment.GetBodyColor());
     }
 
@@ -94,7 +94,7 @@ public class WorkshopMecha : MonoBehaviour
         _legsSkinnedMeshRenderer = updatedLegsMesh;
 
         _legsShader.SetData(newLegs.masterShader, newLegs.bodyMaterial, newLegs.jointsMaterial, newLegs.armorMaterial);
-        _legsShader.colorMecha = _equipment.GetLegsColor();
+        //_legsShader.colorMecha = _equipment.GetLegsColor();
         UpdateLegsColor(_equipment.GetLegsColor());
     }
 

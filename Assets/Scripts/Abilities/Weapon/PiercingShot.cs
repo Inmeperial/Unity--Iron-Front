@@ -66,7 +66,7 @@ public class PiercingShot : WeaponAbility
 		if (Input.GetMouseButtonDown(0))
 		{
             Debug.Log("Piercing Shooting");
-            var selectedTile = MouseRay.GetTargetTransform(_character.block);
+            var selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 		
             if (!selectedTile) return;
 		

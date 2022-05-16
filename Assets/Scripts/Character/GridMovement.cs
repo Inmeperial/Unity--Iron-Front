@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class GridMovement : MonoBehaviour
 {
-    public float tpThreshold;
-    public float rotationWatchdog;
+    [SerializeField] private float _tpThreshold = 0.3f;
+    [SerializeField] private float _rotationWatchdog = 40;
     private float _watchdogCounter;
     private bool _forcedForward;
-    private bool _checkedDirToLast;
-    [SerializeField] private List<Tile> _tilesList = new List<Tile>();
+    private List<Tile> _tilesList = new List<Tile>();
     int _tilesIndex;
     Character _character;
     private float _moveSpeed;
     private float _rotationSpeed;
     private bool _move;
     private bool _rotate;
-    private int _index;
     private float _yPosition;
     private Vector3 _posToRotate;
     private Vector3 _prevPos;
 
     private Action _callback;
-    private Vector3 _nextPos;
+
     private void Start()
     {
         _character = GetComponent<Character>();
@@ -47,15 +45,16 @@ public class GridMovement : MonoBehaviour
     /// </summary>
     public void StartMovement(List<Tile> tilesList)
     {
-        if (_move) return;
+        if (_move)
+            return;
         
         _forcedForward = false;
 
         _tilesList = new List<Tile>();
-        foreach (var t in tilesList)
-        {
-            _tilesList.Add(t);
-        }
+        
+        foreach (Tile tile in tilesList)
+            _tilesList.Add(tile);
+
         //_tilesList = tilesList;
         _tilesIndex = 1;
         _move = true;
@@ -68,6 +67,7 @@ public class GridMovement : MonoBehaviour
         {
             Vector3 newPos = _tilesList[_tilesIndex].transform.position;
             newPos.y = _yPosition;
+
             if (_forcedForward == false)
             {
                 if (!CheckIfFacing(newPos))
@@ -77,13 +77,9 @@ public class GridMovement : MonoBehaviour
                     Vector3 prev;
                     
                     if (_tilesIndex - 1 >= 0)
-                    {
                         prev = _tilesList[_tilesIndex - 1].transform.position;
-                    }
                     else
-                    {
                         prev = _character.GetMyPositionTile().transform.position;
-                    }
                     
                     prev.y = _yPosition;
                     _prevPos = prev;
@@ -95,32 +91,27 @@ public class GridMovement : MonoBehaviour
 
 
             Vector3 targetDir = newPos - transform.position;
-            if ((newPos - transform.position).magnitude <= tpThreshold)
+
+            if ((newPos - transform.position).magnitude <= _tpThreshold)
             {
                 _forcedForward = false;
                 transform.position = newPos;
                 _tilesIndex++;
             }
             else
-            {
                 transform.position += targetDir.normalized * (_moveSpeed * Time.deltaTime);
-            }
         }
         else
         {
-            Vector3 forwardDir = Vector3.zero;
-            Vector3 last = Vector3.zero;
-            Vector3 preLast = Vector3.zero;
+            Vector3 forwardDir;
+            Vector3 last;
+            Vector3 preLast;
             last = _tilesList[_tilesList.Count - 1].transform.position;
+
             if (_tilesList.Count >= 2)
-            {
                 preLast = _tilesList[_tilesList.Count - 2].transform.position;
-                
-            }
             else
-            {
                 preLast = _character.GetMyPositionTile().transform.position;
-            }
             
             last.y = _yPosition;
             preLast.y = _yPosition;
@@ -135,13 +126,16 @@ public class GridMovement : MonoBehaviour
     private void Rotation()
     {
         _watchdogCounter += 1;
-        if (CheckIfFacing(_posToRotate) || _watchdogCounter >= rotationWatchdog)
+
+        if (CheckIfFacing(_posToRotate) || _watchdogCounter >= _rotationWatchdog)
         {
             _forcedForward = true;
             _watchdogCounter = 0;
             _rotate = false;
             _posToRotate = Vector3.zero;
-            if (_callback == null) return;
+
+            if (_callback == null)
+                return;
             
             _callback?.Invoke();
             _callback = null;
@@ -153,7 +147,6 @@ public class GridMovement : MonoBehaviour
         Vector3 dir = (_posToRotate - _prevPos).normalized;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, dir, step, 0f);
         transform.rotation = Quaternion.LookRotation(newDir);
-
     }
 
     private bool CheckIfFacing(Vector3 pos)
@@ -161,23 +154,15 @@ public class GridMovement : MonoBehaviour
         Vector3 dir = pos - transform.position;
         Vector3 thresholdPlus = new Vector3(dir.x + 0.1f, dir.y, dir.z + 0.1f);
         Vector3 thresholdMin = new Vector3(dir.x - 0.1f, dir.y, dir.z - 0.1f);
+
         return transform.forward == dir.normalized || transform.forward == thresholdPlus || transform.forward == thresholdMin;
     }
 
-    public void SetMoveSpeed(float speed)
-    {
-        _moveSpeed = speed;
-    }
+    public void SetMoveSpeed(float speed) => _moveSpeed = speed;
 
-    public void SetRotationSpeed(float speed)
-    {
-        _rotationSpeed = speed;
-    }
+    public void SetRotationSpeed(float speed) => _rotationSpeed = speed;
 
-    public void SetPosToRotate(Vector3 pos)
-    {
-        _posToRotate = pos;
-    }
+    //public void SetPosToRotate(Vector3 pos) => _posToRotate = pos;
 
     public void StartRotation(Action callback)
     {

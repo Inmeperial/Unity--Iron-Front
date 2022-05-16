@@ -16,25 +16,27 @@ public class MechaPartButton : CustomButton
     
     private int _bulletsCount;
     private Character _characterSelectedToAttack;
-    private PartsMechaEnum _partEnum;
+    private IChangeableShader _part;
     public override void OnPointerEnter(PointerEventData eventData)
     {
         UpdateDamagePreviewSlider();
         
         _damagePreviewSlider.gameObject.SetActive(true);
 
-        _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, _partEnum);
+        _part.SetShader(SwitchTextureEnum.TextureFresnel);
+        //_characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, _partEnum);
 
-        if (_partEnum == PartsMechaEnum.body)
-        {
-            _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.armL);
-            _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.armR);
-        }
+        //if (_partEnum == PartsMechaEnum.body)
+        //{
+        //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.body);
+        //    //_characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.armL);
+        //    //_characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.armR);
+        //}
         
-        if (_partEnum == PartsMechaEnum.legL)
-        {
-            _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.legR);
-        }
+        //if (_partEnum == PartsMechaEnum.legL)
+        //{
+        //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.legR);
+        //}
     }
     
     public override void OnPointerExit(PointerEventData eventData)
@@ -42,18 +44,20 @@ public class MechaPartButton : CustomButton
         if (_bulletsCount <= 0)
         {
             _damagePreviewSlider.gameObject.SetActive(false);
-            _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
-            
-            if (_partEnum == PartsMechaEnum.body)
-            {
-                _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armL);
-                _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armR);
-            }
-            
-            if (_partEnum == PartsMechaEnum.legL)
-            {
-                _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.legR);
-            }
+            _part.SetShader(SwitchTextureEnum.TextureClean);
+
+            //_characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
+
+            //if (_partEnum == PartsMechaEnum.body)
+            //{
+            //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armL);
+            //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armR);
+            //}
+
+            //if (_partEnum == PartsMechaEnum.legL)
+            //{
+            //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.legR);
+            //}
         }
             
     }
@@ -64,18 +68,19 @@ public class MechaPartButton : CustomButton
 
         if (_bulletsCount <= 0)
         {
-            _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
+            _part.SetShader(SwitchTextureEnum.TextureClean);
+            //_characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
             
-            if (_partEnum == PartsMechaEnum.body)
-            {
-                _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armL);
-                _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armR);
-            }
+            //if (_partEnum == PartsMechaEnum.body)
+            //{
+            //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armL);
+            //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armR);
+            //}
             
-            if (_partEnum == PartsMechaEnum.legL)
-            {
-                _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.legR);
-            }
+            //if (_partEnum == PartsMechaEnum.legL)
+            //{
+            //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.legR);
+            //}
         }
         
         UpdateDamagePreviewSlider();
@@ -128,29 +133,37 @@ public class MechaPartButton : CustomButton
     /// </summary>
     /// <param name="character"></param>
     /// <param name="part">Body includes arms and legL includes legR</param>
-    public void SetCharacter(Character character, PartsMechaEnum part)
+    public void SetCharacter(Character character, IChangeableShader part)
     {
         _characterSelectedToAttack = character;
-        _partEnum = part;
+        _part = part;
     }
 
     public void ResetButton()
     {
         _bulletsCount = 0;
         _bulletsCountText.text = "0";
-        if (!_characterSelectedToAttack) return;
-        _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
-        
-        if (_partEnum == PartsMechaEnum.body)
-        {
-            _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armL);
-            _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armR);
-        }
 
-        if (_partEnum == PartsMechaEnum.legL)
-        {
-            _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.legR);
-        }
+        if (!_characterSelectedToAttack)
+            return;
+
+        if (_part == null)
+            return;
+
+        _part.SetShader(SwitchTextureEnum.TextureClean);
+        //_characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
+
+
+        //if (_partEnum == PartsMechaEnum.body)
+        //{
+        //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armL);
+        //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armR);
+        //}
+
+        //if (_partEnum == PartsMechaEnum.legL)
+        //{
+        //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.legR);
+        //}
     }
     
     public void ButtonEnabling(bool status, UnityAction rightAction, UnityAction leftAction)

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class Gun : EnumsClass
+public abstract class Gun : EnumsClass, IChangeableShader
 {
     [SerializeField] protected GameObject[] _models;
     [SerializeField] protected GameObject _damageParticleSpawner;
+    [SerializeField] protected MasterShaderScript _masterShader;
     protected Character _myChar;
     protected float _maxHP;
     protected float _currentHP;
@@ -170,6 +171,7 @@ public abstract class Gun : EnumsClass
         _weight = data.weight;
         _gunSkill = false;
 
+        StartRoulette();
         //if(!_abilityCreated && data.ability && data.ability.abilityPrefab)
         //{
         //    _ability = Instantiate(data.ability.abilityPrefab, _myChar.transform);
@@ -358,7 +360,7 @@ public abstract class Gun : EnumsClass
         }
         
         WorldUI ui = _myChar.GetMyUI();
-        ui.ContainerActivation(true);
+        ui.Show();
         
         switch (_location)
         {
@@ -399,7 +401,7 @@ public abstract class Gun : EnumsClass
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, pos);
         
         WorldUI ui = _myChar.GetMyUI();
-        ui.ContainerActivation(true);
+        ui.Show();
 
         bool isActive = CharacterSelection.Instance.IsActiveCharacter(_myChar);
         
@@ -452,6 +454,6 @@ public abstract class Gun : EnumsClass
                 break;
         }
     }
-    
 
+    public void SetShader(SwitchTextureEnum textureEnum) => _masterShader.ConvertEnumToStringEnumForShader(textureEnum);
 }

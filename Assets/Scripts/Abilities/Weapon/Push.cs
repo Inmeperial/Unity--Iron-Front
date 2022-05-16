@@ -52,7 +52,7 @@ public class Push : WeaponAbility
 		if (Input.GetMouseButtonDown(0))
 		{
             Debug.Log("Pushing");
-            var selectedTile = MouseRay.GetTargetTransform(_character.block);
+            var selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 		
             if (!selectedTile) return;
 		

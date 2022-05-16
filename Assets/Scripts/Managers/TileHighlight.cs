@@ -2,6 +2,8 @@
 using UnityEngine;
 public class TileHighlight : MonoBehaviour
 {
+    public static TileHighlight Instance;
+
     Character _character;
     public AStarAgent agent;
     public LayerMask tileMask;
@@ -9,6 +11,18 @@ public class TileHighlight : MonoBehaviour
     public bool characterMoving;
     private Stack<List<Tile>> _inMoveRangeTiles = new Stack<List<Tile>>();
     private LineRenderer _lineRenderer;
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            //DontDestroyOnLoad(gameObject);
+        }
+    }
     private void Start()
     {
         _lineRenderer = GetComponent<LineRenderer>();

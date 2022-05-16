@@ -36,7 +36,7 @@ public class MineItem : Item
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			var selectedTile = MouseRay.GetTargetTransform(_character.block);
+			var selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 		
 			if (!selectedTile) return;
 		

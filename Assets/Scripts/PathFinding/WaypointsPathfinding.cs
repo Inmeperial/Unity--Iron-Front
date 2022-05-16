@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class WaypointsPathfinding : MonoBehaviour, IPathCreator
+public class WaypointsPathfinding : MonoBehaviour
 {
-    [SerializeField] private AStarAgent _agent;
-    [SerializeField] private List<Tile> _fullMovePath = new List<Tile>();
+    private AStarAgent _agent;
+    private List<Tile> _fullMovePath = new List<Tile>();
     private Stack<List<Tile>> _partialPaths = new Stack<List<Tile>>();
     private Character _char;
 
@@ -23,24 +23,23 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         }
         //If list is not empty, pathfinding starts with last tile of the list.
         else if (_fullMovePath.Count > 1)
-        {
             _agent.init = _fullMovePath[_fullMovePath.Count - 1];
-        }
         
         _agent.finit = end;
-        var temp = _agent.PathFindingAstar();
 
-        if (temp.Count <= 0) return;
+        List<Tile> temp = _agent.PathFindingAstar();
+
+        if (temp.Count <= 0)
+            return;
 
         if (_fullMovePath.Count > 0)
         {
             temp.RemoveAt(0);
             if (temp.Count <= distance)
             {
-                foreach (var item in temp)
-                {
-                    _fullMovePath.Add(item);
-                }
+                foreach (Tile tile in temp)
+                    _fullMovePath.Add(tile);
+
                 _char.ReduceAvailableSteps(temp.Count);
             }
         }
@@ -48,63 +47,55 @@ public class WaypointsPathfinding : MonoBehaviour, IPathCreator
         {
             if (temp.Count-1 <= distance)
             {
-                foreach (var item in temp)
-                {
-                    _fullMovePath.Add(item);
-                }
+                foreach (Tile tile in temp)
+                    _fullMovePath.Add(tile);
+
                 _char.ReduceAvailableSteps(temp.Count-1);
             }
         }
         _partialPaths.Push(temp);
     }
 
-    public List<Tile> GetPath()
-    {
-        return _fullMovePath;
-    }
+    public List<Tile> GetPath() => _fullMovePath;
 
-    public int GetDistance()
-    {
-        return _fullMovePath.Count-1;
-    }
+    public int GetDistance() => _fullMovePath.Count - 1;
 
     public void UndoLastWaypoint()
     {
         //Prevents path from breaking during movement.
-        if (_char.IsMoving()) return;
+        if (_char.IsMoving())
+            return;
         
         //Check if there is a path.
-        if (_partialPaths.Count <= 0) return;
-        
+        if (_partialPaths.Count <= 0)
+            return;
+
         //Get the partial path and return tiles to their normal color.
-        var removed = _partialPaths.Pop();
-        foreach (var tile in removed)
+        List<Tile> removed = _partialPaths.Pop();
+
+        foreach (Tile tile in removed)
         {
             if (tile != _char.GetMyPositionTile())
                 _char.IncreaseAvailableSteps(1);
         }
-        _char.highlight.ClearTilesInMoveRange(removed);
+
+        TileHighlight.Instance.ClearTilesInMoveRange(removed);
 
 
-        var tempStack = new Stack<List<Tile>>();
+        Stack<List<Tile>> tempStack = new Stack<List<Tile>>();
 
         //Invert the stack so tiles are added in the correct order.
-        foreach (var partialList in _partialPaths)
-        {
+        foreach (List<Tile> partialList in _partialPaths)
             tempStack.Push(partialList);
-        }
 
         _fullMovePath.Clear();
 
         //Recreate the path.
-        foreach (var item in tempStack)
-        {
-            _fullMovePath.AddRange(item);
-        }
+        foreach (List<Tile> tilesList in tempStack)
+            _fullMovePath.AddRange(tilesList);
+
         if (_fullMovePath == null || _fullMovePath.Count == 0)
-        {
             _char.ClearTargetTile();
-        }
         
         _char.Undo();
     }

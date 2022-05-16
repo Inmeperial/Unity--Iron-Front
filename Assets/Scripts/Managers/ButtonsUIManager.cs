@@ -157,7 +157,7 @@ public class ButtonsUIManager : MonoBehaviour
             if ((_selectedChar && _selectedChar.IsMoving() == false) && _selectedChar.GetPath().Count > 0 &&
                 Input.GetMouseButtonDown(1))
             {
-                _selectedChar.pathCreator.UndoLastWaypoint();
+                _selectedChar.GetWaypointsPathfinding().UndoLastWaypoint();
             }
                 
         }
@@ -495,11 +495,11 @@ public class ButtonsUIManager : MonoBehaviour
         _selectedChar.ResetInRangeLists();
         DeactivateBodyPartsContainer();
         attackHudContainer.SetActive(false);
-        foreach (var go in _selectedChar.bodyRenderContainer)
-        {
-            go.SetActive(true);
-        }
-        if (_selectedChar.gunsOffOnCloseUp)
+        //foreach (var go in _selectedChar.bodyRenderContainer)
+        //{
+        //    go.SetActive(true);
+        //}
+        if (_selectedChar.GunsOffOnCloseup())
         {
             if (_selectedChar.GetLeftGun()) _selectedChar.GetLeftGun().ModelsOn();
             
@@ -617,11 +617,11 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (_selectedEnemy)
             {
-                foreach (var go in _selectedChar.bodyRenderContainer)
-                {
-                    go.SetActive(true);
-                }
-                if (_selectedChar.gunsOffOnCloseUp)
+                //foreach (var go in _selectedChar.bodyRenderContainer)
+                //{
+                //    go.SetActive(true);
+                //}
+                if (_selectedChar.GunsOffOnCloseup())
                 {
                     if (_selectedChar.GetLeftGun()) _selectedChar.GetLeftGun().ModelsOn();
                     
@@ -745,7 +745,8 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (!unit.IsSelectedForAttack() && unit.CanBeSelected())
             {
-                unit.ShowWorldUI();
+                unit.SetWorldUIValues();
+                unit.GetWorldUI().Show();
             }
         }
     }
@@ -757,7 +758,7 @@ public class ButtonsUIManager : MonoBehaviour
         Character[] units = TurnManager.Instance.GetAllUnits();
         foreach (Character unit in units)
         {
-            unit.HideWorldUI();
+            unit.GetWorldUI().Hide();
         }
     }
 
@@ -768,14 +769,17 @@ public class ButtonsUIManager : MonoBehaviour
             _worldUIActive = true;
             _worldUIToggled = true;
             Character[] units = TurnManager.Instance.GetAllUnits();
+
             foreach (Character unit in units)
             {
                 if (unit.IsDead()) continue;
                 
                 if (!unit.IsSelectedForAttack() && unit.CanBeSelected())
                 {
-                    unit.ShowWorldUI();
-                    unit.WorldUIToggled(true);
+                    unit.SetWorldUIValues();
+                    WorldUI worldUI = unit.GetWorldUI();
+                    worldUI.Show();
+                    worldUI.Toggle(true);
                 }
             }
         }
@@ -786,8 +790,9 @@ public class ButtonsUIManager : MonoBehaviour
             Character[] units = TurnManager.Instance.GetAllUnits();
             foreach (Character unit in units)
             {
-                unit.WorldUIToggled(false);
-                unit.HideWorldUI();
+                WorldUI worldUI = unit.GetWorldUI();
+                worldUI.Hide();
+                worldUI.Toggle(true);
             }
         }
     }
@@ -1329,11 +1334,11 @@ public class ButtonsUIManager : MonoBehaviour
     {
         if (_selectedEnemy)
         {
-            foreach (var go in _selectedChar.bodyRenderContainer)
-            {
-                go.SetActive(false);
-            }
-            if (_selectedChar.gunsOffOnCloseUp)
+            //foreach (var go in _selectedChar.bodyRenderContainer)
+            //{
+            //    go.SetActive(false);
+            //}
+            if (_selectedChar.GunsOffOnCloseup())
             {
                 if (_selectedChar.GetLeftGun()) _selectedChar.GetLeftGun().ModelsOff();
                 
@@ -1402,16 +1407,17 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_bodyInsight)
         {
-            bodyButton.SetCharacter(_selectedEnemy, PartsMechaEnum.body);
-            bodyButton.SetHpText(_selectedEnemy.GetBody().GetCurrentHp().ToString());
-            bodyButton.SetSlider(0, _selectedEnemy.GetBody().GetMaxHp());
-            bodyButton.UpdateHpSlider(_selectedEnemy.GetBody().GetCurrentHp());
+            Body body = _selectedEnemy.GetBody();
+            bodyButton.SetCharacter(_selectedEnemy, body);
+            bodyButton.SetHpText(body.GetCurrentHp().ToString());
+            bodyButton.SetSlider(0, body.GetMaxHp());
+            bodyButton.UpdateHpSlider(body.GetCurrentHp());
             bodyButton.UpdateDamagePreviewSlider();
             bodyButton.ButtonEnabling(true, BodyMinus, BodySelection);
         }
         else
         {
-            bodyButton.SetCharacter(null, PartsMechaEnum.body);
+            bodyButton.SetCharacter(null,null);
             bodyButton.SetHpText("0");
             bodyButton.SetSlider(0, 0);
             bodyButton.UpdateHpSlider(0);
@@ -1420,13 +1426,14 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_lArmInsight)
         {
-            if (_selectedEnemy.GetLeftGun())
+            Gun leftGun = _selectedEnemy.GetLeftGun();
+            if (leftGun)
             {
                 //ui.SetLeftArmHpText(_selectedEnemy.GetLeftGun().GetCurrentHp());
-                leftGunButton.SetCharacter(_selectedEnemy, PartsMechaEnum.weaponL);
-                leftGunButton.SetHpText(_selectedEnemy.GetLeftGun().GetCurrentHp().ToString());
-                leftGunButton.SetSlider(0, _selectedEnemy.GetLeftGun().GetMaxHp());
-                leftGunButton.UpdateHpSlider(_selectedEnemy.GetLeftGun().GetCurrentHp());
+                leftGunButton.SetCharacter(_selectedEnemy, leftGun);
+                leftGunButton.SetHpText(leftGun.GetCurrentHp().ToString());
+                leftGunButton.SetSlider(0, leftGun.GetMaxHp());
+                leftGunButton.UpdateHpSlider(leftGun.GetCurrentHp());
                 leftGunButton.UpdateDamagePreviewSlider();
                 leftGunButton.ButtonEnabling(true, LeftArmMinus, LeftArmSelection);
             }
@@ -1434,7 +1441,7 @@ public class ButtonsUIManager : MonoBehaviour
         else
         {
             //ui.SetLeftArmHpText(0);
-            leftGunButton.SetCharacter(null, PartsMechaEnum.weaponL);
+            leftGunButton.SetCharacter(null, null);
             leftGunButton.SetHpText("0");
             leftGunButton.SetSlider(0, 0);
             leftGunButton.UpdateHpSlider(0);
@@ -1443,13 +1450,14 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_rArmInsight)
         {
-            if (_selectedEnemy.GetRightGun())
+            Gun rightGun = _selectedEnemy.GetRightGun();
+            if (rightGun)
             {
                 //ui.SetRightArmHpText(_selectedEnemy.GetRightGun().GetCurrentHp());
-                rightGunButton.SetCharacter(_selectedEnemy, PartsMechaEnum.weaponR);
-                rightGunButton.SetHpText(_selectedEnemy.GetRightGun().GetCurrentHp().ToString());
-                rightGunButton.SetSlider(0, _selectedEnemy.GetRightGun().GetMaxHp());
-                rightGunButton.UpdateHpSlider(_selectedEnemy.GetRightGun().GetCurrentHp());
+                rightGunButton.SetCharacter(_selectedEnemy, rightGun);
+                rightGunButton.SetHpText(rightGun.GetCurrentHp().ToString());
+                rightGunButton.SetSlider(0, rightGun.GetMaxHp());
+                rightGunButton.UpdateHpSlider(rightGun.GetCurrentHp());
                 rightGunButton.UpdateDamagePreviewSlider();
                 rightGunButton.ButtonEnabling(true, RightArmMinus, RightArmSelection);
             }
@@ -1457,7 +1465,7 @@ public class ButtonsUIManager : MonoBehaviour
         else
         {
             //ui.SetRightArmHpText(0);
-            rightGunButton.SetCharacter(null, PartsMechaEnum.weaponR);
+            rightGunButton.SetCharacter(null, null);
             rightGunButton.SetHpText("0");
             rightGunButton.SetSlider(0, 0);
             rightGunButton.UpdateHpSlider(0);
@@ -1468,16 +1476,17 @@ public class ButtonsUIManager : MonoBehaviour
 
         if (_legsInsight)
         {
-            legsButton.SetCharacter(_selectedEnemy, PartsMechaEnum.legL);
-            legsButton.SetHpText(_selectedEnemy.GetLegs().GetCurrentHp().ToString());
-            legsButton.SetSlider(0, _selectedEnemy.GetLegs().GetMaxHp());
-            legsButton.UpdateHpSlider(_selectedEnemy.GetLegs().GetCurrentHp());
+            Legs legs = _selectedEnemy.GetLegs();
+            legsButton.SetCharacter(_selectedEnemy, legs);
+            legsButton.SetHpText(legs.GetCurrentHp().ToString());
+            legsButton.SetSlider(0, legs.GetMaxHp());
+            legsButton.UpdateHpSlider(legs.GetCurrentHp());
             legsButton.UpdateDamagePreviewSlider();
             legsButton.ButtonEnabling(true, LegsMinus, LegsSelection);
         }
         else
         {
-            legsButton.SetCharacter(null, default);
+            legsButton.SetCharacter(null, null);
             legsButton.SetHpText("0");
             legsButton.SetSlider(0, 0);
             legsButton.UpdateHpSlider(0);

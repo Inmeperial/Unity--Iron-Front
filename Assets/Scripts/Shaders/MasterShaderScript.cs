@@ -8,6 +8,7 @@ public class MasterShaderScript : MonoBehaviour
 
     //public TexturesForMasterShader textureForMasterShader;
 
+    [SerializeField] private Renderer _renderer;
     public bool isWeapon = false;
     public MechaEnum mechaEnum;
     public Texture[] texturesCuerpo = new Texture[3];
@@ -20,7 +21,7 @@ public class MasterShaderScript : MonoBehaviour
     private string[] _shaderArrayString;
     private List<Material> _matList = new List<Material>();
 
-    public void Initialize()
+    private void Initialize()
     {
         _shaderArrayString = new string[Enum.GetNames(typeof(StringTextureEnum)).Length];
 
@@ -28,7 +29,7 @@ public class MasterShaderScript : MonoBehaviour
         _shaderArrayString[1] = StringTextureEnum._SwitchTexture_Key1.ToString();
         _shaderArrayString[2] = StringTextureEnum._SwitchTexture_Key2.ToString();
 
-        Material[] mats = GetComponent<Renderer>().materials;
+        Material[] mats = _renderer.materials;
         _matList = new List<Material>();
 
         for (int i = 0; i < mats.Length; i++)
@@ -190,7 +191,7 @@ public class MasterShaderScript : MonoBehaviour
         materialCuerpo = prefab.materialCuerpo;
         materialArmadura = prefab.materialArmadura;
 
-        SkinnedMeshRenderer renderer = GetComponent<SkinnedMeshRenderer>();
+        //SkinnedMeshRenderer renderer = GetComponent<SkinnedMeshRenderer>();
 
         Material[] orderedMaterials = new Material[3];
         
@@ -205,7 +206,6 @@ public class MasterShaderScript : MonoBehaviour
             material.EnableKeyword("_TextureEmission");
         }
 
-
         //prefab.texturesXXX[1] is NormalMap
         orderedMaterials[materialCuerpo].SetTexture("_TextureNormal", prefab.texturesCuerpo[1]);
         orderedMaterials[materialArmadura].SetTexture("_TextureNormal", prefab.textureArmadura[1]);
@@ -219,7 +219,7 @@ public class MasterShaderScript : MonoBehaviour
         //prefab.texturesXXX[3] is Emission
         orderedMaterials[materialArticulacion].SetTexture("_TextureEmission", prefab.textureArticulaciones[3]);
 
-        renderer.materials = orderedMaterials;
+        _renderer.materials = orderedMaterials;
         Initialize();
 }
 
@@ -240,6 +240,7 @@ public enum SwitchTextureEnum
     TextureOutLine
 };
 
+//TODO: Ver de borrar
 public enum MechaEnum
 {
     Mecha1,

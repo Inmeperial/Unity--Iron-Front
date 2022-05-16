@@ -51,7 +51,7 @@ public class Grenade : Item
     {
         if (Input.GetMouseButtonDown(0))
         {
-            var selection = MouseRay.GetTargetTransform(_character.block);
+            var selection = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 
             if (selection == null)
             {

@@ -16,39 +16,21 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	public CustomButton selectionButton;
 	public Character _characterSelected;
 
-	FramesUI(Image mecha, TextMeshProUGUI myName)
-	{
-		mechaImage = mecha;
-		mechaName = myName;
-	}
-
-	public void ChangeData(Image newMechaImage, TextMeshProUGUI newMechaName)
+    public void ChangeData(Image newMechaImage, TextMeshProUGUI newMechaName)
 	{
 		mechaImage = newMechaImage;
 		mechaName.text = newMechaName.text;
 	}
 
-	public void RemoveButtonLeftClickListeners()
-	{
-		selectionButton.OnLeftClick.RemoveAllListeners();
-	}
-	
-	public void AddButtonLeftClickListener(UnityAction action)
-	{
-		selectionButton.OnLeftClick.AddListener(action);
-	}
-	
-	public void RemoveButtonRightClickListeners()
-	{
-		selectionButton.OnRightClick.RemoveAllListeners();
-	}
-	
-	public void AddButtonRightClickListener(UnityAction action)
-	{
-		selectionButton.OnRightClick.AddListener(action);
-	}
+    public void RemoveButtonLeftClickListeners() => selectionButton.OnLeftClick.RemoveAllListeners();
 
-	public FramesUI SetCharacter(Character character)
+    public void AddButtonLeftClickListener(UnityAction action) => selectionButton.OnLeftClick.AddListener(action);
+
+    public void RemoveButtonRightClickListeners() => selectionButton.OnRightClick.RemoveAllListeners();
+
+    public void AddButtonRightClickListener(UnityAction action) => selectionButton.OnRightClick.AddListener(action);
+
+    public FramesUI SetCharacter(Character character)
 	{
 		_characterSelected = character;
 
@@ -69,27 +51,28 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	public FramesUI SetBorderColor(EnumsClass.Team team)
 	{
-		var color =  team == EnumsClass.Team.Green ? playerColor : enemyColor;
+        Color color =  team == EnumsClass.Team.Green ? playerColor : enemyColor;
 		colorBorder.color = color;
 		colorNamePlate.color = color;
 		
 		return this;
 	}
 
-	public void OverweightIconState(bool state)
-	{
-		overWeight.gameObject.SetActive(state);
-	}
+    public void OverweightIconState(bool state) => overWeight.gameObject.SetActive(state);
 
-	public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
 	{
-		if (_characterSelected.IsDead()) return;
+		if (_characterSelected.IsDead())
+			return;
+
 		_characterSelected.SetShaderForAllParts(SwitchTextureEnum.TextureFresnel);
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
-		if (_characterSelected.IsDead()) return;
+		if (_characterSelected.IsDead())
+			return;
+
 		_characterSelected.SetShaderForAllParts(SwitchTextureEnum.TextureClean);
 	}
 }

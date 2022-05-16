@@ -7,7 +7,6 @@ public class SelfDestruct : BodyAbility
 {
     private HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
     private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
-    private TileHighlight _highlight;
     
     private SelfDestructSO _abilityData;
 
@@ -22,7 +21,6 @@ public class SelfDestruct : BodyAbility
     {
         _character.DeselectThisUnit();
         _character.EquipableSelectionState(true, this);
-        _highlight = _character.highlight;
         PaintTilesInAttackRange(_character.GetMyPositionTile(), 0);
     }
 
@@ -30,10 +28,10 @@ public class SelfDestruct : BodyAbility
     {
         if(_tilesInAttackRange.Count != 0)
 		{
-            _highlight.ClearTilesInPreview(_tilesInAttackRange);
-            _highlight.ClearTilesInActivationRange(_tilesInAttackRange);
-            _highlight.ClearTilesInAttackRange(_tilesInAttackRange);
-            _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
+            TileHighlight.Instance.ClearTilesInPreview(_tilesInAttackRange);
+            TileHighlight.Instance.ClearTilesInActivationRange(_tilesInAttackRange);
+            TileHighlight.Instance.ClearTilesInAttackRange(_tilesInAttackRange);
+            TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInAttackRange);
         }
         
         _tilesInAttackRange.Clear();
@@ -45,7 +43,7 @@ public class SelfDestruct : BodyAbility
     {
         if (Input.GetMouseButtonDown(0))
         {
-            var selectedTile = MouseRay.GetTargetTransform(_character.block);
+            var selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 		
             if (!selectedTile) return;
 		
@@ -125,7 +123,7 @@ public class SelfDestruct : BodyAbility
                 {
                     _tilesInAttackRange.Add(tile);
                     tile.inAttackRange = true;
-                    _highlight.PaintTilesInAttackRange(tile);
+                    TileHighlight.Instance.PaintTilesInAttackRange(tile);
                 }
             }
             PaintTilesInAttackRange(tile, count + 1);
