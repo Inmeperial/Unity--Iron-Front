@@ -16,14 +16,14 @@ public class WorkshopMecha : MonoBehaviour
     [SerializeField] private MasterShaderScript _bodyShader;
     [SerializeField] private MasterShaderScript _legsShader;
 
-    private GameObject _leftGun;
-    private GameObject _rightGun;
+    private GameObject _leftGunGameObject;
+    private GameObject _rightGunGameObject;
 
     private int _positionIndexInWorkshop;
 
     
-    private List<MasterShaderScript> _rightWeaponList = new List<MasterShaderScript>();
-    private List<MasterShaderScript> _leftWeaponList = new List<MasterShaderScript>();
+    private MasterShaderScript _rightGunShader;
+    private MasterShaderScript _leftGunShader;
 
     private void Start()
     {        
@@ -63,29 +63,35 @@ public class WorkshopMecha : MonoBehaviour
         _bodySkinnedMeshRenderer = updatedBodyMesh;
 
         _bodyShader.SetData(newBody.masterShader, newBody.bodyMaterial, newBody.jointsMaterial, newBody.armorMaterial);
-        //_bodyShader.colorMecha = _equipment.GetBodyColor();
         UpdateBodyColor(_equipment.GetBodyColor());
     }
 
     public void ChangeLeftGun(GunSO newGun)
     {
-        if (_leftGun) Destroy(_leftGun);
+        if (_leftGunGameObject)
+            Destroy(_leftGunGameObject);
 
         Gun leftGun = Instantiate(newGun.prefab, _leftGunSpawn);
         leftGun.transform.localPosition = Vector3.zero;
-        _leftGun = leftGun.gameObject;
+        _leftGunGameObject = leftGun.gameObject;
 
-        SetLeftWeaponArray();
+        _leftGunShader = leftGun.GetMasterShader();
+
+        _leftGunShader.Initialize();
     }
 
     public void ChangeRightGun(GunSO newGun)
     {
-        if (_rightGun) Destroy(_rightGun);
+        if (_rightGunGameObject)
+            Destroy(_rightGunGameObject);
 
         Gun rightGun = Instantiate(newGun.prefab, _rightGunSpawn.transform);
         rightGun.transform.localPosition = Vector3.zero;
-        _rightGun = rightGun.gameObject;
-        SetRightWeaponArray();
+        _rightGunGameObject = rightGun.gameObject;
+
+        _rightGunShader = rightGun.GetMasterShader();
+        
+        _rightGunShader.Initialize();
     }
 
     public void ChangeLegs(LegsSO newLegs)
@@ -98,33 +104,33 @@ public class WorkshopMecha : MonoBehaviour
         UpdateLegsColor(_equipment.GetLegsColor());
     }
 
-    private void SetLeftWeaponArray()
-    {
-        _leftWeaponList = new List<MasterShaderScript>();
+    //private void SetLeftWeaponArray()
+    //{
+    //    _leftGunShader = new List<MasterShaderScript>();
 
-        for (int i = 0; i < _leftGun.transform.childCount; i++)
-        {
-            Transform child = _leftGun.transform.GetChild(i);
+    //    for (int i = 0; i < _leftGunGameObject.transform.childCount; i++)
+    //    {
+    //        Transform child = _leftGunGameObject.transform.GetChild(i);
 
-            MasterShaderScript masterShader = child.GetComponent<MasterShaderScript>();
+    //        MasterShaderScript masterShader = child.GetComponent<MasterShaderScript>();
 
-            if (masterShader != null) _leftWeaponList.Add(masterShader);
-        }
-    }
+    //        if (masterShader != null) _leftGunShader.Add(masterShader);
+    //    }
+    //}
 
-    private void SetRightWeaponArray()
-    {
-        _rightWeaponList = new List<MasterShaderScript>();
+    //private void SetRightWeaponArray()
+    //{
+    //    _rightWeaponShader = new List<MasterShaderScript>();
 
-        for (int i = 0; i < _rightGun.transform.childCount; i++)
-        {
-            Transform child = _rightGun.transform.GetChild(i);
+    //    for (int i = 0; i < _rightGunGameObject.transform.childCount; i++)
+    //    {
+    //        Transform child = _rightGunGameObject.transform.GetChild(i);
 
-            MasterShaderScript masterShader = child.GetComponent<MasterShaderScript>();
+    //        MasterShaderScript masterShader = child.GetComponent<MasterShaderScript>();
 
-            if (masterShader != null) _rightWeaponList.Add(masterShader);
-        }
-    }
+    //        if (masterShader != null) _rightWeaponShader.Add(masterShader);
+    //    }
+    //}
 
     public MasterShaderScript GetBodyShader()
     {
@@ -135,14 +141,14 @@ public class WorkshopMecha : MonoBehaviour
     {
         return _legsShader;
     }
-    public List<MasterShaderScript> GetLeftWeaponShaderList()
+    public MasterShaderScript GetLeftGunShader()
     {
-        return _leftWeaponList;
+        return _leftGunShader;
     }
 
-    public List<MasterShaderScript> GetRightWeaponShaderList()
+    public MasterShaderScript GetRightGunShader()
     {
-        return _rightWeaponList;
+        return _rightGunShader;
     }
 
     public MechaEquipmentSO GetEquipment()

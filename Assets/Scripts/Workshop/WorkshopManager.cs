@@ -171,7 +171,6 @@ public class WorkshopManager : MonoBehaviour
         
         _equipmentContainer.equipments[_mechaIndex].body = body;
         
-        StartPartFlicker("Body");
         StartCoroutine(PartFlickerDelay("Body"));
         ApplyChangesButton();
     }
@@ -181,7 +180,6 @@ public class WorkshopManager : MonoBehaviour
         mechas[_mechaIndex].ChangeLeftGun(gun);
         _equipmentContainer.equipments[_mechaIndex].leftGun = gun;
         
-        StartPartFlicker("LGun");
         StartCoroutine(PartFlickerDelay("LGun"));
         ApplyChangesButton();
     }
@@ -191,7 +189,6 @@ public class WorkshopManager : MonoBehaviour
         mechas[_mechaIndex].ChangeRightGun(gun);
         _equipmentContainer.equipments[_mechaIndex].rightGun = gun;
         
-        StartPartFlicker("RGun");
         StartCoroutine(PartFlickerDelay("RGun"));
         ApplyChangesButton();
     }
@@ -328,63 +325,44 @@ public class WorkshopManager : MonoBehaviour
         switch (part)
         {
             case "Body":
-                mechas[_mechaIndex].GetBodyShader().ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-                //mechas[_mechaIndex]._leftArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-                //mechas[_mechaIndex]._rightArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+                MasterShaderScript bodyShader = mechas[_mechaIndex].GetBodyShader();
+                bodyShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+
                 break;
             
             case "LGun":
-                //MasterShaderScript[] _leftWeaponArr = new MasterShaderScript[mechas[_mechaIndex].GetLeftWeaponShaderArray().Length];
-                //_leftWeaponArr = mechas[_mechaIndex].GetLeftWeaponShaderArray();
-                List<MasterShaderScript> leftWeaponArr = mechas[_mechaIndex].GetLeftWeaponShaderList();
-                for (int i = 0; i < leftWeaponArr.Count; i++)
-                {
-                    if (leftWeaponArr[i] != null) leftWeaponArr[i].ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-                }
+                MasterShaderScript leftGunShader = mechas[_mechaIndex].GetLeftGunShader();
+                leftGunShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+
                 break;
                 
             case "RGun":
-                //MasterShaderScript[] _rightWeaponArr = new MasterShaderScript[mechas[_mechaIndex].GetRightWeaponShaderArray().Length];
-                //_rightWeaponArr = mechas[_mechaIndex].GetRightWeaponShaderArray();
-                List<MasterShaderScript> rightWeaponArr = mechas[_mechaIndex].GetRightWeaponShaderList();
-                for (int i = 0; i < rightWeaponArr.Count; i++)
-                {
-                    if (rightWeaponArr[i] != null) rightWeaponArr[i].ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-                }
+                MasterShaderScript rightGunShader = mechas[_mechaIndex].GetRightGunShader();
+                rightGunShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+
                 break;
             
             case "Legs":
-                //mechas[_mechaIndex]._leftLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-                //mechas[_mechaIndex]._rightLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-                mechas[_mechaIndex].GetLegsShader().ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+                MasterShaderScript legsShader = mechas[_mechaIndex].GetLegsShader();
+                legsShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
+
                 break;
         }
     }
 
     public void EndPartFlicker()
     {
-        mechas[_mechaIndex].GetBodyShader().ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-        mechas[_mechaIndex].GetLegsShader().ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-        //mechas[_mechaIndex]._leftArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-        //mechas[_mechaIndex]._rightArmShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-        //mechas[_mechaIndex]._leftLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-        //mechas[_mechaIndex]._rightLegShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+        MasterShaderScript bodyShader = mechas[_mechaIndex].GetBodyShader();
+        bodyShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
 
-        //MasterShaderScript[] _leftWeaponArr = new MasterShaderScript[mechas[_mechaIndex].GetLeftWeaponShaderArray().Length];
-        //_leftWeaponArr = mechas[_mechaIndex].GetLeftWeaponShaderArray();
-        List<MasterShaderScript> _leftWeaponArr = mechas[_mechaIndex].GetLeftWeaponShaderList();
-        for (int i = 0; i < _leftWeaponArr.Count; i++)
-        {
-            if (_leftWeaponArr[i] != null) _leftWeaponArr[i].ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-        }
+        MasterShaderScript legsShader = mechas[_mechaIndex].GetLegsShader();
+        legsShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
 
-        //MasterShaderScript[] _rightWeaponArr = new MasterShaderScript[mechas[_mechaIndex].GetRightWeaponShaderArray().Length];
-        //_rightWeaponArr = mechas[_mechaIndex].GetRightWeaponShaderArray();
-        List<MasterShaderScript> _rightWeaponArr = mechas[_mechaIndex].GetRightWeaponShaderList();
-        for (int i = 0; i < _rightWeaponArr.Count; i++)
-        {
-            if (_rightWeaponArr[i] != null) _rightWeaponArr[i].ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
-        }
+        MasterShaderScript leftGunShader = mechas[_mechaIndex].GetLeftGunShader();
+        leftGunShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
+
+        MasterShaderScript rightGunShader = mechas[_mechaIndex].GetRightGunShader();
+        rightGunShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureClean);
     }
 
     //Nico

@@ -458,4 +458,6 @@ public abstract class Gun : EnumsClass, IChangeableShader
     }
 
     public void SetShader(SwitchTextureEnum textureEnum) => _masterShader.ConvertEnumToStringEnumForShader(textureEnum);
+
+    public MasterShaderScript GetMasterShader() => _masterShader;
 }

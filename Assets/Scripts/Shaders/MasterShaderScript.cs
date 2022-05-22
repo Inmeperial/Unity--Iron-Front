@@ -10,7 +10,7 @@ public class MasterShaderScript : MonoBehaviour
 
     [SerializeField] private Renderer _renderer;
     public bool isWeapon = false;
-    public MechaEnum mechaEnum;
+    //public MechaEnum mechaEnum;
     public Texture[] texturesCuerpo = new Texture[3];
     public Texture[] textureArmadura = new Texture[3];
     public Texture[] textureArticulaciones = new Texture[4];
@@ -21,7 +21,7 @@ public class MasterShaderScript : MonoBehaviour
     private string[] _shaderArrayString;
     private List<Material> _matList = new List<Material>();
 
-    private void Initialize()
+    public void Initialize()
     {
         _shaderArrayString = new string[Enum.GetNames(typeof(StringTextureEnum)).Length];
 
@@ -39,13 +39,9 @@ public class MasterShaderScript : MonoBehaviour
         for (int i = 0; i < _matList.Count; i++)
         {
             if (isWeapon)
-            {
                 _matList[i].SetInt("_isWeapon", 1);
-            }
             else
-            {
                 _matList[i].SetInt("_isWeapon", 0);
-            }
         }
 
         //SetMaterialsForMecha();
@@ -109,16 +105,10 @@ public class MasterShaderScript : MonoBehaviour
 
         for (int i = 0; i < _matList.Count; i++)
         {
-            
-
             if (key)
-            {
                 _matList[i].SetInt("_isOutLineOn", 1);
-            }
             else
-            {
                 _matList[i].SetInt("_isOutLineOn", 0);
-            }
         }
 
     }
@@ -126,19 +116,15 @@ public class MasterShaderScript : MonoBehaviour
     private void SetTexturesToMaterial(int matArrayNum, Texture[] arr, bool setEmission)
     {
         if (arr[0] != null)
-        {
             _matList[matArrayNum].SetTexture("_TextureAlbedo", arr[0]);
-        }
+
         if (arr[1] != null)
-        {
             _matList[matArrayNum].SetTexture("_TextureNormal", arr[1]);
-        }
+
         if (!isWeapon)
         {
             if (arr[2] != null)
-            {
                 _matList[matArrayNum].SetTexture("_MaskAlbedo", arr[2]);
-            }
 
             if (setEmission)
             {
@@ -168,13 +154,9 @@ public class MasterShaderScript : MonoBehaviour
             for (int j = 0; j < _shaderArrayString.Length; j++)
             {
                 if (_shaderArrayString[j] == key.ToString())
-                {
                     _matList[i].EnableKeyword(_shaderArrayString[j]);
-                }
                 else
-                {
                     _matList[i].DisableKeyword(_shaderArrayString[j]);
-                }
             }
         }
     }
@@ -182,7 +164,7 @@ public class MasterShaderScript : MonoBehaviour
     public void SetData(MasterShaderScript prefab, Material bodyMat, Material jointsMat, Material armorMat)
     {
         isWeapon = prefab.isWeapon;
-        mechaEnum = prefab.mechaEnum;
+        //mechaEnum = prefab.mechaEnum;
         texturesCuerpo = prefab.texturesCuerpo;
         textureArmadura = prefab.textureArmadura;
         textureArticulaciones = prefab.textureArticulaciones;
@@ -190,8 +172,6 @@ public class MasterShaderScript : MonoBehaviour
         materialArticulacion = prefab.materialArticulacion;
         materialCuerpo = prefab.materialCuerpo;
         materialArmadura = prefab.materialArmadura;
-
-        //SkinnedMeshRenderer renderer = GetComponent<SkinnedMeshRenderer>();
 
         Material[] orderedMaterials = new Material[3];
         
@@ -241,8 +221,8 @@ public enum SwitchTextureEnum
 };
 
 //TODO: Ver de borrar
-public enum MechaEnum
-{
-    Mecha1,
-    Mecha2
-}
+//public enum MechaEnum
+//{
+//    Mecha1,
+//    Mecha2
+//}
