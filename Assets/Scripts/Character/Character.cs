@@ -1198,7 +1198,8 @@ public class Character : EnumsClass, IObservable
             int steps = _currentSteps + amount;
             _currentSteps = steps <= _legs.GetMaxSteps() ? steps : _legs.GetMaxSteps();
         }
-        else _currentSteps += amount;
+        else
+            _currentSteps += amount;
 
     }
 
@@ -1460,11 +1461,8 @@ public class Character : EnumsClass, IObservable
             _observers[i].Notify(action);
         }
     }
-    
-    public void OnUseEquipable()
-    {
-        EquipableSelectionState(false, null);
-    }
+
+    public void OnUseEquipable() => EquipableSelectionState(false, null);
 
     #endregion
 
@@ -1475,7 +1473,7 @@ public class Character : EnumsClass, IObservable
         if (!_mechaEquipment)
             return;
 
-        _myName = _mechaEquipment.name;
+        _myName = _mechaEquipment.mechaName;
         
         _worldUI.SetName(_myName);
 
@@ -1544,8 +1542,10 @@ public class Character : EnumsClass, IObservable
         if (_rightGun)
         {
             _selectedGun = _rightGun;
+
             if (_selectedGun.GetGunType() == GunsType.Shield)
                 _selectedGun.Ability();
+
             _canAttack = true;
             _rightGunSelected = true;
             _leftGunSelected = false;
@@ -1553,8 +1553,10 @@ public class Character : EnumsClass, IObservable
         else if (_leftGun)
         {
             _selectedGun = _leftGun;
+
             if (_selectedGun.GetGunType() == GunsType.Shield)
                 _selectedGun.Ability();
+
             _canAttack = true;
             _rightGunSelected = false;
             _leftGunSelected = true;
@@ -1613,7 +1615,8 @@ public class Character : EnumsClass, IObservable
     {
         float totalWeight = 0;
 
-        if (!_body) return;
+        if (!_body)
+            return;
 
         totalWeight += _body.GetWeight();
 
@@ -1626,10 +1629,9 @@ public class Character : EnumsClass, IObservable
         totalWeight += _legs.GetWeight();
 
         if (totalWeight <= _body.GetMaxWeight())
-        {
             _overweight = false;
-        }
-        else _overweight = true;
+        else 
+            _overweight = true;
         
         OnOverweight?.Invoke(_overweight);
     }
@@ -1648,9 +1650,8 @@ public class Character : EnumsClass, IObservable
         }
         
         if (ability && _equipables.Contains(ability))
-        {
             _equipables.Remove(ability);
-        }
+
         CheckWeight();
     }
 
@@ -1718,9 +1719,7 @@ public class Character : EnumsClass, IObservable
     private void OnEnable()
     {
         if (_isDead)
-        {
             _animationMechaHandler.SetIsDeadAnimatorTrue();
-        }
     }
     
     public LayerMask GetBlockLayerMask() => _block;
@@ -1728,6 +1727,12 @@ public class Character : EnumsClass, IObservable
     public WaypointsPathfinding GetWaypointsPathfinding() => _waypointsPathfinding;
 
     public bool GunsOffOnCloseup() => _gunsOffOnCloseUp;
+
+    public void ChangeMeshActiveStatus(bool status)
+    {
+        _body.ChangePartMeshActiveStatus(status);
+        _legs.ChangePartMeshActiveStatus(status);
+    }
 }
 public enum PartsMechaEnum
 {

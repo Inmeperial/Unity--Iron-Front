@@ -230,10 +230,10 @@ public class EffectsController : MonoBehaviour
     }
 
     /// <summary>
-    /// Creates the Damage Text in world. type: 
+    /// Creates the Damage Text in world. Type: Miss: 0 - Normal: 1 - Critical: 2 - Heal: 3
     /// </summary>
     /// <param name="text">Text that will be shown.</param>
-    /// <param name="type">Miss: 0 - Normal: 1 - Critical: 2 - Heal: 3.</param>
+    /// <param name="type"></param>
     /// <param name="position">The position it will spawn.</param>
     public void CreateDamageText(string text, int type, Vector3 position)
     {

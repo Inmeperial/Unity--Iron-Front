@@ -469,10 +469,11 @@ public class ButtonsUIManager : MonoBehaviour
     /// </summary>
     public void ExecuteAttack()
     {
-        if (!_selectedEnemy) return;
+        if (!_selectedEnemy)
+            return;
         
         DeactivateEndTurnButton();
-        var cam = FindObjectOfType<CloseUpCamera>();
+        CloseUpCamera cam = FindObjectOfType<CloseUpCamera>();
         WorldUI ui = _selectedEnemy.GetMyUI();
 
         //ui.ResetButtons();
@@ -482,34 +483,40 @@ public class ButtonsUIManager : MonoBehaviour
         legsButton.ResetButton();
         
         float rightGunHP = 0;
+
         if (_selectedEnemy.GetRightGun())
             rightGunHP = _selectedEnemy.GetRightGun().GetCurrentHp();
         
         float leftGunHP = 0;
+
         if (_selectedEnemy.GetLeftGun())
             leftGunHP = _selectedEnemy.GetLeftGun().GetCurrentHp();
         
         ui.SetLimits(_selectedEnemy.GetBody().GetMaxHp(), rightGunHP, leftGunHP, _selectedEnemy.GetLegs().GetMaxHp());
+
         buttonExecuteAttack.interactable = false;
+
         buttonExecuteAttack.gameObject.SetActive(false);
+
         _selectedChar.ResetInRangeLists();
+
         DeactivateBodyPartsContainer();
+
         attackHudContainer.SetActive(false);
-        //foreach (var go in _selectedChar.bodyRenderContainer)
-        //{
-        //    go.SetActive(true);
-        //}
+
         if (_selectedChar.GunsOffOnCloseup())
         {
-            if (_selectedChar.GetLeftGun()) _selectedChar.GetLeftGun().ModelsOn();
+            if (_selectedChar.GetLeftGun())
+                _selectedChar.GetLeftGun().ModelsOn();
             
-            if (_selectedChar.GetRightGun()) _selectedChar.GetRightGun().ModelsOn();
+            if (_selectedChar.GetRightGun())
+                _selectedChar.GetRightGun().ModelsOn();
         }
         
         Character[] units = TurnManager.Instance.GetAllUnits();
-        foreach (Character u in units)
+        foreach (Character unit in units)
         {
-            u.gameObject.SetActive(true);
+            unit.ChangeMeshActiveStatus(true);
         }
         cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, Attack, attackDelay);
     }
@@ -1391,11 +1398,13 @@ public class ButtonsUIManager : MonoBehaviour
         
         Character[] units = TurnManager.Instance.GetAllUnits();
 
-        foreach (Character u in units)
+        foreach (Character unit in units)
         {
-            if (u == _selectedChar || u == _selectedEnemy) continue;
-            
-            u.gameObject.SetActive(false);
+            //if (unit == _selectedChar || unit == _selectedEnemy)
+            if (unit == _selectedEnemy)
+                continue;
+
+            unit.ChangeMeshActiveStatus(false);
         }
         _selectedChar.RaysOffDelay();
 

@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff40bb0bb505d04db54dff77db5e3e0, type: 3}
   m_Name: DEFAULT
   m_EditorClassIdentifier: 
-  _objectsDatabase: {fileID: 11400000, guid: bac69f91cfa8f474c9a8a84a413dbf90, type: 2}
-  name: DEFAULT
+  mechaName: Default
   body: {fileID: 11400000, guid: 3664c60e888fe6a47bac9e1f46f2d2b1, type: 2}
+  bodyAbility: {fileID: 0}
+  item: {fileID: 0}
   leftGun: {fileID: 11400000, guid: f59c4b3a26e546146be5cdcc049749e7, type: 2}
+  leftGunAbility: {fileID: 0}
   rightGun: {fileID: 11400000, guid: a8eeee1f1d2bf3542a3f889799659fb6, type: 2}
+  rightGunAbility: {fileID: 0}
   legs: {fileID: 11400000, guid: d2c8df4a9af149148b2463b533891594, type: 2}
+  legsAbility: {fileID: 0}
   bodyColor:
     red: 1
     green: 1

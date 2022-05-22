@@ -10,13 +10,12 @@ public static class LoadSaveUtility
     /// <summary>
     /// Loads the file that contains the equipment info.
     /// </summary>
-    /// <param name="equipmentContainer">The equipment to overwrite with the loaded files.</param>
-    /// <returns>Returns the loaded equipment if found, else returns the same equipment.</returns>
+    /// <returns>Returns the loaded equipment if found, else returns the default equipment.</returns>
     public static MechaEquipmentContainerSO LoadEquipment()
     {
         if (!File.Exists(string.Concat(Application.dataPath, _savePath)))
         {
-             var defaultEquipment = Resources.Load<MechaEquipmentContainerSO>("Equipment/DefaultContainer");
+            MechaEquipmentContainerSO defaultEquipment = Resources.Load<MechaEquipmentContainerSO>("Equipment/DefaultContainer");
             // return defaultEquipment;
             SaveEquipment(defaultEquipment);
         }
@@ -25,11 +24,11 @@ public static class LoadSaveUtility
         FileStream file = File.Open(string.Concat(Application.dataPath, _savePath), FileMode.Open);
         
         //Get the string of equipments
-        string save = formatter.Deserialize(file).ToString();
+        string saveFile = formatter.Deserialize(file).ToString();
 
         //Separates the string in an array to have each equipment
         char[] equipmentSeparator = {'#'};
-        string[] allEquipments = save.Split(equipmentSeparator);
+        string[] allEquipments = saveFile.Split(equipmentSeparator);
 
         MechaEquipmentContainerSO newContainer = ScriptableObject.CreateInstance<MechaEquipmentContainerSO>();
         newContainer.name = "es el del load";
