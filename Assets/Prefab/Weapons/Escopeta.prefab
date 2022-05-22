@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _renderer: {fileID: 0}
   isWeapon: 1
   mechaEnum: 0
   texturesCuerpo:
@@ -321,6 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _renderer: {fileID: 0}
   isWeapon: 1
   mechaEnum: 0
   texturesCuerpo:
@@ -398,9 +400,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607a6d60e7757684cab501bc2d2e6ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _models:
-  - {fileID: 7509537918280246806}
-  - {fileID: 8510019456189541868}
+  _renderers: []
+  _collider: {fileID: 0}
   _damageParticleSpawner: {fileID: 1894852082657178957}
   _masterShader: {fileID: 2905074970829904868}
   _particleSpawn: {fileID: 2775798271717325472}

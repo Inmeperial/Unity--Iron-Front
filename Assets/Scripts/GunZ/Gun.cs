@@ -5,8 +5,10 @@ using UnityEngine;
 
 public abstract class Gun : EnumsClass, IChangeableShader
 {
-    [SerializeField] protected GameObject[] _models;
+    [SerializeField] protected Renderer[] _renderers;
+    [SerializeField] protected Collider _collider;
     [SerializeField] protected GameObject _damageParticleSpawner;
+    [SerializeField] protected GameObject _shootParticleSpawn;
     [SerializeField] protected MasterShaderScript _masterShader;
     protected Character _myChar;
     protected float _maxHP;
@@ -41,7 +43,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
     protected Ability _ability;
 
     private bool _abilityCreated;
-    [SerializeField] protected GameObject _particleSpawn;
+    
     public void SetRightOrLeft(string location)
     {
         _location = location;
@@ -135,7 +137,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
     
     public GameObject GetParticleSpawn()
     {
-        return _particleSpawn;
+        return _shootParticleSpawn;
     }
     
     public bool SkillUsed()
@@ -306,24 +308,24 @@ public abstract class Gun : EnumsClass, IChangeableShader
 
         ModelsOff();
 
-        GetComponent<BoxCollider>().enabled = false;
+        _collider.enabled = false;
     }
 
 
 
     public void ModelsOff()
     {
-        foreach (GameObject m in _models)
+        foreach (Renderer renderer in _renderers)
         {
-            m.gameObject.SetActive(false);
+            renderer.enabled = false;
         }
     }
     
     public void ModelsOn()
     {
-        foreach (GameObject m in _models)
+        foreach (Renderer renderer in _renderers)
         {
-            m.gameObject.SetActive(true);
+            renderer.enabled = true;
         }
     }
     
