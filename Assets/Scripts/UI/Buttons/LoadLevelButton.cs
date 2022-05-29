@@ -6,7 +6,7 @@ public class LoadLevelButton : CustomButton
 {
     [SerializeField] private string _levelName;
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         base.Start();
 

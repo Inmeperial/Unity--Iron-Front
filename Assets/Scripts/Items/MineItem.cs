@@ -6,27 +6,27 @@ using UnityEngine;
 public class MineItem : Item
 {
 	MineItemSO _data;
-	TileHighlight _highlight;
 	HashSet<Tile> _tilesInRange = new HashSet<Tile>();
 
-	public override void Initialize(Character character, EquipableSO data, Location location)
+	public override void Initialize(Character character, EquipableSO data)
 	{
-		base.Initialize(character, data, location);
+		base.Initialize(character, data);
+
 		_data = data as MineItemSO;
-		if (!_highlight)
-			_highlight = FindObjectOfType<TileHighlight>();
 	}
 
 	public override void Select()
 	{
 		PaintTilesInRange(_character.GetMyPositionTile(), 0);
+
 		_character.DeselectThisUnit();
+
 		_character.EquipableSelectionState(true, this);
 	}
 
 	public override void Deselect()
 	{
-		_highlight.MortarClearTilesInAttackRange(_tilesInRange);
+		TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
 		_tilesInRange.Clear();
 		_character.EquipableSelectionState(false, null);
 		_character.SelectThisUnit();
@@ -36,35 +36,45 @@ public class MineItem : Item
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			var selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
-		
-			if (!selectedTile) return;
-		
-			var tile = selectedTile.GetComponent<Tile>();
-
-			if (!tile) return;
-		
-			if (!_tilesInRange.Contains(tile)) return;
-			
-			Instantiate(_data.minePefab, selectedTile.transform.position + Vector3.up * 2, Quaternion.Euler(-90, 0, 0));
-			
-			ItemUsed();
-			UpdateButtonText(_availableUses.ToString(), _data);
-			_button.interactable = false;
-			
-			if (callback != null)
-				callback();
-			
-			Deselect();
+            ExecuteAbility(callback);
 		}
 
 		if (Input.GetMouseButtonDown(1))
 			Deselect();
 	}
 
+	private void ExecuteAbility(Action callback = null)
+    {
+		Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
+
+		if (!selectedTile)
+			return;
+
+		Tile tile = selectedTile.GetComponent<Tile>();
+
+		if (!tile)
+			return;
+
+		if (!_tilesInRange.Contains(tile))
+			return;
+
+		Instantiate(_data.minePefab, selectedTile.transform.position + Vector3.up * 2, Quaternion.Euler(-90, 0, 0));
+
+		ItemUsed();
+
+		UpdateButtonText(_availableUses.ToString(), _data);
+
+		_button.interactable = false;
+
+		callback?.Invoke();
+
+		Deselect();
+	}
+
 	private void PaintTilesInRange(Tile currentTile, int count)
 	{
-		if (count >= _data.useRange) return;
+		if (count >= _data.useRange)
+			return;
 
 		foreach (var item in currentTile.allNeighbours)
 		{
@@ -73,7 +83,7 @@ public class MineItem : Item
 				if (item && item.IsWalkable() && !item.GetUnitAbove())
 				{
 					_tilesInRange.Add(item);
-					_highlight.MortarPaintTilesInAttackRange(item);
+					TileHighlight.Instance.MortarPaintTilesInAttackRange(item);
 				}
 			}
 			PaintTilesInRange(item, count + 1);

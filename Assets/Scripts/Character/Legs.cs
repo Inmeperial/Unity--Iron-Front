@@ -18,9 +18,9 @@ public class Legs : Parts
         return _maxSteps;
     }
 
-    public override void SetPart(Character character, PartSO data, Color partColor, Equipable.Location location)
+    public override void SetPartData(Character character, PartSO data, Color partColor)
     {
-        base.SetPart(character, data, partColor, location);
+        base.SetPartData(character, data, partColor);
 
         LegsSO legsData = data as LegsSO;
 
@@ -79,7 +79,7 @@ public class Legs : Parts
         _myChar.MakeNotAttackable();
 
         TurnManager.Instance.ReducePosition(_myChar);
-        
+
         if (_currentHP <= 0 && !_brokenLegs)
         {
             //EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.Damage);
@@ -90,6 +90,8 @@ public class Legs : Parts
             }
             HalfSteps();
         }
+
+        _myChar.SetHurtAnimation();
     }
 
     public override void TakeDamage(int damage)
@@ -106,6 +108,7 @@ public class Legs : Parts
         ui.HideWithTimer();
 
         float hp = _currentHP - damage;
+
         _currentHP = hp > 0 ? hp : 0;
 
         if (_currentHP <= 0 && !_brokenLegs)
@@ -128,12 +131,9 @@ public class Legs : Parts
             EffectsController.Instance.PlayParticlesEffect(spawner, EnumsClass.ParticleActionType.Damage);
         }
 
-
-        //EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
-        
-        //Vector3 legsMidPosition = Vector3.Lerp(_particleSpawner[0].transform.position, _particleSpawner[1].transform.position, 0.5f);
-
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position);
+
+        _myChar.SetHurtAnimation();
     }
 
     public float GetRotationSpeed() => _rotationSpeed;

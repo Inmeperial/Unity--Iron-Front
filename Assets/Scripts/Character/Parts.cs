@@ -17,7 +17,7 @@ public abstract class Parts : MonoBehaviour, IChangeableShader
     protected float _currentHP;
     protected float _weight;
 
-    public virtual void SetPart(Character character, PartSO data, Color partColor, Equipable.Location location)
+    public virtual void SetPartData(Character character, PartSO data, Color partColor)
     {
         _myChar = character;
         _maxHP = data.maxHP;
@@ -42,20 +42,24 @@ public abstract class Parts : MonoBehaviour, IChangeableShader
         //}
     }
 
-    public float GetMaxHp()
+    public virtual void SetAbilityData(AbilitySO abilityData)
     {
-        return _maxHP;
+        if (!abilityData)
+        {
+            Debug.Log("sin ability data " + _myChar.GetCharacterName());
+            return;
+        }
+            
+        _ability = Instantiate(abilityData.abilityPrefab, transform);
+        _ability.Initialize(_myChar, abilityData);
+        _myChar.AddEquipable(_ability);
     }
 
-    public float GetCurrentHp()
-    {
-        return _currentHP;
-    }
-    
-    public float GetWeight()
-    {
-        return _weight;
-    }
+    public float GetMaxHp() => _maxHP;
+
+    public float GetCurrentHp() => _currentHP;
+
+    public float GetWeight() => _weight;
 
     public abstract void TakeDamage(List<Tuple<int, int>> damages);
 

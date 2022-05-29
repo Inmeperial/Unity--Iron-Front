@@ -1,10 +1,10 @@
 ﻿public class AssaultRifle : Gun
 {
-    public override void SetGun(GunSO data, Character character, Equipable.Location location)
+    public override void SetGunData(GunSO data, Character character)
     {
         _gunType = GunsType.AssaultRifle;
         _gun = "AssaultRifle";
-        base.SetGun(data, character,location);
+        base.SetGunData(data, character);
     }
     public override void Ability()
     {

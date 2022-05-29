@@ -5,45 +5,35 @@ using UnityEngine;
 
 public class CripplingShot : WeaponAbility
 {
-	private TileHighlight _highlight;
-	private int _abilityUseRange;
 	private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
 	private EnemyCharacter _enemy;
 	
 	private CripplingShotSO _abilityData;
 
-	public override void Initialize(Character character, EquipableSO data, Location location)
+	public override void Initialize(Character character, EquipableSO data)
 	{
-		base.Initialize(character, data, location);
+		base.Initialize(character, data);
 	    
 		_abilityData = data as CripplingShotSO;
 	}
 	
 	public override void Select()
 	{
-		if (_inCooldown || !_character.CanAttack()) return;
-		switch (_location)
-		{
-			case Location.LeftGun:
-				var left = _character.GetLeftGun();
-				if (left) _abilityUseRange = left.GetAttackRange();
-				break;
-            
-			case Location.RightGun:
-				var right = _character.GetRightGun();
-				if (right) _abilityUseRange = right.GetAttackRange();
-				break;
-		}
-		if (!_highlight)
-			_highlight = FindObjectOfType<TileHighlight>();
+		if (_inCooldown || !_character.CanAttack())
+			return;
+
+		if (!_gun)
+			return;
+
 		PaintTilesInRange(_character.GetMyPositionTile(), 0);
+
 		_character.EquipableSelectionState(true, this);
 		_character.DeselectThisUnit();
 	}
 
 	public override void Deselect()
 	{
-		_highlight.MortarClearTilesInAttackRange(_tilesInRange);
+		TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
 		_tilesInRange.Clear();
 		_character.EquipableSelectionState(false, null);
 		_character.SelectThisUnit();
@@ -51,39 +41,50 @@ public class CripplingShot : WeaponAbility
 
 	public override void Use(Action callback = null)
 	{
-		Debug.Log("Using Crippling Shot");
 		if (Input.GetMouseButtonDown(0))
 		{
-			Debug.Log("Crippling Shot");
 			//Selecionar al enemigo que esta en rango como si lo estás atacando normalmente.
 			_enemy = MouseRay.GetTargetTransform(LayerMask.NameToLayer("Character")).GetComponent<EnemyCharacter>();
+
 			//Agregar lo de la rotación y el rayo a las piernas
-			if (!_enemy) return;
-			_character.RotateTowardsEnemy(_enemy.transform);
-			var dir = _enemy.GetLegsPosition() - _character.transform.position;
-			//Si puede ver las piernas, le dispara, hace daño y evita que se mueva el proximo turno
-			if (_character.RayToPartsForAttack(_enemy.GetLegsPosition(), "Legs", true))
-			{
-				_enemy.GetLegs().TakeDamage(_abilityData.damage);
-				_enemy.MovementReduction(_abilityData.stepsReduction);
-				_enemy.SetHurtAnimation();
-				_character.DeactivateAttack();
-				
-				AbilityUsed(_abilityData);
-				UpdateButtonText(_availableUses.ToString(), _abilityData);
-				_button.interactable = false;
 
-				Deselect();
-			}
+			if (!_enemy)
+				return;
 
-			if (callback != null)
-				callback();
+			ExecuteAbility(callback);
 		}
 
 		if (Input.GetMouseButtonDown(1))
 			Deselect();
-		
 	}
+
+	private void ExecuteAbility(Action callback = null)
+    {
+		_character.RotateTowardsEnemy(_enemy.transform);
+
+		//Vector3 dir = _enemy.GetLegsPosition() - _character.transform.position;
+
+		//Si puede ver las piernas, le dispara, hace daño y evita que se mueva el proximo turno
+		if (_character.RayToPartsForAttack(_enemy.GetLegsPosition(), "Legs", true))
+		{
+			Legs legs = _enemy.GetLegs();
+			legs.TakeDamage(_abilityData.damage);
+
+			_enemy.MovementReduction(_abilityData.stepsReduction);
+
+			_character.DeactivateAttack();
+
+			AbilityUsed(_abilityData);
+
+			UpdateButtonText(_availableUses.ToString(), _abilityData);
+
+			_button.interactable = false;
+
+			Deselect();
+		}
+
+        callback?.Invoke();
+    }
 
 	/*private void OnMouseOver()
 	{
@@ -123,7 +124,7 @@ public class CripplingShot : WeaponAbility
 	void PaintTilesInRange(Tile currentTile, int count)
 	{
 		
-		if (count >= _abilityUseRange || !currentTile) return;
+		if (count >= _gun.GetAttackRange() || !currentTile) return;
 
 		foreach (var item in currentTile.allNeighbours)
 		{
@@ -132,7 +133,7 @@ public class CripplingShot : WeaponAbility
 				if(item && item.IsWalkable())
 				{
 					_tilesInRange.Add(currentTile);
-					_highlight.MortarPaintTilesInAttackRange(item);
+					TileHighlight.Instance.MortarPaintTilesInAttackRange(item);
 				}
 			}
 			PaintTilesInRange(item, count + 1);

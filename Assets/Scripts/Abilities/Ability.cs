@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Ability : Equipable
 {
+    [SerializeField] protected Abilities _ability;
+
     protected bool _inCooldown;
     protected int _currentCooldown;
     //Agregar nuevas al final, sino se modifican en el prefab
@@ -18,30 +20,20 @@ public class Ability : Equipable
         SelfDestruct,
         SmokeScreen
     }
-    [SerializeField] protected Abilities _ability;
-    public override void Initialize(Character character, EquipableSO data, Location location)
+    
+    public override void Initialize(Character character, EquipableSO data)
     {
         _character = character;
         _icon = data.equipableIcon;
-        _location = location;
         _equipableType = data.equipableType;
         _equipableName = data.equipableName;
     }
 
-    public override void Select()
-    {
-        Debug.Log("select ability");
-    }
+    public override void Select() => Debug.Log("select ability");
 
-    public override void Deselect()
-    {
-        Debug.Log("deselect ability");
-    }
+    public override void Deselect() => Debug.Log("deselect ability");
 
-    public override void Use(Action callback = null)
-    {
-        Debug.Log("use ability");
-    }
+    public override void Use(Action callback = null) => Debug.Log("use ability");
 
     protected void AbilityUsed(AbilitySO data)
     {
@@ -57,13 +49,7 @@ public class Ability : Equipable
             _inCooldown = false;
     }
 
-    public override bool CanBeUsed()
-    {
-        return !_inCooldown;
-    }
+    public override bool CanBeUsed() => !_inCooldown;
 
-    public Abilities GetAbilityEnum()
-    {
-        return _ability;
-    }
+    public Abilities GetAbilityEnum() => _ability;
 }

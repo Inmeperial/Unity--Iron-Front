@@ -40,9 +40,9 @@ public abstract class Gun : EnumsClass, IChangeableShader
     private const int NormalHit = 1;
     private const int CriticalHit = 2;
 
-    protected Ability _ability;
+    protected WeaponAbility _ability;
 
-    private bool _abilityCreated;
+    //private bool _abilityCreated;
     
     public void SetRightOrLeft(string location)
     {
@@ -154,7 +154,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
     /// <summary>
     /// Set Gun stats from given scriptable object.
     /// </summary>
-    public virtual void SetGun(GunSO data, Character character, Equipable.Location location)
+    public virtual void SetGunData(GunSO data, Character character)
     {
         _myChar = character;
         _maxHP = data.maxHp;
@@ -173,7 +173,10 @@ public abstract class Gun : EnumsClass, IChangeableShader
         _weight = data.weight;
         _gunSkill = false;
 
+        _masterShader.Initialize();
+
         StartRoulette();
+
         //if(!_abilityCreated && data.ability && data.ability.abilityPrefab)
         //{
         //    _ability = Instantiate(data.ability.abilityPrefab, _myChar.transform);
@@ -181,6 +184,19 @@ public abstract class Gun : EnumsClass, IChangeableShader
         //    _myChar.AddEquipable(_ability);
         //    _abilityCreated = true;
         //}
+    }
+
+    public virtual void SetAbilityData(AbilitySO abilityData)
+    {
+        if (!abilityData)
+            return;
+
+        _ability = Instantiate(abilityData.abilityPrefab, _myChar.transform) as WeaponAbility;
+
+        _ability.Initialize(_myChar, abilityData);
+        _ability.SetGun(this);
+        _myChar.AddEquipable(_ability);
+        //_abilityCreated = true;
     }
 
     public void ReloadGun()

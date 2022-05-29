@@ -4,7 +4,7 @@ using UnityEngine;
 public class GetPartsOfMecha : MonoBehaviour
 {
     public GameObject legLSpawn, legRSpawn, chestSpawn, armLSpawn, armRSpawn, weaponLSpawn, weaponRSpawn;
-    private Dictionary<PartsMechaEnum, GameObject> _partsDictionary = new Dictionary<PartsMechaEnum, GameObject>();
+    //private Dictionary<PartsMechaEnum, GameObject> _partsDictionary = new Dictionary<PartsMechaEnum, GameObject>();
 
     // cambiar el scale del normal, 2.28 para el mecha A y 1.5 para el mecha B.
 
@@ -50,9 +50,9 @@ public class GetPartsOfMecha : MonoBehaviour
         //}
     }
 
-    public Dictionary<PartsMechaEnum, GameObject> GetPartsObj()
-    {
-        return _partsDictionary;
-    }
+    //public Dictionary<PartsMechaEnum, GameObject> GetPartsObj()
+    //{
+    //    return _partsDictionary;
+    //}
 
 }

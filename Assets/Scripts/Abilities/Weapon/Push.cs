@@ -5,44 +5,41 @@ using UnityEngine;
 
 public class Push : WeaponAbility
 {
-    private int _abilityUseRange;
-    private int _pushDistance;
-    private TileHighlight _highlight;
     //private Dictionary<Tile, int> _tilesInRangeChecked = new Dictionary<Tile, int>();
     private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
-    bool collides;
-    Character collidingUnit;
+    private bool collides;
+    private Character collidingUnit;
     
     private PushSO _abilityData;
 
-    public override void Initialize(Character character, EquipableSO data, Location location)
+    public override void Initialize(Character character, EquipableSO data)
     {
-        base.Initialize(character, data, location);
+        base.Initialize(character, data);
 	    
         _abilityData = data as PushSO;
     }
     
     public override void Select()
     {
-        if (_inCooldown || !_character.CanAttack()) return;
-        Debug.Log("pinto tiles push");
-        if (!_highlight)
-        {
-            _highlight = FindObjectOfType<TileHighlight>();
-        }
-        _abilityUseRange = _abilityData.pushUseRange;
-        _pushDistance = _abilityData.pushDistance;
+        if (_inCooldown || !_character.CanAttack())
+            return;
+
         PaintUseTiles(_character.GetMyPositionTile(), 0, Vector3.zero);
+
         _character.EquipableSelectionState(true, this);
+
         _character.DeselectThisUnit();
     }
 
     public override void Deselect()
     {
         if(_tilesInRange.Count != 0)
-            _highlight.MortarClearTilesInAttackRange(_tilesInRange);
+            TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
+
         _tilesInRange.Clear();
+
         _character.EquipableSelectionState(false, null);
+
         _character.SelectThisUnit();
     }
 
@@ -50,80 +47,103 @@ public class Push : WeaponAbility
     {
         Debug.Log("Using Push");
 		if (Input.GetMouseButtonDown(0))
-		{
-            Debug.Log("Pushing");
-            var selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
-		
-            if (!selectedTile) return;
-		
-            var tile = selectedTile.GetComponent<Tile>();
-
-            if (!tile) return;
-		
-            if (!_tilesInRange.Contains(tile)) return;
-            
-            var selectedUnit = tile.GetUnitAbove();
-            if (!selectedUnit) return;
-
-            //Para que solo puedas empujar enemigos
-            var unitTeam = selectedUnit.GetUnitTeam();
-            if (unitTeam == EnumsClass.Team.Green) return;
-
-            var tileToPushTo = GetTileToPushTo(tile, (selectedUnit.transform.position - _character.transform.position).normalized, 0);
-            PushAction(tileToPushTo, selectedUnit);
-            
-            if (callback != null)
-                callback();
-            
-            AbilityUsed(_abilityData);
-            UpdateButtonText(_availableUses.ToString(), _abilityData);
-            _button.interactable = false;
-            Deselect();
-        }
+            UseAbility(callback);
 
         if (Input.GetMouseButtonDown(1))
             Deselect();
     }
 
+    private void UseAbility(Action callback = null)
+    {
+        Debug.Log("Pushing");
+
+        Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
+
+        if (!selectedTile)
+            return;
+
+        Tile tile = selectedTile.GetComponent<Tile>();
+
+        if (!tile)
+            return;
+
+        if (!_tilesInRange.Contains(tile))
+            return;
+
+        Character selectedUnit = tile.GetUnitAbove();
+
+        if (!selectedUnit)
+            return;
+
+        //Para que solo puedas empujar enemigos
+        EnumsClass.Team unitTeam = selectedUnit.GetUnitTeam();
+        //TODO: Cambiar para que pueda usar tambien la ia
+        if (unitTeam == EnumsClass.Team.Green) 
+            return;
+
+        Tile tileToPushTo = GetTileToPushTo(tile, (selectedUnit.transform.position - _character.transform.position).normalized, 0);
+
+        PushAction(tileToPushTo, selectedUnit);
+
+        callback?.Invoke();
+
+        AbilityUsed(_abilityData);
+
+        UpdateButtonText(_availableUses.ToString(), _abilityData);
+
+        _button.interactable = false;
+
+        Deselect();
+    }
     /// <summary>
     /// Calls the push movement and does the damage
     /// </summary>
     /// <param name="tileToPush"> The tile the unit is pushed to</param>
     /// <param name="enemy"> The unit that is pushed</param>
-    void PushAction(Tile tileBeignPushedTo, Character enemy)
+    private void PushAction(Tile tileBeignPushedTo, Character enemy)
 	{
         //Hago un Lerp del enemy hacia el tileBeignPushedTo
         StartCoroutine(LerpPush(enemy.transform, tileBeignPushedTo.transform.position, _abilityData.pushLerpDuration));
+
         enemy.ChangeMyPosTile(tileBeignPushedTo);
-        enemy.GetBody().TakeDamage(_abilityData.pushDamage);
-        enemy.SetHurtAnimation();
-        EffectsController.Instance.PlayParticlesEffect(enemy.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
+
+        Body enemyBody = enemy.GetBody();
+        enemyBody.TakeDamage(_abilityData.pushDamage);
+
+        GameObject enemyBurningSpawner = enemy.GetBurningSpawner();
+        EffectsController.Instance.PlayParticlesEffect(enemyBurningSpawner, EnumsClass.ParticleActionType.Damage);
+
         if (collides)
 		{
-            enemy.SetHurtAnimation();
-            enemy.GetBody().TakeDamage(_abilityData.collisionDamage);
-            EffectsController.Instance.PlayParticlesEffect(enemy.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
+            enemyBody.TakeDamage(_abilityData.collisionDamage);
+
+            EffectsController.Instance.PlayParticlesEffect(enemyBurningSpawner, EnumsClass.ParticleActionType.Damage);
 
             if (collidingUnit)
             {
                 //Hacer daño a la otra unidad
-                collidingUnit.SetHurtAnimation();
                 collidingUnit.GetBody().TakeDamage(_abilityData.collisionDamage);
+
                 EffectsController.Instance.PlayParticlesEffect(collidingUnit.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
             }
         }
         _character.DeactivateAttack();
 	}
 
-    IEnumerator LerpPush(Transform movingTarget, Vector3 targetPos, float duration)
+    private IEnumerator LerpPush(Transform movingTarget, Vector3 targetPos, float duration)
 	{
         float lerpTime = 0;
+
         Vector3 startPos = movingTarget.position;
-        targetPos = targetPos + (Vector3.up * 4);
+
+        targetPos += (Vector3.up * 4);
+
         while(lerpTime < duration)
 		{
             movingTarget.position = Vector3.Lerp(startPos, targetPos, lerpTime / duration);
+
             lerpTime += Time.deltaTime;
+
             yield return null;
 		}
         movingTarget.position = targetPos;
@@ -139,27 +159,31 @@ public class Push : WeaponAbility
     /// <returns></returns>
     Tile GetTileToPushTo(Tile currentTile, Vector3 dir, int count)
 	{
-        if (count >= _pushDistance) return currentTile;
+        if (count >= _abilityData.pushDistance)
+            return currentTile;
+
         Debug.Log("Push To dir = " + dir);
+
         count++;
 
-        RaycastHit nextHit;
+        Vector3 position = currentTile.transform.position;
 
-        var position = currentTile.transform.position;
-        Physics.Raycast(position, dir, out nextHit);
+        Physics.Raycast(position, dir, out RaycastHit nextHit);
+
         if (nextHit.transform)
         {
-            Tile t = nextHit.transform.GetComponent<Tile>();
-            if (!t) return currentTile;
+            Tile tile = nextHit.transform.GetComponent<Tile>();
 
-            if (t && t.IsWalkable() && t.IsFree())
-            {
-                return GetTileToPushTo(t, dir, count);
-            }
-            else if (!t.IsWalkable() || !t.IsFree())
+            if (!tile) return 
+                    currentTile;
+
+            if (tile && tile.IsWalkable() && tile.IsFree())
+                return GetTileToPushTo(tile, dir, count);
+
+            else if (!tile.IsWalkable() || !tile.IsFree())
             {
                 collides = true;
-                collidingUnit = t.GetUnitAbove();
+                collidingUnit = tile.GetUnitAbove();
                 return currentTile;
             }
         }
@@ -169,65 +193,68 @@ public class Push : WeaponAbility
     private void PaintUseTiles(Tile currentTile, int count, Vector3 dir)
     {
         _tilesInRange.Add(currentTile);
-        if (count >= _abilityUseRange) //|| (_tilesInRangeChecked.ContainsKey(currentTile) && _tilesInRangeChecked[currentTile] <= count))
+
+        if (count >= _abilityData.pushUseRange) //|| (_tilesInRangeChecked.ContainsKey(currentTile) && _tilesInRangeChecked[currentTile] <= count))
             return;
 
         count++;
+
         if (dir == Vector3.zero)
         {
             Debug.Log("comienzo");
-            RaycastHit forwardHit;
-            RaycastHit leftHit;
-            RaycastHit rightHit;
-            RaycastHit backHit;
-    
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.forward, out forwardHit);
-            Physics.Raycast(position, currentTile.transform.right * -1, out leftHit);
-            Physics.Raycast(position, currentTile.transform.right, out rightHit);
-            Physics.Raycast(position, currentTile.transform.forward * -1, out backHit);
+
+            Vector3 position = currentTile.transform.position;
+
+            Physics.Raycast(position, currentTile.transform.forward, out RaycastHit forwardHit);
+            Physics.Raycast(position, currentTile.transform.right * -1, out RaycastHit leftHit);
+            Physics.Raycast(position, currentTile.transform.right, out RaycastHit rightHit);
+            Physics.Raycast(position, currentTile.transform.forward * -1, out RaycastHit backHit);
     
             if (forwardHit.transform)
             {
-                Tile t = forwardHit.transform.GetComponent<Tile>();
+                Tile tile = forwardHit.transform.GetComponent<Tile>();
     
-                if (t && t.IsWalkable())
+                if (tile && tile.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInAttackRange(t);
-                    PaintUseTiles(t, count, forwardHit.transform.forward);                    
+                    TileHighlight.Instance.MortarPaintTilesInAttackRange(tile);
+
+                    PaintUseTiles(tile, count, forwardHit.transform.forward);                    
                 }
             }
             
             if (leftHit.transform)
             {
-                Tile t = leftHit.transform.GetComponent<Tile>();
+                Tile tile = leftHit.transform.GetComponent<Tile>();
     
-                if (t && t.IsWalkable())
+                if (tile && tile.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInAttackRange(t);
-                    PaintUseTiles(t, count, leftHit.transform.right * -1);                    
+                    TileHighlight.Instance.MortarPaintTilesInAttackRange(tile);
+
+                    PaintUseTiles(tile, count, leftHit.transform.right * -1);                    
                 }
             }
             
             if (rightHit.transform)
             {
-                Tile t = rightHit.transform.GetComponent<Tile>();
+                Tile tile = rightHit.transform.GetComponent<Tile>();
     
-                if (t && t.IsWalkable())
+                if (tile && tile.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInAttackRange(t);
-                    PaintUseTiles(t, count, rightHit.transform.right);                    
+                    TileHighlight.Instance.MortarPaintTilesInAttackRange(tile);
+
+                    PaintUseTiles(tile, count, rightHit.transform.right);                    
                 }
             }
             
             if (backHit.transform)
             {
-                Tile t = backHit.transform.GetComponent<Tile>();
+                Tile tile = backHit.transform.GetComponent<Tile>();
     
-                if (t && t.IsWalkable())
+                if (tile && tile.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInAttackRange(t);
-                    PaintUseTiles(t, count, backHit.transform.forward * -1);                    
+                    TileHighlight.Instance.MortarPaintTilesInAttackRange(tile);
+
+                    PaintUseTiles(tile, count, backHit.transform.forward * -1);                    
                 }
             }
         }
@@ -235,100 +262,79 @@ public class Push : WeaponAbility
         if (dir == Vector3.forward)
         {
             Debug.Log("forward count: " + count);
-            RaycastHit forwardHit;
-            
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.forward, out forwardHit);
-            if (forwardHit.transform)
+
+            Vector3 position = currentTile.transform.position;
+
+            Physics.Raycast(position, currentTile.transform.forward, out RaycastHit forwardHit);
+
+            if (!forwardHit.transform)
+                return;
+
+            Tile tile = forwardHit.transform.GetComponent<Tile>();
+
+            if (tile && tile.IsWalkable())
             {
-                Tile t = forwardHit.transform.GetComponent<Tile>();
-    
-                if (t && t.IsWalkable())
-                {
-                    _highlight.MortarPaintTilesInAttackRange(t);
-                    PaintUseTiles(t, count, forwardHit.transform.forward);                    
-                }
+                TileHighlight.Instance.MortarPaintTilesInAttackRange(tile);
+
+                PaintUseTiles(tile, count, forwardHit.transform.forward);
             }
-            else return;
         }
 
         if (dir == Vector3.left)
         {
-            RaycastHit leftHit;
-            
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.right * -1, out leftHit);
-            
-            if (leftHit.transform)
+            Vector3 position = currentTile.transform.position;
+
+            Physics.Raycast(position, currentTile.transform.right * -1, out RaycastHit leftHit);
+
+            if (!leftHit.transform)
+                return;
+
+            Tile tile = leftHit.transform.GetComponent<Tile>();
+
+            if (tile && tile.IsWalkable())
             {
-                Tile t = leftHit.transform.GetComponent<Tile>();
-    
-                if (t && t.IsWalkable())
-                {
-                    _highlight.MortarPaintTilesInAttackRange(t);
-                    PaintUseTiles(t, count, leftHit.transform.right * -1);                    
-                }
+                TileHighlight.Instance.MortarPaintTilesInAttackRange(tile);
+
+                PaintUseTiles(tile, count, leftHit.transform.right * -1);
             }
-            else return;
         }
         
         if (dir == Vector3.right)
         {
-            RaycastHit rightHit;
-            
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.right * -1, out rightHit);
-            
-            if (rightHit.transform)
+            Vector3 position = currentTile.transform.position;
+
+            Physics.Raycast(position, currentTile.transform.right * -1, out RaycastHit rightHit);
+
+            if (!rightHit.transform)
+                return;
+
+            Tile tile = rightHit.transform.GetComponent<Tile>();
+
+            if (tile && tile.IsWalkable())
             {
-                Tile t = rightHit.transform.GetComponent<Tile>();
-    
-                if (t && t.IsWalkable())
-                {
-                    _highlight.MortarPaintTilesInAttackRange(t);
-                    PaintUseTiles(t, count, rightHit.transform.right);                    
-                }
+                TileHighlight.Instance.MortarPaintTilesInAttackRange(tile);
+
+                PaintUseTiles(tile, count, rightHit.transform.right);
             }
-            else return;
         }
         
         if (dir == Vector3.back)
         {
-            RaycastHit backHit;
-            
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.forward * -1, out backHit);
-            
-            if (backHit.transform)
+            Vector3 position = currentTile.transform.position;
+
+            Physics.Raycast(position, currentTile.transform.forward * -1, out RaycastHit backHit);
+
+            if (!backHit.transform)
+                return;
+
+            Tile tile = backHit.transform.GetComponent<Tile>();
+
+            if (tile && tile.IsWalkable())
             {
-                Tile t = backHit.transform.GetComponent<Tile>();
-    
-                if (t && t.IsWalkable())
-                {
-                    _highlight.MortarPaintTilesInAttackRange(t);
-                    PaintUseTiles(t, count, backHit.transform.forward * -1);                    
-                }
+                TileHighlight.Instance.MortarPaintTilesInAttackRange(tile);
+
+                PaintUseTiles(tile, count, backHit.transform.forward * -1);
             }
-            else return;
         }
-        
-
-
-            // _tilesInRangeChecked[currentTile] = count;
-        //
-        // foreach (Tile tile in currentTile.allNeighbours)
-        // {
-        //     if (!_tilesInRange.Contains(tile))
-        //     {
-        //         if (!tile.HasTileAbove() && tile.IsWalkable())
-        //         {
-        //             _tilesInRange.Add(tile);
-        //             tile.inAttackRange = true;
-        //             _highlight.PaintTilesInPreviewRange(tile);
-        //         }
-        //
-        //     }
-        //     PaintUseTiles(tile, count + 1);
-        // }
     }
 }

@@ -100,74 +100,22 @@ public class WorkshopMecha : MonoBehaviour
         _legsSkinnedMeshRenderer = updatedLegsMesh;
 
         _legsShader.SetData(newLegs.masterShader, newLegs.bodyMaterial, newLegs.jointsMaterial, newLegs.armorMaterial);
-        //_legsShader.colorMecha = _equipment.GetLegsColor();
+
         UpdateLegsColor(_equipment.GetLegsColor());
     }
 
-    //private void SetLeftWeaponArray()
-    //{
-    //    _leftGunShader = new List<MasterShaderScript>();
+    public MasterShaderScript GetBodyShader() => _bodyShader;
 
-    //    for (int i = 0; i < _leftGunGameObject.transform.childCount; i++)
-    //    {
-    //        Transform child = _leftGunGameObject.transform.GetChild(i);
+    public MasterShaderScript GetLegsShader() => _legsShader;
+    public MasterShaderScript GetLeftGunShader() => _leftGunShader;
 
-    //        MasterShaderScript masterShader = child.GetComponent<MasterShaderScript>();
+    public MasterShaderScript GetRightGunShader() => _rightGunShader;
 
-    //        if (masterShader != null) _leftGunShader.Add(masterShader);
-    //    }
-    //}
+    public MechaEquipmentSO GetEquipment() => _equipment;
 
-    //private void SetRightWeaponArray()
-    //{
-    //    _rightWeaponShader = new List<MasterShaderScript>();
+    public int GetPositionIndex() => _positionIndexInWorkshop;
 
-    //    for (int i = 0; i < _rightGunGameObject.transform.childCount; i++)
-    //    {
-    //        Transform child = _rightGunGameObject.transform.GetChild(i);
+    public void UpdateBodyColor(Color color) => _bodyShader.SetMechaColor(color);
 
-    //        MasterShaderScript masterShader = child.GetComponent<MasterShaderScript>();
-
-    //        if (masterShader != null) _rightWeaponShader.Add(masterShader);
-    //    }
-    //}
-
-    public MasterShaderScript GetBodyShader()
-    {
-        return _bodyShader;
-    }
-
-    public MasterShaderScript GetLegsShader()
-    {
-        return _legsShader;
-    }
-    public MasterShaderScript GetLeftGunShader()
-    {
-        return _leftGunShader;
-    }
-
-    public MasterShaderScript GetRightGunShader()
-    {
-        return _rightGunShader;
-    }
-
-    public MechaEquipmentSO GetEquipment()
-    {
-        return _equipment;
-    }
-
-    public int GetPositionIndex()
-    {
-        return _positionIndexInWorkshop;
-    }
-
-    public void UpdateBodyColor(Color color)
-    {
-        _bodyShader.SetMechaColor(color);
-    }
-    
-    public void UpdateLegsColor(Color color)
-    {
-        _legsShader.SetMechaColor(color);
-    }
+    public void UpdateLegsColor(Color color) => _legsShader.SetMechaColor(color);
 }

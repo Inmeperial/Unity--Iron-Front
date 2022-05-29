@@ -34,9 +34,6 @@ public class WorkshopManager : MonoBehaviour
     private int _mechaIndex;
     private bool _isEditing;
 
-    [Header("Test")]
-    public bool useForTest;
-
     private void Awake()
     {
         SetEquipment();
@@ -61,7 +58,8 @@ public class WorkshopManager : MonoBehaviour
     {
         if (_isEditing)
         {
-            if (Input.GetMouseButtonDown(1)) _closeButton.onClick?.Invoke();
+            if (Input.GetMouseButtonDown(1))
+                _closeButton.onClick?.Invoke();
             return;
         }
 
@@ -69,21 +67,24 @@ public class WorkshopManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Transform obj = MouseRay.GetTargetTransform(_characterLayer);
+                Transform mechaTransform = MouseRay.GetTargetTransform(_characterLayer);
 
-                if (obj)
+                if (mechaTransform)
                 {
-                    WorkshopMecha mecha = obj.GetComponent<WorkshopMecha>();
+                    WorkshopMecha mecha = mechaTransform.GetComponent<WorkshopMecha>();
 
-                    if (mecha) MoveToPosition(mecha.GetPositionIndex());
+                    if (mecha)
+                        MoveToPosition(mecha.GetPositionIndex());
                 }
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) PreviousButton();
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            PreviousButton();
 
 
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) NextButton();
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            NextButton();
 
     }
 
@@ -91,8 +92,10 @@ public class WorkshopManager : MonoBehaviour
     {
         AudioManager.audioManagerInstance.PlaySound(_soundMenu.GetClickSound(), _soundMenu.GetObjectToAddAudioSource());
         
-        if (_mechaIndex == 0) _mechaIndex = mechas.Length - 1;
-        else _mechaIndex--;
+        if (_mechaIndex == 0)
+            _mechaIndex = mechas.Length - 1;
+        else
+            _mechaIndex--;
 
         OnClickPrevious?.Invoke(_mechaIndex);
     }
@@ -100,8 +103,11 @@ public class WorkshopManager : MonoBehaviour
     public void NextButton()
     {
         AudioManager.audioManagerInstance.PlaySound(_soundMenu.GetClickSound(), _soundMenu.GetObjectToAddAudioSource());
-        if (_mechaIndex >= mechas.Length - 1) _mechaIndex = 0;
-        else _mechaIndex++;
+        
+        if (_mechaIndex >= mechas.Length - 1)
+            _mechaIndex = 0;
+        else
+            _mechaIndex++;
 
         OnClickNext?.Invoke(_mechaIndex);
     }
@@ -109,14 +115,18 @@ public class WorkshopManager : MonoBehaviour
     public void EditButton()
     {
         AudioManager.audioManagerInstance.PlaySound(_soundMenu.GetClickSound(), _soundMenu.GetObjectToAddAudioSource());
+        
         _isEditing = true;
+        
         OnClickEdit?.Invoke(_mechaIndex);
     }
 
     public void CloseEditionButton()
     {
         AudioManager.audioManagerInstance.PlaySound(_soundMenu.GetClickSound(), _soundMenu.GetObjectToAddAudioSource());
+        
         _isEditing = false;
+        
         OnClickCloseEdit?.Invoke(_mechaIndex);
     }
 
@@ -124,7 +134,8 @@ public class WorkshopManager : MonoBehaviour
     {
         AudioManager.audioManagerInstance.PlaySound(_soundMenu.GetClickSound(), _soundMenu.GetObjectToAddAudioSource());
 
-        if (index == _mechaIndex) _editButton.onClick?.Invoke();
+        if (index == _mechaIndex)
+            _editButton.onClick?.Invoke();
         else
         {
             _mechaIndex = index;
@@ -132,35 +143,28 @@ public class WorkshopManager : MonoBehaviour
         }
         
     }
-    
-    public void ApplyChangesButton()
-    {
-        LoadSaveUtility.SaveEquipment(_equipmentContainer);
-    }
 
-    public MechaEquipmentSO GetMechaEquipment(int index)
-    {
-        return mechas[index].GetEquipment();
-    }
+    public void ApplyChangesButton() => LoadSaveUtility.SaveEquipment(_equipmentContainer);
+
+    public MechaEquipmentSO GetMechaEquipment(int index) => mechas[index].GetEquipment();
 
     private void SetEquipment()
     {
-        MechaEquipmentContainerSO loadedEquipment = LoadSaveUtility.LoadEquipment();
+        _equipmentContainer = LoadSaveUtility.LoadEquipment();
 
-        if (useForTest) loadedEquipment = null;
+        //MechaEquipmentContainerSO equipmentToUse = null;
 
-        MechaEquipmentContainerSO equipmentToUse = null;
-
-        if (loadedEquipment == null) equipmentToUse = _equipmentContainer;
-        else
-        {
-            _equipmentContainer = loadedEquipment;
-            equipmentToUse = loadedEquipment;
-        }
+        //if (loadedEquipment == null) 
+        //    equipmentToUse = _equipmentContainer;
+        //else
+        //{
+        //    _equipmentContainer = loadedEquipment;
+        //    equipmentToUse = loadedEquipment;
+        //}
 
         for (int i = 0; i < mechas.Length; i++)
         {
-            mechas[i].SetEquipment(equipmentToUse.GetEquipment(i), i);
+            mechas[i].SetEquipment(_equipmentContainer.GetEquipment(i), i);
             mechas[i].SpawnParts();
         }
     }
@@ -172,33 +176,40 @@ public class WorkshopManager : MonoBehaviour
         _equipmentContainer.equipments[_mechaIndex].body = body;
         
         StartCoroutine(PartFlickerDelay("Body"));
+
         ApplyChangesButton();
     }
     
     public void UpdateLeftGun(GunSO gun)
     {
         mechas[_mechaIndex].ChangeLeftGun(gun);
+
         _equipmentContainer.equipments[_mechaIndex].leftGun = gun;
         
         StartCoroutine(PartFlickerDelay("LGun"));
+
         ApplyChangesButton();
     }
     
     public void UpdateRightGun(GunSO gun)
     {
         mechas[_mechaIndex].ChangeRightGun(gun);
+
         _equipmentContainer.equipments[_mechaIndex].rightGun = gun;
         
         StartCoroutine(PartFlickerDelay("RGun"));
+
         ApplyChangesButton();
     }
     
     public void UpdateLegs(LegsSO legs)
     {
         mechas[_mechaIndex].ChangeLegs(legs);
+
         _equipmentContainer.equipments[_mechaIndex].legs = legs;
         
         StartCoroutine(PartFlickerDelay("Legs"));
+
         ApplyChangesButton();
     }
 
@@ -206,7 +217,6 @@ public class WorkshopManager : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         StartPartFlicker(part);
-        
     }
 
     public void UpdateEquippable(EquipableSO equippable, string location)
@@ -214,25 +224,26 @@ public class WorkshopManager : MonoBehaviour
         switch (location)
         {
             case "Body":
-                _equipmentContainer.equipments[_mechaIndex].bodyAbility = equippable as BodyAbilitySO;
+                _equipmentContainer.equipments[_mechaIndex].bodyAbility = equippable as AbilitySO;
                 break;
 
             case "LeftArm":
-                _equipmentContainer.equipments[_mechaIndex].leftGunAbility = equippable as GunAbilitySO;
+                _equipmentContainer.equipments[_mechaIndex].leftGunAbility = equippable as AbilitySO;
                 break;
 
             case "RightArm":
-                _equipmentContainer.equipments[_mechaIndex].rightGunAbility = equippable as GunAbilitySO;
+                _equipmentContainer.equipments[_mechaIndex].rightGunAbility = equippable as AbilitySO;
                 break;
 
             case "Legs":
-                _equipmentContainer.equipments[_mechaIndex].legsAbility = equippable as LegsAbilitySO;
+                _equipmentContainer.equipments[_mechaIndex].legsAbility = equippable as AbilitySO;
                 break;
 
             case "Item":
                 _equipmentContainer.equipments[_mechaIndex].item = equippable as ItemSO;
                 break;
         }
+
         ApplyChangesButton();
     }
 
@@ -295,12 +306,14 @@ public class WorkshopManager : MonoBehaviour
             Color newColor = new Color(colorData.red, colorData.green, colorData.blue);
             mechas[i].UpdateLegsColor(newColor);
         }
+
         ApplyChangesButton();
     }
     
     private void UpdateName(string name)
     {
         _equipmentContainer.equipments[_mechaIndex].mechaName = name;
+
         ApplyChangesButton();
     }
 
@@ -314,40 +327,36 @@ public class WorkshopManager : MonoBehaviour
         _createdObjectButtonList = new List<WorkshopObjectButton>();
     }
 
-    public int GetMechaIndex()
-    {
-        return _mechaIndex;
-    }
+    public int GetMechaIndex() => _mechaIndex;
 
     public void StartPartFlicker(string part)
     {
         EndPartFlicker();
+
+        MasterShaderScript masterShader = null;
+
+        WorkshopMecha mecha = mechas[_mechaIndex];
+
         switch (part)
         {
             case "Body":
-                MasterShaderScript bodyShader = mechas[_mechaIndex].GetBodyShader();
-                bodyShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-
+                masterShader = mecha.GetBodyShader();
                 break;
             
             case "LGun":
-                MasterShaderScript leftGunShader = mechas[_mechaIndex].GetLeftGunShader();
-                leftGunShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-
+                masterShader = mecha.GetLeftGunShader();
                 break;
                 
             case "RGun":
-                MasterShaderScript rightGunShader = mechas[_mechaIndex].GetRightGunShader();
-                rightGunShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-
+                masterShader = mecha.GetRightGunShader();
                 break;
             
             case "Legs":
-                MasterShaderScript legsShader = mechas[_mechaIndex].GetLegsShader();
-                legsShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
-
+                masterShader = mecha.GetLegsShader();
                 break;
         }
+
+        masterShader.ConvertEnumToStringEnumForShader(SwitchTextureEnum.TextureOutLine);
     }
 
     public void EndPartFlicker()

@@ -13,13 +13,14 @@ public static class LoadSaveUtility
     /// <returns>Returns the loaded equipment if found, else returns the default equipment.</returns>
     public static MechaEquipmentContainerSO LoadEquipment()
     {
+        MechaEquipmentContainerSO defaultEquipment = Resources.Load<MechaEquipmentContainerSO>("Equipment/DefaultContainer");
         if (!File.Exists(string.Concat(Application.dataPath, _savePath)))
         {
-            MechaEquipmentContainerSO defaultEquipment = Resources.Load<MechaEquipmentContainerSO>("Equipment/DefaultContainer");
-            // return defaultEquipment;
             SaveEquipment(defaultEquipment);
+            return defaultEquipment;
         }
-        
+        ObjectsDatabase database = Resources.Load<ObjectsDatabase>("Database/Database");
+
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream file = File.Open(string.Concat(Application.dataPath, _savePath), FileMode.Open);
         
@@ -45,39 +46,110 @@ public static class LoadSaveUtility
             string[] allParts = savedEquipment.Split(partSeparator);
             
             MechaEquipmentSO newEquipment = ScriptableObject.CreateInstance<MechaEquipmentSO>();
-
-            newEquipment.body = ScriptableObject.CreateInstance<BodySO>();
-            newEquipment.leftGun = ScriptableObject.CreateInstance<GunSO>();
-            newEquipment.rightGun = ScriptableObject.CreateInstance<GunSO>();
-            newEquipment.legs = ScriptableObject.CreateInstance<LegsSO>();
-
-            newEquipment.bodyAbility = ScriptableObject.CreateInstance<BodyAbilitySO>();
-            newEquipment.leftGunAbility = ScriptableObject.CreateInstance<GunAbilitySO>();
-            newEquipment.rightGunAbility = ScriptableObject.CreateInstance<GunAbilitySO>();
-            newEquipment.legsAbility = ScriptableObject.CreateInstance<LegsAbilitySO>();
-            newEquipment.item = ScriptableObject.CreateInstance<ItemSO>();
             
-            //Overwrites body data with the saved one.
-            JsonUtility.FromJsonOverwrite(allParts[0], newEquipment.body);
-            
-            //Overwrites left gun data with the saved one.
-            JsonUtility.FromJsonOverwrite(allParts[1], newEquipment.leftGun);
-            
-            //Overwrites right gundata with the saved one.
-            JsonUtility.FromJsonOverwrite(allParts[2], newEquipment.rightGun);
-            
-            //Overwrites legs data with the saved one.
-            JsonUtility.FromJsonOverwrite(allParts[3], newEquipment.legs);
+            //BODY
+            string bodyID = allParts[0];
 
-            JsonUtility.FromJsonOverwrite(allParts[4], newEquipment.bodyAbility);
+            BodySO bodySO;
 
-            JsonUtility.FromJsonOverwrite(allParts[5], newEquipment.leftGunAbility);
+            if (!string.IsNullOrEmpty(bodyID))
+                bodySO = database.GetBodySOByID(bodyID);
+            else
+                bodySO = defaultEquipment.GetEquipment(i).body;
 
-            JsonUtility.FromJsonOverwrite(allParts[6], newEquipment.rightGunAbility);
+            newEquipment.body = bodySO;
 
-            JsonUtility.FromJsonOverwrite(allParts[7], newEquipment.legsAbility);
+            //LEFT GUN
+            string leftGunID = allParts[1];
 
-            JsonUtility.FromJsonOverwrite(allParts[8], newEquipment.item);
+            GunSO leftGunSO;
+
+            if (!string.IsNullOrEmpty(leftGunID))
+                leftGunSO = database.GetGunSOByID(leftGunID);
+            else
+                leftGunSO = defaultEquipment.GetEquipment(i).leftGun;
+
+            newEquipment.leftGun = leftGunSO;
+
+            string rightGunID = allParts[2];
+
+            //RIGHT GUN
+            GunSO rightGunSO;
+
+            if (!string.IsNullOrEmpty(rightGunID))
+                rightGunSO = database.GetGunSOByID(rightGunID);
+            else
+                rightGunSO = defaultEquipment.GetEquipment(i).rightGun;
+
+            newEquipment.rightGun = rightGunSO;
+
+            //LEGS
+            string legsID = allParts[3];
+
+            LegsSO legsSO;
+
+            if (!string.IsNullOrEmpty(legsID))
+                legsSO = database.GetLegsSOByID(legsID);
+            else
+                legsSO = defaultEquipment.GetEquipment(i).legs;
+
+            newEquipment.legs = legsSO;
+
+            //BODY ABILITY
+            string bodyAbilityID = allParts[4];
+
+            BodyAbilitySO bodyAbilitySO;
+            if (!string.IsNullOrEmpty(bodyAbilityID))
+                bodyAbilitySO = database.GetAbilitySOByID(bodyAbilityID) as BodyAbilitySO;
+
+            else
+                bodyAbilitySO = defaultEquipment.GetEquipment(i).bodyAbility as BodyAbilitySO;
+
+            newEquipment.bodyAbility = bodyAbilitySO;
+
+            //LEFT GUN ABILITY
+            string leftGunAbilityID = allParts[5];
+
+            GunAbilitySO leftGunAbilitySO;
+            if (!string.IsNullOrEmpty(leftGunAbilityID))
+                leftGunAbilitySO = database.GetAbilitySOByID(leftGunAbilityID) as GunAbilitySO;
+            else
+                leftGunAbilitySO = defaultEquipment.GetEquipment(i).leftGunAbility as GunAbilitySO;
+
+            newEquipment.leftGunAbility = leftGunAbilitySO;
+
+            //RIGHT GUN ABILITY
+            string rightGunAbilityID = allParts[6];
+
+            GunAbilitySO rightGunAbilitySO;
+            if (!string.IsNullOrEmpty(rightGunAbilityID))
+                rightGunAbilitySO = database.GetAbilitySOByID(rightGunAbilityID) as GunAbilitySO;
+            else
+                rightGunAbilitySO = defaultEquipment.GetEquipment(i).rightGunAbility as GunAbilitySO;
+
+            newEquipment.rightGunAbility = rightGunAbilitySO;
+
+            //LEGS ABILITY
+            string legsAbilityID = allParts[7];
+
+            LegsAbilitySO legsAbilitySO;
+            if (!string.IsNullOrEmpty(legsAbilityID))
+                legsAbilitySO = database.GetAbilitySOByID(legsAbilityID) as LegsAbilitySO;
+            else
+                legsAbilitySO = defaultEquipment.GetEquipment(i).legsAbility as LegsAbilitySO;
+
+            newEquipment.legsAbility = legsAbilitySO;
+
+            //ITEM
+            string itemID = allParts[8];
+
+            ItemSO itemSO;
+            if (!string.IsNullOrEmpty(itemID))
+                itemSO = database.GetItemSOByID(itemID);
+            else
+                itemSO = defaultEquipment.GetEquipment(i).item;
+
+            newEquipment.item = itemSO;
 
             //Overwrites body color.
             newEquipment.bodyColor = JsonUtility.FromJson<MechaEquipmentSO.ColorData>(allParts[9]);
@@ -108,32 +180,41 @@ public static class LoadSaveUtility
         //Converts al equipments to json/string.
         for (int i = 0; i < amount; i++)
         {
-            //Gets parts data and adds a separator to read each part when loading.
-            string body = JsonUtility.ToJson(equipmentContainer.equipments[i].body, true);
+            string body = equipmentContainer.equipments[i].body.partName;
             body += '|';
 
-            string bodyAbility = JsonUtility.ToJson(equipmentContainer.equipments[i].bodyAbility, true);
+            string bodyAbility = "";
+            if (equipmentContainer.equipments[i].bodyAbility)
+                bodyAbility = equipmentContainer.equipments[i].bodyAbility.equipableName;
             bodyAbility += '|';
 
-            string item = JsonUtility.ToJson(equipmentContainer.equipments[i].item, true);
+            string item = "";            
+            if (equipmentContainer.equipments[i].item)
+                item = equipmentContainer.equipments[i].item.equipableName;
             item += '|';
 
-            string leftGun = JsonUtility.ToJson(equipmentContainer.equipments[i].leftGun, true);
+            string leftGun = equipmentContainer.equipments[i].leftGun.gunName;
             leftGun += '|';
-            
-            string leftGunAbility = JsonUtility.ToJson(equipmentContainer.equipments[i].leftGunAbility, true);
+
+            string leftGunAbility = "";
+            if (equipmentContainer.equipments[i].leftGunAbility)
+                leftGunAbility = equipmentContainer.equipments[i].leftGunAbility.equipableName;
             leftGunAbility += '|';
 
-            string rightGun = JsonUtility.ToJson(equipmentContainer.equipments[i].rightGun, true);
+            string rightGun = equipmentContainer.equipments[i].rightGun.gunName;
             rightGun += '|';
 
-            string rightGunAbility = JsonUtility.ToJson(equipmentContainer.equipments[i].rightGunAbility, true);
+            string rightGunAbility = "";
+            if (equipmentContainer.equipments[i].rightGunAbility)
+                rightGunAbility = equipmentContainer.equipments[i].rightGunAbility.equipableName;
             rightGunAbility += '|';
-            
-            string legs = JsonUtility.ToJson(equipmentContainer.equipments[i].legs, true);
+
+            string legs = equipmentContainer.equipments[i].legs.partName;
             legs += '|';
 
-            string legsAbility = JsonUtility.ToJson(equipmentContainer.equipments[i].legsAbility, true);
+            string legsAbility = "";
+            if (equipmentContainer.equipments[i].legsAbility)
+                legsAbility = equipmentContainer.equipments[i].legsAbility.equipableName;
             legsAbility += '|';
 
             string bodyColor = JsonUtility.ToJson(equipmentContainer.equipments[i].bodyColor, true);
@@ -141,15 +222,15 @@ public static class LoadSaveUtility
 
             string legsColor = JsonUtility.ToJson(equipmentContainer.equipments[i].legsColor, true);
             legsColor += '|';
+
             if (i == 0)
             {
                 //If it's the first equipment, removes the empty space.
                 equipmentSaves = body;
             }
             else
-            {
                 equipmentSaves += body;
-            }
+
             //BODY == 0
             equipmentSaves += leftGun; // == 1
             equipmentSaves += rightGun; // == 2

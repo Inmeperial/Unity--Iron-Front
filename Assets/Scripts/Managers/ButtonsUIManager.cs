@@ -1182,7 +1182,7 @@ public class ButtonsUIManager : MonoBehaviour
 
     void ConfigureEquipmentButton(EquipmentButton button, Equipable equipable)
     {
-        button.Reset();
+        button.ResetButton();
 
         if (equipable == null)
         {

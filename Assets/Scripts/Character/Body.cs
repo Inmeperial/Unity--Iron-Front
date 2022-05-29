@@ -9,9 +9,9 @@ public class Body : Parts
     private bool _smokeScreenAvailable;
     private float _smokeScreenHpPercentage;
     private bool _smokeScreenActive;
-    public override void SetPart(Character character, PartSO data, Color partColor, Equipable.Location location)
+    public override void SetPartData(Character character, PartSO data, Color partColor)
     {
-        base.SetPart(character, data, partColor, location);
+        base.SetPartData(character, data, partColor);
 
         BodySO bodyData = data as BodySO;
         _maxWeight = bodyData.maxWeight;
@@ -74,16 +74,16 @@ public class Body : Parts
                     break;
             }
         }
-        
-        
-        
+
         ui.Show();
         ui.UpdateBodySlider(total, (int)_currentHP);
 
         _myChar.MakeNotAttackable();
 
         CheckSmokeScreen();
-            
+
+        _myChar.SetHurtAnimation();
+
         if (_currentHP <= 0)
             _myChar.Dead();
     }
@@ -120,7 +120,8 @@ public class Body : Parts
         _myChar.MakeNotAttackable();
         
         CheckSmokeScreen();
-        
+        _myChar.SetHurtAnimation();
+
         if (_currentHP <= 0)
             _myChar.Dead();
     }

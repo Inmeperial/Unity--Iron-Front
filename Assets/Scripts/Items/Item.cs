@@ -3,12 +3,11 @@
 public class Item : Equipable
 {
     protected bool _itemUsed;
-    public override void Initialize(Character character, EquipableSO data, Location location)
+    public override void Initialize(Character character, EquipableSO data)
     {
         _character = character;
         _availableUses = data.maxUses;
         _icon = data.equipableIcon;
-        _location = location;
         _equipableType = data.equipableType;
         _equipableName = data.equipableName;
     }

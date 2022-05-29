@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelfDestruct : BodyAbility
+public class SelfDestruct : Ability
 {
     private HashSet<Tile> _tilesInAttackRange = new HashSet<Tile>();
     private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
     
     private SelfDestructSO _abilityData;
 
-    public override void Initialize(Character character, EquipableSO data, Location location)
+    public override void Initialize(Character character, EquipableSO data)
     {
-        base.Initialize(character, data, location);
+        base.Initialize(character, data);
 	    
         _abilityData = data as SelfDestructSO;
     }
@@ -20,7 +20,9 @@ public class SelfDestruct : BodyAbility
     public override void Select()
     {
         _character.DeselectThisUnit();
+
         _character.EquipableSelectionState(true, this);
+
         PaintTilesInAttackRange(_character.GetMyPositionTile(), 0);
     }
 
@@ -35,7 +37,9 @@ public class SelfDestruct : BodyAbility
         }
         
         _tilesInAttackRange.Clear();
+
         _tilesForAttackChecked.Clear();
+
         _character.SelectThisUnit();
     }
 
@@ -43,61 +47,7 @@ public class SelfDestruct : BodyAbility
     {
         if (Input.GetMouseButtonDown(0))
         {
-            var selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
-		
-            if (!selectedTile) return;
-		
-            var t = selectedTile.GetComponent<Tile>();
-
-            if (!t) return;
-		
-            if (!_tilesInAttackRange.Contains(t)) return;
-            Debug.Log("use self destruct");
-
-            _character.SetHurtAnimation();
-            _character.GetBody().TakeDamage((int)_character.GetBody().GetMaxHp());
-            _character.GetLegs().TakeDamage((int)_character.GetLegs().GetMaxHp());
-
-            var myRGun = _character.GetRightGun();
-            if (myRGun) myRGun.TakeDamage((int)myRGun.GetMaxHp());
-            
-            var myLGun = _character.GetLeftGun();
-            if (myLGun) myLGun.TakeDamage((int)myLGun.GetMaxHp());
-            EffectsController.Instance.PlayParticlesEffect(_character.GetBurningSpawner(), EnumsClass.ParticleActionType.MortarHit);
-
-            foreach (var tile in _tilesInAttackRange)
-            {
-                var characterAbove = tile.GetUnitAbove();
-
-                if (characterAbove && characterAbove != _character)
-                {
-                    characterAbove.SetHurtAnimation();
-
-                    characterAbove.GetBody().TakeDamage(_abilityData.selfDestructDamage);
-                    
-                    characterAbove.GetLegs().TakeDamage(_abilityData.selfDestructDamage);
-
-                    var lGun = characterAbove.GetLeftGun();
-                    
-                    if (lGun) lGun.TakeDamage(_abilityData.selfDestructDamage);
-
-                    var rGun = characterAbove.GetRightGun();
-                    
-                    if (rGun) rGun.TakeDamage(_abilityData.selfDestructDamage);
-
-                    EffectsController.Instance.PlayParticlesEffect(characterAbove.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
-                }
-
-                var mine = tile.GetMineAbove();
-                
-                if (mine) mine.DestroyMine();
-            }
-            
-            AbilityUsed(_abilityData);
-            UpdateButtonText(_availableUses.ToString(), _abilityData);
-            _button.interactable = false;
-            
-            Deselect();
+            UseAbility(callback);
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -106,9 +56,81 @@ public class SelfDestruct : BodyAbility
         }
     }
 
+    private void UseAbility(Action callback = null)
+    {
+        Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
+
+        if (!selectedTile)
+            return;
+
+        Tile mechaTile = selectedTile.GetComponent<Tile>();
+
+        if (!mechaTile)
+            return;
+
+        if (!_tilesInAttackRange.Contains(mechaTile))
+            return;
+
+        Debug.Log("use self destruct");
+
+        Body body = _character.GetBody();
+        body.TakeDamage((int)body.GetMaxHp());
+
+        Legs legs = _character.GetLegs();
+        legs.TakeDamage((int)legs.GetMaxHp());
+
+        Gun rightGun = _character.GetRightGun();
+        if (rightGun)
+            rightGun.TakeDamage((int)rightGun.GetMaxHp());
+
+        Gun leftGun = _character.GetLeftGun();
+        if (leftGun)
+            leftGun.TakeDamage((int)leftGun.GetMaxHp());
+
+        EffectsController.Instance.PlayParticlesEffect(_character.GetBurningSpawner(), EnumsClass.ParticleActionType.MortarHit);
+
+        int selfDestructDamage = _abilityData.selfDestructDamage;
+        foreach (Tile tile in _tilesInAttackRange)
+        {
+            Character characterAbove = tile.GetUnitAbove();
+
+            if (characterAbove && characterAbove != _character)
+            {
+                characterAbove.GetBody().TakeDamage(selfDestructDamage);
+
+                characterAbove.GetLegs().TakeDamage(selfDestructDamage);
+
+                Gun lGun = characterAbove.GetLeftGun();
+
+                if (lGun)
+                    lGun.TakeDamage(selfDestructDamage);
+
+                Gun rGun = characterAbove.GetRightGun();
+
+                if (rGun)
+                    rGun.TakeDamage(selfDestructDamage);
+
+                EffectsController.Instance.PlayParticlesEffect(characterAbove.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
+            }
+
+            LandMine mine = tile.GetMineAbove();
+
+            if (mine)
+                mine.DestroyMine();
+        }
+
+        AbilityUsed(_abilityData);
+
+        UpdateButtonText(_availableUses.ToString(), _abilityData);
+
+        _button.interactable = false;
+
+        Deselect();
+    }
     private void PaintTilesInAttackRange(Tile currentTile, int count)
     {
-        if (count >= _abilityData.selfDestructRange) return;
+        if (count >= _abilityData.selfDestructRange)
+            return;
         
         if ((_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
             return;

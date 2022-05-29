@@ -6,14 +6,14 @@ public class MechaEquipmentSO : ScriptableObject
 {
     public string mechaName;
     public BodySO body;
-    public BodyAbilitySO bodyAbility;
+    public AbilitySO bodyAbility;
     public ItemSO item;
     public GunSO leftGun;
-    public GunAbilitySO leftGunAbility;
+    public AbilitySO leftGunAbility;
     public GunSO rightGun;
-    public GunAbilitySO rightGunAbility;
+    public AbilitySO rightGunAbility;
     public LegsSO legs;
-    public LegsAbilitySO legsAbility;
+    public AbilitySO legsAbility;
     //public Color bodyColor;
     //public Color legsColor;
     public ColorData bodyColor;

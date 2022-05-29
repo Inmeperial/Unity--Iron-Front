@@ -7,11 +7,11 @@ public class Shotgun : Gun
 
     private readonly string[] _parts = { "Body", "LArm", "RArm", "Legs" };
     
-    public override void SetGun(GunSO data, Character character, Equipable.Location location)
+    public override void SetGunData(GunSO data, Character character)
     {
         _gunType = GunsType.Shotgun;
         _gun = "Shotgun";
-        base.SetGun(data, character, location);
+        base.SetGunData(data, character);
     }
     
     public override void Ability()

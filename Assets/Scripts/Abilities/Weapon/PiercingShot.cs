@@ -4,55 +4,46 @@ using UnityEngine;
 
 public class PiercingShot : WeaponAbility
 {
-	private TileHighlight _highlight;
-	private int _abilityUseRange;
     private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
     private List<Character> _charactersToAttack = new List<Character>();
 
     private PiercingShotSO _abilityData;
 
-    public override void Initialize(Character character, EquipableSO data, Location location)
+    public override void Initialize(Character character, EquipableSO data)
     {
-        base.Initialize(character, data, location);
+        base.Initialize(character, data);
 	    
         _abilityData = data as PiercingShotSO;
     }
     
 	public override void Select()
 	{
-		if (_inCooldown || !_character.CanAttack()) return;
-		Debug.Log("Pinto tiles de piercing shot");
-        
-        switch (_location)
-        {
-            case Location.LeftGun:
-                var left = _character.GetLeftGun();
-                if (left) _abilityUseRange = left.GetAttackRange();
-                break;
-            
-            case Location.RightGun:
-                var right = _character.GetRightGun();
-                if (right) _abilityUseRange = right.GetAttackRange();
-                break;
-        }
-        //_abilityUseRange = _character.GetRightGun().GetAttackRange();//Estaría bueno conseguir el rango del arma que tenga la habilidad.
+		if (_inCooldown || !_character.CanAttack())
+            return;
+
+        if (!_gun)
+            return;
+
         //damage = _character.GetLeftGun().GetBulletDamage() * (_character.GetLeftGun().GetAvailableBullets() / 2);//Formulita para hacer el daño dinamico según que arma tiene
-		if (!_highlight)
-			_highlight = FindObjectOfType<TileHighlight>();
+
         //_abilityUseRange = _abilityData.pushUseRange;
         //PaintUseTiles(_character.GetMyPositionTile(), 0, Vector3.zero);//Cambie porque no me pintaba todos los tiles
+
         PaintTilesInRange(_character.GetMyPositionTile(), 0, Vector3.forward);
         PaintTilesInRange(_character.GetMyPositionTile(), 0, -Vector3.forward);
         PaintTilesInRange(_character.GetMyPositionTile(), 0, Vector3.right);
         PaintTilesInRange(_character.GetMyPositionTile(), 0, -Vector3.right);
+
         _character.EquipableSelectionState(true, this);
+
         _character.DeselectThisUnit();
 	}
 
 	public override void Deselect()
 	{
         if(_tilesInRange.Count != 0)
-            _highlight.MortarClearTilesInAttackRange(_tilesInRange);
+            TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
+
         _tilesInRange.Clear();
         _charactersToAttack.Clear();
         _character.EquipableSelectionState(false, null);
@@ -62,40 +53,50 @@ public class PiercingShot : WeaponAbility
 	public override void Use(Action callback = null)
 	{
 		base.Use(callback);
-        Debug.Log("Using Piercing Shot");
-		if (Input.GetMouseButtonDown(0))
-		{
-            Debug.Log("Piercing Shooting");
-            var selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
-		
-            if (!selectedTile) return;
-		
-            var tile = selectedTile.GetComponent<Tile>();
 
-            if (!tile) return;
-		
-            if (!_tilesInRange.Contains(tile)) return;
-            
-            var characterTilePos = _character.GetMyPositionTile().transform.position;
-            var dir = selectedTile.transform.position - characterTilePos;
-            RaycastHit hit;
-            Physics.Raycast(characterTilePos, dir, out hit);
-            var firstTile = hit.transform.GetComponent<Tile>();
-            GetCharactersInAttackDirection(firstTile, dir, 0);
-            
-            ShootTheShot();
-            
-            if (callback != null)
-                callback();
-            
-            AbilityUsed(_abilityData);
-            UpdateButtonText(_availableUses.ToString(), _abilityData);
-            _button.interactable = false;
-            Deselect();
-		}
+		if (Input.GetMouseButtonDown(0))
+            ExecuteAbility(callback);
 
         if (Input.GetMouseButtonDown(1))
             Deselect();
+    }
+
+    private void ExecuteAbility(Action callback = null)
+    {
+        Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
+
+        if (!selectedTile)
+            return;
+
+        Tile tile = selectedTile.GetComponent<Tile>();
+
+        if (!tile)
+            return;
+
+        if (!_tilesInRange.Contains(tile))
+            return;
+
+        Vector3 characterTilePos = _character.GetMyPositionTile().transform.position;
+
+        Vector3 dir = selectedTile.transform.position - characterTilePos;
+
+        Physics.Raycast(characterTilePos, dir, out RaycastHit hit);
+
+        Tile firstTile = hit.transform.GetComponent<Tile>();
+
+        GetCharactersInAttackDirection(firstTile, dir, 0);
+
+        Shoot();
+
+        callback?.Invoke();
+
+        AbilityUsed(_abilityData);
+
+        UpdateButtonText(_availableUses.ToString(), _abilityData);
+
+        _button.interactable = false;
+
+        Deselect();
     }
 
     private List<Character> GetCharactersInAttackDirection(Tile currentTile, Vector3 dir, int count)
@@ -103,34 +104,39 @@ public class PiercingShot : WeaponAbility
         //Primero agrego el character que esta en el rango de ataque
 		if (!currentTile.IsFree())
 		{
-            var unitToAttack = currentTile.GetUnitAbove();
+            Character unitToAttack = currentTile.GetUnitAbove();
+
             if (unitToAttack && !unitToAttack.IsDead())
                 _charactersToAttack.Add(unitToAttack);
 		}
 
-        if (count >= _abilityUseRange) return _charactersToAttack;
+        if (count >= _gun.GetAttackRange())
+            return _charactersToAttack;
+
         count++;
-        RaycastHit hit;
-        Physics.Raycast(currentTile.transform.position, dir, out hit);
-        var nextTile = hit.transform.GetComponent<Tile>();
+
+        Physics.Raycast(currentTile.transform.position, dir, out RaycastHit hit);
+
+        Tile nextTile = hit.transform.GetComponent<Tile>();
+
 		if (nextTile)//Despues chequeo cual es el proximo tile en esa dirección
 		{
-            Tile t = nextTile.transform.GetComponent<Tile>();
+            Tile tile = nextTile.transform.GetComponent<Tile>();
 
-            if(t && t.IsWalkable())//Si existe el tile continuo con la cadena
-			{
-                return GetCharactersInAttackDirection(t, dir, count);
-			}
+            if(tile && tile.IsWalkable())//Si existe el tile continuo con la cadena
+                return GetCharactersInAttackDirection(tile, dir, count);
 		}
+
         return _charactersToAttack;
 	}
 
-    private void ShootTheShot()
+    private void Shoot()
 	{
-        foreach(var attackedCharacter in _charactersToAttack)
+        foreach(Character attackedCharacter in _charactersToAttack)
 		{
-            attackedCharacter.SetHurtAnimation();
-            attackedCharacter.GetBody().TakeDamage(_abilityData.damage);
+            Body body = attackedCharacter.GetBody();
+            body.TakeDamage(_abilityData.damage);
+
             EffectsController.Instance.PlayParticlesEffect(attackedCharacter.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
         }
         _character.DeactivateAttack();
@@ -141,19 +147,18 @@ public class PiercingShot : WeaponAbility
         if(!_tilesInRange.Contains(currentTile))
             _tilesInRange.Add(currentTile);
 
-        if (count >= _abilityUseRange)
+        if (count >= _gun.GetAttackRange())
             return;
 
         count++;
 
-        RaycastHit hit;
-        Physics.Raycast(currentTile.transform.position, dir, out hit);
-        Tile t = hit.transform.GetComponent<Tile>();
+        Physics.Raycast(currentTile.transform.position, dir, out RaycastHit hit);
+        Tile tile = hit.transform.GetComponent<Tile>();
 
-        if (t && t.IsWalkable())
+        if (tile && tile.IsWalkable())
 		{
-            _highlight.MortarPaintTilesInAttackRange(t);
-            PaintTilesInRange(t, count, dir);
+            TileHighlight.Instance.MortarPaintTilesInAttackRange(tile);
+            PaintTilesInRange(tile, count, dir);
 		}
         return;
     }
@@ -161,65 +166,64 @@ public class PiercingShot : WeaponAbility
     private void PaintUseTiles(Tile currentTile, int count, Vector3 dir)
     {
         _tilesInRange.Add(currentTile);
-        if (count >= _abilityUseRange) //|| (_tilesInRangeChecked.ContainsKey(currentTile) && _tilesInRangeChecked[currentTile] <= count))
+
+        if (count >= _gun.GetAttackRange()) //|| (_tilesInRangeChecked.ContainsKey(currentTile) && _tilesInRangeChecked[currentTile] <= count))
             return;
 
         count++;
+
         if (dir == Vector3.zero)
         {
             Debug.Log("comienzo");
-            RaycastHit forwardHit;
-            RaycastHit leftHit;
-            RaycastHit rightHit;
-            RaycastHit backHit;
 
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.forward, out forwardHit);
-            Physics.Raycast(position, currentTile.transform.right * -1, out leftHit);
-            Physics.Raycast(position, currentTile.transform.right, out rightHit);
-            Physics.Raycast(position, currentTile.transform.forward * -1, out backHit);
+            Vector3 position = currentTile.transform.position;
+
+            Physics.Raycast(position, currentTile.transform.forward, out RaycastHit forwardHit);
+            Physics.Raycast(position, currentTile.transform.right * -1, out RaycastHit leftHit);
+            Physics.Raycast(position, currentTile.transform.right, out RaycastHit rightHit);
+            Physics.Raycast(position, currentTile.transform.forward * -1, out RaycastHit backHit);
 
             if (forwardHit.transform)
             {
-                Tile t = forwardHit.transform.GetComponent<Tile>();
+                Tile tile = forwardHit.transform.GetComponent<Tile>();
 
-                if (t && t.IsWalkable())
+                if (tile && tile.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
-                    PaintUseTiles(t, count, forwardHit.transform.forward);
+                    TileHighlight.Instance.MortarPaintTilesInActivationRange(tile);
+                    PaintUseTiles(tile, count, forwardHit.transform.forward);
                 }
             }
 
             if (leftHit.transform)
             {
-                Tile t = leftHit.transform.GetComponent<Tile>();
+                Tile tile = leftHit.transform.GetComponent<Tile>();
 
-                if (t && t.IsWalkable())
+                if (tile && tile.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
-                    PaintUseTiles(t, count, leftHit.transform.right * -1);
+                    TileHighlight.Instance.MortarPaintTilesInActivationRange(tile);
+                    PaintUseTiles(tile, count, leftHit.transform.right * -1);
                 }
             }
 
             if (rightHit.transform)
             {
-                Tile t = rightHit.transform.GetComponent<Tile>();
+                Tile tile = rightHit.transform.GetComponent<Tile>();
 
-                if (t && t.IsWalkable())
+                if (tile && tile.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
-                    PaintUseTiles(t, count, rightHit.transform.right);
+                    TileHighlight.Instance.MortarPaintTilesInActivationRange(tile);
+                    PaintUseTiles(tile, count, rightHit.transform.right);
                 }
             }
 
             if (backHit.transform)
             {
-                Tile t = backHit.transform.GetComponent<Tile>();
+                Tile tile = backHit.transform.GetComponent<Tile>();
 
-                if (t && t.IsWalkable())
+                if (tile && tile.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
-                    PaintUseTiles(t, count, backHit.transform.forward * -1);
+                    TileHighlight.Instance.MortarPaintTilesInActivationRange(tile);
+                    PaintUseTiles(tile, count, backHit.transform.forward * -1);
                 }
             }
         }
@@ -227,81 +231,85 @@ public class PiercingShot : WeaponAbility
         if (dir == Vector3.forward)
         {
             Debug.Log("forward count: " + count);
-            RaycastHit forwardHit;
 
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.forward, out forwardHit);
-            if (forwardHit.transform)
+            Vector3 position = currentTile.transform.position;
+
+            Physics.Raycast(position, currentTile.transform.forward, out RaycastHit forwardHit);
+
+            if (!forwardHit.transform)
+                return;
+
+            else
             {
-                Tile t = forwardHit.transform.GetComponent<Tile>();
+                Tile tile = forwardHit.transform.GetComponent<Tile>();
 
-                if (t && t.IsWalkable())
+                if (tile && tile.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
-                    PaintUseTiles(t, count, forwardHit.transform.forward);
+                    TileHighlight.Instance.MortarPaintTilesInActivationRange(tile);
+                    PaintUseTiles(tile, count, forwardHit.transform.forward);
                 }
             }
-            else return;
         }
 
         if (dir == Vector3.left)
         {
-            RaycastHit leftHit;
+            Vector3 position = currentTile.transform.position;
 
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.right * -1, out leftHit);
+            Physics.Raycast(position, currentTile.transform.right * -1, out RaycastHit leftHit);
 
-            if (leftHit.transform)
+            if (!leftHit.transform)
+                return;
+            else
             {
-                Tile t = leftHit.transform.GetComponent<Tile>();
+                Tile tile = leftHit.transform.GetComponent<Tile>();
 
-                if (t && t.IsWalkable())
+                if (tile && tile.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
-                    PaintUseTiles(t, count, leftHit.transform.right * -1);
+                    TileHighlight.Instance.MortarPaintTilesInActivationRange(tile);
+                    PaintUseTiles(tile, count, leftHit.transform.right * -1);
                 }
             }
-            else return;
         }
 
         if (dir == Vector3.right)
         {
-            RaycastHit rightHit;
+            Vector3 position = currentTile.transform.position;
+            
+            Physics.Raycast(position, currentTile.transform.right * -1, out RaycastHit rightHit);
 
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.right * -1, out rightHit);
+            if (!rightHit.transform)
+                return;
 
-            if (rightHit.transform)
+            else
             {
-                Tile t = rightHit.transform.GetComponent<Tile>();
+                Tile tile = rightHit.transform.GetComponent<Tile>();
 
-                if (t && t.IsWalkable())
+                if (tile && tile.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
-                    PaintUseTiles(t, count, rightHit.transform.right);
+                    TileHighlight.Instance.MortarPaintTilesInActivationRange(tile);
+                    PaintUseTiles(tile, count, rightHit.transform.right);
                 }
             }
-            else return;
         }
 
         if (dir == Vector3.back)
         {
-            RaycastHit backHit;
+            Vector3 position = currentTile.transform.position;
+         
+            Physics.Raycast(position, currentTile.transform.forward * -1, out RaycastHit backHit);
 
-            var position = currentTile.transform.position;
-            Physics.Raycast(position, currentTile.transform.forward * -1, out backHit);
-
-            if (backHit.transform)
+            if (!backHit.transform)
+                return;
+            else
             {
-                Tile t = backHit.transform.GetComponent<Tile>();
+                Tile tile = backHit.transform.GetComponent<Tile>();
 
-                if (t && t.IsWalkable())
+                if (tile && tile.IsWalkable())
                 {
-                    _highlight.MortarPaintTilesInActivationRange(t);
-                    PaintUseTiles(t, count, backHit.transform.forward * -1);
+                    TileHighlight.Instance.MortarPaintTilesInActivationRange(tile);
+                    PaintUseTiles(tile, count, backHit.transform.forward * -1);
                 }
             }
-            else return;
         }
     }
 }

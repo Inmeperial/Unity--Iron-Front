@@ -102,23 +102,33 @@ public class WorkshopUIManager : MonoBehaviour
         _overviewName.text = equipmentData.mechaName;
 
         _overviewBody.text = "Body: \n" + equipmentData.body.partName;
-        if (equipmentData.bodyAbility) _overviewBodyAbility.sprite = equipmentData.bodyAbility.equipableIcon;
-        else _overviewBodyAbility.sprite = _noneIcon;
+        if (equipmentData.bodyAbility)
+            _overviewBodyAbility.sprite = equipmentData.bodyAbility.equipableIcon;
+        else
+            _overviewBodyAbility.sprite = _noneIcon;
 
         _overviewLeftArm.text = "Left Gun: \n" + equipmentData.leftGun.gunName;
-        if (equipmentData.leftGunAbility) _overviewLeftArmAbility.sprite = equipmentData.leftGunAbility.equipableIcon;
-        else _overviewLeftArmAbility.sprite = _noneIcon;
+        if (equipmentData.leftGunAbility)
+            _overviewLeftArmAbility.sprite = equipmentData.leftGunAbility.equipableIcon;
+        else
+            _overviewLeftArmAbility.sprite = _noneIcon;
 
         _overviewRightArm.text = "Right Gun: \n" + equipmentData.rightGun.gunName;
-        if (equipmentData.rightGunAbility) _overviewRightArmAbility.sprite = equipmentData.rightGunAbility.equipableIcon;
-        else _overviewRightArmAbility.sprite = _noneIcon;
+        if (equipmentData.rightGunAbility) 
+            _overviewRightArmAbility.sprite = equipmentData.rightGunAbility.equipableIcon;
+        else
+            _overviewRightArmAbility.sprite = _noneIcon;
 
         _overviewLegs.text = "Legs: \n" + equipmentData.legs.partName;
-        if (equipmentData.legsAbility) _overviewLegsAbility.sprite = equipmentData.legsAbility.equipableIcon;
-        else _overviewLegsAbility.sprite = _noneIcon;
+        if (equipmentData.legsAbility)
+            _overviewLegsAbility.sprite = equipmentData.legsAbility.equipableIcon;
+        else
+            _overviewLegsAbility.sprite = _noneIcon;
 
-        if (equipmentData.item) _overviewItem.sprite = equipmentData.item.equipableIcon;
-        else _overviewItem.sprite = _noneIcon;
+        if (equipmentData.item) 
+            _overviewItem.sprite = equipmentData.item.equipableIcon;
+        else 
+            _overviewItem.sprite = _noneIcon;
 
         AbilitiesTabSetAbilitiesIcons();
     }
@@ -139,7 +149,8 @@ public class WorkshopUIManager : MonoBehaviour
 
         Vector3 newRotation = (weight * _maxRotationMaxWeight) / maxWeight;
 
-        if (newRotation.z < _maxRotationOverweight.z) newRotation.z = _maxRotationOverweight.z;
+        if (newRotation.z < _maxRotationOverweight.z) 
+            newRotation.z = _maxRotationOverweight.z;
 
         Quaternion target = Quaternion.Euler(newRotation);
 
@@ -168,6 +179,8 @@ public class WorkshopUIManager : MonoBehaviour
         int mechaIndex = _workshopManager.GetMechaIndex();
 
         MechaEquipmentSO currentMechaEquipment = _workshopManager.GetMechaEquipment(mechaIndex);
+
+        //TODO: Revisar switch
         switch (part)
         {
             case "Body":
@@ -298,6 +311,8 @@ public class WorkshopUIManager : MonoBehaviour
 
         int index = _workshopManager.GetMechaIndex();
         MechaEquipmentSO currentMechaEquipment = _workshopManager.GetMechaEquipment(index);
+
+        //TODO: Revisar switch
 
         switch (part)
         {
@@ -586,17 +601,25 @@ public class WorkshopUIManager : MonoBehaviour
 
         MechaEquipmentSO currentMechaEquipment = _workshopManager.GetMechaEquipment(index);
 
-        if (currentMechaEquipment.bodyAbility) _bodyAbilityImage.sprite = currentMechaEquipment.bodyAbility.equipableIcon;
-        else _bodyAbilityImage.sprite = _noneIcon;
+        if (currentMechaEquipment.bodyAbility)
+            _bodyAbilityImage.sprite = currentMechaEquipment.bodyAbility.equipableIcon;
+        else
+            _bodyAbilityImage.sprite = _noneIcon;
 
-        if (currentMechaEquipment.leftGunAbility) _leftArmAbilityImage.sprite = currentMechaEquipment.leftGunAbility.equipableIcon;
-        else _leftArmAbilityImage.sprite = _noneIcon;
+        if (currentMechaEquipment.leftGunAbility)
+            _leftArmAbilityImage.sprite = currentMechaEquipment.leftGunAbility.equipableIcon;
+        else 
+            _leftArmAbilityImage.sprite = _noneIcon;
 
-        if (currentMechaEquipment.rightGunAbility) _rightArmAbilityImage.sprite = currentMechaEquipment.rightGunAbility.equipableIcon;
-        else _rightArmAbilityImage.sprite = _noneIcon;
+        if (currentMechaEquipment.rightGunAbility)
+            _rightArmAbilityImage.sprite = currentMechaEquipment.rightGunAbility.equipableIcon;
+        else 
+            _rightArmAbilityImage.sprite = _noneIcon;
 
-        if (currentMechaEquipment.legsAbility) _legsAbilityImage.sprite = currentMechaEquipment.legsAbility.equipableIcon;
-        else _legsAbilityImage.sprite = _noneIcon;
+        if (currentMechaEquipment.legsAbility) 
+            _legsAbilityImage.sprite = currentMechaEquipment.legsAbility.equipableIcon;
+        else 
+            _legsAbilityImage.sprite = _noneIcon;
     }
 
     public void ItemsTabSetItemIcon()
@@ -611,9 +634,11 @@ public class WorkshopUIManager : MonoBehaviour
         {
             Sprite icon = item.equipableIcon;
 
-            if (icon) _itemImage.sprite = icon;
+            if (icon)
+                _itemImage.sprite = icon;
         }
-        else _itemImage.sprite = _noneIcon;
+        else
+            _itemImage.sprite = _noneIcon;
     }
 
     private void OnDestroy()

@@ -11,7 +11,6 @@ public class Character : EnumsClass, IObservable
     [SerializeField] protected WorldUI _worldUI;
     [SerializeField] protected WaypointsPathfinding _waypointsPathfinding;
     [SerializeField] protected GridMovement _gridMovement;
-    //[SerializeField] protected MaterialMechaHandler _materialMechaHandler;
     [SerializeField] protected ParticleMechaHandler _particleMechaHandler;
     [SerializeField] protected AnimationMechaHandler _animationMechaHandler;
     [SerializeField] protected AudioMechaHandler _audioMechaHandler;
@@ -29,7 +28,6 @@ public class Character : EnumsClass, IObservable
     #region Parts
     [Header("Parts")]
     [SerializeField] protected Body _body;
-    protected Transform _bodyTransform;
 
     [SerializeField] protected GameObject _leftGunSpawn;
     protected Gun _leftGun;
@@ -42,7 +40,6 @@ public class Character : EnumsClass, IObservable
     protected Gun _selectedGun;
 
     [SerializeField] protected Legs _legs;
-    protected Transform _legsTransform;
     protected int _currentSteps;
     #endregion
 
@@ -110,31 +107,28 @@ public class Character : EnumsClass, IObservable
 
     public Action<bool> OnOverweight;
 
-    //public List<GameObject> bodyRenderContainer = new List<GameObject>();
-
     protected List<IObserver> _observers = new List<IObserver>();
 
     protected List<Equipable> _equipables = new List<Equipable>();
 
     protected float _startingHeight;
+
     public virtual void Awake()
     {
         _startingHeight = transform.position.y;
-
-        //_partsDictionary = GetComponent<GetPartsOfMecha>().GetPartsObj();
     }
 
     // Start is called before the first frame update
     public virtual void ManualStart()
     {
         ConfigureMecha();
+
         Subscribe(TurnManager.Instance);
-        _canMove = _legs.GetCurrentHp() > 0;
-        _currentSteps = _canMove ? _legs.GetMaxSteps() : 0;
 
         _myPositionTile = GetTileBelow();
+
         if (!_myPositionTile)
-            Debug.Log("Sin tile " + _mechaEquipment.mechaName);
+            throw new Exception("Tile not found on start!");
 
         _myPositionTile.MakeTileOccupied();
         _myPositionTile.SetUnitAbove(this);
@@ -144,20 +138,18 @@ public class Character : EnumsClass, IObservable
         float rightGunHP = 0;
 
         if (_rightGun)
-            rightGunHP = _rightGun.GetCurrentHp();
+            rightGunHP = _rightGun.GetMaxHp();
         
         float leftGunHP = 0;
 
         if (_leftGun)
-            leftGunHP = _leftGun.GetCurrentHp();
+            leftGunHP = _leftGun.GetMaxHp();
         
         _worldUI.SetLimits(_body.GetMaxHp(), rightGunHP, leftGunHP, _legs.GetMaxHp());
 
         _selected = false;
-        _canBeSelected = _body.GetCurrentHp() > 0;
 
-        _bodyTransform = _body.transform;
-        _legsTransform = _raycastToTile;
+        _canBeSelected = true;
     }
 
     // Update is called once per frame
@@ -215,7 +207,7 @@ public class Character : EnumsClass, IObservable
     {
         if (!_selectedGun)
             return;
-
+        //TODO: Ver de sacar switch
         if (_selectedGun.GetLocation() == "Right")
         {
             switch (_rightGun.GetGunType())
@@ -260,56 +252,6 @@ public class Character : EnumsClass, IObservable
                     break;
             }
         }
-
-
-        // if (_rightGunSelected)
-        // {
-        //     if(!_rightGun) return;
-        //     
-        //     switch (_rightGun.GetGunType())
-        //     {
-        //         case GunsType.None:
-        //             break;
-        //         case GunsType.AssaultRifle:
-        //             _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
-        //             break;
-        //         case GunsType.Melee:
-        //             _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
-        //             break;
-        //         case GunsType.Rifle:
-        //             _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
-        //             break;
-        //         case GunsType.Shield:
-        //             break;
-        //         case GunsType.Shotgun:
-        //             _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
-        //             break;
-        //     }
-        // }
-        // else if (_leftGunSelected)
-        // {
-        //     if (!_leftGun) return;
-        //     
-        //     switch (_leftGun.GetGunType())
-        //     {
-        //         case GunsType.None:
-        //             break;
-        //         case GunsType.AssaultRifle:
-        //             _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
-        //             break;
-        //         case GunsType.Melee:
-        //             _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
-        //             break;
-        //         case GunsType.Rifle:
-        //             _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
-        //             break;
-        //         case GunsType.Shield:
-        //             break;
-        //         case GunsType.Shotgun:
-        //             _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
-        //             break;
-        //     }
-        // }
     }
 
     /// <summary>
@@ -792,7 +734,9 @@ public class Character : EnumsClass, IObservable
         //pos.y = 3;
         Physics.Raycast(pos, Vector3.down, out RaycastHit hit, LayerMask.NameToLayer("GridBlock"));
 
-        return hit.transform.gameObject.GetComponent<Tile>();
+        Tile tile = hit.transform.gameObject.GetComponent<Tile>();
+
+        return tile;
     }
 
     /// <summary>
@@ -818,7 +762,7 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Return Body world position.
     /// </summary>
-    public Vector3 GetBodyPosition() => _bodyTransform.position;
+    public Vector3 GetBodyPosition() => _body.transform.position;
 
     /// <summary>
     /// Return Left Arm world position.
@@ -826,7 +770,7 @@ public class Character : EnumsClass, IObservable
     public Vector3 GetLArmPosition()
     {
         if (_leftGun)
-            return _leftGun.gameObject.transform.position;
+            return _leftGun.transform.position;
         
         return Vector3.zero;
     }
@@ -837,7 +781,7 @@ public class Character : EnumsClass, IObservable
     public Vector3 GetRArmPosition()
     {
         if (_rightGun)
-            return _rightGun.gameObject.transform.position;
+            return _rightGun.transform.position;
         
         return Vector3.zero;
     }
@@ -845,7 +789,7 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Return Legs world position.
     /// </summary>
-    public Vector3 GetLegsPosition() => _legsTransform.position;
+    public Vector3 GetLegsPosition() => _legs.transform.position;
 
     /// <summary>
     /// Return true if it's Character turn.
@@ -1423,14 +1367,6 @@ public class Character : EnumsClass, IObservable
         _worldUI.Show();
     }
 
-    /// <summary>
-    /// Deactivates Character World UI.
-    /// </summary>
-    //public void HideWorldUI()
-    //{
-    //    if (!_worldUI.IsToggledOn) _worldUI.Hide();
-    //}
-
     #endregion
 
     #region Others
@@ -1477,36 +1413,20 @@ public class Character : EnumsClass, IObservable
         
         _worldUI.SetName(_myName);
 
-        _body.SetPart(this, _mechaEquipment.body, _mechaEquipment.GetBodyColor(), Equipable.Location.Body);
-
-        //var bodyMesh = Instantiate(_mechaEquipment.body.meshPrefab[0], _body.transform);
-        //bodyMesh.transform.localPosition = Vector3.zero;
-        //_body.SetParticleSpawner(bodyMesh.transform.GetChild(0).gameObject);
-        //var bodyShader = bodyMesh.GetComponent<MasterShaderScript>();
-        //bodyShader.colorMecha = _mechaEquipment.GetBodyColor();
-
-        //var leftArm = Instantiate(_mechaEquipment.body.armsMeshPrefab[0], _leftArmSpawnPosition);
-        //leftArm.transform.localPosition = Vector3.zero;
-        //var leftArmShader = leftArm.GetComponent<MasterShaderScript>();
-        //leftArmShader.colorMecha = _mechaEquipment.GetBodyColor();
+        _body.SetPartData(this, _mechaEquipment.body, _mechaEquipment.GetBodyColor());
+        _body.SetAbilityData(_mechaEquipment.bodyAbility);
 
         _leftGun = Instantiate(_mechaEquipment.leftGun.prefab, _leftGunSpawn.transform);
-        
 
         if (_leftGun)
         {
             _leftGun.transform.localPosition = Vector3.zero;
             _leftGun.gameObject.tag = "LGun";
-            _leftGun.SetGun(_mechaEquipment.leftGun, this, Equipable.Location.LeftGun);
+            _leftGun.SetGunData(_mechaEquipment.leftGun, this);
             _leftGun.SetRightOrLeft("Left");
+            _leftGun.SetAbilityData(_mechaEquipment.leftGunAbility);
             _leftGunAlive = true;
         }
-
-
-        //var rightArm = Instantiate(_mechaEquipment.body.armsMeshPrefab[1], _rightArmSpawnPosition);
-        //rightArm.transform.localPosition = Vector3.zero;
-        //var rightArmShader = rightArm.GetComponent<MasterShaderScript>();
-        //rightArmShader.colorMecha = _mechaEquipment.GetBodyColor();
 
         _rightGun = Instantiate(_mechaEquipment.rightGun.prefab, _rightGunSpawn.transform);
 
@@ -1514,30 +1434,19 @@ public class Character : EnumsClass, IObservable
         {
             _rightGun.transform.localPosition = Vector3.zero;
             _rightGun.gameObject.tag = "RGun";
-            _rightGun.SetGun(_mechaEquipment.rightGun, this, Equipable.Location.RightGun);
+            _rightGun.SetGunData(_mechaEquipment.rightGun, this);
             _rightGun.SetRightOrLeft("Right");
+            _rightGun.SetAbilityData(_mechaEquipment.rightGunAbility);
             _rightGunAlive = true;
         }
 
-        _legs.SetPart(this, _mechaEquipment.legs, _mechaEquipment.GetLegsColor(), Equipable.Location.Legs);
+        _legs.SetPartData(this, _mechaEquipment.legs, _mechaEquipment.GetLegsColor());
+        _legs.SetAbilityData(_mechaEquipment.legsAbility);
 
-        //var lLeg = Instantiate(_mechaEquipment.legs.meshPrefab[0], _legs.transform);
-        //lLeg.transform.localPosition = Vector3.zero;
-        //_legs.SetParticleSpawner(lLeg.transform.GetChild(0).gameObject);
-        //_legs.SetParticleSpawner(lLeg.transform.GetChild(1).gameObject);
-        //var lLegShader = lLeg.GetComponent<MasterShaderScript>();
-        //lLegShader.colorMecha = _mechaEquipment.GetLegsColor();
+        _canMove = true;
+        _currentSteps = _legs.GetMaxSteps();
 
-        //var rLeg = Instantiate(_mechaEquipment.legs.meshPrefab[1], _leftLegSpawnPosition);
-        //rLeg.transform.localPosition = Vector3.zero;
-        //var rLegShader = rLeg.GetComponent<MasterShaderScript>();
-        //rLegShader.colorMecha = _mechaEquipment.GetLegsColor();
-        
         CheckWeight();
-
-        //_materialMechaHandler.SetPartGameObject(_body, _leftGun, _rightGun, _legs);
-        
-        //_worldUI.SetPartsButtonCharacter(this);
 
         if (_rightGun)
         {
@@ -1549,8 +1458,10 @@ public class Character : EnumsClass, IObservable
             _canAttack = true;
             _rightGunSelected = true;
             _leftGunSelected = false;
+            return;
         }
-        else if (_leftGun)
+        
+        if (_leftGun)
         {
             _selectedGun = _leftGun;
 
@@ -1560,15 +1471,15 @@ public class Character : EnumsClass, IObservable
             _canAttack = true;
             _rightGunSelected = false;
             _leftGunSelected = true;
+
+            return;
         }
-        else
-        {
-            _selectedGun = null;
-            _leftGun = null;
-            _rightGun = null;
-            _rightGunSelected = false;
-            _leftGunSelected = false;
-        }
+
+        _selectedGun = null;
+        _leftGun = null;
+        _rightGun = null;
+        _rightGunSelected = false;
+        _leftGunSelected = false;
     }
     
     //Funcion de Nico para el push/pull
@@ -1591,25 +1502,7 @@ public class Character : EnumsClass, IObservable
         _rightGun.SetShader(texture);
 
         _leftGun.SetShader(texture);
-        //foreach (KeyValuePair<PartsMechaEnum, GameObject> kvp in _partsDictionary)
-        //{
-        //    if (kvp.Value.GetComponent<MasterShaderScript>() !=  null)
-        //    {
-        //        kvp.Value.GetComponent<MasterShaderScript>().ConvertEnumToStringEnumForShader(texture);
-        //    }
-        //}
     }
-
-    //public void SetShaderForPart(SwitchTextureEnum texture, PartsMechaEnum partEnum)
-    //{
-    //    foreach (KeyValuePair<PartsMechaEnum, GameObject> kvp in _partsDictionary)
-    //    {
-    //        if (kvp.Key == partEnum)
-    //        {
-    //            kvp.Value.GetComponent<MasterShaderScript>().ConvertEnumToStringEnumForShader(texture);
-    //        }
-    //    }
-    //}
 
     public void CheckWeight()
     {
@@ -1734,11 +1627,3 @@ public class Character : EnumsClass, IObservable
         _legs.ChangePartMeshActiveStatus(status);
     }
 }
-public enum PartsMechaEnum
-{
-    body,
-    weaponL,
-    weaponR,
-    arm,
-    legs
-};

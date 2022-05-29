@@ -10,25 +10,28 @@ public class Grenade : Item
     private Dictionary<Tile, int> _tilesForSelectionChecked = new Dictionary<Tile, int>();
     private HashSet<Tile> _tilesInSelectionRange = new HashSet<Tile>();
     
-    private TileHighlight _highlight;
     private Tile _tile;
+
     protected GrenadeSO _itemData;
 
-    public override void Initialize(Character character, EquipableSO data, Location location)
+    public override void Initialize(Character character, EquipableSO data)
     {
-        base.Initialize(character, data, location);
+        base.Initialize(character, data);
+
         _itemData = data as GrenadeSO;
-        _highlight = FindObjectOfType<TileHighlight>();
     }
     public override void Select()
     {
         _character.DeselectThisUnit();
+
         _character.EquipableSelectionState(true, this);
+
         _tile = null;
         // _tilesInSelectionRange = new HashSet<Tile>();
         // _tilesForSelectionChecked = new Dictionary<Tile, int>();
         // _tilesInAttackRange = new HashSet<Tile>();
         // _tilesForAttackChecked = new Dictionary<Tile, int>();
+
         PaintTilesInSelectionRange(_character.GetMyPositionTile(), 0);
        
     }
@@ -37,13 +40,20 @@ public class Grenade : Item
     {
         _character.EquipableSelectionState(false, null);
         
-        _highlight.ClearTilesInPreview(_tilesInAttackRange);
-        _highlight.ClearTilesInActivationRange(_tilesInSelectionRange);
+        TileHighlight.Instance.ClearTilesInPreview(_tilesInAttackRange);
+
+        TileHighlight.Instance.ClearTilesInActivationRange(_tilesInSelectionRange);
+
         _tile = null;
+
         _tilesForAttackChecked.Clear();
+
         _tilesInAttackRange.Clear();
+
         _tilesForSelectionChecked.Clear();
+
         _tilesInSelectionRange.Clear();
+
         _character.SelectThisUnit();
     }
 
@@ -51,41 +61,46 @@ public class Grenade : Item
     {
         if (Input.GetMouseButtonDown(0))
         {
-            var selection = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
-
-            if (selection == null)
-            {
-                return;
-            }
-            
-            if (!IsValidBlock(selection))
-            {
-                return;
-            }
-
-            var newTile = selection.GetComponent<Tile>();
-        
-            if (!newTile) return;
-            if (_tile != null && newTile == _tile)
-            {
-                Attack();
-                if (callback != null)
-                    callback();
-            }
-            else
-            {
-                _highlight.ClearTilesInPreview(_tilesInAttackRange);
-                _tilesForAttackChecked.Clear();
-                _tilesInAttackRange.Clear();
-                _tile = newTile;
-
-                PaintAoeTiles(_tile, 0); 
-            }
+            UseItem(callback);
         }
 
         if (Input.GetMouseButtonDown(1))
         {
             Deselect();
+        }
+    }
+
+    private void UseItem(Action callback = null)
+    {
+        Transform selection = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
+
+        if (!selection)
+            return;
+
+        if (!IsValidBlock(selection))
+            return;
+
+        Tile newTile = selection.GetComponent<Tile>();
+
+        if (!newTile)
+            return;
+
+        if (_tile != null && newTile == _tile)
+        {
+            Attack();
+            callback?.Invoke();
+        }
+        else
+        {
+            TileHighlight.Instance.ClearTilesInPreview(_tilesInAttackRange);
+
+            _tilesForAttackChecked.Clear();
+
+            _tilesInAttackRange.Clear();
+
+            _tile = newTile;
+
+            PaintAoeTiles(_tile, 0);
         }
     }
     
@@ -104,7 +119,7 @@ public class Grenade : Item
                 {
                     _tilesInAttackRange.Add(tile);
                     tile.inAttackRange = true;
-                    _highlight.PaintTilesInPreviewRange(tile);
+                    TileHighlight.Instance.PaintTilesInPreviewRange(tile);
                 }
 
             }
@@ -126,7 +141,7 @@ public class Grenade : Item
                 if (!tile.HasTileAbove() && tile.IsWalkable())
                 {
                     _tilesInSelectionRange.Add(tile);
-                    _highlight.MortarPaintTilesInActivationRange(tile);
+                    TileHighlight.Instance.MortarPaintTilesInActivationRange(tile);
                 }
             }
             PaintTilesInSelectionRange(tile, count + 1);
@@ -135,40 +150,52 @@ public class Grenade : Item
 
     private void Attack()
     {
-        foreach (var tile in _tilesInAttackRange)
+        foreach (Tile tile in _tilesInAttackRange)
         {
-            var unit = tile.GetUnitAbove();
-            if (!unit) continue;
+            Character unit = tile.GetUnitAbove();
+
+            if (!unit) 
+                continue;
+
+            Body body = unit.GetBody();
+            body.TakeDamage(_itemData.damage);
+
+            Gun leftGun = unit.GetLeftGun();
+            if (leftGun)
+                leftGun.TakeDamage(_itemData.damage);
             
-            unit.GetBody().TakeDamage(_itemData.damage);
+            Gun rightGun = unit.GetRightGun();
+            if (rightGun)
+                rightGun.TakeDamage(_itemData.damage);
             
-            if (unit.GetLeftGun())
-                unit.GetLeftGun().TakeDamage(_itemData.damage);
-            
-            if (unit.GetRightGun())
-                unit.GetRightGun().TakeDamage(_itemData.damage);
-            
-            unit.GetLegs().TakeDamage(_itemData.damage);
+            Legs legs = unit.GetLegs();
+            legs.TakeDamage(_itemData.damage);
 
             EffectsController.Instance.PlayParticlesEffect(tile.gameObject, EnumsClass.ParticleActionType.HandGranade);
         }
         ItemUsed();
+
         UpdateButtonText(_availableUses.ToString(), _itemData);
+
         _button.interactable = false;
+
         Deselect();
         
     }
     
     private bool IsValidBlock(Transform target)
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return false;
+        if (EventSystem.current.IsPointerOverGameObject()) 
+            return false;
         
-        if (!target) return false;
+        if (!target) 
+            return false;
         
-        if (LayerMask.LayerToName(target.gameObject.layer) != "GridBlock") return false;
+        if (LayerMask.LayerToName(target.gameObject.layer) != "GridBlock")
+            return false;
 
-        var t = target.GetComponent<Tile>();
+        Tile tile = target.GetComponent<Tile>();
         
-        return _tilesInSelectionRange.Contains(t);
+        return _tilesInSelectionRange.Contains(tile);
     }
 }
