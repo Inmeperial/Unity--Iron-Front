@@ -322,26 +322,17 @@ public abstract class Gun : EnumsClass, IChangeableShader
     public void TurnOff()
     {
 
-        ModelsOff();
+        ChangeMeshRenderStatus(false);
 
         _collider.enabled = false;
     }
 
 
-
-    public void ModelsOff()
+    public void ChangeMeshRenderStatus(bool status)
     {
         foreach (Renderer renderer in _renderers)
         {
-            renderer.enabled = false;
-        }
-    }
-    
-    public void ModelsOn()
-    {
-        foreach (Renderer renderer in _renderers)
-        {
-            renderer.enabled = true;
+            renderer.enabled = status;
         }
     }
     

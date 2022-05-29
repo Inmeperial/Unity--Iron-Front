@@ -507,10 +507,10 @@ public class ButtonsUIManager : MonoBehaviour
         if (_selectedChar.GunsOffOnCloseup())
         {
             if (_selectedChar.GetLeftGun())
-                _selectedChar.GetLeftGun().ModelsOn();
+                _selectedChar.GetLeftGun().ChangeMeshRenderStatus(true);
             
             if (_selectedChar.GetRightGun())
-                _selectedChar.GetRightGun().ModelsOn();
+                _selectedChar.GetRightGun().ChangeMeshRenderStatus(true);
         }
         
         Character[] units = TurnManager.Instance.GetAllUnits();
@@ -624,15 +624,13 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (_selectedEnemy)
             {
-                //foreach (var go in _selectedChar.bodyRenderContainer)
-                //{
-                //    go.SetActive(true);
-                //}
                 if (_selectedChar.GunsOffOnCloseup())
                 {
-                    if (_selectedChar.GetLeftGun()) _selectedChar.GetLeftGun().ModelsOn();
+                    if (_selectedChar.GetLeftGun()) 
+                        _selectedChar.GetLeftGun().ChangeMeshRenderStatus(true);
                     
-                    if (_selectedChar.GetRightGun()) _selectedChar.GetRightGun().ModelsOn();  
+                    if (_selectedChar.GetRightGun()) 
+                        _selectedChar.GetRightGun().ChangeMeshRenderStatus(true);  
                 }
                 
                 attackHudContainer.SetActive(false);
@@ -1347,9 +1345,11 @@ public class ButtonsUIManager : MonoBehaviour
             //}
             if (_selectedChar.GunsOffOnCloseup())
             {
-                if (_selectedChar.GetLeftGun()) _selectedChar.GetLeftGun().ModelsOff();
+                if (_selectedChar.GetLeftGun()) 
+                    _selectedChar.GetLeftGun().ChangeMeshRenderStatus(false);
                 
-                if (_selectedChar.GetRightGun()) _selectedChar.GetRightGun().ModelsOff();
+                if (_selectedChar.GetRightGun()) 
+                    _selectedChar.GetRightGun().ChangeMeshRenderStatus(false);
             }
             //_selectedChar.RotateTowardsEnemy(_selectedEnemy.transform.position, ActivateParts);
             _selectedChar.RotateTowardsEnemy(_selectedEnemy.transform);

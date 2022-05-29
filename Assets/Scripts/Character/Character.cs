@@ -1625,5 +1625,12 @@ public class Character : EnumsClass, IObservable
     {
         _body.ChangePartMeshActiveStatus(status);
         _legs.ChangePartMeshActiveStatus(status);
+
+        if (_leftGun)
+            _leftGun.ChangeMeshRenderStatus(status);
+
+        if (_rightGun)
+            _rightGun.ChangeMeshRenderStatus(status);
+            
     }
 }
