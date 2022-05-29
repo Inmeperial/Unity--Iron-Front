@@ -74,15 +74,23 @@ public class Elevator : MonoBehaviour, IObserver
     
     private void OnTriggerEnter(Collider other)
     {
-        if (_currentHp <= 0) return;
+        if (_currentHp <= 0)
+            return;
 
-        if (_isMoving) return;
+        if (_isMoving)
+            return;
         
-        if (!_canInteract) return;
+        if (!_canInteract)
+            return;
 
-        if (_aboveCharacter && !_aboveCharacter.IsMyTurn()) return;
-        
-        if (_aboveCharacter.GetUnitTeam() == EnumsClass.Team.Red) return;
+        if (_aboveCharacter)
+        {
+            if (!_aboveCharacter.IsMyTurn())
+                return;
+
+            if (_aboveCharacter.GetUnitTeam() == EnumsClass.Team.Red)
+                return;
+        }
 
         StartCoroutine(CheckCharacterDelay());
     }
@@ -100,11 +108,14 @@ public class Elevator : MonoBehaviour, IObserver
 
     private void OnTriggerExit(Collider other)
     {
-        if (_currentHp <= 0) return;
+        if (_currentHp <= 0)
+            return;
 
-        if (_isMoving) return;
+        if (_isMoving)
+            return;
         
-        if (!_aboveCharacter) return;
+        if (!_aboveCharacter) 
+            return;
         
         _aboveCharacter.OnExitElevator(this);
         _aboveCharacter = null;
