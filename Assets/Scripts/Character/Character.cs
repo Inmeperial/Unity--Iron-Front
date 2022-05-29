@@ -1276,7 +1276,10 @@ public class Character : EnumsClass, IObservable
 
         if (!_selectedForAttack && _canBeSelected)
             SetWorldUIValues();
-        
+
+        if (!_selected)
+            return;
+
         if (_canBeAttacked && !_selectedForAttack)
         {
             if (TurnManager.Instance.GetActiveTeam() == Team.Red)
