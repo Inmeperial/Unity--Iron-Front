@@ -1621,16 +1621,18 @@ public class Character : EnumsClass, IObservable
 
     public bool GunsOffOnCloseup() => _gunsOffOnCloseUp;
 
-    public void ChangeMeshActiveStatus(bool status)
+    public void ChangePartsMeshActiveStatus(bool status)
     {
         _body.ChangePartMeshActiveStatus(status);
         _legs.ChangePartMeshActiveStatus(status);
+    }
 
+    public void ChangeGunsMeshActiveStatus(bool status)
+    {
         if (_leftGun)
             _leftGun.ChangeMeshRenderStatus(status);
 
         if (_rightGun)
             _rightGun.ChangeMeshRenderStatus(status);
-            
     }
 }

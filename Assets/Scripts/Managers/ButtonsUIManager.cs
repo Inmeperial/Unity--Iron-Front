@@ -516,7 +516,8 @@ public class ButtonsUIManager : MonoBehaviour
         Character[] units = TurnManager.Instance.GetAllUnits();
         foreach (Character unit in units)
         {
-            unit.ChangeMeshActiveStatus(true);
+            unit.ChangePartsMeshActiveStatus(true);
+            unit.ChangeGunsMeshActiveStatus(true);
         }
         cam.MoveCameraToParent(cam.transform.parent.position, _selectedEnemy.transform.position, Attack, attackDelay);
     }
@@ -624,20 +625,12 @@ public class ButtonsUIManager : MonoBehaviour
         {
             if (_selectedEnemy)
             {
-                if (_selectedChar.GunsOffOnCloseup())
-                {
-                    if (_selectedChar.GetLeftGun()) 
-                        _selectedChar.GetLeftGun().ChangeMeshRenderStatus(true);
-                    
-                    if (_selectedChar.GetRightGun()) 
-                        _selectedChar.GetRightGun().ChangeMeshRenderStatus(true);  
-                }
-                
                 attackHudContainer.SetActive(false);
                 Character[] units = TurnManager.Instance.GetAllUnits();
                 foreach (Character u in units)
                 {
-                    u.gameObject.SetActive(true);
+                    u.ChangePartsMeshActiveStatus(true);
+                    u.ChangeGunsMeshActiveStatus(true);
                 }
                 var cam = FindObjectOfType<CloseUpCamera>();
                 _selectedChar.SetSelectingEnemy(false);
@@ -1404,7 +1397,12 @@ public class ButtonsUIManager : MonoBehaviour
             if (unit == _selectedEnemy)
                 continue;
 
-            unit.ChangeMeshActiveStatus(false);
+            unit.ChangePartsMeshActiveStatus(false);
+
+            if (unit == _selectedChar)
+                continue;
+
+            unit.ChangeGunsMeshActiveStatus(false);
         }
         _selectedChar.RaysOffDelay();
 
