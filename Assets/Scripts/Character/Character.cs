@@ -528,6 +528,8 @@ public class Character : EnumsClass, IObservable
             case "Body":
                 if (hitObj.gameObject.CompareTag(tagToCheck) && hitObj.GetComponent<Body>().GetCharacter().GetUnitTeam() != _unitTeam)
                     goodHit = true;
+                else
+                    Debug.Log("Body ray hit: " + hitObj.gameObject.name);
                 
                 renderer = _rayForBody;
                 break;
@@ -535,6 +537,8 @@ public class Character : EnumsClass, IObservable
             case "Legs":
                 if (hitObj.gameObject.CompareTag(tagToCheck) && hitObj.GetComponent<Legs>().GetCharacter().GetUnitTeam() != _unitTeam)
                     goodHit = true;
+                else 
+                    Debug.Log("Legs ray hit: " + hitObj.gameObject.name);
 
                 renderer = _rayForLegs;
                 break;
@@ -542,6 +546,8 @@ public class Character : EnumsClass, IObservable
             case "RGun":
                 if (hitObj.gameObject.CompareTag(tagToCheck) && hitObj.GetComponent<Gun>().GetCharacter().GetUnitTeam() != _unitTeam)
                     goodHit = true;
+                else 
+                    Debug.Log("RGun ray hit: " + hitObj.gameObject.name);
 
                 renderer = _rayForRightArm;
                 break;
@@ -549,6 +555,8 @@ public class Character : EnumsClass, IObservable
             case "LGun":
                 if (hitObj.gameObject.CompareTag(tagToCheck) && hitObj.GetComponent<Gun>().GetCharacter().GetUnitTeam() != _unitTeam)
                     goodHit = true;
+                else 
+                    Debug.Log("LGun ray hit: " + hitObj.gameObject.name);
 
                 renderer = _rayForLeftArm;
                 break;
@@ -1421,9 +1429,7 @@ public class Character : EnumsClass, IObservable
         if (_leftGun)
         {
             _leftGun.transform.localPosition = Vector3.zero;
-            _leftGun.gameObject.tag = "LGun";
-            _leftGun.SetGunData(_mechaEquipment.leftGun, this);
-            _leftGun.SetRightOrLeft("Left");
+            _leftGun.SetGunData(_mechaEquipment.leftGun, this, "LGun", "Left");
             _leftGun.SetAbilityData(_mechaEquipment.leftGunAbility);
             _leftGunAlive = true;
         }
@@ -1433,9 +1439,7 @@ public class Character : EnumsClass, IObservable
         if (_rightGun)
         {
             _rightGun.transform.localPosition = Vector3.zero;
-            _rightGun.gameObject.tag = "RGun";
-            _rightGun.SetGunData(_mechaEquipment.rightGun, this);
-            _rightGun.SetRightOrLeft("Right");
+            _rightGun.SetGunData(_mechaEquipment.rightGun, this, "RGun", "Right");
             _rightGun.SetAbilityData(_mechaEquipment.rightGunAbility);
             _rightGunAlive = true;
         }

@@ -6,12 +6,12 @@ public class Shotgun : Gun
     private Dictionary<string, int> _multipleHitRoulette = new Dictionary<string, int>();
 
     private readonly string[] _parts = { "Body", "LArm", "RArm", "Legs" };
-    
-    public override void SetGunData(GunSO data, Character character)
+
+    public override void SetGunData(GunSO data, Character character, string tag, string location)
     {
         _gunType = GunsType.Shotgun;
         _gun = "Shotgun";
-        base.SetGunData(data, character);
+        base.SetGunData(data, character, tag, location);
     }
     
     public override void Ability()

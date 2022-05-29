@@ -44,11 +44,6 @@ public abstract class Gun : EnumsClass, IChangeableShader
 
     //private bool _abilityCreated;
     
-    public void SetRightOrLeft(string location)
-    {
-        _location = location;
-    }
-    
     # region Getters
     public int GetMaxBullets()
     {
@@ -154,7 +149,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
     /// <summary>
     /// Set Gun stats from given scriptable object.
     /// </summary>
-    public virtual void SetGunData(GunSO data, Character character)
+    public virtual void SetGunData(GunSO data, Character character, string tag, string location)
     {
         _myChar = character;
         _maxHP = data.maxHp;
@@ -172,6 +167,9 @@ public abstract class Gun : EnumsClass, IChangeableShader
         _bodyPartsSelectionQuantity = data.bodyPartsSelectionQuantity;
         _weight = data.weight;
         _gunSkill = false;
+
+        _collider.gameObject.tag = tag;
+        _location = location;
 
         _masterShader.Initialize();
 

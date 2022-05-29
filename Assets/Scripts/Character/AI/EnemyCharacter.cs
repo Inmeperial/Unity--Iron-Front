@@ -314,8 +314,6 @@ public class EnemyCharacter : Character
 
     //protected override void ConfigureMecha()
     //{
-    //    if (!_mechaEquipment)
-    //        _mechaEquipment = _equipment;
     //    base.ConfigureMecha();
     //}
 

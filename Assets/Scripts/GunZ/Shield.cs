@@ -6,11 +6,11 @@ public class Shield : Gun
     public float prefabHeight;
     private bool _selected = false;
     private List<GameObject> _instantiated = new List<GameObject>();
-    public override void SetGunData(GunSO data, Character character)
+    public override void SetGunData(GunSO data, Character character, string tag, string location)
     {
         _gunType = GunsType.Shield;
         _gun = "Shield";
-        base.SetGunData(data, character);
+        base.SetGunData(data, character, tag, location);
     }
 
     public override void Ability()

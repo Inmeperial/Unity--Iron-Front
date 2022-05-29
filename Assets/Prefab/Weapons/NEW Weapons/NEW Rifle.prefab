@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7243873532868469686}
   - component: {fileID: 7109212115555344315}
+  - component: {fileID: 5652192454107929912}
   m_Layer: 9
   m_Name: NEW Rifle
   m_TagString: Untagged
@@ -47,10 +48,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderers:
   - {fileID: 5067032203517058641}
-  _collider: {fileID: 6034359415900666640}
+  _collider: {fileID: 5652192454107929912}
   _damageParticleSpawner: {fileID: 6743376488076012256}
   _shootParticleSpawn: {fileID: 8046643030820697803}
   _masterShader: {fileID: 376307374612302145}
+--- !u!65 &5652192454107929912
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2123851461071558641}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 4.5}
+  m_Center: {x: 0, y: 0, z: 1.8}
 --- !u!1 &6743376488076012256
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,19 +244,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5877236342617522901}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &6034359415900666640
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6724237638342475652}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6976111, y: 5.9416203, z: 2.1076565}
-  m_Center: {x: 0.1089493, y: -2.5507867, z: -0.052517425}
 --- !u!114 &376307374612302145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,7 +258,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 5067032203517058641}
   isWeapon: 1
-  mechaEnum: 0
   texturesCuerpo:
   - {fileID: 2800000, guid: 11e83bb4586b84e4086da88132e35974, type: 3}
   - {fileID: 2800000, guid: af93befb1188490448e1451c9eb3681b, type: 3}

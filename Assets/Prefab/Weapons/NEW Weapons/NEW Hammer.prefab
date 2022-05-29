@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3278604593058575998}
   - component: {fileID: 1450129193210833540}
+  - component: {fileID: 177087977917482356}
   m_Layer: 9
   m_Name: NEW Hammer
   m_TagString: Untagged
@@ -47,10 +48,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderers:
   - {fileID: 3626872738900907036}
-  _collider: {fileID: 6034648842628249300}
+  _collider: {fileID: 177087977917482356}
   _damageParticleSpawner: {fileID: 6752134924807429091}
   _shootParticleSpawn: {fileID: 6752134924807429091}
   _masterShader: {fileID: 2114621700826307070}
+--- !u!65 &177087977917482356
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6304616918719058431}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 4.5}
+  m_Center: {x: 0, y: 0, z: 1.8}
 --- !u!1 &6752134924807429091
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,19 +207,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2707974182571739288}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &6034648842628249300
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2978500008213689801}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.85371894, y: 4.5443397, z: 1.6217282}
-  m_Center: {x: 0.020068228, y: -1.8521465, z: 0.26622593}
 --- !u!114 &2114621700826307070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,7 +221,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 3626872738900907036}
   isWeapon: 1
-  mechaEnum: 0
   texturesCuerpo:
   - {fileID: 2800000, guid: 11e83bb4586b84e4086da88132e35974, type: 3}
   - {fileID: 2800000, guid: af93befb1188490448e1451c9eb3681b, type: 3}
