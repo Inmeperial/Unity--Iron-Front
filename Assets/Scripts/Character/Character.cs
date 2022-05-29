@@ -778,7 +778,7 @@ public class Character : EnumsClass, IObservable
     public Vector3 GetLArmPosition()
     {
         if (_leftGun)
-            return _leftGun.transform.position;
+            return _leftGun.GetObjectCenterCenter();            
         
         return Vector3.zero;
     }
@@ -789,8 +789,8 @@ public class Character : EnumsClass, IObservable
     public Vector3 GetRArmPosition()
     {
         if (_rightGun)
-            return _rightGun.transform.position;
-        
+            return _rightGun.GetObjectCenterCenter();
+
         return Vector3.zero;
     }
 

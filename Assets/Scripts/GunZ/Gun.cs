@@ -144,6 +144,11 @@ public abstract class Gun : EnumsClass, IChangeableShader
     {
         return _location;
     }
+
+    public Vector3 GetObjectCenterCenter()
+    {
+        return _collider.bounds.center;
+    }
     #endregion
     
     /// <summary>
