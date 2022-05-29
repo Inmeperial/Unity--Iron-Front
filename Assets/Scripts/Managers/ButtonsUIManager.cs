@@ -1164,9 +1164,9 @@ public class ButtonsUIManager : MonoBehaviour
         
         ConfigureEquipmentButton(legsEquipmentButton, legs.GetAbility());
 
-        if (body.GetItem())
+        if (_selectedChar.GetItem())
         {
-            ConfigureEquipmentButton(itemEquipmentButton, body.GetItem());
+            ConfigureEquipmentButton(itemEquipmentButton, _selectedChar.GetItem());
         }
         else ConfigureEquipmentButton(itemEquipmentButton, null);
     }

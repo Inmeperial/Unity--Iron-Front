@@ -58,6 +58,7 @@ public class Character : EnumsClass, IObservable
     protected string _myName;
 
     protected Equipable _equipable;
+    protected Item _item;
 
     //TODO: REVISAR ESTA RANCIADA
     //protected Dictionary<PartsMechaEnum, GameObject> _partsDictionary = new Dictionary<PartsMechaEnum, GameObject>();
@@ -869,11 +870,6 @@ public class Character : EnumsClass, IObservable
 
     public string GetCharacterName() => _myName;
 
-    // public Item GetItem()
-    // {
-    //     return _equipable;
-    // }
-
     public List<Equipable> GetEquipables() => _equipables;
 
     public void EquipableSelectionState(bool state, Equipable equipable)
@@ -1408,6 +1404,7 @@ public class Character : EnumsClass, IObservable
 
     public void OnUseEquipable() => EquipableSelectionState(false, null);
 
+    public Item GetItem() => _item;
     #endregion
 
     public void SetEquipment(MechaEquipmentSO equipment) => _mechaEquipment = equipment;
@@ -1446,6 +1443,13 @@ public class Character : EnumsClass, IObservable
 
         _legs.SetPartData(this, _mechaEquipment.legs, _mechaEquipment.GetLegsColor());
         _legs.SetAbilityData(_mechaEquipment.legsAbility);
+
+        if (_mechaEquipment.item)
+        {
+            _item = Instantiate(_mechaEquipment.item.itemPrefab, transform);
+            _item.Initialize(this, _mechaEquipment.item);
+        }
+            
 
         _canMove = true;
         _currentSteps = _legs.GetMaxSteps();

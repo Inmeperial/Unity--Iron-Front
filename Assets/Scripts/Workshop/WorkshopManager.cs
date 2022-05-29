@@ -152,16 +152,6 @@ public class WorkshopManager : MonoBehaviour
     {
         _equipmentContainer = LoadSaveUtility.LoadEquipment();
 
-        //MechaEquipmentContainerSO equipmentToUse = null;
-
-        //if (loadedEquipment == null) 
-        //    equipmentToUse = _equipmentContainer;
-        //else
-        //{
-        //    _equipmentContainer = loadedEquipment;
-        //    equipmentToUse = loadedEquipment;
-        //}
-
         for (int i = 0; i < mechas.Length; i++)
         {
             mechas[i].SetEquipment(_equipmentContainer.GetEquipment(i), i);

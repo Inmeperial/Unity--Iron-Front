@@ -12,7 +12,6 @@ public abstract class Parts : MonoBehaviour, IChangeableShader
     protected const int CriticalHit = 2;
     protected Character _myChar;
     protected Ability _ability;
-    protected Item _item;
     protected float _maxHP;
     protected float _currentHP;
     protected float _weight;
@@ -45,10 +44,7 @@ public abstract class Parts : MonoBehaviour, IChangeableShader
     public virtual void SetAbilityData(AbilitySO abilityData)
     {
         if (!abilityData)
-        {
-            Debug.Log("sin ability data " + _myChar.GetCharacterName());
             return;
-        }
             
         _ability = Instantiate(abilityData.abilityPrefab, transform);
         _ability.Initialize(_myChar, abilityData);

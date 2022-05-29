@@ -15,25 +15,7 @@ public class Body : Parts
 
         BodySO bodyData = data as BodySO;
         _maxWeight = bodyData.maxWeight;
-        
-        
-
-        //if (_ability && _ability.GetAbilityEnum() == Ability.Abilities.SmokeScreen)
-        //{
-        //    _smokeScreenAvailable = true;
-        //    var smokeData = d.ability as SmokeScreenSO;
-        //    _smokeScreenHpPercentage = smokeData.hpPercentageForSmokeActivation;
-        //}
-        
-        //if (d.item && d.item.itemPrefab)
-        //{
-        //    _item = Instantiate(d.item.itemPrefab, _myChar.transform);
-        //    _item.Initialize(_myChar, d.item, location);
-        //    _myChar.AddEquipable(_item);
-        //}
     }
-
-
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void TakeDamage(List<Tuple<int,int>> damages)
     {
@@ -150,8 +132,6 @@ public class Body : Parts
         _ability.Use();
     }
 
-    public Item GetItem() => _item;
-
     public override void Heal(int healAmount)
     {
         base.Heal(healAmount);
@@ -161,6 +141,11 @@ public class Body : Parts
         ButtonsUIManager.Instance.UpdateBodyHUD(_currentHP);
     }
 
+    public void ConfigureSmokeScreen(float percentageToActivate)
+    {
+        _smokeScreenHpPercentage = percentageToActivate;
+        _smokeScreenAvailable = true;
+    }
     public void DeactivateSmokeScreen()
     {
         _smokeScreenActive = false;

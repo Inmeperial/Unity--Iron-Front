@@ -14,6 +14,8 @@ public class SmokeScreen : Ability
         base.Initialize(character, data);
 	    
         _abilityData = data as SmokeScreenSO;
+
+        _character.GetBody().ConfigureSmokeScreen(_abilityData.hpPercentageForSmokeActivation);
     }
     
     public override void Select()
