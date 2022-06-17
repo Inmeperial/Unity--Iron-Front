@@ -48,7 +48,7 @@ public class RepairKit : Item
 
 	private void UseItem(Action callback = null)
     {
-		EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.RepairKit);
+		EffectsController.Instance.PlayParticlesEffect(_character.GetMyPositionTile().gameObject, EnumsClass.ParticleActionType.RepairKit);
         
 		Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 

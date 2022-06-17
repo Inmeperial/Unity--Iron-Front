@@ -26,6 +26,7 @@ public class LegsOvercharge : Ability
     }
     public override void Select()
     {
+        EffectsController.Instance.PlayParticlesEffect(_character.GetMyPositionTile().gameObject, EnumsClass.ParticleActionType.LegsOvercharge);
         _character.DeselectThisUnit();
 
         _character.LegsOverchargeActivate();
@@ -51,6 +52,7 @@ public class LegsOvercharge : Ability
     public override void Use(Action callback = null)
     {
         Debug.Log("use legs overcharge");
+        
     }
 
     private IEnumerator SelectCharacterDelay()

@@ -43,6 +43,7 @@ public abstract class EnumsClass: MonoBehaviour
         AssaultRifleFinalShot,
         Rifle,
         Dead,
-        MortarHit
+        MortarHit,
+        LegsOvercharge
     };
 }
