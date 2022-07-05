@@ -23,9 +23,9 @@ public class EffectsController : MonoBehaviour
     [SerializeField] private GameObject _assaultRifleEffect;
     [SerializeField] private GameObject _rifleEffect;
     [SerializeField] private GameObject _deadMechaEffect;
-    [SerializeField] private GameObject _hitMechaEffect;
+    //[SerializeField] private GameObject _hitMechaEffect;
     [SerializeField] private GameObject _burningMechaEffect;
-    [SerializeField] private GameObject _dustEffect;
+    //[SerializeField] private GameObject _dustEffect;
     [SerializeField] private GameObject _healEffect;
     [SerializeField] private GameObject _chargeEffect;
 
@@ -223,13 +223,13 @@ public class EffectsController : MonoBehaviour
                 break;
 
             case EnumsClass.ParticleActionType.MortarHit:
-                effect = Instantiate(_dustEffect, obj.transform.position, obj.transform.rotation, obj.transform);
-                particle = effect.GetComponent<ParticleSystem>();
-                particle.time = 0f;
-                particle.Play();
+                //effect = Instantiate(_dustEffect, obj.transform.position, obj.transform.rotation, obj.transform);
+                //particle = effect.GetComponent<ParticleSystem>();
+                //particle.time = 0f;
+                //particle.Play();
                 ShakeIt();
                 AudioManager.audioManagerInstance.PlaySound(_mineSound, this.gameObject);
-                StartCoroutine(DestroyEffect(effect, particle.main.duration));
+                //StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
         }
     }
