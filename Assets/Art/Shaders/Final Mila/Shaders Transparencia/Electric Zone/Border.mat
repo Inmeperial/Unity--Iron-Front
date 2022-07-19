@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Border
   m_Shader: {fileID: 4800000, guid: 414ebe130bd02a242bc78ba5a3c8a5bd, type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -67,6 +68,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _Bias1: 3.9159024
     - _Bias2: 0
@@ -88,9 +90,10 @@ Material:
     - _SphereSize: 40
     - _TessPhongStrength: 0.5
     - _Tiling: 5
-    - __dirty: 0
+    - __dirty: 1
     m_Colors:
     - _Vector0: {r: 9.3, g: 7.94, b: 0, a: 0}
     - _offSet: {r: 0.15, g: -0.55, b: 0, a: 0}
     - _offSetElectriciy: {r: 9.3, g: 7.94, b: 0, a: 0}
     - _offSetElectriciy2: {r: 9.3, g: 7.94, b: 0, a: 0}
+  m_BuildTextureStacks: []
