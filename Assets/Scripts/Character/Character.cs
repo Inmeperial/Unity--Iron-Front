@@ -1510,9 +1510,11 @@ public class Character : EnumsClass, IObservable
 
         _legs.SetShader(texture);
 
-        _rightGun.SetShader(texture);
+        if (_rightGun)
+            _rightGun.SetShader(texture);
 
-        _leftGun.SetShader(texture);
+        if (_leftGun)
+            _leftGun.SetShader(texture);
     }
 
     public void CheckWeight()
