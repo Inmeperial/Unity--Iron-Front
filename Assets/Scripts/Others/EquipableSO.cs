@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class EquipableSO : ScriptableObject
+public abstract class EquipableSO : ArsenalObjectSO
 {
     public enum EquipableType
      {
@@ -10,9 +10,6 @@ public abstract class EquipableSO : ScriptableObject
      };
 
     public EquipableType equipableType;
-    public string equipableName;
-    public Sprite equipableIcon;
-    public string description;
     public int maxUses;
     public int cooldown;
     public int buttonTextFontSize;

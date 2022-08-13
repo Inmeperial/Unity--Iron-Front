@@ -24,9 +24,9 @@ public class Ability : Equipable
     public override void Initialize(Character character, EquipableSO data)
     {
         _character = character;
-        _icon = data.equipableIcon;
+        _icon = data.objectImage;
         _equipableType = data.equipableType;
-        _equipableName = data.equipableName;
+        _equipableName = data.objectName;
     }
 
     public override void Select() => Debug.Log("select ability");

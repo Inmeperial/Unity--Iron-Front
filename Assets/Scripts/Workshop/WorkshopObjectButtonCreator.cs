@@ -8,19 +8,19 @@ public class WorkshopObjectButtonCreator : MonoBehaviour
 
     public WorkshopObjectButton CreateWorkshopObjectButton(PartSO part, Transform parent)
     {
-        WorkshopObjectButton button = InstantiateWorkshopObjectButton(parent, part.partName, part.icon);
+        WorkshopObjectButton button = InstantiateWorkshopObjectButton(parent, part.objectName, part.objectImage);
         return button;
     }
 
     public WorkshopObjectButton CreateWorkshopObjectButton(GunSO gun, Transform parent)
     {
-        WorkshopObjectButton button = InstantiateWorkshopObjectButton(parent, gun.gunName, gun.gunImage);
+        WorkshopObjectButton button = InstantiateWorkshopObjectButton(parent, gun.objectName, gun.objectImage);
         return button;
     }
 
     public WorkshopObjectButton CreateWorkshopObjectButton(EquipableSO equipable, Transform parent)
     {
-        WorkshopObjectButton button = InstantiateWorkshopObjectButton(parent, equipable.equipableName, equipable.equipableIcon);
+        WorkshopObjectButton button = InstantiateWorkshopObjectButton(parent, equipable.objectName, equipable.objectImage);
         return button;
     }
 

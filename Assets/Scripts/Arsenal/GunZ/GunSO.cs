@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Gun", menuName = "Create Gun")]
-public class GunSO : ScriptableObject
+public class GunSO : ArsenalObjectSO
 {
-    public string gunName;
     public Gun prefab;
     public float maxHp;
     public int maxBullets;
-    public Sprite gunImage;
     public int availableBullets;
     public int bulletsPerClick;
     public int damage;
@@ -17,6 +15,5 @@ public class GunSO : ScriptableObject
     public int chanceToHitOtherParts;
     public int attackRange;
     public int bodyPartsSelectionQuantity;
-    //public AbilitySO ability;
     public float weight;
 }

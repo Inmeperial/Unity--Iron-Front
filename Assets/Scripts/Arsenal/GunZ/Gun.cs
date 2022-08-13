@@ -159,7 +159,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
         _myChar = character;
         _maxHP = data.maxHp;
         _currentHP = _maxHP;
-        _icon = data.gunImage;
+        _icon = data.objectImage;
         _maxBullets = data.maxBullets;
         _availableBullets = _maxBullets;
         _bulletsPerClick = data.bulletsPerClick;

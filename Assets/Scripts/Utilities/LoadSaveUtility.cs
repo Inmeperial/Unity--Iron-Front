@@ -180,41 +180,41 @@ public static class LoadSaveUtility
         //Converts al equipments to json/string.
         for (int i = 0; i < amount; i++)
         {
-            string body = equipmentContainer.equipments[i].body.partName;
+            string body = equipmentContainer.equipments[i].body.objectName;
             body += '|';
 
             string bodyAbility = "";
             if (equipmentContainer.equipments[i].bodyAbility)
-                bodyAbility = equipmentContainer.equipments[i].bodyAbility.equipableName;
+                bodyAbility = equipmentContainer.equipments[i].bodyAbility.objectName;
             bodyAbility += '|';
 
             string item = "";            
             if (equipmentContainer.equipments[i].item)
-                item = equipmentContainer.equipments[i].item.equipableName;
+                item = equipmentContainer.equipments[i].item.objectName;
             item += '|';
 
-            string leftGun = equipmentContainer.equipments[i].leftGun.gunName;
+            string leftGun = equipmentContainer.equipments[i].leftGun.objectName;
             leftGun += '|';
 
             string leftGunAbility = "";
             if (equipmentContainer.equipments[i].leftGunAbility)
-                leftGunAbility = equipmentContainer.equipments[i].leftGunAbility.equipableName;
+                leftGunAbility = equipmentContainer.equipments[i].leftGunAbility.objectName;
             leftGunAbility += '|';
 
-            string rightGun = equipmentContainer.equipments[i].rightGun.gunName;
+            string rightGun = equipmentContainer.equipments[i].rightGun.objectName;
             rightGun += '|';
 
             string rightGunAbility = "";
             if (equipmentContainer.equipments[i].rightGunAbility)
-                rightGunAbility = equipmentContainer.equipments[i].rightGunAbility.equipableName;
+                rightGunAbility = equipmentContainer.equipments[i].rightGunAbility.objectName;
             rightGunAbility += '|';
 
-            string legs = equipmentContainer.equipments[i].legs.partName;
+            string legs = equipmentContainer.equipments[i].legs.objectName;
             legs += '|';
 
             string legsAbility = "";
             if (equipmentContainer.equipments[i].legsAbility)
-                legsAbility = equipmentContainer.equipments[i].legsAbility.equipableName;
+                legsAbility = equipmentContainer.equipments[i].legsAbility.objectName;
             legsAbility += '|';
 
             string bodyColor = JsonUtility.ToJson(equipmentContainer.equipments[i].bodyColor, true);

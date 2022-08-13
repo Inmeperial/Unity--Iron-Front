@@ -114,6 +114,7 @@ public class Character : EnumsClass, IObservable
 
     protected float _startingHeight;
 
+    public Action<int, int, int, int> 
     public virtual void Awake()
     {
         _startingHeight = transform.position.y;

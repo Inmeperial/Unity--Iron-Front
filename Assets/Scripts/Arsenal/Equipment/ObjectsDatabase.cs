@@ -19,7 +19,7 @@ public class ObjectsDatabase : ScriptableObject
     {
         foreach(BodySO body in bodiesList)
         {
-            if (body.partName == id)
+            if (body.objectName == id)
                 return body;
         }
 
@@ -30,7 +30,7 @@ public class ObjectsDatabase : ScriptableObject
     {
         foreach (LegsSO legs in legsList)
         {
-            if (legs.partName == id)
+            if (legs.objectName == id)
                 return legs;
         }
 
@@ -41,7 +41,7 @@ public class ObjectsDatabase : ScriptableObject
     {
         foreach (GunSO gun in gunsList)
         {
-            if (gun.gunName == id)
+            if (gun.objectName == id)
                 return gun;
         }
 
@@ -52,7 +52,7 @@ public class ObjectsDatabase : ScriptableObject
     {
         foreach (AbilitySO ability in abilitiesList)
         {
-            if (ability.equipableName == id)
+            if (ability.objectName == id)
                 return ability;
         }
 
@@ -63,7 +63,7 @@ public class ObjectsDatabase : ScriptableObject
     {
         foreach (ItemSO item in itemsList)
         {
-            if (item.equipableName == id)
+            if (item.objectName == id)
                 return item;
         }
 

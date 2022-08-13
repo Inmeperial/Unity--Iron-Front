@@ -16,15 +16,16 @@ public class WorkshopUIManager : MonoBehaviour
 
     [Header("Overview Texts")]
     [SerializeField] private TextMeshProUGUI _overviewName;
-    [SerializeField] private TextMeshProUGUI _overviewBody;
-    [SerializeField] private Image _overviewBodyAbility;
-    [SerializeField] private TextMeshProUGUI _overviewLeftArm;
-    [SerializeField] private Image _overviewLeftArmAbility;
-    [SerializeField] private TextMeshProUGUI _overviewRightArm;
-    [SerializeField] private Image _overviewRightArmAbility;
-    [SerializeField] private TextMeshProUGUI _overviewLegs;
-    [SerializeField] private Image _overviewLegsAbility;
-    [SerializeField] private Image _overviewItem;
+    [SerializeField] private OverviewDataText _overviewBody;
+    [SerializeField] private OverviewDataImage _overviewBodyAbility;
+    [SerializeField] private OverviewDataText _overviewLeftGun;
+    [SerializeField] private OverviewDataImage _overviewLeftArmAbility;
+    [SerializeField] private OverviewDataText _overviewRightGun;
+    [SerializeField] private OverviewDataImage _overviewRightArmAbility;
+    [SerializeField] private OverviewDataText _overviewLegs;
+    [SerializeField] private OverviewDataImage _overviewLegsAbility;
+    [SerializeField] private OverviewDataText _overviewItemText;
+    [SerializeField] private OverviewDataImage _overviewItemImage;
 
 
 
@@ -101,34 +102,81 @@ public class WorkshopUIManager : MonoBehaviour
 
         _overviewName.text = equipmentData.mechaName;
 
-        _overviewBody.text = "Body: \n" + equipmentData.body.partName;
+        string bodyName = "Body: \n" + equipmentData.body.objectName;
+        _overviewBody.SetData(bodyName);
+        _overviewBody.SetTooltipData(equipmentData.body);
+
         if (equipmentData.bodyAbility)
-            _overviewBodyAbility.sprite = equipmentData.bodyAbility.equipableIcon;
+        {
+            _overviewBodyAbility.SetData(equipmentData.bodyAbility.objectImage);
+            _overviewBodyAbility.SetTooltipData(equipmentData.bodyAbility);
+        }
         else
-            _overviewBodyAbility.sprite = _noneIcon;
+        {
+            _overviewBodyAbility.SetData(_noneIcon);
+            _overviewBodyAbility.SetTooltipData("", "");
+        }
 
-        _overviewLeftArm.text = "Left Gun: \n" + equipmentData.leftGun.gunName;
+        string leftGunName = "Left Gun: \n" + equipmentData.leftGun.objectName;
+        _overviewLeftGun.SetData(leftGunName);
+        _overviewLeftGun.SetTooltipData(equipmentData.leftGun);
+
         if (equipmentData.leftGunAbility)
-            _overviewLeftArmAbility.sprite = equipmentData.leftGunAbility.equipableIcon;
+        {
+            _overviewLeftArmAbility.SetData(equipmentData.leftGunAbility.objectImage);
+            _overviewLeftArmAbility.SetTooltipData(equipmentData.leftGunAbility);
+        }
         else
-            _overviewLeftArmAbility.sprite = _noneIcon;
+        {
+            _overviewLeftArmAbility.SetData(_noneIcon);
+            _overviewLeftArmAbility.SetTooltipData("", "");
+        }
 
-        _overviewRightArm.text = "Right Gun: \n" + equipmentData.rightGun.gunName;
-        if (equipmentData.rightGunAbility) 
-            _overviewRightArmAbility.sprite = equipmentData.rightGunAbility.equipableIcon;
+        string rightGunName = "Right Gun: \n" + equipmentData.rightGun.objectName;
+        _overviewRightGun.SetData(rightGunName);
+        _overviewRightGun.SetTooltipData(equipmentData.rightGun);
+
+        if (equipmentData.leftGunAbility)
+        {
+            _overviewRightArmAbility.SetData(equipmentData.rightGunAbility.objectImage);
+            _overviewRightArmAbility.SetTooltipData(equipmentData.rightGunAbility);
+        }
         else
-            _overviewRightArmAbility.sprite = _noneIcon;
+        {
+            _overviewRightArmAbility.SetData(_noneIcon);
+            _overviewRightArmAbility.SetTooltipData("", "");
+        }
 
-        _overviewLegs.text = "Legs: \n" + equipmentData.legs.partName;
-        if (equipmentData.legsAbility)
-            _overviewLegsAbility.sprite = equipmentData.legsAbility.equipableIcon;
+        string legsName = "Legs: \n" + equipmentData.legs.objectName;
+        _overviewLegs.SetData(legsName);
+        _overviewLegs.SetTooltipData(equipmentData.legs);
+
+        if (equipmentData.leftGunAbility)
+        {
+            _overviewLegsAbility.SetData(equipmentData.legsAbility.objectImage);
+            _overviewLegsAbility.SetTooltipData(equipmentData.legsAbility);
+        }
         else
-            _overviewLegsAbility.sprite = _noneIcon;
+        {
+            _overviewLegsAbility.SetData(_noneIcon);
+            _overviewLegsAbility.SetTooltipData("", "");
+        }
 
-        if (equipmentData.item) 
-            _overviewItem.sprite = equipmentData.item.equipableIcon;
-        else 
-            _overviewItem.sprite = _noneIcon;
+
+        if (equipmentData.item)
+        {
+            _overviewItemText.SetData(equipmentData.item.objectName);
+            _overviewItemText.SetTooltipData(equipmentData.item);
+            _overviewItemImage.SetData(equipmentData.item.objectImage);
+            _overviewItemImage.SetTooltipData(equipmentData.item);
+        }
+        else
+        {
+            _overviewItemText.SetData("None");
+            _overviewItemText.SetTooltipData("", "");
+            _overviewItemImage.SetData(_noneIcon);
+            _overviewItemImage.SetTooltipData("", "");
+        }
 
         AbilitiesTabSetAbilitiesIcons();
     }
@@ -201,7 +249,7 @@ public class WorkshopUIManager : MonoBehaviour
                         UpdateWeightSlider(mechaIndex);
                     });
 
-                    if (currentMechaEquipment.body.partName == body.partName)
+                    if (currentMechaEquipment.body.objectName == body.objectName)
                     {
                         button.Select();
                         _partsDescription.text = "HP: " + body.maxHP +
@@ -230,7 +278,7 @@ public class WorkshopUIManager : MonoBehaviour
                         UpdateWeightSlider(mechaIndex);
                     });
 
-                    if (currentMechaEquipment.leftGun.gunName == gun.gunName)
+                    if (currentMechaEquipment.leftGun.objectName == gun.objectName)
                     {
                         button.Select();
                         _partsDescription.text = "Damage: " + gun.damage +
@@ -260,7 +308,7 @@ public class WorkshopUIManager : MonoBehaviour
                         UpdateWeightSlider(mechaIndex);
                     });
 
-                    if (currentMechaEquipment.rightGun.gunName == gun.gunName)
+                    if (currentMechaEquipment.rightGun.objectName == gun.objectName)
                     {
                         button.Select();
                         _partsDescription.text = "Damage: " + gun.damage +
@@ -289,7 +337,7 @@ public class WorkshopUIManager : MonoBehaviour
                         UpdateWeightSlider(mechaIndex);
                     });
 
-                    if (currentMechaEquipment.legs.partName == leg.partName)
+                    if (currentMechaEquipment.legs.objectName == leg.objectName)
                     {
                         button.Select();
                         _partsDescription.text = "HP: " + leg.maxHP +
@@ -324,8 +372,8 @@ public class WorkshopUIManager : MonoBehaviour
                         WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(ability, _abilitiesSpawnParent);
                         button.SetLeftClick(() =>
                         {
-                            _abilitiesDescription.text = ability.description;
-                            if (ability.equipableIcon) _bodyAbilityImage.sprite = ability.equipableIcon;
+                            _abilitiesDescription.text = ability.objectDescription;
+                            if (ability.objectImage) _bodyAbilityImage.sprite = ability.objectImage;
 
                             button.Select();
 
@@ -334,10 +382,10 @@ public class WorkshopUIManager : MonoBehaviour
 
                         if (currentMechaEquipment.bodyAbility)
                         {
-                            if (currentMechaEquipment.bodyAbility.equipableName == ability.equipableName)
+                            if (currentMechaEquipment.bodyAbility.objectName == ability.objectName)
                             {
                                 button.Select();
-                                _abilitiesDescription.text = ability.description;
+                                _abilitiesDescription.text = ability.objectDescription;
                             }
                         }
                     }
@@ -354,8 +402,8 @@ public class WorkshopUIManager : MonoBehaviour
                         WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(ability, _abilitiesSpawnParent);
                         button.SetLeftClick(() =>
                         {
-                            _abilitiesDescription.text = ability.description;
-                            if (ability.equipableIcon) _leftArmAbilityImage.sprite = ability.equipableIcon;
+                            _abilitiesDescription.text = ability.objectDescription;
+                            if (ability.objectImage) _leftArmAbilityImage.sprite = ability.objectImage;
 
                             button.Select();
                             OnChangeEquippable?.Invoke(ability, part);
@@ -363,10 +411,10 @@ public class WorkshopUIManager : MonoBehaviour
 
                         if (currentMechaEquipment.leftGunAbility)
                         {
-                            if (currentMechaEquipment.leftGunAbility.equipableName == ability.equipableName)
+                            if (currentMechaEquipment.leftGunAbility.objectName == ability.objectName)
                             {
                                 button.Select();
-                                _abilitiesDescription.text = ability.description;
+                                _abilitiesDescription.text = ability.objectDescription;
                             }
                         }
                     }
@@ -382,8 +430,8 @@ public class WorkshopUIManager : MonoBehaviour
                         WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(ability, _abilitiesSpawnParent);
                         button.SetLeftClick(() =>
                         {
-                            _abilitiesDescription.text = ability.description;
-                            if (ability.equipableIcon) _rightArmAbilityImage.sprite = ability.equipableIcon;
+                            _abilitiesDescription.text = ability.objectDescription;
+                            if (ability.objectImage) _rightArmAbilityImage.sprite = ability.objectImage;
 
                             button.Select();
 
@@ -392,10 +440,10 @@ public class WorkshopUIManager : MonoBehaviour
 
                         if (currentMechaEquipment.rightGunAbility)
                         {
-                            if (currentMechaEquipment.rightGunAbility.equipableName == ability.equipableName)
+                            if (currentMechaEquipment.rightGunAbility.objectName == ability.objectName)
                             {
                                 button.Select();
-                                _abilitiesDescription.text = ability.description;
+                                _abilitiesDescription.text = ability.objectDescription;
                             }
                         }
                     }
@@ -412,8 +460,8 @@ public class WorkshopUIManager : MonoBehaviour
                         WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(ability, _abilitiesSpawnParent);
                         button.SetLeftClick(() =>
                         {
-                            _abilitiesDescription.text = ability.description;
-                            if (ability.equipableIcon) _legsAbilityImage.sprite = ability.equipableIcon;
+                            _abilitiesDescription.text = ability.objectDescription;
+                            if (ability.objectImage) _legsAbilityImage.sprite = ability.objectImage;
 
                             button.Select();
 
@@ -422,10 +470,10 @@ public class WorkshopUIManager : MonoBehaviour
 
                         if (currentMechaEquipment.legsAbility)
                         {
-                            if (currentMechaEquipment.legsAbility.equipableName == ability.equipableName)
+                            if (currentMechaEquipment.legsAbility.objectName == ability.objectName)
                             {
                                 button.Select();
-                                _abilitiesDescription.text = ability.description;
+                                _abilitiesDescription.text = ability.objectDescription;
                             }
                         }
                     }
@@ -451,8 +499,8 @@ public class WorkshopUIManager : MonoBehaviour
             WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(item, _itemsSpawnParent);
             button.SetLeftClick(() =>
             {
-                _itemsDescription.text = item.description;
-                _itemImage.sprite = item.equipableIcon;
+                _itemsDescription.text = item.objectDescription;
+                _itemImage.sprite = item.objectImage;
 
                 button.Select();
 
@@ -461,10 +509,10 @@ public class WorkshopUIManager : MonoBehaviour
 
             if (currentMechaEquipment.item)
             {
-                if (currentMechaEquipment.item.equipableName == item.equipableName)
+                if (currentMechaEquipment.item.objectName == item.objectName)
                 {
                     button.Select();
-                    _itemsDescription.text = item.description;
+                    _itemsDescription.text = item.objectDescription;
                 }
             }
         }
@@ -602,22 +650,22 @@ public class WorkshopUIManager : MonoBehaviour
         MechaEquipmentSO currentMechaEquipment = _workshopManager.GetMechaEquipment(index);
 
         if (currentMechaEquipment.bodyAbility)
-            _bodyAbilityImage.sprite = currentMechaEquipment.bodyAbility.equipableIcon;
+            _bodyAbilityImage.sprite = currentMechaEquipment.bodyAbility.objectImage;
         else
             _bodyAbilityImage.sprite = _noneIcon;
 
         if (currentMechaEquipment.leftGunAbility)
-            _leftArmAbilityImage.sprite = currentMechaEquipment.leftGunAbility.equipableIcon;
+            _leftArmAbilityImage.sprite = currentMechaEquipment.leftGunAbility.objectImage;
         else 
             _leftArmAbilityImage.sprite = _noneIcon;
 
         if (currentMechaEquipment.rightGunAbility)
-            _rightArmAbilityImage.sprite = currentMechaEquipment.rightGunAbility.equipableIcon;
+            _rightArmAbilityImage.sprite = currentMechaEquipment.rightGunAbility.objectImage;
         else 
             _rightArmAbilityImage.sprite = _noneIcon;
 
         if (currentMechaEquipment.legsAbility) 
-            _legsAbilityImage.sprite = currentMechaEquipment.legsAbility.equipableIcon;
+            _legsAbilityImage.sprite = currentMechaEquipment.legsAbility.objectImage;
         else 
             _legsAbilityImage.sprite = _noneIcon;
     }
@@ -632,7 +680,7 @@ public class WorkshopUIManager : MonoBehaviour
 
         if (item)
         {
-            Sprite icon = item.equipableIcon;
+            Sprite icon = item.objectImage;
 
             if (icon)
                 _itemImage.sprite = icon;

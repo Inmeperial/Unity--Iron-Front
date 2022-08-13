@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5370b50706ef63644971868b76d8be6a, type: 3}
   m_Name: MineItem
   m_EditorClassIdentifier: 
+  objectName: Mine
+  objectDescription: Mine se murio
   equipableType: 0
-  equipableName: Mine
   equipableIcon: {fileID: 21300000, guid: a2edffa084aa95e40bf5cfa58dbf9003, type: 3}
-  description: 'Create a mine in a unoccupied tile up to 3 spaces away. Uses: 2'
   maxUses: 2
   cooldown: 1
   buttonTextFontSize: 0

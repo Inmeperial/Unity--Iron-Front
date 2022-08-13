@@ -16,6 +16,7 @@ public class TooltipSystem : MonoBehaviour
 	public static void Show(string content, string header = "")
 	{
 		_current.tooltip.SetText(content, header);
+		_current.tooltip.UpdateTooltipPosition();
 		_current.tooltip.gameObject.SetActive(true);
 	}
 

@@ -40,18 +40,13 @@ public class Tooltip : MonoBehaviour
 
 	private void Update()
 	{
-		if (Application.isEditor)
-		{
-			int headerLenght = headerField.text.Length;
-			int contentLenght = contentField.text.Length;
+		if (!gameObject.activeSelf)
+			return;
 
-			layoutElement.enabled = (headerLenght > characterWrapLimit || contentLenght > characterWrapLimit) ? true : false;
-		}
-
-		TooltipPosition();
+		UpdateTooltipPosition();
 	}
 
-	void TooltipPosition()
+	public void UpdateTooltipPosition()
 	{
 		Vector2 position = Input.mousePosition;
 
