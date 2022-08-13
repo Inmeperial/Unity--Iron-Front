@@ -177,7 +177,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
 
         _actualCharacter = _charactersInCurrentTurnOrder[0];
 
-        while (_actualCharacter.GetBody().GetCurrentHp() <= 0 || !_actualCharacter.IsUnitEnabled())
+        while (_actualCharacter.GetBody().CurrentHP <= 0 || !_actualCharacter.IsUnitEnabled())
         {
             MoveToLast();
 
@@ -307,7 +307,7 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         //Move unit portrait one position behind
         int newPos;
 
-        if (unit.GetLegs().GetCurrentHp() > 0)
+        if (unit.GetLegs().CurrentHP > 0)
         {
             if (unit.IsOverweight())
             {

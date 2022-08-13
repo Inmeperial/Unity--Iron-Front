@@ -11,8 +11,8 @@ public abstract class Gun : EnumsClass, IChangeableShader
     [SerializeField] protected GameObject _shootParticleSpawn;
     [SerializeField] protected MasterShaderScript _masterShader;
     protected Character _myChar;
-    protected float _maxHP;
-    protected float _currentHP;
+    private float _maxHP;
+    private float _currentHP;
     protected GunsType _gunType;
     protected string _gun;
     protected Sprite _icon;
@@ -42,9 +42,14 @@ public abstract class Gun : EnumsClass, IChangeableShader
 
     protected WeaponAbility _ability;
 
+    public float MaxHP { get => _maxHP; set => _maxHP = value; }
+    public float CurrentHP { get => _currentHP; set => _currentHP = value; }
+
+    public Action<float> OnHealthChanged;
+
     //private bool _abilityCreated;
-    
-    # region Getters
+
+    #region Getters
     public int GetMaxBullets()
     {
         return _maxBullets;
@@ -104,16 +109,6 @@ public abstract class Gun : EnumsClass, IChangeableShader
     {
         return _icon;
     }
-    
-    public float GetMaxHp()
-    {
-        return _maxHP;
-    }
-
-    public float GetCurrentHp()
-    {
-        return _currentHP;
-    }
 
     public float GetWeight()
     {
@@ -158,7 +153,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
     {
         _myChar = character;
         _maxHP = data.maxHp;
-        _currentHP = _maxHP;
+        _currentHP = MaxHP;
         _icon = data.objectImage;
         _maxBullets = data.maxBullets;
         _availableBullets = _maxBullets;
@@ -371,22 +366,25 @@ public abstract class Gun : EnumsClass, IChangeableShader
             }
         }
         
-        WorldUI ui = _myChar.GetMyUI();
-        ui.Show();
+        WorldUI worldUI = _myChar.GetMyUI();
+        worldUI.Show();
         
         switch (_location)
         {
             case "Left":
-                ui.SetLeftArmSlider(_currentHP);
-                ui.UpdateLeftArmSlider(total, (int)_currentHP);
+                worldUI.SetLeftArmSlider(CurrentHP);
+                worldUI.UpdateLeftArmSlider(total, (int)CurrentHP);
                 break;
             
             case "Right":
-                ui.SetRightArmSlider(_currentHP);
-                ui.UpdateRightArmSlider(total, (int)_currentHP);
+                worldUI.SetRightArmSlider(CurrentHP);
+                worldUI.UpdateRightArmSlider(total, (int)CurrentHP);
                 break;
         }
-        
+
+        if (_myChar.IsSelected())
+            OnHealthChanged?.Invoke(_currentHP);
+
         _myChar.MakeNotAttackable();
         
         if (_currentHP <= 0)
@@ -412,29 +410,27 @@ public abstract class Gun : EnumsClass, IChangeableShader
         Vector3 pos = transform.position;
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, pos);
         
-        WorldUI ui = _myChar.GetMyUI();
-        ui.Show();
+        WorldUI worldUI = _myChar.GetMyUI();
+        worldUI.Show();
 
-        bool isActive = CharacterSelection.Instance.IsActiveCharacter(_myChar);
-        
+
         if (_location == "Left")
         {
-            ui.SetLeftArmSlider(_currentHP);
-            ui.UpdateLeftArmSlider(damage, (int) _currentHP);
-
-            if (isActive) ButtonsUIManager.Instance.UpdateLeftArmHUD(_currentHP);
+            worldUI.SetLeftArmSlider(_currentHP);
+            worldUI.UpdateLeftArmSlider(damage, (int)_currentHP);
         }
         else
         {
-            ui.SetRightArmSlider(_currentHP);
-            ui.UpdateRightArmSlider(damage, (int) _currentHP);
-
-            if (isActive) ButtonsUIManager.Instance.UpdateRightArmHUD(_currentHP);
+            worldUI.SetRightArmSlider(_currentHP);
+            worldUI.UpdateRightArmSlider(damage, (int)_currentHP);
         }
         
+        if (_myChar.IsSelected())
+            OnHealthChanged?.Invoke(_currentHP);
+
         _myChar.MakeNotAttackable();
         
-        if (_currentHP <= 0)
+        if (CurrentHP <= 0)
         {
             EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.DestroyPart);
             _myChar.ArmDestroyed(_location, _ability);
@@ -455,19 +451,17 @@ public abstract class Gun : EnumsClass, IChangeableShader
         var pos = transform.position;
         EffectsController.Instance.CreateDamageText(healAmount.ToString(), 3, pos);
 
-        switch (_location)
-        {
-            case "Left":
-                ButtonsUIManager.Instance.UpdateLeftArmHUD(_currentHP);
-                break;
-            
-            case "Right":
-                ButtonsUIManager.Instance.UpdateRightArmHUD(_currentHP);
-                break;
-        }
+
+        if (_myChar.IsSelected())
+            OnHealthChanged?.Invoke(_currentHP);
     }
 
     public void SetShader(SwitchTextureEnum textureEnum) => _masterShader.ConvertEnumToStringEnumForShader(textureEnum);
 
     public MasterShaderScript GetMasterShader() => _masterShader;
+
+    private void OnDestroy()
+    {
+        OnHealthChanged = null;
+    }
 }

@@ -74,18 +74,18 @@ public class SelfDestruct : Ability
         Debug.Log("use self destruct");
 
         Body body = _character.GetBody();
-        body.TakeDamage((int)body.GetMaxHp());
+        body.TakeDamage((int)body.MaxHp);
 
         Legs legs = _character.GetLegs();
-        legs.TakeDamage((int)legs.GetMaxHp());
+        legs.TakeDamage((int)legs.MaxHp);
 
         Gun rightGun = _character.GetRightGun();
         if (rightGun)
-            rightGun.TakeDamage((int)rightGun.GetMaxHp());
+            rightGun.TakeDamage((int)rightGun.MaxHP);
 
         Gun leftGun = _character.GetLeftGun();
         if (leftGun)
-            leftGun.TakeDamage((int)leftGun.GetMaxHp());
+            leftGun.TakeDamage((int)leftGun.MaxHP);
 
         EffectsController.Instance.PlayParticlesEffect(_character.GetBurningSpawner(), EnumsClass.ParticleActionType.MortarHit);
 

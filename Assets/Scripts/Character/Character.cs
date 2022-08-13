@@ -114,7 +114,7 @@ public class Character : EnumsClass, IObservable
 
     protected float _startingHeight;
 
-    public Action<int, int, int, int> 
+    public Action<Body, Gun, Gun, Legs> OnMechaSelected;
     public virtual void Awake()
     {
         _startingHeight = transform.position.y;
@@ -140,14 +140,14 @@ public class Character : EnumsClass, IObservable
         float rightGunHP = 0;
 
         if (_rightGun)
-            rightGunHP = _rightGun.GetMaxHp();
+            rightGunHP = _rightGun.MaxHP;
         
         float leftGunHP = 0;
 
         if (_leftGun)
-            leftGunHP = _leftGun.GetMaxHp();
+            leftGunHP = _leftGun.MaxHP;
         
-        _worldUI.SetLimits(_body.GetMaxHp(), rightGunHP, leftGunHP, _legs.GetMaxHp());
+        _worldUI.SetLimits(_body.MaxHp, rightGunHP, leftGunHP, _legs.MaxHp);
 
         _selected = false;
 
@@ -397,6 +397,9 @@ public class Character : EnumsClass, IObservable
             return;
 
         _selected = true;
+        
+        OnMechaSelected?.Invoke(_body, _leftGun, _rightGun, _legs);
+
         InitialRotation = transform.rotation; //Cambio Nico
         ResetInRangeLists();
         _path.Clear();
@@ -458,7 +461,7 @@ public class Character : EnumsClass, IObservable
                 _movementReduced = false;
             
             else
-                _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
+                _currentSteps = _legs.CurrentHP > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
             
             
             PaintTilesInMoveRange(_myPositionTile, 0);
@@ -838,7 +841,7 @@ public class Character : EnumsClass, IObservable
     public bool LeftGunAlive()
     {
         if (_leftGun)
-            _leftGunAlive = _leftGun.GetCurrentHp() > 0;
+            _leftGunAlive = _leftGun.CurrentHP > 0;
         else
             _leftGunAlive = false;
         
@@ -851,7 +854,7 @@ public class Character : EnumsClass, IObservable
     public bool RightGunAlive()
     {
         if (_rightGun)
-            _rightGunAlive = _rightGun.GetCurrentHp() > 0;
+            _rightGunAlive = _rightGun.CurrentHP > 0;
         else
             _rightGunAlive = false;
         
@@ -865,7 +868,7 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Return the Character initiative.
     /// </summary>
-    public float GetCharacterInitiative() => _legs.GetCurrentHp() / _legs.GetMaxHp() * 100 + _legs.GetLegsInitiative();
+    public float GetCharacterInitiative() => _legs.CurrentHP / _legs.MaxHp * 100 + _legs.GetLegsInitiative();
 
     public Sprite GetCharacterSprite() => _myIcon;
 
@@ -1070,7 +1073,7 @@ public class Character : EnumsClass, IObservable
         
         _canAttack = true;
         _path.Clear();
-        _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps() / 2;
+        _currentSteps = _legs.CurrentHP > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps() / 2;
         _enemiesInRange.Clear();
         _canBeAttacked = false;
         _waypointsPathfinding.ResetPath();
@@ -1327,10 +1330,10 @@ public class Character : EnumsClass, IObservable
 
         selectedCharacter.transform.LookAt(posToLook);
         
-        bool body = selectedCharacter.RayToPartsForAttack(GetBodyPosition(), "Body", true) && _body.GetCurrentHp() > 0;
+        bool body = selectedCharacter.RayToPartsForAttack(GetBodyPosition(), "Body", true) && _body.CurrentHP > 0;
         bool lArm = selectedCharacter.RayToPartsForAttack(GetLArmPosition(), "LGun", true) && _leftGun;
         bool rArm = selectedCharacter.RayToPartsForAttack(GetRArmPosition(), "RGun", true) && _rightGun;
-        bool legs = selectedCharacter.RayToPartsForAttack(GetLegsPosition(), "Legs", true) && _legs.GetCurrentHp() > 0;
+        bool legs = selectedCharacter.RayToPartsForAttack(GetLegsPosition(), "Legs", true) && _legs.CurrentHP > 0;
     }
 
     public void ResetRotationAndRays()
@@ -1364,14 +1367,14 @@ public class Character : EnumsClass, IObservable
         float rightGunHP = 0;
 
         if (_rightGun)
-            rightGunHP = _rightGun.GetCurrentHp();
+            rightGunHP = _rightGun.CurrentHP;
         
         float leftGunHP = 0;
 
         if (_leftGun)
-            leftGunHP = _leftGun.GetCurrentHp();
+            leftGunHP = _leftGun.CurrentHP;
         
-        _worldUI.SetWorldUIValues(_body.GetCurrentHp(), rightGunHP, leftGunHP, _legs.GetCurrentHp(), _canMove, _canAttack, _overweight);
+        _worldUI.SetWorldUIValues(_body.CurrentHP, rightGunHP, leftGunHP, _legs.CurrentHP, _canMove, _canAttack, _overweight);
         _worldUI.Show();
     }
 
@@ -1585,23 +1588,23 @@ public class Character : EnumsClass, IObservable
 
     public void TakeFallDamage(float dmgPercentage)
     {
-        float legsDamage = _legs.GetMaxHp() * dmgPercentage / 100;
+        float legsDamage = _legs.MaxHp * dmgPercentage / 100;
         _legs.TakeDamage((int)legsDamage);
 
         if (_leftGun)
         {
-            float lGunDamage = _leftGun.GetMaxHp() * dmgPercentage / 100;
+            float lGunDamage = _leftGun.MaxHP * dmgPercentage / 100;
             _leftGun.TakeDamage((int)lGunDamage);
         }
 
 
         if (_rightGun)
         {
-            float rGunDamage = _rightGun.GetMaxHp() * dmgPercentage / 100;
+            float rGunDamage = _rightGun.MaxHP * dmgPercentage / 100;
             _rightGun.TakeDamage((int)rGunDamage);
         }
 
-        float bodyDamage = _body.GetMaxHp() * dmgPercentage / 100;
+        float bodyDamage = _body.MaxHp * dmgPercentage / 100;
         _body.TakeDamage((int)bodyDamage);
         GetComponent<Rigidbody>().isKinematic = true;
 
@@ -1614,7 +1617,7 @@ public class Character : EnumsClass, IObservable
     {
         _movementReduced = true;
         
-        _currentSteps = _legs.GetCurrentHp() > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
+        _currentSteps = _legs.CurrentHP > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
 
         _currentSteps -= amount;
     }

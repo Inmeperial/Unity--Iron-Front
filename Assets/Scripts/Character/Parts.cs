@@ -16,6 +16,11 @@ public abstract class Parts : MonoBehaviour, IChangeableShader
     protected float _currentHP;
     protected float _weight;
 
+    public float MaxHP { get => _maxHP; set => _maxHP = value; }
+    public float CurrentHP { get => _currentHP; set => _currentHP = value; }
+
+    public Action<float> OnHealthChanged;
+
     public virtual void SetPartData(Character character, PartSO data, Color partColor)
     {
         _myChar = character;
@@ -51,9 +56,7 @@ public abstract class Parts : MonoBehaviour, IChangeableShader
         _myChar.AddEquipable(_ability);
     }
 
-    public float GetMaxHp() => _maxHP;
-
-    public float GetCurrentHp() => _currentHP;
+    public float MaxHp => _maxHP;
 
     public float GetWeight() => _weight;
 
@@ -67,7 +70,7 @@ public abstract class Parts : MonoBehaviour, IChangeableShader
 
         if (finalHP >= _maxHP)
             _currentHP = _maxHP;
-        else 
+        else
             _currentHP = finalHP;
     }
 

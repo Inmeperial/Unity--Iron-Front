@@ -9,6 +9,7 @@ public class Body : Parts
     private bool _smokeScreenAvailable;
     private float _smokeScreenHpPercentage;
     private bool _smokeScreenActive;
+
     public override void SetPartData(Character character, PartSO data, Color partColor)
     {
         base.SetPartData(character, data, partColor);
@@ -22,8 +23,8 @@ public class Body : Parts
         if (_currentHP <= 0)
             return;
         
-        WorldUI ui = _myChar.GetMyUI();
-        ui.SetBodySlider(_currentHP);
+        WorldUI worldUI = _myChar.GetMyUI();
+        worldUI.SetBodySlider(_currentHP);
 
         int total = 0;
 
@@ -57,14 +58,17 @@ public class Body : Parts
             }
         }
 
-        ui.Show();
-        ui.UpdateBodySlider(total, (int)_currentHP);
+        worldUI.Show();
+        worldUI.UpdateBodySlider(total, (int)_currentHP);
 
         _myChar.MakeNotAttackable();
 
         CheckSmokeScreen();
 
         _myChar.SetHurtAnimation();
+
+        if (_myChar.IsSelected())
+            OnHealthChanged?.Invoke(_currentHP);
 
         if (_currentHP <= 0)
             _myChar.Dead();
@@ -83,10 +87,8 @@ public class Body : Parts
         float hp = _currentHP - damage;
         _currentHP = hp > 0 ? hp : 0;
 
-        bool isActive = CharacterSelection.Instance.IsActiveCharacter(_myChar);
-
-        if (isActive)
-            ButtonsUIManager.Instance.UpdateBodyHUD(_currentHP);
+        if (_myChar.IsSelected())
+            OnHealthChanged?.Invoke(_currentHP);
 
         foreach (GameObject spawner in _particleSpawner)
         {
@@ -104,7 +106,7 @@ public class Body : Parts
         CheckSmokeScreen();
         _myChar.SetHurtAnimation();
 
-        if (_currentHP <= 0)
+        if (CurrentHP <= 0)
             _myChar.Dead();
     }
 
@@ -117,7 +119,7 @@ public class Body : Parts
         if (!_smokeScreenAvailable)
             return;
 
-        if (_currentHP <= 0)
+        if (CurrentHP <= 0)
             return;
 
         float hpPercentage = _currentHP * 100 / _maxHP;
@@ -138,7 +140,8 @@ public class Body : Parts
 
         EffectsController.Instance.CreateDamageText(healAmount.ToString(), 3, transform.position);
 
-        ButtonsUIManager.Instance.UpdateBodyHUD(_currentHP);
+        if (_myChar.IsSelected())
+            OnHealthChanged?.Invoke(_currentHP);
     }
 
     public void ConfigureSmokeScreen(float percentageToActivate)

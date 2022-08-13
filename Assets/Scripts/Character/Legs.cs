@@ -39,8 +39,8 @@ public class Legs : Parts
             return;
 
 
-        WorldUI ui = _myChar.GetMyUI();
-        ui.SetLegsSlider(_currentHP);
+        WorldUI worldUI = _myChar.GetMyUI();
+        worldUI.SetLegsSlider(_currentHP);
         int total = 0;
         
         for (int i = 0; i < damages.Count; i++)
@@ -73,14 +73,17 @@ public class Legs : Parts
             }
         }
 
-        ui.Show();
-        ui.UpdateLegsSlider(total, _currentHP);
+        worldUI.Show();
+        worldUI.UpdateLegsSlider(total, _currentHP);
 
         _myChar.MakeNotAttackable();
 
         TurnManager.Instance.ReducePosition(_myChar);
 
-        if (_currentHP <= 0 && !_brokenLegs)
+        if (_myChar.IsSelected())
+            OnHealthChanged?.Invoke(_currentHP);
+
+        if (CurrentHP <= 0 && !_brokenLegs)
         {
             //EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.Damage);
             //EffectsController.Instance.PlayParticlesEffect(_particleSpawner[1], EnumsClass.ParticleActionType.Damage);
@@ -100,12 +103,12 @@ public class Legs : Parts
             return;
 
 
-        WorldUI ui = _myChar.GetMyUI();
+        WorldUI worldUI = _myChar.GetMyUI();
 
-        ui.SetLegsSlider(_currentHP);
-        ui.Show();
-        ui.UpdateLegsSlider(damage, _currentHP);
-        ui.HideWithTimer();
+        worldUI.SetLegsSlider(_currentHP);
+        worldUI.Show();
+        worldUI.UpdateLegsSlider(damage, _currentHP);
+        worldUI.HideWithTimer();
 
         float hp = _currentHP - damage;
 
@@ -121,10 +124,8 @@ public class Legs : Parts
             HalfSteps();
         }
 
-        bool isActive = CharacterSelection.Instance.IsActiveCharacter(_myChar);
-
-        if (isActive)
-            ButtonsUIManager.Instance.UpdateLegsHUD(_currentHP);
+        if (_myChar.IsSelected())
+            OnHealthChanged?.Invoke(_currentHP);
 
         foreach (GameObject spawner in _particleSpawner)
         {
@@ -151,6 +152,8 @@ public class Legs : Parts
         base.Heal(healAmount);
 
         EffectsController.Instance.CreateDamageText(healAmount.ToString(), 3, transform.position);
-        ButtonsUIManager.Instance.UpdateLegsHUD(_currentHP);
+        
+        if (_myChar.IsSelected())
+            OnHealthChanged?.Invoke(_currentHP);
     }
 }

@@ -95,9 +95,9 @@ public class RepairKit : Item
 
 		Body body = unitToRepair.GetBody();
 		
-		if(body.GetCurrentHp() > 0)
+		if(body.CurrentHP > 0)
 		{
-            float bodyHealAmount = body.GetMaxHp() * healPercentage / 100;
+            float bodyHealAmount = body.MaxHp * healPercentage / 100;
 			
 			body.Heal((int)bodyHealAmount);
 		}
@@ -106,7 +106,7 @@ public class RepairKit : Item
 
 		if (leftGun)
 		{
-            float leftGunHealAmount = leftGun.GetMaxHp() * healPercentage / 100;
+            float leftGunHealAmount = leftGun.MaxHP * healPercentage / 100;
 
 			leftGun.Heal((int)leftGunHealAmount);
 		}
@@ -115,15 +115,15 @@ public class RepairKit : Item
 		
 		if (rightGun)
 		{
-            float rightGunHealAmount = rightGun.GetMaxHp() * healPercentage / 100;
+            float rightGunHealAmount = rightGun.MaxHP * healPercentage / 100;
 			rightGun.Heal((int)rightGunHealAmount);
 		}
 
         Legs legs = unitToRepair.GetLegs();
 		
-		if (legs.GetCurrentHp() > 0)
+		if (legs.CurrentHP > 0)
 		{
-            float rightGunHealAmount = legs.GetMaxHp() * healPercentage / 100;
+            float rightGunHealAmount = legs.MaxHp * healPercentage / 100;
 
 			legs.Heal((int)rightGunHealAmount);
 		}

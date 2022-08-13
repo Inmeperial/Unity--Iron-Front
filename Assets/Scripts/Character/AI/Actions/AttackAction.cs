@@ -68,14 +68,14 @@ public class AttackAction : GOAction
 
             Dictionary<string, float> parts = new Dictionary<string, float>();
             
-            if (body && closestEnemy.GetBody().GetCurrentHp() > 0)
-                parts.Add("Body", closestEnemy.GetBody().GetCurrentHp());
-            if (leftGun && closestEnemy.GetLeftGun().GetCurrentHp() > 0)
-                parts.Add("LGun", closestEnemy.GetLeftGun().GetCurrentHp());
-            if (rightGun && closestEnemy.GetRightGun().GetCurrentHp() > 0)
-                parts.Add("RGun", closestEnemy.GetRightGun().GetCurrentHp());
-            if (legs && closestEnemy.GetLegs().GetCurrentHp() > 0)
-                parts.Add("Legs", closestEnemy.GetLegs().GetCurrentHp());
+            if (body && closestEnemy.GetBody().CurrentHP > 0)
+                parts.Add("Body", closestEnemy.GetBody().CurrentHP);
+            if (leftGun && closestEnemy.GetLeftGun().CurrentHP > 0)
+                parts.Add("LGun", closestEnemy.GetLeftGun().CurrentHP);
+            if (rightGun && closestEnemy.GetRightGun().CurrentHP > 0)
+                parts.Add("RGun", closestEnemy.GetRightGun().CurrentHP);
+            if (legs && closestEnemy.GetLegs().CurrentHP > 0)
+                parts.Add("Legs", closestEnemy.GetLegs().CurrentHP);
 
             string partToAttack = "DEFAULT";
             float lowest = 100000; 
