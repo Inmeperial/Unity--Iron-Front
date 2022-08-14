@@ -10,7 +10,6 @@ public class Shotgun : Gun
     public override void SetGunData(GunSO data, Character character, string tag, string location)
     {
         _gunType = GunsType.Shotgun;
-        _gun = "Shotgun";
         base.SetGunData(data, character, tag, location);
     }
     

@@ -9,7 +9,6 @@ public class Shield : Gun
     public override void SetGunData(GunSO data, Character character, string tag, string location)
     {
         _gunType = GunsType.Shield;
-        _gun = "Shield";
         base.SetGunData(data, character, tag, location);
     }
 

@@ -14,7 +14,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
     private float _maxHP;
     private float _currentHP;
     protected GunsType _gunType;
-    protected string _gun;
+    protected string _gunName;
     protected Sprite _icon;
     protected int _maxBullets;
     protected int _availableBullets;
@@ -90,9 +90,9 @@ public abstract class Gun : EnumsClass, IChangeableShader
         return _gunType;
     }
 
-    public string GetGunTypeString()
+    public string GetGunName()
     {
-        return _gun;
+        return _gunName;
     }
 
     public int GetAvailableSelections()
@@ -151,6 +151,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
     /// </summary>
     public virtual void SetGunData(GunSO data, Character character, string tag, string location)
     {
+        _gunName = data.objectName;
         _myChar = character;
         _maxHP = data.maxHp;
         _currentHP = MaxHP;

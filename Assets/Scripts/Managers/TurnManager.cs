@@ -96,11 +96,12 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         {
             CharacterSelection.Instance.ActivateCharacterSelection(true);
 
-            ButtonsUIManager.Instance.RightWeaponCircleState(true);
-            ButtonsUIManager.Instance.LeftWeaponCircleState(true);
-            ButtonsUIManager.Instance.RightWeaponBarButtonState(true);
-            ButtonsUIManager.Instance.LeftWeaponBarButtonState(true);
-            
+            //TODO: CAMBIAR AL EQUIPMENT HUD
+            //ButtonsUIManager.Instance.RightWeaponCircleState(true);
+            //ButtonsUIManager.Instance.LeftWeaponCircleState(true);
+            //ButtonsUIManager.Instance.RightWeaponBarButtonState(true);
+            //ButtonsUIManager.Instance.LeftWeaponBarButtonState(true);
+
             toDo += () => ButtonsUIManager.Instance.ActivateEndTurnButton();
         }
         else
@@ -108,12 +109,13 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             CharacterSelection.Instance.ActivateCharacterSelection(false);
 
             ButtonsUIManager.Instance.DeactivateEndTurnButton();
-            
-            ButtonsUIManager.Instance.RightWeaponCircleState(false);
-            ButtonsUIManager.Instance.LeftWeaponCircleState(false);
-            ButtonsUIManager.Instance.RightWeaponBarButtonState(false);
-            ButtonsUIManager.Instance.LeftWeaponBarButtonState(false);
-            
+
+            //TODO: CAMBIAR AL EQUIPMENT HUD
+            //ButtonsUIManager.Instance.RightWeaponCircleState(false);
+            //ButtonsUIManager.Instance.LeftWeaponCircleState(false);
+            //ButtonsUIManager.Instance.RightWeaponBarButtonState(false);
+            //ButtonsUIManager.Instance.LeftWeaponBarButtonState(false);
+
         }
         _cameraMovement.MoveTo(_actualCharacter.transform, toDo, _actualCharacter.transform);
     }
@@ -196,11 +198,12 @@ public class TurnManager : EnumsClass, IObservable, IObserver
         {
             CharacterSelection.Instance.ActivateCharacterSelection(true);
 
-            ButtonsUIManager.Instance.RightWeaponCircleState(true);
-            ButtonsUIManager.Instance.LeftWeaponCircleState(true);
-            ButtonsUIManager.Instance.RightWeaponBarButtonState(true);
-            ButtonsUIManager.Instance.LeftWeaponBarButtonState(true);
-            
+            //TODO: CAMBIAR AL EQUIPMENT HUD
+            //ButtonsUIManager.Instance.RightWeaponCircleState(true);
+            //ButtonsUIManager.Instance.LeftWeaponCircleState(true);
+            //ButtonsUIManager.Instance.RightWeaponBarButtonState(true);
+            //ButtonsUIManager.Instance.LeftWeaponBarButtonState(true);
+
             toDo += () => ButtonsUIManager.Instance.ActivateEndTurnButton();
         }
         else
@@ -209,12 +212,13 @@ public class TurnManager : EnumsClass, IObservable, IObserver
             
             ButtonsUIManager.Instance.DeactivateEndTurnButton();
             
-            ButtonsUIManager.Instance.RightWeaponCircleState(false);
-            ButtonsUIManager.Instance.LeftWeaponCircleState(false);
-            ButtonsUIManager.Instance.RightWeaponBarButtonState(false);
-            ButtonsUIManager.Instance.LeftWeaponBarButtonState(false);
+            //TODO: CAMBIAR AL EQUIPMENT HUD
+            //ButtonsUIManager.Instance.RightWeaponCircleState(false);
+            //ButtonsUIManager.Instance.LeftWeaponCircleState(false);
+            //ButtonsUIManager.Instance.RightWeaponBarButtonState(false);
+            //ButtonsUIManager.Instance.LeftWeaponBarButtonState(false);
         }
-         
+
         _cameraMovement.MoveTo(_actualCharacter.transform, toDo, _actualCharacter.transform);
     }
 

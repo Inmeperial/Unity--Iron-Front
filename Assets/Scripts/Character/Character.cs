@@ -114,7 +114,12 @@ public class Character : EnumsClass, IObservable
 
     protected float _startingHeight;
 
-    public Action<Body, Gun, Gun, Legs> OnMechaSelected;
+    public Action<Character> OnMechaSelected;
+    public Action OnBeginMove;
+    public Action OnEndMove;
+
+    public Action OnLeftGunSelected;
+    public Action OnRightGunSelected;
     public virtual void Awake()
     {
         _startingHeight = transform.position.y;
@@ -184,7 +189,7 @@ public class Character : EnumsClass, IObservable
     {
         _moving = true;
         ButtonsUIManager.Instance.DeactivateBodyPartsContainer();
-        ButtonsUIManager.Instance.DeactivateEquipablesButtons();
+        //ButtonsUIManager.Instance.DeactivateEquipablesButtons();
         TurnManager.Instance.UnitIsMoving();
         TileHighlight.Instance.characterMoving = true;
 
@@ -196,6 +201,9 @@ public class Character : EnumsClass, IObservable
 
         ResetTilesInMoveRange();
         ResetTilesInAttackRange();
+
+        OnBeginMove?.Invoke();
+
         _animationMechaHandler.SetIsWalkingAnimatorTrue();
         _audioMechaHandler.SetPlayMotorStart();
         _particleMechaHandler.SetMachineOn(true);
@@ -280,23 +288,36 @@ public class Character : EnumsClass, IObservable
         ResetTilesInAttackRange();
         ResetTilesInMoveRange();
 
-        if (_selectedGun.GetGunType() != GunsType.Shield)
-        {
-            if (_canAttack)
-            {
-                if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
-                {
-                    if (_unitTeam == Team.Green)
-                        PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
-                    else
-                        PaintTilesInAttackRange(_myPositionTile, 0);
+        //if (_selectedGun.GetGunType() != GunsType.Shield)
+        //{
+        //    if (_canAttack)
+        //    {
+        //        if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
+        //        {
+        //            if (_unitTeam == Team.Green)
+        //                PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+        //            else
+        //                PaintTilesInAttackRange(_myPositionTile, 0);
 
-                    CheckEnemiesInAttackRange(); 
-                }
+        //            CheckEnemiesInAttackRange(); 
+        //        }
+        //    }
+        //}
+        //else if (!_isOnElevator && _canAttack)
+        //        _selectedGun.Ability();
+
+        if (_canAttack)
+        {
+            if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
+            {
+                if (_unitTeam == Team.Green)
+                    PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+                else
+                    PaintTilesInAttackRange(_myPositionTile, 0);
+
+                CheckEnemiesInAttackRange();
             }
         }
-        else if (!_isOnElevator && _canAttack)
-                _selectedGun.Ability();
 
 
         if (!_isOnElevator && _canMove)
@@ -306,6 +327,8 @@ public class Character : EnumsClass, IObservable
             else
                 PaintTilesInMoveRange(_myPositionTile, 0);
         }
+
+        OnLeftGunSelected?.Invoke();
     }
 
     /// <summary>
@@ -333,24 +356,38 @@ public class Character : EnumsClass, IObservable
         ResetTilesInAttackRange();
         ResetTilesInMoveRange();
 
-        if (_selectedGun.GetGunType() != GunsType.Shield)
-        {
-            if (_canAttack)
-            {
-                if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
-                {
-                    if (_unitTeam == Team.Green)
-                        PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
-                    else
-                        PaintTilesInAttackRange(_myPositionTile, 0);
-                    
+        //if (_selectedGun.GetGunType() != GunsType.Shield)
+        //{
+        //    if (_canAttack)
+        //    {
+        //        if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
+        //        {
+        //            if (_unitTeam == Team.Green)
+        //                PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+        //            else
+        //                PaintTilesInAttackRange(_myPositionTile, 0);
 
-                    CheckEnemiesInAttackRange(); 
-                }
+
+        //            CheckEnemiesInAttackRange(); 
+        //        }
+        //    }
+        //}
+        //else if (!_isOnElevator && _canAttack)
+        //    _selectedGun.Ability();
+
+        if (_canAttack)
+        {
+            if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
+            {
+                if (_unitTeam == Team.Green)
+                    PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
+                else
+                    PaintTilesInAttackRange(_myPositionTile, 0);
+
+
+                CheckEnemiesInAttackRange();
             }
         }
-        else if (!_isOnElevator && _canAttack)
-            _selectedGun.Ability();
 
         if (!_isOnElevator && _canMove)
         {
@@ -359,6 +396,8 @@ public class Character : EnumsClass, IObservable
             else
                 PaintTilesInMoveRange(_myPositionTile, 0);
         }
+
+        OnRightGunSelected?.Invoke();
     }
 
     public void Undo()
@@ -398,7 +437,7 @@ public class Character : EnumsClass, IObservable
 
         _selected = true;
         
-        OnMechaSelected?.Invoke(_body, _leftGun, _rightGun, _legs);
+        OnMechaSelected?.Invoke(this);
 
         InitialRotation = transform.rotation; //Cambio Nico
         ResetInRangeLists();
@@ -419,15 +458,19 @@ public class Character : EnumsClass, IObservable
             }
         }
 
-
-
         if (_canAttack)
         {
             if (_rightGunAlive && _rightGun)
+            {
                 _selectedGun = _rightGun;
+                SelectRightGun();
+            }
             
             else if (_leftGunAlive && _leftGun)
+            {
                 _selectedGun = _leftGun;
+                SelectLeftGun();
+            }
 
             else
                 _selectedGun = null;
@@ -1128,7 +1171,8 @@ public class Character : EnumsClass, IObservable
         PaintTilesInAttackRange(_myPositionTile, 0);
         CheckEnemiesInAttackRange();
 
-        ButtonsUIManager.Instance.ActivateEquipablesButtons();
+        //ButtonsUIManager.Instance.ActivateEquipablesButtons();
+        OnEndMove?.Invoke();
     }
 
     /// <summary>
@@ -1467,8 +1511,8 @@ public class Character : EnumsClass, IObservable
         {
             _selectedGun = _rightGun;
 
-            if (_selectedGun.GetGunType() == GunsType.Shield)
-                _selectedGun.Ability();
+            //if (_selectedGun.GetGunType() == GunsType.Shield)
+            //    _selectedGun.Ability();
 
             _canAttack = true;
             _rightGunSelected = true;
@@ -1480,8 +1524,8 @@ public class Character : EnumsClass, IObservable
         {
             _selectedGun = _leftGun;
 
-            if (_selectedGun.GetGunType() == GunsType.Shield)
-                _selectedGun.Ability();
+            //if (_selectedGun.GetGunType() == GunsType.Shield)
+            //    _selectedGun.Ability();
 
             _canAttack = true;
             _rightGunSelected = false;

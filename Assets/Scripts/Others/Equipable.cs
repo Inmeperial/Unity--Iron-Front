@@ -17,6 +17,7 @@ public abstract class Equipable : MonoBehaviour
     protected Character _character;
     protected EquipmentButton _button;
     protected Sprite _icon;
+
     //protected Location _location;
 
     //public abstract void Initialize(Character character, EquipableSO data, Location location);
@@ -52,7 +53,12 @@ public abstract class Equipable : MonoBehaviour
     {
         return _availableUses;
     }
-    
+
+    public bool IsActive() => _equipableType == EquipableSO.EquipableType.Active;
+    public bool IsPassive() => _equipableType == EquipableSO.EquipableType.Passive;
+    public bool IsItem() => _equipableType == EquipableSO.EquipableType.Item;
+
+
     protected virtual void UpdateButtonText(string text, EquipableSO data)
     {
         _button.SetButtonText(text, data.buttonTextFontSize);

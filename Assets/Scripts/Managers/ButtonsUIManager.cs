@@ -42,27 +42,27 @@ public class ButtonsUIManager : MonoBehaviour
     #region HUD
     //Player
     public GameObject playerHudContainer;
-    [Header("Weapons")]
-    public TextMeshProUGUI leftGunTypeText;
-    public TextMeshProUGUI leftGunDamageText;
-    public TextMeshProUGUI leftGunHitsText;
-    public TextMeshProUGUI leftGunHitChanceText;
-    public TextMeshProUGUI rightGunTypeText;
-    public TextMeshProUGUI rightGunDamageText;
-    public TextMeshProUGUI rightGunHitsText;
-    public TextMeshProUGUI rightGunHitChanceText;
-    public GameObject leftWeaponCircle;
-    public GameObject rightWeaponCircle;
-    public Button leftWeaponBar;
-    public Button rightWeaponBar;
-    //public EquipmentButton equipmentButton;
-    public EquipmentButton bodyEquipmentButton;
-    public EquipmentButton leftGunEquipmentButton;
-    public EquipmentButton rightGunEquipmentButton;
-    public EquipmentButton legsEquipmentButton;
-    public EquipmentButton itemEquipmentButton;
-    private Dictionary<EquipmentButton, bool> _equipmentButtonsPreviousState = new Dictionary<EquipmentButton, bool>();
-    public Sprite noneIcon;
+    //[Header("Weapons")]
+    //public TextMeshProUGUI leftGunTypeText;
+    //public TextMeshProUGUI leftGunDamageText;
+    //public TextMeshProUGUI leftGunHitsText;
+    //public TextMeshProUGUI leftGunHitChanceText;
+    //public TextMeshProUGUI rightGunTypeText;
+    //public TextMeshProUGUI rightGunDamageText;
+    //public TextMeshProUGUI rightGunHitsText;
+    //public TextMeshProUGUI rightGunHitChanceText;
+    //public GameObject leftWeaponCircle;
+    //public GameObject rightWeaponCircle;
+    //public Button leftWeaponBar;
+    //public Button rightWeaponBar;
+    ////public EquipmentButton equipmentButton;
+    //public EquipmentButton bodyEquipmentButton;
+    //public EquipmentButton leftGunEquipmentButton;
+    //public EquipmentButton rightGunEquipmentButton;
+    //public EquipmentButton legsEquipmentButton;
+    //public EquipmentButton itemEquipmentButton;
+    //private Dictionary<EquipmentButton, bool> _equipmentButtonsPreviousState = new Dictionary<EquipmentButton, bool>();
+    //public Sprite noneIcon;
 
     [Space]
     
@@ -111,11 +111,11 @@ public class ButtonsUIManager : MonoBehaviour
     
     private void Start()
     {
-        bodyEquipmentButton.interactable = false;
-        leftGunEquipmentButton.interactable = false;
-        rightGunEquipmentButton.interactable = false;
-        legsEquipmentButton.interactable = false;
-        itemEquipmentButton.interactable = false;
+        //bodyEquipmentButton.interactable = false;
+        //leftGunEquipmentButton.interactable = false;
+        //rightGunEquipmentButton.interactable = false;
+        //legsEquipmentButton.interactable = false;
+        //itemEquipmentButton.interactable = false;
 
         playerHudContainer.SetActive(false);
         _buttonBodySelected = false;
@@ -691,10 +691,10 @@ public class ButtonsUIManager : MonoBehaviour
         RightArmClear();
         LegsClear();
         _selectedChar.SelectLeftGun();
-        leftWeaponCircle.SetActive(true);
-        rightWeaponCircle.SetActive(false);
+        //leftWeaponCircle.SetActive(true);
+        //rightWeaponCircle.SetActive(false);
 
-        ShowPlayerHudText();
+        //ShowPlayerHudText();
 
         if (_selectedChar.HasEnemiesInRange())
             ActivateBodyPartsContainer();
@@ -714,10 +714,10 @@ public class ButtonsUIManager : MonoBehaviour
         RightArmClear();
         LegsClear();
         _selectedChar.SelectRightGun();
-        rightWeaponCircle.SetActive(true);
-        leftWeaponCircle.SetActive(false);
+        //rightWeaponCircle.SetActive(true);
+        //leftWeaponCircle.SetActive(false);
 
-        ShowPlayerHudText();
+        //ShowPlayerHudText();
 
         if (_selectedChar.HasEnemiesInRange())
             ActivateBodyPartsContainer();
@@ -951,25 +951,25 @@ public class ButtonsUIManager : MonoBehaviour
     /// </summary>
     public void SetPlayerUI()
     {
-        ShowPlayerHudText();
+        //ShowPlayerHudText();
         
-        if (_selectedChar.RightGunAlive() && _selectedChar.GetRightGun())
-        {
-            rightWeaponCircle.SetActive(true);
-            leftWeaponCircle.SetActive(false);
-        }
-        else if (_selectedChar.LeftGunAlive() && _selectedChar.GetLeftGun())
-        {
-            rightWeaponCircle.SetActive(false);
-            leftWeaponCircle.SetActive(true);
-        }
-        else
-        {
-            rightWeaponCircle.SetActive(false);
-            rightWeaponBar.enabled = false;
-            leftWeaponCircle.SetActive(false);
-            leftWeaponBar.enabled = false;
-        }
+        //if (_selectedChar.RightGunAlive() && _selectedChar.GetRightGun())
+        //{
+        //    rightWeaponCircle.SetActive(true);
+        //    leftWeaponCircle.SetActive(false);
+        //}
+        //else if (_selectedChar.LeftGunAlive() && _selectedChar.GetLeftGun())
+        //{
+        //    rightWeaponCircle.SetActive(false);
+        //    leftWeaponCircle.SetActive(true);
+        //}
+        //else
+        //{
+        //    rightWeaponCircle.SetActive(false);
+        //    rightWeaponBar.enabled = false;
+        //    leftWeaponCircle.SetActive(false);
+        //    leftWeaponBar.enabled = false;
+        //}
 
         if (_selectedChar.CanAttack())
         {
@@ -1023,7 +1023,7 @@ public class ButtonsUIManager : MonoBehaviour
     private void SetAttackHUD()
     {
         Gun gun = _selectedChar.GetSelectedGun();
-        attackWeaponNameText.text = gun.GetGunTypeString();
+        attackWeaponNameText.text = gun.GetGunName();
         attackWeaponHitsText.text = gun.GetMaxBullets().ToString();
         attackWeaponDamageText.text = gun.GetBulletDamage().ToString();
         attackWeaponHitChanceText.text = gun.GetHitChance().ToString();
@@ -1032,189 +1032,189 @@ public class ButtonsUIManager : MonoBehaviour
         attackHudContainer.SetActive(true);
     }
     
-    private void ShowPlayerHudText()
-    {
-        Gun left = _selectedChar.GetLeftGun();
-        if (_selectedChar.LeftGunAlive() && left)
-        {
-            leftGunTypeText.text = left.GetGunTypeString();
-            string b = left.GetAvailableBullets().ToString();
-            leftGunHitsText.text = b;
+    //private void ShowPlayerHudText()
+    //{
+    //    //Gun left = _selectedChar.GetLeftGun();
+    //    //if (_selectedChar.LeftGunAlive() && left)
+    //    //{
+    //    //    leftGunTypeText.text = left.GetGunName();
+    //    //    string b = left.GetAvailableBullets().ToString();
+    //    //    leftGunHitsText.text = b;
 
-            string dmg = left.GetBulletDamage().ToString();
-            leftGunDamageText.text = dmg;
+    //    //    string dmg = left.GetBulletDamage().ToString();
+    //    //    leftGunDamageText.text = dmg;
 
-            string h = left.GetHitChance().ToString();
-            leftGunHitChanceText.text = h + "%";
+    //    //    string h = left.GetHitChance().ToString();
+    //    //    leftGunHitChanceText.text = h + "%";
             
-            leftWeaponBar.enabled = true;
-            leftWeaponCircle.transform.parent.GetComponent<Button>().enabled = true;
-        }
-        else
-        {
-            if (_selectedChar.LeftGunAlive()) leftGunTypeText.text = "No gun";
-            else leftGunTypeText.text = "Arm Destroyed";
-            leftGunHitsText.text = "";
-            leftGunDamageText.text = "";
-            leftGunHitChanceText.text = "";
-            leftWeaponBar.enabled = false;
-            leftWeaponCircle.transform.parent.GetComponent<Button>().enabled = false;
-        }
+    //    //    leftWeaponBar.enabled = true;
+    //    //    leftWeaponCircle.transform.parent.GetComponent<Button>().enabled = true;
+    //    //}
+    //    //else
+    //    //{
+    //    //    if (_selectedChar.LeftGunAlive()) leftGunTypeText.text = "No gun";
+    //    //    else leftGunTypeText.text = "Arm Destroyed";
+    //    //    leftGunHitsText.text = "";
+    //    //    leftGunDamageText.text = "";
+    //    //    leftGunHitChanceText.text = "";
+    //    //    leftWeaponBar.enabled = false;
+    //    //    leftWeaponCircle.transform.parent.GetComponent<Button>().enabled = false;
+    //    //}
         
-        Gun right = _selectedChar.GetRightGun();
-        if (_selectedChar.RightGunAlive() && right)
-        {
-            rightGunTypeText.text = right.GetGunTypeString();
+    //    //Gun right = _selectedChar.GetRightGun();
+    //    //if (_selectedChar.RightGunAlive() && right)
+    //    //{
+    //    //    rightGunTypeText.text = right.GetGunName();
 
-            string b = right.GetAvailableBullets().ToString();
-            rightGunHitsText.text = b;
+    //    //    string b = right.GetAvailableBullets().ToString();
+    //    //    rightGunHitsText.text = b;
 
-            string dmg = right.GetBulletDamage().ToString();
-            rightGunDamageText.text = dmg;
+    //    //    string dmg = right.GetBulletDamage().ToString();
+    //    //    rightGunDamageText.text = dmg;
 
-            string h = right.GetHitChance().ToString();
-            rightGunHitChanceText.text = h + "%";
+    //    //    string h = right.GetHitChance().ToString();
+    //    //    rightGunHitChanceText.text = h + "%";
             
-            rightWeaponBar.enabled = true;
-            rightWeaponCircle.transform.parent.GetComponent<Button>().enabled = true;
-        }
-        else
-        {
-            if (_selectedChar.RightGunAlive()) rightGunTypeText.text = "No gun";
+    //    //    rightWeaponBar.enabled = true;
+    //    //    rightWeaponCircle.transform.parent.GetComponent<Button>().enabled = true;
+    //    //}
+    //    //else
+    //    //{
+    //    //    if (_selectedChar.RightGunAlive()) rightGunTypeText.text = "No gun";
 
-            else
-            {
-                rightGunTypeText.text = "Arm Destroyed";
-                rightGunHitsText.text = "";
-                rightGunDamageText.text = "";
-                rightGunHitChanceText.text = "";
-                rightWeaponBar.enabled = false;
-                rightWeaponCircle.transform.parent.GetComponent<Button>().enabled = false;
-            }
+    //    //    else
+    //    //    {
+    //    //        rightGunTypeText.text = "Arm Destroyed";
+    //    //        rightGunHitsText.text = "";
+    //    //        rightGunDamageText.text = "";
+    //    //        rightGunHitChanceText.text = "";
+    //    //        rightWeaponBar.enabled = false;
+    //    //        rightWeaponCircle.transform.parent.GetComponent<Button>().enabled = false;
+    //    //    }
             
-        }
+    //    //}
 
-        var body = _selectedChar.GetBody();
-        ConfigureEquipmentButton(bodyEquipmentButton, body.GetAbility());
+    //    //var body = _selectedChar.GetBody();
+    //    //ConfigureEquipmentButton(bodyEquipmentButton, body.GetAbility());
 
-        var leftGun = _selectedChar.GetLeftGun();
+    //    //var leftGun = _selectedChar.GetLeftGun();
 
-        if (leftGun)
-        {
-            ConfigureEquipmentButton(leftGunEquipmentButton, leftGun.GetAbility());
-        }
-        else ConfigureEquipmentButton(leftGunEquipmentButton, null);
+    //    //if (leftGun)
+    //    //{
+    //    //    ConfigureEquipmentButton(leftGunEquipmentButton, leftGun.GetAbility());
+    //    //}
+    //    //else ConfigureEquipmentButton(leftGunEquipmentButton, null);
         
-        var rightGun = _selectedChar.GetRightGun();
+    //    //var rightGun = _selectedChar.GetRightGun();
         
-        if (rightGun)
-        {
-            ConfigureEquipmentButton(rightGunEquipmentButton, rightGun.GetAbility());
-        }
-        else ConfigureEquipmentButton(rightGunEquipmentButton, null);
+    //    //if (rightGun)
+    //    //{
+    //    //    ConfigureEquipmentButton(rightGunEquipmentButton, rightGun.GetAbility());
+    //    //}
+    //    //else ConfigureEquipmentButton(rightGunEquipmentButton, null);
 
-        var legs = _selectedChar.GetLegs();
+    //    //var legs = _selectedChar.GetLegs();
         
-        ConfigureEquipmentButton(legsEquipmentButton, legs.GetAbility());
+    //    //ConfigureEquipmentButton(legsEquipmentButton, legs.GetAbility());
 
-        if (_selectedChar.GetItem())
-        {
-            ConfigureEquipmentButton(itemEquipmentButton, _selectedChar.GetItem());
-        }
-        else ConfigureEquipmentButton(itemEquipmentButton, null);
-    }
+    //    //if (_selectedChar.GetItem())
+    //    //{
+    //    //    ConfigureEquipmentButton(itemEquipmentButton, _selectedChar.GetItem());
+    //    //}
+    //    //else ConfigureEquipmentButton(itemEquipmentButton, null);
+    //}
 
-    void ConfigureEquipmentButton(EquipmentButton button, Equipable equipable)
-    {
-        button.ResetButton();
+    //void ConfigureEquipmentButton(EquipmentButton button, Equipable equipable)
+    //{
+    //    button.ResetButton();
 
-        if (equipable == null)
-        {
-            button.interactable = false;
-            button.SetButtonIcon(noneIcon);
-            return;
-        }
+    //    if (equipable == null)
+    //    {
+    //        button.interactable = false;
+    //        button.SetButtonIcon(noneIcon);
+    //        return;
+    //    }
         
         
         
-        equipable.SetButton(button);
+    //    equipable.SetButton(button);
 
-        button.SetButtonIcon(equipable.GetIcon());
+    //    button.SetButtonIcon(equipable.GetIcon());
 
-        button.SetCharacter(_selectedChar);
+    //    button.SetCharacter(_selectedChar);
             
-        button.AddLeftClick(equipable.Select);
+    //    button.AddLeftClick(equipable.Select);
         
-        //This deactivates all buttons except the clicked one
-        button.AddLeftClick(() =>
-        {
-            //TODO: descomentar si hace falta
-            //_selectedChar.GetSelectedEquipable().Deselect();
-            _equipmentButtonsPreviousState.Clear();
+    //    //This deactivates all buttons except the clicked one
+    //    button.AddLeftClick(() =>
+    //    {
+    //        //TODO: descomentar si hace falta
+    //        //_selectedChar.GetSelectedEquipable().Deselect();
+    //        _equipmentButtonsPreviousState.Clear();
             
-            if (button != bodyEquipmentButton)
-            {
-                _equipmentButtonsPreviousState.Add(bodyEquipmentButton, bodyEquipmentButton.IsInteractable());
-                bodyEquipmentButton.interactable = false;
-            }
+    //        if (button != bodyEquipmentButton)
+    //        {
+    //            _equipmentButtonsPreviousState.Add(bodyEquipmentButton, bodyEquipmentButton.IsInteractable());
+    //            bodyEquipmentButton.interactable = false;
+    //        }
             
-            if (button != leftGunEquipmentButton)
-            {
-                _equipmentButtonsPreviousState.Add(leftGunEquipmentButton, leftGunEquipmentButton.IsInteractable());
-                leftGunEquipmentButton.interactable = false;
-            }
+    //        if (button != leftGunEquipmentButton)
+    //        {
+    //            _equipmentButtonsPreviousState.Add(leftGunEquipmentButton, leftGunEquipmentButton.IsInteractable());
+    //            leftGunEquipmentButton.interactable = false;
+    //        }
             
-            if (button != rightGunEquipmentButton)
-            {
-                _equipmentButtonsPreviousState.Add(rightGunEquipmentButton, rightGunEquipmentButton.IsInteractable());
-                rightGunEquipmentButton.interactable = false;
-            }
+    //        if (button != rightGunEquipmentButton)
+    //        {
+    //            _equipmentButtonsPreviousState.Add(rightGunEquipmentButton, rightGunEquipmentButton.IsInteractable());
+    //            rightGunEquipmentButton.interactable = false;
+    //        }
             
-            if (button != legsEquipmentButton)
-            {
-                _equipmentButtonsPreviousState.Add(legsEquipmentButton, legsEquipmentButton.IsInteractable());
-                legsEquipmentButton.interactable = false;
-            }
+    //        if (button != legsEquipmentButton)
+    //        {
+    //            _equipmentButtonsPreviousState.Add(legsEquipmentButton, legsEquipmentButton.IsInteractable());
+    //            legsEquipmentButton.interactable = false;
+    //        }
             
-            if (button != itemEquipmentButton)
-            {
-                _equipmentButtonsPreviousState.Add(itemEquipmentButton, itemEquipmentButton.IsInteractable());
-                itemEquipmentButton.interactable = false;
-            }
-        });
+    //        if (button != itemEquipmentButton)
+    //        {
+    //            _equipmentButtonsPreviousState.Add(itemEquipmentButton, itemEquipmentButton.IsInteractable());
+    //            itemEquipmentButton.interactable = false;
+    //        }
+    //    });
             
-        button.AddRightClick(equipable.Deselect);
+    //    button.AddRightClick(equipable.Deselect);
         
-        button.AddRightClick(ActivateEquipablesButtons);
+    //    button.AddRightClick(ActivateEquipablesButtons);
         
             
         
-        if (equipable.GetEquipableType() == EquipableSO.EquipableType.Passive)
-        {
-            button.interactable = false;
-        }
+    //    if (equipable.GetEquipableType() == EquipableSO.EquipableType.Passive)
+    //    {
+    //        button.interactable = false;
+    //    }
 
-        else if (equipable.GetEquipableType() == EquipableSO.EquipableType.Item &&
-                 equipable.GetAvailableUses() <= 0)
-        {
-            button.interactable = false;
-        }
+    //    else if (equipable.GetEquipableType() == EquipableSO.EquipableType.Item &&
+    //             equipable.GetAvailableUses() <= 0)
+    //    {
+    //        button.interactable = false;
+    //    }
             
-        else if (equipable.CanBeUsed() == false)
-        {
-            button.interactable = false;
-        }
+    //    else if (equipable.CanBeUsed() == false)
+    //    {
+    //        button.interactable = false;
+    //    }
             
-        else
-        {
-            button.interactable = true;
-        }
+    //    else
+    //    {
+    //        button.interactable = true;
+    //    }
         
-        if (_selectedChar.GetUnitTeam() == EnumsClass.Team.Red)
-        {
-            button.interactable = false;
-        }
-    }
+    //    if (_selectedChar.GetUnitTeam() == EnumsClass.Team.Red)
+    //    {
+    //        button.interactable = false;
+    //    }
+    //}
 
     #endregion
     
@@ -1446,51 +1446,51 @@ public class ButtonsUIManager : MonoBehaviour
         buttonExecuteAttack.interactable = false;
     }
 
-    public void RightWeaponCircleState(bool state)
-    {
-        rightWeaponCircle.transform.parent.gameObject.SetActive(state);
-    }
-    public void LeftWeaponCircleState(bool state)
-    {
-        leftWeaponCircle.transform.parent.gameObject.SetActive(state);
-    }
-    public void RightWeaponBarButtonState(bool state)
-    {
-        rightWeaponBar.enabled = state;
-    }
-    public void LeftWeaponBarButtonState(bool state)
-    {
-        leftWeaponBar.enabled = state;
-    }
+    //public void RightWeaponCircleState(bool state)
+    //{
+    //    rightWeaponCircle.transform.parent.gameObject.SetActive(state);
+    //}
+    //public void LeftWeaponCircleState(bool state)
+    //{
+    //    leftWeaponCircle.transform.parent.gameObject.SetActive(state);
+    //}
+    //public void RightWeaponBarButtonState(bool state)
+    //{
+    //    rightWeaponBar.enabled = state;
+    //}
+    //public void LeftWeaponBarButtonState(bool state)
+    //{
+    //    leftWeaponBar.enabled = state;
+    //}
     #endregion
 
-    public void DeactivateEquipablesButtons()
-    {
-        _equipmentButtonsPreviousState.Clear();
+    //public void DeactivateEquipablesButtons()
+    //{
+    //    _equipmentButtonsPreviousState.Clear();
         
-        _equipmentButtonsPreviousState.Add(bodyEquipmentButton, bodyEquipmentButton.IsInteractable());
-        bodyEquipmentButton.interactable = false;
+    //    _equipmentButtonsPreviousState.Add(bodyEquipmentButton, bodyEquipmentButton.IsInteractable());
+    //    bodyEquipmentButton.interactable = false;
         
-        _equipmentButtonsPreviousState.Add(leftGunEquipmentButton, leftGunEquipmentButton.IsInteractable());
-        leftGunEquipmentButton.interactable = false;
+    //    _equipmentButtonsPreviousState.Add(leftGunEquipmentButton, leftGunEquipmentButton.IsInteractable());
+    //    leftGunEquipmentButton.interactable = false;
         
-        _equipmentButtonsPreviousState.Add(rightGunEquipmentButton, rightGunEquipmentButton.IsInteractable());
-        rightGunEquipmentButton.interactable = false;
+    //    _equipmentButtonsPreviousState.Add(rightGunEquipmentButton, rightGunEquipmentButton.IsInteractable());
+    //    rightGunEquipmentButton.interactable = false;
         
-        _equipmentButtonsPreviousState.Add(legsEquipmentButton, legsEquipmentButton.IsInteractable());
-        legsEquipmentButton.interactable = false;
+    //    _equipmentButtonsPreviousState.Add(legsEquipmentButton, legsEquipmentButton.IsInteractable());
+    //    legsEquipmentButton.interactable = false;
         
-        _equipmentButtonsPreviousState.Add(itemEquipmentButton, itemEquipmentButton.IsInteractable());
-        itemEquipmentButton.interactable = false;
-    }
+    //    _equipmentButtonsPreviousState.Add(itemEquipmentButton, itemEquipmentButton.IsInteractable());
+    //    itemEquipmentButton.interactable = false;
+    //}
 
-    public void ActivateEquipablesButtons()
-    {
-        foreach (var kv in _equipmentButtonsPreviousState)
-        {
-            kv.Key.interactable = kv.Value;
-        }
+    //public void ActivateEquipablesButtons()
+    //{
+    //    foreach (var kv in _equipmentButtonsPreviousState)
+    //    {
+    //        kv.Key.interactable = kv.Value;
+    //    }
         
-        _equipmentButtonsPreviousState.Clear();
-    }
+    //    _equipmentButtonsPreviousState.Clear();
+    //}
 }
