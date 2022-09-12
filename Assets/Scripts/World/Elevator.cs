@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Elevator : MonoBehaviour, IObserver
+public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
 {
     protected const int MissHit = 0;
     protected const int NormalHit = 1;
@@ -40,14 +40,16 @@ public class Elevator : MonoBehaviour, IObserver
 
     private bool _isMoving;
 
-    private delegate void Execute();
-    Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
+    //private delegate void Execute();
+    //Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
 
     private Character _aboveCharacter;
 
     [SerializeField] private GameObject _colliderForAttack;
 
-    
+    public Action OnEndAction { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -67,9 +69,9 @@ public class Elevator : MonoBehaviour, IObserver
                 break;
             }
         }
-        
-        _actionsDic.Add("EndTurn", CanInteractAgain);
-        _actionsDic.Add("AboveTurn", ActivateButton);
+
+        GameManager.Instance.OnEndTurn += DeactivateButton;
+        GameManager.Instance.OnEndTurn += CanInteractAgain;
     }
     
     private void OnTriggerEnter(Collider other)
@@ -101,7 +103,7 @@ public class Elevator : MonoBehaviour, IObserver
 
         _aboveCharacter = _tileBelow.GetUnitAbove();
 
-        _aboveCharacter.OnEnterElevator(this);
+        _aboveCharacter.OnMechaTurnStart += ActivateButton;
         
         ActivateButton();
     }
@@ -116,8 +118,9 @@ public class Elevator : MonoBehaviour, IObserver
         
         if (!_aboveCharacter) 
             return;
-        
-        _aboveCharacter.OnExitElevator(this);
+
+        _aboveCharacter.OnMechaTurnStart -= ActivateButton;
+
         _aboveCharacter = null;
         DeactivateButton();
     }
@@ -128,7 +131,7 @@ public class Elevator : MonoBehaviour, IObserver
         StartCoroutine(Move());
         DeactivateButton();
     }
-    IEnumerator Move()
+    private IEnumerator Move()
     {
         if (!_canInteract) yield break;
 
@@ -193,16 +196,17 @@ public class Elevator : MonoBehaviour, IObserver
 
     private void ActivateButton()
     {
-        if (_currentHp <= 0) return;
-        
+        if (_currentHp <= 0)
+            return;
+
+        if (GameManager.Instance.ActiveTeam != EnumsClass.Team.Green)
+            return;
+
         if (_active)
-        {
             _buttonText.text = "DOWN";
-        }
         else
-        {
             _buttonText.text = "UP";
-        }
+
         _button.SetActive(true);
     }
     
@@ -210,13 +214,8 @@ public class Elevator : MonoBehaviour, IObserver
     {
         _button.SetActive(false);
     }
-    public void Notify(string action)
-    {
-        if (_actionsDic.ContainsKey(action))
-            _actionsDic[action]();
-    }
 
-    public void TakeDamage(List<Tuple<int, int>> damages)
+    public void ReceiveDamage(List<Tuple<int, int>> damages)
     {
         int total = 0;
         for (int i = 0; i < damages.Count; i++)
@@ -245,7 +244,9 @@ public class Elevator : MonoBehaviour, IObserver
 
         if (_currentHp <= 0)
         {
-            TurnManager.Instance.Unsubscribe(this);
+            GameManager.Instance.OnEndTurn -= DeactivateButton;
+            GameManager.Instance.OnEndTurn -= CanInteractAgain;
+
             _colliderForAttack.SetActive(false);
             _aboveCharacter.transform.parent = null; 
             _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
@@ -255,14 +256,16 @@ public class Elevator : MonoBehaviour, IObserver
         }
     }
 
-    public void TakeDamage(int damage)
+    public void ReceiveDamage(int damage)
     {
         float hp = _currentHp - damage;
         _currentHp = hp > 0 ? hp : 0;
         
         if (_currentHp <= 0)
         {
-            TurnManager.Instance.Unsubscribe(this);
+            GameManager.Instance.OnEndTurn -= DeactivateButton;
+            GameManager.Instance.OnEndTurn -= CanInteractAgain;
+
             _colliderForAttack.SetActive(false);
             _aboveCharacter.transform.parent = null; 
             _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
@@ -281,7 +284,7 @@ public class Elevator : MonoBehaviour, IObserver
         return _colliderForAttack;
     }
 
-    IEnumerator Fall()
+    private IEnumerator Fall()
     {
         float time = 0;
         var startPos = _platform.position;

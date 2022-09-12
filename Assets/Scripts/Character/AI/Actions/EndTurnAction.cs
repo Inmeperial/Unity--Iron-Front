@@ -22,7 +22,7 @@ public class EndTurnAction : GOAction
                 return TaskStatus.FAILED;
         }
         
-        ButtonsUIManager.Instance.EndTurn();
+        GameManager.Instance.BeginEndTurnProcess();
         _myUnit.OnStartAction(null);
         return TaskStatus.COMPLETED;
     }

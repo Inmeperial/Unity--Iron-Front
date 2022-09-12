@@ -68,9 +68,10 @@ public class Bridge : MonoBehaviour
         {
             character.EnableUnit();
 
-            var portrait = PortraitsController.Instance.GetCharacterPortrait(character);
+            //TODO ARREGLAR
+            //var portrait = PortraitsController.Instance.GetCharacterPortrait(character);
 
-            if (portrait) portrait.selectionButton.interactable = true;
+            //if (portrait) portrait.selectionButton.interactable = true;
         }
     }
 }

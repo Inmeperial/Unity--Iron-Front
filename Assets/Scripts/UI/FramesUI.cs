@@ -14,8 +14,14 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	public Color enemyColor;
 	public TextMeshProUGUI mechaName;
 	public CustomButton selectionButton;
-	public Character _characterSelected;
+	public Character _mecha;
 
+	private RectTransform _rectTransform;
+
+    private void Awake()
+    {
+        _rectTransform = GetComponent<RectTransform>();
+    }
     public void ChangeData(Image newMechaImage, TextMeshProUGUI newMechaName)
 	{
 		mechaImage = newMechaImage;
@@ -30,11 +36,11 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void AddButtonRightClickListener(UnityAction action) => selectionButton.OnRightClick.AddListener(action);
 
-    public FramesUI SetCharacter(Character character)
+    public FramesUI SetMecha(Character mecha)
 	{
-		_characterSelected = character;
+		_mecha = mecha;
 
-		_characterSelected.OnOverweight += OverweightIconState;
+		_mecha.OnOverweight += OverweightIconState;
 		return this;
 	}
 	public FramesUI SetSprite(Sprite sprite)
@@ -58,21 +64,28 @@ public class FramesUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		return this;
 	}
 
-    public void OverweightIconState(bool state) => overWeight.gameObject.SetActive(state);
+    public void ChangeMechaImageColor(Color color) => mechaImage.color = color;
 
+    public void OverweightIconState(Character mecha, bool state) => overWeight.gameObject.SetActive(state);
+
+	public void ShowFrame() => gameObject.SetActive(true);
+	public void HideFrame() => gameObject.SetActive(false);
+	public void EnableFrame() => selectionButton.enabled = true;
+	public void DisableFrame() => selectionButton.enabled = false;
+	public RectTransform GetRectTransform() => _rectTransform;
     public void OnPointerEnter(PointerEventData eventData)
 	{
-		if (_characterSelected.IsDead())
+		if (_mecha.IsDead())
 			return;
 
-		_characterSelected.SetShaderForAllParts(SwitchTextureEnum.TextureFresnel);
+		_mecha.SetShaderForAllParts(SwitchTextureEnum.TextureFresnel);
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
-		if (_characterSelected.IsDead())
+		if (_mecha.IsDead())
 			return;
 
-		_characterSelected.SetShaderForAllParts(SwitchTextureEnum.TextureClean);
+		_mecha.SetShaderForAllParts(SwitchTextureEnum.TextureClean);
 	}
 }

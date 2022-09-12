@@ -3,23 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmokeBomb : Item, IObserver
+public class SmokeBomb : Item
 {
 	private SmokeBombSO _data;
 	private GameObject _smokeScreen;
 	private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
 	private int _turnsLived;
 
-	private delegate void Execute();
-
-	private Dictionary<string, Execute> _actionDic = new Dictionary<string, Execute>();
-
 	public override void Initialize(Character character, EquipableSO data)
 	{
 		base.Initialize(character, data);
 
 		_data = data as SmokeBombSO;
-		_actionDic.Add("EndTurn", UpdateLifeSpan);
 	}
 
 	public override void Select()
@@ -28,7 +23,7 @@ public class SmokeBomb : Item, IObserver
 
 		_character.EquipableSelectionState(true, this);
 
-		PaintTilesInSelectionRange(_character.GetMyPositionTile(), 0);
+		PaintTilesInSelectionRange(_character.GetPositionTile(), 0);
 
 		if (!_smokeScreen)
 			_smokeScreen = Instantiate(_data.smokeGameObject);
@@ -97,7 +92,9 @@ public class SmokeBomb : Item, IObserver
     {
 		EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.SmokeBomb);
 
-		TurnManager.Instance.Subscribe(this);
+		//TurnManager.Instance.Subscribe(this);
+
+		GameManager.Instance.OnEndTurn += UpdateLifeSpan;
 
 		//Creo la esfera con el radio y le agrego el collider
 		//Para saber la posición donde crear la esfera necesito saber el tile que estoy tocando con un raycast
@@ -126,18 +123,13 @@ public class SmokeBomb : Item, IObserver
 	}
 
 	//Para evitar que se destruya en el mismo frame que se hace el notify, sino da error al modificar la coleccion del turn manager mientras se la usa.
-	IEnumerator DestroyDelay()
+	private IEnumerator DestroyDelay()
 	{
 		yield return new WaitForEndOfFrame();
 
-		TurnManager.Instance.Unsubscribe(this);
+		//TurnManager.Instance.Unsubscribe(this);
 
+		GameManager.Instance.OnEndTurn -= UpdateLifeSpan;
 		Destroy(_smokeScreen);
-	}
-
-	public void Notify(string action)
-	{
-		if (_actionDic.ContainsKey(action))
-			_actionDic[action]();
 	}
 }

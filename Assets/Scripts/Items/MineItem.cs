@@ -17,7 +17,7 @@ public class MineItem : Item
 
 	public override void Select()
 	{
-		PaintTilesInRange(_character.GetMyPositionTile(), 0);
+		PaintTilesInRange(_character.GetPositionTile(), 0);
 
 		_character.DeselectThisUnit();
 

@@ -11,21 +11,20 @@ public class InitializationManager : MonoBehaviour
         //    c.ManualAwake();
         //}
         
-        FindObjectOfType<EquipmentManager>().ManualAwake();
 
-        TurnManager turnManager = FindObjectOfType<TurnManager>();
-        turnManager.ManualAwake();
+        //TurnManager turnManager = FindObjectOfType<TurnManager>();
+        //turnManager.ManualAwake();
 
     }
 
     private void Start()
     {
-        Character[] characters = FindObjectsOfType<Character>();
-        
-        foreach (Character character in characters)
-        {
-            character.ManualStart();
-        }
+        //Character[] characters = GameManager.Instance.GetMechas();
+
+        //foreach (Character character in characters)
+        //{
+        //    character.Initialize();
+        //}
 
         //GetPartsOfMecha[] getParts = FindObjectsOfType<GetPartsOfMecha>();
 
@@ -37,6 +36,6 @@ public class InitializationManager : MonoBehaviour
         //TurnManager turnManager = FindObjectOfType<TurnManager>();
 
         //turnManager.ManualStart();
-        TurnManager.Instance.ManualStart();
+        //TurnManager.Instance.ManualStart();
     }
 }

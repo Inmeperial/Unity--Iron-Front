@@ -1,19 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
-public class Mortar : MonoBehaviour, IObserver, IInteractable
+using System;
+
+public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
 {
-    public float activationTilesDetectionRange;
+    [Header("References")]
+    [SerializeField] private Transform _textSpawnPos;
+    [SerializeField] private GameObject _turnsCounterTextPrefab;
+
+    [Header("Configs")]
     [SerializeField] private LayerMask _mortarMask;
     [SerializeField] private LayerMask _gridBlock;
     [SerializeField] private KeyCode _deselectKey;
+    [SerializeField] private float _activationTilesDetectionRange;
+    [SerializeField] private float _waitAfterAttack;
+
+    [Header("Stats")]
     [SerializeField] private int _shootRange;
     [SerializeField] private int _aoe;
     [SerializeField] private int _damage;
     [SerializeField] private int _turnsToAttack;
-    [SerializeField] private Transform _textSpawnPos;
-    [SerializeField] private GameObject _turnsCounterTextPrefab;
+
+    [Header("Debug")]
+    [SerializeField] private bool _drawGizmo;
+
     private List<TextMeshProUGUI> _textsList = new List<TextMeshProUGUI>();
     private Dictionary<Tile, int> _tilesForAttackChecked = new Dictionary<Tile, int>();
     private Dictionary<Tile, int> _tilesForPreviewChecked = new Dictionary<Tile, int>();
@@ -33,20 +46,18 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
 
     private HashSet<Tile> _tilesInActivationRange = new HashSet<Tile>();
     private Character _activationCharacter;
-
-    private delegate void Execute();
-    Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
     private bool _attackPending = false;
     private int _turnCount = 0;
-    public bool drawGizmo;
+
+    public Action OnEndAction { get; set; }
+
     // Start is called before the first frame update
     private void Start()
     {
         _highlight = FindObjectOfType<TileHighlight>();
         _myPositionTile = GetTileBelow();
         _selected = false;
-        _actionsDic.Add("EndTurn", CheckAttack);
-        _actionsDic.Add("Deselect", Deselect);
+
         GetTilesInActivationRange();
 
         foreach (Tile t in _tilesInActivationRange)
@@ -65,7 +76,7 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
             Deselect();
         }
 
-        if (CharacterSelection.Instance.GetSelectedCharacter() != null && !CharacterSelection.Instance.GetSelectedCharacter().IsSelectingEnemy() 
+        if (GameManager.Instance.CurrentTurnMecha && !GameManager.Instance.CurrentTurnMecha.IsSelectingEnemy() 
                                                                        && !_attackPending && Input.GetMouseButtonDown(0))
         {
             Interact();
@@ -85,9 +96,9 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
                     m.Deselect();
             }
             
-            Character s = CharacterSelection.Instance.GetSelectedCharacter();
-            s.SetSelection(false);
-            s.ResetRotationAndRays();
+            Character selectedCharacter = GameManager.Instance.CurrentTurnMecha;
+            selectedCharacter.SetSelection(false);
+            selectedCharacter.ResetRotationAndRays();
             _selected = true;
             if (SelectedPlayerAbove())
             {
@@ -154,7 +165,8 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
         {
             Character character = tile.GetUnitAbove();
             
-            if (!CharacterSelection.Instance.IsActiveCharacter(character)) continue;
+            if (!GameManager.Instance.IsActiveMecha(character))
+                continue;
             
             _activationCharacter = character;
             return true;
@@ -250,12 +262,15 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
         
         _activationCharacter.DeactivateAttack();
         _activationCharacter = null;
+
+        GameManager.Instance.OnEndTurn += CheckAttack;
+
         Deselect();
     }
 
     private void GetTilesInActivationRange()
     {
-        Collider[] tiles = Physics.OverlapSphere(transform.position, activationTilesDetectionRange, _gridBlock);
+        Collider[] tiles = Physics.OverlapSphere(transform.position, _activationTilesDetectionRange, _gridBlock);
 
         foreach (Collider tile in tiles)
         {
@@ -268,39 +283,35 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
     
     private void OnDrawGizmos()
     {
-        if (!drawGizmo) return;
+        if (!_drawGizmo) return;
         
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, activationTilesDetectionRange);
+        Gizmos.DrawWireSphere(transform.position, _activationTilesDetectionRange);
 
-    }
-
-    public void Notify(string action)
-    {
-        if (_actionsDic.ContainsKey(action))
-            _actionsDic[action]();
     }
 
     private void CheckAttack()
     {
-        if (!_attackPending) return;
+        if (!_attackPending)
+            return;
 
         _turnCount--;
         _textsList[0].text = _turnCount.ToString();
         _textsList[1].text = _turnCount.ToString();
         
-        if (_turnCount > 0) return;
+        if (_turnCount > 0)
+            return;
         
         Destroy(_textsList[0].gameObject);
         Destroy(_textsList[1].gameObject);
         
         _textsList.Clear();
         
-        TurnManager.Instance.SetMortarAttack(true);
-        
-        CameraMovement c = FindObjectOfType<CameraMovement>();
-        
-        c.MoveTo(_centerToAttack.gameObject.transform, Attack);
+        //TurnManager.Instance.SetMortarAttack(true);
+
+        CameraMovement cameraMovement = GameManager.Instance.GameCamerasController.CameraMovement;
+
+        GameManager.Instance.AddEndTurnAction(this, () => cameraMovement.MoveTo(_centerToAttack.gameObject.transform, Attack));
     }
 
     void Attack()
@@ -311,15 +322,15 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
             Character unit = tile.GetUnitAbove();
             if (unit)
             {
-                unit.GetBody().TakeDamage(_damage);
+                unit.GetBody().ReceiveDamage(_damage);
                 
                 if (unit.GetLeftGun())
-                    unit.GetLeftGun().TakeDamage(_damage);
+                    unit.GetLeftGun().ReceiveDamage(_damage);
                 
                 if (unit.GetRightGun())
-                    unit.GetRightGun().TakeDamage(_damage);
+                    unit.GetRightGun().ReceiveDamage(_damage);
                 
-                unit.GetLegs().TakeDamage(_damage);
+                unit.GetLegs().ReceiveDamage(_damage);
                 
                 //if (unit.GetBody().GetCurrentHp() <= 0) unit.Dead();
             }
@@ -331,16 +342,29 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
         }
         
         _attackPending = false;
-        TurnManager.Instance.SetMortarAttack(false);
+        //TurnManager.Instance.SetMortarAttack(false);
         _turnCount = _turnsToAttack;
+
+        GameManager.Instance.OnEndTurn -= CheckAttack;
+
         Deselect();
+
+        StartCoroutine(DelayAfterAttack());
+    }
+
+    private IEnumerator DelayAfterAttack()
+    {
+        yield return new WaitForSeconds(_waitAfterAttack);
+
+        OnEndAction?.Invoke();
     }
 
     private void Deselect()
     {
-        Character selection = CharacterSelection.Instance.GetSelectedCharacter(); 
+        Character selection = GameManager.Instance.CurrentTurnMecha; 
         
-        if (selection) CharacterSelection.Instance.Selection(selection);
+        if (selection) 
+            CharacterSelector.Instance.Selection(selection);
         
         _selected = false;
         _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
@@ -362,6 +386,4 @@ public class Mortar : MonoBehaviour, IObserver, IInteractable
         
         _last = null;
     }
-    
-    
 }

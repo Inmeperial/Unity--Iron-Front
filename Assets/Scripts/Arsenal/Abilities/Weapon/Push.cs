@@ -24,7 +24,7 @@ public class Push : WeaponAbility
         if (_inCooldown || !_character.CanAttack())
             return;
 
-        PaintUseTiles(_character.GetMyPositionTile(), 0, Vector3.zero);
+        PaintUseTiles(_character.GetPositionTile(), 0, Vector3.zero);
 
         _character.EquipableSelectionState(true, this);
 
@@ -108,21 +108,21 @@ public class Push : WeaponAbility
         enemy.ChangeMyPosTile(tileBeignPushedTo);
 
         Body enemyBody = enemy.GetBody();
-        enemyBody.TakeDamage(_abilityData.pushDamage);
+        enemyBody.ReceiveDamage(_abilityData.pushDamage);
 
         GameObject enemyBurningSpawner = enemy.GetBurningSpawner();
         EffectsController.Instance.PlayParticlesEffect(enemyBurningSpawner, EnumsClass.ParticleActionType.Damage);
 
         if (collides)
 		{
-            enemyBody.TakeDamage(_abilityData.collisionDamage);
+            enemyBody.ReceiveDamage(_abilityData.collisionDamage);
 
             EffectsController.Instance.PlayParticlesEffect(enemyBurningSpawner, EnumsClass.ParticleActionType.Damage);
 
             if (collidingUnit)
             {
                 //Hacer daño a la otra unidad
-                collidingUnit.GetBody().TakeDamage(_abilityData.collisionDamage);
+                collidingUnit.GetBody().ReceiveDamage(_abilityData.collisionDamage);
 
                 EffectsController.Instance.PlayParticlesEffect(collidingUnit.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
             }

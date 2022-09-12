@@ -169,9 +169,11 @@ public class Tile : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (TurnManager.Instance.GetActiveTeam() == EnumsClass.Team.Red) return;
+        if (GameManager.Instance.ActiveTeam == EnumsClass.Team.Red)
+            return;
         
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
         
         MouseOverColor();
     }

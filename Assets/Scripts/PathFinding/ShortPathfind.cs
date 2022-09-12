@@ -13,8 +13,8 @@ public class ShortPathfind : MonoBehaviour, IPathCreator
 
     public void Calculate(Tile start, Tile end, int distance)
     {
-        _agent.init = start;
-        _agent.finit = end;
+        _agent.SetStartAndFinish(start, end);
+
         _path = _agent.PathFindingAstar();
     }
 

@@ -30,9 +30,9 @@ public class EnemyCharacter : Character
             _behaviorExecutor.paused = true;
     }
 
-    public override void NewTurn()
+    public override void EndTurn()
     {
-        base.NewTurn();
+        base.EndTurn();
         _closestEnemy = null;
         checkedEnemy = false;
     }
@@ -57,11 +57,6 @@ public class EnemyCharacter : Character
         yield return new WaitForSeconds(2);
         
         _behaviorExecutor.paused = false;
-    }
-
-    public void SetAttackFORTEST()
-    {
-        _canAttack = false;
     }
 
     public void ForceBehaviorPause()
@@ -136,8 +131,8 @@ public class EnemyCharacter : Character
         Character closestEnemy = null;
 
         List<Tile> path = new List<Tile>();
-        
-        List<Character> enemies = GetEnemyTeam();
+
+        List<Character> enemies = GameManager.Instance.GetEnemies(_unitTeam);
         
         for (int i = 0; i < enemies.Count; i++)
         {
@@ -188,7 +183,7 @@ public class EnemyCharacter : Character
         if (!character) 
             return null;
         
-        Tile enemyTile = character.GetMyPositionTile();
+        Tile enemyTile = character.GetPositionTile();
 
         if (!enemyTile) 
             return null;
@@ -226,19 +221,19 @@ public class EnemyCharacter : Character
         return closest;
     }
 
-    List<Character> GetEnemyTeam()
-    {
-        Character[] units = TurnManager.Instance.GetAllUnits();
+    //private List<Character> GetEnemyTeam()
+    //{
+    //    Character[] units = GameManager.Instance.GetMechas();
         
-        List<Character> enemyTeam = new List<Character>();
+    //    List<Character> enemyTeam = new List<Character>();
 
-        foreach (Character unit in units)
-        {
-            if (!unit.IsDead() && unit.GetUnitTeam() != _unitTeam)
-                enemyTeam.Add(unit);
-        }
-        return enemyTeam;
-    }
+    //    foreach (Character unit in units)
+    //    {
+    //        if (!unit.IsDead() && unit.GetUnitTeam() != _unitTeam)
+    //            enemyTeam.Add(unit);
+    //    }
+    //    return enemyTeam;
+    //}
 
     public void SetClosestEnemy(Character character)
     {
@@ -260,7 +255,7 @@ public class EnemyCharacter : Character
         }
         else
         {
-            _canMove = false;
+            SetCharacterMoveState(false);
             OnEndAction();
         }
     }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class EnumsClass: MonoBehaviour
+public static class EnumsClass
 {
     public enum Team
     {

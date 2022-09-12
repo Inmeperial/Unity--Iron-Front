@@ -154,7 +154,7 @@ public class Flamethrower : WeaponAbility
                 continue;
 
             Body body = item.GetBody();
-            body.TakeDamage(_abilityData.damage);
+            body.ReceiveDamage(_abilityData.damage);
         }
         _character.DeactivateAttack();
     }

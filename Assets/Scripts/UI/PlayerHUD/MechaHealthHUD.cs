@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class MechaHealthHUD : MonoBehaviour
+public class MechaHealthHUD : Initializable
 {
     [SerializeField] private GameObject _container;
 
@@ -24,13 +24,19 @@ public class MechaHealthHUD : MonoBehaviour
 
     private void Awake()
     {
-        Character[] mechas = FindObjectsOfType<Character>();
+        HideHealthContainer();
+    }
 
-        foreach (var mecha in mechas)
+    public override void Initialize()
+    {
+        Character[] mechas = GameManager.Instance.GetMechas();
+
+        foreach (Character mecha in mechas)
         {
             mecha.OnMechaSelected += OnMechaSelected;
 
-            mecha.GetBody().OnHealthChanged += OnBodyHPChange;
+            Body body = mecha.GetBody();
+            body.OnHealthChanged += OnBodyHPChange;
 
             Gun leftGun = mecha.GetLeftGun();
 
@@ -42,13 +48,20 @@ public class MechaHealthHUD : MonoBehaviour
             if (rightGun)
                 rightGun.OnHealthChanged += OnRightGunHPChange;
 
-            mecha.GetLegs().OnHealthChanged += OnLegsHPChange;
+            Legs legs = mecha.GetLegs();
+            legs.OnHealthChanged += OnLegsHPChange;
         }
-        _container.SetActive(false);
+
+        GameManager.Instance.OnBeginTurn += ShowHealthContainer;
+        GameManager.Instance.OnEndTurn += HideHealthContainer;
+        GameManager.Instance.OnEnemyMechaSelected += HideHealthContainer;
+        GameManager.Instance.OnEnemyMechaDeselected += ShowHealthContainer;
+        GameManager.Instance.OnBeginAttackPreparations += HideHealthContainer;
+        GameManager.Instance.OnMechaAttackPreparationsFinished += ShowHealthContainer;
     }
 
-    public void ShowHealthContainer() => _container.SetActive(true);
-    public void HideHealthContainer() => _container.SetActive(false);
+    private void ShowHealthContainer() => _container.SetActive(true);
+    private void HideHealthContainer() => _container.SetActive(false);
 
     private void OnMechaSelected(Character mecha)
     {
@@ -98,18 +111,21 @@ public class MechaHealthHUD : MonoBehaviour
         _bodyHealthSlider.value = newValue;
         _bodyHealthText.text = newValue.ToString();
     }
+    
 
     private void OnLeftGunHPChange(float newValue)
     {
         _leftGunHealthSlider.value = newValue;
         _leftGunHealthText.text = newValue.ToString();
     }
+    
 
     private void OnRightGunHPChange(float newValue)
     {
         _rightGunHealthSlider.value = newValue;
         _rightGunHealthText.text = newValue.ToString();
     }
+    
 
     private void OnLegsHPChange(float newValue)
     {
@@ -119,13 +135,14 @@ public class MechaHealthHUD : MonoBehaviour
 
     private void OnDestroy()
     {
-        Character[] mechas = FindObjectsOfType<Character>();
+        Character[] mechas = GameManager.Instance.GetMechas();
 
         foreach (var mecha in mechas)
         {
             mecha.OnMechaSelected -= OnMechaSelected;
 
-            mecha.GetBody().OnHealthChanged -= OnBodyHPChange;
+            Body body = mecha.GetBody();
+            body.OnHealthChanged -= OnBodyHPChange;
 
             Gun leftGun = mecha.GetLeftGun();
 
@@ -137,7 +154,11 @@ public class MechaHealthHUD : MonoBehaviour
             if (rightGun)
                 rightGun.OnHealthChanged -= OnRightGunHPChange;
 
-            mecha.GetLegs().OnHealthChanged -= OnLegsHPChange;
+            Legs legs = mecha.GetLegs();
+            legs.OnHealthChanged -= OnLegsHPChange;
         }
+
+        GameManager.Instance.OnBeginTurn -= ShowHealthContainer;
+        GameManager.Instance.OnEndTurn -= HideHealthContainer;
     }
 }

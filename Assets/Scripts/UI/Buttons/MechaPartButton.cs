@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,8 +16,15 @@ public class MechaPartButton : CustomButton
     [SerializeField] private TextMeshProUGUI _bulletsCountText;
     
     private int _bulletsCount;
-    private Character _characterSelectedToAttack;
-    private IChangeableShader _part;
+    private Character _attackingMecha;
+    private Character _mechaSelectedToAttack;
+    private MechaPart _part;
+
+    public int BulletsCount { get => _bulletsCount; set => _bulletsCount = value; }
+
+    public Action OnButtonClicked;
+    public Action<int> OnAddBullets;
+    public Action<int> OnReduceBullets;
     public override void OnPointerEnter(PointerEventData eventData)
     {
         UpdateDamagePreviewSlider();
@@ -24,19 +32,6 @@ public class MechaPartButton : CustomButton
         _damagePreviewSlider.gameObject.SetActive(true);
 
         _part.SetShader(SwitchTextureEnum.TextureFresnel);
-        //_characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, _partEnum);
-
-        //if (_partEnum == PartsMechaEnum.body)
-        //{
-        //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.body);
-        //    //_characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.armL);
-        //    //_characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.armR);
-        //}
-        
-        //if (_partEnum == PartsMechaEnum.legL)
-        //{
-        //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureFresnel, PartsMechaEnum.legR);
-        //}
     }
     
     public override void OnPointerExit(PointerEventData eventData)
@@ -45,21 +40,7 @@ public class MechaPartButton : CustomButton
         {
             _damagePreviewSlider.gameObject.SetActive(false);
             _part.SetShader(SwitchTextureEnum.TextureClean);
-
-            //_characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
-
-            //if (_partEnum == PartsMechaEnum.body)
-            //{
-            //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armL);
-            //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armR);
-            //}
-
-            //if (_partEnum == PartsMechaEnum.legL)
-            //{
-            //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.legR);
-            //}
-        }
-            
+        }            
     }
 
     protected override void PressRight()
@@ -67,28 +48,17 @@ public class MechaPartButton : CustomButton
         base.PressRight();
 
         if (_bulletsCount <= 0)
-        {
             _part.SetShader(SwitchTextureEnum.TextureClean);
-            //_characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
-            
-            //if (_partEnum == PartsMechaEnum.body)
-            //{
-            //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armL);
-            //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armR);
-            //}
-            
-            //if (_partEnum == PartsMechaEnum.legL)
-            //{
-            //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.legR);
-            //}
-        }
-        
+
+        ReduceBullets();        
         UpdateDamagePreviewSlider();
     }
 
     protected override void PressLeft()
     {
         base.PressLeft();
+
+        AddBullets();
         UpdateDamagePreviewSlider();
     }
 
@@ -101,25 +71,19 @@ public class MechaPartButton : CustomButton
         _damagePreviewSlider.maxValue = maxValue;
     }
 
-    public void UpdateHpSlider(float value)
+    public void UpdateHP(float value)
     {
         _currentHPSlider.value = value;
+        _hpText.text = value.ToString();
     }
 
     public void UpdateDamagePreviewSlider()
     {
-        Character selectedCharacter = CharacterSelection.Instance.GetSelectedCharacter();
-
-        Gun gun = selectedCharacter.GetSelectedGun();
+        Gun gun = _attackingMecha.GetSelectedGun();
 
         float estimatedDamage = gun.GetBulletDamage() * _bulletsCount;
 
         _damagePreviewSlider.value = _currentHPSlider.value - estimatedDamage;
-    }
-
-    public void SetHpText(string text)
-    {
-        _hpText.text = text;
     }
 
     public void SetBulletsCount(int value)
@@ -128,14 +92,10 @@ public class MechaPartButton : CustomButton
         _bulletsCount = value;
     }
 
-    /// <summary>
-    /// Sets the character and the part that corresponds to this button.
-    /// </summary>
-    /// <param name="character"></param>
-    /// <param name="part">Body includes arms and legL includes legR</param>
-    public void SetCharacter(Character character, IChangeableShader part)
+    public void SetMechas(Character attacker, Character characterToAttack, MechaPart part)
     {
-        _characterSelectedToAttack = character;
+        _attackingMecha = attacker;
+        _mechaSelectedToAttack = characterToAttack;
         _part = part;
     }
 
@@ -144,38 +104,80 @@ public class MechaPartButton : CustomButton
         _bulletsCount = 0;
         _bulletsCountText.text = "0";
 
-        if (!_characterSelectedToAttack)
-            return;
+        _attackingMecha = null;
+        _mechaSelectedToAttack = null;
 
+        ClearSelectedPartShader();
+
+        _part = null;
+    }
+    
+    public void ShowButton()
+    {
+        EnableButton();
+        SetBulletsCount(0);
+        gameObject.SetActive(true);
+    }
+    public void HideButton()
+    {
+        DisableButton();
+        ClearSelectedPartShader();
+        gameObject.SetActive(false);
+    }
+
+    private void ClearSelectedPartShader()
+    {
         if (_part == null)
             return;
 
         _part.SetShader(SwitchTextureEnum.TextureClean);
-        //_characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, _partEnum);
+    }    
+    private void EnableButton() => interactable = true;
+    private void DisableButton() => interactable = false;
 
-
-        //if (_partEnum == PartsMechaEnum.body)
-        //{
-        //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armL);
-        //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.armR);
-        //}
-
-        //if (_partEnum == PartsMechaEnum.legL)
-        //{
-        //    _characterSelectedToAttack.SetShaderForPart(SwitchTextureEnum.TextureClean, PartsMechaEnum.legR);
-        //}
-    }
-    
-    public void ButtonEnabling(bool status, UnityAction rightAction, UnityAction leftAction)
+    private void AddBullets()
     {
-        gameObject.SetActive(status);
-        interactable = status;
+        Gun gun = _attackingMecha.GetSelectedGun();
 
-        OnRightClick.RemoveAllListeners();
-        OnLeftClick.RemoveAllListeners();
-        OnRightClick.AddListener(rightAction);
-        OnLeftClick.AddListener(leftAction);
+        if (gun.GetAvailableBullets() <= 0 || _bulletsCount >= gun.GetMaxBullets())
+            return;
 
-        SetBulletsCount(0);
+        _bulletsCount += gun.GetBulletsPerClick();
+
+        gun.ReduceAvailableBullets();
+
+        _bulletsCountText.text = _bulletsCount.ToString();
+
+        OnButtonClicked?.Invoke();
+        OnAddBullets?.Invoke(gun.GetBulletsPerClick());
+    }
+
+    private void ReduceBullets()
+    {
+        if (_bulletsCount <= 0)
+            return;
+
+        Gun gun = _attackingMecha.GetSelectedGun();
+
+        if (gun.GetMaxBullets() <= gun.GetAvailableBullets())
+            return;
+
+        gun.IncreaseAvailableBullets();
+
+        _bulletsCount = _bulletsCount > 0 ? (_bulletsCount - gun.GetBulletsPerClick()) : 0;
+
+        _bulletsCountText.text = _bulletsCount.ToString();
+
+        OnButtonClicked?.Invoke();
+        OnReduceBullets?.Invoke(gun.GetBulletsPerClick());
+    }
+    public void Attack()
+    {
+        if (_bulletsCount <= 0)
+            return;
+
+        Gun selectedGun = _attackingMecha.GetSelectedGun();
+        selectedGun.Attack(_part, _bulletsCount);
+        selectedGun.GunSkill(_part);
     }
 }

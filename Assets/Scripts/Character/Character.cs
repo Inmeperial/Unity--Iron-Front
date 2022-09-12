@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [SelectionBase]
-public class Character : EnumsClass, IObservable
+public class Character : Initializable
 {
     [Header("References")]
-    [SerializeField] protected WorldUI _worldUI;
+    //[SerializeField] protected WorldUI _worldUI;
     [SerializeField] protected WaypointsPathfinding _waypointsPathfinding;
     [SerializeField] protected GridMovement _gridMovement;
     [SerializeField] protected ParticleMechaHandler _particleMechaHandler;
@@ -46,8 +46,7 @@ public class Character : EnumsClass, IObservable
     [Space(2)]
 
     [Header("Configs")]
-    [SerializeField] protected Team _unitTeam;
-    [SerializeField] protected bool _gunsOffOnCloseUp;
+    [SerializeField] protected EnumsClass.Team _unitTeam;
     [SerializeField] protected LayerMask _block;
 
     [Header("Data")]
@@ -76,8 +75,7 @@ public class Character : EnumsClass, IObservable
 
     protected List<Character> _enemiesInRange = new List<Character>();
 
-    public Quaternion InitialRotation { get; private set; } //Cambio Nico
-    public Quaternion RotationBeforeAttack { get; private set; }
+    public Quaternion SavedRotation { get; private set; } //Cambio Nico
 
 
     #region  Flags
@@ -88,7 +86,7 @@ public class Character : EnumsClass, IObservable
     protected bool _canAttack = true;
     protected bool _leftGunAlive;
     protected bool _rightGunAlive;
-    protected bool _canBeAttacked = false;
+    protected bool _inAttackRange = false;
     protected bool _selectingEnemy = false;
     protected bool _selectedForAttack;
     protected bool _myTurn = false;
@@ -106,7 +104,7 @@ public class Character : EnumsClass, IObservable
     protected bool _movementReduced;
     #endregion
 
-    public Action<bool> OnOverweight;
+    public Action<Character, bool> OnOverweight;
 
     protected List<IObserver> _observers = new List<IObserver>();
 
@@ -115,22 +113,29 @@ public class Character : EnumsClass, IObservable
     protected float _startingHeight;
 
     public Action<Character> OnMechaSelected;
+    public Action OnMechaDeselected;
+    public Action OnSelectingEnemy;
     public Action OnBeginMove;
     public Action OnEndMove;
-
+    public Action<Character, bool> OnMoveActionStateChange;
+    public Action<Character, bool> OnAttackActionStateChange;
     public Action OnLeftGunSelected;
     public Action OnRightGunSelected;
+
+    public Action<Character> OnMouseOverMecha;
+    public Action<Character> OnMouseExitMecha;
+    public Action<Character> OnMechaDeath;
+
+    public Action OnMechaTurnStart;
     public virtual void Awake()
     {
         _startingHeight = transform.position.y;
     }
 
     // Start is called before the first frame update
-    public virtual void ManualStart()
+    public override void Initialize()
     {
         ConfigureMecha();
-
-        Subscribe(TurnManager.Instance);
 
         _myPositionTile = GetTileBelow();
 
@@ -141,18 +146,6 @@ public class Character : EnumsClass, IObservable
         _myPositionTile.SetUnitAbove(this);
         _gridMovement.SetMoveSpeed(_legs.GetMoveSpeed());
         _gridMovement.SetRotationSpeed(_legs.GetRotationSpeed());
-        
-        float rightGunHP = 0;
-
-        if (_rightGun)
-            rightGunHP = _rightGun.MaxHP;
-        
-        float leftGunHP = 0;
-
-        if (_leftGun)
-            leftGunHP = _leftGun.MaxHP;
-        
-        _worldUI.SetLimits(_body.MaxHp, rightGunHP, leftGunHP, _legs.MaxHp);
 
         _selected = false;
 
@@ -168,7 +161,7 @@ public class Character : EnumsClass, IObservable
         if (!_unitEnabled)
             return;
 
-        if (_unitTeam == Team.Red)
+        if (_unitTeam == EnumsClass.Team.Red)
             return;
 
         if (!_isOnElevator)
@@ -188,9 +181,9 @@ public class Character : EnumsClass, IObservable
     protected void Move()
     {
         _moving = true;
-        ButtonsUIManager.Instance.DeactivateBodyPartsContainer();
+        //ButtonsUIManager.Instance.DeactivateBodyPartsContainer();
         //ButtonsUIManager.Instance.DeactivateEquipablesButtons();
-        TurnManager.Instance.UnitIsMoving();
+        //TurnManager.Instance.UnitIsMoving();
         TileHighlight.Instance.characterMoving = true;
 
         if (_myPositionTile)
@@ -213,62 +206,66 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Creates shoot particle at selected gun position.
     /// </summary>
-    public void Shoot()
-    {
-        if (!_selectedGun)
-            return;
-        //TODO: Ver de sacar switch
-        if (_selectedGun.GetLocation() == "Right")
-        {
-            switch (_rightGun.GetGunType())
-            {
-                case GunsType.None:
-                    break;
-                case GunsType.AssaultRifle:
-                    _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
-                    break;
-                case GunsType.Melee:
-                    _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
-                    break;
-                case GunsType.Rifle:
-                    _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
-                    break;
-                case GunsType.Shield:
-                    break;
-                case GunsType.Shotgun:
-                    _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
-                    break;
-            }
-        }
-        else if (_selectedGun.GetLocation() == "Left")
-        {
-            switch (_leftGun.GetGunType())
-            {
-                case GunsType.None:
-                    break;
-                case GunsType.AssaultRifle:
-                    _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
-                    break;
-                case GunsType.Melee:
-                    _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
-                    break;
-                case GunsType.Rifle:
-                    _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
-                    break;
-                case GunsType.Shield:
-                    break;
-                case GunsType.Shotgun:
-                    _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
-                    break;
-            }
-        }
-    }
+    //public void Shoot()
+    //{
+    //    if (!_selectedGun)
+    //        return;
+
+    //    //TODO: AGREGAR LA EJECUCION DE LA ANIMACION (EL SWITCH RANCIO) AL ARMA
+    //    if (_selectedGun.GetLocation() == "Right")
+    //    {
+    //        switch (_rightGun.GetGunType())
+    //        {
+    //            //case EnumsClass.GunsType.None:
+    //            //    break;
+    //            //case EnumsClass.GunsType.AssaultRifle:
+    //            //    _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
+    //            //    break;
+    //            case EnumsClass.GunsType.Melee:
+    //                _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
+    //                break;
+    //            case EnumsClass.GunsType.Rifle:
+    //                _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
+    //                break;
+    //            case EnumsClass.GunsType.Shield:
+    //                break;
+    //            case EnumsClass.GunsType.Shotgun:
+    //                _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
+    //                break;
+    //        }
+    //    }
+    //    else if (_selectedGun.GetLocation() == "Left")
+    //    {
+    //        switch (_leftGun.GetGunType())
+    //        {
+    //            case EnumsClass.GunsType.None:
+    //                break;
+    //            case EnumsClass.GunsType.AssaultRifle:
+    //                _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
+    //                break;
+    //            case EnumsClass.GunsType.Melee:
+    //                _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
+    //                break;
+    //            case EnumsClass.GunsType.Rifle:
+    //                _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
+    //                break;
+    //            case EnumsClass.GunsType.Shield:
+    //                break;
+    //            case EnumsClass.GunsType.Shotgun:
+    //                _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
+    //                break;
+    //        }
+    //    }
+    //}
 
     /// <summary>
     /// Select Left Gun and repaint tiles.
     /// </summary>
     public void SelectLeftGun()
     {
+        if (_selectingEnemy)
+            return;
+
         if (!_leftGun)
             return;
         
@@ -277,7 +274,7 @@ public class Character : EnumsClass, IObservable
         
         foreach (Character enemy in _enemiesInRange)
         {
-            TurnManager.Instance.UnitCantBeAttacked(enemy);
+            enemy.MechaOutsideAttackRange();
         }
 
         _enemiesInRange.Clear();
@@ -310,7 +307,7 @@ public class Character : EnumsClass, IObservable
         {
             if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
             {
-                if (_unitTeam == Team.Green)
+                if (_unitTeam == EnumsClass.Team.Green)
                     PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
                 else
                     PaintTilesInAttackRange(_myPositionTile, 0);
@@ -322,7 +319,7 @@ public class Character : EnumsClass, IObservable
 
         if (!_isOnElevator && _canMove)
         {
-            if (_unitTeam == Team.Green)
+            if (_unitTeam == EnumsClass.Team.Green)
                 PaintTilesInMoveRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
             else
                 PaintTilesInMoveRange(_myPositionTile, 0);
@@ -336,6 +333,9 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void SelectRightGun()
     {
+        if (_selectingEnemy)
+            return;
+
         if (!_rightGun)
             return;
         
@@ -344,7 +344,7 @@ public class Character : EnumsClass, IObservable
 
         foreach (Character enemy in _enemiesInRange)
         {
-            TurnManager.Instance.UnitCantBeAttacked(enemy);
+            enemy.MechaOutsideAttackRange();
         }
         _enemiesInRange.Clear();
         
@@ -379,7 +379,7 @@ public class Character : EnumsClass, IObservable
         {
             if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
             {
-                if (_unitTeam == Team.Green)
+                if (_unitTeam == EnumsClass.Team.Green)
                     PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
                 else
                     PaintTilesInAttackRange(_myPositionTile, 0);
@@ -391,7 +391,7 @@ public class Character : EnumsClass, IObservable
 
         if (!_isOnElevator && _canMove)
         {
-            if (_unitTeam == Team.Green)
+            if (_unitTeam == EnumsClass.Team.Green)
                 PaintTilesInMoveRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
             else
                 PaintTilesInMoveRange(_myPositionTile, 0);
@@ -439,7 +439,7 @@ public class Character : EnumsClass, IObservable
         
         OnMechaSelected?.Invoke(this);
 
-        InitialRotation = transform.rotation; //Cambio Nico
+        SavedRotation = transform.rotation; //Cambio Nico
         ResetInRangeLists();
         _path.Clear();
         TileHighlight.Instance.PathLinesClear();
@@ -460,13 +460,13 @@ public class Character : EnumsClass, IObservable
 
         if (_canAttack)
         {
-            if (_rightGunAlive && _rightGun)
+            if (_rightGun)
             {
                 _selectedGun = _rightGun;
                 SelectRightGun();
             }
             
-            else if (_leftGunAlive && _leftGun)
+            else if (_leftGun)
             {
                 _selectedGun = _leftGun;
                 SelectLeftGun();
@@ -517,6 +517,9 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void DeselectThisUnit()
     {
+        if (_isDead)
+            return;
+
         _selected = false;
         _selectingEnemy = false;
         
@@ -530,9 +533,9 @@ public class Character : EnumsClass, IObservable
             _myPositionTile.EndMouseOverColor();
         }
 
-        foreach (Character unit in _enemiesInRange)
+        foreach (Character enemy in _enemiesInRange)
         {
-            TurnManager.Instance.UnitCantBeAttacked(unit);
+            enemy.MechaOutsideAttackRange();
         }
 
         // if (_canMove)
@@ -541,6 +544,11 @@ public class Character : EnumsClass, IObservable
         _path.Clear();
         TileHighlight.Instance.PathLinesClear();
         _waypointsPathfinding.ResetPath();
+
+        ShowMechaMesh();
+        ShowGunsMesh();
+
+        OnMechaDeselected?.Invoke();
     }
 
     /// <summary>
@@ -568,70 +576,89 @@ public class Character : EnumsClass, IObservable
         Physics.Raycast(position, dir, out RaycastHit hit, 1000f);
         Transform hitObj = hit.collider.transform;
         //bool goodHit = hitObj.gameObject.CompareTag(tagToCheck) && hitObj.position == partPosition;
-        bool goodHit = false;
+        bool targetHit = false;
 
         LineRenderer renderer = null;
         switch (tagToCheck)
         {
             case "Body":
-                if (hitObj.gameObject.CompareTag(tagToCheck) && hitObj.GetComponent<Body>().GetCharacter().GetUnitTeam() != _unitTeam)
-                    goodHit = true;
+                if (hitObj.gameObject.CompareTag(tagToCheck))
+                {
+                    if (hitObj.GetComponent<Body>().GetCharacter().GetUnitTeam() != _unitTeam)
+                        targetHit = true;
+                    else
+                        Debug.Log("es del equipo: " + hitObj.GetComponent<Body>().GetCharacter().GetUnitTeam().ToString());
+                }
                 else
-                    Debug.Log("Body ray hit: " + hitObj.gameObject.name);
+                    Debug.Log("tag hitteado: " + hitObj.tag + " - tag buscado: " + tagToCheck);
                 
                 renderer = _rayForBody;
                 break;
 
             case "Legs":
-                if (hitObj.gameObject.CompareTag(tagToCheck) && hitObj.GetComponent<Legs>().GetCharacter().GetUnitTeam() != _unitTeam)
-                    goodHit = true;
-                else 
-                    Debug.Log("Legs ray hit: " + hitObj.gameObject.name);
+                if (hitObj.gameObject.CompareTag(tagToCheck))
+                {
+                    if (hitObj.GetComponent<Legs>().GetCharacter().GetUnitTeam() != _unitTeam)
+                        targetHit = true;
+                    else
+                        Debug.Log("es del equipo: " + hitObj.GetComponent<Legs>().GetCharacter().GetUnitTeam().ToString());
+                }
+                else
+                    Debug.Log("tag hitteado: " + hitObj.tag + " - tag buscado: " + tagToCheck);
 
                 renderer = _rayForLegs;
                 break;
 
             case "RGun":
-                if (hitObj.gameObject.CompareTag(tagToCheck) && hitObj.GetComponent<Gun>().GetCharacter().GetUnitTeam() != _unitTeam)
-                    goodHit = true;
-                else 
-                    Debug.Log("RGun ray hit: " + hitObj.gameObject.name);
+                if (hitObj.gameObject.CompareTag(tagToCheck))
+                {
+                    if (hitObj.GetComponent<Gun>().GetCharacter().GetUnitTeam() != _unitTeam)
+                        targetHit = true;
+                    else
+                        Debug.Log("es del equipo: " + hitObj.GetComponent<Gun>().GetCharacter().GetUnitTeam().ToString());
+                }
+                else
+                    Debug.Log("tag hitteado: " + hitObj.tag + " - tag buscado: " + tagToCheck);
 
                 renderer = _rayForRightArm;
                 break;
 
             case "LGun":
-                if (hitObj.gameObject.CompareTag(tagToCheck) && hitObj.GetComponent<Gun>().GetCharacter().GetUnitTeam() != _unitTeam)
-                    goodHit = true;
-                else 
-                    Debug.Log("LGun ray hit: " + hitObj.gameObject.name);
+                if (hitObj.gameObject.CompareTag(tagToCheck))
+                {
+                    if (hitObj.GetComponent<Gun>().GetCharacter().GetUnitTeam() != _unitTeam)
+                        targetHit = true;
+                    else
+                        Debug.Log("es del equipo: " + hitObj.GetComponent<Gun>().GetCharacter().GetUnitTeam().ToString());
+                }
+                else
+                    Debug.Log("tag hitteado: " + hitObj.tag + " - tag buscado: " + tagToCheck);
 
                 renderer = _rayForLeftArm;
                 break;
         }
 
-        renderer.positionCount = 2;
-        renderer.SetPosition(0, position);
-        renderer.SetPosition(1, partPosition);
-
-        if (goodHit)
-        {
-            if (drawRays)
-            {
-                renderer.material = _rayHitMaterial;
-                Debug.DrawRay(position, dir * 20f, Color.green, 10f); 
-            }
-            
-            return true;
-        }
-
+        
         if (drawRays)
         {
-            renderer.material = _rayMissMaterial;
-            Debug.DrawRay(position, dir * 20f, Color.red, 10f); 
+            renderer.positionCount = 2;
+            renderer.SetPosition(0, position);
+            renderer.SetPosition(1, partPosition);
+
+            if (targetHit)
+            {
+                renderer.material = _rayHitMaterial;
+                Debug.DrawRay(position, dir * 20f, Color.green, 10f);
+            }
+            else
+            {
+                renderer.material = _rayMissMaterial;
+                Debug.DrawRay(position, dir * 20f, Color.red, 10f);
+            }
+            
         }
-        
-        return false;
+
+        return targetHit;
     }
 
     public bool RayToElevator(Vector3 colliderPosition)
@@ -670,14 +697,8 @@ public class Character : EnumsClass, IObservable
         RaysOff();
     }
 
-    /// <summary>
-    /// Set legs overcharge status to true
-    /// </summary>
     public void LegsOverchargeActivate() => _legsOvercharged = true;
 
-    /// <summary>
-    /// Set legs overcharge status to false
-    /// </summary>
     public void LegsOverchargeDeactivate() => _legsOvercharged = false;
 
     public void AddEquipable(Equipable equipable) => _equipables.Add(equipable);
@@ -745,44 +766,29 @@ public class Character : EnumsClass, IObservable
             TileHighlight.Instance.PaintLastTileInPath(_targetTile);
         }
     }
-
-    /// <summary>
-    /// Return Character World UI.
-    /// </summary>
-    public WorldUI GetMyUI() => _worldUI;
+    //public WorldUI GetMyUI() => _worldUI;
 
     public int GetCurrentSteps() => _currentSteps;
 
     public Tile GetEndTile() => _targetTile;
 
-    public Team GetUnitTeam() => _unitTeam;
+    public EnumsClass.Team GetUnitTeam() => _unitTeam;
 
     public bool IsSelected() => _selected;
 
-
-    /// <summary>
-    /// Return the Tile where the Character is.
-    /// </summary>
-    public Tile GetMyPositionTile()
+    public Tile GetPositionTile()
     {
         if (!_myPositionTile)
             _myPositionTile = GetTileBelow();
         
         return _myPositionTile;
     }
-
-    /// <summary>
-    /// Return the current path.
-    /// </summary>
     public List<Tile> GetPath()
     {
         _path = _waypointsPathfinding.GetPath();
         return _path;
     }
 
-    /// <summary>
-    /// Raycast to get the tile the character is.
-    /// </summary>
     private Tile GetTileBelow()
     {
         Vector3 pos = _raycastToTile.position;
@@ -795,34 +801,18 @@ public class Character : EnumsClass, IObservable
         return tile;
     }
 
-    /// <summary>
-    /// Return true if Character has Enemy Units in attack range.
-    /// </summary>
     public bool HasEnemiesInRange() => _enemiesInRange.Count > 0;
 
-    /// <summary>
-    /// Return the selected gun.
-    /// </summary>
     public Gun GetSelectedGun() => _selectedGun;
-
-    /// <summary>
-    /// Return the Left Gun.
-    /// </summary>
     public Gun GetLeftGun() => _leftGun;
-
-    /// <summary>
-    /// Return the Right Gun.
-    /// </summary>
     public Gun GetRightGun() => _rightGun;
 
-    /// <summary>
-    /// Return Body world position.
-    /// </summary>
+    public void ResetSelectedGun()
+    {
+        if (_selectedGun)
+            _selectedGun.ResetGun();
+    }
     public Vector3 GetBodyPosition() => _body.transform.position;
-
-    /// <summary>
-    /// Return Left Arm world position.
-    /// </summary>
     public Vector3 GetLArmPosition()
     {
         if (_leftGun)
@@ -830,10 +820,6 @@ public class Character : EnumsClass, IObservable
         
         return Vector3.zero;
     }
-
-    /// <summary>
-    /// Return Right Arm world position.
-    /// </summary>
     public Vector3 GetRArmPosition()
     {
         if (_rightGun)
@@ -841,15 +827,8 @@ public class Character : EnumsClass, IObservable
 
         return Vector3.zero;
     }
-
-    /// <summary>
-    /// Return Legs world position.
-    /// </summary>
     public Vector3 GetLegsPosition() => _legs.transform.position;
 
-    /// <summary>
-    /// Return true if it's Character turn.
-    /// </summary>
     public bool IsMyTurn() => _myTurn;
 
     public bool IsDead() => _isDead;
@@ -859,14 +838,14 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Return true if Character is selected for an attack.
     /// </summary>
-    public bool IsSelectedForAttack() => _selectedForAttack;
+    //public bool IsSelectedForAttack() => _selectedForAttack;
 
     public bool IsSelectingEnemy() => _selectingEnemy;
 
     /// <summary>
     /// Return true if Character can be attacked.
     /// </summary>
-    public bool CanBeAttacked() => _canBeAttacked;
+    public bool CanBeAttacked() => _inAttackRange;
 
     /// <summary>
     /// Return true if Character can attack.
@@ -878,32 +857,6 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public bool IsMoving() => _moving;
 
-    /// <summary>
-    /// Return true if Character Left Arm has more than 0 HP.
-    /// </summary>
-    public bool LeftGunAlive()
-    {
-        if (_leftGun)
-            _leftGunAlive = _leftGun.CurrentHP > 0;
-        else
-            _leftGunAlive = false;
-        
-        return _leftGunAlive;
-    }
-
-    /// <summary>
-    /// Return true if Character Right Arm has more than 0 HP.
-    /// </summary>
-    public bool RightGunAlive()
-    {
-        if (_rightGun)
-            _rightGunAlive = _rightGun.CurrentHP > 0;
-        else
-            _rightGunAlive = false;
-        
-        return _rightGunAlive;
-    }
-
     public bool CanMove() => _canMove;
 
     public bool CanBeSelected() => !_equipableSelected && _canBeSelected;
@@ -911,7 +864,7 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Return the Character initiative.
     /// </summary>
-    public float GetCharacterInitiative() => _legs.CurrentHP / _legs.MaxHp * 100 + _legs.GetLegsInitiative();
+    public float GetCharacterInitiative() => _legs.GetLegsInitiative();
 
     public Sprite GetCharacterSprite() => _myIcon;
 
@@ -949,7 +902,7 @@ public class Character : EnumsClass, IObservable
         if (!_myTurn)
             return;
 
-        NotifyObserver("AboveTurn");
+        OnMechaTurnStart?.Invoke();
 
         if (_body.IsSmokeScreenActive())
             _body.DeactivateSmokeScreen();
@@ -958,19 +911,34 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Set if Character is selected for an Attack.
     /// </summary>
-    public void SetSelectedForAttack(bool state) => _selectedForAttack = state;
+    public void SelectedForAttack() => _selectedForAttack = true;
+    public void NotSelectedForAttack() => _selectedForAttack = false;
 
     /// <summary>
     /// Set if Character is selecting an enemy.
     /// </summary>
-    public void SetSelectingEnemy(bool state) => _selectingEnemy = state;
+    public void SelectingEnemy()
+    {
+        _selectingEnemy = true;
+
+        ResetTilesInAttackRange();
+        ResetTilesInMoveRange();
+        HideMechaMesh();
+        OnSelectingEnemy?.Invoke();            
+    }
+
+    public void CancelEnemySelection() => _selectingEnemy = false;
 
     public void SetTargetTile(Tile target) => _targetTile = target;
 
     /// <summary>
     /// Set if Character can move.
     /// </summary>
-    public void SetCharacterMove(bool state) => _canMove = state;
+    public void SetCharacterMoveState(bool state)
+    {
+        _canMove = state;
+        OnMoveActionStateChange?.Invoke(this, _canMove);
+    }
 
     public void SetSelection(bool state) => _selected = state;
 
@@ -987,7 +955,7 @@ public class Character : EnumsClass, IObservable
         if (_selectedGun == null || count >= _selectedGun.GetAttackRange() || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
             return;
         
-        if (_isOnElevator && _selectedGun.GetGunType() == GunsType.Melee)
+        if (_isOnElevator && _selectedGun.GetGunType() == EnumsClass.GunsType.Melee)
             return;
 
         _tilesForAttackChecked[currentTile] = count;
@@ -1071,9 +1039,9 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public void ResetInRangeLists()
     {
-        foreach (Character item in _enemiesInRange)
+        foreach (Character enemy in _enemiesInRange)
         {
-            TurnManager.Instance.UnitCantBeAttacked(item);
+            enemy.MechaOutsideAttackRange();
         }
 
         TileHighlight.Instance.PathLinesClear();
@@ -1092,7 +1060,7 @@ public class Character : EnumsClass, IObservable
     /// <summary>
     /// Reset Character for new turn.
     /// </summary>
-    public virtual void NewTurn()
+    public virtual void EndTurn()
     {
         if (_isDead)
             return;
@@ -1102,23 +1070,25 @@ public class Character : EnumsClass, IObservable
         if (_rightGun)
         {
             _rightGun.Deselect();
-            _rightGun.ReloadGun();
+            _rightGun.ResetGun();
         }
 
         if (_leftGun)
         {
             _leftGun.Deselect();
-            _leftGun.ReloadGun();
+            _leftGun.ResetGun();
         }
 
         _myTurn = false;
-        _canMove = true;
-        
-        _canAttack = true;
+
+        SetCharacterMoveState(true);
+
+        SetAttackActionState(true);
+
         _path.Clear();
         _currentSteps = _legs.CurrentHP > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps() / 2;
         _enemiesInRange.Clear();
-        _canBeAttacked = false;
+        _inAttackRange = false;
         _waypointsPathfinding.ResetPath();
 
         foreach (Equipable equipable in _equipables)
@@ -1134,12 +1104,13 @@ public class Character : EnumsClass, IObservable
     /// </summary>
     public virtual void ReachedEnd()
     {
-        _canMove = false;
+        SetCharacterMoveState(false);
+
         _legsOvercharged = false;
         TileHighlight.Instance.characterMoving = false;
         TileHighlight.Instance.EndPreview();
         _moving = false;
-        InitialRotation = transform.rotation; //Cambio Nico
+        SavedRotation = transform.rotation; //Cambio Nico
 
         if (_myPositionTile)
         {
@@ -1157,7 +1128,7 @@ public class Character : EnumsClass, IObservable
         _myPositionTile.unitAboveSelected = true;
         _myPositionTile.MouseOverColor();
         _targetTile = null;
-        TurnManager.Instance.UnitStoppedMoving();
+        //TurnManager.Instance.UnitStoppedMoving();
         _waypointsPathfinding.ResetPath();
         _tilesForAttackChecked.Clear();
         _tilesInAttackRange.Clear();
@@ -1211,12 +1182,8 @@ public class Character : EnumsClass, IObservable
 
         _canBeSelected = false;
         _isDead = true;
-        PortraitsController.Instance.DeadPortrait(this);
-        NotifyObserver(_unitTeam == Team.Green ? "GreenDead" : "RedDead");
-        FramesUI myPortrait = PortraitsController.Instance.GetCharacterPortrait(this);
-        myPortrait.RemoveButtonLeftClickListeners();
-        myPortrait.RemoveButtonRightClickListeners();
-        _worldUI.Hide();
+        
+        OnMechaDeath?.Invoke(this);
     }
 
     /// <summary>
@@ -1261,9 +1228,9 @@ public class Character : EnumsClass, IObservable
         if (_tilesInAttackRange == null || _tilesInAttackRange.Count <= 0)
             return;
 
-        foreach (Character unit in _enemiesInRange)
+        foreach (Character enemy in _enemiesInRange)
         {
-            TurnManager.Instance.UnitCantBeAttacked(unit);
+            enemy.MechaOutsideAttackRange();
         }
 
         _enemiesInRange.Clear();
@@ -1272,46 +1239,34 @@ public class Character : EnumsClass, IObservable
         {
             if (!tile.IsFree())
             {
-                Character unit = tile.GetUnitAbove();
+                Character mecha = tile.GetUnitAbove();
                 
-                if (unit.GetUnitTeam() == _unitTeam)
+                if (mecha.GetUnitTeam() == _unitTeam)
                     continue;
                 
-                if (unit.IsDead())
+                if (mecha.IsDead())
                     continue;
 
-                TurnManager.Instance.UnitCanBeAttacked(unit);
-                _enemiesInRange.Add(unit);
+                mecha.MechaInAttackRange();
+                _enemiesInRange.Add(mecha);
             }
         }
     }
 
-    /// <summary>
-    /// Make Character attackable.
-    /// </summary>
-    public void MakeAttackable() => _canBeAttacked = true;
-
-    /// <summary>
-    /// Make Character not attackable.
-    /// </summary>
-    public void MakeNotAttackable() => _canBeAttacked = false;
-
-    /// <summary>
-    /// Check if Left and Right arm have more than 0 HP and determines if Character can attack.
-    /// </summary>
-    public void CheckArms()
+    public void SetAttackActionState(bool state)
     {
-        if ((!LeftGunAlive() && !RightGunAlive()) || _selectedGun == null)
-            _canAttack = false;
+        _canAttack = state;
+        OnAttackActionStateChange?.Invoke(this, _canAttack);
     }
+    public void MechaInAttackRange() => _inAttackRange = true;
 
-    /// <summary>
-    /// Deactivates Character Attack Action.
-    /// </summary>
+    public void MechaOutsideAttackRange() => _inAttackRange = false;
+
     public void DeactivateAttack()
     {
         ResetTilesInAttackRange();
-        _canAttack = false;
+
+        SetAttackActionState(false);
     }
 
     private void OnMouseOver()
@@ -1323,14 +1278,16 @@ public class Character : EnumsClass, IObservable
             return;
 
         if (!_selectedForAttack && _canBeSelected)
-            SetWorldUIValues();
+            OnMouseOverMecha?.Invoke(this);
+            //_worldUI.Show();
+            //SetWorldUIValues();
 
         if (!_selected)
             return;
 
-        if (_canBeAttacked && !_selectedForAttack)
+        if (_inAttackRange && !_selectedForAttack)
         {
-            if (TurnManager.Instance.GetActiveTeam() == Team.Red)
+            if (GameManager.Instance.ActiveTeam == EnumsClass.Team.Red)
                 return;
             
             RotateWithRays();
@@ -1345,17 +1302,17 @@ public class Character : EnumsClass, IObservable
         if (EventSystem.current.IsPointerOverGameObject())
             return;
         
-        _worldUI.Hide();
+        OnMouseExitMecha?.Invoke(this);
         
-        if (_canBeAttacked)
+        if (_inAttackRange)
             ResetRotationAndRays();
     }
 
     private void RotateWithRays()
     {
-        Character selectedCharacter = CharacterSelection.Instance.GetSelectedCharacter();
+        Character selectedCharacter = GameManager.Instance.CurrentTurnMecha;
 
-        if (!selectedCharacter._selected) 
+        if (!selectedCharacter.IsSelected()) 
             return;
         
         if (selectedCharacter.IsMoving()) 
@@ -1366,7 +1323,7 @@ public class Character : EnumsClass, IObservable
 
         selectedCharacter._rotated = true;
 
-        selectedCharacter.SetInitialRotation(selectedCharacter.transform.rotation);
+        selectedCharacter.SaveRotation();
 
         Vector3 posToLook = transform.position;
 
@@ -1382,7 +1339,8 @@ public class Character : EnumsClass, IObservable
 
     public void ResetRotationAndRays()
     {
-        Character selectedCharacter = CharacterSelection.Instance.GetSelectedCharacter();
+        Character selectedCharacter = GameManager.Instance.CurrentTurnMecha;
+
         if (selectedCharacter == null) 
             return;
 
@@ -1391,36 +1349,30 @@ public class Character : EnumsClass, IObservable
         
         selectedCharacter._rotated = false;
         //c._move.StopRotation();
-        selectedCharacter.transform.rotation = selectedCharacter.InitialRotation; //Volver la rotación del mecha a InitialRotation, esto podría ser más smooth
+        selectedCharacter.LoadRotation(); //Volver la rotación del mecha a InitialRotation, esto podría ser más smooth
         selectedCharacter.RaysOff(); //Apago los raycasts cuando saco el mouse
     }
 
-    public void SetInitialRotation(Quaternion rot) => InitialRotation = rot;
+    public void SaveRotation() => SavedRotation = transform.rotation;
+    public void LoadRotation() => transform.rotation = SavedRotation;
 
-    public void SetRotationBeforeAttack(Quaternion rot) => RotationBeforeAttack = rot;
+    //public WorldUI GetWorldUI() => _worldUI;
 
-    public void ResetRotationOnDeselect() => transform.rotation = RotationBeforeAttack;
+    //public void SetWorldUIValues()
+    //{
+    //    //float rightGunHP = 0;
 
-    public WorldUI GetWorldUI() => _worldUI;
-
-    /// <summary>
-    /// Activates Character World UI.
-    /// </summary>
-    public void SetWorldUIValues()
-    {
-        float rightGunHP = 0;
-
-        if (_rightGun)
-            rightGunHP = _rightGun.CurrentHP;
+    //    //if (_rightGun)
+    //    //    rightGunHP = _rightGun.CurrentHP;
         
-        float leftGunHP = 0;
+    //    //float leftGunHP = 0;
 
-        if (_leftGun)
-            leftGunHP = _leftGun.CurrentHP;
+    //    //if (_leftGun)
+    //    //    leftGunHP = _leftGun.CurrentHP;
         
-        _worldUI.SetWorldUIValues(_body.CurrentHP, rightGunHP, leftGunHP, _legs.CurrentHP, _canMove, _canAttack, _overweight);
-        _worldUI.Show();
-    }
+    //    //_worldUI.SetWorldUIValues(_body.CurrentHP, rightGunHP, leftGunHP, _legs.CurrentHP, _canMove, _canAttack, _overweight);
+    //    _worldUI.Show();
+    //}
 
     #endregion
 
@@ -1432,26 +1384,6 @@ public class Character : EnumsClass, IObservable
     //{
     //    AudioManager.audioManagerInstance.PlaySound(soundHit, this.gameObject);
     //}
-
-    public void Subscribe(IObserver observer)
-    {
-        if (_observers.Contains(observer) == false)
-            _observers.Add(observer);
-    }
-
-    public void Unsubscribe(IObserver observer)
-    {
-        if (_observers.Contains(observer))
-            _observers.Remove(observer);
-    }
-
-    public void NotifyObserver(string action)
-    {
-        for (int i = _observers.Count - 1; i >= 0; i--)
-        {
-            _observers[i].Notify(action);
-        }
-    }
 
     public void OnUseEquipable() => EquipableSelectionState(false, null);
 
@@ -1466,8 +1398,6 @@ public class Character : EnumsClass, IObservable
             return;
 
         _myName = _mechaEquipment.mechaName;
-        
-        _worldUI.SetName(_myName);
 
         _body.SetPartData(this, _mechaEquipment.body, _mechaEquipment.GetBodyColor());
         _body.SetAbilityData(_mechaEquipment.bodyAbility);
@@ -1477,6 +1407,7 @@ public class Character : EnumsClass, IObservable
         if (_leftGun)
         {
             _leftGun.transform.localPosition = Vector3.zero;
+            _leftGun.SetAnimationHandler(_animationMechaHandler);
             _leftGun.SetGunData(_mechaEquipment.leftGun, this, "LGun", "Left");
             _leftGun.SetAbilityData(_mechaEquipment.leftGunAbility);
             _leftGunAlive = true;
@@ -1487,6 +1418,7 @@ public class Character : EnumsClass, IObservable
         if (_rightGun)
         {
             _rightGun.transform.localPosition = Vector3.zero;
+            _rightGun.SetAnimationHandler(_animationMechaHandler);
             _rightGun.SetGunData(_mechaEquipment.rightGun, this, "RGun", "Right");
             _rightGun.SetAbilityData(_mechaEquipment.rightGunAbility);
             _rightGunAlive = true;
@@ -1501,8 +1433,8 @@ public class Character : EnumsClass, IObservable
             _item.Initialize(this, _mechaEquipment.item);
         }
             
+        SetCharacterMoveState(true);
 
-        _canMove = true;
         _currentSteps = _legs.GetMaxSteps();
 
         CheckWeight();
@@ -1514,7 +1446,7 @@ public class Character : EnumsClass, IObservable
             //if (_selectedGun.GetGunType() == GunsType.Shield)
             //    _selectedGun.Ability();
 
-            _canAttack = true;
+            SetAttackActionState(true);
             _rightGunSelected = true;
             _leftGunSelected = false;
             return;
@@ -1527,7 +1459,7 @@ public class Character : EnumsClass, IObservable
             //if (_selectedGun.GetGunType() == GunsType.Shield)
             //    _selectedGun.Ability();
 
-            _canAttack = true;
+            SetAttackActionState(true);
             _rightGunSelected = false;
             _leftGunSelected = true;
 
@@ -1587,7 +1519,7 @@ public class Character : EnumsClass, IObservable
         else 
             _overweight = true;
         
-        OnOverweight?.Invoke(_overweight);
+        OnOverweight?.Invoke(this, _overweight);
     }
     
     public void ArmDestroyed(string location, Ability ability)
@@ -1609,10 +1541,6 @@ public class Character : EnumsClass, IObservable
         CheckWeight();
     }
 
-    public void OnEnterElevator(Elevator elevator) => Subscribe(elevator);
-
-    public void OnExitElevator(Elevator elevator) => Unsubscribe(elevator);
-
     public void CharacterElevatedState(bool state, int extraRange, int extraCrit)
     {
         _isOnElevator = state;
@@ -1633,23 +1561,23 @@ public class Character : EnumsClass, IObservable
     public void TakeFallDamage(float dmgPercentage)
     {
         float legsDamage = _legs.MaxHp * dmgPercentage / 100;
-        _legs.TakeDamage((int)legsDamage);
+        _legs.ReceiveDamage((int)legsDamage);
 
         if (_leftGun)
         {
             float lGunDamage = _leftGun.MaxHP * dmgPercentage / 100;
-            _leftGun.TakeDamage((int)lGunDamage);
+            _leftGun.ReceiveDamage((int)lGunDamage);
         }
 
 
         if (_rightGun)
         {
             float rGunDamage = _rightGun.MaxHP * dmgPercentage / 100;
-            _rightGun.TakeDamage((int)rGunDamage);
+            _rightGun.ReceiveDamage((int)rGunDamage);
         }
 
         float bodyDamage = _body.MaxHp * dmgPercentage / 100;
-        _body.TakeDamage((int)bodyDamage);
+        _body.ReceiveDamage((int)bodyDamage);
         GetComponent<Rigidbody>().isKinematic = true;
 
         Vector3 pos = transform.position;
@@ -1680,20 +1608,49 @@ public class Character : EnumsClass, IObservable
 
     public WaypointsPathfinding GetWaypointsPathfinding() => _waypointsPathfinding;
 
-    public bool GunsOffOnCloseup() => _gunsOffOnCloseUp;
-
-    public void ChangePartsMeshActiveStatus(bool status)
+    public void ShowMechaMesh()
     {
-        _body.ChangePartMeshActiveStatus(status);
-        _legs.ChangePartMeshActiveStatus(status);
+        _body.ChangePartMeshActiveStatus(true);
+        _legs.ChangePartMeshActiveStatus(true);
     }
-
-    public void ChangeGunsMeshActiveStatus(bool status)
+    public void HideMechaMesh()
+    {
+        _body.ChangePartMeshActiveStatus(false);
+        _legs.ChangePartMeshActiveStatus(false);
+    }
+    public void ShowGunsMesh()
     {
         if (_leftGun)
-            _leftGun.ChangeMeshRenderStatus(status);
+            _leftGun.ChangeMeshRenderStatus(true);
 
         if (_rightGun)
-            _rightGun.ChangeMeshRenderStatus(status);
+            _rightGun.ChangeMeshRenderStatus(true);
     }
+
+    public void HideGunsMesh()
+    {
+        if (_leftGun)
+            _leftGun.ChangeMeshRenderStatus(false);
+
+        if (_rightGun)
+            _rightGun.ChangeMeshRenderStatus(false);
+    }
+
+    public bool IsEnemyInSight(Character enemy)
+    {
+        bool body = IsEnemyBodyInSight(enemy);
+
+        bool lArm = IsEnemyLeftGunInSight(enemy);
+
+        bool rArm = IsEnemyRightGunInSight(enemy);
+
+        bool legs = IsEnemyLegsInSight(enemy);
+
+        return body || lArm || rArm || legs;
+    }
+
+    public bool IsEnemyBodyInSight(Character enemy) => enemy.GetBody().CurrentHP > 0 && RayToPartsForAttack(enemy.GetBodyPosition(), "Body", false);
+    public bool IsEnemyLeftGunInSight(Character enemy) => enemy.GetLeftGun() && RayToPartsForAttack(enemy.GetLArmPosition(), "LGun", false);
+    public bool IsEnemyRightGunInSight(Character enemy) => enemy.GetRightGun() && RayToPartsForAttack(enemy.GetRArmPosition(), "RGun", false);
+    public bool IsEnemyLegsInSight(Character enemy) => enemy.GetLegs().CurrentHP > 0 && RayToPartsForAttack(enemy.GetLegsPosition(), "Legs", false);
 }

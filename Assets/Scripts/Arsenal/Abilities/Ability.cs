@@ -8,6 +8,8 @@ public class Ability : Equipable
 
     protected bool _inCooldown;
     protected int _currentCooldown;
+    protected MechaPart _part;
+
     //Agregar nuevas al final, sino se modifican en el prefab
     public enum Abilities
     {
@@ -35,6 +37,7 @@ public class Ability : Equipable
 
     public override void Use(Action callback = null) => Debug.Log("use ability");
 
+    public virtual void SetPart(MechaPart part) => _part = part;
     protected void AbilityUsed(AbilitySO data)
     {
         _inCooldown = true;

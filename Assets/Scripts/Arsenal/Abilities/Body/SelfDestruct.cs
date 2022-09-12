@@ -23,7 +23,7 @@ public class SelfDestruct : Ability
 
         _character.EquipableSelectionState(true, this);
 
-        PaintTilesInAttackRange(_character.GetMyPositionTile(), 0);
+        PaintTilesInAttackRange(_character.GetPositionTile(), 0);
     }
 
     public override void Deselect()
@@ -74,18 +74,18 @@ public class SelfDestruct : Ability
         Debug.Log("use self destruct");
 
         Body body = _character.GetBody();
-        body.TakeDamage((int)body.MaxHp);
+        body.ReceiveDamage((int)body.MaxHp);
 
         Legs legs = _character.GetLegs();
-        legs.TakeDamage((int)legs.MaxHp);
+        legs.ReceiveDamage((int)legs.MaxHp);
 
         Gun rightGun = _character.GetRightGun();
         if (rightGun)
-            rightGun.TakeDamage((int)rightGun.MaxHP);
+            rightGun.ReceiveDamage((int)rightGun.MaxHP);
 
         Gun leftGun = _character.GetLeftGun();
         if (leftGun)
-            leftGun.TakeDamage((int)leftGun.MaxHP);
+            leftGun.ReceiveDamage((int)leftGun.MaxHP);
 
         EffectsController.Instance.PlayParticlesEffect(_character.GetBurningSpawner(), EnumsClass.ParticleActionType.MortarHit);
 
@@ -96,19 +96,19 @@ public class SelfDestruct : Ability
 
             if (characterAbove && characterAbove != _character)
             {
-                characterAbove.GetBody().TakeDamage(selfDestructDamage);
+                characterAbove.GetBody().ReceiveDamage(selfDestructDamage);
 
-                characterAbove.GetLegs().TakeDamage(selfDestructDamage);
+                characterAbove.GetLegs().ReceiveDamage(selfDestructDamage);
 
                 Gun lGun = characterAbove.GetLeftGun();
 
                 if (lGun)
-                    lGun.TakeDamage(selfDestructDamage);
+                    lGun.ReceiveDamage(selfDestructDamage);
 
                 Gun rGun = characterAbove.GetRightGun();
 
                 if (rGun)
-                    rGun.TakeDamage(selfDestructDamage);
+                    rGun.ReceiveDamage(selfDestructDamage);
 
                 EffectsController.Instance.PlayParticlesEffect(characterAbove.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
             }

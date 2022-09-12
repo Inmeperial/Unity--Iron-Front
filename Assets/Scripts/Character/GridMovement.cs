@@ -79,7 +79,7 @@ public class GridMovement : MonoBehaviour
                     if (_tilesIndex - 1 >= 0)
                         prev = _tilesList[_tilesIndex - 1].transform.position;
                     else
-                        prev = _character.GetMyPositionTile().transform.position;
+                        prev = _character.GetPositionTile().transform.position;
                     
                     prev.y = _yPosition;
                     _prevPos = prev;
@@ -111,7 +111,7 @@ public class GridMovement : MonoBehaviour
             if (_tilesList.Count >= 2)
                 preLast = _tilesList[_tilesList.Count - 2].transform.position;
             else
-                preLast = _character.GetMyPositionTile().transform.position;
+                preLast = _character.GetPositionTile().transform.position;
             
             last.y = _yPosition;
             preLast.y = _yPosition;

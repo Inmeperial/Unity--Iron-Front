@@ -17,15 +17,12 @@ public class WaypointsPathfinding : MonoBehaviour
     public void Calculate(Tile start, Tile end, int distance)
     {
         if (_fullMovePath == null || _fullMovePath.Count == 0)
-        {
             _fullMovePath = new List<Tile>();
-            _agent.init = start;
-        }
         //If list is not empty, pathfinding starts with last tile of the list.
         else if (_fullMovePath.Count > 1)
-            _agent.init = _fullMovePath[_fullMovePath.Count - 1];
-        
-        _agent.finit = end;
+            start = _fullMovePath[_fullMovePath.Count - 1];
+
+        _agent.SetStartAndFinish(start, end);
 
         List<Tile> temp = _agent.PathFindingAstar();
 
@@ -75,7 +72,7 @@ public class WaypointsPathfinding : MonoBehaviour
 
         foreach (Tile tile in removed)
         {
-            if (tile != _char.GetMyPositionTile())
+            if (tile != _char.GetPositionTile())
                 _char.IncreaseAvailableSteps(1);
         }
 

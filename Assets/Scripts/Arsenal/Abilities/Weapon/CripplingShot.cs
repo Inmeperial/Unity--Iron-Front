@@ -25,7 +25,7 @@ public class CripplingShot : WeaponAbility
 		if (!_gun)
 			return;
 
-		PaintTilesInRange(_character.GetMyPositionTile(), 0);
+		PaintTilesInRange(_character.GetPositionTile(), 0);
 
 		_character.EquipableSelectionState(true, this);
 		_character.DeselectThisUnit();
@@ -68,7 +68,7 @@ public class CripplingShot : WeaponAbility
 		if (_character.RayToPartsForAttack(_enemy.GetLegsPosition(), "Legs", true))
 		{
 			Legs legs = _enemy.GetLegs();
-			legs.TakeDamage(_abilityData.damage);
+			legs.ReceiveDamage(_abilityData.damage);
 
 			_enemy.MovementReduction(_abilityData.stepsReduction);
 
@@ -123,8 +123,8 @@ public class CripplingShot : WeaponAbility
 
 	void PaintTilesInRange(Tile currentTile, int count)
 	{
-		
-		if (count >= _gun.GetAttackRange() || !currentTile) return;
+		if (count >= _gun.GetAttackRange() || !currentTile)
+			return;
 
 		foreach (var item in currentTile.allNeighbours)
 		{

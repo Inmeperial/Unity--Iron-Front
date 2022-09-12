@@ -33,7 +33,7 @@ public class AttackAction : GOAction
 
         _myUnit.OnStartAction(MakeItFail);
 
-        if (!_myUnit.LeftGunAlive() && !_myUnit.RightGunAlive())
+        if (!_myUnit.GetLeftGun() && !_myUnit.GetRightGun())
         {
             _myUnit.OnEndAction();
             return TaskStatus.COMPLETED;
@@ -46,7 +46,7 @@ public class AttackAction : GOAction
         }
         
         Character closestEnemy = _myUnit.GetClosestEnemy();
-        var initialRotation = _myUnit.InitialRotation;
+        var initialRotation = _myUnit.SavedRotation;
         _myUnit.RotateTowardsEnemy(closestEnemy.transform);
         var gun = _myUnit.GetSelectedGun();
 
@@ -58,73 +58,84 @@ public class AttackAction : GOAction
         
         if (!closestEnemy.IsOnElevator())
         {
-            ButtonsUIManager.Instance.SetPlayerCharacter(_myUnit);
-            ButtonsUIManager.Instance.SetEnemy(closestEnemy);
-            
-            bool body = _myUnit.RayToPartsForAttack(closestEnemy.GetBodyPosition(), "Body", false);
-            bool leftGun = _myUnit.RayToPartsForAttack(closestEnemy.GetLArmPosition(), "LGun",false);
-            bool rightGun = _myUnit.RayToPartsForAttack(closestEnemy.GetRArmPosition(), "RGun", false);
-            bool legs = _myUnit.RayToPartsForAttack(closestEnemy.GetLegsPosition(), "Legs", false);
+            GameManager.Instance.CurrentTurnMecha = _myUnit;
+            GameManager.Instance.SelectedEnemy = closestEnemy;
+            //ButtonsUIManager.Instance.SetPlayerCharacter(_myUnit);
+            //ButtonsUIManager.Instance.SetEnemy(closestEnemy);
 
-            Dictionary<string, float> parts = new Dictionary<string, float>();
+            Dictionary<string, MechaPart> parts = new Dictionary<string, MechaPart>();
             
-            if (body && closestEnemy.GetBody().CurrentHP > 0)
-                parts.Add("Body", closestEnemy.GetBody().CurrentHP);
-            if (leftGun && closestEnemy.GetLeftGun().CurrentHP > 0)
-                parts.Add("LGun", closestEnemy.GetLeftGun().CurrentHP);
-            if (rightGun && closestEnemy.GetRightGun().CurrentHP > 0)
-                parts.Add("RGun", closestEnemy.GetRightGun().CurrentHP);
-            if (legs && closestEnemy.GetLegs().CurrentHP > 0)
-                parts.Add("Legs", closestEnemy.GetLegs().CurrentHP);
+            if (_myUnit.IsEnemyBodyInSight(closestEnemy))
+                parts.Add("Body", closestEnemy.GetBody());
+
+            if (_myUnit.IsEnemyLeftGunInSight(closestEnemy))
+                parts.Add("LGun", closestEnemy.GetLeftGun());
+
+            if (_myUnit.IsEnemyRightGunInSight(closestEnemy))
+                parts.Add("RGun", closestEnemy.GetRightGun());
+
+            if (_myUnit.IsEnemyLegsInSight(closestEnemy))
+                parts.Add("Legs", closestEnemy.GetLegs());
 
             string partToAttack = "DEFAULT";
+
             float lowest = 100000; 
-            foreach (var part in parts)
+
+            foreach (KeyValuePair<string, MechaPart> kvp in parts)
             {
-                if (part.Value <= 0) continue;
+                MechaPart part = kvp.Value;
+                if (!part)
+                    continue;
+
+                if (part.CurrentHP <= 0)
+                    continue;
                 
-                if (part.Value <= lowest)
+                if (part.CurrentHP <= lowest)
                 {
-                    lowest = part.Value;
-                    partToAttack = part.Key;
+                    lowest = part.CurrentHP;
+                    partToAttack = kvp.Key;
                 }
             }
-            switch (partToAttack)
-            {
-                case "Body":
-                    ButtonsUIManager.Instance.AddBulletsToBody(gun.GetAvailableBullets());
-                    break;
+
+            if (parts.ContainsKey(partToAttack))
+                parts[partToAttack].ReceiveDamage(gun.GetAvailableBullets());
+
+            //switch (partToAttack)
+            //{
+            //    case "Body":
+            //        ButtonsUIManager.Instance.AddBulletsToBody(gun.GetAvailableBullets());
+            //        break;
                     
-                case "LGun":
-                    ButtonsUIManager.Instance.AddBulletsToLArm(gun.GetAvailableBullets());
-                    break;
+            //    case "LGun":
+            //        ButtonsUIManager.Instance.AddBulletsToLArm(gun.GetAvailableBullets());
+            //        break;
                 
-                case "RGun":
-                    ButtonsUIManager.Instance.AddBulletsToRArm(gun.GetAvailableBullets());
-                    break;
+            //    case "RGun":
+            //        ButtonsUIManager.Instance.AddBulletsToRArm(gun.GetAvailableBullets());
+            //        break;
                 
-                case "Legs":
-                    ButtonsUIManager.Instance.AddBulletsToLegs(gun.GetAvailableBullets());
-                    break;
+            //    case "Legs":
+            //        ButtonsUIManager.Instance.AddBulletsToLegs(gun.GetAvailableBullets());
+            //        break;
                 
-                case "DEFAULT":
-                    _myUnit.transform.rotation = initialRotation;
-                    break;
-            }
+            //    case "DEFAULT":
+            //        _myUnit.transform.rotation = initialRotation;
+            //        break;
+            //}
             if (partToAttack != "DEFAULT")
                 _myUnit.OnEndActionWithDelay(0);
             else _myUnit.OnEndAction();
         }
         else
         {
-            var elevator = closestEnemy.GetMyPositionTile().GetElevatorAbove();
+            Elevator elevator = closestEnemy.GetPositionTile().GetElevatorAbove();
             
             if (_myUnit.RayToElevator(elevator.GetColliderForAttack().transform.position))
             {
-                var damage = gun.DamageCalculation(gun.GetMaxBullets());
+                var damage = gun.GetCalculatedDamage(gun.GetMaxBullets());
             
-                elevator.TakeDamage(damage);
-                _myUnit.Shoot();
+                elevator.ReceiveDamage(damage);
+                _myUnit.GetSelectedGun().AttackAnimation();
                 _myUnit.DeactivateAttack();
                 _myUnit.OnEndActionWithDelay(0);
                 Debug.Log("attack");

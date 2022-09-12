@@ -8,15 +8,15 @@ public class Shield : Gun
     private List<GameObject> _instantiated = new List<GameObject>();
     public override void SetGunData(GunSO data, Character character, string tag, string location)
     {
-        _gunType = GunsType.Shield;
+        _gunType = EnumsClass.GunsType.Shield;
         base.SetGunData(data, character, tag, location);
     }
 
-    public override void Ability()
+    public override void GunSkill(MechaPart targetPart)
     {
         if (_selected) return;
-        
-        List<Tile> t = _myChar.GetMyPositionTile().allNeighbours;
+
+        List<Tile> t = _myChar.GetPositionTile().allNeighbours;
 
         for (int i = 0; i < t.Count; i++)
         {
@@ -65,7 +65,7 @@ public class Shield : Gun
         Vector3 position = _myChar.transform.position;
         Vector3 shieldCharVector = (transform.position - position).normalized;
         Vector3 buttonCharVector = (t.position - position).normalized;
-        
+
         float angle = Vector3.SignedAngle(shieldCharVector, buttonCharVector, Vector3.up);
 
         if (angle >= 90 && angle < 180)
@@ -77,15 +77,25 @@ public class Shield : Gun
         else if (angle >= -180 && angle < -90)
             angle = -180;
         else return;
-        
+
         _myChar.transform.RotateAround(_myChar.transform.position, _myChar.transform.up, angle);
         foreach (GameObject prefab in _instantiated)
         {
             Destroy(prefab);
         }
-        
+
         _instantiated.Clear();
         _selected = false;
         _myChar.DeactivateAttack();
+    }
+
+    protected override void PlayLeftSideAttackAnimation()
+    {
+        
+    }
+
+    protected override void PlayRightSideAttackAnimation()
+    {
+        
     }
 }

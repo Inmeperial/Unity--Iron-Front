@@ -18,7 +18,7 @@ public class CheckEnemiesInRange : GOCondition
                 return false;
         }
 
-        if (_myUnit.RightGunAlive())
+        if (_myUnit.GetLeftGun())
         {
             //if (_myUnit.GetRightGun().GetGunType() != EnumsClass.GunsType.Shield)
             //{
@@ -32,7 +32,7 @@ public class CheckEnemiesInRange : GOCondition
                 return true;
         }
 
-        if (_myUnit.LeftGunAlive())
+        if (_myUnit.GetRightGun())
         {
             //if (_myUnit.GetLeftGun().GetGunType() != EnumsClass.GunsType.Shield)
             //{

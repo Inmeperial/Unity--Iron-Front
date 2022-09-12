@@ -2,18 +2,15 @@
 using UnityEngine;
 public class AStarAgent : MonoBehaviour
 {
-    public Tile init;
-    public Tile finit;
-    AStar _aStar = new AStar();
-    public List<Tile> PathFindingAstar()
-    {
-        return _aStar.Run(init, Satisfies, GetNeighboursCost, Heuristic);
-    }
-    float Heuristic(Tile curr)
-    { 
-        return Vector3.Distance(curr.transform.position, finit.transform.position);
-    }
-    Dictionary<Tile, float> GetNeighboursCost(Tile curr)
+    private Tile _initialTile;
+    private Tile _finishTile;
+    private AStar _aStar = new AStar();
+
+    public List<Tile> PathFindingAstar() => _aStar.Run(_initialTile, Satisfies, GetNeighboursCost, Heuristic);
+
+    private float Heuristic(Tile curr) => Vector3.Distance(curr.transform.position, _finishTile.transform.position);
+
+    private Dictionary<Tile, float> GetNeighboursCost(Tile curr)
     {
         Dictionary<Tile, float> dic = new Dictionary<Tile, float>();
         for (int i = 0; i < curr.neighboursForMove.Count; i++)
@@ -25,8 +22,12 @@ public class AStarAgent : MonoBehaviour
         }
         return dic;
     }
-    bool Satisfies(Tile curr)
+
+    private bool Satisfies(Tile curr) => curr == _finishTile;
+
+    public void SetStartAndFinish(Tile start, Tile finish)
     {
-        return curr == finit;
+        _initialTile = start;
+        _finishTile = finish;
     }
 }

@@ -205,11 +205,3 @@ public class MaterialMechaHandler : MonoBehaviour
 //
     #endregion
 }
-
-public enum MechaParts
-{
-    Body,
-    Legs,
-    RArm,
-    LArm
-}

@@ -17,10 +17,10 @@ public class RepairKit : Item
 
 	public override void Select()
 	{
-		PaintTilesInRange(_character.GetMyPositionTile(), 0, Vector3.forward);
-		PaintTilesInRange(_character.GetMyPositionTile(), 0, -Vector3.forward);
-		PaintTilesInRange(_character.GetMyPositionTile(), 0, Vector3.right);
-		PaintTilesInRange(_character.GetMyPositionTile(), 0, -Vector3.right);
+		PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.forward);
+		PaintTilesInRange(_character.GetPositionTile(), 0, -Vector3.forward);
+		PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.right);
+		PaintTilesInRange(_character.GetPositionTile(), 0, -Vector3.right);
 
 		_character.DeselectThisUnit();
 
@@ -48,7 +48,7 @@ public class RepairKit : Item
 
 	private void UseItem(Action callback = null)
     {
-		EffectsController.Instance.PlayParticlesEffect(_character.GetMyPositionTile().gameObject, EnumsClass.ParticleActionType.RepairKit);
+		EffectsController.Instance.PlayParticlesEffect(_character.GetPositionTile().gameObject, EnumsClass.ParticleActionType.RepairKit);
         
 		Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 

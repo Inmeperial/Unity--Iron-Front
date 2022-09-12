@@ -57,6 +57,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1187505564468164340, guid: d603a2e8dd3c1554e91f5b0d03206348,
+        type: 3}
+      propertyPath: _owner
+      value: 
+      objectReference: {fileID: 6353191613440130819}
     - target: {fileID: 1611071939384203633, guid: d603a2e8dd3c1554e91f5b0d03206348,
         type: 3}
       propertyPath: m_Name
@@ -579,7 +584,6 @@ MonoBehaviour:
   _mechaEquipment: {fileID: 11400000, guid: ef9386d2e2b26e6419f7a7d235506045, type: 2}
   _soundHit: {fileID: 8300000, guid: 66ef0b1a0895d6f4399a8266eca32680, type: 3}
   _myIcon: {fileID: 21300000, guid: e57b6a69ec916734c8dbb5a1bb9c72b0, type: 3}
-  _equipment: {fileID: 0}
   _delayAfterAction: 2
   checkedParts: 0
   checkedEnemy: 0

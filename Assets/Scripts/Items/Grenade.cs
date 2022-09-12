@@ -32,7 +32,7 @@ public class Grenade : Item
         // _tilesInAttackRange = new HashSet<Tile>();
         // _tilesForAttackChecked = new Dictionary<Tile, int>();
 
-        PaintTilesInSelectionRange(_character.GetMyPositionTile(), 0);
+        PaintTilesInSelectionRange(_character.GetPositionTile(), 0);
        
     }
 
@@ -158,18 +158,18 @@ public class Grenade : Item
                 continue;
 
             Body body = unit.GetBody();
-            body.TakeDamage(_itemData.damage);
+            body.ReceiveDamage(_itemData.damage);
 
             Gun leftGun = unit.GetLeftGun();
             if (leftGun)
-                leftGun.TakeDamage(_itemData.damage);
+                leftGun.ReceiveDamage(_itemData.damage);
             
             Gun rightGun = unit.GetRightGun();
             if (rightGun)
-                rightGun.TakeDamage(_itemData.damage);
+                rightGun.ReceiveDamage(_itemData.damage);
             
             Legs legs = unit.GetLegs();
-            legs.TakeDamage(_itemData.damage);
+            legs.ReceiveDamage(_itemData.damage);
 
             EffectsController.Instance.PlayParticlesEffect(tile.gameObject, EnumsClass.ParticleActionType.HandGranade);
         }

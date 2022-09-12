@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Parts : MonoBehaviour, IChangeableShader
+public abstract class MechaPart : MonoBehaviour, IDamageable
 {
     [SerializeField] protected SkinnedMeshRenderer _skinnedMeshRenderer;
+    [SerializeField] protected Collider _collider;
     [SerializeField] protected List<GameObject> _particleSpawner = new List<GameObject>();
     [SerializeField] protected MasterShaderScript _masterShader;
     protected const int MissHit = 0;
@@ -20,6 +21,7 @@ public abstract class Parts : MonoBehaviour, IChangeableShader
     public float CurrentHP { get => _currentHP; set => _currentHP = value; }
 
     public Action<float> OnHealthChanged;
+    public Action<Character, float> OnDamageTaken;
 
     public virtual void SetPartData(Character character, PartSO data, Color partColor)
     {
@@ -60,9 +62,9 @@ public abstract class Parts : MonoBehaviour, IChangeableShader
 
     public float GetWeight() => _weight;
 
-    public abstract void TakeDamage(List<Tuple<int, int>> damages);
+    public abstract void ReceiveDamage(List<Tuple<int, int>> damages);
 
-    public abstract void TakeDamage(int damage);
+    public abstract void ReceiveDamage(int damage);
 
     public virtual void Heal(int healAmount)
     {
@@ -80,5 +82,9 @@ public abstract class Parts : MonoBehaviour, IChangeableShader
 
     public void SetShader(SwitchTextureEnum textureEnum) => _masterShader.ConvertEnumToStringEnumForShader(textureEnum);
 
-    public void ChangePartMeshActiveStatus(bool status) => _skinnedMeshRenderer.gameObject.SetActive(status);
+    public void ChangePartMeshActiveStatus(bool status)
+    {
+        _skinnedMeshRenderer.gameObject.SetActive(status);
+        _collider.enabled = status;
+    }
 }

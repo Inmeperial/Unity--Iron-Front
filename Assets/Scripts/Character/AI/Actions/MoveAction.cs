@@ -46,7 +46,7 @@ public class MoveAction : GOAction
         if (_myUnit.CanAttack())
         {
             if (!_myUnit.IsMoving())
-                _myUnit.SetCharacterMove(false);
+                _myUnit.SetCharacterMoveState(false);
             return TaskStatus.COMPLETED;
         }
             

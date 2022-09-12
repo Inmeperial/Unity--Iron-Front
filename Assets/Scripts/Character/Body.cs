@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Body : Parts
+public class Body : MechaPart
 {
     private float _maxWeight;
 
@@ -18,19 +18,19 @@ public class Body : Parts
         _maxWeight = bodyData.maxWeight;
     }
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public override void TakeDamage(List<Tuple<int,int>> damages)
+    public override void ReceiveDamage(List<Tuple<int,int>> damages)
     {
         if (_currentHP <= 0)
             return;
         
-        WorldUI worldUI = _myChar.GetMyUI();
-        worldUI.SetBodySlider(_currentHP);
+        //WorldUI worldUI = _myChar.GetMyUI();
+        //worldUI.SetBodyHPBar(_currentHP);
 
-        int total = 0;
+        int totalDamage = 0;
 
         for (int i = 0; i < damages.Count; i++)
         {
-            total += damages[i].Item1;
+            totalDamage += damages[i].Item1;
             float hp = _currentHP - damages[i].Item1;
             _currentHP = hp > 0 ? hp : 0;
 
@@ -58,10 +58,10 @@ public class Body : Parts
             }
         }
 
-        worldUI.Show();
-        worldUI.UpdateBodySlider(total, (int)_currentHP);
-
-        _myChar.MakeNotAttackable();
+        //worldUI.Show();
+        //worldUI.UpdateBodyHPBar(totalDamage);
+        OnDamageTaken?.Invoke(_myChar, totalDamage);
+        _myChar.MechaOutsideAttackRange();
 
         CheckSmokeScreen();
 
@@ -75,14 +75,14 @@ public class Body : Parts
     }
     
     //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public override void TakeDamage(int damage)
+    public override void ReceiveDamage(int damage)
     {
         if (_currentHP <= 0)
             return;
         
         
-        WorldUI ui = _myChar.GetMyUI();
-        ui.SetBodySlider(_currentHP);
+        //WorldUI ui = _myChar.GetMyUI();
+        //ui.SetBodyHPBar(_currentHP);
 
         float hp = _currentHP - damage;
         _currentHP = hp > 0 ? hp : 0;
@@ -98,10 +98,12 @@ public class Body : Parts
 
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position);
 
-        ui.Show();
-        ui.UpdateBodySlider(damage, (int)_currentHP);
+        //ui.Show();
+        //ui.UpdateBodyHPBar(damage);
 
-        _myChar.MakeNotAttackable();
+        OnDamageTaken?.Invoke(_myChar, damage);
+
+        _myChar.MechaOutsideAttackRange();
         
         CheckSmokeScreen();
         _myChar.SetHurtAnimation();

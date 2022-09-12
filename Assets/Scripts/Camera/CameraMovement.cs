@@ -95,11 +95,11 @@ public class CameraMovement : MonoBehaviour
         Vector3 pos = transformToMove.position;
         pos.y = _yPos;
         _cameraLocked = true;
-        PortraitsController.Instance.DeactivatePortraitsButtons();
+        //PortraitsController.Instance.DeactivatePortraitsButtons();
         StartCoroutine(Move(pos, callback, lookAt));
     }
 
-    IEnumerator Move(Vector3 pos, Action callback = null, Transform lookAt = null)
+    private IEnumerator Move(Vector3 pos, Action callback = null, Transform lookAt = null)
     {
         float timer = 0;
         while ((pos - transform.position).magnitude >= fixationThreshold)
@@ -130,7 +130,7 @@ public class CameraMovement : MonoBehaviour
         
         if (!_rotating) _cameraLocked = false;
         
-        PortraitsController.Instance.ActivatePortraitsButtons();
+        //PortraitsController.Instance.ActivatePortraitsButtons();
 
 
         yield return new WaitWhile(() => _rotating);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Legs : Parts
+public class Legs : MechaPart
 {
     private int _maxSteps;
 
@@ -13,6 +13,7 @@ public class Legs : Parts
 
     private bool _brokenLegs = false;
 
+    public Action<Character> OnDamageTakenByAttack;
     public int GetMaxSteps()
     {
         return _maxSteps;
@@ -33,19 +34,19 @@ public class Legs : Parts
     public int GetLegsInitiative() => _initiative;
 
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public override void TakeDamage(List<Tuple<int, int>> damages)
+    public override void ReceiveDamage(List<Tuple<int, int>> damages)
     {
         if (_currentHP <= 0)
             return;
 
 
-        WorldUI worldUI = _myChar.GetMyUI();
-        worldUI.SetLegsSlider(_currentHP);
-        int total = 0;
+        //WorldUI worldUI = _myChar.GetMyUI();
+        //worldUI.SetLegsHPBar(_currentHP);
+        int totalDamage = 0;
         
         for (int i = 0; i < damages.Count; i++)
         {
-            total += damages[i].Item1;
+            totalDamage += damages[i].Item1;
             float hp = _currentHP - damages[i].Item1;
             _currentHP = hp > 0 ? hp : 0;
             //_myChar.SetCharacterMove(_currentHP > 0 ? true : false);
@@ -73,12 +74,16 @@ public class Legs : Parts
             }
         }
 
-        worldUI.Show();
-        worldUI.UpdateLegsSlider(total, _currentHP);
+        //worldUI.Show();
+        //worldUI.UpdateLegsHPBar(totalDamage);
 
-        _myChar.MakeNotAttackable();
+        _myChar.MechaOutsideAttackRange();
 
-        TurnManager.Instance.ReducePosition(_myChar);
+        //TurnManager.Instance.ReducePosition(_myChar);
+
+        OnDamageTaken?.Invoke(_myChar, totalDamage);
+        
+        OnDamageTakenByAttack?.Invoke(_myChar);
 
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
@@ -97,18 +102,18 @@ public class Legs : Parts
         _myChar.SetHurtAnimation();
     }
 
-    public override void TakeDamage(int damage)
+    public override void ReceiveDamage(int damage)
     {
         if (_currentHP <= 0)
             return;
 
 
-        WorldUI worldUI = _myChar.GetMyUI();
+        //WorldUI worldUI = _myChar.GetMyUI();
 
-        worldUI.SetLegsSlider(_currentHP);
-        worldUI.Show();
-        worldUI.UpdateLegsSlider(damage, _currentHP);
-        worldUI.HideWithTimer();
+        //worldUI.SetLegsHPBar(_currentHP);
+        //worldUI.Show();
+        //worldUI.UpdateLegsHPBar(damage);
+        //worldUI.HideWithTimer();
 
         float hp = _currentHP - damage;
 
@@ -123,6 +128,8 @@ public class Legs : Parts
 
             HalfSteps();
         }
+
+        OnDamageTaken?.Invoke(_myChar, damage);
 
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);

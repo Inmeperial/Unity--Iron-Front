@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PortraitsController : MonoBehaviour
+public class PortraitsController : Initializable
 {
-    public static PortraitsController Instance;
-    [SerializeField] private Transform _canvasTransform;
+    //public static PortraitsController Instance;
+    [SerializeField] private GameObject _container;
     [SerializeField] private float _portraitPivotHeightForAnimation = 0.75f;
     [SerializeField] private float _portraitMoveTime;
     [SerializeField] private float _animationCurveWeight;
@@ -15,45 +15,40 @@ public class PortraitsController : MonoBehaviour
     [SerializeField] private List<FramesUI> _portraits = new List<FramesUI>();
     [SerializeField] private List<RectTransform> _portraitsPositions = new List<RectTransform>();
 
-    private void Awake()
+    public float PortraitMoveTime => _portraitMoveTime;
+    public int PortraitsCount => _portraits.Count;
+
+    public Action OnPortraitStoppedMoving;
+    public override void Initialize()
     {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-            //DontDestroyOnLoad(gameObject);
-        }
+        GameManager.Instance.OnEnemyMechaSelected += HidePortraits;
+        GameManager.Instance.OnEnemyMechaDeselected += ShowPortraits;
+        GameManager.Instance.OnMechaAttackPreparationsFinished += ShowPortraits;
     }
 
-    public RectTransform GetMyRect(Character c)
+    public RectTransform GetMechaFrameRectTransform(Character mecha)
     {
-        foreach (Tuple<Character, FramesUI> t in _charAndFramesList)
+        foreach (Tuple<Character, FramesUI> tuple in _charAndFramesList)
         {
-            if (t.Item1 == c)
-            {
-                return t.Item2.GetComponent<RectTransform>();
-            }
+            if (tuple.Item1 != mecha)
+                continue;
+
+            return tuple.Item2.GetRectTransform();
         }
 
         return null;
     }
-    
-    public void PortraitsActiveState(bool state)
-    {
-        foreach (FramesUI p in _portraits)
-        {
-            p.gameObject.SetActive(state);
-        }
-    }
+
+    public void ShowPortraits() => _container.SetActive(true);
+    public void HidePortraits() => _container.SetActive(false);
     public void ActivatePortraitsButtons()
     {
-        foreach (Tuple<Character, FramesUI> c in _charAndFramesList)
+        foreach (Tuple<Character, FramesUI> tuple in _charAndFramesList)
         {
-            if (c.Item1.IsUnitEnabled())
-                c.Item2.selectionButton.interactable = true;
+            if (!tuple.Item1.IsUnitEnabled())
+                continue;
+
+            tuple.Item2.selectionButton.interactable = true;
         }
     }
     
@@ -65,25 +60,34 @@ public class PortraitsController : MonoBehaviour
         }
     }
 
-    public void DeadPortrait(Character character)
+    public void DisableDeadMechaPortrait(Character deadMecha)
     {
-        foreach (Tuple<Character, FramesUI> c in _charAndFramesList)
+        foreach (Tuple<Character, FramesUI> tuple in _charAndFramesList)
         {
-            if (c.Item1 == character)
-                c.Item2.mechaImage.color = Color.red;
+            Character mecha = tuple.Item1;
+
+            if (mecha != deadMecha)
+                continue;
+
+            FramesUI portrait = tuple.Item2;
+
+            portrait.ChangeMechaImageColor(Color.red);
+
+            portrait.RemoveButtonLeftClickListeners();
+            portrait.RemoveButtonRightClickListeners();
         }
         
     }
 
-    public void MovePortrait(Character character, int currentPos = 0, int newPos = 0)
+    public void MovePortraitOfMechaFromTo(Character mecha, int fromPos = 0, int toPos = 0)
     {
-        StartCoroutine(PortraitMovement(GetMyRect(character), currentPos, newPos));
+        StartCoroutine(MovePortrait(GetMechaFrameRectTransform(mecha), fromPos, toPos));
     }
     
-    IEnumerator PortraitMovement(RectTransform myRect, int currentPos, int newPos)
+    private IEnumerator MovePortrait(RectTransform myRect, int fromPos, int toPos)
     {
-        RectTransform startV = _portraitsPositions[currentPos].gameObject.GetComponent<RectTransform>();
-        RectTransform end = _portraitsPositions[newPos].gameObject.GetComponent<RectTransform>();
+        RectTransform startV = _portraitsPositions[fromPos];
+        RectTransform end = _portraitsPositions[toPos];
         RectTransform midRectA = new RectTransform();
         GameObject midGoA = new GameObject();
 
@@ -91,9 +95,9 @@ public class PortraitsController : MonoBehaviour
         AnimationCurve curveMaxX = null;
         AnimationCurve curveMinY = null;
         AnimationCurve curveMaxY = null;
-        if (Mathf.Abs(currentPos - newPos) > 1)
+        if (Mathf.Abs(fromPos - toPos) > 1)
         {
-            midGoA.transform.parent = _canvasTransform;
+            midGoA.transform.parent = _container.transform;
             midRectA = midGoA.AddComponent<RectTransform>();
             midRectA.gameObject.name = "INSTANCIA";
             midRectA.anchorMax = Vector2.Lerp(startV.anchorMax, end.anchorMax, 0.5f);
@@ -142,7 +146,7 @@ public class PortraitsController : MonoBehaviour
             time += Time.deltaTime;
             float normalized = time / _portraitMoveTime;
             
-            if (Mathf.Abs(currentPos - newPos) > 1)
+            if (Mathf.Abs(fromPos - toPos) > 1)
             {
                 myRect.anchorMax = new Vector2(curveMaxX.Evaluate(time), curveMaxY.Evaluate(time));
                 myRect.anchorMin = new Vector2(curveMinX.Evaluate(time), curveMinY.Evaluate(time));
@@ -156,51 +160,55 @@ public class PortraitsController : MonoBehaviour
         }
 
         myRect.anchoredPosition = end.anchoredPosition;
-        
+
+        OnPortraitStoppedMoving?.Invoke();
+
         Destroy(midGoA);
     }
 
-    public void AddCharAndFrame(Tuple<Character, FramesUI> t)
-    {
-        _charAndFramesList.Add(t);
-    }
+    public void AddCharAndFrame(Tuple<Character, FramesUI> t) => _charAndFramesList.Add(t);
 
-    public List<FramesUI> GetPortraits()
-    {
-        return _portraits;
-    }
+    public List<FramesUI> GetPortraits() => _portraits;
 
-    public FramesUI GetCharacterPortrait(Character character)
+    public FramesUI GetMechaPortrait(Character mecha)
     {
-        foreach (var t in _charAndFramesList)
+        foreach (Tuple<Character, FramesUI> tuple in _charAndFramesList)
         {
-            if (t.Item1 == character)
-                return t.Item2;
+            if (tuple.Item1 != mecha)
+                continue;
+
+            return tuple.Item2;
         }
 
         return null;
     }
 
-    public List<RectTransform> GetPortraitsRectPosition()
-    {
-        return _portraitsPositions;
-    }
+    public List<RectTransform> GetPortraitsPositionsRectTransform() => _portraitsPositions;
 
-    public FramesUI SetPortrait(Character character, int position, Sprite sprite, string name, EnumsClass.Team team, UnityAction leftButtonAction = null, UnityAction rightButtonAction = null)
+    public FramesUI SetPortrait(Character mecha, int position, Sprite sprite, string name, EnumsClass.Team team, Action leftButtonAction = null, Action rightButtonAction = null)
     {
-        FramesUI portrait = _portraits[position].SetSprite(sprite).SetName(name).SetBorderColor(team).SetCharacter(character);
+        FramesUI portrait = _portraits[position].SetSprite(sprite).SetName(name).SetBorderColor(team).SetMecha(mecha);
 
         if (leftButtonAction != null)
         {
             portrait.RemoveButtonLeftClickListeners();
-            portrait.AddButtonLeftClickListener(leftButtonAction);
+            portrait.AddButtonLeftClickListener(() => leftButtonAction?.Invoke());
         }
         
         if (rightButtonAction != null)
         {
             portrait.RemoveButtonRightClickListeners();
-            portrait.AddButtonRightClickListener(rightButtonAction);
+            portrait.AddButtonRightClickListener(() => rightButtonAction?.Invoke());
         }
         return portrait;
+    }
+
+    private void OnDestroy()
+    {
+        foreach (FramesUI portrait in _portraits)
+        {
+            portrait.RemoveButtonLeftClickListeners();
+            portrait.RemoveButtonRightClickListeners();
+        }
     }
 }

@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class Gun : EnumsClass, IChangeableShader
+public abstract class Gun : MechaPart
 {
     [SerializeField] protected Renderer[] _renderers;
-    [SerializeField] protected Collider _collider;
     [SerializeField] protected GameObject _damageParticleSpawner;
     [SerializeField] protected GameObject _shootParticleSpawn;
-    [SerializeField] protected MasterShaderScript _masterShader;
-    protected Character _myChar;
-    private float _maxHP;
-    private float _currentHP;
-    protected GunsType _gunType;
+    protected EnumsClass.GunsType _gunType;
     protected string _gunName;
     protected Sprite _icon;
     protected int _maxBullets;
@@ -26,26 +21,15 @@ public abstract class Gun : EnumsClass, IChangeableShader
     protected int _chanceToHitOtherParts;
     protected int _attackRange;
     protected int _bodyPartsSelectionQuantity;
-    protected float _weight;
 
     protected RouletteWheel _roulette;
     protected Dictionary<string, int> _critRoulette = new Dictionary<string, int>();
     protected Dictionary<string, int> _hitRoulette = new Dictionary<string, int>();
 
     //Nada que ver con la habilidad que se le equipa
-    protected bool _gunSkill;
+    protected bool _gunSkillAvailable;
     protected string _location;
-
-    private const int MissHit = 0;
-    private const int NormalHit = 1;
-    private const int CriticalHit = 2;
-
-    protected WeaponAbility _ability;
-
-    public float MaxHP { get => _maxHP; set => _maxHP = value; }
-    public float CurrentHP { get => _currentHP; set => _currentHP = value; }
-
-    public Action<float> OnHealthChanged;
+    protected AnimationMechaHandler _animationMechaHandler;
 
     //private bool _abilityCreated;
 
@@ -85,7 +69,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
         return _hitChance;
     }
 
-    public GunsType GetGunType()
+    public EnumsClass.GunsType GetGunType()
     {
         return _gunType;
     }
@@ -109,30 +93,15 @@ public abstract class Gun : EnumsClass, IChangeableShader
     {
         return _icon;
     }
-
-    public float GetWeight()
-    {
-        return _weight;
-    }
-
-    public Ability GetAbility()
-    {
-        return _ability;
-    }
-
-    public Character GetCharacter()
-    {
-        return _myChar;
-    }
     
     public GameObject GetParticleSpawn()
     {
         return _shootParticleSpawn;
     }
     
-    public bool SkillUsed()
+    public bool IsGunSkillAvailable()
     {
-        return _gunSkill;
+        return _gunSkillAvailable;
     }
     
     public string GetLocation()
@@ -167,7 +136,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
         _attackRange = data.attackRange;
         _bodyPartsSelectionQuantity = data.bodyPartsSelectionQuantity;
         _weight = data.weight;
-        _gunSkill = false;
+        _gunSkillAvailable = true;
 
         _collider.gameObject.tag = tag;
         _location = location;
@@ -185,7 +154,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
         //}
     }
 
-    public virtual void SetAbilityData(AbilitySO abilityData)
+    public override void SetAbilityData(AbilitySO abilityData)
     {
         if (!abilityData)
             return;
@@ -193,15 +162,17 @@ public abstract class Gun : EnumsClass, IChangeableShader
         _ability = Instantiate(abilityData.abilityPrefab, _myChar.transform) as WeaponAbility;
 
         _ability.Initialize(_myChar, abilityData);
-        _ability.SetGun(this);
+        _ability.SetPart(this);
         _myChar.AddEquipable(_ability);
         //_abilityCreated = true;
     }
 
-    public void ReloadGun()
+    public void SetAnimationHandler(AnimationMechaHandler animationMechaHandler) => _animationMechaHandler = animationMechaHandler;
+
+    public void ResetGun()
     {
         _availableBullets = _maxBullets;
-        _gunSkill = false;
+        _gunSkillAvailable = true;
     }
 
     /// <summary>
@@ -227,8 +198,10 @@ public abstract class Gun : EnumsClass, IChangeableShader
     /// </summary>
     public void ReduceAvailableBullets()
     {
-        if (_availableBullets > 0)
-            _availableBullets -= GetBulletsPerClick();
+        _availableBullets -= GetBulletsPerClick();
+
+        if (_availableBullets < 0)
+            _availableBullets = 0;
     }
 
     /// <summary>
@@ -236,8 +209,10 @@ public abstract class Gun : EnumsClass, IChangeableShader
     /// </summary>
     public void IncreaseAvailableBullets()
     {
-        if (_availableBullets < _maxBullets)
-            _availableBullets += GetBulletsPerClick();
+        _availableBullets += GetBulletsPerClick();
+
+        if (_availableBullets > _maxBullets)
+            _availableBullets = _maxBullets;
     }
     
     /// <summary>
@@ -245,14 +220,25 @@ public abstract class Gun : EnumsClass, IChangeableShader
     /// </summary>
     public void IncreaseAvailableBullets(int quantity)
     {
-        if (_availableBullets < _maxBullets)
-            _availableBullets += quantity;
+        _availableBullets += quantity;
+        
+        if (_availableBullets > _maxBullets)
+            _availableBullets = _maxBullets;
+    }
+
+    public void Attack(MechaPart partToAttack, int bullets)
+    {
+        List<Tuple<int, int>> damages = GetCalculatedDamage(bullets);
+
+        partToAttack.ReceiveDamage(damages);
+        
+        AttackAnimation();
     }
 
     /// <summary>
     /// Returns a collection of the damage each bullet does and if it miss, hits or crit.
     /// </summary>
-    public List<Tuple<int, int>> DamageCalculation(int bullets)
+    public List<Tuple<int, int>> GetCalculatedDamage(int bullets)
     {
         List<Tuple<int, int>> list = new List<Tuple<int, int>>();
 
@@ -272,13 +258,13 @@ public abstract class Gun : EnumsClass, IChangeableShader
 
                 switch (c)
                 {
-                    case "Crit" when _gunSkill:
+                    case "Crit" when !_gunSkillAvailable:
                         t = Tuple.Create((int)(_damage * _critMultiplier) / 2, CriticalHit);
                         break;
                     case "Crit":
                         t = Tuple.Create((int)(_damage * _critMultiplier), CriticalHit);
                         break;
-                    case "Normal" when _gunSkill:
+                    case "Normal" when !_gunSkillAvailable:
                         t = Tuple.Create(_damage / 2, NormalHit);
                         break;
                     case "Normal":
@@ -309,7 +295,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
         _hitRoulette.Add("Miss", h > 0 ? h : 0);
     }
 
-    public abstract void Ability();
+    public abstract void GunSkill(MechaPart targetPart);
 
     public abstract void Deselect();
 
@@ -320,7 +306,6 @@ public abstract class Gun : EnumsClass, IChangeableShader
 
     public void TurnOff()
     {
-
         ChangeMeshRenderStatus(false);
 
         _collider.enabled = false;
@@ -333,18 +318,20 @@ public abstract class Gun : EnumsClass, IChangeableShader
         {
             renderer.enabled = status;
         }
+
+        _collider.enabled = status;
     }
     
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamage(List<Tuple<int,int>> damages)
+    public override void ReceiveDamage(List<Tuple<int,int>> damages)
     {
         if (_currentHP <= 0) return;
         
-        int total = 0;
+        int totalDamage = 0;
         Vector3 pos = transform.position;
         for (int i = 0; i < damages.Count; i++)
         {
-            total += damages[i].Item1;
+            totalDamage += damages[i].Item1;
             float hp = _currentHP - damages[i].Item1;
             _currentHP = hp > 0 ? hp : 0;
             EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.Damage);
@@ -366,27 +353,28 @@ public abstract class Gun : EnumsClass, IChangeableShader
                     break;
             }
         }
+
+        OnDamageTaken?.Invoke(_myChar, totalDamage);
+        //WorldUI worldUI = _myChar.GetMyUI();
+        //worldUI.Show();
         
-        WorldUI worldUI = _myChar.GetMyUI();
-        worldUI.Show();
-        
-        switch (_location)
-        {
-            case "Left":
-                worldUI.SetLeftArmSlider(CurrentHP);
-                worldUI.UpdateLeftArmSlider(total, (int)CurrentHP);
-                break;
+        //switch (_location)
+        //{
+        //    case "Left":
+        //        worldUI.SetLeftGunHPBar(CurrentHP);
+        //        worldUI.UpdateLeftGunHPBar(totalDamage);
+        //        break;
             
-            case "Right":
-                worldUI.SetRightArmSlider(CurrentHP);
-                worldUI.UpdateRightArmSlider(total, (int)CurrentHP);
-                break;
-        }
+        //    case "Right":
+        //        worldUI.SetRightGunHPBar(CurrentHP);
+        //        worldUI.UpdateRightGunHPBar(totalDamage);
+        //        break;
+        //}
 
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
 
-        _myChar.MakeNotAttackable();
+        _myChar.MechaOutsideAttackRange();
         
         if (_currentHP <= 0)
         {
@@ -398,7 +386,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
     }
     
     //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
-    public void TakeDamage(int damage)
+    public override void ReceiveDamage(int damage)
     {
         if (_currentHP <= 0) return;
         
@@ -410,26 +398,28 @@ public abstract class Gun : EnumsClass, IChangeableShader
 
         Vector3 pos = transform.position;
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, pos);
-        
-        WorldUI worldUI = _myChar.GetMyUI();
-        worldUI.Show();
+
+        OnDamageTaken?.Invoke(_myChar, damage);
+
+        //WorldUI worldUI = _myChar.GetMyUI();
+        //worldUI.Show();
 
 
-        if (_location == "Left")
-        {
-            worldUI.SetLeftArmSlider(_currentHP);
-            worldUI.UpdateLeftArmSlider(damage, (int)_currentHP);
-        }
-        else
-        {
-            worldUI.SetRightArmSlider(_currentHP);
-            worldUI.UpdateRightArmSlider(damage, (int)_currentHP);
-        }
+        //if (_location == "Left")
+        //{
+        //    worldUI.SetLeftGunHPBar(_currentHP);
+        //    worldUI.UpdateLeftGunHPBar(damage);
+        //}
+        //else
+        //{
+        //    worldUI.SetRightGunHPBar(_currentHP);
+        //    worldUI.UpdateRightGunHPBar(damage);
+        //}
         
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
 
-        _myChar.MakeNotAttackable();
+        _myChar.MechaOutsideAttackRange();
         
         if (CurrentHP <= 0)
         {
@@ -440,7 +430,7 @@ public abstract class Gun : EnumsClass, IChangeableShader
         
     }
 
-    public void Heal(int healAmount)
+    public override void Heal(int healAmount)
     {
         if (_currentHP >= _maxHP)
         {
@@ -456,13 +446,30 @@ public abstract class Gun : EnumsClass, IChangeableShader
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
     }
-
-    public void SetShader(SwitchTextureEnum textureEnum) => _masterShader.ConvertEnumToStringEnumForShader(textureEnum);
-
     public MasterShaderScript GetMasterShader() => _masterShader;
 
+    public virtual void AttackAnimation()
+    {
+        switch (_location)
+        {
+            case "Left":
+                PlayLeftSideAttackAnimation();
+                break;
+
+            case "Right":
+                PlayRightSideAttackAnimation();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    protected abstract void PlayLeftSideAttackAnimation();
+    protected abstract void PlayRightSideAttackAnimation();
     private void OnDestroy()
     {
         OnHealthChanged = null;
+        OnDamageTaken = null;
     }
 }

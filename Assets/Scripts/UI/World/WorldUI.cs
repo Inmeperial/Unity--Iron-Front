@@ -1,9 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-public class WorldUI : MonoBehaviour
+public class WorldUI : Initializable
 {
+    [Header("Mecha")]
+    [SerializeField] private Character _owner;
+    public Character Owner => _owner;
+
     #region Fields
     [Header("Status")]
     [SerializeField] private GameObject _statusContainer;
@@ -16,12 +21,12 @@ public class WorldUI : MonoBehaviour
     [SerializeField] private Slider _bodyDamageSlider;
 
     [Header("Left Arm")]
-    [SerializeField] private Slider _leftArmHpSlider;
-    [SerializeField] private Slider _leftArmDamageSlider;
+    [SerializeField] private Slider _leftGunHpSlider;
+    [SerializeField] private Slider _leftGunDamageSlider;
 
     [Header("Right Arm")]
-    [SerializeField] private Slider _rightArmHpSlider;
-    [SerializeField] private Slider _rightArmDamageSlider;
+    [SerializeField] private Slider _rightGunHpSlider;
+    [SerializeField] private Slider _rightGunDamageSlider;
 
     [Header("Legs")]
     [SerializeField] private Slider _legsHpSlider;
@@ -30,95 +35,90 @@ public class WorldUI : MonoBehaviour
     [Header("Actions")]
     [SerializeField] private GameObject _moveActionIcon;
     [SerializeField] private GameObject _attackActionIcon;
-
-    [Header("Buttons")] 
-    [SerializeField] private float _forwardMultiplier;
-    [SerializeField] private GameObject _buttonsContainer;
-
-    [SerializeField] private MechaPartButton _bodyButton;
-    [SerializeField] private MechaPartButton _leftArmButton;
-    [SerializeField] private MechaPartButton _rightArmButton;
-    [SerializeField] private MechaPartButton _legsButton;
     #endregion
 
-    private bool _isToggledOn;
-    public bool IsToggledOn => _isToggledOn;
+    private int _partsBeingUpdated;
 
-    private bool _isActive;
-    public bool IsActive => _isActive;
+    public Action<Character> OnUpdateFinished;
 
-
-    // Start is called before the first frame update
-    private void Start()
+    public override void Initialize()
     {
-        Hide();
-        ButtonsContainerSetActive(false);
+        SetSlidersLimits();
     }
+    public void Show()
+    {
+        SetName(_owner.GetCharacterName());
+        float bodyHP = _owner.GetBody().CurrentHP;
+        SetBodyHPBar(bodyHP);
 
-    public void SetWorldUIValues(float bodyCurr, float rArmCurr, float lArmCurr, float legsCurr, bool moveStatus, bool attackStatus, bool overweightStatus)
-    {
-        SetBodySlider(bodyCurr);
-        SetLeftArmSlider(lArmCurr);
-        SetRightArmSlider(rArmCurr);
-        SetLegsSlider(legsCurr);
-        MoveActionIcon(moveStatus);
-        AttackActionIcon(attackStatus);
-        OverweightIcon(overweightStatus);
+        float leftGunHP = 0;
+
+        if (_owner.GetLeftGun())
+            leftGunHP = _owner.GetLeftGun().CurrentHP;
+
+        SetLeftGunHPBar(leftGunHP);
+
+        float rightGunHP = 0;
+
+        if (_owner.GetRightGun())
+            rightGunHP = _owner.GetRightGun().CurrentHP;
+
+        SetRightGunHPBar(rightGunHP);
+
+        float legsHP = _owner.GetLegs().CurrentHP;
+
+        SetLegsHPBar(legsHP);
+
+        MoveActionIconStatus(_owner.CanMove());
+
+        AttackActionIconStatus(_owner.CanAttack());
+
+        OverweightIconStatus(_owner.IsOverweight());
+
+        _statusContainer.SetActive(true);
     }
-    
-    public void Hide()
-    {
-        _isActive = false;
-        _statusContainer.SetActive(false);
-    }
+    public void Hide() => _statusContainer.SetActive(false);
 
     public void HideWithTimer() => StartCoroutine(DeactivateUI(_showDuration));
 
-    IEnumerator DeactivateUI(float timer)
+    private IEnumerator DeactivateUI(float timer)
     {
         yield return new WaitForSeconds(timer);
         _statusContainer.SetActive(false);
     }
     
-    public void Show()
-    {
-        _isActive = true;
-        _statusContainer.SetActive(true);
-    }
     
-    public void SetLimits(float bodyMax, float rArmMax, float lArmMax, float legsMax)
+    private void SetSlidersLimits()
     {
-        
+        float bodyMax = _owner.GetBody().MaxHp;
         _bodyHpSlider.maxValue = bodyMax;
         _bodyHpSlider.minValue = 0;
         _bodyDamageSlider.maxValue = bodyMax;
         _bodyDamageSlider.minValue = 0;
-        //_bodyButton.SetSlider(0, bodyMax);
 
-        _rightArmHpSlider.maxValue = rArmMax;
-        _rightArmHpSlider.minValue = 0;
-        _rightArmDamageSlider.maxValue = rArmMax;
-        _rightArmDamageSlider.minValue = 0;
-        //_rightArmButton.SetSlider(0, rArmMax);
+        float rightGunMax = _owner.GetRightGun().MaxHP;
+        _rightGunHpSlider.maxValue = rightGunMax;
+        _rightGunHpSlider.minValue = 0;
+        _rightGunDamageSlider.maxValue = rightGunMax;
+        _rightGunDamageSlider.minValue = 0;
 
-        _leftArmHpSlider.maxValue = lArmMax;
-        _leftArmHpSlider.minValue = 0;
-        _leftArmDamageSlider.maxValue = lArmMax;
-        _leftArmDamageSlider.minValue = 0;
-        //_leftArmButton.SetSlider(0, lArmMax);
+        float leftGunMax = _owner.GetLeftGun().MaxHP;
+        _leftGunHpSlider.maxValue = leftGunMax;
+        _leftGunHpSlider.minValue = 0;
+        _leftGunDamageSlider.maxValue = leftGunMax;
+        _leftGunDamageSlider.minValue = 0;
 
+        float legsMax = _owner.GetLegs().MaxHP;
         _legsHpSlider.maxValue = legsMax;
         _legsHpSlider.minValue = 0;
         _legsDamageSlider.maxValue = legsMax;
         _legsDamageSlider.minValue = 0;
-        //_legsButton.SetSlider(0, legsMax);
     }
 
-    public void Toggle(bool state) => _isToggledOn = state;
+    //public void Toggle(bool state) => _isToggledOn = state;
 
-    //TODO: Revisar Sliders
     #region WorldCanvas
-    public void SetBodySlider(float quantity)
+    private void SetBodyHPBar(float quantity)
     {
         if (quantity < 0)
         {
@@ -132,89 +132,109 @@ public class WorldUI : MonoBehaviour
         }
     }
    
-   public void UpdateBodySlider(float damage, float currentHp)
-   {
-       _bodyHpSlider.value = currentHp;
-       StartCoroutine(UpdateBody(damage));
-   }
+    public void UpdateBodyHPBar(float receivedDamage)
+    {
+        _bodyHpSlider.value = _owner.GetBody().CurrentHP;
 
-   IEnumerator UpdateBody(float damage)
-   {
-       for (int i = 1; i <= damage; i++)
-       {
-           _bodyDamageSlider.value -= 1;
-           yield return new WaitForEndOfFrame();
-       }
-       
-       if (_bodyDamageSlider.value < 0)
-           _bodyDamageSlider.value = 0;
-   }
-   
-   public void SetLeftArmSlider(float quantity)
-    {
-        if (quantity < 0)
-        {
-            _leftArmHpSlider.value = 0;
-            _leftArmDamageSlider.value = 0;
-        }
-        else
-        {
-            _leftArmHpSlider.value = quantity;
-            _leftArmDamageSlider.value = quantity;
-        }
-    }
-   
-    public void UpdateLeftArmSlider(float damage, float currentHp)
-    {
-        _leftArmHpSlider.value = currentHp;
-        StartCoroutine(UpdateLeftArm(damage));
+        _partsBeingUpdated++;
+
+        Show();
+        StartCoroutine(UpdateBodySlider(receivedDamage));
     }
 
-    IEnumerator UpdateLeftArm(float damage)
+    private IEnumerator UpdateBodySlider(float receivedDamage)
     {
-        for (int i = 1; i <= damage; i++)
+        for (int i = 1; i <= receivedDamage; i++)
         {
-            _leftArmDamageSlider.value -= 1;
+            _bodyDamageSlider.value -= 1;
             yield return new WaitForEndOfFrame();
         }
        
-        if (_leftArmDamageSlider.value < 0)
-            _leftArmDamageSlider.value = 0;
-    }
+        if (_bodyDamageSlider.value < 0)
+            _bodyDamageSlider.value = 0;
 
-    public void SetRightArmSlider(float quantity)
+        PartFinishedUpdating();
+    }
+   
+    private void SetLeftGunHPBar(float quantity)
     {
         if (quantity < 0)
         {
-            _rightArmHpSlider.value = 0;
-            _rightArmDamageSlider.value = 0;
+            _leftGunHpSlider.value = 0;
+            _leftGunDamageSlider.value = 0;
         }
         else
         {
-            _rightArmHpSlider.value = quantity;
-            _rightArmDamageSlider.value = quantity;
+            _leftGunHpSlider.value = quantity;
+            _leftGunDamageSlider.value = quantity;
+        }
+    }
+   
+    public void UpdateLeftGunHPBar(float receivedDamage)
+    {
+        _leftGunHpSlider.value = _owner.GetLeftGun().CurrentHP;
+
+        _partsBeingUpdated++;
+
+        Show();
+
+        StartCoroutine(UpdateLeftGunSlider(receivedDamage));
+    }
+
+    private IEnumerator UpdateLeftGunSlider(float receivedDamage)
+    {
+        for (int i = 1; i <= receivedDamage; i++)
+        {
+            _leftGunDamageSlider.value -= 1;
+            yield return new WaitForEndOfFrame();
+        }
+       
+        if (_leftGunDamageSlider.value < 0)
+            _leftGunDamageSlider.value = 0;
+
+        PartFinishedUpdating();
+    }
+
+    private void SetRightGunHPBar(float quantity)
+    {
+        if (quantity < 0)
+        {
+            _rightGunHpSlider.value = 0;
+            _rightGunDamageSlider.value = 0;
+        }
+        else
+        {
+            _rightGunHpSlider.value = quantity;
+            _rightGunDamageSlider.value = quantity;
         }
     }
     
-    public void UpdateRightArmSlider(float damage, float currentHp)
+    public void UpdateRightGunHPBar(float receivedDamage)
     {
-        _rightArmHpSlider.value = currentHp;
-        StartCoroutine(UpdateRightArm(damage));
+        _rightGunHpSlider.value = _owner.GetRightGun().CurrentHP;
+
+        _partsBeingUpdated++;
+
+        Show();
+
+        StartCoroutine(UpdateRightGunSlider(receivedDamage));
     }
 
-    IEnumerator UpdateRightArm(float damage)
+    private IEnumerator UpdateRightGunSlider(float receivedDamage)
     {
-        for (int i = 1; i <= damage; i++)
+        for (int i = 1; i <= receivedDamage; i++)
         {
-            _rightArmDamageSlider.value -= 1;
+            _rightGunDamageSlider.value -= 1;
             yield return new WaitForEndOfFrame();
         }
        
-        if (_rightArmDamageSlider.value < 0)
-            _rightArmDamageSlider.value = 0;
+        if (_rightGunDamageSlider.value < 0)
+            _rightGunDamageSlider.value = 0;
+
+        PartFinishedUpdating();
     }
 
-    public void SetLegsSlider(float quantity)
+    private void SetLegsHPBar(float quantity)
     {
         if (quantity < 0)
         {
@@ -228,15 +248,20 @@ public class WorldUI : MonoBehaviour
         }
     }
     
-    public void UpdateLegsSlider(float damage, float currentHp)
+    public void UpdateLegsHPBar(float receivedDamage)
     {
-        _legsHpSlider.value = currentHp;
-        StartCoroutine(UpdateLegs(damage));
+        _legsHpSlider.value = _owner.GetLegs().CurrentHP;
+
+        _partsBeingUpdated++;
+
+        Show();
+
+        StartCoroutine(UpdateLegsSlider(receivedDamage));
     }
 
-    IEnumerator UpdateLegs(float damage)
+    private IEnumerator UpdateLegsSlider(float receivedDamage)
     {
-        for (int i = 1; i <= damage; i++)
+        for (int i = 1; i <= receivedDamage; i++)
         {
             _legsDamageSlider.value -= 1;
             yield return new WaitForEndOfFrame();
@@ -244,18 +269,26 @@ public class WorldUI : MonoBehaviour
        
         if (_legsDamageSlider.value < 0)
             _legsDamageSlider.value = 0;
+
+        PartFinishedUpdating();
     }
 
-    private void MoveActionIcon(bool status) => _moveActionIcon.SetActive(status);
+    private void PartFinishedUpdating()
+    {
+        _partsBeingUpdated--;
 
-    private void AttackActionIcon(bool status) => _attackActionIcon.SetActive(status);
+        if (_partsBeingUpdated > 0)
+            return;
 
-    public void OverweightIcon(bool status) => _overweightIcon.SetActive(status);
+        _partsBeingUpdated = 0;
 
-    public void SetName(string name) => _nameText.text = name;
+        OnUpdateFinished?.Invoke(_owner);
+    }
+
+    public void MoveActionIconStatus(bool status) => _moveActionIcon.SetActive(status);
+    public void AttackActionIconStatus(bool status) => _attackActionIcon.SetActive(status);
+    public void OverweightIconStatus(bool status) => _overweightIcon.SetActive(status);
+    private void SetName(string name) => _nameText.text = name;    
     #endregion
-
-    //Activa el contenedor de los botones
-    public void ButtonsContainerSetActive(bool status) => _buttonsContainer.SetActive(status);
 
 }

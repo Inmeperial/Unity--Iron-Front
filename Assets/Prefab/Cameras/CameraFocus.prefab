@@ -30,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: 0.92387956}
   m_LocalPosition: {x: -0.089999676, y: 12.55, z: -20.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6247512506647726717}
   - {fileID: 2198611427763460416}
@@ -145,8 +146,14 @@ MonoBehaviour:
   m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: SepiaPPSSettings, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  m_AfterStackBundles:
+  - assemblyQualifiedName: NigthVisionPPSSettings, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - assemblyQualifiedName: TerminatorPPSSettings, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &2198611426206265782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +198,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2198611427763460416}
   m_RootOrder: 0
@@ -267,6 +275,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 42.63, y: 22.88, z: 28.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2198611426206265777}
   - {fileID: 2198611427559387589}
@@ -349,6 +358,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1.03}
   m_LocalScale: {x: 0.3336, y: 0.17301498, z: 1.685881}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2198611426922619479}
   m_RootOrder: 1
@@ -372,9 +382,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -399,6 +412,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2198611427763460419
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,6 +443,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2198611426487135060}
   m_Father: {fileID: 2198611426206265777}
@@ -535,8 +550,14 @@ MonoBehaviour:
   m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: SepiaPPSSettings, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  m_AfterStackBundles:
+  - assemblyQualifiedName: NigthVisionPPSSettings, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - assemblyQualifiedName: TerminatorPPSSettings, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &2198611427763460422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 662ddfcc798e8534391bf97c09bada61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mainCamWorld: {fileID: 2198611426206265781}
+  _closeUpCameraUI: {fileID: 2198611426487135061}
   speed: 20
   minHeight: 2
   maxHeight: 6
@@ -573,7 +596,6 @@ MonoBehaviour:
   moveBackInZ: 0
   lerp: 1
   _mainCamUI: {fileID: 5918101607786342320}
-  _closeCameraUI: {fileID: 2198611426487135061}
 --- !u!1 &7963079546743389567
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,6 +623,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2198611426206265777}
   m_RootOrder: 0

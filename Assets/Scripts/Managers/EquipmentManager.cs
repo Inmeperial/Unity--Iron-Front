@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipmentManager : MonoBehaviour
+public class EquipmentManager : Initializable
 {
     [SerializeField] private MechaEquipmentContainerSO _equipmentContainer;
-    public void ManualAwake()
+    public override void Initialize()
     {
-        Character[] chars = FindObjectsOfType<Character>();
+        Character[] chars = GameManager.Instance.GetMechas();
 
         MechaEquipmentContainerSO loadedEquipment = LoadSaveUtility.LoadEquipment();
         MechaEquipmentContainerSO equipmentToUse = null;

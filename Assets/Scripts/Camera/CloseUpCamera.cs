@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class CloseUpCamera : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private Camera _mainCamWorld;
+    [SerializeField] private Camera _closeUpCameraUI;
+    private Camera _closeCameraWorld;
     public float speed = 25f;
 
 	public float minHeight = 5f;
@@ -13,10 +17,8 @@ public class CloseUpCamera : MonoBehaviour
     
     [Range(0,1)]
     public float lerp = .9f;
-    private  Camera _mainCamWorld;
     [SerializeField] private Camera _mainCamUI;
-    private  Camera _closeCameraWorld;
-    [SerializeField] private Camera _closeCameraUI;
+    
     
 	private void Start()
     {
@@ -28,7 +30,7 @@ public class CloseUpCamera : MonoBehaviour
 	public void MoveCameraWithLerp(Vector3 enemyPosToLerp, Vector3 playerPosToLerp, Action callback = null)
     {
         FindObjectOfType<CameraMovement>().LockCamera(true);
-        _closeCameraUI.enabled = true;
+        _closeUpCameraUI.enabled = true;
         _closeCameraWorld.enabled = true;
         _mainCamWorld.enabled = false;
         _mainCamUI.enabled = false;
@@ -61,9 +63,9 @@ public class CloseUpCamera : MonoBehaviour
         StartCoroutine(Move(destination, enemyPosToLerp, callback));
     }
 
-    public void MoveCameraToParent(Vector3 destination, Vector3 targetToLook, Action callback = null, float callbackDelay = 0)
+    public void MoveCameraToParent(Vector3 targetToLook, Action callback = null, float callbackDelay = 0)
     {
-        StartCoroutine(MoveToParent(destination, targetToLook, callback, callbackDelay));
+        StartCoroutine(MoveToParent(targetToLook, callback, callbackDelay));
     }
 
     IEnumerator Move(Vector3 destination, Vector3 targetToLook, Action callback = null)
@@ -83,16 +85,18 @@ public class CloseUpCamera : MonoBehaviour
         }
         
     }
-    IEnumerator MoveToParent(Vector3 destination, Vector3 targetToLook, Action callback = null, float callbackDelay = 0)
+    IEnumerator MoveToParent(Vector3 targetToLook, Action callback = null, float callbackDelay = 0)
     {
-        while ((destination - transform.position).magnitude >= threshold)
+        Vector3 parentPos = transform.parent.position;
+
+        while ((parentPos - transform.position).magnitude >= threshold)
         {
-            Vector3 dir = (destination - transform.position).normalized;
+            Vector3 dir = (parentPos - transform.position).normalized;
             transform.position += dir * (speed * Time.deltaTime);
             transform.LookAt(targetToLook);
             yield return new WaitForEndOfFrame();
         }
-        transform.position = destination;
+        transform.position = parentPos;
         transform.localRotation = Quaternion.identity;
         
         if (callback != null)
@@ -110,6 +114,6 @@ public class CloseUpCamera : MonoBehaviour
         _mainCamWorld.enabled = true;
         _mainCamUI.enabled = true;
         _closeCameraWorld.enabled = false;
-        _closeCameraUI.enabled = false;
+        _closeUpCameraUI.enabled = false;
     }
 }

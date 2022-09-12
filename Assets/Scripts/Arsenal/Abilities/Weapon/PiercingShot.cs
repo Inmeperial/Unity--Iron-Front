@@ -29,10 +29,10 @@ public class PiercingShot : WeaponAbility
         //_abilityUseRange = _abilityData.pushUseRange;
         //PaintUseTiles(_character.GetMyPositionTile(), 0, Vector3.zero);//Cambie porque no me pintaba todos los tiles
 
-        PaintTilesInRange(_character.GetMyPositionTile(), 0, Vector3.forward);
-        PaintTilesInRange(_character.GetMyPositionTile(), 0, -Vector3.forward);
-        PaintTilesInRange(_character.GetMyPositionTile(), 0, Vector3.right);
-        PaintTilesInRange(_character.GetMyPositionTile(), 0, -Vector3.right);
+        PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.forward);
+        PaintTilesInRange(_character.GetPositionTile(), 0, -Vector3.forward);
+        PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.right);
+        PaintTilesInRange(_character.GetPositionTile(), 0, -Vector3.right);
 
         _character.EquipableSelectionState(true, this);
 
@@ -76,7 +76,7 @@ public class PiercingShot : WeaponAbility
         if (!_tilesInRange.Contains(tile))
             return;
 
-        Vector3 characterTilePos = _character.GetMyPositionTile().transform.position;
+        Vector3 characterTilePos = _character.GetPositionTile().transform.position;
 
         Vector3 dir = selectedTile.transform.position - characterTilePos;
 
@@ -135,7 +135,7 @@ public class PiercingShot : WeaponAbility
         foreach(Character attackedCharacter in _charactersToAttack)
 		{
             Body body = attackedCharacter.GetBody();
-            body.TakeDamage(_abilityData.damage);
+            body.ReceiveDamage(_abilityData.damage);
 
             EffectsController.Instance.PlayParticlesEffect(attackedCharacter.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
         }
