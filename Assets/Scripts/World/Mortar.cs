@@ -76,6 +76,9 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
             Deselect();
         }
 
+        if (GameManager.Instance.ActiveTeam == EnumsClass.Team.Red)
+            return;
+
         if (GameManager.Instance.CurrentTurnMecha && !GameManager.Instance.CurrentTurnMecha.IsSelectingEnemy() 
                                                                        && !_attackPending && Input.GetMouseButtonDown(0))
         {
