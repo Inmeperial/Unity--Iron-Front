@@ -47,6 +47,7 @@ public class WorldUI : Initializable
     }
     public void Show()
     {
+        Debug.Log("show UI: " + _owner.GetCharacterName());
         SetName(_owner.GetCharacterName());
         float bodyHP = _owner.GetBody().CurrentHP;
         SetBodyHPBar(bodyHP);

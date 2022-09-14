@@ -98,7 +98,7 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
             
             Character selectedCharacter = GameManager.Instance.CurrentTurnMecha;
             selectedCharacter.SetSelection(false);
-            selectedCharacter.ResetRotationAndRays();
+            selectedCharacter.LoadRotationOnDeselect();
             _selected = true;
             if (SelectedPlayerAbove())
             {

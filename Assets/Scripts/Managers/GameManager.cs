@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class GameManager : MonoBehaviour
 {
@@ -96,13 +97,10 @@ public class GameManager : MonoBehaviour
         foreach (Character mecha in _mechas)
         {
             _inputsReader.OnDeselectKeyPressed += mecha.ShowGunsMesh;
-            _inputsReader.OnDeselectKeyPressed += mecha.ShowMechaMesh;            
+            _inputsReader.OnDeselectKeyPressed += mecha.ShowMechaMesh;
 
             OnBeginAttackPreparations += mecha.ShowMechaMesh;
             OnBeginAttackPreparations += mecha.ShowGunsMesh;
-
-            if (mecha.GetUnitTeam() == EnumsClass.Team.Red)
-                _inputsReader.OnDeselectKeyPressed += mecha.NotSelectedForAttack;
 
             mecha.OnMechaDeath += OnMechaDeath;
             mecha.OnBeginMove += _characterSelector.DisableCharacterSelection;
@@ -226,7 +224,7 @@ public class GameManager : MonoBehaviour
 
     private void BeginMechaAttackPreparations()
     {
-        _currentTurnMecha.SaveRotation();
+        _currentTurnMecha.SaveRotationBeforeLookingAtEnemy();
         _currentTurnMecha.RotateTowardsEnemy(_selectedEnemy.transform);
 
         OnBeginAttackPreparations?.Invoke();
@@ -303,10 +301,14 @@ public class GameManager : MonoBehaviour
             return;
         _attackHUD.HideAttackHUD();
 
+        if (_currentTurnMecha)
+            _currentTurnMecha.LoadRotationOnDeselect();
+
         Action OnCameraMovementFinished = () =>
         {
             OnEnemyMechaDeselected?.Invoke();
             _selectedEnemy.DeselectThisUnit();
+            _selectedEnemy.NotSelectedForAttack();
             _selectedEnemy = null;
 
             _characterSelector.Selection(_currentTurnMecha);
@@ -500,8 +502,8 @@ public class GameManager : MonoBehaviour
             mecha.SetTurn(false);
         }
 
-        OnCurrentTurnMechaDeselected();
         EnemyMechaDeselected();
+        OnCurrentTurnMechaDeselected();
 
         BeginTurn(newTurnMecha);
     }
@@ -561,9 +563,6 @@ public class GameManager : MonoBehaviour
 
         OnBeginAttackPreparations -= mecha.ShowMechaMesh;
         OnBeginAttackPreparations -= mecha.ShowGunsMesh;
-
-        if (mecha.GetUnitTeam() == EnumsClass.Team.Red)
-            _inputsReader.OnDeselectKeyPressed -= mecha.NotSelectedForAttack;
 
         mecha.OnMechaDeath -= OnMechaDeath;
         mecha.OnBeginMove -= _characterSelector.DisableCharacterSelection;
@@ -628,7 +627,7 @@ public class GameManager : MonoBehaviour
     {
         _inputsReader.OnUndoKeyPressed += _currentTurnMecha.GetWaypointsPathfinding().UndoLastWaypoint;
         _inputsReader.OnDeselectKeyPressed += _currentTurnMecha.CancelEnemySelection;
-        _inputsReader.OnDeselectKeyPressed += _currentTurnMecha.ResetRotationAndRays;
+        _inputsReader.OnDeselectKeyPressed += _currentTurnMecha.LoadRotationOnDeselect;
         _inputsReader.OnDeselectKeyPressed += _currentTurnMecha.ResetSelectedGun;
     }
 
@@ -636,7 +635,7 @@ public class GameManager : MonoBehaviour
     {
         _inputsReader.OnUndoKeyPressed -= _currentTurnMecha.GetWaypointsPathfinding().UndoLastWaypoint;
         _inputsReader.OnDeselectKeyPressed -= _currentTurnMecha.CancelEnemySelection;
-        _inputsReader.OnDeselectKeyPressed -= _currentTurnMecha.ResetRotationAndRays;
+        _inputsReader.OnDeselectKeyPressed -= _currentTurnMecha.LoadRotationOnDeselect;
         _inputsReader.OnDeselectKeyPressed -= _currentTurnMecha.ResetSelectedGun;
     }
 
@@ -652,12 +651,14 @@ public class GameManager : MonoBehaviour
         foreach (Character mecha in _mechas)
         {
             _inputsReader.OnDeselectKeyPressed -= mecha.ShowGunsMesh;
-            _inputsReader.OnDeselectKeyPressed -= mecha.ShowMechaMesh;            
-
-            if (mecha.GetUnitTeam() == EnumsClass.Team.Red)
-                _inputsReader.OnDeselectKeyPressed -= mecha.NotSelectedForAttack;
+            _inputsReader.OnDeselectKeyPressed -= mecha.ShowMechaMesh;
 
             mecha.OnMechaDeath -= OnMechaDeath;
+
+            mecha.OnBeginMove -= _characterSelector.DisableCharacterSelection;
+            mecha.OnEndMove -= _characterSelector.EnableCharacterSelection;
+
+            mecha.GetLegs().OnDamageTakenByAttack -= OnMechaLegsDamaged;
         }
     }
 }

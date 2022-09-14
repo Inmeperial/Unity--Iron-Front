@@ -136,7 +136,7 @@ public class WorkshopUIManager : MonoBehaviour
         _overviewRightGun.SetData(rightGunName);
         _overviewRightGun.SetTooltipData(equipmentData.rightGun);
 
-        if (equipmentData.leftGunAbility)
+        if (equipmentData.rightGunAbility)
         {
             _overviewRightArmAbility.SetData(equipmentData.rightGunAbility.objectImage);
             _overviewRightArmAbility.SetTooltipData(equipmentData.rightGunAbility);

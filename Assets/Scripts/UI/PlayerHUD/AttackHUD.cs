@@ -243,16 +243,16 @@ public class AttackHUD : Initializable
         }
         else if (_partsSelectedForAttack < selectedGun.GetAvailableSelections())
         {
-            if (_bodyButton.BulletsCount <= 0 && _selectedCharacter.IsEnemyBodyInSight(_selectedEnemy))
+            if (_bodyButton.PartIsInSight && _bodyButton.BulletsCount <= 0)
                 _bodyButton.ShowButton();
 
-            if (_leftGunButton.BulletsCount <= 0 && _selectedCharacter.IsEnemyBodyInSight(_selectedEnemy))
+            if (_leftGunButton.PartIsInSight && _leftGunButton.BulletsCount <= 0)
                 _leftGunButton.ShowButton();
 
-            if (_rightGunButton.BulletsCount <= 0 && _selectedCharacter.IsEnemyBodyInSight(_selectedEnemy))
+            if (_rightGunButton.PartIsInSight && _rightGunButton.BulletsCount <= 0)
                 _rightGunButton.ShowButton();
 
-            if (_legsButton.BulletsCount <= 0 && _selectedCharacter.IsEnemyBodyInSight(_selectedEnemy))
+            if (_legsButton.PartIsInSight && _legsButton.BulletsCount <= 0)
                 _legsButton.ShowButton();
         }
     }

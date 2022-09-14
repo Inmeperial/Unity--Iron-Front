@@ -33,7 +33,7 @@ public class CheckPartsInSight : GOCondition
 
         if (body || leftArm || rightArm || legs)
             _myUnit.checkedParts = true;
-        _myUnit.ResetRotationAndRays();
+        _myUnit.LoadRotationBeforeLookingAtEnemy();
         return body || leftArm || rightArm || legs;
         }
 }

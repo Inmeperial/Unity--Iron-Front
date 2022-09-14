@@ -46,7 +46,7 @@ public class AttackAction : GOAction
         }
         
         Character closestEnemy = _myUnit.GetClosestEnemy();
-        var initialRotation = _myUnit.SavedRotation;
+        var initialRotation = _myUnit.RotationBeforeLookingAtEnemy;
         _myUnit.RotateTowardsEnemy(closestEnemy.transform);
         var gun = _myUnit.GetSelectedGun();
 

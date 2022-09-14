@@ -75,7 +75,9 @@ public class Character : Initializable
 
     protected List<Character> _enemiesInRange = new List<Character>();
 
-    public Quaternion SavedRotation { get; private set; } //Cambio Nico
+    public Quaternion RotationBeforeLookingAtEnemy { get; private set; } //Cambio Nico
+    public Quaternion RotationBeforeAttacking { get; private set; }
+    public bool IsRotated { get => _isRotated; set => _isRotated = value; }
 
 
     #region  Flags
@@ -92,7 +94,7 @@ public class Character : Initializable
     protected bool _myTurn = false;
     protected bool _isDead = false;
     protected bool _equipableSelected;
-    protected bool _rotated;
+    private bool _isRotated;
     protected bool _unitEnabled = true;
     
     protected bool _overweight;    
@@ -137,6 +139,7 @@ public class Character : Initializable
     {
         ConfigureMecha();
 
+        RotationBeforeAttacking = transform.rotation;
         _myPositionTile = GetTileBelow();
 
         if (!_myPositionTile)
@@ -162,6 +165,9 @@ public class Character : Initializable
             return;
 
         if (_unitTeam == EnumsClass.Team.Red)
+            return;
+
+        if (!_selected)
             return;
 
         if (!_isOnElevator)
@@ -348,8 +354,11 @@ public class Character : Initializable
         }
         _enemiesInRange.Clear();
         
-        ResetRotationAndRays();
-        
+        //ResetRotationAndRays();
+        //_isRotated = false;
+
+        //RaysOff();
+        //LoadRotationOnDeselect();
         _selectedGun = _rightGun;
         _leftGunSelected = false;
         _rightGunSelected = true;
@@ -439,7 +448,7 @@ public class Character : Initializable
         
         OnMechaSelected?.Invoke(this);
 
-        SavedRotation = transform.rotation; //Cambio Nico
+        RotationBeforeAttacking = transform.rotation; //Cambio Nico
         ResetInRangeLists();
         _path.Clear();
         TileHighlight.Instance.PathLinesClear();
@@ -921,6 +930,7 @@ public class Character : Initializable
     {
         _selectingEnemy = true;
 
+        RaysOff();
         ResetTilesInAttackRange();
         ResetTilesInMoveRange();
         HideMechaMesh();
@@ -1110,7 +1120,7 @@ public class Character : Initializable
         TileHighlight.Instance.characterMoving = false;
         TileHighlight.Instance.EndPreview();
         _moving = false;
-        SavedRotation = transform.rotation; //Cambio Nico
+        RotationBeforeAttacking = transform.rotation; //Cambio Nico
 
         if (_myPositionTile)
         {
@@ -1269,29 +1279,28 @@ public class Character : Initializable
         SetAttackActionState(false);
     }
 
-    private void OnMouseOver()
+    private void OnMouseEnter()
     {
-        if (_isDead)
-            return;
-
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        if (!_selectedForAttack && _canBeSelected)
-            OnMouseOverMecha?.Invoke(this);
-            //_worldUI.Show();
-            //SetWorldUIValues();
-
-        if (!_selected)
+        if (_isDead)
             return;
 
-        if (_inAttackRange && !_selectedForAttack)
-        {
-            if (GameManager.Instance.ActiveTeam == EnumsClass.Team.Red)
-                return;
-            
+        if (!_selectedForAttack)
+            OnMouseOverMecha?.Invoke(this);
+
+        if (!_inAttackRange)
+            return;
+        
+        //_worldUI.Show();
+        //SetWorldUIValues();
+
+        if (GameManager.Instance.ActiveTeam == EnumsClass.Team.Red)
+            return;
+
+        if (!_selectedForAttack)
             RotateWithRays();
-        }
     }
 
     private void OnMouseExit()
@@ -1304,13 +1313,22 @@ public class Character : Initializable
         
         OnMouseExitMecha?.Invoke(this);
         
+        if (_selectedForAttack)
+            return;
+        
         if (_inAttackRange)
-            ResetRotationAndRays();
+        {
+            Character currentMecha = GameManager.Instance.CurrentTurnMecha;
+            currentMecha.LoadRotationBeforeLookingAtEnemy();
+        }
     }
 
     private void RotateWithRays()
     {
         Character selectedCharacter = GameManager.Instance.CurrentTurnMecha;
+
+        if (selectedCharacter == null)
+            return;
 
         if (!selectedCharacter.IsSelected()) 
             return;
@@ -1318,43 +1336,45 @@ public class Character : Initializable
         if (selectedCharacter.IsMoving()) 
             return;
         
-        if (selectedCharacter._rotated) 
+        if (selectedCharacter.IsRotated) 
             return;
 
-        selectedCharacter._rotated = true;
+        selectedCharacter.IsRotated = true;
 
-        selectedCharacter.SaveRotation();
+        selectedCharacter.SaveRotationBeforeLookingAtEnemy();
 
         Vector3 posToLook = transform.position;
 
         posToLook.y = selectedCharacter.transform.position.y;
 
         selectedCharacter.transform.LookAt(posToLook);
-        
-        bool body = selectedCharacter.RayToPartsForAttack(GetBodyPosition(), "Body", true) && _body.CurrentHP > 0;
-        bool lArm = selectedCharacter.RayToPartsForAttack(GetLArmPosition(), "LGun", true) && _leftGun;
-        bool rArm = selectedCharacter.RayToPartsForAttack(GetRArmPosition(), "RGun", true) && _rightGun;
-        bool legs = selectedCharacter.RayToPartsForAttack(GetLegsPosition(), "Legs", true) && _legs.CurrentHP > 0;
+
+        selectedCharacter.RayToPartsForAttack(GetBodyPosition(), "Body", true);
+        selectedCharacter.RayToPartsForAttack(GetLArmPosition(), "LGun", true);
+        selectedCharacter.RayToPartsForAttack(GetRArmPosition(), "RGun", true);
+        selectedCharacter.RayToPartsForAttack(GetLegsPosition(), "Legs", true);
     }
 
-    public void ResetRotationAndRays()
+    public void SaveRotationBeforeLookingAtEnemy()
     {
-        Character selectedCharacter = GameManager.Instance.CurrentTurnMecha;
-
-        if (selectedCharacter == null) 
-            return;
-
-        if (selectedCharacter.IsSelectingEnemy()) 
-            return;
-        
-        selectedCharacter._rotated = false;
-        //c._move.StopRotation();
-        selectedCharacter.LoadRotation(); //Volver la rotación del mecha a InitialRotation, esto podría ser más smooth
-        selectedCharacter.RaysOff(); //Apago los raycasts cuando saco el mouse
+        _isRotated = true;
+        RotationBeforeLookingAtEnemy = transform.rotation;
     }
 
-    public void SaveRotation() => SavedRotation = transform.rotation;
-    public void LoadRotation() => transform.rotation = SavedRotation;
+    public void LoadRotationBeforeLookingAtEnemy()
+    {
+        RaysOff();
+        _isRotated = false;
+        transform.rotation = RotationBeforeLookingAtEnemy;
+    }
+
+    public void LoadRotationOnDeselect()
+    {
+        Debug.Log("reset rotation");
+        RaysOff();
+        _isRotated = false;
+        transform.rotation = RotationBeforeAttacking;
+    }
 
     //public WorldUI GetWorldUI() => _worldUI;
 
@@ -1364,12 +1384,12 @@ public class Character : Initializable
 
     //    //if (_rightGun)
     //    //    rightGunHP = _rightGun.CurrentHP;
-        
+
     //    //float leftGunHP = 0;
 
     //    //if (_leftGun)
     //    //    leftGunHP = _leftGun.CurrentHP;
-        
+
     //    //_worldUI.SetWorldUIValues(_body.CurrentHP, rightGunHP, leftGunHP, _legs.CurrentHP, _canMove, _canAttack, _overweight);
     //    _worldUI.Show();
     //}

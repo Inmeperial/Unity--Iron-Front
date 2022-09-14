@@ -123,7 +123,7 @@ public class CharacterSelector : MonoBehaviour
 
             if (selectedCharacter.CanAttack())
             {
-                selectedCharacter.SaveRotation();
+                selectedCharacter.SaveRotationBeforeLookingAtEnemy();
 
                 selectedCharacter.RotateTowardsEnemy(character.transform);
 
@@ -146,8 +146,8 @@ public class CharacterSelector : MonoBehaviour
                 }
                 else
                 {
-                    selectedCharacter.RaysOffDelay();
-                    selectedCharacter.ResetRotationAndRays(); 
+                    //selectedCharacter.RaysOffDelay();
+                    selectedCharacter.LoadRotationOnDeselect(); 
                 }
             }
         }
