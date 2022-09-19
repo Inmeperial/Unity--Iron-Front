@@ -7,11 +7,15 @@ public class WorldUIController : Initializable
     [SerializeField] private InputsReader _inputsReader;
 
     private bool _isToggledOn = false;
+    private bool _canShowWorldUI;
 
     private Dictionary<Character, WorldUI> _mechaUIDictionary = new Dictionary<Character, WorldUI>();
 
+    private Dictionary<WorldUI, bool> _stateBeforeForcingHide = new Dictionary<WorldUI, bool>();
     public override void Initialize()
     {
+        _canShowWorldUI = true;
+
         WorldUI[] worldUIs = FindObjectsOfType<WorldUI>();
 
         foreach (WorldUI ui in worldUIs)
@@ -49,10 +53,19 @@ public class WorldUIController : Initializable
 
         _inputsReader.OnToggleWorldUIKeyPressed += ToggleWorldUI;
 
+        GameManager.Instance.OnEnemyMechaSelected += DisableWorldUI;
+        GameManager.Instance.OnEnemyMechaSelected += ForceHideWorldUI;
+        GameManager.Instance.OnEnemyMechaDeselected += EnableWorldUI;
+        GameManager.Instance.OnEnemyMechaDeselected += RestoreWorldUIPreviousState;
+        GameManager.Instance.OnMechaAttackPreparationsFinished += EnableWorldUI;
+        GameManager.Instance.OnMechaAttackPreparationsFinished += RestoreWorldUIPreviousState;
     }
 
     private void ShowWorldUI()
     {
+        if (!_canShowWorldUI)
+            return;
+
         foreach (KeyValuePair<Character, WorldUI> kvp in _mechaUIDictionary)
         {
             Character mecha = kvp.Key;
@@ -65,14 +78,6 @@ public class WorldUIController : Initializable
             ui.Show();
         }
     }
-
-    private void OnBodyDamageTaken(Character mecha, float damage) => _mechaUIDictionary[mecha].UpdateBodyHPBar(damage);
-    private void OnLeftGunDamageTaken(Character mecha, float damage) => _mechaUIDictionary[mecha].UpdateLeftGunHPBar(damage);
-    private void OnRightGunDamageTaken(Character mecha, float damage) => _mechaUIDictionary[mecha].UpdateRightGunHPBar(damage);
-    private void OnLegsDamageTaken(Character mecha, float damage) => _mechaUIDictionary[mecha].UpdateLegsHPBar(damage);
-    private void OnAttackActionStateChange(Character mecha, bool state) => _mechaUIDictionary[mecha].AttackActionIconStatus(state);
-    private void OnMoveActionStateChange(Character mecha, bool state) => _mechaUIDictionary[mecha].MoveActionIconStatus(state);
-    private void OnOverweightStateChange(Character mecha, bool state) => _mechaUIDictionary[mecha].OverweightIconStatus(state);
     private void HideWorldUI()
     {
         if (_isToggledOn)
@@ -84,8 +89,49 @@ public class WorldUIController : Initializable
         }
     }
 
+    private void ForceHideWorldUI()
+    {
+        Debug.Log("force hide");
+        foreach (WorldUI ui in _mechaUIDictionary.Values)
+        {
+            if (_stateBeforeForcingHide.ContainsKey(ui))
+            {
+                _stateBeforeForcingHide[ui] = ui.IsActive;
+            }
+            else
+            {
+                _stateBeforeForcingHide.Add(ui, ui.IsActive);
+            }
+
+            ui.Hide();
+        }
+    }
+
+    private void RestoreWorldUIPreviousState()
+    {
+        if (!_isToggledOn)
+            return;
+
+        if (!_canShowWorldUI)
+            return;
+
+        Debug.Log("restore");
+        foreach (KeyValuePair<WorldUI, bool> kvp in _stateBeforeForcingHide)
+        {
+            WorldUI ui = kvp.Key;
+
+            bool wasActive = kvp.Value;
+
+            if (wasActive)
+                ui.Show();
+        }
+    }
+
     private void ToggleWorldUI()
     {
+        if (!_canShowWorldUI)
+            return;
+
         _isToggledOn = !_isToggledOn;
 
         if (_isToggledOn)
@@ -94,13 +140,64 @@ public class WorldUIController : Initializable
             HideWorldUI();
     }
 
-    public void ShowMechaWorldUI(Character mecha) => _mechaUIDictionary[mecha].Show();
+    public void ShowMechaWorldUI(Character mecha)
+    {
+        if (!_canShowWorldUI)
+            return;
+
+        _mechaUIDictionary[mecha].Show();
+    }
+
     public void HideMechaWorldUI(Character mecha)
     {
         if (!mecha.IsDead() && _isToggledOn)
             return;
 
         _mechaUIDictionary[mecha].Hide();
+    }
+
+    public void EnableWorldUI()
+    {
+        _canShowWorldUI = true;
+    }
+
+    public void DisableWorldUI()
+    {
+        _canShowWorldUI = false;
+    }
+    private void OnBodyDamageTaken(Character mecha, float damage)
+    {
+        _mechaUIDictionary[mecha].UpdateBodyHPBar(damage);
+    }
+
+    private void OnLeftGunDamageTaken(Character mecha, float damage)
+    {
+        _mechaUIDictionary[mecha].UpdateLeftGunHPBar(damage);
+    }
+
+    private void OnRightGunDamageTaken(Character mecha, float damage)
+    {
+        _mechaUIDictionary[mecha].UpdateRightGunHPBar(damage);
+    }
+
+    private void OnLegsDamageTaken(Character mecha, float damage)
+    {
+        _mechaUIDictionary[mecha].UpdateLegsHPBar(damage);
+    }
+
+    private void OnAttackActionStateChange(Character mecha, bool state)
+    {
+        _mechaUIDictionary[mecha].AttackActionIconStatus(state);
+    }
+
+    private void OnMoveActionStateChange(Character mecha, bool state)
+    {
+        _mechaUIDictionary[mecha].MoveActionIconStatus(state);
+    }
+
+    private void OnOverweightStateChange(Character mecha, bool state)
+    {
+        _mechaUIDictionary[mecha].OverweightIconStatus(state);
     }
 
     private void OnDestroy()
@@ -127,5 +224,12 @@ public class WorldUIController : Initializable
             mecha.GetRightGun().OnDamageTaken += OnRightGunDamageTaken;
             mecha.GetLegs().OnDamageTaken += OnLegsDamageTaken;
         }
+
+        GameManager.Instance.OnEnemyMechaSelected -= DisableWorldUI;
+        GameManager.Instance.OnEnemyMechaSelected -= ForceHideWorldUI;
+        GameManager.Instance.OnEnemyMechaDeselected -= EnableWorldUI;
+        GameManager.Instance.OnEnemyMechaDeselected -= RestoreWorldUIPreviousState;
+        GameManager.Instance.OnMechaAttackPreparationsFinished -= EnableWorldUI;
+        GameManager.Instance.OnMechaAttackPreparationsFinished -= RestoreWorldUIPreviousState;
     }
 }

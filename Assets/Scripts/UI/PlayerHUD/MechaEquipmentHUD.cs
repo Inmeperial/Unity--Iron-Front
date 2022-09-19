@@ -81,10 +81,14 @@ public class MechaEquipmentHUD : Initializable
         Ability bodyAbility = mecha.GetBody().GetAbility();
         ConfigureEquipableButton(mecha, _bodyAbilityButton, bodyAbility);
 
-        Ability leftGunAbility = mecha.GetLeftGun().GetAbility();
+        Ability leftGunAbility = null;
+        if (mecha.GetLeftGun())
+            leftGunAbility = mecha.GetLeftGun().GetAbility();
         ConfigureEquipableButton(mecha, _leftGunAbilityButton, leftGunAbility);
 
-        Ability rightGunAbility = mecha.GetRightGun().GetAbility();
+        Ability rightGunAbility = null;
+        if (mecha.GetRightGun())
+            rightGunAbility = mecha.GetRightGun().GetAbility();
         ConfigureEquipableButton(mecha, _rightGunAbilityButton, rightGunAbility);
 
         Ability legsAbility = mecha.GetLegs().GetAbility();

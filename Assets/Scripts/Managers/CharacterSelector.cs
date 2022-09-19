@@ -83,6 +83,9 @@ public class CharacterSelector : MonoBehaviour
 
     public void Selection(Character character)
     {
+        if (!character)
+            return;
+
         if (!character.CanBeSelected())
         {
             Debug.Log(character.GetCharacterName() + " cant be selected");
@@ -139,17 +142,15 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
-    public void EnableCharacterSelection() => _canSelectUnit = true;
-    public void DisableCharacterSelection() => _canSelectUnit = false;
+    public void EnableCharacterSelection()
+    {
+        _canSelectUnit = true;
+    }
 
-    //public void ResetSelector()
-    //{
-    //    DeselectCurrentCharacter();
-
-    //    DeselectCurrentEnemy();
-    //    //Cambiarlo despues
-    //    //ButtonsUIManager.Instance.DeactivateExecuteAttackButton();
-    //}
+    public void DisableCharacterSelection()
+    {
+        _canSelectUnit = false;
+    }
 
     public void SelectionWithDelay(Character character)
     {

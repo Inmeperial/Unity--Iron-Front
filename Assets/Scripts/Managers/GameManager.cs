@@ -90,7 +90,8 @@ public class GameManager : MonoBehaviour
 
         _portraitsController.OnPortraitStoppedMoving += OnPortraitStoppedMoving;
 
-        _inputsReader.OnDeselectKeyPressed += EnableCharacterSelection;
+        //_inputsReader.OnDeselectKeyPressed += EnableCharacterSelection;
+        _inputsReader.OnDeselectKeyPressed += EnemyMechaDeselected;
     }
 
     private void Start()
@@ -105,7 +106,9 @@ public class GameManager : MonoBehaviour
 
             mecha.OnMechaDeath += OnMechaDeath;
             mecha.OnBeginMove += _characterSelector.DisableCharacterSelection;
-            mecha.OnEndMove += _characterSelector.EnableCharacterSelection;
+            mecha.OnBeginMove += _gunsSelector.DisableGunSelection;
+            mecha.OnEndMove += EnableCharacterSelection;
+            mecha.OnEndMove += _gunsSelector.EnableGunSelection;
 
             mecha.GetLegs().OnDamageTakenByAttack += OnMechaLegsDamaged;
             mecha.Initialize();
@@ -261,9 +264,9 @@ public class GameManager : MonoBehaviour
         if (_selectedEnemy)
             _selectedEnemy.DeselectThisUnit();
 
-        _inputsReader.EnableKeysCheck();
+        //_inputsReader.EnableKeysCheck();
 
-        _gunsSelector.EnableGunSelection();
+        //_gunsSelector.EnableGunSelection();
 
         _currentTurnMecha = mecha;
 
@@ -313,17 +316,22 @@ public class GameManager : MonoBehaviour
     private void EnemyMechaDeselected()
     {
         if (!_selectedEnemy)
+        {
+            Debug.Log("no selected enemy");
             return;
+        }
         _attackHUD.HideAttackHUD();
 
         if (_currentTurnMecha)
             _currentTurnMecha.LoadRotationOnDeselect();
 
+        Debug.Log("Selected enemy: " + _selectedEnemy.GetCharacterName(), _selectedEnemy.gameObject);
         Action OnCameraMovementFinished = () =>
         {
             OnEnemyMechaDeselected?.Invoke();
             _selectedEnemy.DeselectThisUnit();
             _selectedEnemy.NotSelectedForAttack();
+            EnableCharacterSelection();
             _selectedEnemy = null;
 
             _characterSelector.Selection(_currentTurnMecha);
@@ -560,6 +568,7 @@ public class GameManager : MonoBehaviour
                 _characterSelector.EnableCharacterSelection();
                 SubscribeToInputs();
                 _inputsReader.EnableKeysCheck();
+                _gunsSelector.EnableGunSelection();
                 EnableEndTurnButton();
             };
         }
@@ -567,6 +576,7 @@ public class GameManager : MonoBehaviour
         {
             _characterSelector.DisableCharacterSelection();
             _inputsReader.DisableKeysCheck();
+            _gunsSelector.DisableGunSelection();
             DisableEndTurnButton();            
         }
 
@@ -589,7 +599,7 @@ public class GameManager : MonoBehaviour
 
         mecha.OnMechaDeath -= OnMechaDeath;
         mecha.OnBeginMove -= _characterSelector.DisableCharacterSelection;
-        mecha.OnEndMove -= _characterSelector.EnableCharacterSelection;
+        mecha.OnEndMove -= EnableCharacterSelection;
 
         mecha.GetLegs().OnDamageTakenByAttack -= OnMechaLegsDamaged;
 
@@ -668,6 +678,9 @@ public class GameManager : MonoBehaviour
 
         _characterSelector.OnTurnMechaSelected -= SetCurrentTurnMecha;
         _characterSelector.OnEnemyMechaSelected -= EnemyMechaSelected;
+        _inputsReader.OnDeselectKeyPressed -= EnemyMechaDeselected;
+
+        _portraitsController.OnPortraitStoppedMoving -= OnPortraitStoppedMoving;
 
         foreach (Character mecha in _mechas)
         {
@@ -677,7 +690,7 @@ public class GameManager : MonoBehaviour
             mecha.OnMechaDeath -= OnMechaDeath;
 
             mecha.OnBeginMove -= _characterSelector.DisableCharacterSelection;
-            mecha.OnEndMove -= _characterSelector.EnableCharacterSelection;
+            mecha.OnEndMove -= EnableCharacterSelection;
 
             mecha.GetLegs().OnDamageTakenByAttack -= OnMechaLegsDamaged;
         }

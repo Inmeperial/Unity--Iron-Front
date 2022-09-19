@@ -62,8 +62,15 @@ public class GunsSelector : Initializable
         OnRightGunSelected += _selectedMecha.SelectRightGun;
     }
 
-    public void EnableGunSelection() => _canChangeGun = true;
-    public void DisableGunSelection() => _canChangeGun = false;
+    public void EnableGunSelection()
+    {
+        _canChangeGun = true;
+    }
+
+    public void DisableGunSelection()
+    {
+        _canChangeGun = false;
+    }
 
     private void OnDestroy()
     {

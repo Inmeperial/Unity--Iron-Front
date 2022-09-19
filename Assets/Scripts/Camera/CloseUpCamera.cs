@@ -104,6 +104,7 @@ public class CloseUpCamera : MonoBehaviour
             yield return new WaitForSeconds(callbackDelay);
             callback();
         }
+        FindObjectOfType<CameraMovement>().LockCamera(false);
     }
 
     public void ResetCamera()

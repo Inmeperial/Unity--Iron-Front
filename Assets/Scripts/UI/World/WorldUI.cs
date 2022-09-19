@@ -9,6 +9,8 @@ public class WorldUI : Initializable
     [SerializeField] private Character _owner;
     public Character Owner => _owner;
 
+    public bool IsActive => gameObject.activeSelf;
+
     #region Fields
     [Header("Status")]
     [SerializeField] private GameObject _statusContainer;
@@ -47,7 +49,6 @@ public class WorldUI : Initializable
     }
     public void Show()
     {
-        Debug.Log("show UI: " + _owner.GetCharacterName());
         SetName(_owner.GetCharacterName());
         float bodyHP = _owner.GetBody().CurrentHP;
         SetBodyHPBar(bodyHP);
@@ -78,9 +79,15 @@ public class WorldUI : Initializable
 
         _statusContainer.SetActive(true);
     }
-    public void Hide() => _statusContainer.SetActive(false);
+    public void Hide()
+    {
+        _statusContainer.SetActive(false);
+    }
 
-    public void HideWithTimer() => StartCoroutine(DeactivateUI(_showDuration));
+    public void HideWithTimer()
+    {
+        StartCoroutine(DeactivateUI(_showDuration));
+    }
 
     private IEnumerator DeactivateUI(float timer)
     {
@@ -286,10 +293,25 @@ public class WorldUI : Initializable
         OnUpdateFinished?.Invoke(_owner);
     }
 
-    public void MoveActionIconStatus(bool status) => _moveActionIcon.SetActive(status);
-    public void AttackActionIconStatus(bool status) => _attackActionIcon.SetActive(status);
-    public void OverweightIconStatus(bool status) => _overweightIcon.SetActive(status);
-    private void SetName(string name) => _nameText.text = name;    
+    public void MoveActionIconStatus(bool status)
+    {
+        _moveActionIcon.SetActive(status);
+    }
+
+    public void AttackActionIconStatus(bool status)
+    {
+        _attackActionIcon.SetActive(status);
+    }
+
+    public void OverweightIconStatus(bool status)
+    {
+        _overweightIcon.SetActive(status);
+    }
+
+    private void SetName(string name)
+    {
+        _nameText.text = name;
+    }
     #endregion
 
 }

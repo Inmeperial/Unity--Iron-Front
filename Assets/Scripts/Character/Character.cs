@@ -283,6 +283,9 @@ public class Character : Initializable
             enemy.MechaOutsideAttackRange();
         }
 
+        if (_isRotated)
+            LoadRotationBeforeLookingAtEnemy();
+
         _enemiesInRange.Clear();
         
         _selectedGun = _leftGun;
@@ -352,6 +355,10 @@ public class Character : Initializable
         {
             enemy.MechaOutsideAttackRange();
         }
+
+        if (_isRotated)
+            LoadRotationBeforeLookingAtEnemy();
+
         _enemiesInRange.Clear();
         
         //ResetRotationAndRays();
