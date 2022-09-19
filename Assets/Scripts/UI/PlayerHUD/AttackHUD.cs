@@ -164,6 +164,9 @@ public class AttackHUD : Initializable
 
     private void HidePartsButtons()
     {
+        if (!_attackHUDContainer.activeSelf)
+            return;
+
         _bodyButton.HideButton();
         _leftGunButton.HideButton();
         _rightGunButton.HideButton();

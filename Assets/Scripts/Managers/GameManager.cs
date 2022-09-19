@@ -86,12 +86,13 @@ public class GameManager : MonoBehaviour
         _attackHUD.OnAttackButtonClicked += BeginMechaAttackPreparations;
 
         _characterSelector.OnTurnMechaSelected += SetCurrentTurnMecha;
-        _characterSelector.OnPlayerMechaDeselected += OnCurrentTurnMechaDeselected;
         _characterSelector.OnEnemyMechaSelected += EnemyMechaSelected;
-        _characterSelector.OnEnemyMechaDeselected += EnemyMechaDeselected;
 
         _portraitsController.OnPortraitStoppedMoving += OnPortraitStoppedMoving;
+
+        _inputsReader.OnDeselectKeyPressed += EnableCharacterSelection;
     }
+
     private void Start()
     {
         foreach (Character mecha in _mechas)
@@ -254,11 +255,19 @@ public class GameManager : MonoBehaviour
 
     private void SetCurrentTurnMecha(Character mecha)
     {
+        if (_currentTurnMecha)
+            _currentTurnMecha.DeselectThisUnit();
+
+        if (_selectedEnemy)
+            _selectedEnemy.DeselectThisUnit();
+
         _inputsReader.EnableKeysCheck();
 
         _gunsSelector.EnableGunSelection();
 
         _currentTurnMecha = mecha;
+
+        _currentTurnMecha.SelectThisUnit();
 
         _activeTeam = mecha.GetUnitTeam();
 
@@ -275,6 +284,12 @@ public class GameManager : MonoBehaviour
     }
     private void EnemyMechaSelected(Character mecha)
     {
+        if (_selectedEnemy)
+        {
+            _selectedEnemy.NotSelectedForAttack();
+            _selectedEnemy.DeselectThisUnit();
+        }
+
         _selectedEnemy = mecha;
 
         _selectedEnemy.SelectedAsEnemy();
@@ -315,6 +330,14 @@ public class GameManager : MonoBehaviour
         };
 
         _gameCamerasController.CloseUpCamera.MoveCameraToParent(_selectedEnemy.transform.position, OnCameraMovementFinished, _attackDelay);        
+    }
+
+    private void EnableCharacterSelection()
+    {
+        if (_activeTeam == EnumsClass.Team.Red)
+            return;
+
+        _characterSelector.EnableCharacterSelection();
     }
 
     private void HideNotInCombatMechasMesh()
@@ -468,7 +491,7 @@ public class GameManager : MonoBehaviour
     {
         if (_currentTurnMecha.GetUnitTeam() == EnumsClass.Team.Red)
         {
-            EnemyCharacter enemy = this._currentTurnMecha as EnemyCharacter;
+            EnemyCharacter enemy = _currentTurnMecha as EnemyCharacter;
 
             if (enemy)
                 enemy.ForceEnd();
@@ -644,9 +667,7 @@ public class GameManager : MonoBehaviour
         _attackHUD.OnAttackButtonClicked -= BeginMechaAttackPreparations;
 
         _characterSelector.OnTurnMechaSelected -= SetCurrentTurnMecha;
-        _characterSelector.OnPlayerMechaDeselected -= OnCurrentTurnMechaDeselected;
         _characterSelector.OnEnemyMechaSelected -= EnemyMechaSelected;
-        _characterSelector.OnEnemyMechaDeselected -= EnemyMechaDeselected;
 
         foreach (Character mecha in _mechas)
         {

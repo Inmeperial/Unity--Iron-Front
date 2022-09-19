@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class CharacterSelector : MonoBehaviour
 {
-    [SerializeField] private InputsReader _inputReader;
     public LayerMask charMask;
     public LayerMask gridBlockMask;
     
@@ -17,9 +16,7 @@ public class CharacterSelector : MonoBehaviour
     public static CharacterSelector Instance;
 
     public Action<Character> OnTurnMechaSelected;
-    public Action OnPlayerMechaDeselected;
     public Action<Character> OnEnemyMechaSelected;
-    public Action OnEnemyMechaDeselected;
     private void Awake()
     {
         if (Instance != null)
@@ -36,9 +33,6 @@ public class CharacterSelector : MonoBehaviour
     {
         EnableCharacterSelection();
         _highlight = GetComponent<TileHighlight>();
-
-        _inputReader.OnDeselectKeyPressed += DeselectCurrentEnemy;
-        _inputReader.OnDeselectKeyPressed += EnableCharacterSelection;
     }
 
     // Update is called once per frame
@@ -98,12 +92,6 @@ public class CharacterSelector : MonoBehaviour
         {
             //ButtonsUIManager.Instance.DeselectActions();
 
-            DeselectCurrentCharacter();
-
-            DeselectCurrentEnemy();
-
-            character.SelectThisUnit();
-
             _highlight.ChangeActiveCharacter(character);
 
             OnTurnMechaSelected?.Invoke(character);
@@ -131,8 +119,6 @@ public class CharacterSelector : MonoBehaviour
 
                 if (enemyInSight)
                 {
-                    DeselectCurrentEnemy();
-
                     OnEnemyMechaSelected?.Invoke(character);
                     //character.SelectingEnemy();
 
@@ -183,18 +169,9 @@ public class CharacterSelector : MonoBehaviour
         _selectingWithDelay = false;
     }
 
-    public void DeselectCurrentCharacter() => OnPlayerMechaDeselected?.Invoke();
-
-    public void DeselectCurrentEnemy() => OnEnemyMechaDeselected?.Invoke();
-
     private void OnDestroy()
     {
-        _inputReader.OnDeselectKeyPressed -= DeselectCurrentEnemy;
-        _inputReader.OnDeselectKeyPressed -= EnableCharacterSelection;
-
         OnTurnMechaSelected = null;
-        OnPlayerMechaDeselected = null;
         OnEnemyMechaSelected = null;
-        OnEnemyMechaDeselected = null;
     }
 }
