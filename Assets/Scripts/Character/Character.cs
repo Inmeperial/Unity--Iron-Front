@@ -817,18 +817,36 @@ public class Character : Initializable
         return tile;
     }
 
-    public bool HasEnemiesInRange() => _enemiesInRange.Count > 0;
+    public bool HasEnemiesInRange()
+    {
+        return _enemiesInRange.Count > 0;
+    }
 
-    public Gun GetSelectedGun() => _selectedGun;
-    public Gun GetLeftGun() => _leftGun;
-    public Gun GetRightGun() => _rightGun;
+    public Gun GetSelectedGun()
+    {
+        return _selectedGun;
+    }
+
+    public Gun GetLeftGun()
+    {
+        return _leftGun;
+    }
+
+    public Gun GetRightGun()
+    {
+        return _rightGun;
+    }
 
     public void ResetSelectedGun()
     {
         if (_selectedGun)
             _selectedGun.ResetGun();
     }
-    public Vector3 GetBodyPosition() => _body.transform.position;
+    public Vector3 GetBodyPosition()
+    {
+        return _body.transform.position;
+    }
+
     public Vector3 GetLArmPosition()
     {
         if (_leftGun)
@@ -843,50 +861,75 @@ public class Character : Initializable
 
         return Vector3.zero;
     }
-    public Vector3 GetLegsPosition() => _legs.transform.position;
+    public Vector3 GetLegsPosition()
+    {
+        return _legs.transform.position;
+    }
 
-    public bool IsMyTurn() => _myTurn;
+    public bool IsMyTurn()
+    {
+        return _myTurn;
+    }
 
-    public bool IsDead() => _isDead;
+    public bool IsDead()
+    {
+        return _isDead;
+    }
 
-    public bool IsUnitEnabled() => _unitEnabled;
+    public bool IsUnitEnabled()
+    {
+        return _unitEnabled;
+    }
 
-    /// <summary>
-    /// Return true if Character is selected for an attack.
-    /// </summary>
-    //public bool IsSelectedForAttack() => _selectedForAttack;
+    public bool IsSelectingEnemy()
+    {
+        return _selectingEnemy;
+    }
 
-    public bool IsSelectingEnemy() => _selectingEnemy;
+    public bool CanBeAttacked()
+    {
+        return _inAttackRange;
+    }
 
-    /// <summary>
-    /// Return true if Character can be attacked.
-    /// </summary>
-    public bool CanBeAttacked() => _inAttackRange;
+    public bool CanAttack()
+    {
+        return _canAttack;
+    }
 
-    /// <summary>
-    /// Return true if Character can attack.
-    /// </summary>
-    public bool CanAttack() => _canAttack;
+    public bool IsMoving()
+    {
+        return _moving;
+    }
 
-    /// <summary>
-    /// Return true if Character is moving.
-    /// </summary>
-    public bool IsMoving() => _moving;
+    public bool CanMove()
+    {
+        return _canMove;
+    }
 
-    public bool CanMove() => _canMove;
+    public bool CanBeSelected()
+    {
+        return !_equipableSelected && _canBeSelected;
+    }
 
-    public bool CanBeSelected() => !_equipableSelected && _canBeSelected;
+    public float GetCharacterInitiative()
+    {
+        return _legs.GetLegsInitiative();
+    }
 
-    /// <summary>
-    /// Return the Character initiative.
-    /// </summary>
-    public float GetCharacterInitiative() => _legs.GetLegsInitiative();
+    public Sprite GetCharacterSprite()
+    {
+        return _myIcon;
+    }
 
-    public Sprite GetCharacterSprite() => _myIcon;
+    public string GetCharacterName()
+    {
+        return _myName;
+    }
 
-    public string GetCharacterName() => _myName;
-
-    public List<Equipable> GetEquipables() => _equipables;
+    public List<Equipable> GetEquipables()
+    {
+        return _equipables;
+    }
 
     public void EquipableSelectionState(bool state, Equipable equipable)
     {
@@ -894,23 +937,29 @@ public class Character : Initializable
         _equipable = equipable;
     }
 
-    public Equipable GetSelectedEquipable() => _equipable;
+    public Equipable GetSelectedEquipable()
+    {
+        return _equipable;
+    }
 
-    public GameObject GetBurningSpawner() => _particleMechaHandler.GetBurningSpawnerFromParticleMechaHandler();
+    public GameObject GetBurningSpawner()
+    {
+        return _particleMechaHandler.GetBurningSpawnerFromParticleMechaHandler();
+    }
 
-    public bool IsOverweight() => _overweight;
+    public bool IsOverweight()
+    {
+        return _overweight;
+    }
 
-    public bool IsOnElevator() => _isOnElevator;
-
-    //public MaterialMechaHandler GetMaterialHandler() => _materialMechaHandler;
+    public bool IsOnElevator()
+    {
+        return _isOnElevator;
+    }
 
     #endregion
 
     #region Setters
-
-    /// <summary>
-    /// Set if it's Character turn.
-    /// </summary>
     public virtual void SetTurn(bool state)
     {
         _myTurn = state;
@@ -923,16 +972,16 @@ public class Character : Initializable
         if (_body.IsSmokeScreenActive())
             _body.DeactivateSmokeScreen();
     }
+    public void SelectedForAttack()
+    {
+        _selectedForAttack = true;
+    }
 
-    /// <summary>
-    /// Set if Character is selected for an Attack.
-    /// </summary>
-    public void SelectedForAttack() => _selectedForAttack = true;
-    public void NotSelectedForAttack() => _selectedForAttack = false;
+    public void NotSelectedForAttack()
+    {
+        _selectedForAttack = false;
+    }
 
-    /// <summary>
-    /// Set if Character is selecting an enemy.
-    /// </summary>
     public void SelectingEnemy()
     {
         _selectingEnemy = true;
@@ -944,20 +993,26 @@ public class Character : Initializable
         OnSelectingEnemy?.Invoke();            
     }
 
-    public void CancelEnemySelection() => _selectingEnemy = false;
+    public void CancelEnemySelection()
+    {
+        _selectingEnemy = false;
+    }
 
-    public void SetTargetTile(Tile target) => _targetTile = target;
+    public void SetTargetTile(Tile target)
+    {
+        _targetTile = target;
+    }
 
-    /// <summary>
-    /// Set if Character can move.
-    /// </summary>
     public void SetCharacterMoveState(bool state)
     {
         _canMove = state;
         OnMoveActionStateChange?.Invoke(this, _canMove);
     }
 
-    public void SetSelection(bool state) => _selected = state;
+    public void SetSelection(bool state)
+    {
+        _selected = state;
+    }
 
     #endregion
 

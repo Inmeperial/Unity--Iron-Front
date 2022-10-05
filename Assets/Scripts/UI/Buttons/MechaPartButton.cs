@@ -19,9 +19,7 @@ public class MechaPartButton : CustomButton
     private Character _attackingMecha;
     private Character _mechaSelectedToAttack;
     private MechaPart _part;
-    private bool _partIsInSight;
     public int BulletsCount { get => _bulletsCount; set => _bulletsCount = value; }
-    public bool PartIsInSight => _partIsInSight;
 
     public Action OnButtonClicked;
     public Action<int> OnAddBullets;
@@ -98,7 +96,6 @@ public class MechaPartButton : CustomButton
         _attackingMecha = attacker;
         _mechaSelectedToAttack = characterToAttack;
         _part = part;
-        _partIsInSight = true;
     }
 
     public void ResetButton()
@@ -112,7 +109,6 @@ public class MechaPartButton : CustomButton
         ClearSelectedPartShader();
 
         _part = null;
-        _partIsInSight = false;
     }
     
     public void ShowButton()

@@ -98,30 +98,11 @@ public class AttackAction : GOAction
             }
 
             if (parts.ContainsKey(partToAttack))
+            {
                 parts[partToAttack].ReceiveDamage(gun.GetAvailableBullets());
+                _myUnit.DeactivateAttack();
+            }
 
-            //switch (partToAttack)
-            //{
-            //    case "Body":
-            //        ButtonsUIManager.Instance.AddBulletsToBody(gun.GetAvailableBullets());
-            //        break;
-                    
-            //    case "LGun":
-            //        ButtonsUIManager.Instance.AddBulletsToLArm(gun.GetAvailableBullets());
-            //        break;
-                
-            //    case "RGun":
-            //        ButtonsUIManager.Instance.AddBulletsToRArm(gun.GetAvailableBullets());
-            //        break;
-                
-            //    case "Legs":
-            //        ButtonsUIManager.Instance.AddBulletsToLegs(gun.GetAvailableBullets());
-            //        break;
-                
-            //    case "DEFAULT":
-            //        _myUnit.transform.rotation = initialRotation;
-            //        break;
-            //}
             if (partToAttack != "DEFAULT")
                 _myUnit.OnEndActionWithDelay(0);
             else _myUnit.OnEndAction();

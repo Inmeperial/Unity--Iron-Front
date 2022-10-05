@@ -35,6 +35,11 @@ public class AttackHUD : Initializable
 
     public Action OnAttackButtonClicked;
 
+    private bool _isBodyInSight;
+    private bool _isLeftGunInSight;
+    private bool _isRightGunInSight;
+    private bool _isLegsInSight;
+
     // Start is called before the first frame update
     public override void Initialize()
     {
@@ -53,25 +58,21 @@ public class AttackHUD : Initializable
         GameManager.Instance.OnBeginAttackPreparations += HideAttackHUD;
 
         _bodyButton.OnButtonClicked += CheckAmountOfPartsSelected;
-        _bodyButton.OnButtonClicked += UpdateExecuteAttackButtonState;
         _bodyButton.OnButtonClicked += DeterminateButtonsActivation;
         _bodyButton.OnAddBullets += DestroyBulletsImage;
         _bodyButton.OnReduceBullets += CreateBulletsImage;
 
         _leftGunButton.OnButtonClicked += CheckAmountOfPartsSelected;
-        _leftGunButton.OnButtonClicked += UpdateExecuteAttackButtonState;
         _leftGunButton.OnButtonClicked += DeterminateButtonsActivation;
         _leftGunButton.OnAddBullets += DestroyBulletsImage;
         _leftGunButton.OnReduceBullets += CreateBulletsImage;
 
         _rightGunButton.OnButtonClicked += CheckAmountOfPartsSelected;
-        _rightGunButton.OnButtonClicked += UpdateExecuteAttackButtonState;
         _rightGunButton.OnButtonClicked += DeterminateButtonsActivation;
         _rightGunButton.OnAddBullets += DestroyBulletsImage;
         _rightGunButton.OnReduceBullets += CreateBulletsImage;
 
         _legsButton.OnButtonClicked += CheckAmountOfPartsSelected;
-        _legsButton.OnButtonClicked += UpdateExecuteAttackButtonState;
         _legsButton.OnButtonClicked += DeterminateButtonsActivation;
         _legsButton.OnAddBullets += DestroyBulletsImage;
         _legsButton.OnReduceBullets += CreateBulletsImage;
@@ -88,16 +89,20 @@ public class AttackHUD : Initializable
 
         _selectedEnemy = GameManager.Instance.SelectedEnemy;
 
-        if (_selectedCharacter.IsEnemyBodyInSight(_selectedEnemy))
+        _isBodyInSight = _selectedCharacter.IsEnemyBodyInSight(_selectedEnemy);
+        if (_isBodyInSight)
             ShowBodyButton();
 
-        if (_selectedCharacter.IsEnemyLeftGunInSight(_selectedEnemy))
+        _isLeftGunInSight = _selectedCharacter.IsEnemyLeftGunInSight(_selectedEnemy);
+        if (_isLeftGunInSight)
             ShowLeftGunButton();
 
-        if (_selectedCharacter.IsEnemyRightGunInSight(_selectedEnemy))
+        _isRightGunInSight = _selectedCharacter.IsEnemyRightGunInSight(_selectedEnemy);
+        if (_isRightGunInSight)
             ShowRightGunButton();
 
-        if (_selectedCharacter.IsEnemyLegsInSight(_selectedEnemy))
+        _isLegsInSight = _selectedCharacter.IsEnemyLegsInSight(_selectedEnemy);
+        if (_isLegsInSight)
             ShowLegsButton();
     }
 
@@ -210,19 +215,6 @@ public class AttackHUD : Initializable
         _legsButton.UpdateDamagePreviewSlider();
     }
 
-    private void UpdateExecuteAttackButtonState()
-    {
-        //bool status;
-        //if (_bodyButton.BulletsCount > 0 || _bodyButton.BulletsCount > 0 || _bodyButton.BulletsCount > 0 | _bodyButton.BulletsCount > 0)
-        //    status = true;
-        //else
-        //    status = false;
-
-        //Debug.Log("ExecuteAttack status: " + status);
-        //_attackButton.interactable = status;
-        //_attackButton.gameObject.SetActive(status);
-    }
-
     private void DeterminateButtonsActivation()
     {
         Gun selectedGun = _selectedCharacter.GetSelectedGun();
@@ -243,16 +235,16 @@ public class AttackHUD : Initializable
         }
         else if (_partsSelectedForAttack < selectedGun.GetAvailableSelections())
         {
-            if (_bodyButton.PartIsInSight && _bodyButton.BulletsCount <= 0)
+            if (_isBodyInSight && _bodyButton.BulletsCount <= 0)
                 _bodyButton.ShowButton();
 
-            if (_leftGunButton.PartIsInSight && _leftGunButton.BulletsCount <= 0)
+            if (_isLeftGunInSight && _leftGunButton.BulletsCount <= 0)
                 _leftGunButton.ShowButton();
 
-            if (_rightGunButton.PartIsInSight && _rightGunButton.BulletsCount <= 0)
+            if (_isRightGunInSight && _rightGunButton.BulletsCount <= 0)
                 _rightGunButton.ShowButton();
 
-            if (_legsButton.PartIsInSight && _legsButton.BulletsCount <= 0)
+            if (_isLegsInSight && _legsButton.BulletsCount <= 0)
                 _legsButton.ShowButton();
         }
     }
@@ -333,25 +325,21 @@ public class AttackHUD : Initializable
 
         GameManager.Instance.OnMechaAttackPreparationsFinished -= ExecuteAttack;
 
-        _bodyButton.OnButtonClicked -= UpdateExecuteAttackButtonState;
         _bodyButton.OnButtonClicked = CheckAmountOfPartsSelected;
         _bodyButton.OnButtonClicked -= DeterminateButtonsActivation;
         _bodyButton.OnAddBullets -= DestroyBulletsImage;
         _bodyButton.OnReduceBullets -= CreateBulletsImage;
 
-        _leftGunButton.OnButtonClicked -= UpdateExecuteAttackButtonState;
         _leftGunButton.OnButtonClicked -= CheckAmountOfPartsSelected;
         _leftGunButton.OnButtonClicked -= DeterminateButtonsActivation;
         _leftGunButton.OnAddBullets -= DestroyBulletsImage;
         _leftGunButton.OnReduceBullets -= CreateBulletsImage;
 
-        _rightGunButton.OnButtonClicked -= UpdateExecuteAttackButtonState;
         _rightGunButton.OnButtonClicked -= CheckAmountOfPartsSelected;
         _rightGunButton.OnButtonClicked -= DeterminateButtonsActivation;
         _rightGunButton.OnAddBullets -= DestroyBulletsImage;
         _rightGunButton.OnReduceBullets -= CreateBulletsImage;
 
-        _legsButton.OnButtonClicked -= UpdateExecuteAttackButtonState;
         _legsButton.OnButtonClicked -= CheckAmountOfPartsSelected;
         _legsButton.OnButtonClicked -= DeterminateButtonsActivation;
         _legsButton.OnAddBullets -= DestroyBulletsImage;
