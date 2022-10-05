@@ -507,7 +507,7 @@ public class GameManager : MonoBehaviour
 
         _currentTurnMecha.EndTurn();
 
-        StartCoroutine(MoveCurrentMechaToLastPosition());
+        yield return StartCoroutine(MoveCurrentMechaToLastPosition());
 
         TileHighlight.Instance.EndPreview();
 
@@ -515,9 +515,11 @@ public class GameManager : MonoBehaviour
 
         OnEndTurn?.Invoke();
 
-        StartCoroutine(EndTurnActionsExecutor());
-
-        yield return new WaitUntil(() => _endTurnActionsQueue.Count <= 0);        
+        if (_endTurnActionsQueue.Count > 0)
+        {
+            StartCoroutine(EndTurnActionsExecutor());
+            yield return new WaitUntil(() => _endTurnActionsQueue.Count <= 0 && _currentActionFinished);
+        }
 
         Character newTurnMecha = _charactersInCurrentTurnOrder[0];
         
@@ -654,7 +656,10 @@ public class GameManager : MonoBehaviour
         notifier.OnEndAction += ReceiveEndActionNotification;
     }
 
-    private void ReceiveEndActionNotification() => _currentActionFinished = true;
+    private void ReceiveEndActionNotification()
+    {
+        _currentActionFinished = true;
+    }
 
     private void SubscribeToInputs()
     {
