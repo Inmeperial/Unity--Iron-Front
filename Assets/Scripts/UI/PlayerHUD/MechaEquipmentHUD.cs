@@ -155,7 +155,7 @@ public class MechaEquipmentHUD : Initializable
         {
             _leftGunContainer.SetActive(true);
             _leftGunNameText.text = left.GetGunName();
-            _leftGunHitsText.text = left.GetHitChance().ToString();
+            _leftGunHitsText.text = left.GetMaxBullets().ToString();
             _leftGunDamageText.text = left.GetBulletDamage().ToString();
             _leftGunHitChanceText.text = left.GetHitChance().ToString();
 
@@ -177,7 +177,7 @@ public class MechaEquipmentHUD : Initializable
         {
             _rightGunContainer.SetActive(true);
             _rightGunNameText.text = right.GetGunName();
-            _rightGunHitsText.text = right.GetHitChance().ToString();
+            _rightGunHitsText.text = right.GetMaxBullets().ToString();
             _rightGunDamageText.text = right.GetBulletDamage().ToString();
             _rightGunHitChanceText.text = right.GetHitChance().ToString();
 

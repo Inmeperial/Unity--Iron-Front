@@ -418,7 +418,8 @@ public class GameManager : MonoBehaviour
                 //yield return waitUntilPortraitStoppedMoving;
             }
 
-            _charactersInCurrentTurnOrder.RemoveAt(newPos);
+
+            _charactersInCurrentTurnOrder.RemoveAt(currentPos);
 
             _charactersInCurrentTurnOrder.Insert(newPos, mecha);
         }
@@ -467,7 +468,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnPortraitStoppedMoving() => _portraitStoppedMoving = true;
+    private void OnPortraitStoppedMoving()
+    {
+        _portraitStoppedMoving = true;
+    }
 
     private int GetMechaTurnPosition(Character mecha)
     {
@@ -480,10 +484,20 @@ public class GameManager : MonoBehaviour
         }
         return -1;
     }
-    public bool IsActiveMecha(Character mecha) => _currentTurnMecha == mecha;
+    public bool IsActiveMecha(Character mecha)
+    {
+        return _currentTurnMecha == mecha;
+    }
 
-    public void EnableEndTurnButton() => _endTurnButton.gameObject.SetActive(true);
-    public void DisableEndTurnButton() => _endTurnButton.gameObject.SetActive(false);
+    public void EnableEndTurnButton()
+    {
+        _endTurnButton.gameObject.SetActive(true);
+    }
+
+    public void DisableEndTurnButton()
+    {
+        _endTurnButton.gameObject.SetActive(false);
+    }
 
     public void BeginEndTurnProcess()
     {
