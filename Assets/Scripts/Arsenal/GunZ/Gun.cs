@@ -232,7 +232,7 @@ public abstract class Gun : MechaPart
 
         partToAttack.ReceiveDamage(damages);
         
-        AttackAnimation();
+        ExecuteAttackAnimation();
     }
 
     /// <summary>
@@ -448,8 +448,9 @@ public abstract class Gun : MechaPart
     }
     public MasterShaderScript GetMasterShader() => _masterShader;
 
-    public virtual void AttackAnimation()
+    public virtual void ExecuteAttackAnimation()
     {
+        Debug.Log(_myChar.GetCharacterName() + " uses attack animation");
         switch (_location)
         {
             case "Left":

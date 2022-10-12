@@ -233,11 +233,11 @@ public class GameManager : MonoBehaviour
 
         OnBeginAttackPreparations?.Invoke();
 
-        foreach (Character mecha in _mechas)
-        {
-            mecha.ShowGunsMesh();
-            mecha.ShowMechaMesh();
-        }
+        //foreach (Character mecha in _mechas)
+        //{
+        //    mecha.ShowGunsMesh();
+        //    mecha.ShowMechaMesh();
+        //}
 
         Vector3 targetEnemyPosition = _selectedEnemy.transform.position;
         _gameCamerasController.CloseUpCamera.MoveCameraToParent(targetEnemyPosition, MechaAttackPreparationsFinished, _attackDelay);

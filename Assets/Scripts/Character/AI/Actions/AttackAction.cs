@@ -116,7 +116,7 @@ public class AttackAction : GOAction
                 var damage = gun.GetCalculatedDamage(gun.GetMaxBullets());
             
                 elevator.ReceiveDamage(damage);
-                _myUnit.GetSelectedGun().AttackAnimation();
+                _myUnit.GetSelectedGun().ExecuteAttackAnimation();
                 _myUnit.DeactivateAttack();
                 _myUnit.OnEndActionWithDelay(0);
                 Debug.Log("attack");

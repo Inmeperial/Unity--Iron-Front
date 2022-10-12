@@ -904,7 +904,7 @@ public class Character : Initializable
 
     public bool CanBeSelected()
     {
-        return !_equipableSelected && _canBeSelected;
+        return _canBeSelected;
     }
 
     public float GetCharacterInitiative()
