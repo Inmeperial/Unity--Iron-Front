@@ -60,14 +60,10 @@ public class Grenade : Item
     public override void Use(Action callback = null)
     {
         if (Input.GetMouseButtonDown(0))
-        {
             UseItem(callback);
-        }
 
         if (Input.GetMouseButtonDown(1))
-        {
             Deselect();
-        }
     }
 
     private void UseItem(Action callback = null)

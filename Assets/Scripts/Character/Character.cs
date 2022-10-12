@@ -167,16 +167,12 @@ public class Character : Initializable
         if (_unitTeam == EnumsClass.Team.Red)
             return;
 
-        if (!_selected)
-            return;
-
         if (!_isOnElevator)
         {
             if (_selected && !_moving && _canMove && !_selectingEnemy && Input.GetMouseButtonDown(0))
                 GetTargetToMove();
         }
         
-
         if (!_selected && _equipables.Count > 0 && _equipableSelected)
             _equipable.Use(OnUseEquipable);
     }
