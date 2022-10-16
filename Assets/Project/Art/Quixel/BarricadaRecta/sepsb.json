@@ -1,0 +1,1730 @@
+{
+  "pack": {
+    "_id": "concrete-barriers",
+    "name": "Concrete Barriers"
+  },
+  "name": "structure_cement_medium_grey_Concrete_Cement_Barrier_sepsb",
+  "tags": [
+    "concrete",
+    "cement",
+    "barrier",
+    "dirty",
+    "grey",
+    "archviz"
+  ],
+  "brushes": [
+    {
+      "contentLength": 6425296,
+      "uri": "Aset_structure_cement_M_sepsb_Brush_001.tif"
+    },
+    {
+      "contentLength": 9229572,
+      "uri": "Aset_structure_cement_M_sepsb_Brush_002.tif"
+    },
+    {
+      "contentLength": 7697304,
+      "uri": "Aset_structure_cement_M_sepsb_Brush_003.tif"
+    },
+    {
+      "contentLength": 9375760,
+      "uri": "Aset_structure_cement_M_sepsb_Brush_004.tif"
+    }
+  ],
+  "previews": {
+    "images": [
+      {
+        "contentLength": 350050,
+        "resolution": "764x400",
+        "uri": "sepsb_Thumb_HighPoly.png",
+        "tags": [
+          "thumb",
+          "highpoly",
+          "highpoly"
+        ]
+      },
+      {
+        "contentLength": 1386442,
+        "resolution": "1528x800",
+        "uri": "sepsb_Thumb_HighPoly_Retina.png",
+        "tags": [
+          "preview",
+          "retina"
+        ]
+      },
+      {
+        "contentLength": 750,
+        "resolution": "46x24",
+        "uri": "h+QK9XnDPOfzEfHabnvhofkR8z6AAABUUlEQVQ4y6WTiXKDMAxEwTEmJhxJZcnw/z/alSlgqDPNTHeA4XjSCkuuqrMsB5HgnXU+09RxC9X1ha46XiRQCLjgqidug9RIIqE2v/HAoEgoRk7Cg+IaWMQpAcSR44aH5EhlnAk/EDhC8xxZgwXhVMBtWDQ7CmWQUWkYgNe3hewkrL44tJatfkTjoZC9TcJCtoectU71eFzx+y3pXt1zVf9Q03zOTkMXn0PXN5856hIxFu35HF793zZetA8I0ZYUQ+B7lOvWLutIEOaEou+6V/43jbgh2h0HyCm9Dp+IuqjNeOAS5x2fatpmVQ/RWzHCe0caCnOG68xpeh2tNYbFLPIG763D8P3AaVRQm1nCgTNlOHQbR6e7Yds/HMxCWXaOJ1xHBSaedWtoXXLKTjxf8dVkcuv2EWMy3OcLeTEZred4yl5hPPvb2zbDpH30X2Px4zcmxSNGLNzq+QAAAABJRU5ErkJggg==",
+        "tags": [
+          "thumb",
+          "highpoly",
+          "tiny"
+        ]
+      },
+      {
+        "contentLength": 46888,
+        "resolution": "764x400",
+        "uri": "sepsb_Thumb_HighPoly_thumb.jpg",
+        "tags": [
+          "thumb",
+          "highpoly",
+          "highpoly",
+          "jpeg"
+        ]
+      },
+      {
+        "contentLength": 184346,
+        "resolution": "1528x800",
+        "uri": "sepsb_Thumb_HighPoly_Retina_preview.jpg",
+        "tags": [
+          "preview",
+          "retina",
+          "jpeg"
+        ]
+      },
+      {
+        "contentLength": 184339,
+        "resolution": "1528x800",
+        "uri": "sepsb_Thumb_HighPoly_Retina_thumb_retina.jpg",
+        "tags": [
+          "thumb",
+          "retina",
+          "jpeg"
+        ]
+      },
+      {
+        "contentLength": 138667,
+        "resolution": "1375x720",
+        "uri": "sepsb_Thumb_HighPoly_Retina_sp.jpg",
+        "tags": [
+          "jpeg",
+          "sidepanel"
+        ]
+      }
+    ],
+    "relativeSize": "2x1"
+  },
+  "environment": {
+    "biome": "mediterranean-forest",
+    "region": "Eastern Europe"
+  },
+  "json": {
+    "contentLength": 40645,
+    "uri": "sepsb.json"
+  },
+  "points": 4,
+  "meta": [
+    {
+      "key": "length",
+      "name": "Length",
+      "value": "3.04m"
+    },
+    {
+      "key": "width",
+      "name": "Width",
+      "value": "0.46m"
+    },
+    {
+      "key": "height",
+      "name": "Height",
+      "value": "0.79m"
+    },
+    {
+      "key": "texelDensity",
+      "name": "Texel Density",
+      "value": "3 px/m"
+    },
+    {
+      "key": "assembly",
+      "name": "Assembly",
+      "value": "False"
+    },
+    {
+      "key": "color",
+      "name": "Color",
+      "value": "grey"
+    },
+    {
+      "key": "iteration",
+      "name": "Iteration Number",
+      "value": "%%iteration%%"
+    },
+    {
+      "key": "set",
+      "name": "Set Toggle",
+      "value": "False"
+    },
+    {
+      "key": "setname",
+      "name": "Set Name",
+      "value": "%%setname%%"
+    },
+    {
+      "key": "points",
+      "name": "Points",
+      "value": 6
+    },
+    {
+      "key": "isScaleFixed",
+      "name": "Is scale fixed",
+      "value": "true"
+    }
+  ],
+  "categories": [
+    "3d",
+    "structure",
+    "cement"
+  ],
+  "components": [
+    {
+      "minIntensity": 93,
+      "name": "Normal",
+      "colorSpace": "Linear",
+      "maxIntensity": 188,
+      "type": "normal",
+      "uris": [
+        {
+          "physicalSize": "1x1",
+          "resolutions": [
+            {
+              "resolution": "8192x8192",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 154762141,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Normal_LOD0.exr",
+                  "lodType": "lod",
+                  "tris": 18694
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 47947603,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Normal_LOD0.jpg",
+                  "lodType": "lod",
+                  "tris": 18694
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 142130802,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Normal_LOD1.exr",
+                  "lodType": "lod",
+                  "tris": 14954
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 35431540,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Normal_LOD1.jpg",
+                  "lodType": "lod",
+                  "tris": 14954
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 142307129,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Normal_LOD2.exr",
+                  "lodType": "lod",
+                  "tris": 11962
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 35504398,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Normal_LOD2.jpg",
+                  "lodType": "lod",
+                  "tris": 11962
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 142440940,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Normal_LOD3.exr",
+                  "lodType": "lod",
+                  "tris": 9568
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 35574165,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Normal_LOD3.jpg",
+                  "lodType": "lod",
+                  "tris": 9568
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 144309822,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Normal_LOD4.exr",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 35778843,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Normal_LOD4.jpg",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 146207063,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Normal_LOD5.exr",
+                  "lodType": "lod",
+                  "tris": 1100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 35720154,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Normal_LOD5.jpg",
+                  "lodType": "lod",
+                  "tris": 1100
+                }
+              ]
+            },
+            {
+              "resolution": "4096x4096",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 43107922,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Normal_LOD0.exr",
+                  "lodType": "lod",
+                  "tris": 18694
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 14539110,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Normal_LOD0.jpg",
+                  "lodType": "lod",
+                  "tris": 18694
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 40664528,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Normal_LOD1.exr",
+                  "lodType": "lod",
+                  "tris": 14954
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 13044312,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Normal_LOD1.jpg",
+                  "lodType": "lod",
+                  "tris": 14954
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 40714703,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Normal_LOD2.exr",
+                  "lodType": "lod",
+                  "tris": 11962
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 13053228,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Normal_LOD2.jpg",
+                  "lodType": "lod",
+                  "tris": 11962
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 40747030,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Normal_LOD3.exr",
+                  "lodType": "lod",
+                  "tris": 9568
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 13055940,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Normal_LOD3.jpg",
+                  "lodType": "lod",
+                  "tris": 9568
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 41297886,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Normal_LOD4.exr",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 13026658,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Normal_LOD4.jpg",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 41823884,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Normal_LOD5.exr",
+                  "lodType": "lod",
+                  "tris": 1100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 12885237,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Normal_LOD5.jpg",
+                  "lodType": "lod",
+                  "tris": 1100
+                }
+              ]
+            },
+            {
+              "resolution": "2048x2048",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 11009928,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Normal_LOD0.exr",
+                  "lodType": "lod",
+                  "tris": 18694
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 3536241,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Normal_LOD0.jpg",
+                  "lodType": "lod",
+                  "tris": 18694
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 10526571,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Normal_LOD1.exr",
+                  "lodType": "lod",
+                  "tris": 14954
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 3408112,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Normal_LOD1.jpg",
+                  "lodType": "lod",
+                  "tris": 14954
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 10544746,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Normal_LOD2.exr",
+                  "lodType": "lod",
+                  "tris": 11962
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 3410524,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Normal_LOD2.jpg",
+                  "lodType": "lod",
+                  "tris": 11962
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 10557595,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Normal_LOD3.exr",
+                  "lodType": "lod",
+                  "tris": 9568
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 3412611,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Normal_LOD3.jpg",
+                  "lodType": "lod",
+                  "tris": 9568
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 10734830,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Normal_LOD4.exr",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 3414788,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Normal_LOD4.jpg",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 10894888,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Normal_LOD5.exr",
+                  "lodType": "lod",
+                  "tris": 1100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 3389237,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Normal_LOD5.jpg",
+                  "lodType": "lod",
+                  "tris": 1100
+                }
+              ]
+            },
+            {
+              "resolution": "1024x1024",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 2756198,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Normal_LOD0.exr",
+                  "lodType": "lod",
+                  "tris": 18694
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 889741,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Normal_LOD0.jpg",
+                  "lodType": "lod",
+                  "tris": 18694
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 2658264,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Normal_LOD1.exr",
+                  "lodType": "lod",
+                  "tris": 14954
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 877614,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Normal_LOD1.jpg",
+                  "lodType": "lod",
+                  "tris": 14954
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 2659845,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Normal_LOD2.exr",
+                  "lodType": "lod",
+                  "tris": 11962
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 879000,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Normal_LOD2.jpg",
+                  "lodType": "lod",
+                  "tris": 11962
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 2664610,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Normal_LOD3.exr",
+                  "lodType": "lod",
+                  "tris": 9568
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 879093,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Normal_LOD3.jpg",
+                  "lodType": "lod",
+                  "tris": 9568
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 2727888,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Normal_LOD4.exr",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 887045,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Normal_LOD4.jpg",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 2806893,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Normal_LOD5.exr",
+                  "lodType": "lod",
+                  "tris": 1100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 884238,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Normal_LOD5.jpg",
+                  "lodType": "lod",
+                  "tris": 1100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "averageColor": "#8181FC"
+    },
+    {
+      "minIntensity": 85,
+      "name": "Bump",
+      "colorSpace": "Linear",
+      "maxIntensity": 181,
+      "type": "bump",
+      "uris": [
+        {
+          "physicalSize": "1x1",
+          "resolutions": [
+            {
+              "resolution": "8192x8192",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 57620912,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Bump.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 10701904,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Bump.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "4096x4096",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 50373410,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Bump.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 3241309,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Bump.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "2048x2048",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 14005799,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Bump.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 1022756,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Bump.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "1024x1024",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 3842477,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Bump.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 351321,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Bump.jpg"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "averageColor": "#808080"
+    },
+    {
+      "minIntensity": 17,
+      "name": "Gloss",
+      "colorSpace": "Linear",
+      "maxIntensity": 39,
+      "type": "gloss",
+      "uris": [
+        {
+          "physicalSize": "1x1",
+          "resolutions": [
+            {
+              "resolution": "8192x8192",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 95290106,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Gloss.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 19428941,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Gloss.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "4096x4096",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 55564350,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Gloss.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 4543844,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Gloss.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "2048x2048",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 14878721,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Gloss.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 1062046,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Gloss.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "1024x1024",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 3965547,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Gloss.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 271767,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Gloss.jpg"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "averageColor": "#202020"
+    },
+    {
+      "minIntensity": 170,
+      "name": "Displacement",
+      "colorSpace": "Linear",
+      "maxIntensity": 217,
+      "type": "displacement",
+      "uris": [
+        {
+          "physicalSize": "1x1",
+          "resolutions": [
+            {
+              "resolution": "8192x8192",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 46555396,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Displacement.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 7199808,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Displacement.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "4096x4096",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 17036383,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Displacement.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 1883956,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Displacement.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "2048x2048",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 5453273,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Displacement.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 500962,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Displacement.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "1024x1024",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 1795953,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Displacement.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 168912,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Displacement.jpg"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "averageColor": "#C6C6C6"
+    },
+    {
+      "minIntensity": 215,
+      "name": "Roughness",
+      "colorSpace": "Linear",
+      "maxIntensity": 240,
+      "type": "roughness",
+      "uris": [
+        {
+          "physicalSize": "1x1",
+          "resolutions": [
+            {
+              "resolution": "8192x8192",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 67314383,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Roughness.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 18407280,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Roughness.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "4096x4096",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 49122182,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Roughness.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 4304530,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Roughness.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "2048x2048",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 13461293,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Roughness.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 1006142,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Roughness.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "1024x1024",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 3622015,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Roughness.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 258103,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Roughness.jpg"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "averageColor": "#E0E0E0"
+    },
+    {
+      "minIntensity": 177,
+      "name": "Cavity",
+      "colorSpace": "sRGB",
+      "maxIntensity": 248,
+      "type": "cavity",
+      "uris": [
+        {
+          "physicalSize": "1x1",
+          "resolutions": [
+            {
+              "resolution": "8192x8192",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 86373028,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Cavity.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 31365214,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Cavity.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "4096x4096",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 54660410,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Cavity.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 8395065,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Cavity.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "2048x2048",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 14704123,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Cavity.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 2020805,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Cavity.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "1024x1024",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 3904964,
+                  "bitDepth": 32,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Cavity.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 498375,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Cavity.jpg"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "averageColor": "#E5E5E5"
+    },
+    {
+      "minIntensity": 0,
+      "name": "Specular",
+      "colorSpace": "sRGB",
+      "maxIntensity": 5,
+      "type": "specular",
+      "uris": [
+        {
+          "physicalSize": "1x1",
+          "resolutions": [
+            {
+              "resolution": "8192x8192",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 190152718,
+                  "bitDepth": 16,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Specular.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 16380794,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Specular.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "4096x4096",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 50097646,
+                  "bitDepth": 16,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Specular.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 4552255,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Specular.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "2048x2048",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 12360757,
+                  "bitDepth": 16,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Specular.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 1058143,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Specular.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "1024x1024",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 3001489,
+                  "bitDepth": 16,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Specular.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 260103,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Specular.jpg"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "averageColor": "#030303"
+    },
+    {
+      "minIntensity": 108,
+      "name": "Normalbump",
+      "colorSpace": "sRGB",
+      "maxIntensity": 174,
+      "type": "normalbump",
+      "uris": [
+        {
+          "physicalSize": "1x1",
+          "resolutions": [
+            {
+              "resolution": "8192x8192",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 147820095,
+                  "bitDepth": 16,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_NormalBump.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 46941121,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_NormalBump.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "4096x4096",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 40172782,
+                  "bitDepth": 16,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_NormalBump.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 14204221,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_NormalBump.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "2048x2048",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 10063448,
+                  "bitDepth": 16,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_NormalBump.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 3309806,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_NormalBump.jpg"
+                }
+              ]
+            },
+            {
+              "resolution": "1024x1024",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 2450585,
+                  "bitDepth": 16,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_NormalBump.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 736680,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_NormalBump.jpg"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "averageColor": "#8181FE"
+    },
+    {
+      "minIntensity": 7,
+      "name": "Albedo",
+      "colorSpace": "sRGB",
+      "maxIntensity": 80,
+      "type": "albedo",
+      "uris": [
+        {
+          "physicalSize": "1x1",
+          "resolutions": [
+            {
+              "resolution": "8192x8192",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 231821012,
+                  "bitDepth": 16,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Albedo.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 46315656,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Albedo.jpg"
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 213652484,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Albedo_LOD4.exr",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 33992882,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Albedo_LOD4.jpg",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 212119978,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Albedo_LOD5.exr",
+                  "lodType": "lod",
+                  "tris": 1100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 33981491,
+                  "uri": "Aset_structure_cement_M_sepsb_8K_Albedo_LOD5.jpg",
+                  "lodType": "lod",
+                  "tris": 1100
+                }
+              ]
+            },
+            {
+              "resolution": "4096x4096",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 59573126,
+                  "bitDepth": 16,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Albedo.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 11339108,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Albedo.jpg"
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 57840209,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Albedo_LOD4.exr",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 10478958,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Albedo_LOD4.jpg",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 57407667,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Albedo_LOD5.exr",
+                  "lodType": "lod",
+                  "tris": 1100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 10369608,
+                  "uri": "Aset_structure_cement_M_sepsb_4K_Albedo_LOD5.jpg",
+                  "lodType": "lod",
+                  "tris": 1100
+                }
+              ]
+            },
+            {
+              "resolution": "2048x2048",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 14809741,
+                  "bitDepth": 16,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Albedo.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 2675504,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Albedo.jpg"
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 14660349,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Albedo_LOD4.exr",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 2612263,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Albedo_LOD4.jpg",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 14547858,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Albedo_LOD5.exr",
+                  "lodType": "lod",
+                  "tris": 1100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 2583237,
+                  "uri": "Aset_structure_cement_M_sepsb_2K_Albedo_LOD5.jpg",
+                  "lodType": "lod",
+                  "tris": 1100
+                }
+              ]
+            },
+            {
+              "resolution": "1024x1024",
+              "formats": [
+                {
+                  "mimeType": "image/x-exr",
+                  "contentLength": 3636438,
+                  "bitDepth": 16,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Albedo.exr"
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "contentLength": 669091,
+                  "bitDepth": 8,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Albedo.jpg"
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 3636884,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Albedo_LOD4.exr",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 665979,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Albedo_LOD4.jpg",
+                  "lodType": "lod",
+                  "tris": 3100
+                },
+                {
+                  "mimeType": "image/x-exr",
+                  "bitDepth": 16,
+                  "contentLength": 3602578,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Albedo_LOD5.exr",
+                  "lodType": "lod",
+                  "tris": 1100
+                },
+                {
+                  "mimeType": "image/jpeg",
+                  "bitDepth": 8,
+                  "contentLength": 658848,
+                  "uri": "Aset_structure_cement_M_sepsb_1K_Albedo_LOD5.jpg",
+                  "lodType": "lod",
+                  "tris": 1100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "averageColor": "#2A2219"
+    }
+  ],
+  "references": [],
+  "referencePreviews": {
+    "models": [
+      {
+        "mimeType": "application/x-abc",
+        "contentLength": 1539484,
+        "type": "lod",
+        "uri": ""
+      },
+      {
+        "mimeType": "application/x-fbx",
+        "contentLength": 972368,
+        "type": "lod",
+        "uri": ""
+      },
+      {
+        "mimeType": "application/x-obj",
+        "contentLength": 3867787,
+        "type": "lod",
+        "uri": ""
+      },
+      {
+        "mimeType": "application/x-abc",
+        "contentLength": 1232652,
+        "type": "lod",
+        "uri": ""
+      },
+      {
+        "mimeType": "application/x-fbx",
+        "contentLength": 801088,
+        "type": "lod",
+        "uri": ""
+      },
+      {
+        "mimeType": "application/x-obj",
+        "contentLength": 3090864,
+        "type": "lod",
+        "uri": ""
+      }
+    ],
+    "maps": [
+      {
+        "mimeType": "image/jpeg",
+        "resolution": "1024x1024",
+        "contentLength": 889741,
+        "type": "normal",
+        "uri": ""
+      },
+      {
+        "mimeType": "image/jpeg",
+        "resolution": "1024x1024",
+        "contentLength": 877614,
+        "type": "normal",
+        "uri": ""
+      },
+      {
+        "mimeType": "image/jpeg",
+        "resolution": "1024x1024",
+        "contentLength": 351321,
+        "type": "bump",
+        "uri": ""
+      },
+      {
+        "mimeType": "image/jpeg",
+        "resolution": "1024x1024",
+        "contentLength": 271767,
+        "type": "gloss",
+        "uri": ""
+      },
+      {
+        "mimeType": "image/jpeg",
+        "resolution": "1024x1024",
+        "contentLength": 168912,
+        "type": "displacement",
+        "uri": ""
+      },
+      {
+        "mimeType": "image/jpeg",
+        "resolution": "1024x1024",
+        "contentLength": 258103,
+        "type": "roughness",
+        "uri": ""
+      },
+      {
+        "mimeType": "image/jpeg",
+        "resolution": "1024x1024",
+        "contentLength": 498375,
+        "type": "cavity",
+        "uri": ""
+      },
+      {
+        "mimeType": "image/jpeg",
+        "resolution": "1024x1024",
+        "contentLength": 260103,
+        "type": "specular",
+        "uri": ""
+      },
+      {
+        "mimeType": "image/jpeg",
+        "resolution": "1024x1024",
+        "contentLength": 736680,
+        "type": "normalbump",
+        "uri": ""
+      },
+      {
+        "mimeType": "image/jpeg",
+        "resolution": "1024x1024",
+        "contentLength": 669091,
+        "type": "albedo",
+        "uri": ""
+      }
+    ]
+  },
+  "properties": [
+    {
+      "key": "size",
+      "value": "medium"
+    },
+    {
+      "key": "mesh type",
+      "value": "closed"
+    }
+  ],
+  "averageColor": "#2A2219",
+  "meshes": [
+    {
+      "type": "zbrush",
+      "uris": [
+        {
+          "mimeType": "application/x-ztl",
+          "contentLength": 132517892,
+          "uri": "Aset_structure_cement_M_sepsb_ZTool.ZTL"
+        }
+      ]
+    },
+    {
+      "type": "original",
+      "uris": [
+        {
+          "mimeType": "application/x-abc",
+          "contentLength": 82027448,
+          "uri": "Aset_structure_cement_M_sepsb_High.abc"
+        },
+        {
+          "mimeType": "application/x-fbx",
+          "contentLength": 57927344,
+          "uri": "Aset_structure_cement_M_sepsb_High.fbx"
+        },
+        {
+          "mimeType": "application/x-obj",
+          "contentLength": 224835542,
+          "uri": "Aset_structure_cement_M_sepsb_High.obj"
+        }
+      ]
+    },
+    {
+      "type": "lod",
+      "uris": [
+        {
+          "mimeType": "application/x-abc",
+          "contentLength": 259040,
+          "uri": "Aset_structure_cement_M_sepsb_LOD4.abc"
+        },
+        {
+          "mimeType": "application/x-fbx",
+          "contentLength": 166944,
+          "uri": "Aset_structure_cement_M_sepsb_LOD4.fbx"
+        },
+        {
+          "mimeType": "application/x-obj",
+          "contentLength": 624132,
+          "uri": "Aset_structure_cement_M_sepsb_LOD4.obj"
+        }
+      ],
+      "tris": 3100
+    },
+    {
+      "type": "lod",
+      "uris": [
+        {
+          "mimeType": "application/x-abc",
+          "contentLength": 94432,
+          "uri": "Aset_structure_cement_M_sepsb_LOD5.abc"
+        },
+        {
+          "mimeType": "application/x-fbx",
+          "contentLength": 60640,
+          "uri": "Aset_structure_cement_M_sepsb_LOD5.fbx"
+        },
+        {
+          "mimeType": "application/x-obj",
+          "contentLength": 218260,
+          "uri": "Aset_structure_cement_M_sepsb_LOD5.obj"
+        }
+      ],
+      "tris": 1100
+    },
+    {
+      "type": "lod",
+      "uris": [
+        {
+          "mimeType": "application/x-abc",
+          "contentLength": 1539484,
+          "uri": "Aset_structure_cement_M_sepsb_LOD0.abc"
+        },
+        {
+          "mimeType": "application/x-fbx",
+          "contentLength": 972368,
+          "uri": "Aset_structure_cement_M_sepsb_LOD0.fbx"
+        },
+        {
+          "mimeType": "application/x-obj",
+          "contentLength": 3867787,
+          "uri": "Aset_structure_cement_M_sepsb_LOD0.obj"
+        }
+      ],
+      "tris": 18694
+    },
+    {
+      "type": "lod",
+      "uris": [
+        {
+          "mimeType": "application/x-abc",
+          "contentLength": 1232652,
+          "uri": "Aset_structure_cement_M_sepsb_LOD1.abc"
+        },
+        {
+          "mimeType": "application/x-fbx",
+          "contentLength": 801088,
+          "uri": "Aset_structure_cement_M_sepsb_LOD1.fbx"
+        },
+        {
+          "mimeType": "application/x-obj",
+          "contentLength": 3090864,
+          "uri": "Aset_structure_cement_M_sepsb_LOD1.obj"
+        }
+      ],
+      "tris": 14954
+    },
+    {
+      "type": "lod",
+      "uris": [
+        {
+          "mimeType": "application/x-abc",
+          "contentLength": 987124,
+          "uri": "Aset_structure_cement_M_sepsb_LOD2.abc"
+        },
+        {
+          "mimeType": "application/x-fbx",
+          "contentLength": 651600,
+          "uri": "Aset_structure_cement_M_sepsb_LOD2.fbx"
+        },
+        {
+          "mimeType": "application/x-obj",
+          "contentLength": 2467520,
+          "uri": "Aset_structure_cement_M_sepsb_LOD2.obj"
+        }
+      ],
+      "tris": 11962
+    },
+    {
+      "type": "lod",
+      "uris": [
+        {
+          "mimeType": "application/x-abc",
+          "contentLength": 790568,
+          "uri": "Aset_structure_cement_M_sepsb_LOD3.abc"
+        },
+        {
+          "mimeType": "application/x-fbx",
+          "contentLength": 525536,
+          "uri": "Aset_structure_cement_M_sepsb_LOD3.fbx"
+        },
+        {
+          "mimeType": "application/x-obj",
+          "contentLength": 1968749,
+          "uri": "Aset_structure_cement_M_sepsb_LOD3.obj"
+        }
+      ],
+      "tris": 9568
+    }
+  ],
+  "assetCategories": {
+    "3D asset": {
+      "Street": {
+        "Barrier": {}
+      }
+    }
+  },
+  "semanticTags": {
+    "minSize": 0.46,
+    "maxSize": 3.04,
+    "name": "Concrete Barrier",
+    "subject_matter": "manmade",
+    "color": [
+      "gray"
+    ],
+    "season": [],
+    "industry": [
+      "VFX",
+      "games",
+      "automotive",
+      "archviz"
+    ],
+    "contains": [
+      "concrete",
+      "cement",
+      "barrier"
+    ],
+    "state": [
+      "new"
+    ],
+    "locations": {
+      "Global": {
+        "Global": {}
+      }
+    },
+    "environment": [
+      "industrial",
+      "urban"
+    ],
+    "3d_mesh": "Closed",
+    "theme": [
+      "roadblock",
+      " block"
+    ],
+    "latin_name": [],
+    "architectural_style": {},
+    "interior_exterior": [
+      "exterior"
+    ],
+    "resolution": 8192,
+    "asset_type": "3D asset",
+    "orientation": [
+      "wall"
+    ]
+  },
+  "id": "sepsb",
+  "physicalSize": "1x1"
+}

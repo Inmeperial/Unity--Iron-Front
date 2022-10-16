@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3744560806809332802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2421804427285826894}
+  - component: {fileID: 855147753075030618}
+  m_Layer: 0
+  m_Name: Mecha B Body
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2421804427285826894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744560806809332802}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &855147753075030618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744560806809332802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWeapon: 0
+  mechaEnum: 0
+  texturesCuerpo:
+  - {fileID: 2800000, guid: 769a8004c4c83b446aa3f65583419840, type: 3}
+  - {fileID: 2800000, guid: d4f0590e5e45b3c498956a5a3eef52ea, type: 3}
+  - {fileID: 2800000, guid: c9f5ed974bfe42d4f946b190c07e6d68, type: 3}
+  textureArmadura:
+  - {fileID: 2800000, guid: 742e6d010de9b0d4688273bfe9321b14, type: 3}
+  - {fileID: 2800000, guid: d383d33f79b84004983c5707f17c6c06, type: 3}
+  - {fileID: 2800000, guid: a6bf65a04856f754a9adce89f3266e33, type: 3}
+  textureArticulaciones:
+  - {fileID: 2800000, guid: 9f4d0f78a20b0454c9047b9e02cc38d2, type: 3}
+  - {fileID: 2800000, guid: 410e262e83789e84d8134f3cf6d9ceb5, type: 3}
+  - {fileID: 2800000, guid: d39b750be02df0c4cae2316c1da8cc7e, type: 3}
+  - {fileID: 2800000, guid: 35a9d7aeabff32040b3d33760a0af605, type: 3}
+  colorMecha: {r: 1, g: 1, b: 1, a: 1}
+  materialArticulacion: 1
+  materialCuerpo: 2
+  materialArmadura: 0

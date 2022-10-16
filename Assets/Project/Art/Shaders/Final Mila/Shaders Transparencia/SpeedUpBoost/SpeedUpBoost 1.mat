@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SpeedUpBoost 1
+  m_Shader: {fileID: 4800000, guid: 063345c18cb71eb438f78385069eabc8, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Texture0:
+        m_Texture: {fileID: 2800000, guid: ed52d5bf2ba2dc94cb50dc990e8d64c4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: ed52d5bf2ba2dc94cb50dc990e8d64c4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Float0: 1
+    - _Float5: 20
+    - _Horizontal1: 4.9
+    - _Horizontal2: 10.31
+    - _Offset: 4.111765
+    - _Rotation: 0.64
+    - _Spe: 1
+    - _Sped: 1
+    - _Speed: 1
+    - _Tiling: 40
+    - _TilingHorizontal: 20
+    - _TilingMascaraHorizontal: 20
+    - _TilingMascaraVertical: 20
+    - _TilingVertical: 20
+    - _Vertical1: 1
+    - _Vertical2: 1.92
+    - __dirty: 0
+    m_Colors:
+    - _Rotatio: {r: 0, g: 0, b: 0, a: 0}
+    - _Rotation: {r: 0, g: 0, b: 0, a: 0}
+    - _Tiling: {r: 50, g: 50, b: 0, a: 0}
+    - _TilingFlechas: {r: 1, g: 1, b: 0, a: 0}
+    - _Vector0: {r: 50, g: 50, b: 0, a: 0}

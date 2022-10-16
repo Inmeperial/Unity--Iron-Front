@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HealthBoost
+  m_Shader: {fileID: 4800000, guid: dfba5a58816e06340a3e6d4e284abb4a, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _TextureSample2:
+        m_Texture: {fileID: 2800000, guid: f47d74ccc531e07499abb9191cef7fa4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample3:
+        m_Texture: {fileID: 2800000, guid: 67302a9e75647a743a4ae6c3cf776be2, type: 3}
+        m_Scale: {x: 2.65, y: 2}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Float: 1
+    - _Float0: 6.48
+    - _Speed: 0.87
+    - _Speed1: 1
+    - __dirty: 0
+    m_Colors:
+    - _Offset: {r: 0.99, g: 0, b: 0, a: 0}
+    - _Tiling: {r: 2.71, g: 2.63, b: 0, a: 0}
+    - _Tiling1: {r: 1.36, g: 2.5, b: 0, a: 0}
+    - _TilingHeealth: {r: 1, g: 1, b: 0, a: 0}

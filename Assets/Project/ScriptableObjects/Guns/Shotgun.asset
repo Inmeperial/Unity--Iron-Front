@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec067eb350895745836bdd9da419181, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  objectName: Shotgun
+  objectDescription: Arma de disparos
+  objectImage: {fileID: 21300000, guid: 9452958cbbded2d45869b68cb12500be, type: 3}
+  prefab: {fileID: 5224315557157618920, guid: 7faee8b7c9b457147b6060e6ec6382b5, type: 3}
+  maxHp: 150
+  maxBullets: 4
+  availableBullets: 0
+  bulletsPerClick: 2
+  damage: 30
+  critChance: 10
+  critMultiplier: 2
+  hitChance: 60
+  chanceToHitOtherParts: 100
+  attackRange: 2
+  bodyPartsSelectionQuantity: 2
+  weight: 120

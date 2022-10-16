@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff40bb0bb505d04db54dff77db5e3e0, type: 3}
+  m_Name: ShotgunEnemy
+  m_EditorClassIdentifier: 
+  _objectsDatabase: {fileID: 11400000, guid: bac69f91cfa8f474c9a8a84a413dbf90, type: 2}
+  name: AA-65
+  body: {fileID: 11400000, guid: 3664c60e888fe6a47bac9e1f46f2d2b1, type: 2}
+  leftGun: {fileID: 11400000, guid: f59c4b3a26e546146be5cdcc049749e7, type: 2}
+  rightGun: {fileID: 11400000, guid: e6168ea85089e684f9343cc6c847adbd, type: 2}
+  legs: {fileID: 11400000, guid: d2c8df4a9af149148b2463b533891594, type: 2}
+  bodyColor:
+    red: 1
+    green: 0
+    blue: 0
+  legsColor:
+    red: 1
+    green: 0
+    blue: 0

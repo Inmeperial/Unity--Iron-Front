@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f520082ca45eb04094d0692070c5412, type: 3}
+  m_Name: PiercingShot
+  m_EditorClassIdentifier: 
+  objectName: Piercing Shot
+  objectDescription: No se
+  objectImage: {fileID: 21300000, guid: d2187335ad891dd4b98b1a92f2593377, type: 3}
+  equipableType: 1
+  maxUses: 100
+  cooldown: 2
+  buttonTextFontSize: 500
+  abilityPrefab: {fileID: 4887648641423547763, guid: de0c340cb1cb8f349b62240f5ba84be7,
+    type: 3}
+  partSlot: 1
+  damage: 100
