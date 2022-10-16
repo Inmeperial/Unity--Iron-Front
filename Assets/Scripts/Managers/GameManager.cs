@@ -448,17 +448,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveCurrentMechaToLastPosition()
+    private IEnumerator MoveMechaToLastPosition(Character mechaToMove, int position)
     {
         yield return null;
 
-        _portraitsController.MovePortraitOfMechaFromTo(_currentTurnMecha, 0, _portraitsController.PortraitsCount - 1);
+        _portraitsController.MovePortraitOfMechaFromTo(mechaToMove, position, _portraitsController.PortraitsCount - 1);
 
-        _charactersInCurrentTurnOrder.RemoveAt(0);
+        _charactersInCurrentTurnOrder.RemoveAt(position);
 
-        _charactersInCurrentTurnOrder.Add(_currentTurnMecha);
+        _charactersInCurrentTurnOrder.Add(mechaToMove);
 
-        //WaitUntil waitUntilPortraitStoppedMoving = new WaitUntil(() => _portraitStoppedMoving);
+        WaitUntil waitUntilPortraitStoppedMoving = new WaitUntil(() => _portraitStoppedMoving);
 
         for (int i = 0; i < _charactersInCurrentTurnOrder.Count-1; i++)
         {
@@ -521,7 +521,7 @@ public class GameManager : MonoBehaviour
 
         _currentTurnMecha.EndTurn();
 
-        yield return StartCoroutine(MoveCurrentMechaToLastPosition());
+        yield return StartCoroutine(MoveMechaToLastPosition(_currentTurnMecha, 0));
 
         TileHighlight.Instance.EndPreview();
 
@@ -539,7 +539,7 @@ public class GameManager : MonoBehaviour
         
         while (newTurnMecha.IsDead() || !newTurnMecha.IsUnitEnabled())
         {
-            yield return StartCoroutine(MoveCurrentMechaToLastPosition());
+            yield return StartCoroutine(MoveMechaToLastPosition(newTurnMecha, 0));
 
             newTurnMecha = _charactersInCurrentTurnOrder[0];
         }

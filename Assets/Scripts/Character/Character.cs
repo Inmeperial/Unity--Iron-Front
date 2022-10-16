@@ -138,7 +138,7 @@ public class Character : Initializable
     public override void Initialize()
     {
         ConfigureMecha();
-
+        gameObject.name = _myName;
         RotationBeforeAttacking = transform.rotation;
         _myPositionTile = GetTileBelow();
 
@@ -1373,12 +1373,15 @@ public class Character : Initializable
         
         if (_selectedForAttack)
             return;
-        
-        if (_inAttackRange)
-        {
-            Character currentMecha = GameManager.Instance.CurrentTurnMecha;
-            currentMecha.LoadRotationBeforeLookingAtEnemy();
-        }
+
+        if (!_inAttackRange)
+            return;
+        Character currentMecha = GameManager.Instance.CurrentTurnMecha;
+
+        if (!currentMecha)
+            return;
+
+        currentMecha.LoadRotationBeforeLookingAtEnemy();
     }
 
     private void RotateWithRays()

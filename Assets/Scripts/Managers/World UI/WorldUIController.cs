@@ -220,8 +220,10 @@ public class WorldUIController : Initializable
             mecha.OnMechaDeath -= HideMechaWorldUI;
 
             mecha.GetBody().OnDamageTaken += OnBodyDamageTaken;
-            mecha.GetLeftGun().OnDamageTaken += OnLeftGunDamageTaken;
-            mecha.GetRightGun().OnDamageTaken += OnRightGunDamageTaken;
+            if (mecha.GetLeftGun())
+                mecha.GetLeftGun().OnDamageTaken += OnLeftGunDamageTaken;
+            if (mecha.GetRightGun())
+                mecha.GetRightGun().OnDamageTaken += OnRightGunDamageTaken;
             mecha.GetLegs().OnDamageTaken += OnLegsDamageTaken;
         }
 

@@ -199,44 +199,24 @@ public class AttackHUD : Initializable
     {
         Body body = _selectedEnemy.GetBody();
         ConfigurePartButton(_bodyButton, body, _selectedCharacter, _selectedEnemy);
-        //_bodyButton.ResetButton();
-        //_bodyButton.SetMechas(_selectedCharacter, _selectedEnemy, body);
-        //_bodyButton.SetSlider(0, body.MaxHp);
-        //_bodyButton.UpdateHP(body.CurrentHP);
-        //_bodyButton.UpdateDamagePreviewSlider();
     }
 
     private void ConfigureLeftGunButton()
     {
         Gun gun = _selectedEnemy.GetLeftGun();
         ConfigurePartButton(_leftGunButton, gun, _selectedCharacter, _selectedEnemy);
-        //_leftGunButton.ResetButton();
-        //_leftGunButton.SetMechas(_selectedCharacter, _selectedEnemy, gun);
-        //_leftGunButton.SetSlider(0, gun.MaxHP);
-        //_leftGunButton.UpdateHP(gun.CurrentHP);
-        //_leftGunButton.UpdateDamagePreviewSlider();
     }
 
     private void ConfigureRightGunButton()
     {
         Gun gun = _selectedEnemy.GetRightGun();
         ConfigurePartButton(_rightGunButton, gun, _selectedCharacter, _selectedEnemy);
-        //_rightGunButton.ResetButton();
-        //_rightGunButton.SetMechas(_selectedCharacter, _selectedEnemy, gun);
-        //_rightGunButton.SetSlider(0, gun.MaxHP);
-        //_rightGunButton.UpdateHP(gun.CurrentHP);
-        //_rightGunButton.UpdateDamagePreviewSlider();
     }
 
     private void ConfigureLegsButton()
     {
         Legs legs = _selectedEnemy.GetLegs();
         ConfigurePartButton(_legsButton, legs, _selectedCharacter, _selectedEnemy);
-        //_legsButton.ResetButton();
-        //_legsButton.SetMechas(_selectedCharacter, _selectedEnemy, legs);
-        //_legsButton.SetSlider(0, legs.MaxHp);
-        //_legsButton.UpdateHP(legs.CurrentHP);
-        //_legsButton.UpdateDamagePreviewSlider();
     }
     private void ConfigurePartButton(MechaPartButton button, MechaPart part, Character attacker, Character defender)
     {
