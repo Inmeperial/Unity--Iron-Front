@@ -718,7 +718,10 @@ public class Character : Initializable
 
     #region Getters
 
-    public Body GetBody() => _body;
+    public Body GetBody() 
+    {
+        return _body;
+    }
 
     // public Arm GetLeftArm()
     // {
@@ -730,9 +733,16 @@ public class Character : Initializable
     //     return _rightArm;
     // }
 
-    public Legs GetLegs() => _legs;
+    public Legs GetLegs() 
+    {
+        return _legs;
+    }
 
-    public bool AreLegsOvercharged() => _legsOvercharged;
+    public bool AreLegsOvercharged()
+    {
+        return _legsOvercharged;
+    }
+
     private void GetTargetToMove()
     {
         Transform target = MouseRay.GetTargetTransform(_block);
@@ -780,13 +790,25 @@ public class Character : Initializable
     }
     //public WorldUI GetMyUI() => _worldUI;
 
-    public int GetCurrentSteps() => _currentSteps;
+    public int GetCurrentSteps()
+    {
+        return _currentSteps;
+    }
 
-    public Tile GetEndTile() => _targetTile;
+    public Tile GetEndTile() 
+    {
+        return _targetTile;
+    }
 
-    public EnumsClass.Team GetUnitTeam() => _unitTeam;
+    public EnumsClass.Team GetUnitTeam()
+    {
+        return _unitTeam;
+    }
 
-    public bool IsSelected() => _selected;
+    public bool IsSelected() 
+    {
+        return _selected;
+    }
 
     public Tile GetPositionTile()
     {
@@ -795,6 +817,7 @@ public class Character : Initializable
         
         return _myPositionTile;
     }
+
     public List<Tile> GetPath()
     {
         _path = _waypointsPathfinding.GetPath();
@@ -1123,7 +1146,10 @@ public class Character : Initializable
         _enemiesInRange.Clear();
     }
 
-    protected void AddTilesInMoveRange() => TileHighlight.Instance.AddTilesInMoveRange(_tilesInMoveRange);
+    protected void AddTilesInMoveRange()
+    {
+        TileHighlight.Instance.AddTilesInMoveRange(_tilesInMoveRange);
+    }
 
     /// <summary>
     /// Reset Character for new turn.
@@ -1165,7 +1191,10 @@ public class Character : Initializable
         }
     }
 
-    public void ClearTargetTile() => _targetTile = null;
+    public void ClearTargetTile()
+    {
+        _targetTile = null;
+    }
 
     /// <summary>
     /// Executed when Character reached the end of the path.
@@ -1241,7 +1270,10 @@ public class Character : Initializable
     /// <summary>
     /// Make Character not selectable.
     /// </summary>
-    public void NotSelectable() => _canBeSelected = false;
+    public void NotSelectable()
+    {
+        _canBeSelected = false;
+    }
 
     public void Dead()
     {
@@ -1326,9 +1358,15 @@ public class Character : Initializable
         _canAttack = state;
         OnAttackActionStateChange?.Invoke(this, _canAttack);
     }
-    public void MechaInAttackRange() => _inAttackRange = true;
+    public void MechaInAttackRange()
+    {
+        _inAttackRange = true;
+    }
 
-    public void MechaOutsideAttackRange() => _inAttackRange = false;
+    public void MechaOutsideAttackRange()
+    {
+        _inAttackRange = false;
+    }
 
     public void DeactivateAttack()
     {
@@ -1350,11 +1388,14 @@ public class Character : Initializable
 
         if (!_inAttackRange)
             return;
-        
-        //_worldUI.Show();
-        //SetWorldUIValues();
 
         if (GameManager.Instance.ActiveTeam == EnumsClass.Team.Red)
+            return;
+
+        if (GameManager.Instance.CurrentTurnMecha == this)
+            return;
+
+        if (GameManager.Instance.CurrentTurnMecha.GetUnitTeam() == _unitTeam)
             return;
 
         if (!_selectedForAttack)
@@ -1459,19 +1500,30 @@ public class Character : Initializable
 
     #region Others
 
-    public void SetHurtAnimation() => _animationMechaHandler.SetIsReciveDamageAnimatorTrue();
+    public void SetHurtAnimation()
+    {
+        _animationMechaHandler.SetIsReciveDamageAnimatorTrue();
+    }
 
     //public void HitSoundMecha()
     //{
     //    AudioManager.audioManagerInstance.PlaySound(soundHit, this.gameObject);
     //}
 
-    public void OnUseEquipable() => EquipableSelectionState(false, null);
+    public void OnUseEquipable()
+    {
+        EquipableSelectionState(false, null);
+    }
 
-    public Item GetItem() => _item;
+    public Item GetItem() {
+        return _item;
+    }
     #endregion
 
-    public void SetEquipment(MechaEquipmentSO equipment) => _mechaEquipment = equipment;
+    public void SetEquipment(MechaEquipmentSO equipment)
+    {
+        _mechaEquipment = equipment;
+    }
 
     protected virtual void ConfigureMecha()
     {
@@ -1675,9 +1727,15 @@ public class Character : Initializable
         _currentSteps -= amount;
     }
 
-    public void DisableUnit() => _unitEnabled = false;
+    public void DisableUnit()
+    {
+        _unitEnabled = false;
+    }
 
-    public void EnableUnit() => _unitEnabled = true;
+    public void EnableUnit()
+    {
+        _unitEnabled = true;
+    }
 
     private void OnEnable()
     {
@@ -1685,9 +1743,15 @@ public class Character : Initializable
             _animationMechaHandler.SetIsDeadAnimatorTrue();
     }
     
-    public LayerMask GetBlockLayerMask() => _block;
+    public LayerMask GetBlockLayerMask() 
+    {
+        return _block;
+    }
 
-    public WaypointsPathfinding GetWaypointsPathfinding() => _waypointsPathfinding;
+    public WaypointsPathfinding GetWaypointsPathfinding()
+    {
+        return _waypointsPathfinding;
+    }
 
     public void ShowMechaMesh()
     {
@@ -1730,8 +1794,22 @@ public class Character : Initializable
         return body || lArm || rArm || legs;
     }
 
-    public bool IsEnemyBodyInSight(Character enemy) => enemy.GetBody().CurrentHP > 0 && RayToPartsForAttack(enemy.GetBodyPosition(), "Body", false);
-    public bool IsEnemyLeftGunInSight(Character enemy) => enemy.GetLeftGun() && RayToPartsForAttack(enemy.GetLArmPosition(), "LGun", false);
-    public bool IsEnemyRightGunInSight(Character enemy) => enemy.GetRightGun() && RayToPartsForAttack(enemy.GetRArmPosition(), "RGun", false);
-    public bool IsEnemyLegsInSight(Character enemy) => enemy.GetLegs().CurrentHP > 0 && RayToPartsForAttack(enemy.GetLegsPosition(), "Legs", false);
+    public bool IsEnemyBodyInSight(Character enemy)
+    {
+        return enemy.GetBody().CurrentHP > 0 && RayToPartsForAttack(enemy.GetBodyPosition(), "Body", false);
+    }
+
+    public bool IsEnemyLeftGunInSight(Character enemy)
+    {
+        return enemy.GetLeftGun() && RayToPartsForAttack(enemy.GetLArmPosition(), "LGun", false);
+    }
+
+    public bool IsEnemyRightGunInSight(Character enemy)
+    {
+        return enemy.GetRightGun() && RayToPartsForAttack(enemy.GetRArmPosition(), "RGun", false);
+    }
+    public bool IsEnemyLegsInSight(Character enemy)
+    {
+        return enemy.GetLegs().CurrentHP > 0 && RayToPartsForAttack(enemy.GetLegsPosition(), "Legs", false);
+    }
 }
