@@ -24,6 +24,8 @@ public class Push : WeaponAbility
         if (_inCooldown || !_character.CanAttack())
             return;
 
+        OnEquipableSelected?.Invoke();
+
         PaintUseTiles(_character.GetPositionTile(), 0, Vector3.zero);
 
         _character.EquipableSelectionState(true, this);
@@ -33,6 +35,8 @@ public class Push : WeaponAbility
 
     public override void Deselect()
     {
+        OnEquipableDeselected?.Invoke();
+
         if(_tilesInRange.Count != 0)
             TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
 
@@ -43,17 +47,17 @@ public class Push : WeaponAbility
         _character.SelectThisUnit();
     }
 
-    public override void Use(Action callback = null)
+    public override void Use()
     {
         Debug.Log("Using Push");
 		if (Input.GetMouseButtonDown(0))
-            UseAbility(callback);
+            UseAbility();
 
         if (Input.GetMouseButtonDown(1))
             Deselect();
     }
 
-    private void UseAbility(Action callback = null)
+    private void UseAbility()
     {
         Debug.Log("Pushing");
 
@@ -85,7 +89,7 @@ public class Push : WeaponAbility
 
         PushAction(tileToPushTo, selectedUnit);
 
-        callback?.Invoke();
+        OnEquipableUsed?.Invoke();
 
         AbilityUsed(_abilityData);
 

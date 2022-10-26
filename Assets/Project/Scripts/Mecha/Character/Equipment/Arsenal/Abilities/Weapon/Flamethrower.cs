@@ -39,10 +39,14 @@ public class Flamethrower : WeaponAbility
         _character.EquipableSelectionState(true, this);
 
         _character.DeselectThisUnit();
+
+        OnEquipableSelected?.Invoke();
     }
 
 	public override void Deselect()
 	{
+        OnEquipableDeselected?.Invoke();
+
         if(_tilesInRange.Count != 0)
             TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
 
@@ -55,22 +59,18 @@ public class Flamethrower : WeaponAbility
         _character.SelectThisUnit();
     }
 
-	public override void Use(Action callback = null)
+	public override void Use()
 	{
         DrawArc();
 
         if (Input.GetMouseButtonDown(0))
-            ExecuteAbility(callback);
+            ExecuteAbility();
 
         if (Input.GetMouseButtonDown(1))
-		{
-            callback?.Invoke();
-
             Deselect();
-		}
 	}
 
-    private void ExecuteAbility(Action callback = null)
+    private void ExecuteAbility()
     {
         //Ataco a todas las unidades que esten en el area de ataque
         EffectsController.Instance.PlayParticlesEffect(_character.gameObject, EnumsClass.ParticleActionType.FlameThrower);
@@ -94,7 +94,7 @@ public class Flamethrower : WeaponAbility
 
         DamageCharacters(charactersHitted);
 
-        callback?.Invoke();
+        OnEquipableUsed?.Invoke();
 
         AbilityUsed(_abilityData);
 

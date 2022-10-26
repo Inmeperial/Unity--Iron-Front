@@ -25,6 +25,8 @@ public class CripplingShot : WeaponAbility
 		if (!_gun)
 			return;
 
+		OnEquipableSelected?.Invoke();
+
 		PaintTilesInRange(_character.GetPositionTile(), 0);
 
 		_character.EquipableSelectionState(true, this);
@@ -33,13 +35,18 @@ public class CripplingShot : WeaponAbility
 
 	public override void Deselect()
 	{
+		OnEquipableDeselected?.Invoke();
+		
 		TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
+		
 		_tilesInRange.Clear();
+
 		_character.EquipableSelectionState(false, null);
+
 		_character.SelectThisUnit();
 	}
 
-	public override void Use(Action callback = null)
+	public override void Use()
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
@@ -51,14 +58,14 @@ public class CripplingShot : WeaponAbility
 			if (!_enemy)
 				return;
 
-			ExecuteAbility(callback);
+			ExecuteAbility();
 		}
 
 		if (Input.GetMouseButtonDown(1))
 			Deselect();
 	}
 
-	private void ExecuteAbility(Action callback = null)
+	private void ExecuteAbility()
     {
 		_character.RotateTowardsEnemy(_enemy.transform);
 
@@ -81,9 +88,9 @@ public class CripplingShot : WeaponAbility
 			_button.interactable = false;
 
 			Deselect();
-		}
 
-        callback?.Invoke();
+			OnEquipableUsed?.Invoke();
+		}
     }
 
 	/*private void OnMouseOver()
@@ -121,7 +128,7 @@ public class CripplingShot : WeaponAbility
 		bool legs = c.RayToPartsForAttack(GetLegsPosition(), "Legs", true) && _legs.GetCurrentHp() > 0;
 	}*/
 
-	void PaintTilesInRange(Tile currentTile, int count)
+	private void PaintTilesInRange(Tile currentTile, int count)
 	{
 		if (count >= _gun.GetAttackRange() || !currentTile)
 			return;

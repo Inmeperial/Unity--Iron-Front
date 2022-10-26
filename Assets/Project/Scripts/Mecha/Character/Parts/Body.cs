@@ -6,10 +6,6 @@ public class Body : MechaPart
 {
     private float _maxWeight;
 
-    private bool _smokeScreenAvailable;
-    private float _smokeScreenHpPercentage;
-    private bool _smokeScreenActive;
-
     public override void SetPartData(Character character, PartSO data, Color partColor)
     {
         base.SetPartData(character, data, partColor);
@@ -17,14 +13,11 @@ public class Body : MechaPart
         BodySO bodyData = data as BodySO;
         _maxWeight = bodyData.maxWeight;
     }
-    //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
+
     public override void ReceiveDamage(List<Tuple<int,int>> damages)
     {
         if (_currentHP <= 0)
             return;
-        
-        //WorldUI worldUI = _myChar.GetMyUI();
-        //worldUI.SetBodyHPBar(_currentHP);
 
         int totalDamage = 0;
 
@@ -58,12 +51,8 @@ public class Body : MechaPart
             }
         }
 
-        //worldUI.Show();
-        //worldUI.UpdateBodyHPBar(totalDamage);
         OnDamageTaken?.Invoke(_myChar, totalDamage);
         _myChar.MechaOutsideAttackRange();
-
-        CheckSmokeScreen();
 
         _myChar.SetHurtAnimation();
 
@@ -74,15 +63,10 @@ public class Body : MechaPart
             _myChar.Dead();
     }
     
-    //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void ReceiveDamage(int damage)
     {
         if (_currentHP <= 0)
             return;
-        
-        
-        //WorldUI ui = _myChar.GetMyUI();
-        //ui.SetBodyHPBar(_currentHP);
 
         float hp = _currentHP - damage;
         _currentHP = hp > 0 ? hp : 0;
@@ -98,42 +82,19 @@ public class Body : MechaPart
 
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position);
 
-        //ui.Show();
-        //ui.UpdateBodyHPBar(damage);
-
         OnDamageTaken?.Invoke(_myChar, damage);
 
         _myChar.MechaOutsideAttackRange();
         
-        CheckSmokeScreen();
         _myChar.SetHurtAnimation();
 
         if (CurrentHP <= 0)
             _myChar.Dead();
     }
 
-    public float GetMaxWeight() => _maxWeight;
-
-    public bool IsSmokeScreenActive() => _smokeScreenActive;
-
-    private void CheckSmokeScreen()
+    public float GetMaxWeight()
     {
-        if (!_smokeScreenAvailable)
-            return;
-
-        if (CurrentHP <= 0)
-            return;
-
-        float hpPercentage = _currentHP * 100 / _maxHP;
-
-        if (hpPercentage > _smokeScreenHpPercentage)
-            return;
-
-        Debug.Log("activo smokescreen");
-        _smokeScreenAvailable = false;
-        _smokeScreenActive = true;
-
-        _ability.Use();
+        return _maxWeight;
     }
 
     public override void Heal(int healAmount)
@@ -144,16 +105,5 @@ public class Body : MechaPart
 
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
-    }
-
-    public void ConfigureSmokeScreen(float percentageToActivate)
-    {
-        _smokeScreenHpPercentage = percentageToActivate;
-        _smokeScreenAvailable = true;
-    }
-    public void DeactivateSmokeScreen()
-    {
-        _smokeScreenActive = false;
-        _ability.Deselect();
     }
 }

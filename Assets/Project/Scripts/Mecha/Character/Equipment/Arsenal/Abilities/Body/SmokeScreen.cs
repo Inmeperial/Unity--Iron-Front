@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SmokeScreen : Ability
@@ -15,9 +13,23 @@ public class SmokeScreen : Ability
 	    
         _abilityData = data as SmokeScreenSO;
 
-        _character.GetBody().ConfigureSmokeScreen(_abilityData.hpPercentageForSmokeActivation);
+        _character.GetBody().OnDamageTaken += CheckSmokescreen;
     }
-    
+
+    private void CheckSmokescreen(Character arg1 = null, float arg2 = 0)
+    {
+        Body body = _character.GetBody();
+        if (body.CurrentHP <= 0)
+            return;
+
+        float hpPercentage = body.CurrentHP * 100 / body.MaxHp;
+
+        if (hpPercentage > _abilityData.hpPercentageForSmokeActivation)
+            return;
+        
+        Use();
+    }
+
     public override void Select()
     {
         Debug.Log("select ability");
@@ -28,19 +40,23 @@ public class SmokeScreen : Ability
         Destroy(_smokeObject);
     }
 
-    public override void Use(Action callback = null)
+    public override void Use()
     {
-        Debug.Log("use ability");
-        _smokeObject = Instantiate(_abilityData.smokeScreenObject, _character.transform);
+        Debug.Log("use smokescreen");
 
-        StartCoroutine(DestroySmoke());
+        _character.GetBody().OnDamageTaken -= CheckSmokescreen;
+
+        _character.OnMechaTurnStart += DestroySmokeScreen;
+
+        _smokeObject = Instantiate(_abilityData.smokeScreenObject, _character.transform);
     }
 
-    private IEnumerator DestroySmoke()
+    private void DestroySmokeScreen()
     {
-        yield return new WaitUntil(() => _character.IsMyTurn());
-        
-        if (_smokeObject)
-            Destroy(_smokeObject);
+        if (!_smokeObject)
+            return;
+
+        _character.OnMechaTurnStart -= DestroySmokeScreen;
+        Destroy(_smokeObject);
     }
 }

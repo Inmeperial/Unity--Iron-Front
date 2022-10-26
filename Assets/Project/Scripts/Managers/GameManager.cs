@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GunsSelector _gunsSelector;
     [SerializeField] private PortraitsController _portraitsController;
     [SerializeField] private AttackHUD _attackHUD;
-    //[SerializeField] private MechaEquipmentHUD _mechaEquipmentHUD;
     [SerializeField] private Button _endTurnButton;
     [SerializeField] private GameObject _winPanel;
     [SerializeField] private GameObject _losePanel;
@@ -92,6 +91,8 @@ public class GameManager : MonoBehaviour
 
         //_inputsReader.OnDeselectKeyPressed += EnableCharacterSelection;
         _inputsReader.OnDeselectKeyPressed += EnemyMechaDeselected;
+
+        _endTurnButton.onClick.AddListener(BeginEndTurnProcess);
     }
 
     private void Start()
@@ -316,16 +317,13 @@ public class GameManager : MonoBehaviour
     private void EnemyMechaDeselected()
     {
         if (!_selectedEnemy)
-        {
-            Debug.Log("no selected enemy");
             return;
-        }
+
         _attackHUD.HideAttackHUD();
 
         if (_currentTurnMecha)
             _currentTurnMecha.LoadRotationOnDeselect();
 
-        Debug.Log("Selected enemy: " + _selectedEnemy.GetCharacterName(), _selectedEnemy.gameObject);
         Action OnCameraMovementFinished = () =>
         {
             OnEnemyMechaDeselected?.Invoke();
@@ -713,5 +711,7 @@ public class GameManager : MonoBehaviour
 
             mecha.GetLegs().OnDamageTakenByAttack -= OnMechaLegsDamaged;
         }
+
+        _endTurnButton.onClick.RemoveListener(BeginEndTurnProcess);
     }
 }

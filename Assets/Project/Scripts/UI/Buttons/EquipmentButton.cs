@@ -5,34 +5,43 @@ using UnityEngine.UI;
 
 public class EquipmentButton : CustomButton
 {
-    private TextMeshProUGUI _buttonText;
-    private Image _buttonImage;
-
-    protected override void Start()
+    [SerializeField] private Image _buttonImage;
+    [SerializeField] private TextMeshProUGUI _itemUsesText;
+    [SerializeField] private TextMeshProUGUI _abilityCooldownText;
+    public void SetButtonText(string text, EquipableSO.EquipableType type)
     {
-        _buttonText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        _buttonImage = GetComponent<Image>();
-    }
-
-    public void SetButtonText(string text, int fontSize)
-    {
-        if (!_buttonText)
-            _buttonText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-
-        if (_buttonText)
+        switch (type)
         {
-            _buttonText.fontSize = fontSize;
-            _buttonText.text = text; 
+            case EquipableSO.EquipableType.Item:
+                _abilityCooldownText.gameObject.SetActive(false);
+
+                _itemUsesText.text = text;
+                _itemUsesText.gameObject.SetActive(true);
+                break;
+
+            case EquipableSO.EquipableType.Active:
+            case EquipableSO.EquipableType.Passive:
+                _itemUsesText.gameObject.SetActive(false);
+
+                _abilityCooldownText.text = text;
+                _abilityCooldownText.gameObject.SetActive(true);
+                break;
         }
     }
 
     public void SetButtonIcon(Sprite sprite)
     {
-        if (!_buttonImage)
-            _buttonImage = GetComponent<Image>();
+        _buttonImage.sprite = sprite;
+    }
 
-        if (sprite && _buttonImage)
-            _buttonImage.sprite = sprite;
+    public void HideItemUsesText()
+    {
+        _itemUsesText.gameObject.SetActive(false);
+    }
+
+    public void HideAbilityCooldownText()
+    {
+        _abilityCooldownText.gameObject.SetActive(false);
     }
 
     public void AddLeftClick(UnityAction action) => OnLeftClick.AddListener(action);

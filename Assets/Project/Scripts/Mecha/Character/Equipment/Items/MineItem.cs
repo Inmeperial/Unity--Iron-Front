@@ -17,6 +17,8 @@ public class MineItem : Item
 
 	public override void Select()
 	{
+		OnEquipableSelected?.Invoke();
+
 		PaintTilesInRange(_character.GetPositionTile(), 0);
 
 		_character.DeselectThisUnit();
@@ -26,24 +28,26 @@ public class MineItem : Item
 
 	public override void Deselect()
 	{
+		OnEquipableDeselected?.Invoke();
+
 		TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
 		_tilesInRange.Clear();
 		_character.EquipableSelectionState(false, null);
 		_character.SelectThisUnit();
 	}
 
-	public override void Use(Action callback = null)
+	public override void Use()
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-            ExecuteAbility(callback);
+            ExecuteAbility();
 		}
 
 		if (Input.GetMouseButtonDown(1))
 			Deselect();
 	}
 
-	private void ExecuteAbility(Action callback = null)
+	private void ExecuteAbility()
     {
 		Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 
@@ -66,7 +70,7 @@ public class MineItem : Item
 
 		_button.interactable = false;
 
-		callback?.Invoke();
+		OnEquipableUsed?.Invoke();
 
 		Deselect();
 	}

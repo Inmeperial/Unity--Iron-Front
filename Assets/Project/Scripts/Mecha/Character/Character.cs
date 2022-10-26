@@ -174,7 +174,7 @@ public class Character : Initializable
         }
         
         if (!_selected && _equipables.Count > 0 && _equipableSelected)
-            _equipable.Use(OnUseEquipable);
+            _equipable.Use();
     }
 
 
@@ -987,10 +987,8 @@ public class Character : Initializable
             return;
 
         OnMechaTurnStart?.Invoke();
-
-        if (_body.IsSmokeScreenActive())
-            _body.DeactivateSmokeScreen();
     }
+
     public void SelectedForAttack()
     {
         _selectedForAttack = true;
@@ -1184,11 +1182,6 @@ public class Character : Initializable
         _enemiesInRange.Clear();
         _inAttackRange = false;
         _waypointsPathfinding.ResetPath();
-
-        foreach (Equipable equipable in _equipables)
-        {
-            equipable.UpdateEquipableState();
-        }
     }
 
     public void ClearTargetTile()
@@ -1472,29 +1465,10 @@ public class Character : Initializable
 
     public void LoadRotationOnDeselect()
     {
-        Debug.Log("reset rotation");
         RaysOff();
         _isRotated = false;
         transform.rotation = RotationBeforeAttacking;
     }
-
-    //public WorldUI GetWorldUI() => _worldUI;
-
-    //public void SetWorldUIValues()
-    //{
-    //    //float rightGunHP = 0;
-
-    //    //if (_rightGun)
-    //    //    rightGunHP = _rightGun.CurrentHP;
-
-    //    //float leftGunHP = 0;
-
-    //    //if (_leftGun)
-    //    //    leftGunHP = _leftGun.CurrentHP;
-
-    //    //_worldUI.SetWorldUIValues(_body.CurrentHP, rightGunHP, leftGunHP, _legs.CurrentHP, _canMove, _canAttack, _overweight);
-    //    _worldUI.Show();
-    //}
 
     #endregion
 
@@ -1510,7 +1484,7 @@ public class Character : Initializable
     //    AudioManager.audioManagerInstance.PlaySound(soundHit, this.gameObject);
     //}
 
-    public void OnUseEquipable()
+    public void OnEquipableUsed()
     {
         EquipableSelectionState(false, null);
     }

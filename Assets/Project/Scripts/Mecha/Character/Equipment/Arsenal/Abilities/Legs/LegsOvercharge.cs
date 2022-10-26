@@ -26,20 +26,7 @@ public class LegsOvercharge : Ability
     }
     public override void Select()
     {
-        EffectsController.Instance.PlayParticlesEffect(_character.GetPositionTile().gameObject, EnumsClass.ParticleActionType.LegsOvercharge);
-        _character.DeselectThisUnit();
-
-        _character.LegsOverchargeActivate();
-
-        _character.IncreaseAvailableSteps(_character.GetLegs().GetMaxSteps());
-
-        _button.OnRightClick?.Invoke();
-        
-        AbilityUsed(_abilityData);
-
-        UpdateButtonText(_availableUses.ToString(), _abilityData);
-
-        _button.interactable = false;
+        Use();
     }
 
     public override void Deselect()
@@ -49,10 +36,24 @@ public class LegsOvercharge : Ability
         StartCoroutine(SelectCharacterDelay());
     }
 
-    public override void Use(Action callback = null)
+    public override void Use()
     {
-        Debug.Log("use legs overcharge");
-        
+        EffectsController.Instance.PlayParticlesEffect(_character.GetPositionTile().gameObject, EnumsClass.ParticleActionType.LegsOvercharge);
+        _character.DeselectThisUnit();
+
+        _character.LegsOverchargeActivate();
+
+        _character.IncreaseAvailableSteps(_character.GetLegs().GetMaxSteps());
+
+        _button.OnRightClick?.Invoke();
+
+        AbilityUsed(_abilityData);
+
+        UpdateButtonText(_availableUses.ToString(), _abilityData);
+
+        _button.interactable = false;
+
+        OnEquipableUsed?.Invoke();
     }
 
     private IEnumerator SelectCharacterDelay()

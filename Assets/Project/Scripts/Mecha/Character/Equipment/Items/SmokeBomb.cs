@@ -19,6 +19,8 @@ public class SmokeBomb : Item
 
 	public override void Select()
 	{
+		OnEquipableSelected?.Invoke();
+
 		_character.DeselectThisUnit();
 
 		_character.EquipableSelectionState(true, this);
@@ -49,6 +51,8 @@ public class SmokeBomb : Item
 
 	public override void Deselect()
 	{
+		OnEquipableDeselected?.Invoke();
+    
 		TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
 
 		_tilesInRange.Clear();
@@ -58,7 +62,7 @@ public class SmokeBomb : Item
 		_character.SelectThisUnit();
 	}
 
-	public override void Use(Action callback = null)
+	public override void Use()
 	{
         Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 		
@@ -77,7 +81,7 @@ public class SmokeBomb : Item
 
 		if (Input.GetMouseButtonDown(0))
 		{
-			UseItem(callback);
+			UseItem();
 		}
 
 		if (Input.GetMouseButtonDown(1))
@@ -88,7 +92,7 @@ public class SmokeBomb : Item
 		
 	}
 
-	private void UseItem(Action callback = null)
+	private void UseItem()
     {
 		EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.SmokeBomb);
 
@@ -103,7 +107,7 @@ public class SmokeBomb : Item
         //_smokeScreen = Instantiate(_data.smokeGameObject, selectedTile.transform.position, Quaternion.identity);
         //Tengo en cuenta el transcurso de los turnos para saber cuando muere el efecto.
 
-        callback?.Invoke();
+        OnEquipableUsed?.Invoke();
 
         ItemUsed();
 

@@ -19,6 +19,7 @@ public class SelfDestruct : Ability
     
     public override void Select()
     {
+        OnEquipableSelected?.Invoke();
         _character.DeselectThisUnit();
 
         _character.EquipableSelectionState(true, this);
@@ -28,6 +29,7 @@ public class SelfDestruct : Ability
 
     public override void Deselect()
     {
+        OnEquipableDeselected?.Invoke();
         if(_tilesInAttackRange.Count != 0)
 		{
             TileHighlight.Instance.ClearTilesInPreview(_tilesInAttackRange);
@@ -43,11 +45,11 @@ public class SelfDestruct : Ability
         _character.SelectThisUnit();
     }
 
-    public override void Use(Action callback = null)
+    public override void Use()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            UseAbility(callback);
+            UseAbility();
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -56,7 +58,7 @@ public class SelfDestruct : Ability
         }
     }
 
-    private void UseAbility(Action callback = null)
+    private void UseAbility()
     {
         Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 
@@ -118,6 +120,8 @@ public class SelfDestruct : Ability
             if (mine)
                 mine.DestroyMine();
         }
+
+        OnEquipableUsed?.Invoke();
 
         AbilityUsed(_abilityData);
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class IncendiaryAmmo : Ability
 {
-	public override void Use(Action callback = null)
+	public override void Use()
 	{
 		
 	}

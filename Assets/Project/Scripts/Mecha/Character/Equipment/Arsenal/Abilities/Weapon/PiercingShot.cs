@@ -29,6 +29,8 @@ public class PiercingShot : WeaponAbility
         //_abilityUseRange = _abilityData.pushUseRange;
         //PaintUseTiles(_character.GetMyPositionTile(), 0, Vector3.zero);//Cambie porque no me pintaba todos los tiles
 
+        OnEquipableSelected?.Invoke();
+
         PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.forward);
         PaintTilesInRange(_character.GetPositionTile(), 0, -Vector3.forward);
         PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.right);
@@ -41,6 +43,8 @@ public class PiercingShot : WeaponAbility
 
 	public override void Deselect()
 	{
+        OnEquipableDeselected?.Invoke();
+
         if(_tilesInRange.Count != 0)
             TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
 
@@ -50,18 +54,18 @@ public class PiercingShot : WeaponAbility
         _character.SelectThisUnit();
     }
 
-	public override void Use(Action callback = null)
+	public override void Use()
 	{
-		base.Use(callback);
+		base.Use();
 
 		if (Input.GetMouseButtonDown(0))
-            ExecuteAbility(callback);
+            ExecuteAbility();
 
         if (Input.GetMouseButtonDown(1))
             Deselect();
     }
 
-    private void ExecuteAbility(Action callback = null)
+    private void ExecuteAbility()
     {
         Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 
@@ -88,7 +92,7 @@ public class PiercingShot : WeaponAbility
 
         Shoot();
 
-        callback?.Invoke();
+        OnEquipableUsed?.Invoke();
 
         AbilityUsed(_abilityData);
 

@@ -2,7 +2,7 @@
 
 public class Item : Equipable
 {
-    protected bool _itemUsed;
+    protected bool _isItemAvailable;
     public override void Initialize(Character character, EquipableSO data)
     {
         _character = character;
@@ -10,6 +10,8 @@ public class Item : Equipable
         _icon = data.objectImage;
         _equipableType = data.equipableType;
         _equipableName = data.objectName;
+        _isItemAvailable = true;
+        OnEquipableUsed += _character.OnEquipableUsed;
     }
 
     public override void Select()
@@ -22,7 +24,7 @@ public class Item : Equipable
         
     }
 
-    public override void Use(Action callback = null)
+    public override void Use()
     {
         
     }
@@ -30,23 +32,25 @@ public class Item : Equipable
     protected void ItemUsed()
     {
         _availableUses--;
-        _itemUsed = true;
+        _isItemAvailable = false;
+        _character.OnMechaTurnStart += UpdateEquipableState;
     }
     public override void UpdateEquipableState()
     {
-        _itemUsed = false;
+        _isItemAvailable = true;
+        _character.OnMechaTurnStart -= UpdateEquipableState;
     }
 
     public override bool CanBeUsed()
     {
-        if (_itemUsed)
+        if (_availableUses <= 0 || !_isItemAvailable)
             return false;
 
-        if (_availableUses <= 0)
-            return false;
-        
-        if (_availableUses > 0 && !_itemUsed)
-            return true;
-        return false;
+        return true;
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
     }
 }

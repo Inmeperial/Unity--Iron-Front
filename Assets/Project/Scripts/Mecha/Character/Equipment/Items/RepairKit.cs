@@ -17,6 +17,7 @@ public class RepairKit : Item
 
 	public override void Select()
 	{
+		OnEquipableSelected?.Invoke();
 		PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.forward);
 		PaintTilesInRange(_character.GetPositionTile(), 0, -Vector3.forward);
 		PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.right);
@@ -29,24 +30,25 @@ public class RepairKit : Item
 	
 	public override void Deselect()
 	{
+		OnEquipableDeselected?.Invoke();
 		TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
 		_tilesInRange.Clear();
 		_character.EquipableSelectionState(false, null);
 		_character.SelectThisUnit();
 	}
 
-	public override void Use(Action callback = null)
+	public override void Use()
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			UseItem(callback);
+			UseItem();
 		}
 
 		if (Input.GetMouseButtonDown(1))
 			Deselect();
 	}
 
-	private void UseItem(Action callback = null)
+	private void UseItem()
     {
 		EffectsController.Instance.PlayParticlesEffect(_character.GetPositionTile().gameObject, EnumsClass.ParticleActionType.RepairKit);
         
@@ -84,7 +86,7 @@ public class RepairKit : Item
 
 		_button.interactable = false;
 
-		callback?.Invoke();
+		OnEquipableUsed?.Invoke();
 
 		Deselect();
 	}

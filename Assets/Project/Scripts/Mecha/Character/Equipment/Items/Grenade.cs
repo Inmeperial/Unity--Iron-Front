@@ -22,6 +22,8 @@ public class Grenade : Item
     }
     public override void Select()
     {
+        OnEquipableSelected?.Invoke();
+
         _character.DeselectThisUnit();
 
         _character.EquipableSelectionState(true, this);
@@ -38,6 +40,8 @@ public class Grenade : Item
 
     public override void Deselect()
     {
+        OnEquipableDeselected?.Invoke();
+
         _character.EquipableSelectionState(false, null);
         
         TileHighlight.Instance.ClearTilesInPreview(_tilesInAttackRange);
@@ -57,16 +61,16 @@ public class Grenade : Item
         _character.SelectThisUnit();
     }
 
-    public override void Use(Action callback = null)
+    public override void Use()
     {
         if (Input.GetMouseButtonDown(0))
-            UseItem(callback);
+            UseItem();
 
         if (Input.GetMouseButtonDown(1))
             Deselect();
     }
 
-    private void UseItem(Action callback = null)
+    private void UseItem()
     {
         Transform selection = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 
@@ -83,8 +87,7 @@ public class Grenade : Item
 
         if (_tile != null && newTile == _tile)
         {
-            Attack();
-            callback?.Invoke();
+            Attack();            
         }
         else
         {
@@ -169,11 +172,15 @@ public class Grenade : Item
 
             EffectsController.Instance.PlayParticlesEffect(tile.gameObject, EnumsClass.ParticleActionType.HandGranade);
         }
+        
+
         ItemUsed();
 
         UpdateButtonText(_availableUses.ToString(), _itemData);
 
         _button.interactable = false;
+
+        OnEquipableUsed?.Invoke();
 
         Deselect();
         
