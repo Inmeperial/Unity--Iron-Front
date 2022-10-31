@@ -248,7 +248,7 @@ public class GameManager : MonoBehaviour
     {       
         OnMechaAttackPreparationsFinished?.Invoke();
 
-        EnableEndTurnButton();
+        ShowEndTurnButton();
 
         _gameCamerasController.CloseUpCamera.ResetCamera();
         _selectedEnemy.NotSelectedForAttack();
@@ -303,7 +303,7 @@ public class GameManager : MonoBehaviour
 
         OnEnemyMechaSelected?.Invoke();
 
-        DisableEndTurnButton();
+        HideEndTurnButton();
 
         Action OnCloseUpFinished = () =>
         {
@@ -330,6 +330,7 @@ public class GameManager : MonoBehaviour
             _selectedEnemy.DeselectThisUnit();
             _selectedEnemy.NotSelectedForAttack();
             EnableCharacterSelection();
+            ShowEndTurnButton();
             _selectedEnemy = null;
 
             _characterSelector.Selection(_currentTurnMecha);
@@ -487,12 +488,12 @@ public class GameManager : MonoBehaviour
         return _currentTurnMecha == mecha;
     }
 
-    public void EnableEndTurnButton()
+    public void ShowEndTurnButton()
     {
         _endTurnButton.gameObject.SetActive(true);
     }
 
-    public void DisableEndTurnButton()
+    public void HideEndTurnButton()
     {
         _endTurnButton.gameObject.SetActive(false);
     }
@@ -502,7 +503,7 @@ public class GameManager : MonoBehaviour
         if (!_currentTurnMecha)
             return;
 
-        DisableEndTurnButton();
+        HideEndTurnButton();
         //_mechaEquipmentHUD.DisableButtonsInteraction();
         StartCoroutine(EndTurnActionsCheck());
     }
@@ -583,7 +584,7 @@ public class GameManager : MonoBehaviour
                 SubscribeToInputs();
                 _inputsReader.EnableKeysCheck();
                 _gunsSelector.EnableGunSelection();
-                EnableEndTurnButton();
+                ShowEndTurnButton();
             };
         }
         else
@@ -591,7 +592,7 @@ public class GameManager : MonoBehaviour
             _characterSelector.DisableCharacterSelection();
             _inputsReader.DisableKeysCheck();
             _gunsSelector.DisableGunSelection();
-            DisableEndTurnButton();            
+            HideEndTurnButton();            
         }
 
         afterCameraMoves += () => OnBeginTurn?.Invoke();

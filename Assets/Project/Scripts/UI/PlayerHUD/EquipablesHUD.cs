@@ -97,11 +97,15 @@ public class EquipablesHUD : Initializable
     private void CheckButtonsState()
     {
         Character mecha = GameManager.Instance.CurrentTurnMecha;
+
         UpdateButtonState(_bodyAbilityButton, mecha.GetBody().GetAbility());
         UpdateButtonState(_rightGunAbilityButton, mecha.GetRightGun().GetAbility());
         UpdateButtonState(_leftGunAbilityButton, mecha.GetLeftGun().GetAbility());
         UpdateButtonState(_legsAbilityButton, mecha.GetLegs().GetAbility());
         UpdateButtonState(_itemButton, mecha.GetItem());
+
+        if (mecha.GetUnitTeam() == EnumsClass.Team.Red)
+            DisableButtonsInteraction();
     }
     private void UpdateButtonState(EquipmentButton button, Equipable equipable)
     {
