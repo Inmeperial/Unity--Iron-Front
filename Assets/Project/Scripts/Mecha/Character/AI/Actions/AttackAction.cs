@@ -1,8 +1,7 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using BBUnity.Actions;
 using UnityEngine;
-
 using Pada1.BBCore;
 using Pada1.BBCore.Tasks;
 
@@ -50,10 +49,6 @@ public class AttackAction : GOAction
         
         if (!closestEnemy.IsOnElevator())
         {
-            //GameManager.Instance.CurrentTurnMecha = _myUnit;
-            //GameManager.Instance.SelectedEnemy = closestEnemy;
-            //ButtonsUIManager.Instance.SetPlayerCharacter(_myUnit);
-            //ButtonsUIManager.Instance.SetEnemy(closestEnemy);
 
             Dictionary<string, MechaPart> parts = new Dictionary<string, MechaPart>();
             
@@ -93,10 +88,11 @@ public class AttackAction : GOAction
 
             if (parts.ContainsKey(partToAttack))
             {
-                List<System.Tuple<int, int>> damage = gun.GetCalculatedDamage(gun.GetAvailableBullets());
+                List<Tuple<int, int>> damage = gun.GetCalculatedDamage(gun.GetAvailableBullets());
                 
                 parts[partToAttack].ReceiveDamage(damage);
                 _myUnit.DeactivateAttack();
+                _myUnit.SetCharacterMoveState(false);
             }
 
             if (partToAttack != "DEFAULT")
@@ -115,6 +111,7 @@ public class AttackAction : GOAction
                 _myUnit.GetSelectedGun().ExecuteAttackAnimation();
                 _myUnit.DeactivateAttack();
                 _myUnit.OnEndActionWithDelay(0);
+                _myUnit.SetCharacterMoveState(false);
                 Debug.Log("attack");
             }
             else
@@ -129,9 +126,7 @@ public class AttackAction : GOAction
             return TaskStatus.FAILED;
         }
         
-        if (_myUnit.CanMove()) 
-            return TaskStatus.COMPLETED;
-        return TaskStatus.FAILED;
+        return TaskStatus.COMPLETED;
     }
     
     private void Fail()
