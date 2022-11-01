@@ -26,18 +26,10 @@ public class AttackAction : GOAction
         {
             _myUnit = gameObject.GetComponent<EnemyCharacter>();
             if (!_myUnit)
-            {
                 return TaskStatus.FAILED;
-            }
         }
 
-        _myUnit.OnStartAction(MakeItFail);
-
-        if (!_myUnit.GetLeftGun() && !_myUnit.GetRightGun())
-        {
-            _myUnit.OnEndAction();
-            return TaskStatus.COMPLETED;
-        }
+        _myUnit.OnStartAction(Fail);
 
         if (!_myUnit.GetLeftGun() && !_myUnit.GetRightGun())
         {
@@ -46,9 +38,9 @@ public class AttackAction : GOAction
         }
         
         Character closestEnemy = _myUnit.GetClosestEnemy();
-        var initialRotation = _myUnit.RotationBeforeLookingAtEnemy;
+        Quaternion initialRotation = _myUnit.RotationBeforeLookingAtEnemy;
         _myUnit.RotateTowardsEnemy(closestEnemy.transform);
-        var gun = _myUnit.GetSelectedGun();
+        Gun gun = _myUnit.GetSelectedGun();
 
         if (gun.GetAvailableBullets() <= 0)
         {
@@ -58,8 +50,8 @@ public class AttackAction : GOAction
         
         if (!closestEnemy.IsOnElevator())
         {
-            GameManager.Instance.CurrentTurnMecha = _myUnit;
-            GameManager.Instance.SelectedEnemy = closestEnemy;
+            //GameManager.Instance.CurrentTurnMecha = _myUnit;
+            //GameManager.Instance.SelectedEnemy = closestEnemy;
             //ButtonsUIManager.Instance.SetPlayerCharacter(_myUnit);
             //ButtonsUIManager.Instance.SetEnemy(closestEnemy);
 
@@ -79,7 +71,7 @@ public class AttackAction : GOAction
 
             string partToAttack = "DEFAULT";
 
-            float lowest = 100000; 
+            float lowest = 1; 
 
             foreach (KeyValuePair<string, MechaPart> kvp in parts)
             {
@@ -89,17 +81,21 @@ public class AttackAction : GOAction
 
                 if (part.CurrentHP <= 0)
                     continue;
-                
-                if (part.CurrentHP <= lowest)
+
+                float hpPercentage = part.CurrentHP / part.MaxHP;
+
+                if (hpPercentage <= lowest)
                 {
-                    lowest = part.CurrentHP;
+                    lowest = hpPercentage;
                     partToAttack = kvp.Key;
                 }
             }
 
             if (parts.ContainsKey(partToAttack))
             {
-                parts[partToAttack].ReceiveDamage(gun.GetAvailableBullets());
+                List<System.Tuple<int, int>> damage = gun.GetCalculatedDamage(gun.GetAvailableBullets());
+                
+                parts[partToAttack].ReceiveDamage(damage);
                 _myUnit.DeactivateAttack();
             }
 
@@ -113,7 +109,7 @@ public class AttackAction : GOAction
             
             if (_myUnit.RayToElevator(elevator.GetColliderForAttack().transform.position))
             {
-                var damage = gun.GetCalculatedDamage(gun.GetMaxBullets());
+                List<System.Tuple<int, int>> damage = gun.GetCalculatedDamage(gun.GetMaxBullets());
             
                 elevator.ReceiveDamage(damage);
                 _myUnit.GetSelectedGun().ExecuteAttackAnimation();
@@ -133,13 +129,13 @@ public class AttackAction : GOAction
             return TaskStatus.FAILED;
         }
         
-        if (_myUnit.CanMove()) return TaskStatus.COMPLETED;
+        if (_myUnit.CanMove()) 
+            return TaskStatus.COMPLETED;
         return TaskStatus.FAILED;
     }
     
-    public void MakeItFail()
+    private void Fail()
     {
-        Debug.Log("fail");
         _fail = true;
     }
 }
