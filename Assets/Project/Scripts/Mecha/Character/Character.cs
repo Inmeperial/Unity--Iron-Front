@@ -51,18 +51,12 @@ public class Character : Initializable
 
     [Header("Data")]
     [SerializeField] protected MechaEquipmentSO _mechaEquipment;
-    [SerializeField] protected AudioClip _soundHit;
     [SerializeField] protected Sprite _myIcon;
 
     protected string _myName;
 
     protected Equipable _equipable;
     protected Item _item;
-
-    //TODO: REVISAR ESTA RANCIADA
-    //protected Dictionary<PartsMechaEnum, GameObject> _partsDictionary = new Dictionary<PartsMechaEnum, GameObject>();
-
-    [Header("Others")]
     
     protected List<Tile> _path = new List<Tile>();
     protected List<Tile> _tilesInMoveRange = new List<Tile>();
@@ -1672,14 +1666,14 @@ public class Character : Initializable
 
         if (_leftGun)
         {
-            float lGunDamage = _leftGun.MaxHP * dmgPercentage / 100;
+            float lGunDamage = _leftGun.MaxHp * dmgPercentage / 100;
             _leftGun.ReceiveDamage((int)lGunDamage);
         }
 
 
         if (_rightGun)
         {
-            float rGunDamage = _rightGun.MaxHP * dmgPercentage / 100;
+            float rGunDamage = _rightGun.MaxHp * dmgPercentage / 100;
             _rightGun.ReceiveDamage((int)rGunDamage);
         }
 

@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "SmokeBomb", menuName = "Create ItemSO/SmokeBomb")]
+[CreateAssetMenu(fileName = "Smoke Bomb", menuName = "Scriptable Objects/Items/Smoke Bomb")]
 public class SmokeBombSO : ItemSO
 {
     public GameObject smokeGameObject;
+    
 }

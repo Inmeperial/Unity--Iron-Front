@@ -51,7 +51,9 @@ public class RepairKit : Item
 	private void UseItem()
     {
 		EffectsController.Instance.PlayParticlesEffect(_character.GetPositionTile().gameObject, EnumsClass.ParticleActionType.RepairKit);
-        
+
+		AudioManager.Instance.PlaySound(_data.sound, _character.gameObject);
+
 		Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 
 		if (!selectedTile)
@@ -108,7 +110,7 @@ public class RepairKit : Item
 
 		if (leftGun)
 		{
-            float leftGunHealAmount = leftGun.MaxHP * healPercentage / 100;
+            float leftGunHealAmount = leftGun.MaxHp * healPercentage / 100;
 
 			leftGun.Heal((int)leftGunHealAmount);
 		}
@@ -117,7 +119,7 @@ public class RepairKit : Item
 		
 		if (rightGun)
 		{
-            float rightGunHealAmount = rightGun.MaxHP * healPercentage / 100;
+            float rightGunHealAmount = rightGun.MaxHp * healPercentage / 100;
 			rightGun.Heal((int)rightGunHealAmount);
 		}
 

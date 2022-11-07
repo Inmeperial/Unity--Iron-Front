@@ -14,7 +14,13 @@
     public override void Deselect()
     {
     }
-    protected override void PlayLeftSideAttackAnimation() => _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
+    protected override void PlayLeftSideAttackAnimation()
+    {
+        _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
+    }
 
-    protected override void PlayRightSideAttackAnimation() => _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
+    protected override void PlayRightSideAttackAnimation()
+    {
+        _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
+    }    
 }

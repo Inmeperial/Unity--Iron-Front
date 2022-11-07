@@ -2,17 +2,18 @@
 
 public class AudioMechaHandler : MonoBehaviour
 {
-    [SerializeField] private AudioClip _soundMotorStart;
-    //[SerializeField] private AudioClip _soundMechaExplosion;
-    [SerializeField] private AudioClip _soundWalk;
-    [SerializeField] private AudioClip _soundHit;
-
+    [SerializeField] private SoundData _motorStart;
+    [SerializeField] private SoundData _walk;
+    [SerializeField] private SoundData _hit;
     //public void SetPlayMechaExplosion()
     //{
     //    AudioManager.audioManagerInstance.PlaySound(_soundMechaExplosion, this.gameObject);
     //}
 
-    public void SetPlayMotorStart() => AudioManager.audioManagerInstance.PlaySound(_soundMotorStart, this.gameObject);
+    public void SetPlayMotorStart()
+    {
+        AudioManager.Instance.PlaySound(_motorStart, this.gameObject);
+    }
 
     //public void SetPlayHit()
     //{
@@ -20,8 +21,13 @@ public class AudioMechaHandler : MonoBehaviour
     //}
 
     //call in Animaton
-    public void SetPlayWalk() => AudioManager.audioManagerInstance.PlaySound(_soundWalk, this.gameObject);
+    public void SetPlayWalk()
+    {
+        AudioManager.Instance.PlaySound(_walk, this.gameObject);
+    }
 
-    public void SetMuteWalk() => AudioManager.audioManagerInstance.StopSoundWithFadeOut(_soundMotorStart, gameObject);
-
+    public void SetMuteWalk()
+    {
+        AudioManager.Instance.PlaySound(_motorStart, gameObject);
+    }
 }

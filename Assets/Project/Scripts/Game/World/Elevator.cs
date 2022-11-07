@@ -32,6 +32,9 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
     [SerializeField] private float _fallMovementDuration;
     [SerializeField] private float _timeToDestroy;
 
+    [SerializeField] private SoundData _moveSound;
+    [SerializeField] private SoundData _destroySound;
+
     private bool _active;
 
     private Tile _tileBelow;
@@ -127,13 +130,13 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
 
     public void StartMovement()
     {
-        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.MovingBridge);
         StartCoroutine(Move());
         DeactivateButton();
     }
     private IEnumerator Move()
     {
-        if (!_canInteract) yield break;
+        if (!_canInteract)
+            yield break;
 
         _isMoving = true;
         Vector3 start;
@@ -161,6 +164,8 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
             _colliderForAttack.SetActive(false);
         }
 
+        AudioManager.Instance.PlaySound(_moveSound, gameObject);
+
         while (time <= _movementDuration)
         {
             time += Time.deltaTime;
@@ -184,7 +189,7 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
             yield return new WaitForEndOfFrame();
             _aboveCharacter.PaintTilesInAttackRange(_tileBelow, 0);
         }
-        AudioManager.audioManagerInstance.StopSoundWithFadeOut(this.gameObject.GetComponent<AudioSource>().clip, this.gameObject);
+        //AudioManager.Instance.StopSoundWithFadeOut(this.gameObject.GetComponent<AudioSource>().clip, this.gameObject);
 
     }
 
@@ -251,7 +256,8 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
             _aboveCharacter.transform.parent = null; 
             _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
             _aboveCharacter.GetComponent<Rigidbody>().isKinematic = false;
-            
+
+            AudioManager.Instance.PlaySound(_destroySound, gameObject);
             StartCoroutine(Fall());
         }
     }

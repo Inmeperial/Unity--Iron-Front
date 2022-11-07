@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Flamethrower", menuName = "Create Ability/Flamethrower")]
+[CreateAssetMenu(fileName = "Flamethrower", menuName = "Scriptable Objects/Abilities/Weapons/Flamethrower")]
 public class FlamethrowerSO : GunAbilitySO
 {
     public int damage;

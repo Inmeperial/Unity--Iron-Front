@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 
@@ -8,20 +9,11 @@ public abstract class Gun : MechaPart
     [SerializeField] protected Renderer[] _renderers;
     [SerializeField] protected GameObject _damageParticleSpawner;
     [SerializeField] protected GameObject _shootParticleSpawn;
+    protected GunSO _data;
     protected EnumsClass.GunsType _gunType;
-    protected string _gunName;
-    protected Sprite _icon;
-    protected int _maxBullets;
     protected int _availableBullets;
-    protected int _bulletsPerClick;
-    protected int _damage;
-    protected int _critChance;
-    protected float _critMultiplier;
-    protected int _hitChance;
-    protected int _chanceToHitOtherParts;
-    protected int _attackRange;
-    protected int _bodyPartsSelectionQuantity;
-
+    protected int _currentAttackRange;
+    protected int _currentCritChance;
     protected RouletteWheel _roulette;
     protected Dictionary<string, int> _critRoulette = new Dictionary<string, int>();
     protected Dictionary<string, int> _hitRoulette = new Dictionary<string, int>();
@@ -36,7 +28,7 @@ public abstract class Gun : MechaPart
     #region Getters
     public int GetMaxBullets()
     {
-        return _maxBullets;
+        return _data.maxBullets;
     }
 
     public int GetAvailableBullets()
@@ -46,27 +38,27 @@ public abstract class Gun : MechaPart
 
     public int GetBulletDamage()
     {
-        return _damage;
+        return _data.damage;
     }
 
     public int GetAttackRange()
     {
-        return _attackRange;
+        return _currentAttackRange;
     }
 
     public int GetCritChance()
     {
-        return _critChance;
+        return _currentCritChance;
     }
 
     public float GetCritMultiplier()
     {
-        return _critMultiplier;
+        return _data.critMultiplier;
     }
 
     public int GetHitChance()
     {
-        return _hitChance;
+        return _data.hitChance;
     }
 
     public EnumsClass.GunsType GetGunType()
@@ -76,22 +68,22 @@ public abstract class Gun : MechaPart
 
     public string GetGunName()
     {
-        return _gunName;
+        return _data.objectName;
     }
 
     public int GetAvailableSelections()
     {
-        return _bodyPartsSelectionQuantity;
+        return _data.bodyPartsSelectionQuantity;
     }
     
     public int GetBulletsPerClick()
     {
-        return _bulletsPerClick;
+        return _data.bulletsPerClick;
     }
 
     public Sprite GetIcon()
     {
-        return _icon;
+        return _data.objectImage;
     }
     
     public GameObject GetParticleSpawn()
@@ -120,24 +112,15 @@ public abstract class Gun : MechaPart
     /// </summary>
     public virtual void SetGunData(GunSO data, Character character, string tag, string location)
     {
-        _gunName = data.objectName;
+        _data = data;
         _myChar = character;
         _maxHP = data.maxHp;
-        _currentHP = MaxHP;
-        _icon = data.objectImage;
-        _maxBullets = data.maxBullets;
-        _availableBullets = _maxBullets;
-        _bulletsPerClick = data.bulletsPerClick;
-        _damage = data.damage;
-        _critChance = data.critChance;
-        _critMultiplier = data.critMultiplier;
-        _hitChance = data.hitChance;
-        _chanceToHitOtherParts = data.chanceToHitOtherParts;
-        _attackRange = data.attackRange;
-        _bodyPartsSelectionQuantity = data.bodyPartsSelectionQuantity;
+        _currentHP = _maxHP;
+        _availableBullets = data.maxBullets;
         _weight = data.weight;
         _gunSkillAvailable = true;
-
+        _currentAttackRange = data.attackRange;
+        _currentCritChance = data.critChance;
         _collider.gameObject.tag = tag;
         _location = location;
 
@@ -171,7 +154,7 @@ public abstract class Gun : MechaPart
 
     public void ResetGun()
     {
-        _availableBullets = _maxBullets;
+        _availableBullets = _data.maxBullets;
         _gunSkillAvailable = true;
     }
 
@@ -181,7 +164,7 @@ public abstract class Gun : MechaPart
     /// <param name="extraRange">The amount of range to modify. If negative, it decrease.</param>
     public void ModifyRange(int extraRange)
     {
-        _attackRange += extraRange;
+        _currentAttackRange += extraRange;
     }
     
     /// <summary>
@@ -190,7 +173,7 @@ public abstract class Gun : MechaPart
     /// <param name="extraChance">The amount of critical chance to modify. If negative, it decrease.</param>
     public void ModifyCritChance(int extraChance)
     {
-        _critChance += extraChance;
+        _currentCritChance += extraChance;
     }
 
     /// <summary>
@@ -211,8 +194,8 @@ public abstract class Gun : MechaPart
     {
         _availableBullets += GetBulletsPerClick();
 
-        if (_availableBullets > _maxBullets)
-            _availableBullets = _maxBullets;
+        if (_availableBullets > _data.maxBullets)
+            _availableBullets = _data.maxBullets;
     }
     
     /// <summary>
@@ -222,16 +205,17 @@ public abstract class Gun : MechaPart
     {
         _availableBullets += quantity;
         
-        if (_availableBullets > _maxBullets)
-            _availableBullets = _maxBullets;
+        if (_availableBullets > _data.maxBullets)
+            _availableBullets = _data.maxBullets;
     }
 
-    public void Attack(MechaPart partToAttack, int bullets)
+    public virtual void Attack(MechaPart partToAttack, int bullets)
     {
         List<Tuple<int, int>> damages = GetCalculatedDamage(bullets);
 
         partToAttack.ReceiveDamage(damages);
-        
+
+        AudioManager.Instance.PlaySound(_data.attackSound, gameObject);
         ExecuteAttackAnimation();
     }
 
@@ -259,16 +243,16 @@ public abstract class Gun : MechaPart
                 switch (c)
                 {
                     case "Crit" when !_gunSkillAvailable:
-                        t = Tuple.Create((int)(_damage * _critMultiplier) / 2, CriticalHit);
+                        t = Tuple.Create((int)(_data.damage * _data.critMultiplier) / 2, CriticalHit);
                         break;
                     case "Crit":
-                        t = Tuple.Create((int)(_damage * _critMultiplier), CriticalHit);
+                        t = Tuple.Create((int)(_data.damage * _data.critMultiplier), CriticalHit);
                         break;
                     case "Normal" when !_gunSkillAvailable:
-                        t = Tuple.Create(_damage / 2, NormalHit);
+                        t = Tuple.Create(_data.damage / 2, NormalHit);
                         break;
                     case "Normal":
-                        t = Tuple.Create(_damage, NormalHit);
+                        t = Tuple.Create(_data.damage, NormalHit);
                         break;
                 }
             }
@@ -285,24 +269,19 @@ public abstract class Gun : MechaPart
     {
         _roulette = new RouletteWheel();
         _critRoulette = new Dictionary<string, int>();
-        _critRoulette.Add("Crit", _critChance);
-        int c = 100 - _critChance;
+        _critRoulette.Add("Crit", _currentCritChance);
+        int c = 100 - _currentCritChance;
         _critRoulette.Add("Normal", c > 0 ? c : 0);
 
         _hitRoulette = new Dictionary<string, int>();
-        _hitRoulette.Add("Hit", _hitChance);
-        int h = 100 - _hitChance;
+        _hitRoulette.Add("Hit", _data.hitChance);
+        int h = 100 - _data.hitChance;
         _hitRoulette.Add("Miss", h > 0 ? h : 0);
     }
 
     public abstract void GunSkill(MechaPart targetPart);
 
     public abstract void Deselect();
-
-    /// <summary>
-    /// Return true if the Gun ability was used, false if not.
-    /// </summary>
-
 
     public void TurnOff()
     {
@@ -325,7 +304,8 @@ public abstract class Gun : MechaPart
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void ReceiveDamage(List<Tuple<int,int>> damages)
     {
-        if (_currentHP <= 0) return;
+        if (IsPartBroken()) 
+            return;
         
         int totalDamage = 0;
         Vector3 pos = transform.position;
@@ -355,40 +335,21 @@ public abstract class Gun : MechaPart
         }
 
         OnDamageTaken?.Invoke(_myChar, totalDamage);
-        //WorldUI worldUI = _myChar.GetMyUI();
-        //worldUI.Show();
-        
-        //switch (_location)
-        //{
-        //    case "Left":
-        //        worldUI.SetLeftGunHPBar(CurrentHP);
-        //        worldUI.UpdateLeftGunHPBar(totalDamage);
-        //        break;
-            
-        //    case "Right":
-        //        worldUI.SetRightGunHPBar(CurrentHP);
-        //        worldUI.UpdateRightGunHPBar(totalDamage);
-        //        break;
-        //}
 
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
 
         _myChar.MechaOutsideAttackRange();
         
-        if (_currentHP <= 0)
-        {
-            EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.DestroyPart);
-            _myChar.ArmDestroyed(_location, _ability);
-            gameObject.SetActive(false);
-        }
-        
+        if (IsPartBroken())
+            DestroyPart();        
     }
     
     //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void ReceiveDamage(int damage)
     {
-        if (_currentHP <= 0) return;
+        if (IsPartBroken()) 
+            return;
         
         float hp = _currentHP - damage;
         _currentHP = hp > 0 ? hp : 0;
@@ -400,34 +361,14 @@ public abstract class Gun : MechaPart
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, pos);
 
         OnDamageTaken?.Invoke(_myChar, damage);
-
-        //WorldUI worldUI = _myChar.GetMyUI();
-        //worldUI.Show();
-
-
-        //if (_location == "Left")
-        //{
-        //    worldUI.SetLeftGunHPBar(_currentHP);
-        //    worldUI.UpdateLeftGunHPBar(damage);
-        //}
-        //else
-        //{
-        //    worldUI.SetRightGunHPBar(_currentHP);
-        //    worldUI.UpdateRightGunHPBar(damage);
-        //}
         
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
 
         _myChar.MechaOutsideAttackRange();
         
-        if (CurrentHP <= 0)
-        {
-            EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.DestroyPart);
-            _myChar.ArmDestroyed(_location, _ability);
-            TurnOff();
-        }
-        
+        if (IsPartBroken())
+            DestroyPart();        
     }
 
     public override void Heal(int healAmount)
@@ -437,7 +378,8 @@ public abstract class Gun : MechaPart
             healAmount = (int)_maxHP - (int)_currentHP;
             _currentHP = _maxHP;
         }
-        else _currentHP += healAmount;
+        else 
+            _currentHP += healAmount;
         
         var pos = transform.position;
         EffectsController.Instance.CreateDamageText(healAmount.ToString(), 3, pos);
@@ -450,7 +392,6 @@ public abstract class Gun : MechaPart
 
     public virtual void ExecuteAttackAnimation()
     {
-        Debug.Log(_myChar.GetCharacterName() + " uses attack animation");
         switch (_location)
         {
             case "Left":
@@ -466,8 +407,27 @@ public abstract class Gun : MechaPart
         }
     }
 
+    protected override void DestroyPart()
+    {
+        base.DestroyPart();
+        EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.DestroyPart);
+        _myChar.ArmDestroyed(_location, _ability);
+        TurnOff();
+
+    }
     protected abstract void PlayLeftSideAttackAnimation();
     protected abstract void PlayRightSideAttackAnimation();
+
+    public override void PlayTakeDamageSound()
+    {
+        AudioManager.Instance.PlaySound(_data.takeDamageSound, gameObject);
+    }
+
+    public override void PlayDestroySound()
+    {
+        AudioManager.Instance.PlaySound(_data.destroySound, gameObject);
+    }
+
     private void OnDestroy()
     {
         OnHealthChanged = null;

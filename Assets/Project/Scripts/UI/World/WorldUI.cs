@@ -104,19 +104,19 @@ public class WorldUI : Initializable
         _bodyDamageSlider.maxValue = bodyMax;
         _bodyDamageSlider.minValue = 0;
 
-        float rightGunMax = _owner.GetRightGun().MaxHP;
+        float rightGunMax = _owner.GetRightGun().MaxHp;
         _rightGunHpSlider.maxValue = rightGunMax;
         _rightGunHpSlider.minValue = 0;
         _rightGunDamageSlider.maxValue = rightGunMax;
         _rightGunDamageSlider.minValue = 0;
 
-        float leftGunMax = _owner.GetLeftGun().MaxHP;
+        float leftGunMax = _owner.GetLeftGun().MaxHp;
         _leftGunHpSlider.maxValue = leftGunMax;
         _leftGunHpSlider.minValue = 0;
         _leftGunDamageSlider.maxValue = leftGunMax;
         _leftGunDamageSlider.minValue = 0;
 
-        float legsMax = _owner.GetLegs().MaxHP;
+        float legsMax = _owner.GetLegs().MaxHp;
         _legsHpSlider.maxValue = legsMax;
         _legsHpSlider.minValue = 0;
         _legsDamageSlider.maxValue = legsMax;

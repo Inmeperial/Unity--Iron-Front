@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Equipment", menuName = "Create Equipment")]
+[CreateAssetMenu(fileName = "Equipment", menuName = "Scriptable Objects/Equipments/Equipment")]
 public class MechaEquipmentSO : ScriptableObject
 {
     public string mechaName;

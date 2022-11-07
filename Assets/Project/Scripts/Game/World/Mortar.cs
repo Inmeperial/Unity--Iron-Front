@@ -17,6 +17,7 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
     [SerializeField] private KeyCode _deselectKey;
     [SerializeField] private float _activationTilesDetectionRange;
     [SerializeField] private float _waitAfterAttack;
+    [SerializeField] private SoundData _sound;
 
     [Header("Stats")]
     [SerializeField] private int _shootRange;
@@ -320,6 +321,7 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
     void Attack()
     {
         EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.MortarHit);
+        AudioManager.Instance.PlaySound(_sound, gameObject);
         foreach (Tile tile in _tilesToAttack)
         {
             Character unit = tile.GetUnitAbove();
@@ -339,7 +341,8 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
             }
 
             LandMine mine = tile.GetMineAbove();
-            if (mine) mine.DestroyMine();
+            if (mine)
+                mine.DestroyMine();
 
             EffectsController.Instance.PlayParticlesEffect(tile.gameObject, EnumsClass.ParticleActionType.Mine);
         }

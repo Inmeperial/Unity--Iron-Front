@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "MineItem", menuName = "Create ItemSO/Mine Item")]
+[CreateAssetMenu(fileName = "MineItem", menuName = "Scriptable Objects/Items/Mine Item")]
 public class MineItemSO : ItemSO
 {
     public GameObject minePefab;

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 public class Legs : MechaPart
 {
+    private LegsSO _data;
     private int _maxSteps;
 
     private float _moveSpeed;
@@ -23,12 +25,12 @@ public class Legs : MechaPart
     {
         base.SetPartData(character, data, partColor);
 
-        LegsSO legsData = data as LegsSO;
+        _data = data as LegsSO;
 
-        _maxSteps = legsData.maxSteps;
-        _moveSpeed = legsData.moveSpeed;
-        _rotationSpeed = legsData.rotationSpeed;
-        _initiative = legsData.initiative;
+        _maxSteps = _data.maxSteps;
+        _moveSpeed = _data.moveSpeed;
+        _rotationSpeed = _data.rotationSpeed;
+        _initiative = _data.initiative;
     }
 
     public int GetLegsInitiative() => _initiative;
@@ -36,12 +38,9 @@ public class Legs : MechaPart
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void ReceiveDamage(List<Tuple<int, int>> damages)
     {
-        if (_currentHP <= 0)
+        if (IsPartBroken())
             return;
 
-
-        //WorldUI worldUI = _myChar.GetMyUI();
-        //worldUI.SetLegsHPBar(_currentHP);
         int totalDamage = 0;
         
         for (int i = 0; i < damages.Count; i++)
@@ -49,7 +48,6 @@ public class Legs : MechaPart
             totalDamage += damages[i].Item1;
             float hp = _currentHP - damages[i].Item1;
             _currentHP = hp > 0 ? hp : 0;
-            //_myChar.SetCharacterMove(_currentHP > 0 ? true : false);
 
             foreach (GameObject spawner in _particleSpawner)
             {
@@ -74,12 +72,7 @@ public class Legs : MechaPart
             }
         }
 
-        //worldUI.Show();
-        //worldUI.UpdateLegsHPBar(totalDamage);
-
         _myChar.MechaOutsideAttackRange();
-
-        //TurnManager.Instance.ReducePosition(_myChar);
 
         OnDamageTaken?.Invoke(_myChar, totalDamage);
         
@@ -88,51 +81,20 @@ public class Legs : MechaPart
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
 
-        if (CurrentHP <= 0 && !_brokenLegs)
-        {
-            //EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.Damage);
-            //EffectsController.Instance.PlayParticlesEffect(_particleSpawner[1], EnumsClass.ParticleActionType.Damage);
-            foreach (GameObject spawner in _particleSpawner)
-            {
-                EffectsController.Instance.PlayParticlesEffect(spawner, EnumsClass.ParticleActionType.Mine);
-            }
-            HalfSteps();
-        }
+        if (IsPartBroken() && !_brokenLegs)
+            BreakLegs();
 
         _myChar.SetHurtAnimation();
     }
 
     public override void ReceiveDamage(int damage)
     {
-        if (_currentHP <= 0)
+        if (IsPartBroken())
             return;
-
-
-        //WorldUI worldUI = _myChar.GetMyUI();
-
-        //worldUI.SetLegsHPBar(_currentHP);
-        //worldUI.Show();
-        //worldUI.UpdateLegsHPBar(damage);
-        //worldUI.HideWithTimer();
 
         float hp = _currentHP - damage;
 
         _currentHP = hp > 0 ? hp : 0;
-
-        if (_currentHP <= 0 && !_brokenLegs)
-        {
-            foreach (GameObject spawner in _particleSpawner)
-            {
-                EffectsController.Instance.PlayParticlesEffect(spawner, EnumsClass.ParticleActionType.Mine);
-            }
-
-            HalfSteps();
-        }
-
-        OnDamageTaken?.Invoke(_myChar, damage);
-
-        if (_myChar.IsSelected())
-            OnHealthChanged?.Invoke(_currentHP);
 
         foreach (GameObject spawner in _particleSpawner)
         {
@@ -141,14 +103,37 @@ public class Legs : MechaPart
 
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position);
 
+        OnDamageTaken?.Invoke(_myChar, damage);
+
+        if (_myChar.IsSelected())
+            OnHealthChanged?.Invoke(_currentHP);        
+
+        if (IsPartBroken() && !_brokenLegs)
+            BreakLegs();
+
         _myChar.SetHurtAnimation();
     }
 
-    public float GetRotationSpeed() => _rotationSpeed;
+    public float GetRotationSpeed()
+    {
+        return _rotationSpeed;
+    }
 
-    public float GetMoveSpeed() => _moveSpeed;
+    public float GetMoveSpeed()
+    {
+        return _moveSpeed;
+    }
 
-    void HalfSteps()
+    private void BreakLegs()
+    {
+        foreach (GameObject spawner in _particleSpawner)
+        {
+            EffectsController.Instance.PlayParticlesEffect(spawner, EnumsClass.ParticleActionType.Mine);
+        }
+        PlayDestroySound();
+        HalfSteps();
+    }
+    private void HalfSteps()
     {
         _maxSteps /= 2;
         _brokenLegs = true;
@@ -162,5 +147,15 @@ public class Legs : MechaPart
         
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
+    }
+
+    public override void PlayTakeDamageSound()
+    {
+        AudioManager.Instance.PlaySound(_data.damageSound, gameObject);
+    }
+
+    public override void PlayDestroySound()
+    {
+        AudioManager.Instance.PlaySound(_data.destroySound, gameObject);
     }
 }

@@ -13,6 +13,8 @@ public class Bridge : MonoBehaviour
 
     [SerializeField] private List<Character> _bridgeEnemies = new List<Character>();
 
+    [SerializeField] private SoundData _soundData;
+
     private Vector3 _startPosition;
 
     private void Awake()
@@ -37,7 +39,6 @@ public class Bridge : MonoBehaviour
     public void StartMovement()
     {
         Debug.Log("start movement");
-        EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.MovingBridge);
         StartCoroutine(Move());
     }
 
@@ -46,6 +47,9 @@ public class Bridge : MonoBehaviour
         float time = 0;
 
         Debug.Log("move");
+
+        AudioManager.Instance.PlaySound(_soundData, gameObject);
+
         while (time <= _movementDuration)
         {
             Debug.Log("moving");
@@ -56,7 +60,7 @@ public class Bridge : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
-        AudioManager.audioManagerInstance.StopSoundWithFadeOut(this.gameObject.GetComponent<AudioSource>().clip, this.gameObject);
+        //AudioManager.Instance.StopSoundWithFadeOut(this.gameObject.GetComponent<AudioSource>().clip, this.gameObject);
 
         foreach (var tile in _bridgeTiles)
         {

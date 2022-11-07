@@ -254,56 +254,56 @@ public class AnimationMechaHandler : MonoBehaviour
             _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.Rifle);
     }
 
-    public void SetParticleStartAttackHammer(int num) //call in Animaton
-    {
-        if (_deadAnimIsActive) 
-            return;
+    //public void SetParticleStartAttackHammer(int num) //call in Animaton
+    //{
+    //    if (_deadAnimIsActive) 
+    //        return;
 
-        //Anim keyFrame = 6 (17,00%)
+    //    //Anim keyFrame = 6 (17,00%)
 
-        Gun gun;
-        if (num == 0)
-            gun = _character.GetRightGun();
-        else
-            gun = _character.GetLeftGun();
+    //    Gun gun;
+    //    if (num == 0)
+    //        gun = _character.GetRightGun();
+    //    else
+    //        gun = _character.GetLeftGun();
 
-        if (gun)
-            _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.HammerPreparation);
-    }
+    //    if (gun)
+    //        _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.HammerPreparation);
+    //}
 
-    public void SetParticleSwingAttackHammer(int num) //call in Animaton
-    {
-        if (_deadAnimIsActive)
-            return;
+    //public void SetParticleSwingAttackHammer(int num) //call in Animaton
+    //{
+    //    if (_deadAnimIsActive)
+    //        return;
 
-        //Anim keyFrame = 18 (52,6%)
+    //    //Anim keyFrame = 18 (52,6%)
 
-        Gun gun;
-        if (num == 0)
-            gun = _character.GetRightGun();
-        else
-            gun = _character.GetLeftGun();
+    //    Gun gun;
+    //    if (num == 0)
+    //        gun = _character.GetRightGun();
+    //    else
+    //        gun = _character.GetLeftGun();
 
-        if (gun)
-            _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.HammerSwing);
-    }
+    //    if (gun)
+    //        _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.HammerSwing);
+    //}
 
-    public void SetParticleLandAttackHammer(int num) //call in Animaton
-    {
-        if (_deadAnimIsActive) 
-            return;
+    //public void SetParticleLandAttackHammer(int num) //call in Animaton
+    //{
+    //    if (_deadAnimIsActive) 
+    //        return;
 
-        //Anim keyFrame = 26 (74,4%)
+    //    //Anim keyFrame = 26 (74,4%)
 
-        Gun gun;
-        if (num == 0)
-            gun = _character.GetRightGun();
-        else
-            gun = _character.GetLeftGun();
+    //    Gun gun;
+    //    if (num == 0)
+    //        gun = _character.GetRightGun();
+    //    else
+    //        gun = _character.GetLeftGun();
 
-        if (gun)
-            _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.HammerHit);
-    }
+    //    if (gun)
+    //        _particleMechaHandler.SetParticleWeapon(gun.GetParticleSpawn(), EnumsClass.ParticleActionType.HammerHit);
+    //}
 
     #endregion
 

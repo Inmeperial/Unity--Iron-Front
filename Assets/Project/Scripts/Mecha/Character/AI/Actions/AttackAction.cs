@@ -77,7 +77,7 @@ public class AttackAction : GOAction
                 if (part.CurrentHP <= 0)
                     continue;
 
-                float hpPercentage = part.CurrentHP / part.MaxHP;
+                float hpPercentage = part.CurrentHP / part.MaxHp;
 
                 if (hpPercentage <= lowest)
                 {

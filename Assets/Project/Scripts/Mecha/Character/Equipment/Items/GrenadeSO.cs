@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Grenade", menuName = "Create ItemSO/Grenade")]
+[CreateAssetMenu(fileName = "Grenade", menuName = "Scriptable Objects/Items/Grenade")]
 public class GrenadeSO : ItemSO
 {
     public int damage;

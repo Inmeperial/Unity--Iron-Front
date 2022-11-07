@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Legs", menuName = "Create Parts/ Create Legs")]
+[CreateAssetMenu(fileName = "Legs", menuName = "Scriptable Objects/Parts/Legs")]
 public class LegsSO : PartSO
 {
     public int maxSteps;

@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "PiercingShot", menuName = "Create Ability/PiercingShot")]
+[CreateAssetMenu(fileName = "Piercing Shot", menuName = "Scriptable Objects/Abilities/Weapons/Piercing Shot")]
 public class PiercingShotSO : GunAbilitySO
 {
     public int damage;

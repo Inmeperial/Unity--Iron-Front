@@ -6,6 +6,6 @@ public class PlaySound : MonoBehaviour
 
     public void PlayTheSound()
 	{
-		AudioManager.audioManagerInstance.PlaySound(sound, gameObject);
+		//AudioManager.Instance.PlaySound(sound, gameObject);
 	}
 }

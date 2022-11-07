@@ -9,4 +9,6 @@ public class PartSO : ArsenalObjectSO
     public Material bodyMaterial;
     public Material jointsMaterial;
     public Material armorMaterial;
+    public SoundData damageSound;
+    public SoundData destroySound;
 }

@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "CripplingShot", menuName = "Create Ability/CripplingShot")]
+[CreateAssetMenu(fileName = "Crippling Shot", menuName = "Scriptable Objects/Abilities/Weapons/Crippling Shot")]
 public class CripplingShotSO : GunAbilitySO
 {
     public int damage;

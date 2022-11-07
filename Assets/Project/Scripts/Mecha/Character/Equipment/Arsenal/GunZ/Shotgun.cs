@@ -42,7 +42,7 @@ public class Shotgun : Gun
                         else partsIndex.Add(index);
                     }
 
-                    int tempMaxBullets = _maxBullets;
+                    int tempMaxBullets = _data.maxBullets;
                     //Attacks the parts previously determined.
                     for (int i = 0; i < partsIndex.Count; i++)
                     {
@@ -102,8 +102,8 @@ public class Shotgun : Gun
     {
         base.StartRoulette();
 
-        _multipleHitRoulette.Add("Multiple", _chanceToHitOtherParts);
-        int m = 100 - _chanceToHitOtherParts;
+        _multipleHitRoulette.Add("Multiple", _data.chanceToHitOtherParts);
+        int m = 100 - _data.chanceToHitOtherParts;
         _multipleHitRoulette.Add("Normal", m > 0 ? m : 0);
     }
 

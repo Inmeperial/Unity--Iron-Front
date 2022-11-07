@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-
-
-public class AbilitySO : EquipableSO
+﻿public class AbilitySO : EquipableSO
 {
     public enum PartSlot
     {

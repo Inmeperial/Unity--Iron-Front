@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Body", menuName = "Create Parts/ Create Body")]
+[CreateAssetMenu(fileName = "Body", menuName = "Scriptable Objects/Parts/Body")]
 public class BodySO : PartSO
 {
     public float maxWeight;

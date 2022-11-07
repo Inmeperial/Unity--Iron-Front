@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "EquipmentContainer", menuName = "Create Equipment Container")]
+[CreateAssetMenu(fileName = "EquipmentContainer", menuName = "Scriptable Objects/Equipments/Equipment Container")]
 public class MechaEquipmentContainerSO : ScriptableObject
 {
     public List<MechaEquipmentSO> equipments;

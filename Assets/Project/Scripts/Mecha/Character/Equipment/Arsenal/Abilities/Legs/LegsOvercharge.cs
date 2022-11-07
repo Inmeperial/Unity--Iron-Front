@@ -38,7 +38,10 @@ public class LegsOvercharge : Ability
 
     public override void Use()
     {
-        EffectsController.Instance.PlayParticlesEffect(_character.GetPositionTile().gameObject, EnumsClass.ParticleActionType.LegsOvercharge);
+        PlayVFX(_character.GetPositionTile().gameObject, EnumsClass.ParticleActionType.LegsOvercharge);
+
+        PlaySound(_abilityData.sound, gameObject);
+
         _character.DeselectThisUnit();
 
         _character.LegsOverchargeActivate();

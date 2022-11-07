@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Push", menuName = "Create Ability/Push")]
+[CreateAssetMenu(fileName = "Push", menuName = "Scriptable Objects/Abilities/Weapons/Push")]
 public class PushSO : GunAbilitySO
 {
     public int collisionDamage = 50;

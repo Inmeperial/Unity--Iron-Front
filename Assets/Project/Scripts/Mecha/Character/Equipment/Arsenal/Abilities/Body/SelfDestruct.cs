@@ -83,14 +83,14 @@ public class SelfDestruct : Ability
 
         Gun rightGun = _character.GetRightGun();
         if (rightGun)
-            rightGun.ReceiveDamage((int)rightGun.MaxHP);
+            rightGun.ReceiveDamage((int)rightGun.MaxHp);
 
         Gun leftGun = _character.GetLeftGun();
         if (leftGun)
-            leftGun.ReceiveDamage((int)leftGun.MaxHP);
+            leftGun.ReceiveDamage((int)leftGun.MaxHp);
 
-        EffectsController.Instance.PlayParticlesEffect(_character.GetBurningSpawner(), EnumsClass.ParticleActionType.MortarHit);
-
+        PlayVFX(_character.GetBurningSpawner(), EnumsClass.ParticleActionType.MortarHit);
+        PlaySound(_abilityData.sound, gameObject);
         int selfDestructDamage = _abilityData.selfDestructDamage;
         foreach (Tile tile in _tilesInAttackRange)
         {

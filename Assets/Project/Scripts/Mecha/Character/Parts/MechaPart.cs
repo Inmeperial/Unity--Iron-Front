@@ -8,6 +8,7 @@ public abstract class MechaPart : MonoBehaviour, IDamageable
     [SerializeField] protected Collider _collider;
     [SerializeField] protected List<GameObject> _particleSpawner = new List<GameObject>();
     [SerializeField] protected MasterShaderScript _masterShader;
+
     protected const int MissHit = 0;
     protected const int NormalHit = 1;
     protected const int CriticalHit = 2;
@@ -16,9 +17,8 @@ public abstract class MechaPart : MonoBehaviour, IDamageable
     protected float _maxHP;
     protected float _currentHP;
     protected float _weight;
-
-    public float MaxHP { get => _maxHP; set => _maxHP = value; }
-    public float CurrentHP { get => _currentHP; set => _currentHP = value; }
+    public float MaxHp => _maxHP;
+    public float CurrentHP => _currentHP;
 
     public Action<float> OnHealthChanged;
     public Action<Character, float> OnDamageTaken;
@@ -58,9 +58,12 @@ public abstract class MechaPart : MonoBehaviour, IDamageable
         _myChar.AddEquipable(_ability);
     }
 
-    public float MaxHp => _maxHP;
+    
 
-    public float GetWeight() => _weight;
+    public float GetWeight()
+    {
+        return _weight;
+    }
 
     public abstract void ReceiveDamage(List<Tuple<int, int>> damages);
 
@@ -86,5 +89,18 @@ public abstract class MechaPart : MonoBehaviour, IDamageable
     {
         _skinnedMeshRenderer.gameObject.SetActive(status);
         _collider.enabled = status;
+    }
+
+    public abstract void PlayTakeDamageSound();
+    public abstract void PlayDestroySound();
+
+    protected virtual bool IsPartBroken()
+    {
+        return _currentHP <= 0;
+    }
+
+    protected virtual void DestroyPart()
+    {
+        PlayDestroySound();
     }
 }

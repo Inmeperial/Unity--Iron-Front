@@ -94,7 +94,9 @@ public class SmokeBomb : Item
 
 	private void UseItem()
     {
-		EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.SmokeBomb);
+		EffectsController.Instance.PlayParticlesEffect(_smokeScreen, EnumsClass.ParticleActionType.SmokeBomb);
+
+		AudioManager.Instance.PlaySound(_data.sound, _smokeScreen);
 
 		//TurnManager.Instance.Subscribe(this);
 

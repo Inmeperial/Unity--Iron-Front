@@ -92,7 +92,6 @@ public class EffectsController : MonoBehaviour
                 particle.time = 0f;
                 particle.Play();
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
-                AudioManager.audioManagerInstance.PlaySound(_mineSound, this.gameObject);
                 break;
 
             case EnumsClass.ParticleActionType.ElevatorDestroy:
@@ -100,33 +99,27 @@ public class EffectsController : MonoBehaviour
                 particle = effect.transform.GetChild(0).GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
-                AudioManager.audioManagerInstance.PlaySound(_movingBridgeSound, obj);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
-            case EnumsClass.ParticleActionType.MovingBridge:
-                AudioManager.audioManagerInstance.PlaySound(_movingBridgeSound, obj);
-                break;
+            //case EnumsClass.ParticleActionType.HammerPreparation:
+            //    AudioManager.Instance.PlaySound(_hammerPreparationSound, this.gameObject);
+            //    break;
 
-            case EnumsClass.ParticleActionType.HammerPreparation:
-                AudioManager.audioManagerInstance.PlaySound(_hammerPreparationSound, this.gameObject);
-                break;
+            //case EnumsClass.ParticleActionType.HammerSwing:
+            //    AudioManager.Instance.PlaySound(_hammerSwingSound, this.gameObject);
+            //    break;
 
-            case EnumsClass.ParticleActionType.HammerSwing:
-                AudioManager.audioManagerInstance.PlaySound(_hammerSwingSound, this.gameObject);
-                break;
+            //case EnumsClass.ParticleActionType.HammerHit:
+            //    AudioManager.Instance.PlaySound(_hammerHitSound, this.gameObject);
+            //    break;
 
-            case EnumsClass.ParticleActionType.HammerHit:
-                AudioManager.audioManagerInstance.PlaySound(_hammerHitSound, this.gameObject);
-                break;
-
-            case EnumsClass.ParticleActionType.SmokeBomb:
-                AudioManager.audioManagerInstance.PlaySound(_smokeBombSound, this.gameObject);
-                break;
+            //case EnumsClass.ParticleActionType.SmokeBomb:
+            //    AudioManager.Instance.PlaySound(_smokeBombSound, this.gameObject);
+            //    break;
 
             case EnumsClass.ParticleActionType.RepairKit:
                 effect = Instantiate(_healEffect, obj.transform.position + Vector3.up * 7, obj.transform.rotation);
-                AudioManager.audioManagerInstance.PlaySound(_flameThrowerSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, 1.5f));
                 break;
 
@@ -135,7 +128,6 @@ public class EffectsController : MonoBehaviour
                 particle = effect.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
-                AudioManager.audioManagerInstance.PlaySound(_handGranadeSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
@@ -148,7 +140,6 @@ public class EffectsController : MonoBehaviour
                     particle.Play();
                     StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 }
-                AudioManager.audioManagerInstance.PlaySound(_flameThrowerSound, this.gameObject);
                 break;
 
             case EnumsClass.ParticleActionType.LegsOvercharge:
@@ -171,7 +162,6 @@ public class EffectsController : MonoBehaviour
                 particle.time = 0f;
                 particle.Play();
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
-                AudioManager.audioManagerInstance.PlaySound(_mineSound, this.gameObject);
                 break;
 
             case EnumsClass.ParticleActionType.ShootGun:
@@ -179,7 +169,6 @@ public class EffectsController : MonoBehaviour
                 particle = effect.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
-                AudioManager.audioManagerInstance.PlaySound(_shootGunSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
@@ -188,7 +177,6 @@ public class EffectsController : MonoBehaviour
                 particle = effect.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
-                AudioManager.audioManagerInstance.PlaySound(_assaultRifleSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
@@ -197,7 +185,6 @@ public class EffectsController : MonoBehaviour
                 particle = effect.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
-                AudioManager.audioManagerInstance.StopSoundWithFadeOut(_assaultRifleSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
@@ -206,7 +193,6 @@ public class EffectsController : MonoBehaviour
                 particle = effect.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
                 particle.time = 0f;
                 particle.Play();
-                AudioManager.audioManagerInstance.PlaySound(_rifleSound, this.gameObject);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
 
@@ -216,7 +202,6 @@ public class EffectsController : MonoBehaviour
                 particle.time = 0f;
                 particle.Play();
                 ShakeIt();
-                AudioManager.audioManagerInstance.PlaySound(_mechaExplosionSound, this.gameObject);
                 GameObject spawnerObj = obj.GetComponent<Character>().GetBurningSpawner();
                 effect2 = Instantiate(_burningMechaEffect, spawnerObj.transform.position, spawnerObj.transform.rotation, obj.transform);
                 StartCoroutine(DestroyEffect(effect, particle.main.duration));
@@ -228,7 +213,6 @@ public class EffectsController : MonoBehaviour
                 //particle.time = 0f;
                 //particle.Play();
                 ShakeIt();
-                AudioManager.audioManagerInstance.PlaySound(_mineSound, this.gameObject);
                 //StartCoroutine(DestroyEffect(effect, particle.main.duration));
                 break;
         }

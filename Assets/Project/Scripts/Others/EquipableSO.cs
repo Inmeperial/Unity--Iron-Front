@@ -13,4 +13,5 @@ public abstract class EquipableSO : ArsenalObjectSO
     public int maxUses;
     public int cooldown;
     public int buttonTextFontSize;
+    public SoundData sound;
 }

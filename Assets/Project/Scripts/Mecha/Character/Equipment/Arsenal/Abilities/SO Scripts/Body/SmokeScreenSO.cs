@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "SmokeScreen", menuName = "Create Ability/SmokeScreen")]
+[CreateAssetMenu(fileName = "Smoke Screen", menuName = "Scriptable Objects/Abilities/Body/Smoke Screen")]
 public class SmokeScreenSO : BodyAbilitySO
 {
     public float hpPercentageForSmokeActivation;

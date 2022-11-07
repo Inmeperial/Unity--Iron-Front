@@ -1181,9 +1181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eccfed0bdfa038048a84615203f462d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _soundMotorStart: {fileID: 8300000, guid: 6f274f4b76635ff4691a9ff0ac43697b, type: 3}
-  _soundWalk: {fileID: 8300000, guid: 9ed97d0a552c47d489599b2189e13c49, type: 3}
-  _soundHit: {fileID: 8300000, guid: 66ef0b1a0895d6f4399a8266eca32680, type: 3}
+  _motorStart: {fileID: 11400000, guid: 1f993fea5f243e24f8584bfd03cbfd8c, type: 2}
+  _walk: {fileID: 11400000, guid: 9a4f4df0560a78e48811662babb130eb, type: 2}
+  _hit: {fileID: 11400000, guid: af11f0272a5824248ba2d14c313bec43, type: 2}
 --- !u!54 &931881812042829618
 Rigidbody:
   m_ObjectHideFlags: 0

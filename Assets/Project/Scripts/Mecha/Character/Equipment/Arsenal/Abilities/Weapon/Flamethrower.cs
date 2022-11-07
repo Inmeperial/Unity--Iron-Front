@@ -73,7 +73,9 @@ public class Flamethrower : WeaponAbility
     private void ExecuteAbility()
     {
         //Ataco a todas las unidades que esten en el area de ataque
-        EffectsController.Instance.PlayParticlesEffect(_character.gameObject, EnumsClass.ParticleActionType.FlameThrower);
+
+        PlayVFX(_character.gameObject, EnumsClass.ParticleActionType.FlameThrower);
+        PlaySound(_abilityData.sound, gameObject);
 
         List<Character> charactersHitted = new List<Character>();
 

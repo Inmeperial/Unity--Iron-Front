@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "RepairKit", menuName = "Create ItemSO/RepairKit")]
+[CreateAssetMenu(fileName = "Repair Kit", menuName = "Scriptable Objects/Items/Repair Kit")]
 public class RepairKitSO : ItemSO
 {
     public int healPercentage; 

@@ -1,14 +1,26 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class LandMine : MonoBehaviour
 {
     public int damage;
+    [SerializeField] private SoundData _sound;
+
+    private Collider _collider;
+    private Renderer _renderer;
+
+    private void Start()
+    {
+        _collider = GetComponent<Collider>();
+        _renderer = GetComponent<Renderer>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         Legs legs = other.GetComponent<Legs>();
 
-        if (!legs) return;
+        if (!legs)
+            return;
         
         legs.GetCharacter().SetHurtAnimation();
         legs.ReceiveDamage(damage);
@@ -17,7 +29,29 @@ public class LandMine : MonoBehaviour
 
     public void DestroyMine()
     {
+        StartCoroutine(DestroyTimer());
+    }
+
+    private IEnumerator DestroyTimer()
+    {
+        _collider.enabled = false;
+        _renderer.enabled = false;
+
+        PlayVFX();
+        PlaySound();
+
+        yield return new WaitForSeconds(_sound.Clip.length);
+
+        Destroy(gameObject);
+    }
+
+    private void PlaySound()
+    {
+        AudioManager.Instance.PlaySound(_sound, gameObject);
+    }
+
+    private void PlayVFX()
+    {
         EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Mine);
-        Destroy(gameObject); 
     }
 }

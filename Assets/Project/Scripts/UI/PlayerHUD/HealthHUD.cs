@@ -66,14 +66,14 @@ public class HealthHUD : Initializable
     private void OnMechaSelected(Character mecha)
     {
         Body body = mecha.GetBody();
-        _bodyHealthSlider.maxValue = body.MaxHP;
+        _bodyHealthSlider.maxValue = body.MaxHp;
         _bodyHealthSlider.value = body.CurrentHP;
         _bodyHealthText.text = body.CurrentHP.ToString();
 
         Gun leftGun = mecha.GetLeftGun();
         if (leftGun)
         {
-            _leftGunHealthSlider.maxValue = leftGun.MaxHP;
+            _leftGunHealthSlider.maxValue = leftGun.MaxHp;
             _leftGunHealthSlider.value = leftGun.CurrentHP;
             _leftGunHealthText.text = leftGun.CurrentHP.ToString();
         }
@@ -87,7 +87,7 @@ public class HealthHUD : Initializable
         Gun rightGun = mecha.GetRightGun();
         if (rightGun)
         {
-            _rightGunHealthSlider.maxValue = rightGun.MaxHP;
+            _rightGunHealthSlider.maxValue = rightGun.MaxHp;
             _rightGunHealthSlider.value = rightGun.CurrentHP;
             _rightGunHealthText.text = rightGun.CurrentHP.ToString();
         }
@@ -99,7 +99,7 @@ public class HealthHUD : Initializable
         }
 
         Legs legs = mecha.GetLegs();
-        _legsHealthSlider.maxValue = legs.MaxHP;
+        _legsHealthSlider.maxValue = legs.MaxHp;
         _legsHealthSlider.value = legs.CurrentHP;
         _legsHealthText.text = legs.CurrentHP.ToString();
 

@@ -60,6 +60,16 @@ public abstract class Equipable : MonoBehaviour
         return _equipableType;
     }
 
+    public virtual void PlaySound(SoundData sound, GameObject soundSource)
+    {
+        AudioManager.Instance.PlaySound(sound, soundSource);
+    }
+
+    public virtual void PlayVFX(GameObject source, EnumsClass.ParticleActionType particleType)
+    {
+        EffectsController.Instance.PlayParticlesEffect(source, particleType);
+    }
+
     protected virtual void OnDestroy()
     {
         OnEquipableUsed = null;

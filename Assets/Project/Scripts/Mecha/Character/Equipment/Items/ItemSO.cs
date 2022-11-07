@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class ItemSO : EquipableSO
+﻿public class ItemSO : EquipableSO
 {
     public Item itemPrefab;
 

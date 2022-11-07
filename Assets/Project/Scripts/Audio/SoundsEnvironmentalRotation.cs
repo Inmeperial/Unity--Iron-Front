@@ -2,33 +2,33 @@
 
 public class SoundsEnvironmentalRotation : MonoBehaviour
 {
-    public AudioClip[] soundsEnvironmentalFxArray;
-    private float _durationSound = 0;
+    //public AudioClip[] soundsEnvironmentalFxArray;
+    //private float _durationSound = 0;
 
-    void Start()
-    {
-        this.transform.position = new Vector3(66.5f, 0, 66.5f);
-    }
+    //void Start()
+    //{
+    //    this.transform.position = new Vector3(66.5f, 0, 66.5f);
+    //}
 
-    void Update()
-    {
-        PlaySoundRandomPos();
-    }
+    //void Update()
+    //{
+    //    PlaySoundRandomPos();
+    //}
 
-    private void PlaySoundRandomPos()
-    {
-        _durationSound -= Time.deltaTime;
-        if (_durationSound <= 0)
-        {
-            AudioClip clip = ChangeRandomSound();
-            AudioManager.audioManagerInstance.PlaySound(clip, this.gameObject);
-            _durationSound = clip.length;
-        }
-    }
+    //private void PlaySoundRandomPos()
+    //{
+    //    _durationSound -= Time.deltaTime;
+    //    if (_durationSound <= 0)
+    //    {
+    //        AudioClip clip = ChangeRandomSound();
+    //        AudioManager.Instance.PlaySound(clip, this.gameObject);
+    //        _durationSound = clip.length;
+    //    }
+    //}
 
-    private AudioClip ChangeRandomSound()
-    {
-        int num = UnityEngine.Random.Range(0, soundsEnvironmentalFxArray.Length);
-        return soundsEnvironmentalFxArray[num];
-    }
+    //private AudioClip ChangeRandomSound()
+    //{
+    //    int num = UnityEngine.Random.Range(0, soundsEnvironmentalFxArray.Length);
+    //    return soundsEnvironmentalFxArray[num];
+    //}
 }

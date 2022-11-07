@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "LegsOvercharge", menuName = "Create Ability/LegsOvercharge")]
+[CreateAssetMenu(fileName = "LegsOvercharge", menuName = "Scriptable Objects/Abilities/Legs/LegsOvercharge")]
 public class LegsOverChargeSO : LegsAbilitySO
 {
     

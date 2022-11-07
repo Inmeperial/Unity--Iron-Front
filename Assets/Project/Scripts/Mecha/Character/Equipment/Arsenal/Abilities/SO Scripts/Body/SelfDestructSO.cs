@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "SelfDestruct", menuName = "Create Ability/SelfDestruct")]
+[CreateAssetMenu(fileName = "Self Destruct", menuName = "Scriptable Objects/Abilities/Body/Self Destruct")]
 public class SelfDestructSO : BodyAbilitySO
 {
     public float selfDestructRange;

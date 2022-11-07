@@ -222,7 +222,7 @@ public class AttackHUD : Initializable
     {
         button.ResetButton();
         button.SetMechas(attacker, defender, part);
-        button.SetSlider(0, part.MaxHP);
+        button.SetSlider(0, part.MaxHp);
         button.UpdateHP(part.CurrentHP);
         button.UpdateDamagePreviewSlider();
         button.ShowButton();

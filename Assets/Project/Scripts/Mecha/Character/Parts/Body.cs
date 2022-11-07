@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class Body : MechaPart
 {
+    private BodySO _data;
     private float _maxWeight;
 
     public override void SetPartData(Character character, PartSO data, Color partColor)
     {
         base.SetPartData(character, data, partColor);
 
-        BodySO bodyData = data as BodySO;
-        _maxWeight = bodyData.maxWeight;
+        _data = data as BodySO;
+        _maxWeight = _data.maxWeight;
     }
 
     public override void ReceiveDamage(List<Tuple<int,int>> damages)
     {
-        if (_currentHP <= 0)
+        if (IsPartBroken())
             return;
 
         int totalDamage = 0;
@@ -56,16 +57,18 @@ public class Body : MechaPart
 
         _myChar.SetHurtAnimation();
 
+        PlayTakeDamageSound();
+
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
 
-        if (_currentHP <= 0)
-            _myChar.Dead();
+        if (IsPartBroken())
+            DestroyPart();
     }
     
     public override void ReceiveDamage(int damage)
     {
-        if (_currentHP <= 0)
+        if (IsPartBroken())
             return;
 
         float hp = _currentHP - damage;
@@ -88,8 +91,10 @@ public class Body : MechaPart
         
         _myChar.SetHurtAnimation();
 
-        if (CurrentHP <= 0)
-            _myChar.Dead();
+        PlayTakeDamageSound();
+
+        if (IsPartBroken())
+            DestroyPart();
     }
 
     public float GetMaxWeight()
@@ -105,5 +110,21 @@ public class Body : MechaPart
 
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
+    }
+
+    public override void PlayTakeDamageSound()
+    {
+        AudioManager.Instance.PlaySound(_data.damageSound, gameObject);
+    }
+
+    public override void PlayDestroySound()
+    {
+        AudioManager.Instance.PlaySound(_data.destroySound, gameObject);
+    }
+
+    protected override void DestroyPart()
+    {
+        base.DestroyPart();
+        _myChar.Dead();
     }
 }

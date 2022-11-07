@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Gun", menuName = "Create Gun")]
+[CreateAssetMenu(fileName = "Gun", menuName = "Scriptable Objects/Parts/Gun")]
 public class GunSO : ArsenalObjectSO
 {
     public Gun prefab;
@@ -16,4 +16,7 @@ public class GunSO : ArsenalObjectSO
     public int attackRange;
     public int bodyPartsSelectionQuantity;
     public float weight;
+    public SoundData attackSound;
+    public SoundData takeDamageSound;
+    public SoundData destroySound;
 }
