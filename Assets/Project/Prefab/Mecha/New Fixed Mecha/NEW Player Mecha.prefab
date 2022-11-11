@@ -530,8 +530,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _waypointsPathfinding: {fileID: 7950991396830017536}
   _gridMovement: {fileID: 3772957672682265908}
-  _animationMechaHandler: {fileID: 9185803483190987991}
-  _audioMechaHandler: {fileID: 9212935733925119357}
   _raycastToTile: {fileID: 560329102395795256}
   _rayForBody: {fileID: 3581792791412369293}
   _rayForLeftArm: {fileID: 4840905597516301830}
@@ -550,7 +548,7 @@ MonoBehaviour:
     m_Bits: 256
   _mechaEquipment: {fileID: 11400000, guid: bb67f7b610dc7c443a41d01fc5815fa5, type: 2}
   _myIcon: {fileID: 21300000, guid: bdf264d73005a474190b69f6e9becb89, type: 3}
-  _walk: {fileID: 0}
+  _walk: {fileID: 11400000, guid: 9a4f4df0560a78e48811662babb130eb, type: 2}
   _motorStart: {fileID: 11400000, guid: 1f993fea5f243e24f8584bfd03cbfd8c, type: 2}
 --- !u!120 &3581792791412369293 stripped
 LineRenderer:
@@ -606,27 +604,3 @@ LineRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 2565589538968335673}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9185803483190987991 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6692429923955472878, guid: d603a2e8dd3c1554e91f5b0d03206348,
-    type: 3}
-  m_PrefabInstance: {fileID: 2565589538968335673}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116338158735170872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7c48c016f3ca194d9ec36f1d4d61064, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &9212935733925119357 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6647350619868131396, guid: d603a2e8dd3c1554e91f5b0d03206348,
-    type: 3}
-  m_PrefabInstance: {fileID: 2565589538968335673}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116338158735170872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eccfed0bdfa038048a84615203f462d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

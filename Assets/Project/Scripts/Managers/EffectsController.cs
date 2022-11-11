@@ -43,6 +43,9 @@ public class EffectsController : MonoBehaviour
     {
         PlayParticlesEffect(particlePrefab, position, forward, out ParticleSystem particle);
 
+        if (!particle)
+            return;
+
         _particlesToDestroy.Add(particle);
     }
 
