@@ -107,7 +107,14 @@ public class Shotgun : Gun
         _multipleHitRoulette.Add("Normal", m > 0 ? m : 0);
     }
 
-    protected override void PlayLeftSideAttackAnimation() => _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
+    public void PlayShootParticle() //call in Animaton
+    {
+        if (_myChar.IsDead())
+            return;
 
-    protected override void PlayRightSideAttackAnimation() => _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
+        if (_data.attackParticles.Length < 1)
+            return;
+
+        EffectsController.Instance.PlayParticlesEffect(_data.attackParticles[0], _shootParticleSpawn.transform.position, _myChar.transform.forward);
+    }
 }

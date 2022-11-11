@@ -88,14 +88,4 @@ public class Shield : Gun
         _selected = false;
         _myChar.DeactivateAttack();
     }
-
-    protected override void PlayLeftSideAttackAnimation()
-    {
-        
-    }
-
-    protected override void PlayRightSideAttackAnimation()
-    {
-        
-    }
 }

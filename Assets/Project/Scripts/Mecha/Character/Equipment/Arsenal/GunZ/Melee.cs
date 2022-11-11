@@ -14,8 +14,4 @@
     public override void Deselect()
     {
     }
-
-    protected override void PlayLeftSideAttackAnimation() => _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
-
-    protected override void PlayRightSideAttackAnimation() => _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
 }

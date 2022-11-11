@@ -31,3 +31,10 @@ MonoBehaviour:
   attackSound: {fileID: 11400000, guid: 5091b50f97a5994469ea6724b4ac1ed8, type: 2}
   takeDamageSound: {fileID: 11400000, guid: af11f0272a5824248ba2d14c313bec43, type: 2}
   destroySound: {fileID: 11400000, guid: 16b8e1669a0194142994edb7096e94f6, type: 2}
+  attackParticles:
+  - {fileID: 19800006, guid: f47cb9d88f4bc6c4bb7441e962c2c1a5, type: 3}
+  damageParticle: {fileID: 19800004, guid: b46890100828db6429ff69c322b45893, type: 3}
+  destroyParticle: {fileID: 5832220434105293201, guid: c1aba6e9b1355294eb669f3e9ad7ce52,
+    type: 3}
+  leftAnimationBoolName: isSniperAttackLeft
+  rightAnimationBoolName: isSniperAttackRight

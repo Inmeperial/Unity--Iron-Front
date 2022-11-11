@@ -1080,9 +1080,7 @@ GameObject:
   - component: {fileID: 4401606349828248695}
   - component: {fileID: 1713323979200391181}
   - component: {fileID: 5606232335563820345}
-  - component: {fileID: 6692429923955472878}
   - component: {fileID: 868427777965205450}
-  - component: {fileID: 6647350619868131396}
   - component: {fileID: 931881812042829618}
   - component: {fileID: 5114372895397944262}
   - component: {fileID: 7363384926149189691}
@@ -1143,18 +1141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5512746b7d2810469f8957a64c919cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6692429923955472878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4522863346062059521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7c48c016f3ca194d9ec36f1d4d61064, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &868427777965205450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1167,23 +1153,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74354ff2dd0251447b4ccaae920f9e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnerMechaBurning: {fileID: 8678082812712614271}
-  _arrParticleObj: []
---- !u!114 &6647350619868131396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4522863346062059521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eccfed0bdfa038048a84615203f462d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _motorStart: {fileID: 11400000, guid: 1f993fea5f243e24f8584bfd03cbfd8c, type: 2}
-  _walk: {fileID: 11400000, guid: 9a4f4df0560a78e48811662babb130eb, type: 2}
-  _hit: {fileID: 11400000, guid: af11f0272a5824248ba2d14c313bec43, type: 2}
+  _exhaust: {fileID: 8678082812712614271}
+  _powerfulExhaustMinSize: 2
+  _powerfulExhaustMaxSize: 4
+  _powerfulExhaustLifetime: 4
+  _normalExhaustMinSize: 1
+  _normalExhaustMaxSize: 2
+  _normalExhaustLifetime: 2
+  _particlesPrefabs: []
 --- !u!54 &931881812042829618
 Rigidbody:
   m_ObjectHideFlags: 0

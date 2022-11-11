@@ -50,9 +50,7 @@ public class RepairKit : Item
 
 	private void UseItem()
     {
-		EffectsController.Instance.PlayParticlesEffect(_character.GetPositionTile().gameObject, EnumsClass.ParticleActionType.RepairKit);
-
-		AudioManager.Instance.PlaySound(_data.sound, _character.gameObject);
+		
 
 		Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 
@@ -80,7 +78,11 @@ public class RepairKit : Item
 		if (unitTeam != _character.GetUnitTeam())
 			return;
 
-		RepairUnit(selectedUnit);
+        EffectsController.Instance.PlayParticlesEffect(_data.particleEffect, selectedUnit.transform.position, selectedUnit.transform.forward);
+
+        AudioManager.Instance.PlaySound(_data.sound, _character.gameObject);
+
+        RepairUnit(selectedUnit);
 
 		ItemUsed();
 

@@ -65,9 +65,23 @@ public abstract class MechaPart : MonoBehaviour, IDamageable
         return _weight;
     }
 
-    public abstract void ReceiveDamage(List<Tuple<int, int>> damages);
+    public virtual void ReceiveDamage(List<Tuple<int, int>> damages)
+    {
+        if (IsPartBroken())
+            return;
 
-    public abstract void ReceiveDamage(int damage);
+        PlayTakeDamageSound();
+        PlayTakeDamageVFX();
+    }
+
+    public virtual void ReceiveDamage(int damage)
+    {
+        if (IsPartBroken())
+            return;
+
+        PlayTakeDamageSound();
+        PlayTakeDamageVFX();
+    }
 
     public virtual void Heal(int healAmount)
     {
@@ -93,7 +107,8 @@ public abstract class MechaPart : MonoBehaviour, IDamageable
 
     public abstract void PlayTakeDamageSound();
     public abstract void PlayDestroySound();
-
+    public abstract void PlayTakeDamageVFX();
+    public abstract void PlayDestroyVFX();
     protected virtual bool IsPartBroken()
     {
         return _currentHP <= 0;
@@ -102,5 +117,6 @@ public abstract class MechaPart : MonoBehaviour, IDamageable
     protected virtual void DestroyPart()
     {
         PlayDestroySound();
+        PlayDestroyVFX();
     }
 }

@@ -6,9 +6,11 @@ using UnityEngine;
 
 public abstract class Gun : MechaPart
 {
+    [Header("References")]
     [SerializeField] protected Renderer[] _renderers;
     [SerializeField] protected GameObject _damageParticleSpawner;
     [SerializeField] protected GameObject _shootParticleSpawn;
+
     protected GunSO _data;
     protected EnumsClass.GunsType _gunType;
     protected int _availableBullets;
@@ -21,10 +23,14 @@ public abstract class Gun : MechaPart
     //Nada que ver con la habilidad que se le equipa
     protected bool _gunSkillAvailable;
     protected string _location;
-    protected AnimationMechaHandler _animationMechaHandler;
 
+    protected Animator _animator;
     //private bool _abilityCreated;
 
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
     #region Getters
     public int GetMaxBullets()
     {
@@ -150,7 +156,10 @@ public abstract class Gun : MechaPart
         //_abilityCreated = true;
     }
 
-    public void SetAnimationHandler(AnimationMechaHandler animationMechaHandler) => _animationMechaHandler = animationMechaHandler;
+    //public void SetAnimationHandler(Animator animator)
+    //{
+    //    _animator = animator;
+    //}
 
     public void ResetGun()
     {
@@ -304,8 +313,7 @@ public abstract class Gun : MechaPart
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void ReceiveDamage(List<Tuple<int,int>> damages)
     {
-        if (IsPartBroken()) 
-            return;
+        base.ReceiveDamage(damages);
         
         int totalDamage = 0;
         Vector3 pos = transform.position;
@@ -314,8 +322,6 @@ public abstract class Gun : MechaPart
             totalDamage += damages[i].Item1;
             float hp = _currentHP - damages[i].Item1;
             _currentHP = hp > 0 ? hp : 0;
-            EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.Damage);
-            //EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.Hit);
 
             int item = damages[i].Item2;
             switch (item)
@@ -348,14 +354,10 @@ public abstract class Gun : MechaPart
     //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void ReceiveDamage(int damage)
     {
-        if (IsPartBroken()) 
-            return;
-        
+        base.ReceiveDamage(damage);
+
         float hp = _currentHP - damage;
         _currentHP = hp > 0 ? hp : 0;
-
-        EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.Damage);
-        //EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
 
         Vector3 pos = transform.position;
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, pos);
@@ -388,7 +390,10 @@ public abstract class Gun : MechaPart
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
     }
-    public MasterShaderScript GetMasterShader() => _masterShader;
+    public MasterShaderScript GetMasterShader()
+    {
+        return _masterShader;
+    }
 
     public virtual void ExecuteAttackAnimation()
     {
@@ -406,18 +411,45 @@ public abstract class Gun : MechaPart
                 break;
         }
     }
+    protected virtual void PlayLeftSideAttackAnimation()
+    {
+        _animator.SetBool(_data.leftAnimationBoolName, true);
+    }
+    protected virtual void PlayRightSideAttackAnimation()
+    {
+        _animator.SetBool(_data.rightAnimationBoolName, true);
+    }
+
+    protected void AnimatorSetBool(string boolName, bool state)
+    {
+        _animator.SetBool(boolName, state);
+    }
+
+    public void EndAnimation() //Call in animation
+    {
+        string boolName = "";
+
+        switch (_location)
+        {
+            case "Left":
+                boolName = _data.leftAnimationBoolName;
+                break;
+
+            case "Right":
+                boolName = _data.rightAnimationBoolName;
+                break;
+        }
+
+        _animator.SetBool(boolName, false);
+    }
 
     protected override void DestroyPart()
     {
         base.DestroyPart();
-        EffectsController.Instance.PlayParticlesEffect(_damageParticleSpawner, EnumsClass.ParticleActionType.DestroyPart);
         _myChar.ArmDestroyed(_location, _ability);
         TurnOff();
 
     }
-    protected abstract void PlayLeftSideAttackAnimation();
-    protected abstract void PlayRightSideAttackAnimation();
-
     public override void PlayTakeDamageSound()
     {
         AudioManager.Instance.PlaySound(_data.takeDamageSound, gameObject);
@@ -427,7 +459,15 @@ public abstract class Gun : MechaPart
     {
         AudioManager.Instance.PlaySound(_data.destroySound, gameObject);
     }
+    public override void PlayTakeDamageVFX()
+    {
+        EffectsController.Instance.PlayParticlesEffect(_data.damageParticle, transform.position, transform.forward);
+    }
 
+    public override void PlayDestroyVFX()
+    {
+        EffectsController.Instance.PlayParticlesEffect(_data.destroyParticle, transform.position, transform.forward);
+    }
     private void OnDestroy()
     {
         OnHealthChanged = null;

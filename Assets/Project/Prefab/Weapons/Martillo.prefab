@@ -179,8 +179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7ab4ed85b02484ebba161d3842921c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _renderer: {fileID: 0}
   isWeapon: 1
-  mechaEnum: 0
   texturesCuerpo:
   - {fileID: 2800000, guid: 11e83bb4586b84e4086da88132e35974, type: 3}
   - {fileID: 2800000, guid: af93befb1188490448e1451c9eb3681b, type: 3}
@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 2899616444058808720}
   - component: {fileID: 8618703884733233169}
   - component: {fileID: 6511842345388835907}
+  - component: {fileID: 3458646989518810162}
   m_Layer: 9
   m_Name: Martillo
   m_TagString: Untagged
@@ -257,8 +258,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77d8c3b51790c043ac04da1473255c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _models:
-  - {fileID: 1039567301696490403}
-  _damageParticleSpawner: {fileID: 410329074202616424}
+  _skinnedMeshRenderer: {fileID: 0}
+  _collider: {fileID: 0}
+  _particleSpawner: []
   _masterShader: {fileID: 968496812406592619}
-  _particleSpawn: {fileID: 1039567301696490403}
+  _renderers: []
+  _damageParticleSpawner: {fileID: 410329074202616424}
+  _shootParticleSpawn: {fileID: 0}
+--- !u!95 &3458646989518810162
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2899616444058808721}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 887d94c7550ffdc489722b5580219e41, type: 3}
+  m_Controller: {fileID: 9100000, guid: 8e9aaa256c49bcb4bbea6c223833367d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

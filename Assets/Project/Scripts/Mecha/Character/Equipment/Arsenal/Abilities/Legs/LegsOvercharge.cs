@@ -38,7 +38,7 @@ public class LegsOvercharge : Ability
 
     public override void Use()
     {
-        PlayVFX(_character.GetPositionTile().gameObject, EnumsClass.ParticleActionType.LegsOvercharge);
+        PlayVFX(_abilityData.particleEffect, _character.GetLegs().transform.position, _character.transform.forward);
 
         PlaySound(_abilityData.sound, gameObject);
 

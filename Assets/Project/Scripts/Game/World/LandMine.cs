@@ -5,6 +5,7 @@ public class LandMine : MonoBehaviour
 {
     public int damage;
     [SerializeField] private SoundData _sound;
+    [SerializeField] private ParticleSystem _particleEffect;
 
     private Collider _collider;
     private Renderer _renderer;
@@ -22,7 +23,6 @@ public class LandMine : MonoBehaviour
         if (!legs)
             return;
         
-        legs.GetCharacter().SetHurtAnimation();
         legs.ReceiveDamage(damage);
         DestroyMine();
     }
@@ -52,6 +52,6 @@ public class LandMine : MonoBehaviour
 
     private void PlayVFX()
     {
-        EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Mine);
+        EffectsController.Instance.PlayParticlesEffect(_particleEffect, transform.position, transform.forward);
     }
 }

@@ -8,12 +8,8 @@ using UnityEngine.EventSystems;
 public class Character : Initializable
 {
     [Header("References")]
-    //[SerializeField] protected WorldUI _worldUI;
     [SerializeField] protected WaypointsPathfinding _waypointsPathfinding;
     [SerializeField] protected GridMovement _gridMovement;
-    [SerializeField] protected ParticleMechaHandler _particleMechaHandler;
-    [SerializeField] protected AnimationMechaHandler _animationMechaHandler;
-    [SerializeField] protected AudioMechaHandler _audioMechaHandler;
 
     [Header("Rays")]
     [SerializeField] protected Transform _raycastToTile;
@@ -52,6 +48,10 @@ public class Character : Initializable
     [Header("Data")]
     [SerializeField] protected MechaEquipmentSO _mechaEquipment;
     [SerializeField] protected Sprite _myIcon;
+
+    [Header("Sound")]
+    [SerializeField] private SoundData _walk;
+    [SerializeField] private SoundData _motorStart;
 
     protected string _myName;
 
@@ -108,6 +108,8 @@ public class Character : Initializable
 
     protected float _startingHeight;
 
+    protected Animator _animator;
+
     public Action<Character> OnMechaSelected;
     public Action OnMechaDeselected;
     public Action OnSelectingEnemy;
@@ -126,6 +128,7 @@ public class Character : Initializable
     public virtual void Awake()
     {
         _startingHeight = transform.position.y;
+        _animator = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -177,9 +180,6 @@ public class Character : Initializable
     protected void Move()
     {
         _moving = true;
-        //ButtonsUIManager.Instance.DeactivateBodyPartsContainer();
-        //ButtonsUIManager.Instance.DeactivateEquipablesButtons();
-        //TurnManager.Instance.UnitIsMoving();
         TileHighlight.Instance.characterMoving = true;
 
         if (_myPositionTile)
@@ -193,70 +193,14 @@ public class Character : Initializable
 
         OnBeginMove?.Invoke();
 
-        _animationMechaHandler.SetIsWalkingAnimatorTrue();
-        _audioMechaHandler.SetPlayMotorStart();
-        _particleMechaHandler.SetMachineOn(true);
+        PlayWalkAnimation();
+
+        AudioManager.Instance.PlaySound(_motorStart, this.gameObject);
+
         _gridMovement.StartMovement(_path);
     }
 
-    /// <summary>
-    /// Creates shoot particle at selected gun position.
-    /// </summary>
-    //public void Shoot()
-    //{
-    //    if (!_selectedGun)
-    //        return;
-
-    //    //TODO: AGREGAR LA EJECUCION DE LA ANIMACION (EL SWITCH RANCIO) AL ARMA
-    //    if (_selectedGun.GetLocation() == "Right")
-    //    {
-    //        switch (_rightGun.GetGunType())
-    //        {
-    //            //case EnumsClass.GunsType.None:
-    //            //    break;
-    //            //case EnumsClass.GunsType.AssaultRifle:
-    //            //    _animationMechaHandler.SetIsMachineGunAttackRightAnimatorTrue();
-    //            //    break;
-    //            case EnumsClass.GunsType.Melee:
-    //                _animationMechaHandler.SetIsHammerAttackRightAnimatorTrue();
-    //                break;
-    //            case EnumsClass.GunsType.Rifle:
-    //                _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
-    //                break;
-    //            case EnumsClass.GunsType.Shield:
-    //                break;
-    //            case EnumsClass.GunsType.Shotgun:
-    //                _animationMechaHandler.SetIsShotgunAttackRightAnimatorTrue();
-    //                break;
-    //        }
-    //    }
-    //    else if (_selectedGun.GetLocation() == "Left")
-    //    {
-    //        switch (_leftGun.GetGunType())
-    //        {
-    //            case EnumsClass.GunsType.None:
-    //                break;
-    //            case EnumsClass.GunsType.AssaultRifle:
-    //                _animationMechaHandler.SetIsMachineGunAttackLeftAnimatorTrue();
-    //                break;
-    //            case EnumsClass.GunsType.Melee:
-    //                _animationMechaHandler.SetIsHammerAttackLeftAnimatorTrue();
-    //                break;
-    //            case EnumsClass.GunsType.Rifle:
-    //                _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
-    //                break;
-    //            case EnumsClass.GunsType.Shield:
-    //                break;
-    //            case EnumsClass.GunsType.Shotgun:
-    //                _animationMechaHandler.SetIsShotgunAttackLeftAnimatorTrue();
-    //                break;
-    //        }
-    //    }
-    //}
-
-    /// <summary>
-    /// Select Left Gun and repaint tiles.
-    /// </summary>
+    
     public void SelectLeftGun()
     {
         if (_selectingEnemy)
@@ -284,24 +228,6 @@ public class Character : Initializable
         ResetTilesInAttackRange();
         ResetTilesInMoveRange();
 
-        //if (_selectedGun.GetGunType() != GunsType.Shield)
-        //{
-        //    if (_canAttack)
-        //    {
-        //        if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
-        //        {
-        //            if (_unitTeam == Team.Green)
-        //                PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
-        //            else
-        //                PaintTilesInAttackRange(_myPositionTile, 0);
-
-        //            CheckEnemiesInAttackRange(); 
-        //        }
-        //    }
-        //}
-        //else if (!_isOnElevator && _canAttack)
-        //        _selectedGun.Ability();
-
         if (_canAttack)
         {
             if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
@@ -327,9 +253,6 @@ public class Character : Initializable
         OnLeftGunSelected?.Invoke();
     }
 
-    /// <summary>
-    /// Select Right Gun and repaint tiles.
-    /// </summary>
     public void SelectRightGun()
     {
         if (_selectingEnemy)
@@ -350,36 +273,12 @@ public class Character : Initializable
             LoadRotationBeforeLookingAtEnemy();
 
         _enemiesInRange.Clear();
-        
-        //ResetRotationAndRays();
-        //_isRotated = false;
 
-        //RaysOff();
-        //LoadRotationOnDeselect();
         _selectedGun = _rightGun;
         _leftGunSelected = false;
         _rightGunSelected = true;
         ResetTilesInAttackRange();
         ResetTilesInMoveRange();
-
-        //if (_selectedGun.GetGunType() != GunsType.Shield)
-        //{
-        //    if (_canAttack)
-        //    {
-        //        if (!_isOnElevator || _isOnElevator && _selectedGun.GetAttackRange() > 1)
-        //        {
-        //            if (_unitTeam == Team.Green)
-        //                PaintTilesInAttackRange(_path.Count == 0 ? _myPositionTile : _path[_path.Count - 1], 0);
-        //            else
-        //                PaintTilesInAttackRange(_myPositionTile, 0);
-
-
-        //            CheckEnemiesInAttackRange(); 
-        //        }
-        //    }
-        //}
-        //else if (!_isOnElevator && _canAttack)
-        //    _selectedGun.Ability();
 
         if (_canAttack)
         {
@@ -433,9 +332,7 @@ public class Character : Initializable
         }
     }
 
-    /// <summary>
-    /// Select Character and paint tiles.
-    /// </summary>
+
     public virtual void SelectThisUnit()
     {
         if (_isDead)
@@ -518,9 +415,6 @@ public class Character : Initializable
         }
     }
 
-    /// <summary>
-    /// Deselect Character and clear tiles.
-    /// </summary>
     public void DeselectThisUnit()
     {
         if (_isDead)
@@ -544,8 +438,6 @@ public class Character : Initializable
             enemy.MechaOutsideAttackRange();
         }
 
-        // if (_canMove)
-        //     _currentSteps = legs.GetMaxSteps();
         ResetInRangeLists();
         _path.Clear();
         TileHighlight.Instance.PathLinesClear();
@@ -557,10 +449,6 @@ public class Character : Initializable
         OnMechaDeselected?.Invoke();
     }
 
-    /// <summary>
-    /// Rotate Character towards enemy.
-    /// </summary>
-    /// <param name="target">Target to look at.</param>
     public void RotateTowardsEnemy(Transform target)
     {
         Vector3 pos = target.position;
@@ -568,9 +456,7 @@ public class Character : Initializable
         transform.LookAt(pos);
     }
 
-    /// <summary>
-    /// Cast a ray to given position. Returns true if collided tag is the same as given tag, false if not.
-    /// </summary>
+
     public bool RayToPartsForAttack(Vector3 partPosition, string tagToCheck, bool drawRays)
     {
         if (partPosition == Vector3.zero)
@@ -581,7 +467,7 @@ public class Character : Initializable
 
         Physics.Raycast(position, dir, out RaycastHit hit, 1000f);
         Transform hitObj = hit.collider.transform;
-        //bool goodHit = hitObj.gameObject.CompareTag(tagToCheck) && hitObj.position == partPosition;
+
         bool targetHit = false;
 
         LineRenderer renderer = null;
@@ -595,8 +481,6 @@ public class Character : Initializable
                     else
                         Debug.Log("es del equipo: " + hitObj.GetComponent<Body>().GetCharacter().GetUnitTeam().ToString());
                 }
-                else
-                    Debug.Log("tag hitteado: " + hitObj.tag + " - tag buscado: " + tagToCheck);
                 
                 renderer = _rayForBody;
                 break;
@@ -609,8 +493,6 @@ public class Character : Initializable
                     else
                         Debug.Log("es del equipo: " + hitObj.GetComponent<Legs>().GetCharacter().GetUnitTeam().ToString());
                 }
-                else
-                    Debug.Log("tag hitteado: " + hitObj.tag + " - tag buscado: " + tagToCheck);
 
                 renderer = _rayForLegs;
                 break;
@@ -623,8 +505,6 @@ public class Character : Initializable
                     else
                         Debug.Log("es del equipo: " + hitObj.GetComponent<Gun>().GetCharacter().GetUnitTeam().ToString());
                 }
-                else
-                    Debug.Log("tag hitteado: " + hitObj.tag + " - tag buscado: " + tagToCheck);
 
                 renderer = _rayForRightArm;
                 break;
@@ -637,8 +517,6 @@ public class Character : Initializable
                     else
                         Debug.Log("es del equipo: " + hitObj.GetComponent<Gun>().GetCharacter().GetUnitTeam().ToString());
                 }
-                else
-                    Debug.Log("tag hitteado: " + hitObj.tag + " - tag buscado: " + tagToCheck);
 
                 renderer = _rayForLeftArm;
                 break;
@@ -695,7 +573,10 @@ public class Character : Initializable
         _rayForRightArm.materials[0] = null;
     }
 
-    public void RaysOffDelay() => StartCoroutine(RaysOffWithDelay());
+    public void RaysOffDelay()
+    {
+        StartCoroutine(RaysOffWithDelay());
+    }
 
     IEnumerator RaysOffWithDelay()
     {
@@ -703,11 +584,20 @@ public class Character : Initializable
         RaysOff();
     }
 
-    public void LegsOverchargeActivate() => _legsOvercharged = true;
+    public void LegsOverchargeActivate()
+    {
+        _legsOvercharged = true;
+    }
 
-    public void LegsOverchargeDeactivate() => _legsOvercharged = false;
+    public void LegsOverchargeDeactivate()
+    {
+        _legsOvercharged = false;
+    }
 
-    public void AddEquipable(Equipable equipable) => _equipables.Add(equipable);
+    public void AddEquipable(Equipable equipable)
+    {
+        _equipables.Add(equipable);
+    }
     #endregion
 
     #region Getters
@@ -716,16 +606,6 @@ public class Character : Initializable
     {
         return _body;
     }
-
-    // public Arm GetLeftArm()
-    // {
-    //     return _leftArm;
-    // }
-    //
-    // public Arm GetRightArm()
-    // {
-    //     return _rightArm;
-    // }
 
     public Legs GetLegs() 
     {
@@ -782,7 +662,6 @@ public class Character : Initializable
             TileHighlight.Instance.PaintLastTileInPath(_targetTile);
         }
     }
-    //public WorldUI GetMyUI() => _worldUI;
 
     public int GetCurrentSteps()
     {
@@ -821,8 +700,7 @@ public class Character : Initializable
     private Tile GetTileBelow()
     {
         Vector3 pos = _raycastToTile.position;
-        //Works at this height after prefab update
-        //pos.y = 3;
+
         Physics.Raycast(pos, Vector3.down, out RaycastHit hit, LayerMask.NameToLayer("GridBlock"));
 
         Tile tile = hit.transform.gameObject.GetComponent<Tile>();
@@ -953,11 +831,6 @@ public class Character : Initializable
     public Equipable GetSelectedEquipable()
     {
         return _equipable;
-    }
-
-    public GameObject GetBurningSpawner()
-    {
-        return _particleMechaHandler.GetBurningSpawnerFromParticleMechaHandler();
     }
 
     public bool IsOverweight()
@@ -1096,10 +969,6 @@ public class Character : Initializable
         }
     }
 
-
-    /// <summary>
-    /// Unpaint Tiles in Character attack range.
-    /// </summary>
     public void ResetTilesInAttackRange()
     {
         TileHighlight.Instance.ClearTilesInAttackRange(_tilesInAttackRange);
@@ -1107,9 +976,6 @@ public class Character : Initializable
         _tilesForAttackChecked.Clear();
     }
 
-    /// <summary>
-    /// Unpaint Tiles in Character move range.
-    /// </summary>
     public void ResetTilesInMoveRange()
     {
         TileHighlight.Instance.ClearTilesInMoveRange(_tilesInMoveRange);
@@ -1117,9 +983,6 @@ public class Character : Initializable
         _tilesForMoveChecked.Clear();
     }
 
-    /// <summary>
-    /// Clear  lists of enemies in attack range, tiles in move and attack range. 
-    /// </summary>
     public void ResetInRangeLists()
     {
         foreach (Character enemy in _enemiesInRange)
@@ -1143,9 +1006,6 @@ public class Character : Initializable
         TileHighlight.Instance.AddTilesInMoveRange(_tilesInMoveRange);
     }
 
-    /// <summary>
-    /// Reset Character for new turn.
-    /// </summary>
     public virtual void EndTurn()
     {
         if (_isDead)
@@ -1183,9 +1043,6 @@ public class Character : Initializable
         _targetTile = null;
     }
 
-    /// <summary>
-    /// Executed when Character reached the end of the path.
-    /// </summary>
     public virtual void ReachedEnd()
     {
         SetCharacterMoveState(false);
@@ -1212,36 +1069,30 @@ public class Character : Initializable
         _myPositionTile.unitAboveSelected = true;
         _myPositionTile.MouseOverColor();
         _targetTile = null;
-        //TurnManager.Instance.UnitStoppedMoving();
+
         _waypointsPathfinding.ResetPath();
         _tilesForAttackChecked.Clear();
         _tilesInAttackRange.Clear();
-        _animationMechaHandler.SetIsWalkingAnimatorFalse();
-        _audioMechaHandler.SetMuteWalk();
-        _particleMechaHandler.SetMachineOn(false);
+        StopWalkAnimation();
 
+        AudioManager.Instance.PlaySound(_motorStart, gameObject);
+
+        OnEndMove?.Invoke();
+        
         if (!CanAttack())
             return;
 
         PaintTilesInAttackRange(_myPositionTile, 0);
         CheckEnemiesInAttackRange();
-
-        //ButtonsUIManager.Instance.ActivateEquipablesButtons();
-        OnEndMove?.Invoke();
+        
     }
 
-    /// <summary>
-    /// Reduce Character steps in the given amount.
-    /// </summary>
     public void ReduceAvailableSteps(int amount)
     {
         int steps = _currentSteps - amount;
         _currentSteps = steps >= 0 ? steps : 0;
     }
 
-    /// <summary>
-    /// Increase Character steps in the given amount.
-    /// </summary>
     public void IncreaseAvailableSteps(int amount)
     {
         if (!_legsOvercharged)
@@ -1254,9 +1105,6 @@ public class Character : Initializable
 
     }
 
-    /// <summary>
-    /// Make Character not selectable.
-    /// </summary>
     public void NotSelectable()
     {
         _canBeSelected = false;
@@ -1269,13 +1117,11 @@ public class Character : Initializable
 
         _canBeSelected = false;
         _isDead = true;
-        
+
+        PlayDeadAnimation();
         OnMechaDeath?.Invoke(this);
     }
 
-    /// <summary>
-    /// Make Character selected as an enemy.
-    /// </summary>
     public void SelectedAsEnemy()
     {
         if (_isDead)
@@ -1290,9 +1136,6 @@ public class Character : Initializable
         _myPositionTile.GetComponent<TileMaterialhandler>().DiseableAndEnableSelectedNode(true);
     }
 
-    /// <summary>
-    /// Check if given Target is a valid GridBlock to move.
-    /// </summary>
     private bool IsValidBlock(Transform target)
     {
         if (EventSystem.current.IsPointerOverGameObject())
@@ -1468,16 +1311,6 @@ public class Character : Initializable
 
     #region Others
 
-    public void SetHurtAnimation()
-    {
-        _animationMechaHandler.SetIsReciveDamageAnimatorTrue();
-    }
-
-    //public void HitSoundMecha()
-    //{
-    //    AudioManager.audioManagerInstance.PlaySound(soundHit, this.gameObject);
-    //}
-
     public void OnEquipableUsed()
     {
         EquipableSelectionState(false, null);
@@ -1508,7 +1341,6 @@ public class Character : Initializable
         if (_leftGun)
         {
             _leftGun.transform.localPosition = Vector3.zero;
-            _leftGun.SetAnimationHandler(_animationMechaHandler);
             _leftGun.SetGunData(_mechaEquipment.leftGun, this, "LGun", "Left");
             _leftGun.SetAbilityData(_mechaEquipment.leftGunAbility);
             _leftGunAlive = true;
@@ -1519,7 +1351,6 @@ public class Character : Initializable
         if (_rightGun)
         {
             _rightGun.transform.localPosition = Vector3.zero;
-            _rightGun.SetAnimationHandler(_animationMechaHandler);
             _rightGun.SetGunData(_mechaEquipment.rightGun, this, "RGun", "Right");
             _rightGun.SetAbilityData(_mechaEquipment.rightGunAbility);
             _rightGunAlive = true;
@@ -1544,9 +1375,6 @@ public class Character : Initializable
         {
             _selectedGun = _rightGun;
 
-            //if (_selectedGun.GetGunType() == GunsType.Shield)
-            //    _selectedGun.Ability();
-
             SetAttackActionState(true);
             _rightGunSelected = true;
             _leftGunSelected = false;
@@ -1556,9 +1384,6 @@ public class Character : Initializable
         if (_leftGun)
         {
             _selectedGun = _leftGun;
-
-            //if (_selectedGun.GetGunType() == GunsType.Shield)
-            //    _selectedGun.Ability();
 
             SetAttackActionState(true);
             _rightGunSelected = false;
@@ -1707,8 +1532,10 @@ public class Character : Initializable
 
     private void OnEnable()
     {
-        if (_isDead)
-            _animationMechaHandler.SetIsDeadAnimatorTrue();
+        if (!_isDead)
+            return;
+
+        PlayDeadAnimation();
     }
     
     public LayerMask GetBlockLayerMask() 
@@ -1780,4 +1607,59 @@ public class Character : Initializable
     {
         return enemy.GetLegs().CurrentHP > 0 && RayToPartsForAttack(enemy.GetLegsPosition(), "Legs", false);
     }
+
+    #region Animation Events
+    private void PlayDeadAnimation()
+    {
+        if (_animator.GetBool("isDead"))
+        {
+            float deadAnimationLength = _animator.GetCurrentAnimatorStateInfo(0).length;
+            _animator.Play("Death2", 0, deadAnimationLength);
+        }
+        else
+            _animator.SetBool("isDead", true);
+    }
+
+    public void PlayReceiveDamageAnimation()
+    {
+        if (_isDead)
+            return;
+
+        _animator.SetBool("isReciveDamageAnimator", true);
+    }
+    public void StopReceiveDamageAnimation()
+    {
+        if (_isDead)
+            return;
+
+        _animator.SetBool("isReciveDamageAnimator", false);
+    }
+
+    private void PlayWalkAnimation()
+    {
+        if (_isDead)
+            return;
+
+        _animator.SetBool("isWalkingAnimator", true);
+    }
+
+    private void StopWalkAnimation()
+    {
+        if (_isDead)
+            return;
+
+        _animator.SetBool("isWalkingAnimator", false);
+    }
+
+    public void StopDeathAnimation()
+    {
+        _animator.speed = 0;
+    }
+
+    public void PlayWalkSound()
+    {
+        AudioManager.Instance.PlaySound(_walk, gameObject);
+    }
+
+    #endregion
 }

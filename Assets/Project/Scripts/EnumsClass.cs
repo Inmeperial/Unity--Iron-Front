@@ -16,32 +16,15 @@
         Shotgun
     };
 
-    public enum ItemType
-    {
-        None,
-        Grenade
-    };
-
     public enum ParticleActionType
     {
-        DestroyPart,
-        ElevatorDestroy,
-        RepairKit,
-        SmokeBomb,
-        HandGranade,
-        MovingBridge,
         HammerPreparation,
         HammerSwing,
         HammerHit,
-        Damage,
-        FlameThrower,
-        Mine,
         ShootGun,
         AssaultRifle,
         AssaultRifleFinalShot,
         Rifle,
         Dead,
-        MortarHit,
-        LegsOvercharge
     };
 }

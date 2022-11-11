@@ -65,9 +65,9 @@ public abstract class Equipable : MonoBehaviour
         AudioManager.Instance.PlaySound(sound, soundSource);
     }
 
-    public virtual void PlayVFX(GameObject source, EnumsClass.ParticleActionType particleType)
+    public virtual void PlayVFX(ParticleSystem particlePrefab, Vector3 position, Vector3 forward)
     {
-        EffectsController.Instance.PlayParticlesEffect(source, particleType);
+        EffectsController.Instance.PlayParticlesEffect(particlePrefab, position, forward);
     }
 
     protected virtual void OnDestroy()

@@ -11,4 +11,6 @@ public class PartSO : ArsenalObjectSO
     public Material armorMaterial;
     public SoundData damageSound;
     public SoundData destroySound;
+    public ParticleSystem damageParticle;
+    public ParticleSystem destroyParticle;
 }

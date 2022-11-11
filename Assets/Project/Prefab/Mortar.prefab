@@ -95,6 +95,10 @@ MonoBehaviour:
   _textSpawnPos: {fileID: 3628902569285782446}
   _turnsCounterTextPrefab: {fileID: 6024940285766728162, guid: ee6fe1d5cc8ed9941985c325d9f1860f,
     type: 3}
+  _shootRange: 7
+  _aoe: 3
+  _damage: 75
+  _turnsToAttack: 4
   _mortarMask:
     serializedVersion: 2
     m_Bits: 8192
@@ -105,10 +109,8 @@ MonoBehaviour:
   _activationTilesDetectionRange: 9.57
   _waitAfterAttack: 3
   _sound: {fileID: 11400000, guid: cb475e348f2a6c944ba26a349217ce28, type: 2}
-  _shootRange: 7
-  _aoe: 3
-  _damage: 75
-  _turnsToAttack: 4
+  _particleEffect: {fileID: 6677810635285035840, guid: 6f2a928275ce9e14880ffbdbfd137866,
+    type: 3}
   _drawGizmo: 0
 --- !u!1001 &7982490400330371254
 PrefabInstance:

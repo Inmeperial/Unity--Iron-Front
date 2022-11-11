@@ -14,13 +14,15 @@
     public override void Deselect()
     {
     }
-    protected override void PlayLeftSideAttackAnimation()
-    {
-        _animationMechaHandler.SetIsSniperAttackLeftAnimatorTrue();
-    }
 
-    protected override void PlayRightSideAttackAnimation()
+    public void PlayShootParticle() //call in Animaton
     {
-        _animationMechaHandler.SetIsSniperAttackRightAnimatorTrue();
-    }    
+        if (_myChar.IsDead())
+            return;
+
+        if (_data.attackParticles.Length < 1)
+            return;
+
+        EffectsController.Instance.PlayParticlesEffect(_data.attackParticles[0], _shootParticleSpawn.transform.position, _myChar.transform.forward);
+    }
 }

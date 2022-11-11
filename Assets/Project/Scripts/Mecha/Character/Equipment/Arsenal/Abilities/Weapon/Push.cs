@@ -114,22 +114,13 @@ public class Push : WeaponAbility
         Body enemyBody = enemy.GetBody();
         enemyBody.ReceiveDamage(_abilityData.pushDamage);
 
-        GameObject enemyBurningSpawner = enemy.GetBurningSpawner();
-        EffectsController.Instance.PlayParticlesEffect(enemyBurningSpawner, EnumsClass.ParticleActionType.Damage);
-
         if (collides)
 		{
             enemyBody.ReceiveDamage(_abilityData.collisionDamage);
 
-            EffectsController.Instance.PlayParticlesEffect(enemyBurningSpawner, EnumsClass.ParticleActionType.Damage);
-
             if (collidingUnit)
-            {
                 //Hacer daño a la otra unidad
                 collidingUnit.GetBody().ReceiveDamage(_abilityData.collisionDamage);
-
-                EffectsController.Instance.PlayParticlesEffect(collidingUnit.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
-            }
         }
         _character.DeactivateAttack();
 	}

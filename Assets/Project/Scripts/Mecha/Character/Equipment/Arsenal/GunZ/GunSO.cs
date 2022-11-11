@@ -3,7 +3,10 @@
 [CreateAssetMenu(fileName = "Gun", menuName = "Scriptable Objects/Parts/Gun")]
 public class GunSO : ArsenalObjectSO
 {
+    [Header("Prefab")]
     public Gun prefab;
+
+    [Header("Stats")]
     public float maxHp;
     public int maxBullets;
     public int availableBullets;
@@ -16,7 +19,18 @@ public class GunSO : ArsenalObjectSO
     public int attackRange;
     public int bodyPartsSelectionQuantity;
     public float weight;
+
+    [Header("Sound")]
     public SoundData attackSound;
     public SoundData takeDamageSound;
     public SoundData destroySound;
+
+    [Header("Effects")]
+    public ParticleSystem[] attackParticles;
+    public ParticleSystem damageParticle;
+    public ParticleSystem destroyParticle;
+
+    [Header("Animation")]
+    public string leftAnimationBoolName;
+    public string rightAnimationBoolName;
 }

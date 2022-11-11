@@ -89,7 +89,8 @@ public class SelfDestruct : Ability
         if (leftGun)
             leftGun.ReceiveDamage((int)leftGun.MaxHp);
 
-        PlayVFX(_character.GetBurningSpawner(), EnumsClass.ParticleActionType.MortarHit);
+        PlayVFX(_abilityData.particleEffect, _character.GetBody().transform.position, _character.transform.forward);
+
         PlaySound(_abilityData.sound, gameObject);
         int selfDestructDamage = _abilityData.selfDestructDamage;
         foreach (Tile tile in _tilesInAttackRange)
@@ -111,8 +112,6 @@ public class SelfDestruct : Ability
 
                 if (rGun)
                     rGun.ReceiveDamage(selfDestructDamage);
-
-                EffectsController.Instance.PlayParticlesEffect(characterAbove.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
             }
 
             LandMine mine = tile.GetMineAbove();

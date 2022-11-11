@@ -38,8 +38,7 @@ public class Legs : MechaPart
     //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void ReceiveDamage(List<Tuple<int, int>> damages)
     {
-        if (IsPartBroken())
-            return;
+        base.ReceiveDamage(damages);
 
         int totalDamage = 0;
         
@@ -48,11 +47,6 @@ public class Legs : MechaPart
             totalDamage += damages[i].Item1;
             float hp = _currentHP - damages[i].Item1;
             _currentHP = hp > 0 ? hp : 0;
-
-            foreach (GameObject spawner in _particleSpawner)
-            {
-                EffectsController.Instance.PlayParticlesEffect(spawner, EnumsClass.ParticleActionType.Damage);
-            }
 
             int hitType = damages[i].Item2;
 
@@ -84,22 +78,16 @@ public class Legs : MechaPart
         if (IsPartBroken() && !_brokenLegs)
             BreakLegs();
 
-        _myChar.SetHurtAnimation();
+        _myChar.PlayReceiveDamageAnimation();
     }
 
     public override void ReceiveDamage(int damage)
     {
-        if (IsPartBroken())
-            return;
+        base.ReceiveDamage(damage);
 
         float hp = _currentHP - damage;
 
         _currentHP = hp > 0 ? hp : 0;
-
-        foreach (GameObject spawner in _particleSpawner)
-        {
-            EffectsController.Instance.PlayParticlesEffect(spawner, EnumsClass.ParticleActionType.Damage);
-        }
 
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position);
 
@@ -111,7 +99,7 @@ public class Legs : MechaPart
         if (IsPartBroken() && !_brokenLegs)
             BreakLegs();
 
-        _myChar.SetHurtAnimation();
+        _myChar.PlayReceiveDamageAnimation();
     }
 
     public float GetRotationSpeed()
@@ -126,11 +114,8 @@ public class Legs : MechaPart
 
     private void BreakLegs()
     {
-        foreach (GameObject spawner in _particleSpawner)
-        {
-            EffectsController.Instance.PlayParticlesEffect(spawner, EnumsClass.ParticleActionType.Mine);
-        }
         PlayDestroySound();
+        PlayDestroyVFX();
         HalfSteps();
     }
     private void HalfSteps()
@@ -157,5 +142,14 @@ public class Legs : MechaPart
     public override void PlayDestroySound()
     {
         AudioManager.Instance.PlaySound(_data.destroySound, gameObject);
+    }
+
+    public override void PlayTakeDamageVFX()
+    {
+        EffectsController.Instance.PlayParticlesEffect(_data.damageParticle, transform.position, transform.forward);
+    }
+    public override void PlayDestroyVFX()
+    {
+        EffectsController.Instance.PlayParticlesEffect(_data.destroyParticle, transform.position, transform.forward);
     }
 }

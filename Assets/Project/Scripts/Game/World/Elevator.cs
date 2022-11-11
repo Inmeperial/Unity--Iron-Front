@@ -20,21 +20,26 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
 
     [SerializeField] private int _fallDamagePercentage;
 
-    [Header("Others")]
-    [SerializeField] private Transform _platform;
-    [SerializeField] private GameObject _button;
-    [SerializeField] private TextMeshProUGUI _buttonText;
-    
-    public LayerMask block;
     [SerializeField] private float _platformMaxHeight;
-    private Vector3 _startingPos;
     [SerializeField] private float _movementDuration;
     [SerializeField] private float _fallMovementDuration;
     [SerializeField] private float _timeToDestroy;
 
-    [SerializeField] private SoundData _moveSound;
-    [SerializeField] private SoundData _destroySound;
+    [Header("References")]
+    [SerializeField] private Transform _platform;
+    [SerializeField] private GameObject _button;
+    [SerializeField] private TextMeshProUGUI _buttonText;
+    [SerializeField] private GameObject _colliderForAttack;
 
+    [Header("Data")]
+    public LayerMask block;
+    [SerializeField] private SoundData _moveSound;
+    [SerializeField] private SoundData _damageSound;
+    [SerializeField] private SoundData _destroySound;
+    [SerializeField] private ParticleSystem _damageParticle;
+    [SerializeField] private ParticleSystem _destroyParticle;
+
+    private Vector3 _startingPos;
     private bool _active;
 
     private Tile _tileBelow;
@@ -42,17 +47,8 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
     private bool _canInteract;
 
     private bool _isMoving;
-
-    //private delegate void Execute();
-    //Dictionary<string, Execute> _actionsDic = new Dictionary<string, Execute>();
-
-    private Character _aboveCharacter;
-
-    [SerializeField] private GameObject _colliderForAttack;
-
+    private Character _aboveCharacter; 
     public Action OnEndAction { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -229,7 +225,9 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
             float hp = _currentHp - damages[i].Item1;
             _currentHp = hp > 0 ? hp : 0;
             
-            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
+            EffectsController.Instance.PlayParticlesEffect(_damageParticle, transform.position, transform.forward);            
+            AudioManager.Instance.PlaySound(_damageSound, gameObject);
+
             int item = damages[i].Item2;
             switch (item)
             {
@@ -258,6 +256,7 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
             _aboveCharacter.GetComponent<Rigidbody>().isKinematic = false;
 
             AudioManager.Instance.PlaySound(_destroySound, gameObject);
+            EffectsController.Instance.PlayParticlesEffect(_destroyParticle, transform.position, transform.forward);
             StartCoroutine(Fall());
         }
     }
@@ -266,7 +265,12 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
     {
         float hp = _currentHp - damage;
         _currentHp = hp > 0 ? hp : 0;
-        
+
+        EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position, true);
+
+        EffectsController.Instance.PlayParticlesEffect(_damageParticle, transform.position, transform.forward);
+        AudioManager.Instance.PlaySound(_damageSound, gameObject);
+
         if (_currentHp <= 0)
         {
             GameManager.Instance.OnEndTurn -= DeactivateButton;
@@ -276,10 +280,9 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
             _aboveCharacter.transform.parent = null; 
             _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
             _aboveCharacter.GetComponent<Rigidbody>().isKinematic = false;
-            
-            EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Damage);
-            
-            EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position, true);
+
+            AudioManager.Instance.PlaySound(_destroySound, gameObject);
+            EffectsController.Instance.PlayParticlesEffect(_destroyParticle, transform.position, transform.forward);
 
             StartCoroutine(Fall());
         }

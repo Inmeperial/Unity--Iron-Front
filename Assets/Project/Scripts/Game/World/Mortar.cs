@@ -11,6 +11,12 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
     [SerializeField] private Transform _textSpawnPos;
     [SerializeField] private GameObject _turnsCounterTextPrefab;
 
+    [Header("Stats")]
+    [SerializeField] private int _shootRange;
+    [SerializeField] private int _aoe;
+    [SerializeField] private int _damage;
+    [SerializeField] private int _turnsToAttack;
+
     [Header("Configs")]
     [SerializeField] private LayerMask _mortarMask;
     [SerializeField] private LayerMask _gridBlock;
@@ -18,12 +24,7 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
     [SerializeField] private float _activationTilesDetectionRange;
     [SerializeField] private float _waitAfterAttack;
     [SerializeField] private SoundData _sound;
-
-    [Header("Stats")]
-    [SerializeField] private int _shootRange;
-    [SerializeField] private int _aoe;
-    [SerializeField] private int _damage;
-    [SerializeField] private int _turnsToAttack;
+    [SerializeField] private ParticleSystem _particleEffect;
 
     [Header("Debug")]
     [SerializeField] private bool _drawGizmo;
@@ -320,11 +321,11 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
 
     void Attack()
     {
-        EffectsController.Instance.PlayParticlesEffect(this.gameObject, EnumsClass.ParticleActionType.MortarHit);
         AudioManager.Instance.PlaySound(_sound, gameObject);
         foreach (Tile tile in _tilesToAttack)
         {
             Character unit = tile.GetUnitAbove();
+
             if (unit)
             {
                 unit.GetBody().ReceiveDamage(_damage);
@@ -336,19 +337,20 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
                     unit.GetRightGun().ReceiveDamage(_damage);
                 
                 unit.GetLegs().ReceiveDamage(_damage);
-                
-                //if (unit.GetBody().GetCurrentHp() <= 0) unit.Dead();
             }
 
             LandMine mine = tile.GetMineAbove();
+
             if (mine)
                 mine.DestroyMine();
 
-            EffectsController.Instance.PlayParticlesEffect(tile.gameObject, EnumsClass.ParticleActionType.Mine);
+            Vector3 posForVFX = tile.transform.position + new Vector3(0, tile.transform.localScale.y / 2, 0);
+            EffectsController.Instance.PlayParticlesEffect(_particleEffect, posForVFX, tile.transform.forward);
+            EffectsController.Instance.CameraShake();
         }
         
         _attackPending = false;
-        //TurnManager.Instance.SetMortarAttack(false);
+
         _turnCount = _turnsToAttack;
 
         GameManager.Instance.OnEndTurn -= CheckAttack;

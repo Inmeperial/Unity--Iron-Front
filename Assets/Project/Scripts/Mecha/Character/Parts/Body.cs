@@ -17,8 +17,7 @@ public class Body : MechaPart
 
     public override void ReceiveDamage(List<Tuple<int,int>> damages)
     {
-        if (IsPartBroken())
-            return;
+        base.ReceiveDamage(damages);
 
         int totalDamage = 0;
 
@@ -28,13 +27,6 @@ public class Body : MechaPart
             float hp = _currentHP - damages[i].Item1;
             _currentHP = hp > 0 ? hp : 0;
 
-            foreach (GameObject spawner in _particleSpawner)
-            {
-                EffectsController.Instance.PlayParticlesEffect(spawner, EnumsClass.ParticleActionType.Damage);
-            }
-
-            //EffectsController.Instance.PlayParticlesEffect(_particleSpawner[0], EnumsClass.ParticleActionType.Damage);
-            //EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
             int item = damages[i].Item2;
             switch (item)
             {
@@ -53,11 +45,10 @@ public class Body : MechaPart
         }
 
         OnDamageTaken?.Invoke(_myChar, totalDamage);
+
         _myChar.MechaOutsideAttackRange();
 
-        _myChar.SetHurtAnimation();
-
-        PlayTakeDamageSound();
+        _myChar.PlayReceiveDamageAnimation();
 
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
@@ -68,8 +59,7 @@ public class Body : MechaPart
     
     public override void ReceiveDamage(int damage)
     {
-        if (IsPartBroken())
-            return;
+        base.ReceiveDamage(damage);
 
         float hp = _currentHP - damage;
         _currentHP = hp > 0 ? hp : 0;
@@ -77,21 +67,13 @@ public class Body : MechaPart
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
 
-        foreach (GameObject spawner in _particleSpawner)
-        {
-            EffectsController.Instance.PlayParticlesEffect(spawner, EnumsClass.ParticleActionType.Damage);
-        }
-        //EffectsController.Instance.PlayParticlesEffect(gameObject, EnumsClass.ParticleActionType.Hit);
-
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, transform.position);
 
         OnDamageTaken?.Invoke(_myChar, damage);
 
         _myChar.MechaOutsideAttackRange();
         
-        _myChar.SetHurtAnimation();
-
-        PlayTakeDamageSound();
+        _myChar.PlayReceiveDamageAnimation();
 
         if (IsPartBroken())
             DestroyPart();
@@ -122,9 +104,18 @@ public class Body : MechaPart
         AudioManager.Instance.PlaySound(_data.destroySound, gameObject);
     }
 
+    public override void PlayTakeDamageVFX()
+    {
+        EffectsController.Instance.PlayParticlesEffect(_data.damageParticle, transform.position, transform.forward);
+    }
+    public override void PlayDestroyVFX()
+    {
+        EffectsController.Instance.PlayParticlesEffect(_data.destroyParticle, transform.position, transform.forward);
+    }
+
     protected override void DestroyPart()
     {
         base.DestroyPart();
         _myChar.Dead();
-    }
+    }    
 }

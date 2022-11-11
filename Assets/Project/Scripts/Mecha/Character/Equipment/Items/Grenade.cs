@@ -151,7 +151,9 @@ public class Grenade : Item
     {
         foreach (Tile tile in _tilesInAttackRange)
         {
-            PlayVFX(tile.gameObject, EnumsClass.ParticleActionType.HandGranade);
+            Vector3 posForVFX = tile.transform.position + new Vector3(0, tile.transform.localScale.y / 2, 0);
+
+            PlayVFX(_itemData.particleEffect, posForVFX, tile.transform.forward);
 
             Character unit = tile.GetUnitAbove();
 
@@ -170,9 +172,7 @@ public class Grenade : Item
                 rightGun.ReceiveDamage(_itemData.damage);
             
             Legs legs = unit.GetLegs();
-            legs.ReceiveDamage(_itemData.damage);
-
-            
+            legs.ReceiveDamage(_itemData.damage);            
         }
 
         PlaySound(_itemData.sound, _tile.gameObject);

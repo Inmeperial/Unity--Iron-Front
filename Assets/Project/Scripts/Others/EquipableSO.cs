@@ -14,4 +14,5 @@ public abstract class EquipableSO : ArsenalObjectSO
     public int cooldown;
     public int buttonTextFontSize;
     public SoundData sound;
+    public ParticleSystem particleEffect;
 }

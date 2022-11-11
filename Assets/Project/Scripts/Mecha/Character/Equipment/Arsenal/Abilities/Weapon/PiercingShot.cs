@@ -140,8 +140,6 @@ public class PiercingShot : WeaponAbility
 		{
             Body body = attackedCharacter.GetBody();
             body.ReceiveDamage(_abilityData.damage);
-
-            EffectsController.Instance.PlayParticlesEffect(attackedCharacter.GetBurningSpawner(), EnumsClass.ParticleActionType.Damage);
         }
         _character.DeactivateAttack();
 	}
