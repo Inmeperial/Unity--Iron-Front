@@ -1661,5 +1661,14 @@ public class Character : Initializable
         AudioManager.Instance.PlaySound(_walk, gameObject);
     }
 
+    public void StopAnimator()
+    {
+        _animator.StopPlayback();
+    }
+
+    public void ResumeAnimator()
+    {
+        _animator.StartPlayback();
+    }
     #endregion
 }

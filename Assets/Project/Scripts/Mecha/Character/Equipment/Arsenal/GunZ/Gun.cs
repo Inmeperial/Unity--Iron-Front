@@ -414,10 +414,15 @@ public abstract class Gun : MechaPart
     protected virtual void PlayLeftSideAttackAnimation()
     {
         _animator.SetBool(_data.leftAnimationBoolName, true);
+
+        _myChar.StopAnimator();
+        _animator.StartPlayback();
     }
     protected virtual void PlayRightSideAttackAnimation()
     {
         _animator.SetBool(_data.rightAnimationBoolName, true);
+        _myChar.StopAnimator();
+        _animator.StartPlayback();
     }
 
     protected void AnimatorSetBool(string boolName, bool state)
@@ -441,6 +446,9 @@ public abstract class Gun : MechaPart
         }
 
         _animator.SetBool(boolName, false);
+        _animator.StopPlayback();
+
+        _myChar.ResumeAnimator();
     }
 
     protected override void DestroyPart()
