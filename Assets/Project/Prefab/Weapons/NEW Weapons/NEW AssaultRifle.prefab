@@ -73,7 +73,6 @@ GameObject:
   - component: {fileID: 8950495714481765804}
   - component: {fileID: 8950495714481765807}
   - component: {fileID: 8300459404957424823}
-  - component: {fileID: -3333117070399861277}
   m_Layer: 9
   m_Name: NEW AssaultRifle
   m_TagString: Untagged
@@ -130,26 +129,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 4.5}
   m_Center: {x: 0, y: 0, z: 1.8}
---- !u!95 &-3333117070399861277
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8950495714481765806}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 887d94c7550ffdc489722b5580219e41, type: 3}
-  m_Controller: {fileID: 9100000, guid: 8e9aaa256c49bcb4bbea6c223833367d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &8950495714501315312
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -61,39 +61,39 @@ ModelImporter:
       curves: []
       events:
       - time: 1
-        functionName: EndAnimation
+        functionName: PlayGunEndAnimationEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.2606982
-        functionName: PlayShootParticle
+        functionName: PlayGunAnimationEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.4538288
-        functionName: PlayShootParticle
+        functionName: PlayGunAnimationEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.6379504
-        functionName: PlayShootParticle
+        functionName: PlayGunAnimationEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.8170045
-        functionName: PlayFinalShootParticle
+        functionName: PlayGunAnimationEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 0
+        intParameter: 1
         messageOptions: 0
       transformMask: []
       maskType: 3

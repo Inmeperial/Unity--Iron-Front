@@ -239,7 +239,6 @@ GameObject:
   - component: {fileID: 9139262577273629086}
   - component: {fileID: 8594024328395260838}
   - component: {fileID: 8405644841352696338}
-  - component: {fileID: 7826729942321481590}
   m_Layer: 9
   m_Name: Ametralladora
   m_TagString: Untagged
@@ -297,23 +296,3 @@ MonoBehaviour:
   _renderers: []
   _damageParticleSpawner: {fileID: 9118317811932137410}
   _shootParticleSpawn: {fileID: 0}
---- !u!95 &7826729942321481590
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9139262577273629085}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 887d94c7550ffdc489722b5580219e41, type: 3}
-  m_Controller: {fileID: 9100000, guid: 8e9aaa256c49bcb4bbea6c223833367d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0

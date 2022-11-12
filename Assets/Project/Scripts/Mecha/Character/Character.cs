@@ -1341,7 +1341,7 @@ public class Character : Initializable
         if (_leftGun)
         {
             _leftGun.transform.localPosition = Vector3.zero;
-            _leftGun.SetGunData(_mechaEquipment.leftGun, this, "LGun", "Left");
+            _leftGun.SetGunData(_mechaEquipment.leftGun, this, "LGun", "Left", _animator);
             _leftGun.SetAbilityData(_mechaEquipment.leftGunAbility);
             _leftGunAlive = true;
         }
@@ -1351,7 +1351,7 @@ public class Character : Initializable
         if (_rightGun)
         {
             _rightGun.transform.localPosition = Vector3.zero;
-            _rightGun.SetGunData(_mechaEquipment.rightGun, this, "RGun", "Right");
+            _rightGun.SetGunData(_mechaEquipment.rightGun, this, "RGun", "Right", _animator);
             _rightGun.SetAbilityData(_mechaEquipment.rightGunAbility);
             _rightGunAlive = true;
         }
@@ -1663,12 +1663,23 @@ public class Character : Initializable
 
     public void StopAnimator()
     {
-        _animator.StopPlayback();
+        _animator.enabled = false;
     }
 
     public void ResumeAnimator()
     {
-        _animator.StartPlayback();
+        _animator.enabled = true;
+    }
+
+    public void PlayGunAnimationEvent(int index)
+    {
+        Debug.Log("play gun animation event");
+        _selectedGun.PlayAnimationEvent(index);
+    }
+
+    public void PlayGunEndAnimationEvent()
+    {
+        _selectedGun.EndAnimationEvent();
     }
     #endregion
 }

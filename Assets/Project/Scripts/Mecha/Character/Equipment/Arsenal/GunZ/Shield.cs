@@ -6,10 +6,10 @@ public class Shield : Gun
     public float prefabHeight;
     private bool _selected = false;
     private List<GameObject> _instantiated = new List<GameObject>();
-    public override void SetGunData(GunSO data, Character character, string tag, string location)
+    public override void SetGunData(GunSO data, Character character, string tag, string location, Animator animator)
     {
         _gunType = EnumsClass.GunsType.Shield;
-        base.SetGunData(data, character, tag, location);
+        base.SetGunData(data, character, tag, location, animator);
     }
 
     public override void GunSkill(MechaPart targetPart)

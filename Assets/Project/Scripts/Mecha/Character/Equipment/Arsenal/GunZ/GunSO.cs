@@ -21,7 +21,7 @@ public class GunSO : ArsenalObjectSO
     public float weight;
 
     [Header("Sound")]
-    public SoundData attackSound;
+    public SoundData[] attackSounds;
     public SoundData takeDamageSound;
     public SoundData destroySound;
 
@@ -31,6 +31,6 @@ public class GunSO : ArsenalObjectSO
     public ParticleSystem destroyParticle;
 
     [Header("Animation")]
-    public string leftAnimationBoolName;
-    public string rightAnimationBoolName;
+    public AnimationClip rightAttackAnimation;
+    public AnimationClip leftAttackAnimation;
 }

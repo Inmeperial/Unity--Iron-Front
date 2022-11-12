@@ -6,10 +6,15 @@ public class Shotgun : Gun
 {
     private Dictionary<string, int> _multipleHitRoulette = new Dictionary<string, int>();
 
-    public override void SetGunData(GunSO data, Character character, string tag, string location)
+    private void Start()
+    {
+        _animationEvents.Add(PlayShootParticle);
+    }
+
+    public override void SetGunData(GunSO data, Character character, string tag, string location, Animator animator)
     {
         _gunType = EnumsClass.GunsType.Shotgun;
-        base.SetGunData(data, character, tag, location);
+        base.SetGunData(data, character, tag, location, animator);
     }
     
     public override void GunSkill(MechaPart targetPart)
@@ -66,25 +71,6 @@ public class Shotgun : Gun
                         List<Tuple<int, int>> damage = GetCalculatedDamage(bullets);
 
                         partToAttack.ReceiveDamage(damage);
-
-                        //switch (_parts[partsIndex[i]])
-                        //{
-                        //    case "Body":
-                        //        ButtonsUIManager.Instance.AddBulletsToBody(bullets);
-                        //        break;
-
-                        //    case "LArm":
-                        //        ButtonsUIManager.Instance.AddBulletsToLArm(bullets);
-                        //        break;
-
-                        //    case "RArm":
-                        //        ButtonsUIManager.Instance.AddBulletsToRArm(bullets);
-                        //        break;
-
-                        //    case "Legs":
-                        //        ButtonsUIManager.Instance.AddBulletsToLegs(bullets);
-                        //        break;
-                        //}
                     }
 
                 break;
@@ -98,7 +84,7 @@ public class Shotgun : Gun
     {
     }
 
-    public override void StartRoulette()
+    protected override void StartRoulette()
     {
         base.StartRoulette();
 
@@ -107,14 +93,10 @@ public class Shotgun : Gun
         _multipleHitRoulette.Add("Normal", m > 0 ? m : 0);
     }
 
-    public void PlayShootParticle() //call in Animaton
+    private void PlayShootParticle() //call in Animaton
     {
-        if (_myChar.IsDead())
-            return;
-
-        if (_data.attackParticles.Length < 1)
-            return;
-
-        EffectsController.Instance.PlayParticlesEffect(_data.attackParticles[0], _shootParticleSpawn.transform.position, _myChar.transform.forward);
+        EffectsController.Instance.PlayParticlesEffect(_data.attackParticles[0], _shootParticleSpawn.transform.position, _myChar.transform.forward, out ParticleSystem particle);
+        particle.transform.parent = _shootParticleSpawn.transform;
+        AudioManager.Instance.PlaySound(_data.attackSounds[0], gameObject);
     }
 }

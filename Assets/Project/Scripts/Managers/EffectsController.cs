@@ -24,6 +24,7 @@ public class EffectsController : MonoBehaviour
     public static EffectsController Instance;
 
     private List<ParticleSystem> _particlesToDestroy = new List<ParticleSystem>();
+    private List<float> _particlesDuration = new List<float>();
     private void Awake()
     {
         if (Instance != null)
@@ -47,6 +48,7 @@ public class EffectsController : MonoBehaviour
             return;
 
         _particlesToDestroy.Add(particle);
+        _particlesDuration.Add(particle.main.duration);
     }
 
     public void PlayParticlesEffect(ParticleSystem particlePrefab, Vector3 position, Vector3 forward, out ParticleSystem particle)
@@ -59,7 +61,6 @@ public class EffectsController : MonoBehaviour
         }
 
         particle = SpawnParticle(particlePrefab, position, forward, transform);
-        _particlesToDestroy.Add(particle);
     }
 
     public void PlayPersistentParticles(ParticleSystem particlePrefab, Vector3 position, Vector3 forward, Transform parent, out ParticleSystem particle)
@@ -82,24 +83,28 @@ public class EffectsController : MonoBehaviour
         WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
         WaitUntil waitForParticles = new WaitUntil(() => _particlesToDestroy.Count > 0);
 
-        List<ParticleSystem> toRemove = new List<ParticleSystem>();
+        List<int> toRemove = new List<int>();
 
         while (true)
         {
             yield return waitForParticles;
 
-            foreach (ParticleSystem particleSystem in _particlesToDestroy)
+            for (int i = 0; i < _particlesToDestroy.Count; i++)
             {
-                if (particleSystem.isPlaying)
+                _particlesDuration[i] -= Time.deltaTime;
+
+                if (_particlesDuration[i] > 0)
                     continue;
 
-                toRemove.Add(particleSystem);
+                toRemove.Add(i);
             }
 
-            foreach (ParticleSystem particleSystem in toRemove)
+            foreach (int index in toRemove)
             {
-                _particlesToDestroy.Remove(particleSystem);
-                Destroy(particleSystem);
+                ParticleSystem particle = _particlesToDestroy[index];
+                particle.Stop();
+                _particlesToDestroy.RemoveAt(index);
+                _particlesDuration.RemoveAt(index);
             }
 
             toRemove.Clear();

@@ -1,9 +1,15 @@
-﻿public class Rifle : Gun
+﻿using UnityEngine;
+
+public class Rifle : Gun
 {
-    public override void SetGunData(GunSO data, Character character, string tag, string location)
+    private void Start()
+    {
+        _animationEvents.Add(PlayShootParticle);
+    }
+    public override void SetGunData(GunSO data, Character character, string tag, string location, UnityEngine.Animator animator)
     {
         _gunType = EnumsClass.GunsType.Rifle;
-        base.SetGunData(data, character, tag, location);
+        base.SetGunData(data, character, tag, location, animator);
     }
 
     public override void GunSkill(MechaPart targetPart)
@@ -14,15 +20,11 @@
     public override void Deselect()
     {
     }
-
-    public void PlayShootParticle() //call in Animaton
+    
+    private void PlayShootParticle() //call in Animaton
     {
-        if (_myChar.IsDead())
-            return;
-
-        if (_data.attackParticles.Length < 1)
-            return;
-
-        EffectsController.Instance.PlayParticlesEffect(_data.attackParticles[0], _shootParticleSpawn.transform.position, _myChar.transform.forward);
+        EffectsController.Instance.PlayParticlesEffect(_data.attackParticles[0], _shootParticleSpawn.transform.position, _myChar.transform.forward, out ParticleSystem particle);
+        particle.transform.parent = _shootParticleSpawn.transform;
+        AudioManager.Instance.PlaySound(_data.attackSounds[0], gameObject);
     }
 }

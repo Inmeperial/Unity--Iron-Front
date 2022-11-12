@@ -20,17 +20,12 @@ public abstract class Gun : MechaPart
     protected Dictionary<string, int> _critRoulette = new Dictionary<string, int>();
     protected Dictionary<string, int> _hitRoulette = new Dictionary<string, int>();
 
-    //Nada que ver con la habilidad que se le equipa
     protected bool _gunSkillAvailable;
     protected string _location;
 
     protected Animator _animator;
-    //private bool _abilityCreated;
 
-    private void Start()
-    {
-        _animator = GetComponent<Animator>();
-    }
+    protected List<Action> _animationEvents = new List<Action>();
     #region Getters
     public int GetMaxBullets()
     {
@@ -116,7 +111,7 @@ public abstract class Gun : MechaPart
     /// <summary>
     /// Set Gun stats from given scriptable object.
     /// </summary>
-    public virtual void SetGunData(GunSO data, Character character, string tag, string location)
+    public virtual void SetGunData(GunSO data, Character character, string tag, string location, Animator animator)
     {
         _data = data;
         _myChar = character;
@@ -132,15 +127,8 @@ public abstract class Gun : MechaPart
 
         _masterShader.Initialize();
 
+        _animator = animator;
         StartRoulette();
-
-        //if(!_abilityCreated && data.ability && data.ability.abilityPrefab)
-        //{
-        //    _ability = Instantiate(data.ability.abilityPrefab, _myChar.transform);
-        //    _ability.Initialize(_myChar, data.ability, location);
-        //    _myChar.AddEquipable(_ability);
-        //    _abilityCreated = true;
-        //}
     }
 
     public override void SetAbilityData(AbilitySO abilityData)
@@ -224,7 +212,6 @@ public abstract class Gun : MechaPart
 
         partToAttack.ReceiveDamage(damages);
 
-        AudioManager.Instance.PlaySound(_data.attackSound, gameObject);
         ExecuteAttackAnimation();
     }
 
@@ -274,7 +261,7 @@ public abstract class Gun : MechaPart
         return list;
     }
 
-    public virtual void StartRoulette()
+    protected virtual void StartRoulette()
     {
         _roulette = new RouletteWheel();
         _critRoulette = new Dictionary<string, int>();
@@ -413,42 +400,25 @@ public abstract class Gun : MechaPart
     }
     protected virtual void PlayLeftSideAttackAnimation()
     {
-        _animator.SetBool(_data.leftAnimationBoolName, true);
-
-        _myChar.StopAnimator();
-        _animator.StartPlayback();
+        _animator.Play(_data.leftAttackAnimation.name);
     }
     protected virtual void PlayRightSideAttackAnimation()
     {
-        _animator.SetBool(_data.rightAnimationBoolName, true);
-        _myChar.StopAnimator();
-        _animator.StartPlayback();
+        _animator.Play(_data.rightAttackAnimation.name);
     }
 
-    protected void AnimatorSetBool(string boolName, bool state)
+    public void EndAnimationEvent() //Call in animation
     {
-        _animator.SetBool(boolName, state);
+        Debug.Log("end animation event");
     }
 
-    public void EndAnimation() //Call in animation
+    public void PlayAnimationEvent(int index)
     {
-        string boolName = "";
+        Debug.Log("play gun event: " + _data.objectName);
+        if (index > _animationEvents.Count - 1)
+            return;
 
-        switch (_location)
-        {
-            case "Left":
-                boolName = _data.leftAnimationBoolName;
-                break;
-
-            case "Right":
-                boolName = _data.rightAnimationBoolName;
-                break;
-        }
-
-        _animator.SetBool(boolName, false);
-        _animator.StopPlayback();
-
-        _myChar.ResumeAnimator();
+        _animationEvents[index]();
     }
 
     protected override void DestroyPart()
