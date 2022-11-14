@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 
 public class MenuOptionsInGame : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class MenuOptionsInGame : MonoBehaviour
     [SerializeField] private GameObject _optionsObj = default;
     [SerializeField] private GameObject _devObj = default;
     [SerializeField] private AudioMixer _audioMixer = default;
+    [SerializeField] private GameObject _cameraWorldObj = default;
+    private MenuPausePPPPSSettings _menuPPSettings = default;
+
+    private void Start()
+    {
+        _menuPPSettings = _cameraWorldObj.GetComponent<PostProcessVolume>().profile.GetSetting<MenuPausePPPPSSettings>();
+    }
 
     void Update()
     {
@@ -28,6 +36,8 @@ public class MenuOptionsInGame : MonoBehaviour
 
     public void CloseAllMenu()
     {
+        _menuPPSettings.enabled.value = false;
+        _menuPPSettings._lerpPower.value = 0;
         _audioMixer.SetFloat("pitch", 1);
         _menuInGameObj.SetActive(false);
         CloseOptionsMenu();
@@ -36,6 +46,8 @@ public class MenuOptionsInGame : MonoBehaviour
 
     private void OpenAllMenu()
     {
+        _menuPPSettings.enabled.value = true;
+        _menuPPSettings._lerpPower.value = 1;
         _audioMixer.SetFloat("pitch", 0.3f);
         _menuInGameObj.SetActive(true);
     }
