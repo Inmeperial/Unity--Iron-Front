@@ -342,6 +342,12 @@ public class Character : Initializable
         
         OnMechaSelected?.Invoke(this);
 
+        if (_equipableSelected)
+        {
+            _equipableSelected = false;
+            _equipable.Deselect();
+        }
+
         RotationBeforeAttacking = transform.rotation; //Cambio Nico
         ResetInRangeLists();
         _path.Clear();
@@ -408,7 +414,9 @@ public class Character : Initializable
             
             else
                 _currentSteps = _legs.CurrentHP > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
-            
+
+            if (_currentSteps <= 0)
+                _currentSteps = 1;
             
             PaintTilesInMoveRange(_myPositionTile, 0);
             AddTilesInMoveRange();
