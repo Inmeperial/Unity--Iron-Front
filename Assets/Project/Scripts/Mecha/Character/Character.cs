@@ -1118,6 +1118,9 @@ public class Character : Initializable
         _canBeSelected = false;
         _isDead = true;
 
+        ResetTilesInAttackRange();
+        ResetTilesInMoveRange();
+
         PlayDeadAnimation();
         OnMechaDeath?.Invoke(this);
     }

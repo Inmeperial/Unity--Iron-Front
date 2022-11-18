@@ -608,6 +608,8 @@ public class GameManager : MonoBehaviour
 
         _inputsReader.OnDeselectKeyPressed -= mecha.ShowGunsMesh;
         _inputsReader.OnDeselectKeyPressed -= mecha.ShowMechaMesh;
+        
+        _gunsSelector.DisableGunSelection();
 
         OnBeginAttackPreparations -= mecha.ShowMechaMesh;
         OnBeginAttackPreparations -= mecha.ShowGunsMesh;

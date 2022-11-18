@@ -12,6 +12,8 @@ public class GunsSelector : Initializable
     private Character _selectedMecha;
     public Action OnLeftGunSelected;
     public Action OnRightGunSelected;
+    public Action OnSelectionDisabled;
+    public Action OnSelectionEnabled;
 
     public override void Initialize()
     {
@@ -65,11 +67,13 @@ public class GunsSelector : Initializable
     public void EnableGunSelection()
     {
         _canChangeGun = true;
+        OnSelectionEnabled?.Invoke();
     }
 
     public void DisableGunSelection()
     {
         _canChangeGun = false;
+        OnSelectionDisabled?.Invoke();
     }
 
     private void OnDestroy()
