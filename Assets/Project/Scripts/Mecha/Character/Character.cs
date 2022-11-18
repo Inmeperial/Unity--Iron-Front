@@ -1453,12 +1453,10 @@ public class Character : Initializable
         if (location == "Right")
         {
             _rightGunAlive = false;
-            _rightGun = null;
         }
         else
         {
             _leftGunAlive = false;
-            _leftGun = null;
         }
         
         if (ability && _equipables.Contains(ability))
