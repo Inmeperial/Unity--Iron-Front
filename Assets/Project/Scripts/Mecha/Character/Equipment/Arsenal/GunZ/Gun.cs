@@ -252,7 +252,6 @@ public abstract class Gun : MechaPart
 
     public void TurnOff()
     {
-        Debug.Log("Turn Off: " + _data.objectName + " Char: " + _myChar.GetCharacterName());
         ChangeMeshRenderStatus(false);
 
         _collider.enabled = false;
@@ -300,6 +299,8 @@ public abstract class Gun : MechaPart
 
         OnDamageTaken?.Invoke(_myChar, totalDamage);
 
+        _myChar.PlayReceiveDamageAnimation();
+
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
 
@@ -307,8 +308,6 @@ public abstract class Gun : MechaPart
         
         if (IsPartBroken())
             DestroyPart();
-        else
-            Debug.Log("PArt not broken");
     }
     
     public override void ReceiveDamage(int damage)
@@ -322,7 +321,9 @@ public abstract class Gun : MechaPart
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, pos);
 
         OnDamageTaken?.Invoke(_myChar, damage);
-        
+
+        _myChar.PlayReceiveDamageAnimation();
+
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
 
@@ -330,8 +331,6 @@ public abstract class Gun : MechaPart
 
         if (IsPartBroken())
             DestroyPart();
-        else
-            Debug.Log("PArt not broken");
     }
 
     public override void Heal(int healAmount)
@@ -388,7 +387,6 @@ public abstract class Gun : MechaPart
 
     public void PlayAnimationEvent(int index)
     {
-        Debug.Log("play gun event: " + _data.objectName);
         if (index > _animationEvents.Count - 1)
             return;
 
@@ -398,7 +396,6 @@ public abstract class Gun : MechaPart
     protected override void DestroyPart()
     {
         base.DestroyPart();
-        Debug.Log("Destroy part");
         _myChar.ArmDestroyed(_location, _ability);
         TurnOff();
 

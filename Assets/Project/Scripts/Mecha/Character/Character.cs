@@ -1644,7 +1644,7 @@ public class Character : Initializable
     }
 
     #region Animation Events
-    private void PlayDeadAnimation()
+    protected virtual void PlayDeadAnimation()
     {
         if (_animator.GetBool("isDead"))
         {
@@ -1655,14 +1655,14 @@ public class Character : Initializable
             _animator.SetBool("isDead", true);
     }
 
-    public void PlayReceiveDamageAnimation()
+    public virtual void PlayReceiveDamageAnimation()
     {
         if (_isDead)
             return;
 
         _animator.SetBool("isReciveDamageAnimator", true);
     }
-    public void StopReceiveDamageAnimation()
+    public virtual void StopReceiveDamageAnimation()
     {
         if (_isDead)
             return;
@@ -1670,7 +1670,7 @@ public class Character : Initializable
         _animator.SetBool("isReciveDamageAnimator", false);
     }
 
-    private void PlayWalkAnimation()
+    protected virtual void PlayWalkAnimation()
     {
         if (_isDead)
             return;
@@ -1678,7 +1678,7 @@ public class Character : Initializable
         _animator.SetBool("isWalkingAnimator", true);
     }
 
-    private void StopWalkAnimation()
+    protected virtual void StopWalkAnimation()
     {
         if (_isDead)
             return;
@@ -1686,12 +1686,12 @@ public class Character : Initializable
         _animator.SetBool("isWalkingAnimator", false);
     }
 
-    public void StopDeathAnimation()
+    public virtual void StopDeathAnimation()
     {
         _animator.speed = 0;
     }
 
-    public void PlayWalkSound()
+    public virtual void PlayWalkSound()
     {
         AudioManager.Instance.PlaySound(_walk, gameObject);
     }
@@ -1706,13 +1706,12 @@ public class Character : Initializable
         _animator.enabled = true;
     }
 
-    public void PlayGunAnimationEvent(int index)
+    public virtual void PlayGunAnimationEvent(int index)
     {
-        Debug.Log("play gun animation event");
         _selectedGun.PlayAnimationEvent(index);
     }
 
-    public void PlayGunEndAnimationEvent()
+    public virtual void PlayGunEndAnimationEvent()
     {
         _selectedGun.EndAnimationEvent();
     }

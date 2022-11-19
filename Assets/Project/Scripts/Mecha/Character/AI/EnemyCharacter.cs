@@ -339,4 +339,49 @@ public class EnemyCharacter : Character
 
         _failSafeRunning = false;
     }
+    //#region Animations
+    //protected override void PlayDeadAnimation()
+    //{
+    //    base.PlayDeadAnimation();
+    //}
+
+    //public override void PlayReceiveDamageAnimation()
+    //{
+    //    base.PlayReceiveDamageAnimation();
+    //}
+    //public override void StopReceiveDamageAnimation()
+    //{
+    //   base.StopReceiveDamageAnimation();
+    //}
+
+    //protected override void PlayWalkAnimation()
+    //{
+    //    base.PlayWalkAnimation();
+    //}
+
+    //protected override void StopWalkAnimation()
+    //{
+    //    base.StopWalkAnimation();
+    //}
+
+    //public override void StopDeathAnimation()
+    //{
+    //    base.StopDeathAnimation();
+    //}
+
+    //public override void PlayWalkSound()
+    //{
+    //    base.PlayWalkSound();
+    //}
+
+    //public override void PlayGunAnimationEvent(int index)
+    //{
+    //    base.PlayGunAnimationEvent(index);
+    //}
+
+    //public override void PlayGunEndAnimationEvent()
+    //{
+    //    base.PlayGunEndAnimationEvent();
+    //}
+    //#endregion
 }

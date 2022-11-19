@@ -48,6 +48,9 @@ public class Body : MechaPart
 
         _myChar.MechaOutsideAttackRange();
 
+        if (_myChar.GetUnitTeam() == EnumsClass.Team.Red)
+            Debug.Log("AI " + _myChar.GetCharacterName() + " took damage!");
+
         _myChar.PlayReceiveDamageAnimation();
 
         if (_myChar.IsSelected())
@@ -72,7 +75,10 @@ public class Body : MechaPart
         OnDamageTaken?.Invoke(_myChar, damage);
 
         _myChar.MechaOutsideAttackRange();
-        
+
+        if (_myChar.GetUnitTeam() == EnumsClass.Team.Red)
+            Debug.Log("AI " + _myChar.GetCharacterName() + " took damage!");
+
         _myChar.PlayReceiveDamageAnimation();
 
         if (IsPartBroken())

@@ -175,8 +175,6 @@ public class MechaPartButton : CustomButton
         if (_bulletsCount <= 0)
             return;
 
-        Debug.Log(_attackingMecha.GetCharacterName() + " attacks " + _part.GetCharacter().GetCharacterName() + " " + _part.name, _part.GetCharacter().gameObject);
-
         Gun selectedGun = _attackingMecha.GetSelectedGun();
         selectedGun.Attack(_part, _bulletsCount);
         selectedGun.GunSkill(_part);
