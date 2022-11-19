@@ -73,7 +73,7 @@ public class GunsHUD : Initializable
 
     private void ConfigureGunsUI(Character mecha, Gun left, Gun right)
     {
-        if (left)
+        if (left.CurrentHP > 0)
         {
             _leftGunContainer.SetActive(true);
             _leftGunNameText.text = left.GetGunName();
@@ -89,7 +89,7 @@ public class GunsHUD : Initializable
         else
             _leftGunContainer.SetActive(false);
 
-        if (right)
+        if (right.CurrentHP > 0)
         {
             _rightGunContainer.SetActive(true);
             _rightGunNameText.text = right.GetGunName();

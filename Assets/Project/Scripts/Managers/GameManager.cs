@@ -108,8 +108,15 @@ public class GameManager : MonoBehaviour
             mecha.OnMechaDeath += OnMechaDeath;
             mecha.OnBeginMove += _characterSelector.DisableCharacterSelection;
             mecha.OnBeginMove += _gunsSelector.DisableGunSelection;
+
             mecha.OnEndMove += EnableCharacterSelection;
             mecha.OnEndMove += _gunsSelector.EnableGunSelection;
+
+            if (mecha.GetUnitTeam() == EnumsClass.Team.Green)
+            {
+                mecha.OnBeginMove += HideEndTurnButton;
+                mecha.OnEndMove += ShowEndTurnButton;
+            }
 
             mecha.GetLegs().OnDamageTakenByAttack += OnMechaLegsDamaged;
             mecha.Initialize();
@@ -711,6 +718,12 @@ public class GameManager : MonoBehaviour
 
             mecha.OnBeginMove -= _characterSelector.DisableCharacterSelection;
             mecha.OnEndMove -= EnableCharacterSelection;
+
+            if (mecha.GetUnitTeam() == EnumsClass.Team.Green)
+            {
+                mecha.OnBeginMove += HideEndTurnButton;
+                mecha.OnEndMove += ShowEndTurnButton;
+            }
 
             mecha.GetLegs().OnDamageTakenByAttack -= OnMechaLegsDamaged;
         }

@@ -252,6 +252,7 @@ public abstract class Gun : MechaPart
 
     public void TurnOff()
     {
+        Debug.Log("Turn Off: " + _data.objectName + " Char: " + _myChar.GetCharacterName());
         ChangeMeshRenderStatus(false);
 
         _collider.enabled = false;
@@ -305,7 +306,9 @@ public abstract class Gun : MechaPart
         _myChar.MechaOutsideAttackRange();
         
         if (IsPartBroken())
-            DestroyPart();        
+            DestroyPart();
+        else
+            Debug.Log("PArt not broken");
     }
     
     public override void ReceiveDamage(int damage)
@@ -324,9 +327,11 @@ public abstract class Gun : MechaPart
             OnHealthChanged?.Invoke(_currentHP);
 
         _myChar.MechaOutsideAttackRange();
-        
+
         if (IsPartBroken())
-            DestroyPart();        
+            DestroyPart();
+        else
+            Debug.Log("PArt not broken");
     }
 
     public override void Heal(int healAmount)
@@ -393,6 +398,7 @@ public abstract class Gun : MechaPart
     protected override void DestroyPart()
     {
         base.DestroyPart();
+        Debug.Log("Destroy part");
         _myChar.ArmDestroyed(_location, _ability);
         TurnOff();
 

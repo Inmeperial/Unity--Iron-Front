@@ -125,6 +125,7 @@ public class EnemyCharacter : Character
     {
         if (!_canAttack && !_canMove)
             return _closestEnemy;
+
         if (_closestEnemy != null)
             return _closestEnemy;
         
@@ -136,6 +137,9 @@ public class EnemyCharacter : Character
         
         for (int i = 0; i < enemies.Count; i++)
         {
+
+            if (enemies[i].IsDead())
+                continue;
 
             Tile tile = ClosestTileToEnemy(enemies[i]);
 
@@ -241,7 +245,10 @@ public class EnemyCharacter : Character
         _closestEnemy = character;
     }
 
-    public Character GetClosestEnemy() => _closestEnemy;
+    public Character GetClosestEnemy()
+    {
+        return _closestEnemy;
+    }
 
     public void EnemyMove()
     {

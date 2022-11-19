@@ -110,7 +110,8 @@ public class Body : MechaPart
     }
     public override void PlayDestroyVFX()
     {
-        EffectsController.Instance.PlayParticlesEffect(_data.destroyParticle, transform.position, transform.forward);
+        EffectsController.Instance.PlayParticlesEffect(_data.destroyParticle, transform.position, transform.forward, out ParticleSystem particle);
+        particle.transform.localScale *= 5;
     }
 
     protected override void DestroyPart()
