@@ -43,11 +43,6 @@ public class EffectsController : MonoBehaviour
     public void PlayParticlesEffect(ParticleSystem particlePrefab, Vector3 position, Vector3 forward)
     {
         PlayParticlesEffect(particlePrefab, position, forward, out ParticleSystem particle);
-
-        if (!particle)
-            return;
-
-        _particlesToDestroy.Add(new DisposableEffect(particle.gameObject, particle.main.duration));
     }
 
     public void PlayParticlesEffect(ParticleSystem particlePrefab, Vector3 position, Vector3 forward, out ParticleSystem particle)
@@ -60,6 +55,7 @@ public class EffectsController : MonoBehaviour
         }
 
         particle = SpawnParticle(particlePrefab, position, forward, transform);
+        _particlesToDestroy.Add(new DisposableEffect(particle.gameObject, particle.main.duration));
     }
 
     public void PlayPersistentParticles(ParticleSystem particlePrefab, Vector3 position, Vector3 forward, Transform parent, out ParticleSystem particle)
