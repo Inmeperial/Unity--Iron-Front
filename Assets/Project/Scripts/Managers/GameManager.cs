@@ -241,12 +241,6 @@ public class GameManager : MonoBehaviour
 
         OnBeginAttackPreparations?.Invoke();
 
-        //foreach (Character mecha in _mechas)
-        //{
-        //    mecha.ShowGunsMesh();
-        //    mecha.ShowMechaMesh();
-        //}
-
         Vector3 targetEnemyPosition = _selectedEnemy.transform.position;
         _gameCamerasController.CloseUpCamera.MoveCameraToParent(targetEnemyPosition, MechaAttackPreparationsFinished, _attackDelay);
     }
@@ -512,6 +506,10 @@ public class GameManager : MonoBehaviour
 
         HideEndTurnButton();
         //_mechaEquipmentHUD.DisableButtonsInteraction();
+
+        _gameCamerasController.CameraMovement.DisableManualMovement();
+        _gameCamerasController.CameraMovement.DisableManualRotation();
+
         StartCoroutine(EndTurnActionsCheck());
     }
 
@@ -587,6 +585,9 @@ public class GameManager : MonoBehaviour
         {
             afterCameraMoves += () =>
             {
+                _gameCamerasController.CameraMovement.EnableManualMovement();
+                _gameCamerasController.CameraMovement.EnableManualRotation();
+
                 _characterSelector.EnableCharacterSelection();
                 SubscribeToInputs();
                 _inputsReader.EnableKeysCheck();
@@ -596,6 +597,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            _gameCamerasController.CameraMovement.DisableManualMovement();
+            _gameCamerasController.CameraMovement.EnableManualRotation();
+
             _characterSelector.DisableCharacterSelection();
             _inputsReader.DisableKeysCheck();
             _gunsSelector.DisableGunSelection();
