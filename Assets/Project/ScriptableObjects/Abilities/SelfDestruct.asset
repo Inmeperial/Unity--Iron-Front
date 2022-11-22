@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c6c527846466da4e85e5d078489136f, type: 3}
+  m_Name: SelfDestruct
+  m_EditorClassIdentifier: 
+  objectName: Self Destruct
+  objectDescription: kaboom
+  objectImage: {fileID: 21300000, guid: c93a92ee687d8874e96ae4e8bc10f405, type: 3}
+  equipableType: 1
+  maxUses: 1
+  cooldown: 0
+  buttonTextFontSize: 500
+  sound: {fileID: 11400000, guid: 16b8e1669a0194142994edb7096e94f6, type: 2}
+  abilityPrefab: {fileID: 6425804071861606486, guid: 47904b8ef5d5f674aa0ddd3f97b390fc,
+    type: 3}
+  partSlot: 0
+  selfDestructRange: 2
+  selfDestructDamage: 145

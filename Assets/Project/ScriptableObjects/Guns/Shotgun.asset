@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec067eb350895745836bdd9da419181, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  objectName: Shotgun
+  objectDescription: Arma de disparos
+  objectImage: {fileID: 21300000, guid: 9452958cbbded2d45869b68cb12500be, type: 3}
+  prefab: {fileID: 5224315557157618920, guid: 7faee8b7c9b457147b6060e6ec6382b5, type: 3}
+  maxHp: 150
+  maxBullets: 4
+  availableBullets: 0
+  bulletsPerClick: 2
+  damage: 30
+  critChance: 10
+  critMultiplier: 2
+  hitChance: 60
+  chanceToHitOtherParts: 100
+  attackRange: 2
+  bodyPartsSelectionQuantity: 2
+  weight: 120
+  attackSounds:
+  - {fileID: 11400000, guid: fe013ed6e4a2a8546946a32a3fcfe7ec, type: 2}
+  attackSound: {fileID: 11400000, guid: fe013ed6e4a2a8546946a32a3fcfe7ec, type: 2}
+  takeDamageSound: {fileID: 11400000, guid: af11f0272a5824248ba2d14c313bec43, type: 2}
+  destroySound: {fileID: 11400000, guid: 16b8e1669a0194142994edb7096e94f6, type: 2}
+  attackParticles:
+  - {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+  damageParticle: {fileID: 19800004, guid: b46890100828db6429ff69c322b45893, type: 3}
+  destroyParticle: {fileID: 5832220434105293201, guid: c1aba6e9b1355294eb669f3e9ad7ce52,
+    type: 3}
+  rightAttackAnimation: {fileID: 1827226128182048838, guid: 4a2a8ee66df621d478d1ec6ab5afc599,
+    type: 3}
+  leftAttackAnimation: {fileID: 1827226128182048838, guid: 6a1aa397e1cd9684e86c98206cfc8a80,
+    type: 3}

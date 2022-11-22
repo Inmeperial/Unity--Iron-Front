@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c899f9e08fa2bb44eb026bd3451c0f3d, type: 3}
+  m_Name: Armata Legs
+  m_EditorClassIdentifier: 
+  objectName: Armata Legs
+  objectDescription: Armador de piernas
+  objectImage: {fileID: 0}
+  skinnedMeshRenderer: {fileID: -7272046681976261708, guid: adcf4e5687e0dfd459366f0e648cf0ae,
+    type: 3}
+  maxHP: 185
+  weight: 80
+  masterShader: {fileID: 4234647731408850771, guid: df099ea2362d9f746b6171dec33ee2df,
+    type: 3}
+  bodyMaterial: {fileID: 2100000, guid: c0dbd7180e63ef54f94b91e7300072f2, type: 2}
+  jointsMaterial: {fileID: 2100000, guid: 6fb946ff51919e04693f67688bf2d152, type: 2}
+  armorMaterial: {fileID: 2100000, guid: 4fe1b43765b131248b8b69a3be7cbf70, type: 2}
+  damageSound: {fileID: 11400000, guid: af11f0272a5824248ba2d14c313bec43, type: 2}
+  destroySound: {fileID: 11400000, guid: 16b8e1669a0194142994edb7096e94f6, type: 2}
+  damageParticle: {fileID: 19800004, guid: b46890100828db6429ff69c322b45893, type: 3}
+  destroyParticle: {fileID: 5832220434105293201, guid: c1aba6e9b1355294eb669f3e9ad7ce52,
+    type: 3}
+  maxSteps: 4
+  moveSpeed: 10
+  rotationSpeed: 5
+  initiative: 3
