@@ -10,6 +10,7 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
     [Header("References")]
     [SerializeField] private Transform _textSpawnPos;
     [SerializeField] private GameObject _turnsCounterTextPrefab;
+
     [Header("Stats")]
     [SerializeField] private int _shootRange;
     [SerializeField] private int _aoe;
@@ -39,8 +40,6 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
     private Tile _centerToAttack;
     private TileHighlight _highlight;
 
-    Mortar[] _mortars;
-
     private bool _selected = false;
 
     private Tile _myPositionTile;
@@ -57,8 +56,6 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
     // Start is called before the first frame update
     private void Start()
     {
-        GameManager.Instance.InputsReader.OnDeselectKeyPressed += Deselect;
-
         _highlight = FindObjectOfType<TileHighlight>();
         _myPositionTile = GetTileBelow();
         _selected = false;
@@ -71,42 +68,47 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
         }
         
         GetTilesInAttackRange(_myPositionTile, 0);
-
-        _mortars = FindObjectsOfType<Mortar>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && CanInteract())
+        if (_selected && Input.GetKeyDown(_deselectKey))
+        {
+            Deselect();
+        }
+
+        if (GameManager.Instance.ActiveTeam == EnumsClass.Team.Red)
+            return;
+
+        if (GameManager.Instance.CurrentTurnMecha && !GameManager.Instance.CurrentTurnMecha.IsSelectingEnemy() 
+                                                                       && !_attackPending && Input.GetMouseButtonDown(0))
+        {
             Interact();
+        }
     }
 
     public void Interact()
     {
-        CharacterSelector.Instance.DisableCharacterSelection();
-
-        GameManager.Instance.CurrentTurnMecha.DeselectThisUnit();
-
-        if (!_selected)
+        //Chequeo si hago click en el mortero o no
+        if (MouseRay.GetTargetGameObject(_mortarMask) == gameObject)
         {
-            foreach (Mortar mortar in _mortars)
+            Mortar[] mortars = FindObjectsOfType<Mortar>();
+
+            foreach (Mortar m in mortars)
             {
-                if (mortar != this)
-                    mortar.Deselect();
+                if (m != this)
+                    m.Deselect();
             }
             
             Character selectedCharacter = GameManager.Instance.CurrentTurnMecha;
-
             selectedCharacter.SetSelection(false);
-
             selectedCharacter.LoadRotationOnDeselect();
-
             _selected = true;
-
-            if (IsSelectedCharacterAbove())
+            if (SelectedPlayerAbove())
+            {
                 _activationCharacter.ResetInRangeLists();
-
+            }
             foreach (Tile tiles in _tilesInAttackRange)
             {
                 tiles.inAttackRange = true;
@@ -118,11 +120,9 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
         {
             Transform target = MouseRay.GetTargetTransform(_gridBlock);
             
-            if (!IsValidTarget(target)) 
-                return;
+            if (!IsValidTarget(target)) return;
             
-            if (!IsSelectedCharacterAbove())
-                return;
+            if (!SelectedPlayerAbove()) return;
             
             _activationCharacter.ResetInRangeLists();
 
@@ -135,7 +135,9 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
             Tile tile = target.GetComponent<Tile>();
 
             if (tile == _myPositionTile)
+            {
                 return;
+            }
 
             if (_last == null || tile != _last)
             {
@@ -153,7 +155,7 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
                 _tilesToAttack.Clear();
                 PaintTilesInPreviewRange(_last, 0);
             }
-            else if (tile == _last && IsSelectedCharacterAbove())
+            else if (tile == _last && SelectedPlayerAbove())
             {
                 _centerToAttack = _last;
                 PrepareAttack();
@@ -162,7 +164,7 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
     }
 
     //Determina si hay alguna unidad sobre las tiles de activacion
-    private bool IsSelectedCharacterAbove()
+    private bool SelectedPlayerAbove()
     {
         foreach (Tile tile in _tilesInActivationRange)
         {
@@ -235,17 +237,13 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
 
     private bool IsValidTarget(Transform target)
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-            return false;
+        if (EventSystem.current.IsPointerOverGameObject()) return false;
 
-        if (!target) 
-            return false;
+        if (!target) return false;
 
-        if (target.gameObject.layer != LayerMask.NameToLayer("GridBlock"))
-            return false;
+        if (target.gameObject.layer != LayerMask.NameToLayer("GridBlock")) return false;
 
         Tile tile = target.gameObject.GetComponent<Tile>();
-
         return tile && tile.inAttackRange;
     }
 
@@ -357,8 +355,6 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
 
         GameManager.Instance.OnEndTurn -= CheckAttack;
 
-        ClearTiles();
-
         Deselect();
 
         StartCoroutine(DelayAfterAttack());
@@ -373,13 +369,10 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
 
     private void Deselect()
     {
-        if (!_selected)
-            return;
-
-        Character currentMecha = GameManager.Instance.CurrentTurnMecha; 
+        Character selection = GameManager.Instance.CurrentTurnMecha; 
         
-        if (currentMecha) 
-            CharacterSelector.Instance.Selection(currentMecha);
+        if (selection) 
+            CharacterSelector.Instance.Selection(selection);
         
         _selected = false;
         _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
@@ -388,46 +381,17 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
         {
             _highlight.PaintTilesInPreviewRange(t);
         }
-
+        
         if (!_attackPending)
-            ClearTiles();
+        {
+            _highlight.ClearTilesInPreview(_tilesInPreviewRange);
+            _highlight.ClearTilesInPreview(_tilesToAttack);
+            _tilesInPreviewRange.Clear();
+            _tilesToAttack.Clear();
+        }
         
         _tilesForPreviewChecked.Clear();
         
         _last = null;
-    }
-
-    private void ClearTiles()
-    {
-        _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
-        _highlight.ClearTilesInPreview(_tilesInPreviewRange);
-        _highlight.ClearTilesInPreview(_tilesToAttack);
-        _tilesInPreviewRange.Clear();
-        _tilesToAttack.Clear();
-    }
-
-    private bool CanInteract()
-    {
-        if (MouseRay.GetTargetGameObject(_mortarMask) != gameObject && !_selected)
-            return false;
-
-        if (GameManager.Instance.ActiveTeam == EnumsClass.Team.Red)
-            return false;
-
-        if (GameManager.Instance.CurrentTurnMecha == null)
-            return false;
-
-        if (GameManager.Instance.CurrentTurnMecha.IsSelectingEnemy())
-            return false;
-
-        if (_attackPending)
-            return false;
-
-        return true;
-    }
-
-    private void OnDestroy()
-    {
-        GameManager.Instance.InputsReader.OnDeselectKeyPressed -= Deselect;
     }
 }

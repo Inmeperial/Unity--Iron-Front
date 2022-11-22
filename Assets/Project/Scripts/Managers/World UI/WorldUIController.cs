@@ -91,6 +91,7 @@ public class WorldUIController : Initializable
 
     private void ForceHideWorldUI()
     {
+        Debug.Log("force hide");
         foreach (WorldUI ui in _mechaUIDictionary.Values)
         {
             if (_stateBeforeForcingHide.ContainsKey(ui))
@@ -114,6 +115,7 @@ public class WorldUIController : Initializable
         if (!_canShowWorldUI)
             return;
 
+        Debug.Log("restore");
         foreach (KeyValuePair<WorldUI, bool> kvp in _stateBeforeForcingHide)
         {
             WorldUI ui = kvp.Key;

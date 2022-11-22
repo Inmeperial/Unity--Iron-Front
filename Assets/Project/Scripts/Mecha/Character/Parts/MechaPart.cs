@@ -93,20 +93,11 @@ public abstract class MechaPart : MonoBehaviour, IDamageable
             _currentHP = finalHP;
     }
 
-    public Ability GetAbility()
-    {
-        return _ability;
-    }
+    public Ability GetAbility() => _ability;
 
-    public Character GetCharacter()
-    {
-        return _myChar;
-    }
+    public Character GetCharacter() => _myChar;
 
-    public void SetShader(SwitchTextureEnum textureEnum)
-    {
-        _masterShader.ConvertEnumToStringEnumForShader(textureEnum);
-    }
+    public void SetShader(SwitchTextureEnum textureEnum) => _masterShader.ConvertEnumToStringEnumForShader(textureEnum);
 
     public void ChangePartMeshActiveStatus(bool status)
     {

@@ -23,8 +23,8 @@ public class EffectsController : MonoBehaviour
 
     public static EffectsController Instance;
 
-    private List<DisposableEffect> _particlesToDestroy = new List<DisposableEffect>();
-
+    private List<ParticleSystem> _particlesToDestroy = new List<ParticleSystem>();
+    private List<float> _particlesDuration = new List<float>();
     private void Awake()
     {
         if (Instance != null)
@@ -43,6 +43,12 @@ public class EffectsController : MonoBehaviour
     public void PlayParticlesEffect(ParticleSystem particlePrefab, Vector3 position, Vector3 forward)
     {
         PlayParticlesEffect(particlePrefab, position, forward, out ParticleSystem particle);
+
+        if (!particle)
+            return;
+
+        _particlesToDestroy.Add(particle);
+        _particlesDuration.Add(particle.main.duration);
     }
 
     public void PlayParticlesEffect(ParticleSystem particlePrefab, Vector3 position, Vector3 forward, out ParticleSystem particle)
@@ -55,7 +61,6 @@ public class EffectsController : MonoBehaviour
         }
 
         particle = SpawnParticle(particlePrefab, position, forward, transform);
-        _particlesToDestroy.Add(new DisposableEffect(particle.gameObject, particle.main.duration));
     }
 
     public void PlayPersistentParticles(ParticleSystem particlePrefab, Vector3 position, Vector3 forward, Transform parent, out ParticleSystem particle)
@@ -86,34 +91,20 @@ public class EffectsController : MonoBehaviour
 
             for (int i = 0; i < _particlesToDestroy.Count; i++)
             {
-                if (_particlesToDestroy[i].effect == null)
-                {
-                    toRemove.Add(i);
-                    continue;
-                }
+                _particlesDuration[i] -= Time.deltaTime;
 
-                _particlesToDestroy[i].remainingTime -= Time.deltaTime;
-
-                if (_particlesToDestroy[i].remainingTime > 0)
+                if (_particlesDuration[i] > 0)
                     continue;
 
                 toRemove.Add(i);
             }
 
-            for (int i = toRemove.Count-1; i > 0; i--)
+            foreach (int index in toRemove)
             {
-                int index = toRemove[i];
-
-                if (_particlesToDestroy[index].effect == null)
-                {
-                    _particlesToDestroy.RemoveAt(index);
-                    continue;
-                }
-
-                GameObject particleObject = _particlesToDestroy[index].effect;
+                ParticleSystem particle = _particlesToDestroy[index];
+                particle.Stop();
                 _particlesToDestroy.RemoveAt(index);
-
-                Destroy(particleObject);
+                _particlesDuration.RemoveAt(index);
             }
 
             toRemove.Clear();

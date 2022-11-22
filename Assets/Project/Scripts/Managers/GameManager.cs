@@ -108,15 +108,8 @@ public class GameManager : MonoBehaviour
             mecha.OnMechaDeath += OnMechaDeath;
             mecha.OnBeginMove += _characterSelector.DisableCharacterSelection;
             mecha.OnBeginMove += _gunsSelector.DisableGunSelection;
-
             mecha.OnEndMove += EnableCharacterSelection;
             mecha.OnEndMove += _gunsSelector.EnableGunSelection;
-
-            if (mecha.GetUnitTeam() == EnumsClass.Team.Green)
-            {
-                mecha.OnBeginMove += HideEndTurnButton;
-                mecha.OnEndMove += ShowEndTurnButton;
-            }
 
             mecha.GetLegs().OnDamageTakenByAttack += OnMechaLegsDamaged;
             mecha.Initialize();
@@ -240,6 +233,12 @@ public class GameManager : MonoBehaviour
         _currentTurnMecha.RotateTowardsEnemy(_selectedEnemy.transform);
 
         OnBeginAttackPreparations?.Invoke();
+
+        //foreach (Character mecha in _mechas)
+        //{
+        //    mecha.ShowGunsMesh();
+        //    mecha.ShowMechaMesh();
+        //}
 
         Vector3 targetEnemyPosition = _selectedEnemy.transform.position;
         _gameCamerasController.CloseUpCamera.MoveCameraToParent(targetEnemyPosition, MechaAttackPreparationsFinished, _attackDelay);
@@ -506,10 +505,6 @@ public class GameManager : MonoBehaviour
 
         HideEndTurnButton();
         //_mechaEquipmentHUD.DisableButtonsInteraction();
-
-        _gameCamerasController.CameraMovement.DisableManualMovement();
-        _gameCamerasController.CameraMovement.DisableManualRotation();
-
         StartCoroutine(EndTurnActionsCheck());
     }
 
@@ -585,9 +580,6 @@ public class GameManager : MonoBehaviour
         {
             afterCameraMoves += () =>
             {
-                _gameCamerasController.CameraMovement.EnableManualMovement();
-                _gameCamerasController.CameraMovement.EnableManualRotation();
-
                 _characterSelector.EnableCharacterSelection();
                 SubscribeToInputs();
                 _inputsReader.EnableKeysCheck();
@@ -597,9 +589,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            _gameCamerasController.CameraMovement.DisableManualMovement();
-            _gameCamerasController.CameraMovement.EnableManualRotation();
-
             _characterSelector.DisableCharacterSelection();
             _inputsReader.DisableKeysCheck();
             _gunsSelector.DisableGunSelection();
@@ -619,8 +608,6 @@ public class GameManager : MonoBehaviour
 
         _inputsReader.OnDeselectKeyPressed -= mecha.ShowGunsMesh;
         _inputsReader.OnDeselectKeyPressed -= mecha.ShowMechaMesh;
-        
-        _gunsSelector.DisableGunSelection();
 
         OnBeginAttackPreparations -= mecha.ShowMechaMesh;
         OnBeginAttackPreparations -= mecha.ShowGunsMesh;
@@ -722,12 +709,6 @@ public class GameManager : MonoBehaviour
 
             mecha.OnBeginMove -= _characterSelector.DisableCharacterSelection;
             mecha.OnEndMove -= EnableCharacterSelection;
-
-            if (mecha.GetUnitTeam() == EnumsClass.Team.Green)
-            {
-                mecha.OnBeginMove += HideEndTurnButton;
-                mecha.OnEndMove += ShowEndTurnButton;
-            }
 
             mecha.GetLegs().OnDamageTakenByAttack -= OnMechaLegsDamaged;
         }

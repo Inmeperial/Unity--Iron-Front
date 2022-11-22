@@ -108,6 +108,9 @@ public abstract class Gun : MechaPart
     }
     #endregion
     
+    /// <summary>
+    /// Set Gun stats from given scriptable object.
+    /// </summary>
     public virtual void SetGunData(GunSO data, Character character, string tag, string location, Animator animator)
     {
         _data = data;
@@ -138,7 +141,13 @@ public abstract class Gun : MechaPart
         _ability.Initialize(_myChar, abilityData);
         _ability.SetPart(this);
         _myChar.AddEquipable(_ability);
+        //_abilityCreated = true;
     }
+
+    //public void SetAnimationHandler(Animator animator)
+    //{
+    //    _animator = animator;
+    //}
 
     public void ResetGun()
     {
@@ -146,16 +155,27 @@ public abstract class Gun : MechaPart
         _gunSkillAvailable = true;
     }
 
+    /// <summary>
+    /// Modify gun range.
+    /// </summary>
+    /// <param name="extraRange">The amount of range to modify. If negative, it decrease.</param>
     public void ModifyRange(int extraRange)
     {
         _currentAttackRange += extraRange;
     }
     
+    /// <summary>
+    /// Modify critical chance.
+    /// </summary>
+    /// <param name="extraChance">The amount of critical chance to modify. If negative, it decrease.</param>
     public void ModifyCritChance(int extraChance)
     {
         _currentCritChance += extraChance;
     }
 
+    /// <summary>
+    /// Reduce this gun available bullets by the amount of this gun bullets per click.  
+    /// </summary>
     public void ReduceAvailableBullets()
     {
         _availableBullets -= GetBulletsPerClick();
@@ -164,6 +184,9 @@ public abstract class Gun : MechaPart
             _availableBullets = 0;
     }
 
+    /// <summary>
+    /// Increase this gun available bullets by the amount of this gun bullets per click.  
+    /// </summary>
     public void IncreaseAvailableBullets()
     {
         _availableBullets += GetBulletsPerClick();
@@ -172,6 +195,9 @@ public abstract class Gun : MechaPart
             _availableBullets = _data.maxBullets;
     }
     
+    /// <summary>
+    /// Increase this gun available bullets by the given quantity.
+    /// </summary>
     public void IncreaseAvailableBullets(int quantity)
     {
         _availableBullets += quantity;
@@ -189,6 +215,9 @@ public abstract class Gun : MechaPart
         ExecuteAttackAnimation();
     }
 
+    /// <summary>
+    /// Returns a collection of the damage each bullet does and if it miss, hits or crit.
+    /// </summary>
     public List<Tuple<int, int>> GetCalculatedDamage(int bullets)
     {
         List<Tuple<int, int>> list = new List<Tuple<int, int>>();
@@ -268,6 +297,7 @@ public abstract class Gun : MechaPart
         _collider.enabled = status;
     }
     
+    //Lo ejecuta el ButtonsUIManager, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void ReceiveDamage(List<Tuple<int,int>> damages)
     {
         base.ReceiveDamage(damages);
@@ -299,17 +329,16 @@ public abstract class Gun : MechaPart
 
         OnDamageTaken?.Invoke(_myChar, totalDamage);
 
-        _myChar.PlayReceiveDamageAnimation();
-
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
 
         _myChar.MechaOutsideAttackRange();
         
         if (IsPartBroken())
-            DestroyPart();
+            DestroyPart();        
     }
     
+    //Lo ejecuta el mortero, activa las particulas y textos de daño del effects controller, actualiza el world canvas
     public override void ReceiveDamage(int damage)
     {
         base.ReceiveDamage(damage);
@@ -321,16 +350,14 @@ public abstract class Gun : MechaPart
         EffectsController.Instance.CreateDamageText(damage.ToString(), 1, pos);
 
         OnDamageTaken?.Invoke(_myChar, damage);
-
-        _myChar.PlayReceiveDamageAnimation();
-
+        
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
 
         _myChar.MechaOutsideAttackRange();
-
+        
         if (IsPartBroken())
-            DestroyPart();
+            DestroyPart();        
     }
 
     public override void Heal(int healAmount)
@@ -387,6 +414,7 @@ public abstract class Gun : MechaPart
 
     public void PlayAnimationEvent(int index)
     {
+        Debug.Log("play gun event: " + _data.objectName);
         if (index > _animationEvents.Count - 1)
             return;
 

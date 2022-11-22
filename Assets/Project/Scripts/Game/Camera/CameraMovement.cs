@@ -21,13 +21,9 @@ public class CameraMovement : MonoBehaviour
     private Quaternion _initialRot;
     private float _watchdogCounter;
     private bool _rotating;
-    private bool _canRotate;
-    private bool _canMove;
-
     private Rigidbody _rb;
 
     private float _yPos;
-
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -42,45 +38,36 @@ public class CameraMovement : MonoBehaviour
     public void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.KeypadPlus))
+        {
             manualMovementSpeed++;
-
+        }
         if (Input.GetKey(KeyCode.KeypadMinus))
+        {
             manualMovementSpeed--;
-
+        }
+            
+        
+        
         if (_cameraLocked)
         {
             _rb.velocity = Vector3.zero;
             return;
         }
         
-        if (_canMove)
-            ManualMoveCamera();
-        
-
-
-        if (_canRotate)
-            ManualRotateCamera();
-        
-
-        if (_gameCam.transform.localPosition != _camInitialPos)
-            _gameCam.transform.localPosition = _camInitialPos;
-    }
-
-    private void ManualMoveCamera()
-    {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         Vector3 dir = transform.right * x + transform.forward * z;
         _rb.velocity = dir * manualMovementSpeed;
-    }
 
-    private void ManualRotateCamera()
-    {
+
         if (Input.GetKey(KeyCode.E))
             transform.Rotate(new Vector3(0, -rotationSpeed * Time.fixedDeltaTime, 0));
         if (Input.GetKey(KeyCode.Q))
             transform.Rotate(new Vector3(0, rotationSpeed * Time.fixedDeltaTime, 0));
+
+        if (_gameCam.transform.localPosition != _camInitialPos)
+            _gameCam.transform.localPosition = _camInitialPos;
     }
 
     public void LockCamera(bool status)
@@ -186,25 +173,5 @@ public class CameraMovement : MonoBehaviour
         pos.y = transform.position.y;
         pos += t.forward;
         return pos;
-    }
-
-    public void DisableManualRotation()
-    {
-        _canRotate = false;
-    }
-
-    public void EnableManualRotation()
-    {
-        _canRotate = true;
-    }
-
-    public void DisableManualMovement()
-    {
-        _canMove = false;
-    }
-
-    public void EnableManualMovement()
-    {
-        _canMove = true;
     }
 }

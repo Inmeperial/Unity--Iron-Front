@@ -18,15 +18,29 @@ public class CheckEnemiesInRange : GOCondition
                 return false;
         }
 
-        if (_myUnit.IsRightGunAlive())
+        if (_myUnit.GetLeftGun())
         {
+            //if (_myUnit.GetRightGun().GetGunType() != EnumsClass.GunsType.Shield)
+            //{
+            //    _myUnit.SelectRightGun();
+            //    if (_myUnit.HasEnemiesInRange())
+            //        return true;
+            //} 
+
             _myUnit.SelectRightGun();
             if (_myUnit.HasEnemiesInRange())
                 return true;
         }
 
-        if (_myUnit.IsLeftGunAlive())
+        if (_myUnit.GetRightGun())
         {
+            //if (_myUnit.GetLeftGun().GetGunType() != EnumsClass.GunsType.Shield)
+            //{
+            //    _myUnit.SelectLeftGun();
+            //    if (_myUnit.HasEnemiesInRange())
+            //        return true;               
+            //}
+
             _myUnit.SelectLeftGun();
             if (_myUnit.HasEnemiesInRange())
                 return true;

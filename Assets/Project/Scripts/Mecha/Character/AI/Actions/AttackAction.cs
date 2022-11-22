@@ -30,21 +30,15 @@ public class AttackAction : GOAction
 
         _myUnit.OnStartAction(Fail);
 
-        if (!_myUnit.IsLeftGunAlive() && !_myUnit.IsRightGunAlive())
+        if (!_myUnit.GetLeftGun() && !_myUnit.GetRightGun())
         {
             _myUnit.OnEndAction();
             return TaskStatus.COMPLETED;
         }
         
         Character closestEnemy = _myUnit.GetClosestEnemy();
-
         Quaternion initialRotation = _myUnit.RotationBeforeLookingAtEnemy;
-
         _myUnit.RotateTowardsEnemy(closestEnemy.transform);
-
-        if (!_myUnit.IsSelectedGunAlive())
-            return TaskStatus.COMPLETED;
-
         Gun gun = _myUnit.GetSelectedGun();
 
         if (gun.GetAvailableBullets() <= 0)
@@ -94,8 +88,9 @@ public class AttackAction : GOAction
 
             if (parts.ContainsKey(partToAttack))
             {
-                gun.Attack(parts[partToAttack], gun.GetAvailableBullets());
-
+                List<Tuple<int, int>> damage = gun.GetCalculatedDamage(gun.GetAvailableBullets());
+                
+                parts[partToAttack].ReceiveDamage(damage);
                 _myUnit.DeactivateAttack();
                 _myUnit.SetCharacterMoveState(false);
             }
@@ -110,13 +105,14 @@ public class AttackAction : GOAction
             
             if (_myUnit.RayToElevator(elevator.GetColliderForAttack().transform.position))
             {
-                List<Tuple<int, int>> damage = gun.GetCalculatedDamage(gun.GetMaxBullets());
+                List<System.Tuple<int, int>> damage = gun.GetCalculatedDamage(gun.GetMaxBullets());
             
                 elevator.ReceiveDamage(damage);
                 _myUnit.GetSelectedGun().ExecuteAttackAnimation();
                 _myUnit.DeactivateAttack();
                 _myUnit.OnEndActionWithDelay(0);
                 _myUnit.SetCharacterMoveState(false);
+                Debug.Log("attack");
             }
             else
             {

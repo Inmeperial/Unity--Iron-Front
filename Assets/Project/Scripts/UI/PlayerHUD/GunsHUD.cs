@@ -51,12 +51,6 @@ public class GunsHUD : Initializable
         _gunsSelector.OnLeftGunSelected += OnLeftGunSelected;
         _gunsSelector.OnRightGunSelected += OnRightGunSelected;
 
-        _gunsSelector.OnSelectionDisabled += HideWeaponsCircle;
-        _gunsSelector.OnSelectionDisabled += DisableButtonsInteraction;
-
-        _gunsSelector.OnSelectionEnabled += ShowWeaponsCircle;
-        _gunsSelector.OnSelectionEnabled += EnableButtonsInteraction;
-
         GameManager.Instance.OnBeginTurn += ShowContainer;
         
         GameManager.Instance.OnEndTurn += HideContainer;
@@ -73,7 +67,7 @@ public class GunsHUD : Initializable
 
     private void ConfigureGunsUI(Character mecha, Gun left, Gun right)
     {
-        if (left.CurrentHP > 0)
+        if (left)
         {
             _leftGunContainer.SetActive(true);
             _leftGunNameText.text = left.GetGunName();
@@ -89,7 +83,7 @@ public class GunsHUD : Initializable
         else
             _leftGunContainer.SetActive(false);
 
-        if (right.CurrentHP > 0)
+        if (right)
         {
             _rightGunContainer.SetActive(true);
             _rightGunNameText.text = right.GetGunName();
@@ -128,19 +122,6 @@ public class GunsHUD : Initializable
         _leftGunButton.interactable = false;
         _rightGunButton.interactable = false;
     }
-
-    private void ShowWeaponsCircle()
-    {
-        _leftGunCircle.transform.parent.gameObject.SetActive(true);
-        _rightGunCircle.transform.parent.gameObject.SetActive(true);
-    }
-
-    private void HideWeaponsCircle() 
-    {
-        _leftGunCircle.transform.parent.gameObject.SetActive(false);
-        _rightGunCircle.transform.parent.gameObject.SetActive(false);
-    }
-
     public void OnRightGunSelected()
     {
         _rightGunCircle.SetActive(true);
@@ -165,12 +146,6 @@ public class GunsHUD : Initializable
 
         _gunsSelector.OnLeftGunSelected -= OnLeftGunSelected;
         _gunsSelector.OnRightGunSelected -= OnRightGunSelected;
-
-        _gunsSelector.OnSelectionDisabled += HideWeaponsCircle;
-        _gunsSelector.OnSelectionDisabled += DisableButtonsInteraction;
-
-        _gunsSelector.OnSelectionEnabled += ShowWeaponsCircle;
-        _gunsSelector.OnSelectionEnabled += EnableButtonsInteraction;
 
         GameManager.Instance.OnBeginTurn -= ShowContainer;
         GameManager.Instance.OnEndTurn -= HideContainer;

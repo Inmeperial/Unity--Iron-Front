@@ -48,9 +48,6 @@ public class Body : MechaPart
 
         _myChar.MechaOutsideAttackRange();
 
-        if (_myChar.GetUnitTeam() == EnumsClass.Team.Red)
-            Debug.Log("AI " + _myChar.GetCharacterName() + " took damage!");
-
         _myChar.PlayReceiveDamageAnimation();
 
         if (_myChar.IsSelected())
@@ -75,10 +72,7 @@ public class Body : MechaPart
         OnDamageTaken?.Invoke(_myChar, damage);
 
         _myChar.MechaOutsideAttackRange();
-
-        if (_myChar.GetUnitTeam() == EnumsClass.Team.Red)
-            Debug.Log("AI " + _myChar.GetCharacterName() + " took damage!");
-
+        
         _myChar.PlayReceiveDamageAnimation();
 
         if (IsPartBroken())
@@ -116,8 +110,7 @@ public class Body : MechaPart
     }
     public override void PlayDestroyVFX()
     {
-        EffectsController.Instance.PlayParticlesEffect(_data.destroyParticle, transform.position, transform.forward, out ParticleSystem particle);
-        particle.transform.localScale *= 5;
+        EffectsController.Instance.PlayParticlesEffect(_data.destroyParticle, transform.position, transform.forward);
     }
 
     protected override void DestroyPart()
