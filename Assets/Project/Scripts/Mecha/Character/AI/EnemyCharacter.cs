@@ -125,6 +125,7 @@ public class EnemyCharacter : Character
     {
         if (!_canAttack && !_canMove)
             return _closestEnemy;
+
         if (_closestEnemy != null)
             return _closestEnemy;
         
@@ -136,6 +137,9 @@ public class EnemyCharacter : Character
         
         for (int i = 0; i < enemies.Count; i++)
         {
+
+            if (enemies[i].IsDead())
+                continue;
 
             Tile tile = ClosestTileToEnemy(enemies[i]);
 
@@ -241,7 +245,10 @@ public class EnemyCharacter : Character
         _closestEnemy = character;
     }
 
-    public Character GetClosestEnemy() => _closestEnemy;
+    public Character GetClosestEnemy()
+    {
+        return _closestEnemy;
+    }
 
     public void EnemyMove()
     {
@@ -332,4 +339,49 @@ public class EnemyCharacter : Character
 
         _failSafeRunning = false;
     }
+    //#region Animations
+    //protected override void PlayDeadAnimation()
+    //{
+    //    base.PlayDeadAnimation();
+    //}
+
+    //public override void PlayReceiveDamageAnimation()
+    //{
+    //    base.PlayReceiveDamageAnimation();
+    //}
+    //public override void StopReceiveDamageAnimation()
+    //{
+    //   base.StopReceiveDamageAnimation();
+    //}
+
+    //protected override void PlayWalkAnimation()
+    //{
+    //    base.PlayWalkAnimation();
+    //}
+
+    //protected override void StopWalkAnimation()
+    //{
+    //    base.StopWalkAnimation();
+    //}
+
+    //public override void StopDeathAnimation()
+    //{
+    //    base.StopDeathAnimation();
+    //}
+
+    //public override void PlayWalkSound()
+    //{
+    //    base.PlayWalkSound();
+    //}
+
+    //public override void PlayGunAnimationEvent(int index)
+    //{
+    //    base.PlayGunAnimationEvent(index);
+    //}
+
+    //public override void PlayGunEndAnimationEvent()
+    //{
+    //    base.PlayGunEndAnimationEvent();
+    //}
+    //#endregion
 }

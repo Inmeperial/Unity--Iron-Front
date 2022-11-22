@@ -342,6 +342,12 @@ public class Character : Initializable
         
         OnMechaSelected?.Invoke(this);
 
+        if (_equipableSelected)
+        {
+            _equipableSelected = false;
+            _equipable.Deselect();
+        }
+
         RotationBeforeAttacking = transform.rotation; //Cambio Nico
         ResetInRangeLists();
         _path.Clear();
@@ -363,13 +369,13 @@ public class Character : Initializable
 
         if (_canAttack)
         {
-            if (_rightGun)
+            if (IsRightGunAlive())
             {
                 _selectedGun = _rightGun;
                 SelectRightGun();
             }
             
-            else if (_leftGun)
+            else if (IsLeftGunAlive())
             {
                 _selectedGun = _leftGun;
                 SelectLeftGun();
@@ -378,12 +384,12 @@ public class Character : Initializable
             else
                 _selectedGun = null;
             
-            if (_isOnElevator && _selectedGun.GetAttackRange() > 1)
+            if (_isOnElevator && IsSelectedGunAlive() && _selectedGun.GetAttackRange() > 1)
             {
                 PaintTilesInAttackRange(_myPositionTile, 0);
                 CheckEnemiesInAttackRange();
             }
-            else if (!_isOnElevator)
+            else if (!_isOnElevator && _selectedGun && IsSelectedGunAlive())
             {
                 PaintTilesInAttackRange(_myPositionTile, 0);
                 CheckEnemiesInAttackRange();
@@ -408,7 +414,9 @@ public class Character : Initializable
             
             else
                 _currentSteps = _legs.CurrentHP > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
-            
+
+            if (_currentSteps <= 0)
+                _currentSteps = 1;
             
             PaintTilesInMoveRange(_myPositionTile, 0);
             AddTilesInMoveRange();
@@ -802,6 +810,24 @@ public class Character : Initializable
         return _canBeSelected;
     }
 
+    public bool IsLeftGunAlive()
+    {
+        _leftGunAlive = _leftGun.CurrentHP > 0;
+
+        return _leftGunAlive;
+    }
+
+    public bool IsRightGunAlive()
+    {
+        _rightGunAlive = _rightGun.CurrentHP > 0;
+
+        return _rightGunAlive;
+    }
+
+    public bool IsSelectedGunAlive()
+    {
+        return _selectedGun.CurrentHP > 0;
+    }
     public float GetCharacterInitiative()
     {
         return _legs.GetLegsInitiative();
@@ -905,7 +931,7 @@ public class Character : Initializable
     //Se pintan los tiles dentro del rango de ataque
     public void PaintTilesInAttackRange(Tile currentTile, int count)
     {
-        if (!_leftGunAlive && !_rightGunAlive)
+        if (!IsLeftGunAlive() && !IsRightGunAlive())
             return;
 
         if (_selectedGun == null || count >= _selectedGun.GetAttackRange() || (_tilesForAttackChecked.ContainsKey(currentTile) && _tilesForAttackChecked[currentTile] <= count))
@@ -1118,6 +1144,9 @@ public class Character : Initializable
         _canBeSelected = false;
         _isDead = true;
 
+        ResetTilesInAttackRange();
+        ResetTilesInMoveRange();
+
         PlayDeadAnimation();
         OnMechaDeath?.Invoke(this);
     }
@@ -1222,10 +1251,18 @@ public class Character : Initializable
         if (GameManager.Instance.ActiveTeam == EnumsClass.Team.Red)
             return;
 
-        if (GameManager.Instance.CurrentTurnMecha == this)
+        Character activeMecha = GameManager.Instance.CurrentTurnMecha;
+
+        if (!activeMecha)
             return;
 
-        if (GameManager.Instance.CurrentTurnMecha.GetUnitTeam() == _unitTeam)
+        if (activeMecha == this)
+            return;
+
+        if (activeMecha.GetUnitTeam() == _unitTeam)
+            return;
+
+        if (activeMecha.GetLeftGun().CurrentHP <= 0 && activeMecha.GetRightGun().CurrentHP <= 0)
             return;
 
         if (!_selectedForAttack)
@@ -1453,12 +1490,10 @@ public class Character : Initializable
         if (location == "Right")
         {
             _rightGunAlive = false;
-            _rightGun = null;
         }
         else
         {
             _leftGunAlive = false;
-            _leftGun = null;
         }
         
         if (ability && _equipables.Contains(ability))
@@ -1560,10 +1595,10 @@ public class Character : Initializable
     }
     public void ShowGunsMesh()
     {
-        if (_leftGun)
+        if (IsLeftGunAlive())
             _leftGun.ChangeMeshRenderStatus(true);
 
-        if (_rightGun)
+        if (IsRightGunAlive())
             _rightGun.ChangeMeshRenderStatus(true);
     }
 
@@ -1609,7 +1644,7 @@ public class Character : Initializable
     }
 
     #region Animation Events
-    private void PlayDeadAnimation()
+    protected virtual void PlayDeadAnimation()
     {
         if (_animator.GetBool("isDead"))
         {
@@ -1620,14 +1655,14 @@ public class Character : Initializable
             _animator.SetBool("isDead", true);
     }
 
-    public void PlayReceiveDamageAnimation()
+    public virtual void PlayReceiveDamageAnimation()
     {
         if (_isDead)
             return;
 
         _animator.SetBool("isReciveDamageAnimator", true);
     }
-    public void StopReceiveDamageAnimation()
+    public virtual void StopReceiveDamageAnimation()
     {
         if (_isDead)
             return;
@@ -1635,7 +1670,7 @@ public class Character : Initializable
         _animator.SetBool("isReciveDamageAnimator", false);
     }
 
-    private void PlayWalkAnimation()
+    protected virtual void PlayWalkAnimation()
     {
         if (_isDead)
             return;
@@ -1643,7 +1678,7 @@ public class Character : Initializable
         _animator.SetBool("isWalkingAnimator", true);
     }
 
-    private void StopWalkAnimation()
+    protected virtual void StopWalkAnimation()
     {
         if (_isDead)
             return;
@@ -1651,12 +1686,12 @@ public class Character : Initializable
         _animator.SetBool("isWalkingAnimator", false);
     }
 
-    public void StopDeathAnimation()
+    public virtual void StopDeathAnimation()
     {
         _animator.speed = 0;
     }
 
-    public void PlayWalkSound()
+    public virtual void PlayWalkSound()
     {
         AudioManager.Instance.PlaySound(_walk, gameObject);
     }
@@ -1671,13 +1706,12 @@ public class Character : Initializable
         _animator.enabled = true;
     }
 
-    public void PlayGunAnimationEvent(int index)
+    public virtual void PlayGunAnimationEvent(int index)
     {
-        Debug.Log("play gun animation event");
         _selectedGun.PlayAnimationEvent(index);
     }
 
-    public void PlayGunEndAnimationEvent()
+    public virtual void PlayGunEndAnimationEvent()
     {
         _selectedGun.EndAnimationEvent();
     }

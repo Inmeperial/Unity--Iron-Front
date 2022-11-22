@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EquipablesHUD : Initializable
@@ -98,6 +96,12 @@ public class EquipablesHUD : Initializable
     {
         Character mecha = GameManager.Instance.CurrentTurnMecha;
 
+        if (mecha.IsDead())
+        {
+            DisableButtonsInteraction();
+            return;
+        }
+
         UpdateButtonState(_bodyAbilityButton, mecha.GetBody().GetAbility());
         UpdateButtonState(_rightGunAbilityButton, mecha.GetRightGun().GetAbility());
         UpdateButtonState(_leftGunAbilityButton, mecha.GetLeftGun().GetAbility());
@@ -173,6 +177,7 @@ public class EquipablesHUD : Initializable
         _leftGunAbilityButton.interactable = true;
         _rightGunAbilityButton.interactable = true;
         _legsAbilityButton.interactable = true;
+        _itemButton.interactable = true;
     }
 
     public void DisableButtonsInteraction()
@@ -181,6 +186,7 @@ public class EquipablesHUD : Initializable
         _leftGunAbilityButton.interactable = false;
         _rightGunAbilityButton.interactable = false;
         _legsAbilityButton.interactable = false;
+        _itemButton.interactable = false;
     }
 
     private void ShowContainer()

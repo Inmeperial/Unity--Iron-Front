@@ -120,13 +120,13 @@ public class SelfDestruct : Ability
                 mine.DestroyMine();
         }
 
-        OnEquipableUsed?.Invoke();
-
-        AbilityUsed(_abilityData);
-
         UpdateButtonText(_availableUses.ToString(), _abilityData);
 
         _button.interactable = false;
+
+        AbilityUsed(_abilityData);
+
+        OnEquipableUsed?.Invoke();
 
         Deselect();
     }

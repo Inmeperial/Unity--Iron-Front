@@ -93,14 +93,9 @@ public class CharacterSelector : MonoBehaviour
         }
         if (character.IsMyTurn())
         {
-            //ButtonsUIManager.Instance.DeselectActions();
-
             _highlight.ChangeActiveCharacter(character);
 
             OnTurnMechaSelected?.Invoke(character);
-
-            //ButtonsUIManager.Instance.SetPlayerCharacter(character);
-            //ButtonsUIManager.Instance.SetPlayerUI();
         }
         else if (character.GetUnitTeam() != GameManager.Instance.ActiveTeam && character.CanBeAttacked())
         {
@@ -112,7 +107,7 @@ public class CharacterSelector : MonoBehaviour
                     return;
             }
 
-            if (selectedCharacter.CanAttack())
+            if (selectedCharacter.CanAttack() && selectedCharacter.IsLeftGunAlive() || selectedCharacter.IsRightGunAlive())
             {
                 selectedCharacter.SaveRotationBeforeLookingAtEnemy();
 
@@ -123,19 +118,9 @@ public class CharacterSelector : MonoBehaviour
                 if (enemyInSight)
                 {
                     OnEnemyMechaSelected?.Invoke(character);
-                    //character.SelectingEnemy();
-
-                    //character.SelectedAsEnemy();
-
-
-                    //ButtonsUIManager.Instance.SetEnemy(character);
-                    //ButtonsUIManager.Instance.SetEnemyUI();
-
-                    //DeactivateCharacterSelection();
                 }
                 else
                 {
-                    //selectedCharacter.RaysOffDelay();
                     selectedCharacter.LoadRotationOnDeselect(); 
                 }
             }

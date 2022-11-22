@@ -18,7 +18,8 @@ public class CheckPartsInSight : GOCondition
                 return false;
         }
 
-        if (_myUnit.checkedParts) return true;
+        if (_myUnit.checkedParts)
+            return true;
         
 
         Character closestEnemy = _myUnit.GetClosestEnemy();
