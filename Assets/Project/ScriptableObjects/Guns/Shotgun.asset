@@ -20,17 +20,16 @@ MonoBehaviour:
   maxBullets: 4
   availableBullets: 0
   bulletsPerClick: 2
-  damage: 30
+  damage: 40
   critChance: 10
   critMultiplier: 2
-  hitChance: 60
-  chanceToHitOtherParts: 100
+  hitChance: 65
+  chanceToHitOtherParts: 70
   attackRange: 2
   bodyPartsSelectionQuantity: 2
   weight: 120
   attackSounds:
   - {fileID: 11400000, guid: fe013ed6e4a2a8546946a32a3fcfe7ec, type: 2}
-  attackSound: {fileID: 11400000, guid: fe013ed6e4a2a8546946a32a3fcfe7ec, type: 2}
   takeDamageSound: {fileID: 11400000, guid: af11f0272a5824248ba2d14c313bec43, type: 2}
   destroySound: {fileID: 11400000, guid: 16b8e1669a0194142994edb7096e94f6, type: 2}
   attackParticles:
