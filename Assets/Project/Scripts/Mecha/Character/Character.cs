@@ -1262,6 +1262,9 @@ public class Character : Initializable
         if (activeMecha.GetUnitTeam() == _unitTeam)
             return;
 
+        if (activeMecha.IsMoving())
+            return;
+
         if (activeMecha.GetLeftGun().CurrentHP <= 0 && activeMecha.GetRightGun().CurrentHP <= 0)
             return;
 
@@ -1287,6 +1290,9 @@ public class Character : Initializable
         Character currentMecha = GameManager.Instance.CurrentTurnMecha;
 
         if (!currentMecha)
+            return;
+
+        if (currentMecha.IsMoving())
             return;
 
         currentMecha.LoadRotationBeforeLookingAtEnemy();
