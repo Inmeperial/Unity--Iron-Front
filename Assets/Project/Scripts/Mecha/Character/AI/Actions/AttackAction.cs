@@ -123,7 +123,14 @@ public class AttackAction : GOAction
                 _myUnit.OnEndAction();
             }
         }
-        
+
+        if (!_myUnit.CanAttack())
+        {
+            _myUnit.SetCharacterMoveState(false);
+            _myUnit.ResetTilesInAttackRange();
+            _myUnit.ResetTilesInMoveRange();
+        }
+
         if (_fail)
         {
             _fail = false;
