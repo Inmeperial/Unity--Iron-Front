@@ -68,6 +68,9 @@ public class Legs : MechaPart
 
         _myChar.MechaOutsideAttackRange();
 
+        if (totalDamage <= 0)
+            return;
+
         OnDamageTaken?.Invoke(_myChar, totalDamage);
         
         OnDamageTakenByAttack?.Invoke(_myChar);
@@ -84,6 +87,9 @@ public class Legs : MechaPart
     public override void ReceiveDamage(int damage)
     {
         base.ReceiveDamage(damage);
+
+        if (damage <= 0)
+            return;
 
         float hp = _currentHP - damage;
 

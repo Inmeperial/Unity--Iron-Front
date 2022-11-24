@@ -70,8 +70,18 @@ public abstract class MechaPart : MonoBehaviour, IDamageable
         if (IsPartBroken())
             return;
 
-        PlayTakeDamageSound();
-        PlayTakeDamageVFX();
+        int totalDamage = 0;
+
+        foreach (Tuple<int, int> kvp in damages)
+        {
+            totalDamage += kvp.Item1;
+        }
+
+        if (totalDamage > 0)
+        {
+            PlayTakeDamageSound();
+            PlayTakeDamageVFX();
+        }        
     }
 
     public virtual void ReceiveDamage(int damage)
@@ -79,8 +89,11 @@ public abstract class MechaPart : MonoBehaviour, IDamageable
         if (IsPartBroken())
             return;
 
-        PlayTakeDamageSound();
-        PlayTakeDamageVFX();
+        if (damage > 0)
+        {
+            PlayTakeDamageSound();
+            PlayTakeDamageVFX();
+        }        
     }
 
     public virtual void Heal(int healAmount)
