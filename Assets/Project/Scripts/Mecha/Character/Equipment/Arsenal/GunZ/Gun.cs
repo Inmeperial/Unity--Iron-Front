@@ -180,11 +180,13 @@ public abstract class Gun : MechaPart
             _availableBullets = _data.maxBullets;
     }
 
-    public virtual void Attack(MechaPart partToAttack, int bullets)
+    public virtual void Attack(IDamageable target, int bullets)
     {
         List<Tuple<int, int>> damages = GetCalculatedDamage(bullets);
 
-        partToAttack.ReceiveDamage(damages);
+        _myChar.DoAttackAction();
+
+        target.ReceiveDamage(damages);
 
         ExecuteAttackAnimation();
     }

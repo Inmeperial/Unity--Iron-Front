@@ -86,6 +86,6 @@ public class Shield : Gun
 
         _instantiated.Clear();
         _selected = false;
-        _myChar.DeactivateAttack();
+        _myChar.DoAttackAction();
     }
 }

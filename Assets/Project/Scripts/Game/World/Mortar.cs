@@ -267,7 +267,7 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
         mortarText.text = _turnCount.ToString();
         missileText.text = _turnCount.ToString();
         
-        _activationCharacter.DeactivateAttack();
+        _activationCharacter.DoAttackAction();
         _activationCharacter = null;
 
         GameManager.Instance.OnEndTurn += CheckAttack;

@@ -141,7 +141,7 @@ public class PiercingShot : WeaponAbility
             Body body = attackedCharacter.GetBody();
             body.ReceiveDamage(_abilityData.damage);
         }
-        _character.DeactivateAttack();
+        _character.DoAttackAction();
 	}
 
     private void PaintTilesInRange(Tile currentTile, int count, Vector3 dir)

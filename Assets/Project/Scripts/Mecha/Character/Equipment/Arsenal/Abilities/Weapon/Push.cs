@@ -122,7 +122,7 @@ public class Push : WeaponAbility
                 //Hacer daño a la otra unidad
                 collidingUnit.GetBody().ReceiveDamage(_abilityData.collisionDamage);
         }
-        _character.DeactivateAttack();
+        _character.DoAttackAction();
 	}
 
     private IEnumerator LerpPush(Transform movingTarget, Vector3 targetPos, float duration)

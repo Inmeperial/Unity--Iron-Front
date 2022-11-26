@@ -115,6 +115,7 @@ public class Character : Initializable
     public Action OnSelectingEnemy;
     public Action OnBeginMove;
     public Action OnEndMove;
+    public Action OnMechaAttack;
     public Action<Character, bool> OnMoveActionStateChange;
     public Action<Character, bool> OnAttackActionStateChange;
     public Action OnLeftGunSelected;
@@ -1210,6 +1211,15 @@ public class Character : Initializable
                 _enemiesInRange.Add(mecha);
             }
         }
+    }
+
+    public void DoAttackAction()
+    {
+        if (!_canAttack)
+            return;
+
+        DeactivateAttack();
+        OnMechaAttack?.Invoke();
     }
 
     public void SetAttackActionState(bool state)

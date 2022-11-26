@@ -79,7 +79,7 @@ public class CripplingShot : WeaponAbility
 
 			_enemy.MovementReduction(_abilityData.stepsReduction);
 
-			_character.DeactivateAttack();
+			_character.DoAttackAction();
 
 			AbilityUsed(_abilityData);
 

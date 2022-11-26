@@ -315,8 +315,6 @@ public class AttackHUD : Initializable
         _rightGunButton.Attack();
         _legsButton.Attack();
 
-        _selectedCharacter.DeactivateAttack();
-
         _selectedCharacter = null;
         _selectedEnemy = null;
     }

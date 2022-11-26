@@ -96,7 +96,6 @@ public class AttackAction : GOAction
             {
                 gun.Attack(parts[partToAttack], gun.GetAvailableBullets());
 
-                _myUnit.DeactivateAttack();
                 _myUnit.SetCharacterMoveState(false);
             }
 
@@ -109,12 +108,8 @@ public class AttackAction : GOAction
             Elevator elevator = closestEnemy.GetPositionTile().GetElevatorAbove();
             
             if (_myUnit.RayToElevator(elevator.GetColliderForAttack().transform.position))
-            {
-                List<Tuple<int, int>> damage = gun.GetCalculatedDamage(gun.GetMaxBullets());
-            
-                elevator.ReceiveDamage(damage);
-                _myUnit.GetSelectedGun().ExecuteAttackAnimation();
-                _myUnit.DeactivateAttack();
+            {            
+                _myUnit.GetSelectedGun().Attack(elevator, gun.GetMaxBullets());
                 _myUnit.OnEndActionWithDelay(0);
                 _myUnit.SetCharacterMoveState(false);
             }

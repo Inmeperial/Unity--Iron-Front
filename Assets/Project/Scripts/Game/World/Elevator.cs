@@ -47,7 +47,10 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
     private bool _canInteract;
 
     private bool _isMoving;
+    private bool _usedThisTurn;
+
     private Character _aboveCharacter; 
+
     public Action OnEndAction { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
     // Start is called before the first frame update
@@ -126,6 +129,8 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
 
     public void StartMovement()
     {
+        _usedThisTurn = true;
+
         StartCoroutine(Move());
         DeactivateButton();
     }
@@ -139,6 +144,8 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
         Vector3 end;
         float time = 0;
 
+        
+
         _aboveCharacter.transform.parent = _platform.transform;
         if (!_active)
         {
@@ -149,6 +156,8 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
             _tileBelow.RemoveFromNeighbour();
             _canInteract = false;
             _colliderForAttack.SetActive(true);
+
+            _aboveCharacter.OnMechaAttack += DeactivateButton;
         }
         else
         {
@@ -158,6 +167,8 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
             _tileBelow.AddToNeighbour();
             _canInteract = false;
             _colliderForAttack.SetActive(false);
+
+            _aboveCharacter.OnMechaAttack -= DeactivateButton;
         }
 
         AudioManager.Instance.PlaySound(_moveSound, gameObject);
@@ -191,6 +202,7 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
 
     private void CanInteractAgain()
     {
+        _usedThisTurn = false;
         _canInteract = true;
         _button.SetActive(false);
     }
@@ -200,7 +212,10 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
         if (_currentHp <= 0)
             return;
 
-        if (GameManager.Instance.ActiveTeam != EnumsClass.Team.Green)
+        if (GameManager.Instance.ActiveTeam == EnumsClass.Team.Red)
+            return;
+
+        if (_usedThisTurn)
             return;
 
         if (_active)
