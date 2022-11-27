@@ -5,14 +5,12 @@ using UnityEngine;
 public class Body : MechaPart
 {
     private BodySO _data;
-    private float _maxWeight;
 
     public override void SetPartData(Character character, PartSO data, Color partColor)
     {
         base.SetPartData(character, data, partColor);
 
         _data = data as BodySO;
-        _maxWeight = _data.maxWeight;
     }
 
     public override void ReceiveDamage(List<Tuple<int,int>> damages)
@@ -76,9 +74,6 @@ public class Body : MechaPart
 
         _myChar.MechaOutsideAttackRange();
 
-        if (_myChar.GetUnitTeam() == EnumsClass.Team.Red)
-            Debug.Log("AI " + _myChar.GetCharacterName() + " took damage!");
-
         _myChar.PlayReceiveDamageAnimation();
 
         if (IsPartBroken())
@@ -87,7 +82,7 @@ public class Body : MechaPart
 
     public float GetMaxWeight()
     {
-        return _maxWeight;
+        return _data.maxWeight;
     }
 
     public override void Heal(int healAmount)
@@ -125,4 +120,9 @@ public class Body : MechaPart
         base.DestroyPart();
         _myChar.Dead();
     }    
+
+    public BodySO GetData()
+    {
+        return _data;
+    }
 }

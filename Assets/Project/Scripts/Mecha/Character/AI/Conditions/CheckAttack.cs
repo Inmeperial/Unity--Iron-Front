@@ -22,9 +22,9 @@ public class CheckAttack : GOCondition
         if (!_myUnit.CanAttack())
             return false;
 
-        if (_myUnit.IsSelectedGunAlive())
-            return true;
+        //if (!_myUnit.IsLeftGunAlive() && !_myUnit.IsRightGunAlive())
+        //    return false;
 
-        return false;
+        return true;
     }
 }

@@ -4,4 +4,5 @@
 public class BodySO : PartSO
 {
     public float maxWeight;
+    public int attackDamage = 50;
 }

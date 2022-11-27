@@ -43,7 +43,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void GetNeighbours()
+    public void CalculateNeighbours()
     {
         RayForMoveNeighbours(Vector3.forward);
         RayForMoveNeighbours(Vector3.right);
@@ -416,5 +416,10 @@ public class Tile : MonoBehaviour
     public Elevator GetElevatorAbove()
     {
         return _elevator;
+    }
+
+    public List<Tile> GetNeighbours()
+    {
+        return allNeighbours;
     }
 }
