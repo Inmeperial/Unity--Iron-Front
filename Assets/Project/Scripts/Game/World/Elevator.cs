@@ -30,6 +30,7 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
     [SerializeField] private GameObject _button;
     [SerializeField] private TextMeshProUGUI _buttonText;
     [SerializeField] private GameObject _colliderForAttack;
+    [SerializeField] private GameObject _shaderObj;
 
     [Header("Data")]
     public LayerMask block;
@@ -73,7 +74,7 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
         }
 
         GameManager.Instance.OnEndTurn += DeactivateButton;
-        GameManager.Instance.OnEndTurn += CanInteractAgain;
+        GameManager.Instance.OnBeginTurn += Restart;
     }
     
     private void OnTriggerEnter(Collider other)
@@ -131,6 +132,8 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
     {
         _usedThisTurn = true;
 
+        DisableShaderObject();
+
         StartCoroutine(Move());
         DeactivateButton();
     }
@@ -158,6 +161,7 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
             _colliderForAttack.SetActive(true);
 
             _aboveCharacter.OnMechaAttack += DeactivateButton;
+            _aboveCharacter.OnMechaAttack += DisableShaderObject;
         }
         else
         {
@@ -169,6 +173,7 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
             _colliderForAttack.SetActive(false);
 
             _aboveCharacter.OnMechaAttack -= DeactivateButton;
+            _aboveCharacter.OnMechaAttack -= DisableShaderObject;
         }
 
         AudioManager.Instance.PlaySound(_moveSound, gameObject);
@@ -200,11 +205,29 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
 
     }
 
-    private void CanInteractAgain()
+    private void Restart()
     {
         _usedThisTurn = false;
-        _canInteract = true;
-        _button.SetActive(false);
+        
+        if (GameManager.Instance.ActiveTeam == EnumsClass.Team.Green)
+        {
+            if (!_aboveCharacter || _aboveCharacter == GameManager.Instance.CurrentTurnMecha)
+            {
+                _canInteract = true;
+                EnableShaderObject();
+            }
+
+            if (_aboveCharacter == GameManager.Instance.CurrentTurnMecha)
+                ActivateButton();
+        }
+        else
+        {
+            _canInteract = false;
+            DisableShaderObject();
+            _button.SetActive(false);
+
+            DeactivateButton();
+        }
     }
 
     private void ActivateButton()
@@ -224,11 +247,22 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
             _buttonText.text = "UP";
 
         _button.SetActive(true);
+
+        EnableShaderObject();
     }
     
     private void DeactivateButton()
     {
         _button.SetActive(false);
+    }
+
+    private void EnableShaderObject()
+    {
+        _shaderObj.SetActive(true);
+    }
+    private void DisableShaderObject()
+    {
+        _shaderObj.SetActive(false);
     }
 
     public void ReceiveDamage(List<Tuple<int, int>> damages)
@@ -288,6 +322,8 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
         AudioManager.Instance.PlaySound(_destroySound, gameObject);
         EffectsController.Instance.PlayParticlesEffect(_destroyParticle, transform.position, transform.forward);
 
+        DisableShaderObject();
+
         StartCoroutine(Fall());
     }
 
@@ -313,9 +349,12 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
         _aboveCharacter.TakeFallDamage(_fallDamagePercentage);
 
         GameManager.Instance.OnEndTurn -= DeactivateButton;
-        GameManager.Instance.OnEndTurn -= CanInteractAgain;
+        GameManager.Instance.OnBeginTurn -= Restart;
 
         _aboveCharacter.OnMechaAttack -= DeactivateButton;
+        _aboveCharacter.OnMechaAttack -= DisableShaderObject;
+
+        _aboveCharacter = null;
 
         Destroy(gameObject);
     }
