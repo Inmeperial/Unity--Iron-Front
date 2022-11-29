@@ -417,6 +417,9 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
         if (GameManager.Instance.CurrentTurnMecha == null)
             return false;
 
+        if (!GameManager.Instance.CurrentTurnMecha.CanAttack())
+            return false;
+
         if (GameManager.Instance.CurrentTurnMecha.IsSelectingEnemy())
             return false;
 
