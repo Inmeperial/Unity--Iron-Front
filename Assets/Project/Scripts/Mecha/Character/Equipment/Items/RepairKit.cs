@@ -8,6 +8,8 @@ public class RepairKit : Item
 	RepairKitSO _data;
 	HashSet<Tile> _tilesInRange = new HashSet<Tile>();
 
+	private bool _characterSelectionState = false;
+
 	public override void Initialize(Character character, EquipableSO data)
 	{
 		base.Initialize(character, data);
@@ -26,12 +28,23 @@ public class RepairKit : Item
 		_character.DeselectThisUnit();
 
 		_character.EquipableSelectionState(true, this);
+
+		_characterSelectionState = CharacterSelector.Instance.IsSelectionEnabled();
+
+		CharacterSelector.Instance.DisableCharacterSelection();
 	}
 	
 	public override void Deselect()
 	{
 		OnEquipableDeselected?.Invoke();
+
+		if (_characterSelectionState)
+			CharacterSelector.Instance.EnableCharacterSelection();
+
+		_characterSelectionState = false;
+
 		TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
+
 		_tilesInRange.Clear();
 		_character.EquipableSelectionState(false, null);
 		_character.SelectThisUnit();
@@ -49,9 +62,7 @@ public class RepairKit : Item
 	}
 
 	private void UseItem()
-    {
-		
-
+    {	
 		Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
 
 		if (!selectedTile)
@@ -62,13 +73,16 @@ public class RepairKit : Item
 		if (!tile)
 			return;
 
+		if (tile == _character.GetPositionTile())
+			Debug.Log("mismo tile");
+
 		if (!_tilesInRange.Contains(tile))
 			return;
 
         Character selectedUnit = tile.GetUnitAbove();
 
-		if (!selectedUnit)
-			return;
+        if (!selectedUnit && _character.GetPositionTile() != tile)
+            return;
 
         //Para que solo puedas curar aliados
         EnumsClass.Team unitTeam = selectedUnit.GetUnitTeam();
@@ -100,41 +114,37 @@ public class RepairKit : Item
 		int healPercentage = _data.healPercentage;
 
 		Body body = unitToRepair.GetBody();
-		
-		if(body.CurrentHP > 0)
-		{
-            float bodyHealAmount = body.MaxHp * healPercentage / 100;
-			
-			body.Heal((int)bodyHealAmount);
-		}
+
+		HealPart(body);
 
         Gun leftGun = unitToRepair.GetLeftGun();
 
-		if (leftGun)
-		{
-            float leftGunHealAmount = leftGun.MaxHp * healPercentage / 100;
-
-			leftGun.Heal((int)leftGunHealAmount);
-		}
+		HealPart(leftGun);
 
         Gun rightGun = unitToRepair.GetRightGun();
 		
-		if (rightGun)
-		{
-            float rightGunHealAmount = rightGun.MaxHp * healPercentage / 100;
-			rightGun.Heal((int)rightGunHealAmount);
-		}
+		HealPart(rightGun);
 
         Legs legs = unitToRepair.GetLegs();
-		
-		if (legs.CurrentHP > 0)
-		{
-            float rightGunHealAmount = legs.MaxHp * healPercentage / 100;
 
-			legs.Heal((int)rightGunHealAmount);
-		}
-		
+		HealPart(legs);	
 	}
+
+	private void HealPart(MechaPart part)
+	{
+		if (part.CurrentHP <= 0)
+			return;
+
+		if (part.CurrentHP == part.MaxHp)
+			return;
+
+        float healAmount = part.MaxHp * _data.healPercentage / 100;
+
+		if (part.CurrentHP + healAmount >= part.MaxHp)
+			healAmount = part.MaxHp - part.CurrentHP;
+
+		part.Heal((int)healAmount);
+    }
 
 	private void PaintTilesInRange(Tile currentTile, int count, Vector3 dir)
 	{

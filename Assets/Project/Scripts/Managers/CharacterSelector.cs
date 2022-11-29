@@ -143,6 +143,10 @@ public class CharacterSelector : MonoBehaviour
             StartCoroutine(SelectionDelay(character));
     }
 
+    public bool IsSelectionEnabled()
+    {
+        return _canSelectUnit;
+    }
     private IEnumerator SelectionDelay(Character character)
     {
         _selectingWithDelay = true;

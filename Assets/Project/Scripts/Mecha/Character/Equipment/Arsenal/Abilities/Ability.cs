@@ -18,18 +18,19 @@ public class Ability : Equipable
         OnEquipableUsed += _character.OnEquipableUsed;
     }
 
-    public override void Select() {
-        Debug.Log("select ability");
+    public override void Select()
+    {
+        
     }
 
     public override void Deselect()
     {
-        Debug.Log("deselect ability");
+        
     }
 
     public override void Use()
     {
-        Debug.Log("use ability");
+        
     }
 
     public virtual void SetPart(MechaPart part) => _part = part;
