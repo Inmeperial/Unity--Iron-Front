@@ -261,19 +261,7 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
         }
 
         if (_currentHp <= 0)
-        {
-            GameManager.Instance.OnEndTurn -= DeactivateButton;
-            GameManager.Instance.OnEndTurn -= CanInteractAgain;
-
-            _colliderForAttack.SetActive(false);
-            _aboveCharacter.transform.parent = null; 
-            _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
-            _aboveCharacter.GetComponent<Rigidbody>().isKinematic = false;
-
-            AudioManager.Instance.PlaySound(_destroySound, gameObject);
-            EffectsController.Instance.PlayParticlesEffect(_destroyParticle, transform.position, transform.forward);
-            StartCoroutine(Fall());
-        }
+            Dead();
     }
 
     public void ReceiveDamage(int damage)
@@ -287,20 +275,20 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
         AudioManager.Instance.PlaySound(_damageSound, gameObject);
 
         if (_currentHp <= 0)
-        {
-            GameManager.Instance.OnEndTurn -= DeactivateButton;
-            GameManager.Instance.OnEndTurn -= CanInteractAgain;
+            Dead();
+    }
 
-            _colliderForAttack.SetActive(false);
-            _aboveCharacter.transform.parent = null; 
-            _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
-            _aboveCharacter.GetComponent<Rigidbody>().isKinematic = false;
+    private void Dead()
+    {
+        _colliderForAttack.SetActive(false);
+        _aboveCharacter.transform.parent = null;
+        _aboveCharacter.CharacterElevatedState(false, -_extraRange, -_extraCrit);
+        _aboveCharacter.GetComponent<Rigidbody>().isKinematic = false;
 
-            AudioManager.Instance.PlaySound(_destroySound, gameObject);
-            EffectsController.Instance.PlayParticlesEffect(_destroyParticle, transform.position, transform.forward);
+        AudioManager.Instance.PlaySound(_destroySound, gameObject);
+        EffectsController.Instance.PlayParticlesEffect(_destroyParticle, transform.position, transform.forward);
 
-            StartCoroutine(Fall());
-        }
+        StartCoroutine(Fall());
     }
 
     public GameObject GetColliderForAttack()
@@ -323,6 +311,12 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
 
         yield return new WaitForSeconds(_timeToDestroy);
         _aboveCharacter.TakeFallDamage(_fallDamagePercentage);
+
+        GameManager.Instance.OnEndTurn -= DeactivateButton;
+        GameManager.Instance.OnEndTurn -= CanInteractAgain;
+
+        _aboveCharacter.OnMechaAttack -= DeactivateButton;
+
         Destroy(gameObject);
     }
 }
