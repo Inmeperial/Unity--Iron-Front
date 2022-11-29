@@ -256,7 +256,7 @@ public abstract class Gun : MechaPart
     {
         ChangeMeshRenderStatus(false);
 
-        _collider.enabled = false;
+        DisableCollider();
     }
 
 
@@ -400,8 +400,8 @@ public abstract class Gun : MechaPart
         base.DestroyPart();
         _myChar.ArmDestroyed(_location, _ability);
         TurnOff();
-
     }
+
     public override void PlayTakeDamageSound()
     {
         AudioManager.Instance.PlaySound(_data.takeDamageSound, gameObject);

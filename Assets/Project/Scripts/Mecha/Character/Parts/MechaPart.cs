@@ -141,7 +141,13 @@ public abstract class MechaPart : MonoBehaviour, IDamageable
 
     protected virtual void DestroyPart()
     {
+        DisableCollider();
         PlayDestroySound();
         PlayDestroyVFX();
+    }
+
+    public void DisableCollider()
+    {
+        _collider.enabled = false;
     }
 }

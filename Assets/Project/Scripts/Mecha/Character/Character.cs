@@ -1148,6 +1148,11 @@ public class Character : Initializable
         ResetTilesInAttackRange();
         ResetTilesInMoveRange();
 
+        _body.DisableCollider();
+        _rightGun.DisableCollider();
+        _leftGun.DisableCollider();
+        _legs.DisableCollider();
+
         PlayDeadAnimation();
         OnMechaDeath?.Invoke(this);
     }
