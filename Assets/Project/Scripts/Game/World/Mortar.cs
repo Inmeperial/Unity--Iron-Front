@@ -375,13 +375,9 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
     {
         if (!_selected)
             return;
-
-        Character currentMecha = GameManager.Instance.CurrentTurnMecha; 
-        
-        if (currentMecha) 
-            CharacterSelector.Instance.Selection(currentMecha);
         
         _selected = false;
+
         _highlight.MortarClearTilesInAttackRange(_tilesInAttackRange);
 
         foreach (Tile t in _tilesToAttack)
@@ -395,6 +391,13 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
         _tilesForPreviewChecked.Clear();
         
         _last = null;
+
+        CharacterSelector.Instance.EnableCharacterSelection();
+
+        Character currentMecha = GameManager.Instance.CurrentTurnMecha;
+
+        if (currentMecha)
+            CharacterSelector.Instance.Selection(currentMecha);
     }
 
     private void ClearTiles()
