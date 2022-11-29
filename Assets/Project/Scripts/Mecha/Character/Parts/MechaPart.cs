@@ -86,6 +86,9 @@ public abstract class MechaPart : MonoBehaviour, IDamageable
 
     public virtual void ReceiveDamage(int damage)
     {
+        if (_myChar.IsDead())
+            return;
+
         if (IsPartBroken())
             return;
 
