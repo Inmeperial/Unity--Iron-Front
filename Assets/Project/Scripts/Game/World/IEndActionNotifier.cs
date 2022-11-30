@@ -1,5 +1,5 @@
 ﻿using System;
 public interface IEndActionNotifier
 {
-    Action OnEndAction { get; set; }
+    Action<IEndActionNotifier> OnEndAction { get; set; }
 }

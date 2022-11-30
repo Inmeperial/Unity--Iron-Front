@@ -52,7 +52,7 @@ public class Elevator : MonoBehaviour, IDamageable, IEndActionNotifier
 
     private Character _aboveCharacter; 
 
-    public Action OnEndAction { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public Action<IEndActionNotifier> OnEndAction { get ; set ; }
 
     // Start is called before the first frame update
     void Start()

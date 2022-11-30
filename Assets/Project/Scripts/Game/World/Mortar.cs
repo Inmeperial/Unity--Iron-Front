@@ -10,6 +10,8 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
     [Header("References")]
     [SerializeField] private Transform _textSpawnPos;
     [SerializeField] private GameObject _turnsCounterTextPrefab;
+    [SerializeField] private GameObject _interactionShaderObject;
+
     [Header("Stats")]
     [SerializeField] private int _shootRange;
     [SerializeField] private int _aoe;
@@ -52,7 +54,7 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
     private bool _attackPending = false;
     private int _turnCount = 0;
 
-    public Action OnEndAction { get; set; }
+    public Action<IEndActionNotifier> OnEndAction { get; set; }
 
     // Start is called before the first frame update
     private void Start()
@@ -64,15 +66,12 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
         _selected = false;
 
         GetTilesInActivationRange();
-
-        foreach (Tile t in _tilesInActivationRange)
-        {
-            _highlight.MortarPaintTilesInActivationRange(t);
-        }
         
         GetTilesInAttackRange(_myPositionTile, 0);
 
         _mortars = FindObjectsOfType<Mortar>();
+
+        GameManager.Instance.OnBeginTurn += CheckIfCanBeUsed;
     }
 
     // Update is called once per frame
@@ -270,6 +269,8 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
         _activationCharacter.DoAttackAction();
         _activationCharacter = null;
 
+        DisableInteractionVisuals();
+
         GameManager.Instance.OnEndTurn += CheckAttack;
 
         Deselect();
@@ -364,11 +365,22 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
         StartCoroutine(DelayAfterAttack());
     }
 
+    private void CheckIfCanBeUsed()
+    {
+        if (_attackPending || GameManager.Instance.ActiveTeam == EnumsClass.Team.Red)
+        {
+            DisableInteractionVisuals();
+            return;
+        }
+
+        EnableInteractionVisuals();
+    }
+
     private IEnumerator DelayAfterAttack()
     {
         yield return new WaitForSeconds(_waitAfterAttack);
 
-        OnEndAction?.Invoke();
+        OnEndAction?.Invoke(this);
     }
 
     private void Deselect()
@@ -432,8 +444,36 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
         return true;
     }
 
+    private void EnableInteractionVisuals()
+    {
+        _interactionShaderObject.SetActive(true);
+
+        PaintTilesInActivationRange();
+    }
+
+    private void DisableInteractionVisuals()
+    {
+        _interactionShaderObject.SetActive(false);
+
+        UnpaintTilesInActivationRange();
+    }
+
+    private void PaintTilesInActivationRange()
+    {
+        foreach (Tile tile in _tilesInActivationRange)
+        {
+            TileHighlight.Instance.MortarPaintTilesInActivationRange(tile);
+        }
+    }
+    
+    private void UnpaintTilesInActivationRange()
+    {
+        TileHighlight.Instance.ClearTilesInActivationRange(_tilesInActivationRange);
+    }
+
     private void OnDestroy()
     {
         GameManager.Instance.InputsReader.OnDeselectKeyPressed -= Deselect;
+        GameManager.Instance.OnBeginTurn -= CheckIfCanBeUsed;
     }
 }

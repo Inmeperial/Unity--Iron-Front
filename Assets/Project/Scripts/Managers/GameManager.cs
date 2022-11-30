@@ -679,11 +679,14 @@ public class GameManager : MonoBehaviour
         _endTurnActionsQueue.Enqueue(action);
 
         notifier.OnEndAction += ReceiveEndActionNotification;
+
     }
 
-    private void ReceiveEndActionNotification()
+    private void ReceiveEndActionNotification(IEndActionNotifier notifier)
     {
         _currentActionFinished = true;
+
+        notifier.OnEndAction -= ReceiveEndActionNotification;
     }
 
     private void SubscribeToInputs()
