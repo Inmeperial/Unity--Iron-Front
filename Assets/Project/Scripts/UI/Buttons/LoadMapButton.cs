@@ -15,16 +15,6 @@ public class LoadMapButton : CustomButton
     IEnumerator ConfigureButton()
     {
         yield return null;
-        ChangeScene changeScene = FindObjectOfType<ChangeScene>();
-
-        WaitForSeconds wait = new WaitForSeconds(0.5f);
-
-        while (!changeScene)
-        {
-            changeScene = FindObjectOfType<ChangeScene>();
-
-            yield return wait;
-        }
 
         OnLeftClick.RemoveAllListeners();
         
@@ -33,6 +23,6 @@ public class LoadMapButton : CustomButton
         if (menuOptions)
             OnLeftClick.AddListener(menuOptions.CloseAllMenu);
         
-        OnLeftClick.AddListener(() => changeScene.LoadScene(_mapSceneName));
+        OnLeftClick.AddListener(() => ChangeScene.Instance.LoadScene(_mapSceneName));
     }
 }

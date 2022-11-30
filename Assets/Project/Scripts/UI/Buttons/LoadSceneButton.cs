@@ -1,10 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using SceneReference;
 
-public class LoadLevelButton : CustomButton
+public class LoadSceneButton : CustomButton
 {
-    [SerializeField] private string _levelName;
+    [SerializeField] private ReferenceToScene _referenceToScene;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -13,15 +14,9 @@ public class LoadLevelButton : CustomButton
         StartCoroutine(ConfigureButton());
     }
 
-    IEnumerator ConfigureButton()
+    private IEnumerator ConfigureButton()
     {
         yield return null;
-        var changeScene = FindObjectOfType<ChangeScene>();
-
-        while (!changeScene)
-        {
-            changeScene = FindObjectOfType<ChangeScene>();
-        }
         
         OnLeftClick.RemoveAllListeners();
         
@@ -30,6 +25,6 @@ public class LoadLevelButton : CustomButton
         if (menuOptions)
             OnLeftClick.AddListener(menuOptions.CloseAllMenu);
         
-        OnLeftClick.AddListener(() => changeScene.LoadScene(_levelName));
+        OnLeftClick.AddListener(() => ChangeScene.Instance.LoadScene(_referenceToScene.sceneName));
     }
 }

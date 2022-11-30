@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class ChangeScene : MonoBehaviour
 {
-    public static bool _firstTimePlaying = false;
-
     public static ChangeScene Instance;
 
     [SerializeField] private static bool _firstLoad = true;
@@ -33,43 +31,8 @@ public class ChangeScene : MonoBehaviour
                 LoadScene("Menu"); 
             }
         }
-        else _firstLoad = false;
-    }
-    // public void MenuLoadScene()
-    // {
-    //     if (!_firstTimePlaying)
-    //     {
-    //         _firstTimePlaying = true;
-    //         LoadLevel1();
-    //     }
-    //     else
-    //         LoadMap();
-    // }
-
-    public void LoadLevel1()
-    {
-        SceneManager.LoadScene("Level 1 NUEVO");
-    }
-
-    public void LoadLevel2()
-    {
-        SceneManager.LoadScene("Level 2");
-    }
-
-    public void LoadLevel3()
-    {
-        
-        SceneManager.LoadScene("Level 3");
-    }
-
-    public void LoadWorkShop()
-    {
-        SceneManager.LoadScene("TallerScene");
-    }
-
-    public void LoadMap()
-    {
-        SceneManager.LoadScene("Map");
+        else
+            _firstLoad = false;
     }
 
     public void ReloadLevel()
@@ -87,7 +50,8 @@ public class ChangeScene : MonoBehaviour
     {
         StartCoroutine(LoadSceneAsync(scene));
     }
-    IEnumerator LoadSceneAsync(string sceneToLoad)
+
+    private IEnumerator LoadSceneAsync(string sceneToLoad)
     {
         yield return null;
 
@@ -113,7 +77,7 @@ public class ChangeScene : MonoBehaviour
                 if (slider)
                     UpdateLoadingBar(slider, progress);
 
-                Debug.Log("Scene finished loading");
+                Debug.Log("Scene " + sceneToLoad + " finished loading");
                 ao.allowSceneActivation = true;
             }
                  

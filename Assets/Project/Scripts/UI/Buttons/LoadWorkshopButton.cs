@@ -16,12 +16,6 @@ public class LoadWorkshopButton : CustomButton
     IEnumerator ConfigureButton()
     {
         yield return null;
-        var changeScene = FindObjectOfType<ChangeScene>();
-
-        while (!changeScene)
-        {
-            changeScene = FindObjectOfType<ChangeScene>();
-        }
         
         OnLeftClick.RemoveAllListeners();
         
@@ -30,7 +24,7 @@ public class LoadWorkshopButton : CustomButton
         if (menuOptions)
             OnLeftClick.AddListener(menuOptions.CloseAllMenu);
         
-        OnLeftClick.AddListener(() => changeScene.LoadScene(_workshopSceneName));
+        OnLeftClick.AddListener(() => ChangeScene.Instance.LoadScene(_workshopSceneName));
     }
 
 }
