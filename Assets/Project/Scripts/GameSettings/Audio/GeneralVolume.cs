@@ -1,19 +1,30 @@
-﻿namespace GameSettings.Audio
+﻿using UnityEngine;
+
+namespace GameSettings.Audio
 {
     public class GeneralVolume : VolumeSlider
     {
-        public override void OnSettingsLoaded()
+        protected override void InitializeSliderValue()
         {
-            base.OnSettingsLoaded();
-
-            float volume = Settings.SettingsData.generalVolume;
+            float volume = Settings.Instance.SettingsData.generalVolume;
 
             _slider.value = (int)volume;
         }
 
+        protected override void OnValueChange(float value)
+        {
+            _statusText.text = (int)value + "%";
+
+            if (Settings.Instance.SettingsData.mute)
+                value = _slider.minValue;
+
+            _audioMixer.SetFloat(_volumeParameterName, SoundUtilities.FloatToDB(value / 100));
+            OnSettingsChange();
+        }
+
         protected override void OnSettingsChange()
         {
-            Settings.SettingsData.generalVolume = _slider.value;
+            Settings.Instance.SettingsData.generalVolume = _slider.value;
         }
     }
 }

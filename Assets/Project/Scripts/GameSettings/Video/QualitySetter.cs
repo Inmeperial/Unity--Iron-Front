@@ -12,7 +12,7 @@ namespace GameSettings.Video
         {
             InitializeDropdown();
 
-            _selector.SetValue(Settings.SettingsData.qualityIndex);
+            _selector.SetValue(Settings.Instance.SettingsData.qualityIndex);
         }
 
         private void InitializeDropdown()
@@ -46,7 +46,7 @@ namespace GameSettings.Video
 
         protected override void OnSettingsChange()
         {
-            Settings.SettingsData.qualityIndex = _selector.CurrentValue;
+            Settings.Instance.SettingsData.qualityIndex = _selector.CurrentValue;
         }
     }
 }

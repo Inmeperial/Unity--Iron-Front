@@ -1,17 +1,17 @@
 ﻿namespace GameSettings.Audio
 {
-    public class FXVolume : VolumeSlider
+    public class EnvironmentVolume : VolumeSlider
     {
         protected override void InitializeSliderValue()
         {
-            float volume = Settings.Instance.SettingsData.fxVolume;
+            float volume = Settings.Instance.SettingsData.environmentVolume;
 
             _slider.value = (int)volume;
         }
 
         protected override void OnSettingsChange()
         {
-            Settings.Instance.SettingsData.fxVolume = _slider.value;
+            Settings.Instance.SettingsData.environmentVolume = _slider.value;
         }
     }
 }

@@ -2,18 +2,16 @@
 {
     public class MusicVolume : VolumeSlider
     {
-        public override void OnSettingsLoaded()
+        protected override void InitializeSliderValue()
         {
-            base.OnSettingsLoaded();
-
-            float volume = Settings.SettingsData.musicVolume;
+            float volume = Settings.Instance.SettingsData.musicVolume;
 
             _slider.value = (int)volume;
         }
 
         protected override void OnSettingsChange()
         {
-            Settings.SettingsData.musicVolume = _slider.value;
+            Settings.Instance.SettingsData.musicVolume = _slider.value;
         }
     }
 }

@@ -10,23 +10,33 @@ namespace GameSettings
         [Header("Data")]
         [SerializeField] private DefaultSettingsSO _defaultSettings;
 
-        [Header("Debug")]
-        [SerializeField] private static SettingsData _settingsData;
+        private SettingsData _settingsData;
 
-        public static SettingsData SettingsData => _settingsData;
+        public SettingsData SettingsData => _settingsData;
+
+        private static Settings _instance;
+        public static Settings Instance => _instance;
 
         private void Awake()
         {
+            if (_instance)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            _instance = this;
+
             DontDestroyOnLoad(gameObject);
+
+            Initialize();
         }
 
         public void Initialize()
         {
             _settingsData = new SettingsData();
 
-            LoadSettings();
-
-            NotifyLoad();
+            LoadSettings();            
         }
 
         public void SaveSettings()
@@ -41,14 +51,25 @@ namespace GameSettings
         public void LoadSettings()
         {
             if (!PlayerPrefs.HasKey("Settings"))
-            {
-                _settingsData.LoadDefaultSettings(_defaultSettings);
-                return;
-            }
+                LoadDefaultSettings();
+            else
+                LoadPlayerPrefsSettings();
+        }
 
+        public void LoadDefaultSettings()
+        {
+            _settingsData.LoadDefaultSettings(_defaultSettings);
+
+            NotifyLoad();
+        }
+
+        private void LoadPlayerPrefsSettings()
+        {
             string settings = PlayerPrefs.GetString("Settings");
 
             JsonUtility.FromJsonOverwrite(settings, _settingsData);
+
+            NotifyLoad();
         }
 
         private void NotifyLoad()

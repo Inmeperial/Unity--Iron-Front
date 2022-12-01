@@ -17,8 +17,9 @@ namespace GameSettings
         public float generalVolume;
         public float musicVolume;
         public float fxVolume;
+        public float environmentVolume;
         public bool mute;
-        #endregion        
+        #endregion
 
         public void LoadDefaultSettings(DefaultSettingsSO defaultData)
         {
@@ -26,7 +27,9 @@ namespace GameSettings
             resolutionIndex = defaultData.resolutionIndex;
             windowModeIndex = defaultData.windowModeIndex;
             generalVolume = defaultData.generalVolume;
+            musicVolume = defaultData.musicVolume;
             fxVolume = defaultData.fxVolume;
+            environmentVolume = defaultData.environmentVolume;
             mute = defaultData.mute;
         }
     }    

@@ -14,7 +14,7 @@ namespace GameSettings.Video
         {
             Initialize();
 
-            int resolutionIndex = Settings.SettingsData.resolutionIndex;
+            int resolutionIndex = Settings.Instance.SettingsData.resolutionIndex;
 
             if (resolutionIndex < 0)
             {
@@ -68,7 +68,7 @@ namespace GameSettings.Video
 
         protected override void OnSettingsChange()
         {
-            Settings.SettingsData.resolutionIndex = _selector.CurrentValue;
+            Settings.Instance.SettingsData.resolutionIndex = _selector.CurrentValue;
         }
     }
 }

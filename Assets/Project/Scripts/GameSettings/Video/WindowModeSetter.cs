@@ -11,7 +11,7 @@ namespace GameSettings.Video
         {
             Initialize();
 
-            _selector.SetValue(Settings.SettingsData.windowModeIndex);
+            _selector.SetValue(Settings.Instance.SettingsData.windowModeIndex);
         }
 
         private void Initialize()
@@ -43,7 +43,7 @@ namespace GameSettings.Video
 
         protected override void OnSettingsChange()
         {
-            Settings.SettingsData.windowModeIndex = _selector.CurrentValue;
+            Settings.Instance.SettingsData.windowModeIndex = _selector.CurrentValue;
         }
     }
 }

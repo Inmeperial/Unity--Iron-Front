@@ -17,6 +17,7 @@ namespace GameSettings
         public float generalVolume;
         public float musicVolume;
         public float fxVolume;
+        public float environmentVolume;
         public bool mute;
     }
 }
