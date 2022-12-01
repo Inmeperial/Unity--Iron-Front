@@ -1,54 +1,57 @@
 ﻿using UnityEngine;
-using UnityEngine.Audio;
-using UnityEngine.UI;
 
 public class MenuOptionsInGame : MonoBehaviour
 {
-    public Text textVolume = default;
+    [SerializeField] private GameObject _container;
+    [SerializeField] private GameObject[] _windowsToClose;
 
-    [SerializeField] private GameObject _menuInGameObj = default;
-    [SerializeField] private GameObject _optionsObj = default;
-    [SerializeField] private GameObject _devObj = default;
-    [SerializeField] private AudioMixer _audioMixer = default;
+    private bool _canCheckInputs;
 
-    void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        _container.SetActive(false);
+
+        GameManager.Instance.InputsReader.OnMenuKeyPressed += ChangeWindowState;
+    }
+
+    private void ChangeWindowState()
+    {
+        CloseWindows();
+
+        if (_container.activeSelf)
+            CloseOptions();
+        else
+            OpenOptions();
+    }
+
+    private void CloseOptions()
+    {
+        _container.SetActive(false);
+
+        if (_canCheckInputs)
+            GameManager.Instance.InputsReader.EnableKeysCheck();
+
+        _canCheckInputs = false;
+    }
+
+    private void OpenOptions()
+    {
+        _container.SetActive(true);
+
+        _canCheckInputs = GameManager.Instance.InputsReader.CanCheckKeys;
+        
+        GameManager.Instance.InputsReader.DisableKeysCheck();
+    }
+
+    private void CloseWindows()
+    {
+        foreach (GameObject window in _windowsToClose)
         {
-            if (_menuInGameObj.activeSelf)
-            {
-                CloseAllMenu();
-            }
-            else
-            {
-                OpenAllMenu();
-            }
+            window.SetActive(false);
         }
     }
-
-    public void CloseAllMenu()
+    private void OnDestroy()
     {
-        _audioMixer.SetFloat("pitch", 1);
-        _menuInGameObj.SetActive(false);
-        CloseOptionsMenu();
-        CloseDevMenu();
-    }
-
-    private void OpenAllMenu()
-    {
-        _audioMixer.SetFloat("pitch", 0.3f);
-        _menuInGameObj.SetActive(true);
-    }
-    
-    public void CloseOptionsMenu()
-    {
-        if (_optionsObj)
-            _optionsObj.SetActive(false);
-    }
-
-    public void CloseDevMenu()
-    {
-        if (_devObj)
-            _devObj.SetActive(false);
+        GameManager.Instance.InputsReader.OnMenuKeyPressed -= ChangeWindowState;
     }
 }

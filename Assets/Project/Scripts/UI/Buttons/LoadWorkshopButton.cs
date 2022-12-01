@@ -19,11 +19,6 @@ public class LoadWorkshopButton : CustomButton
         
         OnLeftClick.RemoveAllListeners();
         
-        MenuOptionsInGame menuOptions = FindObjectOfType<MenuOptionsInGame>();
-        
-        if (menuOptions)
-            OnLeftClick.AddListener(menuOptions.CloseAllMenu);
-        
         OnLeftClick.AddListener(() => ChangeScene.Instance.LoadScene(_workshopSceneName));
     }
 

@@ -41,6 +41,9 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     public void FixedUpdate()
     {
+        if (!GameManager.Instance.InputsReader.CanCheckKeys)
+            return;
+
         if (Input.GetKey(KeyCode.KeypadPlus))
             manualMovementSpeed++;
 
@@ -55,8 +58,6 @@ public class CameraMovement : MonoBehaviour
         
         if (_canMove)
             ManualMoveCamera();
-        
-
 
         if (_canRotate)
             ManualRotateCamera();

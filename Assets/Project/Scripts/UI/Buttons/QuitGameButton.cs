@@ -23,12 +23,7 @@ public class QuitGameButton : CustomButton
         }
         
         OnLeftClick.RemoveAllListeners();
-        
-        MenuOptionsInGame menuOptions = FindObjectOfType<MenuOptionsInGame>();
-        
-        if (menuOptions)
-            OnLeftClick.AddListener(menuOptions.CloseAllMenu);
-        
+
         //Cambiar si al cerrar hay que hacer algo mas.
         OnLeftClick.AddListener(changeScene.Quit);
     }

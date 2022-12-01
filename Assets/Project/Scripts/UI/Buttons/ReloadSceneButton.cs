@@ -26,11 +26,6 @@ public class ReloadSceneButton : CustomButton
         
         OnLeftClick.RemoveAllListeners();
         
-        MenuOptionsInGame menuOptions = FindObjectOfType<MenuOptionsInGame>();
-        
-        if (menuOptions)
-            OnLeftClick.AddListener(menuOptions.CloseAllMenu);
-        
         OnLeftClick.AddListener(() => changeScene.LoadScene(SceneManager.GetActiveScene().name));
     }
 }

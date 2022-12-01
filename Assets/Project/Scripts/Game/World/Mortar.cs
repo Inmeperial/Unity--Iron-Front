@@ -77,6 +77,9 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
     // Update is called once per frame
     private void Update()
     {
+        if (!GameManager.Instance.InputsReader.CanCheckKeys)
+            return;
+
         if (Input.GetMouseButtonDown(0) && CanInteract())
             Interact();
     }
