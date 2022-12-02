@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+using UnityEngine;
 using UnityEngine.Audio;
 
 namespace GameSettings.Audio
@@ -7,28 +8,21 @@ namespace GameSettings.Audio
     {
         [SerializeField] private AudioMixer _globalMixer;
 
-        public override void OnSettingsLoaded()
+        protected override void Configure()
         {
-            base.OnSettingsLoaded();
-
+            base.Configure();
             _toggle.isOn = Settings.Instance.SettingsData.mute;
         }
-        protected override void OnSettingsChange()
+
+        protected override void OnSettingChange()
         {
-            Settings.Instance.SettingsData.mute = _toggle.isOn;
+            Settings.Instance.SetMute(_toggle.isOn);
         }
+
         protected override void OnValueChange(bool status)
         {
-            if (status)
-
-                _globalMixer.SetFloat("MasterVolume", SoundUtilities.FloatToDB(0.0001f));
-            else
-            {
-                float value = Settings.Instance.SettingsData.generalVolume;
-                _globalMixer.SetFloat("MasterVolume", SoundUtilities.FloatToDB(value / 100));
-            }
-
-            OnSettingsChange();
+            Settings.Instance.SettingsData.mute = status;
+            OnSettingChange();
         }
     }
 }

@@ -3,16 +3,13 @@ using UnityEngine;
 
 namespace GameSettings.Video
 {
-    public class ResolutionSetter : SettingItem
+    public class ResolutionSelector : SettingSelector
     {
-        [Header("References")]
-        [SerializeField] private Selector _selector;
+        private Resolution[] _resolutions;   
 
-        private Resolution[] _resolutions;
-
-        public override void OnSettingsLoaded()
+        protected override void Configure()
         {
-            Initialize();
+            base.Configure();
 
             int resolutionIndex = Settings.Instance.SettingsData.resolutionIndex;
 
@@ -35,7 +32,7 @@ namespace GameSettings.Video
             _selector.SetValue(resolutionIndex);
         }
 
-        private void Initialize()
+        protected override void InitializeSelector()
         {
             List<SelectorOption> selectorOptions = new List<SelectorOption>();
 
@@ -46,30 +43,21 @@ namespace GameSettings.Video
                 selectorOptions.Add(new SelectorOption(resolution.width + "x" + resolution.height));
             }
             _selector.SetOptions(selectorOptions.ToArray());
-
-            _selector.OnValueChanged += SetResolution;
         }
 
-        private void SetResolution(int resolutionIndex)
+        protected override void OnValueChanged(int value)
         {
-            Resolution selectedResolution = _resolutions[resolutionIndex];
+            Resolution selectedResolution = _resolutions[value];
 
-            bool isFullScreen = Screen.fullScreen;
+            Settings.Instance.SetResolution(selectedResolution);
 
-            Screen.SetResolution(selectedResolution.width, selectedResolution.height, isFullScreen);
-
-            OnSettingsChange();
+            OnSettingChange();
         }
 
-        private void OnDestroy()
-        {
-            _selector.OnValueChanged -= SetResolution;
-        }
-
-        protected override void OnSettingsChange()
+        protected override void OnSettingChange()
         {
             Settings.Instance.SettingsData.resolutionIndex = _selector.CurrentValue;
-        }
+        }    
     }
 }
 

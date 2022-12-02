@@ -8,16 +8,16 @@ namespace GameSettings
         [Header("References")]
         [SerializeField] protected Toggle _toggle;
 
-        public override void OnSettingsLoaded()
+        protected override void Configure()
         {
-            _toggle.onValueChanged.AddListener((bool isActive) => OnValueChange(isActive));
+            _toggle.onValueChanged.AddListener(OnValueChange);
         }
 
         protected abstract void OnValueChange(bool status);
 
-        protected void OnDestroy()
+        protected virtual void OnDestroy()
         {
-            _toggle.onValueChanged = null;
+            _toggle.onValueChanged.RemoveListener(OnValueChange);
         }
     }
 }

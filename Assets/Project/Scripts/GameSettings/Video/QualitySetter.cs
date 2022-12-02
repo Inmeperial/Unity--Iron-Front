@@ -3,19 +3,18 @@ using UnityEngine;
 
 namespace GameSettings.Video
 {
-    public class QualitySetter : SettingItem
+    public class QualitySetter : SettingSelector
     {
-        [Header("References")]
-        [SerializeField] private Selector _selector;
-
-        public override void OnSettingsLoaded()
+        protected override void Configure()
         {
-            InitializeDropdown();
+            base.Configure();
 
-            _selector.SetValue(Settings.Instance.SettingsData.qualityIndex);
+            int qualityIndex = Settings.Instance.SettingsData.qualityIndex;
+
+            _selector.SetValue(qualityIndex);
         }
 
-        private void InitializeDropdown()
+        protected override void InitializeSelector()
         {
             string[] qualityNames = QualitySettings.names;
 
@@ -28,23 +27,15 @@ namespace GameSettings.Video
             }
 
             _selector.SetOptions(selectorOptions.ToArray());
-
-            _selector.OnValueChanged += SetQuality;
-
         }
 
-        private void SetQuality(int qualityIndex)
+        protected override void OnValueChanged(int value)
         {
-            QualitySettings.SetQualityLevel(qualityIndex, true);
-            OnSettingsChange();
+            Settings.Instance.SetQualityLevel(value);
+            OnSettingChange();
         }
 
-        private void OnDestroy()
-        {
-            _selector.OnValueChanged -= SetQuality;
-        }
-
-        protected override void OnSettingsChange()
+        protected override void OnSettingChange()
         {
             Settings.Instance.SettingsData.qualityIndex = _selector.CurrentValue;
         }

@@ -1,14 +1,22 @@
-﻿using UnityEngine;
+﻿using GameSettings;
+using UnityEngine;
 
 public class MenuOptionsInGame : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private GameObject _container;
     [SerializeField] private GameObject[] _windowsToClose;
+    [SerializeField] private SettingItem[] _settingItems;
 
     private bool _canCheckInputs;
 
     private void Start()
     {
+        foreach (SettingItem item in _settingItems)
+        {
+            item.Initialize();
+        }
+
         _container.SetActive(false);
 
         GameManager.Instance.InputsReader.OnMenuKeyPressed += ChangeWindowState;

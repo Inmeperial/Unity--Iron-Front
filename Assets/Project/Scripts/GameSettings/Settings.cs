@@ -1,11 +1,15 @@
+using GameSettings.Audio;
+using System.Collections;
+using System.Net.Sockets;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace GameSettings
 {
     public class Settings : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private SettingItem[] _settingItems;
+        [SerializeField] private AudioMixer _audioMixer;
 
         [Header("Data")]
         [SerializeField] private DefaultSettingsSO _defaultSettings;
@@ -29,14 +33,25 @@ namespace GameSettings
 
             DontDestroyOnLoad(gameObject);
 
+            _settingsData = new SettingsData();
+
+            LoadSettings();
+        }
+
+        private void Start()
+        {
             Initialize();
         }
 
-        public void Initialize()
+        private void Initialize()
         {
-            _settingsData = new SettingsData();
+            UpdateVolume("MasterVolume", _settingsData.generalVolume);
+            UpdateVolume("MusicVolume", _settingsData.musicVolume);
+            UpdateVolume("FXVolume", _settingsData.fxVolume);
+            UpdateVolume("EnvironmentVolume", _settingsData.environmentVolume);
+            SetMute(_settingsData.mute);
 
-            LoadSettings();            
+            SetQualityLevel(_settingsData.qualityIndex);
         }
 
         public void SaveSettings()
@@ -59,8 +74,6 @@ namespace GameSettings
         public void LoadDefaultSettings()
         {
             _settingsData.LoadDefaultSettings(_defaultSettings);
-
-            NotifyLoad();
         }
 
         private void LoadPlayerPrefsSettings()
@@ -68,17 +81,57 @@ namespace GameSettings
             string settings = PlayerPrefs.GetString("Settings");
 
             JsonUtility.FromJsonOverwrite(settings, _settingsData);
-
-            NotifyLoad();
         }
 
-        private void NotifyLoad()
+#region Audio
+        public void UpdateVolume(string name, float value)
         {
-            foreach (SettingItem item in _settingItems)
-            {
-                item.OnSettingsLoaded();
-            }
+            if (_settingsData.mute)
+                value = 0.0001f;
+
+            _audioMixer.SetFloat(name, SoundUtilities.FloatToDB(value / 100));
         }
+
+        public void SetMute(bool mute)
+        {
+            if (mute)
+                UpdateVolume("MasterVolume", 0.0001f);
+            else
+                UpdateVolume("MasterVolume", _settingsData.generalVolume);
+        }
+        #endregion
+
+        #region Video
+
+        public void SetResolution(Resolution resolution)
+        {
+            if (resolution.width == Screen.currentResolution.width && resolution.height == Screen.currentResolution.height)
+                return;
+
+            bool isFullScreen = Screen.fullScreen;
+
+            Screen.SetResolution(resolution.width, resolution.height, isFullScreen);
+        }
+
+        public void SetWindowMode(FullScreenMode screenMode)
+        {
+            if (screenMode == Screen.fullScreenMode)
+                return;
+
+            Screen.fullScreenMode = screenMode;
+        }
+
+        public void SetQualityLevel(int index)
+        {
+            if (index == QualitySettings.GetQualityLevel())
+                return;
+
+            QualitySettings.SetQualityLevel(index, true);
+        }
+
+        #endregion
     }
+
+
 }
 

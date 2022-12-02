@@ -39,11 +39,6 @@ namespace GameSettings
 
             OnValueChanged?.Invoke(value);
         }
-
-        internal void SetValue(object windowModeIndex)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
 
