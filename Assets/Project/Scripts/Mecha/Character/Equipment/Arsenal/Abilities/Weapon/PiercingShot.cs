@@ -314,4 +314,14 @@ public class PiercingShot : WeaponAbility
             }
         }
     }
+
+    public override string GetEquipableName()
+    {
+        return _abilityData.objectName;
+    }
+
+    public override string GetEquipableDescription()
+    {
+        return _abilityData.objectDescription;
+    }
 }

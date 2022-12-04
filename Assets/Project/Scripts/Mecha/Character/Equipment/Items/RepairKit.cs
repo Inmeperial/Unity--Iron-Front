@@ -166,4 +166,14 @@ public class RepairKit : Item
 		}
 		return;
 	}
+
+    public override string GetEquipableName()
+    {
+        return _data.objectName;
+    }
+
+    public override string GetEquipableDescription()
+    {
+        return _data.objectDescription;
+    }
 }

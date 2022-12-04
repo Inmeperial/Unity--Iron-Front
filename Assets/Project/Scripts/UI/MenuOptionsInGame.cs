@@ -8,6 +8,7 @@ public class MenuOptionsInGame : MonoBehaviour
     [SerializeField] private GameObject[] _windowsToClose;
     [SerializeField] private SettingItem[] _settingItems;
 
+    private InputsReader _inputsReader;
     private bool _canCheckInputs;
 
     private void Start()
@@ -21,7 +22,17 @@ public class MenuOptionsInGame : MonoBehaviour
 
         if (!GameManager.Instance)
             return;
-        GameManager.Instance.InputsReader.OnMenuKeyPressed += ChangeWindowState;
+        _inputsReader = GameManager.Instance.InputsReader;
+        _inputsReader.OnMenuKeyPressed += ChangeWindowState;
+    }
+
+    private void Update()
+    {
+        if (_inputsReader)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            ChangeWindowState();
     }
 
     private void ChangeWindowState()
@@ -38,8 +49,11 @@ public class MenuOptionsInGame : MonoBehaviour
     {
         _container.SetActive(false);
 
+        if (!_inputsReader)
+            return;
+
         if (_canCheckInputs)
-            GameManager.Instance.InputsReader.EnableKeysCheck();
+            _inputsReader.EnableKeysCheck();
 
         _canCheckInputs = false;
     }
@@ -48,9 +62,12 @@ public class MenuOptionsInGame : MonoBehaviour
     {
         _container.SetActive(true);
 
-        _canCheckInputs = GameManager.Instance.InputsReader.CanCheckKeys;
+        if (!_inputsReader)
+            return;
+
+        _canCheckInputs = _inputsReader.CanCheckKeys;
         
-        GameManager.Instance.InputsReader.DisableKeysCheck();
+        _inputsReader.DisableKeysCheck();
     }
 
     private void CloseWindows()
@@ -60,10 +77,12 @@ public class MenuOptionsInGame : MonoBehaviour
             window.SetActive(false);
         }
     }
+
     private void OnDestroy()
     {
-        if (!GameManager.Instance)
+        if (!_inputsReader)
             return;
-        GameManager.Instance.InputsReader.OnMenuKeyPressed -= ChangeWindowState;
+
+        _inputsReader.OnMenuKeyPressed -= ChangeWindowState;
     }
 }

@@ -93,4 +93,14 @@ public class MineItem : Item
 			PaintTilesInRange(item, count + 1);
 		}
 	}
+
+    public override string GetEquipableName()
+    {
+        return _data.objectName;
+    }
+
+    public override string GetEquipableDescription()
+    {
+        return _data.objectDescription;
+    }
 }

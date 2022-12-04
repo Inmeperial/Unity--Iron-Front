@@ -5,7 +5,17 @@ using UnityEngine;
 
 public class IncendiaryAmmo : Ability
 {
-	public override void Use()
+    public override string GetEquipableDescription()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override string GetEquipableName()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Use()
 	{
 		
 	}

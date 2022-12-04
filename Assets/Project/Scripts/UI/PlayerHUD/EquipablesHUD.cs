@@ -80,6 +80,8 @@ public class EquipablesHUD : Initializable
             equipable.OnEquipableDeselected += CheckButtonsState;
             equipable.OnEquipableUsed += CheckButtonsState;
 
+            button.GetComponent<OverviewData>().SetTooltipData(equipable.GetEquipableName(), equipable.GetEquipableDescription());
+
             if (mecha.GetUnitTeam() != EnumsClass.Team.Green)
             {
                 button.interactable = false;

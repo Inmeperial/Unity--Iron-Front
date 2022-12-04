@@ -138,4 +138,14 @@ public class SmokeBomb : Item
 		GameManager.Instance.OnEndTurn -= UpdateLifeSpan;
 		Destroy(_smokeScreen);
 	}
+
+    public override string GetEquipableName()
+    {
+        return _data.objectName;
+    }
+
+    public override string GetEquipableDescription()
+    {
+        return _data.objectDescription;
+    }
 }

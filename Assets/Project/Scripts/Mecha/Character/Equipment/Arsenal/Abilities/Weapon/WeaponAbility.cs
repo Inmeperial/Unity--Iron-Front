@@ -1,5 +1,5 @@
 
-public class WeaponAbility : Ability
+public abstract class WeaponAbility : Ability
 {
     protected Gun _gun;
     public override void SetPart(MechaPart part)

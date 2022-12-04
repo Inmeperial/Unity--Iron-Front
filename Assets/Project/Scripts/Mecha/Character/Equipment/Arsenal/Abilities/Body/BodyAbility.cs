@@ -1,4 +1,4 @@
 
-public class BodyAbility : Ability
+public abstract class BodyAbility : Ability
 {
 }

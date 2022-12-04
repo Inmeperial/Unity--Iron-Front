@@ -64,4 +64,14 @@ public class LegsOvercharge : Ability
         yield return new WaitForEndOfFrame();
         _character.SelectThisUnit();
     }
+
+    public override string GetEquipableName()
+    {
+        return _abilityData.objectName;
+    }
+
+    public override string GetEquipableDescription()
+    {
+        return _abilityData.objectDescription;
+    }
 }

@@ -175,5 +175,13 @@ public class Flamethrower : WeaponAbility
         }
     }
 
-    public override string GetEquipableName() => _abilityData.objectName;
+    public override string GetEquipableName()
+    {
+		return _abilityData.objectName;
+    }
+
+    public override string GetEquipableDescription()
+    {
+		return _abilityData.objectDescription;
+    }
 }

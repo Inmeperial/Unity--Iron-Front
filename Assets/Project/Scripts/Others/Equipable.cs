@@ -5,7 +5,6 @@ public abstract class Equipable : MonoBehaviour
 {
     protected EquipableSO.EquipableType _equipableType;
     protected int _availableUses;
-    protected string _equipableName;
     protected Character _character;
     protected EquipmentButton _button;
     protected Sprite _icon;
@@ -21,10 +20,9 @@ public abstract class Equipable : MonoBehaviour
 
     public abstract void Use();
 
-    public virtual string GetEquipableName()
-    {
-        return _equipableName;
-    }
+    public abstract string GetEquipableName();
+
+    public abstract string GetEquipableDescription();
 
     public void SetButton(EquipmentButton button)
     {

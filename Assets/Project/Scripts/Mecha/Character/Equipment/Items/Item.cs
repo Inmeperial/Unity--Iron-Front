@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class Item : Equipable
+public abstract class Item : Equipable
 {
     protected bool _isItemAvailable;
     public override void Initialize(Character character, EquipableSO data)
@@ -10,7 +10,6 @@ public class Item : Equipable
         _availableUses = data.maxUses;
         _icon = data.objectImage;
         _equipableType = data.equipableType;
-        _equipableName = data.objectName;
         _isItemAvailable = true;
         OnEquipableUsed += _character.OnEquipableUsed;
     }

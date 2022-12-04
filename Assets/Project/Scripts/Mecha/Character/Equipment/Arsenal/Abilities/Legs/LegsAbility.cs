@@ -1,4 +1,4 @@
 
-public class LegsAbility : Ability
+public abstract class LegsAbility : Ability
 {
 }

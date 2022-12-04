@@ -59,4 +59,14 @@ public class SmokeScreen : Ability
         _character.OnMechaTurnStart -= DestroySmokeScreen;
         Destroy(_smokeObject);
     }
+
+    public override string GetEquipableName()
+    {
+        return _abilityData.objectName;
+    }
+
+    public override string GetEquipableDescription()
+    {
+        return _abilityData.objectDescription;
+    }
 }

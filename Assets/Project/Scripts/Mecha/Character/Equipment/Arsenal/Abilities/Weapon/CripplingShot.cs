@@ -146,4 +146,14 @@ public class CripplingShot : WeaponAbility
 			PaintTilesInRange(item, count + 1);
 		}
 	}
+
+    public override string GetEquipableName()
+    {
+		return _abilityData.objectName;
+    }
+
+    public override string GetEquipableDescription()
+    {
+		return _abilityData.objectDescription;
+    }
 }

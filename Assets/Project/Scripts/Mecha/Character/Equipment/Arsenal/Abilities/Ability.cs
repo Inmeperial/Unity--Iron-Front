@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
-public class Ability : Equipable
+public abstract class Ability : Equipable
 {
     protected bool _inCooldown;
     protected int _currentCooldown;
@@ -14,7 +14,6 @@ public class Ability : Equipable
         _character = character;
         _icon = data.objectImage;
         _equipableType = data.equipableType;
-        _equipableName = data.objectName;
         OnEquipableUsed += _character.OnEquipableUsed;
     }
 

@@ -204,4 +204,14 @@ public class Grenade : Item
         
         return _tilesInSelectionRange.Contains(tile);
     }
+
+    public override string GetEquipableName()
+    {
+        return _itemData.objectName;
+    }
+
+    public override string GetEquipableDescription()
+    {
+        return _itemData.objectDescription;
+    }
 }
