@@ -21,7 +21,7 @@ namespace GameSettings
         private static Settings _instance;
         public static Settings Instance => _instance;
 
-        private void Awake()
+        public void Initialize()
         {
             if (_instance)
             {
@@ -38,12 +38,7 @@ namespace GameSettings
             LoadSettings();
         }
 
-        private void Start()
-        {
-            Initialize();
-        }
-
-        private void Initialize()
+        public void ApplySettingsOnGameOpen()
         {
             UpdateVolume("MasterVolume", _settingsData.generalVolume);
             UpdateVolume("MusicVolume", _settingsData.musicVolume);

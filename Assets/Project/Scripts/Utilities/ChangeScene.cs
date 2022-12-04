@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class ChangeScene : MonoBehaviour
+public class ChangeScene : Initializable
 {
     public static ChangeScene Instance;
 
     [SerializeField] private static bool _firstLoad = true;
-    private void Awake()
+    public override void Initialize()
     {
         if (Instance != null)
         {
@@ -21,18 +20,18 @@ public class ChangeScene : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        if (_firstLoad)
-        {
-            _firstLoad = false;
+        //if (_firstLoad)
+        //{
+        //    _firstLoad = false;
 
-            if (SceneManager.GetActiveScene().name == "LoadScreen")
-            {
-                Debug.Log("load menu");
-                LoadScene("Menu"); 
-            }
-        }
-        else
-            _firstLoad = false;
+        //    if (SceneManager.GetActiveScene().name == "LoadScreen")
+        //    {
+        //        Debug.Log("load menu");
+        //        LoadScene("Menu"); 
+        //    }
+        //}
+        //else
+        //    _firstLoad = false;
     }
 
     public void ReloadLevel()

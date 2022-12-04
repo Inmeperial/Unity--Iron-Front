@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SaveChecker : MonoBehaviour
+public class SaveChecker : Initializable
 {
-    private void Awake()
+    public override void Initialize()
     {
         StartCoroutine(LoadAndSave());
     }

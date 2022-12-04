@@ -19,6 +19,8 @@ public class MenuOptionsInGame : MonoBehaviour
 
         _container.SetActive(false);
 
+        if (!GameManager.Instance)
+            return;
         GameManager.Instance.InputsReader.OnMenuKeyPressed += ChangeWindowState;
     }
 
@@ -60,6 +62,8 @@ public class MenuOptionsInGame : MonoBehaviour
     }
     private void OnDestroy()
     {
+        if (!GameManager.Instance)
+            return;
         GameManager.Instance.InputsReader.OnMenuKeyPressed -= ChangeWindowState;
     }
 }
