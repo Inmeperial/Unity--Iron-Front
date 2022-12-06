@@ -84,6 +84,11 @@ public class WorkshopUIManager : MonoBehaviour
     public delegate void NameChange(string name);
 
     public event NameChange OnNameChange;
+
+    public Action OnCopyAbilityToAll;
+
+    public Action OnCopyItemToAll;
+
     private void Start()
     {
         _workshopManager.OnClickPrevious += UpdateOverviewText;
@@ -615,6 +620,16 @@ public class WorkshopUIManager : MonoBehaviour
     {
         OnCopyColorToAllBodies?.Invoke(_bodyColorImage.color);
         OnCopyColorToAllLegs?.Invoke(_legsColorImage.color);
+    }
+
+    public void CopyAbilitiesToAll()
+    {
+        OnCopyAbilityToAll?.Invoke();
+    }
+
+    public void CopyItemToAll()
+    {
+        OnCopyItemToAll?.Invoke();
     }
 
     public void CustomizeTabSetBodyColorSliders()
