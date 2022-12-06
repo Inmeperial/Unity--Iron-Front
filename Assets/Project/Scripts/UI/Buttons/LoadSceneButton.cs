@@ -22,4 +22,9 @@ public class LoadSceneButton : CustomButton
         
         OnLeftClick.AddListener(() => ChangeScene.Instance.LoadScene(_referenceToScene.sceneName));
     }
+
+    public void SetSceneReference(ReferenceToScene reference)
+    {
+        _referenceToScene = reference;
+    }
 }
