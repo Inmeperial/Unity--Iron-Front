@@ -10,7 +10,7 @@ public class ProjectorButton : CustomButton
     {
         _projector = FindObjectOfType<MissionProjector>();
 
-        OnLeftClick.AddListener(SetMissionImageToProjector);
+        OnLeftClick.AddListener(LoadScene);
     }
 
     public override void OnPointerEnter(PointerEventData eventData)
@@ -24,13 +24,13 @@ public class ProjectorButton : CustomButton
         base.OnPointerExit(eventData);
     }
 
-    private void SetMissionImageToProjector()
+    private void LoadScene()
     {
-        //_projector.ChangeMissionImage(_missionData);
+        ChangeScene.Instance.LoadScene(_missionData.mission.sceneName);
     }
 
     protected override void OnDestroy()
     {
-        OnLeftClick.RemoveListener(SetMissionImageToProjector);
+        OnLeftClick.RemoveListener(LoadScene);
     }
 }
