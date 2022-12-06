@@ -21,15 +21,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _FramePic:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: e704fa8a8e5338c42b109cbbf506305c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureFrame:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: e704fa8a8e5338c42b109cbbf506305c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TexturePic:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 30b35836961494847924cb77d0431799, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -38,7 +38,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _InnerRedLines: 0.7580875
+    - _InnerRedLines: 0
+    - _Power: 0.286
+    - _Power2: 0.391
+    - _Power3: 0.756
+    - _Scale: 4.62
+    - _Scale2: 6.3
+    - _Scale3: 5.49
     - __dirty: 0
-    m_Colors: []
+    m_Colors:
+    - _ColorOfVintage: {r: 1, g: 0.2436808, b: 0, a: 0}
+    - _ColorOfVintage2: {r: 1, g: 0.7533744, b: 0, a: 0}
+    - _ColorOfVintage3: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
