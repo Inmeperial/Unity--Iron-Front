@@ -65,8 +65,13 @@ public class Bridge : MonoBehaviour
         foreach (var tile in _bridgeTiles)
         {
             tile.gameObject.SetActive(true);
+        }
+
+        foreach (var tile in _bridgeTiles)
+        {
             tile.AddToNeighbour();
         }
+        
 
         foreach (var character in _bridgeEnemies)
         {
