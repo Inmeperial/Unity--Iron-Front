@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: PiercingShot
   m_EditorClassIdentifier: 
   objectName: Piercing Shot
-  objectDescription: No se
+  objectDescription: 'CD: 2
+
+
+    100 Damage to all mechas in a straight line'
   objectImage: {fileID: 21300000, guid: d2187335ad891dd4b98b1a92f2593377, type: 3}
   equipableType: 1
   maxUses: 100
   cooldown: 2
   buttonTextFontSize: 500
+  sound: {fileID: 0}
+  particleEffect: {fileID: 0}
   abilityPrefab: {fileID: 4887648641423547763, guid: de0c340cb1cb8f349b62240f5ba84be7,
     type: 3}
   partSlot: 1

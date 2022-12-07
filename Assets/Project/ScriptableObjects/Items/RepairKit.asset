@@ -13,13 +13,19 @@ MonoBehaviour:
   m_Name: RepairKit
   m_EditorClassIdentifier: 
   objectName: Repair Kit
-  objectDescription: Sona de bolsillo
+  objectDescription: 'Uses: 1
+
+
+    Repairs 20% of the damage to every remaining
+    part of the selected mecha ally'
   objectImage: {fileID: 21300000, guid: 8f246c11087af524489e2cef48b4540f, type: 3}
   equipableType: 0
   maxUses: 1
   cooldown: 1
   buttonTextFontSize: 0
   sound: {fileID: 11400000, guid: a684588357509d44880029e1f3b01a5b, type: 2}
+  particleEffect: {fileID: 5439327703645212621, guid: c6d92a7f3b4846e4da9184f2140c8156,
+    type: 3}
   itemPrefab: {fileID: 6282442800253608195, guid: 224dfa5fcbf76934da620260f9d3c2a3,
     type: 3}
   duration: 0

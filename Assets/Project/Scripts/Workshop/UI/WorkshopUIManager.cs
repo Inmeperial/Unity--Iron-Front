@@ -243,9 +243,9 @@ public class WorkshopUIManager : MonoBehaviour
                     WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(body, _partsSpawnParent);
                     button.SetLeftClick(() =>
                     {
-                        _partsDescription.text = "HP: " + body.maxHP +
-                                                "\n Weight: " + body.weight +
-                                                "\n MaxWeight: " + body.maxWeight;
+                        _partsDescription.text = body.maxHP + "  Durability \n" +
+                                                body.weight + "  Kg \n" +
+                                                body.maxWeight + "  Max Weight";
 
                         button.Select();
 
@@ -257,9 +257,9 @@ public class WorkshopUIManager : MonoBehaviour
                     if (currentMechaEquipment.body.objectName == body.objectName)
                     {
                         button.Select();
-                        _partsDescription.text = "HP: " + body.maxHP +
-                                                "\n Weight: " + body.weight +
-                                                "\n MaxWeight: " + body.maxWeight;
+                        _partsDescription.text = body.maxHP + "  Durability \n" +
+                                                body.weight + "  Kg \n" +
+                                                body.maxWeight + "  Max Weight";
                     }
                 }
                 break;
@@ -271,10 +271,16 @@ public class WorkshopUIManager : MonoBehaviour
                     WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(gun, _partsSpawnParent);
                     button.SetLeftClick(() =>
                     {
-                        _partsDescription.text = "Damage: " + gun.damage +
-                                                "\n HitChance:" + gun.hitChance +
-                                                "\n Attack Range: " + gun.attackRange +
-                                                "\n Weight: " + gun.weight;
+                        _partsDescription.text = gun.maxHp + "  Durability  -  " + gun.attackRange + "  Range \n" +
+                                                gun.damage + "  Dmg  x  " + gun.maxBullets + "  Hits \n" +
+                                                gun.hitChance + "%  Hit Chance \n" +
+                                                gun.weight + "  Kg";
+
+                        /*170 Durability
+                        35 Dmg x 5 Hits
+                        70% Hit Chance
+                        3 Range
+                        100 Kg*/
 
                         button.Select();
 
@@ -286,10 +292,10 @@ public class WorkshopUIManager : MonoBehaviour
                     if (currentMechaEquipment.leftGun.objectName == gun.objectName)
                     {
                         button.Select();
-                        _partsDescription.text = "Damage: " + gun.damage +
-                                                "\n HitChance:" + gun.hitChance +
-                                                "\n Attack Range: " + gun.attackRange +
-                                                "\n Weight: " + gun.weight;
+                        _partsDescription.text = gun.maxHp + "  Durability  -  " + gun.attackRange + "  Range \n" +
+                                                gun.damage + "  Dmg  x  " + gun.maxBullets + "  Hits \n" +
+                                                gun.hitChance + "%  Hit Chance \n" +
+                                                gun.weight + "  Kg";
                     }
                 }
                 break;
@@ -301,10 +307,10 @@ public class WorkshopUIManager : MonoBehaviour
                     WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(gun, _partsSpawnParent);
                     button.SetLeftClick(() =>
                     {
-                        _partsDescription.text = "Damage: " + gun.damage +
-                                                "\n HitChance:" + gun.hitChance +
-                                                "\n Attack Range: " + gun.attackRange +
-                                                "\n Weight: " + gun.weight;
+                        _partsDescription.text = gun.maxHp + "  Durability  -  " + gun.attackRange + "  Range \n" +
+                                                gun.damage + "  Dmg  x  " + gun.maxBullets + "  Hits \n" +
+                                                gun.hitChance + "%  Hit Chance \n" +
+                                                gun.weight + "  Kg";
 
                         button.Select();
 
@@ -316,10 +322,10 @@ public class WorkshopUIManager : MonoBehaviour
                     if (currentMechaEquipment.rightGun.objectName == gun.objectName)
                     {
                         button.Select();
-                        _partsDescription.text = "Damage: " + gun.damage +
-                                                "\n HitChance:" + gun.hitChance +
-                                                "\n Attack Range: " + gun.attackRange +
-                                                "\n Weight: " + gun.weight;
+                        _partsDescription.text = gun.maxHp + "  Durability  -  " + gun.attackRange + "  Range \n" +
+                                                gun.damage + "  Dmg  x  " + gun.maxBullets + "  Hits \n" +
+                                                gun.hitChance + "%  Hit Chance \n" +
+                                                gun.weight + "  Kg";
                     }
                 }
                 break;
@@ -331,9 +337,9 @@ public class WorkshopUIManager : MonoBehaviour
                     WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(leg, _partsSpawnParent);
                     button.SetLeftClick(() =>
                     {
-                        _partsDescription.text = "HP: " + leg.maxHP +
-                                                "\n Steps: " + leg.maxSteps +
-                                                "\n Weight: " + leg.weight;
+                        _partsDescription.text = leg.maxHP + "  Durability \n" +
+                                                leg.maxSteps + "  Steps \n" +
+                                                leg.weight + "  Kg";
 
                         button.Select();
 
@@ -345,9 +351,9 @@ public class WorkshopUIManager : MonoBehaviour
                     if (currentMechaEquipment.legs.objectName == leg.objectName)
                     {
                         button.Select();
-                        _partsDescription.text = "HP: " + leg.maxHP +
-                                                "\n Steps: " + leg.maxSteps +
-                                                "\n Weight: " + leg.weight;
+                        _partsDescription.text = leg.maxHP + "  Durability \n" +
+                                                leg.maxSteps + "  Steps \n" +
+                                                leg.weight + "  Kg";
                     }
                 }
                 break;

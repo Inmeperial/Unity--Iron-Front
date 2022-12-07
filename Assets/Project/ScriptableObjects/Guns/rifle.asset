@@ -13,7 +13,16 @@ MonoBehaviour:
   m_Name: rifle
   m_EditorClassIdentifier: 
   objectName: Rifle
-  objectDescription: Este no te asalta
+  objectDescription: '170 Durability
+
+    125 Dmg x 1 Hits
+
+    90% Hit Chance
+
+    5
+    Range
+
+    120 Kg'
   objectImage: {fileID: 21300000, guid: 7721cc4ae8f6df4449cf46c4c7048bc0, type: 3}
   prefab: {fileID: 7109212115555344315, guid: 19f0d724e8cc83c43804144841893b7e, type: 3}
   maxHp: 170
@@ -23,14 +32,13 @@ MonoBehaviour:
   damage: 125
   critChance: 10
   critMultiplier: 2
-  hitChance: 80
+  hitChance: 90
   chanceToHitOtherParts: 0
   attackRange: 5
   bodyPartsSelectionQuantity: 1
   weight: 120
   attackSounds:
   - {fileID: 11400000, guid: 5091b50f97a5994469ea6724b4ac1ed8, type: 2}
-  attackSound: {fileID: 11400000, guid: 5091b50f97a5994469ea6724b4ac1ed8, type: 2}
   takeDamageSound: {fileID: 11400000, guid: af11f0272a5824248ba2d14c313bec43, type: 2}
   destroySound: {fileID: 11400000, guid: 16b8e1669a0194142994edb7096e94f6, type: 2}
   attackParticles:

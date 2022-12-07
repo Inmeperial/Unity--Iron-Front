@@ -13,13 +13,18 @@ MonoBehaviour:
   m_Name: MineItem
   m_EditorClassIdentifier: 
   objectName: Mine
-  objectDescription: Mine se murio
+  objectDescription: 'Uses: 2     CD: 1
+
+
+    Places a mine in the selected tile
+    in range'
   objectImage: {fileID: 21300000, guid: a2edffa084aa95e40bf5cfa58dbf9003, type: 3}
   equipableType: 0
   maxUses: 2
   cooldown: 1
   buttonTextFontSize: 0
   sound: {fileID: 11400000, guid: 37ab83e40cb9e9f4fad399b3d8e5c60b, type: 2}
+  particleEffect: {fileID: 0}
   itemPrefab: {fileID: 5845280891398707801, guid: 0b9a1bebacfd73b4293d415e16c6b3dc,
     type: 3}
   duration: 0

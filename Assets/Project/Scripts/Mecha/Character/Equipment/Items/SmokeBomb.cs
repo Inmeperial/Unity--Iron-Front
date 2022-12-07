@@ -10,6 +10,8 @@ public class SmokeBomb : Item
 	private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
 	private int _turnsLived;
 
+	private ParticleSystem _smokeParticles;
+
 	public override void Initialize(Character character, EquipableSO data)
 	{
 		base.Initialize(character, data);
@@ -77,7 +79,7 @@ public class SmokeBomb : Item
 		if (!_tilesInRange.Contains(tile))
 			return;
 		
-		_smokeScreen.transform.position = selectedTile.transform.position;
+		_smokeScreen.transform.position = selectedTile.transform.position + Vector3.up * 1.5f;
 
 		if (Input.GetMouseButtonDown(0))
 		{
@@ -94,7 +96,7 @@ public class SmokeBomb : Item
 
 	private void UseItem()
     {
-		EffectsController.Instance.PlayParticlesEffect(_data.particleEffect, _smokeScreen.transform.position, _smokeScreen.transform.forward);
+		EffectsController.Instance.PlayParticlesEffect(_data.particleEffect, _smokeScreen.transform.position, _smokeScreen.transform.up);//Up para el forward por culpa de marcos y la orientación del shader
 
 		AudioManager.Instance.PlaySound(_data.sound, _smokeScreen);
 
@@ -137,6 +139,7 @@ public class SmokeBomb : Item
 
 		GameManager.Instance.OnEndTurn -= UpdateLifeSpan;
 		Destroy(_smokeScreen);
+		_data.particleEffect.Stop(true);
 	}
 
     public override string GetEquipableName()
