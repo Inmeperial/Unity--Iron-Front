@@ -399,25 +399,34 @@ public class Character : Initializable
         
         if (!_isOnElevator && _canMove)
         {
+            _currentSteps = _legs.GetMaxSteps();
+
             if (_legsOvercharged)
-            {
-                if (_movementReduced && _myTurn)
-                {
-                    _currentSteps *= 2;
-                    _movementReduced = false;
-                }
-                else
-                    _currentSteps = _legs.GetMaxSteps() * 2;
-            }
+                _currentSteps *= 2;
 
-            else if (_movementReduced && _myTurn)
-                _movementReduced = false;
+            if (_movementReduced)
+                _currentSteps /= 2;
+
+            if (_legs.CurrentHP <= 0)
+                _currentSteps /= 2;
+
+            //if (_legsOvercharged)
+            //{
+            //    if (_movementReduced && _myTurn)
+            //    {
+            //        _currentSteps *= 2;
+            //        _movementReduced = false;
+            //    }
+            //    else
+            //        _currentSteps = _legs.GetMaxSteps() * 2;
+            //}
+            //else if (_movementReduced && _myTurn)
+            //    _movementReduced = false;
             
-            else
-                _currentSteps = _legs.CurrentHP > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
+            //else
+            //    _currentSteps = _legs.CurrentHP > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
 
-            if (_currentSteps <= 0)
-                _currentSteps = 1;
+            
             
             PaintTilesInMoveRange(_myPositionTile, 0);
             AddTilesInMoveRange();
@@ -1075,6 +1084,8 @@ public class Character : Initializable
         SetCharacterMoveState(false);
 
         _legsOvercharged = false;
+        _movementReduced = false;
+
         TileHighlight.Instance.characterMoving = false;
         TileHighlight.Instance.EndPreview();
         _moving = false;

@@ -18,6 +18,8 @@ public class EnemyCharacter : Character
 
     private CameraMovement _camera;
 
+    private int _stepsBeforeFindingEnemy;
+
     private bool _failSafeRunning;
     public override void Awake()
     {
@@ -49,7 +51,11 @@ public class EnemyCharacter : Character
 
         base.SelectThisUnit();
         _closestEnemy = null;
-        
+
+        _stepsBeforeFindingEnemy = _currentSteps;
+
+        ResetTilesInMoveRange();
+        PaintTilesInMoveRange(_myPositionTile, 0);
     }
 
     IEnumerator DelayStart()
@@ -109,8 +115,8 @@ public class EnemyCharacter : Character
         
         if (_targetTile == _myPositionTile)
             return false;
-        
-        _currentSteps = _legs.GetMaxSteps();
+
+        _currentSteps = _stepsBeforeFindingEnemy;
         
         //Calculates shortest path.
         _waypointsPathfinding.Calculate(_myPositionTile, _targetTile, _currentSteps);
@@ -173,7 +179,7 @@ public class EnemyCharacter : Character
 
             closestEnemy = enemies[i];
         }
-        _currentSteps = _legs.GetMaxSteps();
+        _currentSteps = _stepsBeforeFindingEnemy;
         
         return closestEnemy;
     }
@@ -339,49 +345,4 @@ public class EnemyCharacter : Character
 
         _failSafeRunning = false;
     }
-    //#region Animations
-    //protected override void PlayDeadAnimation()
-    //{
-    //    base.PlayDeadAnimation();
-    //}
-
-    //public override void PlayReceiveDamageAnimation()
-    //{
-    //    base.PlayReceiveDamageAnimation();
-    //}
-    //public override void StopReceiveDamageAnimation()
-    //{
-    //   base.StopReceiveDamageAnimation();
-    //}
-
-    //protected override void PlayWalkAnimation()
-    //{
-    //    base.PlayWalkAnimation();
-    //}
-
-    //protected override void StopWalkAnimation()
-    //{
-    //    base.StopWalkAnimation();
-    //}
-
-    //public override void StopDeathAnimation()
-    //{
-    //    base.StopDeathAnimation();
-    //}
-
-    //public override void PlayWalkSound()
-    //{
-    //    base.PlayWalkSound();
-    //}
-
-    //public override void PlayGunAnimationEvent(int index)
-    //{
-    //    base.PlayGunAnimationEvent(index);
-    //}
-
-    //public override void PlayGunEndAnimationEvent()
-    //{
-    //    base.PlayGunEndAnimationEvent();
-    //}
-    //#endregion
 }

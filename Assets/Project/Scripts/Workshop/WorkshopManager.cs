@@ -59,35 +59,6 @@ public class WorkshopManager : MonoBehaviour
         _workshopUIManager.OnCopyItemToAll += CopyItemToAll;
     }
 
-    private void CopyItemToAll()
-    {
-        ItemSO item = mechas[_mechaIndex].GetEquipment().item;
-
-        for (int i = 0; i < mechas.Length; i++)
-        {
-            _equipmentContainer.equipments[i].item = item;
-        }
-
-        ApplyChangesButton();
-    }
-
-    private void CopyAbilityToAll()
-    {
-        MechaEquipmentSO currentMechaEquipment = mechas[_mechaIndex].GetEquipment();
-        for (int i = 0; i < mechas.Length; i++)
-        {
-            _equipmentContainer.equipments[i].bodyAbility = currentMechaEquipment.bodyAbility;
-
-            _equipmentContainer.equipments[i].leftGunAbility = currentMechaEquipment.leftGunAbility;
-
-            _equipmentContainer.equipments[i].rightGunAbility = currentMechaEquipment.rightGunAbility;
-
-            _equipmentContainer.equipments[i].legsAbility = currentMechaEquipment.legsAbility;         
-        }
-
-        ApplyChangesButton();
-    }
-
     private void Update()
     {
         if (_isEditing)
@@ -339,7 +310,36 @@ public class WorkshopManager : MonoBehaviour
 
         ApplyChangesButton();
     }
-    
+
+    private void CopyItemToAll()
+    {
+        ItemSO item = mechas[_mechaIndex].GetEquipment().item;
+
+        for (int i = 0; i < mechas.Length; i++)
+        {
+            _equipmentContainer.equipments[i].item = item;
+        }
+
+        ApplyChangesButton();
+    }
+
+    private void CopyAbilityToAll()
+    {
+        MechaEquipmentSO currentMechaEquipment = mechas[_mechaIndex].GetEquipment();
+        for (int i = 0; i < mechas.Length; i++)
+        {
+            _equipmentContainer.equipments[i].bodyAbility = currentMechaEquipment.bodyAbility;
+
+            _equipmentContainer.equipments[i].leftGunAbility = currentMechaEquipment.leftGunAbility;
+
+            _equipmentContainer.equipments[i].rightGunAbility = currentMechaEquipment.rightGunAbility;
+
+            _equipmentContainer.equipments[i].legsAbility = currentMechaEquipment.legsAbility;
+        }
+
+        ApplyChangesButton();
+    }
+
     private void UpdateName(string name)
     {
         _equipmentContainer.equipments[_mechaIndex].mechaName = name;
