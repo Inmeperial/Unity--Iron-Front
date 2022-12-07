@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class QuitGameButton : CustomButton
 {
@@ -9,22 +7,17 @@ public class QuitGameButton : CustomButton
     {
         base.Start();
 
-        StartCoroutine(ConfigureButton());
+        if (Application.isEditor)
+            return;
+
+        OnLeftClick.AddListener(ChangeScene.Instance.Quit);
     }
 
-    IEnumerator ConfigureButton()
+    protected override void OnDestroy()
     {
-        yield return null;
-        var changeScene = FindObjectOfType<ChangeScene>();
+        if (Application.isEditor)
+            return;
 
-        while (!changeScene)
-        {
-            changeScene = FindObjectOfType<ChangeScene>();
-        }
-        
-        OnLeftClick.RemoveAllListeners();
-
-        //Cambiar si al cerrar hay que hacer algo mas.
-        OnLeftClick.AddListener(changeScene.Quit);
+        OnLeftClick.RemoveListener(ChangeScene.Instance.Quit);
     }
 }

@@ -1,14 +1,18 @@
 ﻿using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine;
 
 public class CustomButton : Selectable, IPointerClickHandler
 {
     public UnityEvent OnLeftClick;
     public UnityEvent OnRightClick;
-
+    
     protected override void Start()
     {
+        if (Application.isEditor)
+            return;
+
         base.Start();
     }
 
