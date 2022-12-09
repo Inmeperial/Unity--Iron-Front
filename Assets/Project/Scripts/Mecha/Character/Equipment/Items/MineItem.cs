@@ -63,6 +63,7 @@ public class MineItem : Item
 			return;
 
 		Instantiate(_data.minePefab, selectedTile.transform.position + Vector3.up * 2, Quaternion.Euler(-90, 0, 0));
+		EffectsController.Instance.PlayParticlesEffect(_data.particleEffect, selectedTile.transform.position + Vector3.up * 2, Vector3.forward);
 
 		ItemUsed();
 

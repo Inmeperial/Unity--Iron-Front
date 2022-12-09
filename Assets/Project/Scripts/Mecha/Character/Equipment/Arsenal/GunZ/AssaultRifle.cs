@@ -37,6 +37,6 @@ public class AssaultRifle : Gun
         //Anim keyFrame = 26.1 - 45.3 - 63.9 - 81.6 - 
         EffectsController.Instance.PlayParticlesEffect(_data.attackParticles[1], _shootParticleSpawn.transform.position, _myChar.transform.forward, out ParticleSystem particle);
         particle.transform.parent = _shootParticleSpawn.transform;
-        AudioManager.Instance.PlaySound(_data.attackSounds[1], gameObject);
+        AudioManager.Instance.PlaySound(_data.attackSounds[0], gameObject);
     }
 }

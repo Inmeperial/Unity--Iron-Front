@@ -156,7 +156,7 @@ public class RepairKit : Item
 
 		count++;
 
-        Physics.Raycast(currentTile.transform.position, dir, out RaycastHit hit);
+        Physics.Raycast(currentTile.transform.position, dir, out RaycastHit hit, 20f);
         Tile tile = hit.transform.GetComponent<Tile>();
 
 		if (tile && tile.IsWalkable())

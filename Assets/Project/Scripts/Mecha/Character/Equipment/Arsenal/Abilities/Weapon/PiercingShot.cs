@@ -93,6 +93,8 @@ public class PiercingShot : WeaponAbility
 
         GetCharactersInAttackDirection(firstTile, dir, 0);
 
+        AudioManager.Instance.PlaySound(_abilityData.sound, _character.gameObject);
+
         StartCoroutine(ParticleEffect());
 
         Shoot();

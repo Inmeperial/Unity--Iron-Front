@@ -7,6 +7,8 @@ public class SmokeScreen : Ability
 
     private SmokeScreenSO _abilityData;
 
+    ParticleSystem _smokeParticles;
+
     public override void Initialize(Character character, EquipableSO data)
     {
         base.Initialize(character, data);
@@ -49,6 +51,14 @@ public class SmokeScreen : Ability
         _character.OnMechaTurnStart += DestroySmokeScreen;
 
         _smokeObject = Instantiate(_abilityData.smokeScreenObject, _character.transform);
+        _smokeObject.transform.position = _character.GetPositionTile().transform.position + Vector3.up * 1.5f;
+
+        AudioManager.Instance.PlaySound(_abilityData.sound, _smokeObject);
+
+        _smokeParticles = Instantiate(_abilityData.particleEffect, _character.transform.position, Quaternion.identity);
+        _smokeParticles.transform.forward = _smokeObject.transform.up;
+        _smokeParticles.time = 0f;
+        _smokeParticles.Play();
     }
 
     private void DestroySmokeScreen()
@@ -58,6 +68,8 @@ public class SmokeScreen : Ability
 
         _character.OnMechaTurnStart -= DestroySmokeScreen;
         Destroy(_smokeObject);
+        _smokeParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        Destroy(_smokeParticles.gameObject, 3f);
     }
 
     public override string GetEquipableName()
