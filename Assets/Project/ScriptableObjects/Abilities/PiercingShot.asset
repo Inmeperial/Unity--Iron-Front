@@ -16,15 +16,16 @@ MonoBehaviour:
   objectDescription: 'CD: 2
 
 
-    100 Damage to all mechas in a straight line'
+    150 Damage to all mechas bodies in a straight line'
   objectImage: {fileID: 21300000, guid: d2187335ad891dd4b98b1a92f2593377, type: 3}
   equipableType: 1
   maxUses: 100
   cooldown: 2
   buttonTextFontSize: 500
-  sound: {fileID: 0}
-  particleEffect: {fileID: 0}
+  sound: {fileID: 11400000, guid: 442bd6ad6918c7a4b9d434f9e1e0b7ba, type: 2}
+  particleEffect: {fileID: 303949478031168038, guid: 411aab2fe09530141ad78f00ef14f8ba,
+    type: 3}
   abilityPrefab: {fileID: 4887648641423547763, guid: de0c340cb1cb8f349b62240f5ba84be7,
     type: 3}
   partSlot: 1
-  damage: 100
+  damage: 150

@@ -96,7 +96,13 @@ public class SmokeBomb : Item
 
 	private void UseItem()
     {
-		EffectsController.Instance.PlayParticlesEffect(_data.particleEffect, _smokeScreen.transform.position, _smokeScreen.transform.up);//Up para el forward por culpa de marcos y la orientación del shader
+		//EffectsController.Instance.PlayParticlesEffect(_data.particleEffect, _smokeScreen.transform.position, _smokeScreen.transform.up);//Up para el forward por culpa de marcos y la orientación del shader
+
+		_smokeParticles = Instantiate(_data.particleEffect, _smokeScreen.transform.position, Quaternion.identity);
+
+		_smokeParticles.transform.forward = _smokeScreen.transform.up;
+		_smokeParticles.time = 0f;
+		_smokeParticles.Play();
 
 		AudioManager.Instance.PlaySound(_data.sound, _smokeScreen);
 
@@ -138,8 +144,9 @@ public class SmokeBomb : Item
 		//TurnManager.Instance.Unsubscribe(this);
 
 		GameManager.Instance.OnEndTurn -= UpdateLifeSpan;
-		Destroy(_smokeScreen);
-		_data.particleEffect.Stop(true);
+		DestroyImmediate(_smokeScreen.gameObject);
+		_smokeParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+		Destroy(_smokeParticles.gameObject, 2f);
 	}
 
     public override string GetEquipableName()

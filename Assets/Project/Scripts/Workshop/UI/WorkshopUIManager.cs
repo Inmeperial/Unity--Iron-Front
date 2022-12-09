@@ -510,7 +510,7 @@ public class WorkshopUIManager : MonoBehaviour
             WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(item, _itemsSpawnParent);
             button.SetLeftClick(() =>
             {
-                _itemsDescription.text = item.objectDescription;
+                _itemsDescription.text = "Uses: " + item.maxUses + "\n" + item.objectDescription;
                 _itemImage.sprite = item.objectImage;
 
                 button.Select();

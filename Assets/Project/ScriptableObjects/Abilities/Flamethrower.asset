@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Flamethrower
   m_EditorClassIdentifier: 
   objectName: Flame Thrower
-  objectDescription: 'CD: 2
+  objectDescription: 'CD: 3
 
 
-    90 Damage to all mechas in the area'
+    100 Damage to all mechas bodies in the area'
   objectImage: {fileID: 21300000, guid: 26030f4583289ff41ac4382213adca95, type: 3}
   equipableType: 1
   maxUses: 100
-  cooldown: 2
+  cooldown: 3
   buttonTextFontSize: 500
   sound: {fileID: 11400000, guid: 442bd6ad6918c7a4b9d434f9e1e0b7ba, type: 2}
   particleEffect: {fileID: 4786087211095786977, guid: 5668d9bc983edaa409afc4d5d6a7a971,
@@ -28,7 +28,7 @@ MonoBehaviour:
   abilityPrefab: {fileID: 5410007677447170726, guid: df67bf8f7d76749469adc7c5c094306e,
     type: 3}
   partSlot: 1
-  damage: 90
+  damage: 100
   range: 20
   angle: 90
   gridMask:

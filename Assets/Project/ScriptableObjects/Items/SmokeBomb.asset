@@ -13,11 +13,7 @@ MonoBehaviour:
   m_Name: SmokeBomb
   m_EditorClassIdentifier: 
   objectName: Smoke Bomb
-  objectDescription: 'Uses: 2     CD: 1
-
-
-    Creates a smoke area obscuring enemy
-    vision for 4 turns'
+  objectDescription: Creates a smoke area obscuring enemy vision for 4 turns
   objectImage: {fileID: 21300000, guid: eaba694fbb8f7ac41a7275bea2c4872c, type: 3}
   equipableType: 0
   maxUses: 2
@@ -28,7 +24,7 @@ MonoBehaviour:
     type: 3}
   itemPrefab: {fileID: 6176770245462929889, guid: 2b35f3f6245126844b405642682b13a1,
     type: 3}
-  duration: 4
+  duration: 5
   areaOfEffect: 0
   useRange: 4
   smokeGameObject: {fileID: 8876491932085123580, guid: a7591665e713dab489c82e1d6203f1da,

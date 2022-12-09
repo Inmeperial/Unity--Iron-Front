@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class PiercingShot : WeaponAbility
 {
     private HashSet<Tile> _tilesInRange = new HashSet<Tile>();
     private List<Character> _charactersToAttack = new List<Character>();
+
+    private List<Tile> _targetedTiles = new List<Tile>();
 
     private PiercingShotSO _abilityData;
 
@@ -84,11 +87,13 @@ public class PiercingShot : WeaponAbility
 
         Vector3 dir = selectedTile.transform.position - characterTilePos;
 
-        Physics.Raycast(characterTilePos, dir, out RaycastHit hit);
+        Physics.Raycast(characterTilePos, dir, out RaycastHit hit, 20f);
 
         Tile firstTile = hit.transform.GetComponent<Tile>();
 
         GetCharactersInAttackDirection(firstTile, dir, 0);
+
+        StartCoroutine(ParticleEffect());
 
         Shoot();
 
@@ -105,6 +110,12 @@ public class PiercingShot : WeaponAbility
 
     private List<Character> GetCharactersInAttackDirection(Tile currentTile, Vector3 dir, int count)
 	{
+        if (count >= _gun.GetAttackRange())
+            return _charactersToAttack;
+
+        count++;
+
+        _targetedTiles.Add(currentTile);
         //Primero agrego el character que esta en el rango de ataque
 		if (!currentTile.IsFree())
 		{
@@ -114,12 +125,7 @@ public class PiercingShot : WeaponAbility
                 _charactersToAttack.Add(unitToAttack);
 		}
 
-        if (count >= _gun.GetAttackRange())
-            return _charactersToAttack;
-
-        count++;
-
-        Physics.Raycast(currentTile.transform.position, dir, out RaycastHit hit);
+        Physics.Raycast(currentTile.transform.position, dir, out RaycastHit hit, 20f);
 
         Tile nextTile = hit.transform.GetComponent<Tile>();
 
@@ -143,6 +149,31 @@ public class PiercingShot : WeaponAbility
         }
         _character.DoAttackAction();
 	}
+
+    IEnumerator ParticleEffect()
+    {
+        var startPos = _targetedTiles[0].transform.position + Vector3.up * 3.5f;
+        var particles = Instantiate(_abilityData.particleEffect, startPos, Quaternion.identity);
+        particles.time = 0f;
+        particles.Play();
+
+        var time = 0f;
+        var duration = 1f;
+
+        var endPos = _targetedTiles[_targetedTiles.Count - 1].transform.position + Vector3.up * 3.5f;
+
+        while(time < duration)
+        {
+            particles.transform.position = Vector3.Lerp(startPos, endPos, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+               
+        particles.transform.position = endPos;
+
+        particles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        Destroy(particles.gameObject, 5f);
+    }
 
     private void PaintTilesInRange(Tile currentTile, int count, Vector3 dir)
 	{
@@ -180,10 +211,10 @@ public class PiercingShot : WeaponAbility
 
             Vector3 position = currentTile.transform.position;
 
-            Physics.Raycast(position, currentTile.transform.forward, out RaycastHit forwardHit);
-            Physics.Raycast(position, currentTile.transform.right * -1, out RaycastHit leftHit);
-            Physics.Raycast(position, currentTile.transform.right, out RaycastHit rightHit);
-            Physics.Raycast(position, currentTile.transform.forward * -1, out RaycastHit backHit);
+            Physics.Raycast(position, currentTile.transform.forward, out RaycastHit forwardHit, 20f);
+            Physics.Raycast(position, currentTile.transform.right * -1, out RaycastHit leftHit, 20f);
+            Physics.Raycast(position, currentTile.transform.right, out RaycastHit rightHit, 20f);
+            Physics.Raycast(position, currentTile.transform.forward * -1, out RaycastHit backHit, 20f);
 
             if (forwardHit.transform)
             {
@@ -236,7 +267,7 @@ public class PiercingShot : WeaponAbility
 
             Vector3 position = currentTile.transform.position;
 
-            Physics.Raycast(position, currentTile.transform.forward, out RaycastHit forwardHit);
+            Physics.Raycast(position, currentTile.transform.forward, out RaycastHit forwardHit, 100f);
 
             if (!forwardHit.transform)
                 return;
@@ -257,7 +288,7 @@ public class PiercingShot : WeaponAbility
         {
             Vector3 position = currentTile.transform.position;
 
-            Physics.Raycast(position, currentTile.transform.right * -1, out RaycastHit leftHit);
+            Physics.Raycast(position, currentTile.transform.right * -1, out RaycastHit leftHit, 100f);
 
             if (!leftHit.transform)
                 return;
@@ -277,7 +308,7 @@ public class PiercingShot : WeaponAbility
         {
             Vector3 position = currentTile.transform.position;
             
-            Physics.Raycast(position, currentTile.transform.right * -1, out RaycastHit rightHit);
+            Physics.Raycast(position, currentTile.transform.right * -1, out RaycastHit rightHit, 100f);
 
             if (!rightHit.transform)
                 return;
@@ -298,7 +329,7 @@ public class PiercingShot : WeaponAbility
         {
             Vector3 position = currentTile.transform.position;
          
-            Physics.Raycast(position, currentTile.transform.forward * -1, out RaycastHit backHit);
+            Physics.Raycast(position, currentTile.transform.forward * -1, out RaycastHit backHit, 100f);
 
             if (!backHit.transform)
                 return;
