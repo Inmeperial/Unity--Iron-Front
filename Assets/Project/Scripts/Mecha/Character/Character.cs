@@ -368,6 +368,13 @@ public class Character : Initializable
             }
         }
 
+        ConfigureAttackOnSelection();
+
+        ConfigureStepsOnSelection();
+    }
+
+    protected void ConfigureAttackOnSelection()
+    {
         if (_canAttack)
         {
             if (IsRightGunAlive())
@@ -375,7 +382,7 @@ public class Character : Initializable
                 _selectedGun = _rightGun;
                 SelectRightGun();
             }
-            
+
             else if (IsLeftGunAlive())
             {
                 _selectedGun = _leftGun;
@@ -384,7 +391,7 @@ public class Character : Initializable
 
             else
                 _selectedGun = null;
-            
+
             if (_isOnElevator && IsSelectedGunAlive() && _selectedGun.GetAttackRange() > 1)
             {
                 PaintTilesInAttackRange(_myPositionTile, 0);
@@ -396,7 +403,9 @@ public class Character : Initializable
                 CheckEnemiesInAttackRange();
             }
         }
-        
+    }
+    protected void ConfigureStepsOnSelection()
+    {
         if (!_isOnElevator && _canMove)
         {
             _currentSteps = _legs.GetMaxSteps();
@@ -410,24 +419,6 @@ public class Character : Initializable
             if (_legs.CurrentHP <= 0)
                 _currentSteps /= 2;
 
-            //if (_legsOvercharged)
-            //{
-            //    if (_movementReduced && _myTurn)
-            //    {
-            //        _currentSteps *= 2;
-            //        _movementReduced = false;
-            //    }
-            //    else
-            //        _currentSteps = _legs.GetMaxSteps() * 2;
-            //}
-            //else if (_movementReduced && _myTurn)
-            //    _movementReduced = false;
-            
-            //else
-            //    _currentSteps = _legs.CurrentHP > 0 ? _legs.GetMaxSteps() : _legs.GetMaxSteps()/2;
-
-            
-            
             PaintTilesInMoveRange(_myPositionTile, 0);
             AddTilesInMoveRange();
         }

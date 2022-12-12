@@ -55,7 +55,9 @@ public class EnemyCharacter : Character
         _stepsBeforeFindingEnemy = _currentSteps;
 
         ResetTilesInMoveRange();
-        PaintTilesInMoveRange(_myPositionTile, 0);
+
+        ConfigureAttackOnSelection();
+        ConfigureStepsOnSelection();
     }
 
     IEnumerator DelayStart()
