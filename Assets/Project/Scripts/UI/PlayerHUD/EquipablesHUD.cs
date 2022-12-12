@@ -143,6 +143,8 @@ public class EquipablesHUD : Initializable
         button.SetButtonIcon(_noneIcon);
         button.HideAbilityCooldownText();
         button.HideItemUsesText();
+
+        button.GetComponent<OverviewData>().SetTooltipData();
     }
 
     private void DeactivateButtons()
