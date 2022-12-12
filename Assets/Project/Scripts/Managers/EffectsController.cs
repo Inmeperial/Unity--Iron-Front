@@ -94,7 +94,8 @@ public class EffectsController : MonoBehaviour
 
                 _particlesToDestroy[i].remainingTime -= Time.deltaTime;
 
-                if (_particlesToDestroy[i].remainingTime > 0)
+                ParticleSystem particleSystem = _particlesToDestroy[i].effect.GetComponentInChildren<ParticleSystem>();
+                if (_particlesToDestroy[i].remainingTime > 0 || particleSystem.particleCount > 0)
                     continue;
 
                 toRemove.Add(i);
