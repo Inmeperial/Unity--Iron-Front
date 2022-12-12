@@ -410,14 +410,14 @@ public class Character : Initializable
         {
             _currentSteps = _legs.GetMaxSteps();
 
-            if (_legsOvercharged)
-                _currentSteps *= 2;
-
             if (_movementReduced)
                 _currentSteps /= 2;
 
-            if (_legs.CurrentHP <= 0)
-                _currentSteps /= 2;
+            if (_currentSteps < 1)
+                _currentSteps = 1;
+
+            if (_legsOvercharged)
+                _currentSteps *= 2;
 
             PaintTilesInMoveRange(_myPositionTile, 0);
             AddTilesInMoveRange();

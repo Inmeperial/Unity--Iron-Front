@@ -13,8 +13,6 @@ public class Legs : MechaPart
 
     private int _initiative;
 
-    private bool _brokenLegs = false;
-
     public Action<Character> OnDamageTakenByAttack;
     public int GetMaxSteps()
     {
@@ -78,7 +76,7 @@ public class Legs : MechaPart
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);
 
-        if (IsPartBroken() && !_brokenLegs)
+        if (IsPartBroken())
             BreakLegs();
 
         _myChar.PlayReceiveDamageAnimation();
@@ -102,7 +100,7 @@ public class Legs : MechaPart
         if (_myChar.IsSelected())
             OnHealthChanged?.Invoke(_currentHP);        
 
-        if (IsPartBroken() && !_brokenLegs)
+        if (IsPartBroken())
             BreakLegs();
 
         _myChar.PlayReceiveDamageAnimation();
@@ -127,7 +125,6 @@ public class Legs : MechaPart
     private void HalfSteps()
     {
         _maxSteps /= 2;
-        _brokenLegs = true;
     }
     
     public override void Heal(int healAmount)
