@@ -100,7 +100,7 @@ public class EffectsController : MonoBehaviour
                 toRemove.Add(i);
             }
 
-            for (int i = toRemove.Count-1; i > 0; i--)
+            for (int i = toRemove.Count-1; i >= 0; i--)
             {
                 int index = toRemove[i];
 
