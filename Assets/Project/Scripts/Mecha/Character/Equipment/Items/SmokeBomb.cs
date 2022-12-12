@@ -12,7 +12,8 @@ public class SmokeBomb : Item
 
 	private ParticleSystem _smokeParticles;
 
-	public override void Initialize(Character character, EquipableSO data)
+    private bool _characterSelectionState = false;
+    public override void Initialize(Character character, EquipableSO data)
 	{
 		base.Initialize(character, data);
 
@@ -27,7 +28,11 @@ public class SmokeBomb : Item
 
 		_character.EquipableSelectionState(true, this);
 
-		PaintTilesInSelectionRange(_character.GetPositionTile(), 0);
+        _characterSelectionState = CharacterSelector.Instance.IsSelectionEnabled();
+
+        CharacterSelector.Instance.DisableCharacterSelection();
+
+        PaintTilesInSelectionRange(_character.GetPositionTile(), 0);
 
 		if (!_smokeScreen)
 			_smokeScreen = Instantiate(_data.smokeGameObject);
@@ -66,22 +71,9 @@ public class SmokeBomb : Item
 
 	public override void Use()
 	{
-        Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
-		
-		if (!selectedTile)
-			return;
+		UpdateSmokeScreenPosition();
 
-        Tile tile = selectedTile.GetComponent<Tile>();
-
-		if (!tile)
-			return;
-		
-		if (!_tilesInRange.Contains(tile))
-			return;
-		
-		_smokeScreen.transform.position = selectedTile.transform.position + Vector3.up * 1.5f;
-
-		if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
 		{
 			UseItem();
 		}
@@ -94,11 +86,29 @@ public class SmokeBomb : Item
 		
 	}
 
+	private void UpdateSmokeScreenPosition()
+	{
+        Transform selectedTile = MouseRay.GetTargetTransform(_character.GetBlockLayerMask());
+
+        if (!selectedTile)
+            return;
+
+        Tile tile = selectedTile.GetComponent<Tile>();
+
+        if (!tile)
+            return;
+
+        if (!_tilesInRange.Contains(tile))
+            return;
+
+        _smokeScreen.transform.position = selectedTile.transform.position + Vector3.up * 1.5f;
+    }
 	private void UseItem()
     {
-		//EffectsController.Instance.PlayParticlesEffect(_data.particleEffect, _smokeScreen.transform.position, _smokeScreen.transform.up);//Up para el forward por culpa de marcos y la orientación del shader
+        
+        //EffectsController.Instance.PlayParticlesEffect(_data.particleEffect, _smokeScreen.transform.position, _smokeScreen.transform.up);//Up para el forward por culpa de marcos y la orientación del shader
 
-		_smokeParticles = Instantiate(_data.particleEffect, _smokeScreen.transform.position, Quaternion.identity);
+        _smokeParticles = Instantiate(_data.particleEffect, _smokeScreen.transform.position, Quaternion.identity);
 
 		_smokeParticles.transform.forward = _smokeScreen.transform.up;
 		_smokeParticles.time = 0f;
