@@ -11,13 +11,21 @@ public class MissionProjector : MonoBehaviour
     [SerializeField] private SoundData _cardInSound;
 
     private Vector2 _origin;
+
+    private string _currentSelection;
+
     private void Awake()
     {
-
         _origin = _image.rectTransform.anchoredPosition;
     }
+
     public void ChangeMissionImage(MissionDataSO missionData)
     {
+        if (_currentSelection == missionData.mission.sceneName)
+            return;
+
+        _currentSelection = missionData.mission.sceneName;
+
         StopAllCoroutines();
 
         StartCoroutine(Transition(missionData.image));
