@@ -187,7 +187,7 @@ public class WorkshopManager : MonoBehaviour
 
         _equipmentContainer.equipments[_mechaIndex].leftGun = gun;
         
-        StartCoroutine(PartFlickerDelay("LGun"));
+        StartCoroutine(PartFlickerDelay("LeftArm"));
 
         ApplyChangesButton();
     }
@@ -198,7 +198,7 @@ public class WorkshopManager : MonoBehaviour
 
         _equipmentContainer.equipments[_mechaIndex].rightGun = gun;
         
-        StartCoroutine(PartFlickerDelay("RGun"));
+        StartCoroutine(PartFlickerDelay("RightArm"));
 
         ApplyChangesButton();
     }
@@ -373,11 +373,11 @@ public class WorkshopManager : MonoBehaviour
                 masterShader = mecha.GetBodyShader();
                 break;
             
-            case "LGun":
+            case "LeftArm":
                 masterShader = mecha.GetLeftGunShader();
                 break;
                 
-            case "RGun":
+            case "RightArm":
                 masterShader = mecha.GetRightGunShader();
                 break;
             

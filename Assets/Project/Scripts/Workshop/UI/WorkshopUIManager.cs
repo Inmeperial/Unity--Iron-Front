@@ -364,6 +364,8 @@ public class WorkshopUIManager : MonoBehaviour
     {
         _workshopManager.DestroyWorkshopObjects();
 
+        _workshopManager.StartPartFlicker(part);
+
         _abilitiesDescription.text = "";
         List<AbilitySO> abilities = new List<AbilitySO>();
         abilities = WorkshopDatabaseManager.Instance.GetAbilities();
