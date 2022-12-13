@@ -20,9 +20,6 @@ public class WorkshopManager : MonoBehaviour
 
     [SerializeField] private Button _closeButton;
 
-    [Header("Configs")]
-    [SerializeField] private SoundData _clickSound;
-
     public Action<int> OnClickPrevious;
     public Action<int> OnClickNext;
     public Action<int> OnClickEdit;
@@ -95,8 +92,6 @@ public class WorkshopManager : MonoBehaviour
 
     public void PreviousButton()
     {
-        PlayClickSound();
-
         if (_mechaIndex == 0)
             _mechaIndex = mechas.Length - 1;
         else
@@ -107,8 +102,6 @@ public class WorkshopManager : MonoBehaviour
    
     public void NextButton()
     {
-        PlayClickSound();
-
         if (_mechaIndex >= mechas.Length - 1)
             _mechaIndex = 0;
         else
@@ -119,9 +112,6 @@ public class WorkshopManager : MonoBehaviour
 
     public void EditButton()
     {
-        PlayClickSound();
-
-
         _isEditing = true;
         
         OnClickEdit?.Invoke(_mechaIndex);
@@ -129,8 +119,6 @@ public class WorkshopManager : MonoBehaviour
 
     public void CloseEditionButton()
     {
-        PlayClickSound();
-
         _isEditing = false;
         
         OnClickCloseEdit?.Invoke(_mechaIndex);
@@ -138,8 +126,6 @@ public class WorkshopManager : MonoBehaviour
 
     void MoveToPosition(int index)
     {
-        PlayClickSound();
-
         if (index == _mechaIndex)
             _editButton.onClick?.Invoke();
         else
@@ -148,11 +134,6 @@ public class WorkshopManager : MonoBehaviour
             OnClickMecha?.Invoke(index); 
         }
         
-    }
-
-    private void PlayClickSound()
-    {
-        AudioManager.Instance.PlaySound(_clickSound, gameObject);
     }
 
     public void ApplyChangesButton() => LoadSaveUtility.SaveEquipment(_equipmentContainer);

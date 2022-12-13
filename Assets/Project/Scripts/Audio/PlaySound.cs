@@ -2,10 +2,10 @@
 
 public class PlaySound : MonoBehaviour
 {
-    [SerializeField] AudioClip sound;
+    [SerializeField] SoundData _clickSound;
 
     public void PlayTheSound()
 	{
-		//AudioManager.Instance.PlaySound(sound, gameObject);
+		AudioManager.Instance.PlaySound(_clickSound, gameObject);
 	}
 }
