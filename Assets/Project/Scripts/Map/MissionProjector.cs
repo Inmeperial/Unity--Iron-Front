@@ -7,6 +7,8 @@ public class MissionProjector : MonoBehaviour
 {
     [SerializeField] private Image _image;
     [SerializeField] private float _transitionDuration;
+    [SerializeField] private SoundData _cardOutSound;
+    [SerializeField] private SoundData _cardInSound;
 
     private Vector2 _origin;
     private void Awake()
@@ -31,6 +33,8 @@ public class MissionProjector : MonoBehaviour
 
         float finalX = _origin.x - image.rect.width * 2;
 
+        AudioManager.Instance.PlaySound(_cardOutSound, gameObject);
+
         while (time < _transitionDuration)
         {
             pos.x = Mathf.Lerp(_image.rectTransform.anchoredPosition.x, finalX, time / _transitionDuration);
@@ -45,6 +49,8 @@ public class MissionProjector : MonoBehaviour
         _image.sprite = image;
 
         time = 0f;
+
+        AudioManager.Instance.PlaySound(_cardInSound, gameObject);
 
         while (time < _transitionDuration)
         {
