@@ -1,5 +1,7 @@
 ﻿using GameSettings;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.Rendering.PostProcessing;
 
 public class MenuOptionsInGame : MonoBehaviour
 {
@@ -7,9 +9,14 @@ public class MenuOptionsInGame : MonoBehaviour
     [SerializeField] private GameObject _container;
     [SerializeField] private GameObject[] _windowsToClose;
     [SerializeField] private SettingItem[] _settingItems;
-
+    
     private InputsReader _inputsReader;
     private bool _canCheckInputs;
+
+    // PProcess Enrique 
+    // [SerializeField] private AudioMixer _audioMixer = default;
+    private GameObject _cameraWorldObj = default;
+    private MenuPausePPPPSSettings _menuPPSettings = default;
 
     private void Start()
     {
@@ -48,6 +55,7 @@ public class MenuOptionsInGame : MonoBehaviour
     private void CloseOptions()
     {
         _container.SetActive(false);
+        StoptMenuPausePP();
 
         if (!_inputsReader)
             return;
@@ -61,6 +69,7 @@ public class MenuOptionsInGame : MonoBehaviour
     private void OpenOptions()
     {
         _container.SetActive(true);
+        StartMenuPausePP();
 
         if (!_inputsReader)
             return;
@@ -68,6 +77,26 @@ public class MenuOptionsInGame : MonoBehaviour
         _canCheckInputs = _inputsReader.CanCheckKeys;
         
         _inputsReader.DisableKeysCheck();
+    }
+
+    private void StoptMenuPausePP()
+    {
+        _menuPPSettings.enabled.value = false;
+        _menuPPSettings._lerpPower.value = 0;
+        //_audioMixer.SetFloat("pitch", 1);
+    }
+
+    private void StartMenuPausePP()
+    {
+        if (_cameraWorldObj == null)
+        {
+            _cameraWorldObj = GameObject.Find("/CameraFocus/CameraWorld");
+            _menuPPSettings = _cameraWorldObj.GetComponent<PostProcessVolume>().profile.GetSetting<MenuPausePPPPSSettings>();
+        }
+        
+        _menuPPSettings.enabled.value = true;
+        _menuPPSettings._lerpPower.value = 1;
+        //_audioMixer.SetFloat("pitch", 0.3f);
     }
 
     private void CloseWindows()
