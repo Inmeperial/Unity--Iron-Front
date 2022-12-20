@@ -31,12 +31,12 @@ namespace GameSettings.Video
 
         protected override void OnValueChanged(int value)
         {
-            Settings.Instance.SetQualityLevel(value);
-            OnSettingChange();
+            
         }
 
-        protected override void OnSettingChange()
+        protected override void ApplySetting()
         {
+            Settings.Instance.SetQualityLevel(_selector.CurrentValue);
             Settings.Instance.SettingsData.qualityIndex = _selector.CurrentValue;
         }
     }

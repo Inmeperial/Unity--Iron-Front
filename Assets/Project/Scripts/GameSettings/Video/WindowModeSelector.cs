@@ -27,19 +27,16 @@ namespace GameSettings.Video
 
         protected override void OnValueChanged(int value)
         {
-            FullScreenMode selectedMode = (FullScreenMode)value;
+            
+        }
+
+        protected override void ApplySetting()
+        {
+            FullScreenMode selectedMode = (FullScreenMode)_selector.CurrentValue;
 
             Settings.Instance.SetWindowMode(selectedMode);
-
-            OnSettingChange();
-        }
-
-        protected override void OnSettingChange()
-        {
             Settings.Instance.SettingsData.windowModeIndex = _selector.CurrentValue;
-        }
-
-        
+        }        
     }
 }
 

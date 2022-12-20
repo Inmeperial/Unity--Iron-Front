@@ -1,6 +1,6 @@
 using GameSettings.Audio;
-using System.Collections;
-using System.Net.Sockets;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -13,6 +13,7 @@ namespace GameSettings
 
         [Header("Data")]
         [SerializeField] private DefaultSettingsSO _defaultSettings;
+        public DefaultSettingsSO DefaultSettings => _defaultSettings;
 
         private SettingsData _settingsData;
 
@@ -20,6 +21,9 @@ namespace GameSettings
 
         private static Settings _instance;
         public static Settings Instance => _instance;
+
+        public Action OnApplySettingRequest;
+        public Action OnRestoreSettingsRequest;
 
         public void Initialize()
         {
@@ -49,8 +53,16 @@ namespace GameSettings
             SetQualityLevel(_settingsData.qualityIndex);
         }
 
-        public void SaveSettings()
+        public async void SaveSettings()
         {
+            Debug.Log("save settings");
+
+            OnApplySettingRequest?.Invoke();
+
+            await Task.Delay(1000);
+
+            Debug.Log("finished wait");
+
             string settings = JsonUtility.ToJson(_settingsData);
 
             PlayerPrefs.SetString("Settings", settings);
@@ -69,6 +81,10 @@ namespace GameSettings
         public void LoadDefaultSettings()
         {
             _settingsData.LoadDefaultSettings(_defaultSettings);
+
+            OnRestoreSettingsRequest?.Invoke();
+
+            OnApplySettingRequest?.Invoke();
         }
 
         private void LoadPlayerPrefsSettings()

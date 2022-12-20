@@ -55,7 +55,7 @@ public class MenuOptionsInGame : MonoBehaviour
     private void CloseOptions()
     {
         _container.SetActive(false);
-        StoptMenuPausePP();
+        //StoptMenuPausePP();
 
         if (!_inputsReader)
             return;
@@ -69,7 +69,7 @@ public class MenuOptionsInGame : MonoBehaviour
     private void OpenOptions()
     {
         _container.SetActive(true);
-        StartMenuPausePP();
+        //StartMenuPausePP();
 
         if (!_inputsReader)
             return;
@@ -79,25 +79,25 @@ public class MenuOptionsInGame : MonoBehaviour
         _inputsReader.DisableKeysCheck();
     }
 
-    private void StoptMenuPausePP()
-    {
-        _menuPPSettings.enabled.value = false;
-        _menuPPSettings._lerpPower.value = 0;
-        //_audioMixer.SetFloat("pitch", 1);
-    }
+    //private void StoptMenuPausePP()
+    //{
+    //    _menuPPSettings.enabled.value = false;
+    //    _menuPPSettings._lerpPower.value = 0;
+    //    //_audioMixer.SetFloat("pitch", 1);
+    //}
 
-    private void StartMenuPausePP()
-    {
-        if (_cameraWorldObj == null)
-        {
-            _cameraWorldObj = GameObject.Find("/CameraFocus/CameraWorld");
-            _menuPPSettings = _cameraWorldObj.GetComponent<PostProcessVolume>().profile.GetSetting<MenuPausePPPPSSettings>();
-        }
+    //private void StartMenuPausePP()
+    //{
+    //    if (_cameraWorldObj == null)
+    //    {
+    //        _cameraWorldObj = GameObject.Find("/CameraFocus/CameraWorld");
+    //        _menuPPSettings = _cameraWorldObj.GetComponent<PostProcessVolume>().profile.GetSetting<MenuPausePPPPSSettings>();
+    //    }
         
-        _menuPPSettings.enabled.value = true;
-        _menuPPSettings._lerpPower.value = 1;
-        //_audioMixer.SetFloat("pitch", 0.3f);
-    }
+    //    _menuPPSettings.enabled.value = true;
+    //    _menuPPSettings._lerpPower.value = 1;
+    //    //_audioMixer.SetFloat("pitch", 0.3f);
+    //}
 
     private void CloseWindows()
     {

@@ -18,12 +18,11 @@ namespace GameSettings
         protected virtual void OnValueChange(float value)
         {
             _statusText.text = (int)value + "%";
-
-            OnSettingChange();
         }
 
-        protected virtual void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             _slider.onValueChanged.RemoveListener(OnValueChange);
         }
     }

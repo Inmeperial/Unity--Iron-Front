@@ -10,9 +10,9 @@
             _slider.value = (int)volume;
         }
 
-        protected override void OnSettingChange()
+        protected override void ApplySetting()
         {
-            base.OnSettingChange();
+            base.ApplySetting();
             Settings.Instance.SettingsData.environmentVolume = _slider.value;
         }
     }

@@ -14,15 +14,15 @@ namespace GameSettings.Audio
             _toggle.isOn = Settings.Instance.SettingsData.mute;
         }
 
-        protected override void OnSettingChange()
+        protected override void ApplySetting()
         {
+            Settings.Instance.SettingsData.mute = _toggle.isOn;
             Settings.Instance.SetMute(_toggle.isOn);
         }
 
         protected override void OnValueChange(bool status)
         {
-            Settings.Instance.SettingsData.mute = status;
-            OnSettingChange();
+            
         }
     }
 }

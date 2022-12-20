@@ -15,8 +15,9 @@ namespace GameSettings
 
         protected abstract void OnValueChange(bool status);
 
-        protected virtual void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             _toggle.onValueChanged.RemoveListener(OnValueChange);
         }
     }

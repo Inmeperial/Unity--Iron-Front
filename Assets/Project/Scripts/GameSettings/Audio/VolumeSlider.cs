@@ -8,7 +8,7 @@ namespace GameSettings.Audio
         [Header("Configs")]
         [SerializeField] protected string _volumeParameterName;
 
-        protected override void OnSettingChange()
+        protected override void ApplySetting()
         {
             Settings.Instance.UpdateVolume(_volumeParameterName, _slider.value);
         }      

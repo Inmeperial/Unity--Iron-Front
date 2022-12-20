@@ -20,11 +20,13 @@ namespace GameSettings.Video
 
         protected override void Configure()
         {
+            Debug.Log("CONFIGURE SETTING SELECTOR");
             _selector.OnValueChanged += OnValueChanged;
         }
 
-        protected virtual void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             _selector.OnValueChanged -= OnValueChanged;
         }
     }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameSettings
 {
@@ -8,10 +9,8 @@ namespace GameSettings
         [Header("Video")]
         [Tooltip("1: lowest - 4: highest")]
         public int qualityIndex;
-        [Tooltip("-1 equals display resolution")]
-        public int resolutionIndex;
         [Tooltip("0: Fullscreen - 1: Borderless Full Screen - 2: Maximized Window - 3: Window")]
-        public int windowModeIndex;
+        public FullScreenMode windowModeIndex;
 
         [Header("Sound")]
         public float generalVolume;
@@ -19,6 +18,35 @@ namespace GameSettings
         public float fxVolume;
         public float environmentVolume;
         public bool mute;
+
+        public int GetDefaultResolutionIndex()
+        {
+            Resolution[] screenRes = Screen.resolutions;
+
+            List<Resolution> resolutions = new List<Resolution>();
+            for (int i = screenRes.Length - 1; i >= 0; i--)
+            {
+                Resolution resolution = screenRes[i];
+
+                bool isValid = true;
+
+                foreach (Resolution res in resolutions)
+                {
+                    if (res.width == resolution.width && res.height == resolution.height)
+                    {
+                        isValid = false;
+                        break;
+                    }
+                }
+
+                if (!isValid)
+                    continue;
+
+                resolutions.Insert(0, resolution);
+            }
+
+            return resolutions.Count-1;
+        }
     }
 }
 

@@ -13,6 +13,7 @@ public class SmokeBomb : Item
 	private ParticleSystem _smokeParticles;
 
     private bool _characterSelectionState = false;
+
     public override void Initialize(Character character, EquipableSO data)
 	{
 		base.Initialize(character, data);
@@ -59,8 +60,13 @@ public class SmokeBomb : Item
 	public override void Deselect()
 	{
 		OnEquipableDeselected?.Invoke();
-    
-		TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
+
+        if (_characterSelectionState)
+            CharacterSelector.Instance.EnableCharacterSelection();
+
+        _characterSelectionState = false;
+
+        TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
 
 		_tilesInRange.Clear();
 
@@ -105,7 +111,6 @@ public class SmokeBomb : Item
     }
 	private void UseItem()
     {
-        
         //EffectsController.Instance.PlayParticlesEffect(_data.particleEffect, _smokeScreen.transform.position, _smokeScreen.transform.up);//Up para el forward por culpa de marcos y la orientación del shader
 
         _smokeParticles = Instantiate(_data.particleEffect, _smokeScreen.transform.position, Quaternion.identity);

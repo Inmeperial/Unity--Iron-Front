@@ -22,8 +22,8 @@ namespace GameSettings
         public void LoadDefaultSettings(DefaultSettingsSO defaultData)
         {
             qualityIndex = defaultData.qualityIndex;
-            resolutionIndex = defaultData.resolutionIndex;
-            windowModeIndex = defaultData.windowModeIndex;
+            resolutionIndex = defaultData.GetDefaultResolutionIndex();
+            windowModeIndex = (int)defaultData.windowModeIndex;
             generalVolume = defaultData.generalVolume;
             musicVolume = defaultData.musicVolume;
             fxVolume = defaultData.fxVolume;

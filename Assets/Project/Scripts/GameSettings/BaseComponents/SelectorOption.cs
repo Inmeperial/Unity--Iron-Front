@@ -1,5 +1,6 @@
 ﻿namespace GameSettings
 {
+    [System.Serializable]
     public class SelectorOption
     {
         private readonly string _text;
