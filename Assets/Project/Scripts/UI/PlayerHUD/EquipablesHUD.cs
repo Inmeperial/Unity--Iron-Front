@@ -5,6 +5,7 @@ public class EquipablesHUD : Initializable
     [Header("Others")]
     [SerializeField] private GameObject _container;
     [SerializeField] private Sprite _noneIcon;
+    [SerializeField] private SoundData _clickSound;
 
     [Header("Buttons")]
     [SerializeField] private EquipmentButton _bodyAbilityButton;
@@ -72,6 +73,7 @@ public class EquipablesHUD : Initializable
             button.SetButtonIcon(equipable.GetIcon());
             button.AddLeftClick(() => OnButtonSelected(button));
             button.AddLeftClick(equipable.Select);
+            button.AddLeftClick(() => AudioManager.Instance.PlaySound(_clickSound, button.gameObject));
 
             button.AddRightClick(equipable.Deselect);
             button.AddRightClick(OnButtonDeselected);
