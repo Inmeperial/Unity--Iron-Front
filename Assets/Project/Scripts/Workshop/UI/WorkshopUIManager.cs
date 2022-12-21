@@ -13,6 +13,7 @@ public class WorkshopUIManager : MonoBehaviour
     [SerializeField] private WorkshopManager _workshopManager;
     [SerializeField] private Button _saveButton;
     [SerializeField] private Sprite _noneIcon;
+    [SerializeField] private PlaySound _clickSound;
 
     [Header("Overview Texts")]
     [SerializeField] private TextMeshProUGUI _overviewName;
@@ -243,6 +244,7 @@ public class WorkshopUIManager : MonoBehaviour
                     WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(body, _partsSpawnParent);
                     button.SetLeftClick(() =>
                     {
+                        _clickSound.PlayTheSound();
                         _partsDescription.text = body.maxHP + "  Durability \n" +
                                                 body.weight + "  Kg \n" +
                                                 body.maxWeight + "  Max Weight";
@@ -271,6 +273,7 @@ public class WorkshopUIManager : MonoBehaviour
                     WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(gun, _partsSpawnParent);
                     button.SetLeftClick(() =>
                     {
+                        _clickSound.PlayTheSound();
                         _partsDescription.text = gun.maxHp + "  Durability  -  " + gun.attackRange + "  Range \n" +
                                                 gun.damage + "  Dmg  x  " + gun.maxBullets + "  Hits \n" +
                                                 gun.hitChance + "%  Hit Chance \n" +
@@ -307,6 +310,7 @@ public class WorkshopUIManager : MonoBehaviour
                     WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(gun, _partsSpawnParent);
                     button.SetLeftClick(() =>
                     {
+                        _clickSound.PlayTheSound();
                         _partsDescription.text = gun.maxHp + "  Durability  -  " + gun.attackRange + "  Range \n" +
                                                 gun.damage + "  Dmg  x  " + gun.maxBullets + "  Hits \n" +
                                                 gun.hitChance + "%  Hit Chance \n" +
@@ -337,6 +341,7 @@ public class WorkshopUIManager : MonoBehaviour
                     WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(leg, _partsSpawnParent);
                     button.SetLeftClick(() =>
                     {
+                        _clickSound.PlayTheSound();
                         _partsDescription.text = leg.maxHP + "  Durability \n" +
                                                 leg.maxSteps + "  Steps \n" +
                                                 leg.weight + "  Kg";
@@ -385,6 +390,7 @@ public class WorkshopUIManager : MonoBehaviour
                         WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(ability, _abilitiesSpawnParent);
                         button.SetLeftClick(() =>
                         {
+                            _clickSound.PlayTheSound();
                             _abilitiesDescription.text = ability.objectDescription;
                             if (ability.objectImage) _bodyAbilityImage.sprite = ability.objectImage;
 
@@ -415,6 +421,7 @@ public class WorkshopUIManager : MonoBehaviour
                         WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(ability, _abilitiesSpawnParent);
                         button.SetLeftClick(() =>
                         {
+                            _clickSound.PlayTheSound();
                             _abilitiesDescription.text = ability.objectDescription;
                             if (ability.objectImage) _leftArmAbilityImage.sprite = ability.objectImage;
 
@@ -443,6 +450,7 @@ public class WorkshopUIManager : MonoBehaviour
                         WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(ability, _abilitiesSpawnParent);
                         button.SetLeftClick(() =>
                         {
+                            _clickSound.PlayTheSound();
                             _abilitiesDescription.text = ability.objectDescription;
                             if (ability.objectImage) _rightArmAbilityImage.sprite = ability.objectImage;
 
@@ -473,6 +481,7 @@ public class WorkshopUIManager : MonoBehaviour
                         WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(ability, _abilitiesSpawnParent);
                         button.SetLeftClick(() =>
                         {
+                            _clickSound.PlayTheSound();
                             _abilitiesDescription.text = ability.objectDescription;
                             if (ability.objectImage) _legsAbilityImage.sprite = ability.objectImage;
 
@@ -512,6 +521,7 @@ public class WorkshopUIManager : MonoBehaviour
             WorkshopObjectButton button = _workshopManager.CreateWorkshopObjectButton(item, _itemsSpawnParent);
             button.SetLeftClick(() =>
             {
+                _clickSound.PlayTheSound();
                 _itemsDescription.text = "Uses: " + item.maxUses + "\n" + item.objectDescription;
                 _itemImage.sprite = item.objectImage;
 
