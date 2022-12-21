@@ -7,9 +7,8 @@ namespace GameSettings
     public class DefaultSettingsSO : ScriptableObject
     {
         [Header("Video")]
-        [Tooltip("1: lowest - 4: highest")]
+        [Tooltip("1: Very Low - 5: Ultra")]
         public int qualityIndex;
-        [Tooltip("0: Fullscreen - 1: Borderless Full Screen - 2: Maximized Window - 3: Window")]
         public FullScreenMode windowModeIndex;
 
         [Header("Sound")]
