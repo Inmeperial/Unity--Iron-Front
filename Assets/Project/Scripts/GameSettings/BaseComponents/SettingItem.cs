@@ -8,7 +8,7 @@ namespace GameSettings
         public virtual void Initialize()
         {
             Configure();
-            Settings.Instance.OnRestoreSettingsRequest += Configure;
+            Settings.Instance.OnConfigureSettingsRequest += Configure;
             Settings.Instance.OnApplySettingRequest += ApplySetting;
         }
         protected abstract void Configure();
@@ -16,7 +16,7 @@ namespace GameSettings
 
         protected virtual void OnDestroy()
         {
-            Settings.Instance.OnRestoreSettingsRequest -= Configure;
+            Settings.Instance.OnConfigureSettingsRequest -= Configure;
             Settings.Instance.OnApplySettingRequest -= ApplySetting;
         }
     }

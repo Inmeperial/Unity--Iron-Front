@@ -23,7 +23,7 @@ namespace GameSettings
         public static Settings Instance => _instance;
 
         public Action OnApplySettingRequest;
-        public Action OnRestoreSettingsRequest;
+        public Action OnConfigureSettingsRequest;
 
         public void Initialize()
         {
@@ -82,7 +82,7 @@ namespace GameSettings
         {
             _settingsData.LoadDefaultSettings(_defaultSettings);
 
-            OnRestoreSettingsRequest?.Invoke();
+            ConfigureCurrentSettings();
 
             OnApplySettingRequest?.Invoke();
         }
@@ -92,6 +92,11 @@ namespace GameSettings
             string settings = PlayerPrefs.GetString("Settings");
 
             JsonUtility.FromJsonOverwrite(settings, _settingsData);
+        }
+
+        public void ConfigureCurrentSettings()
+        {
+            OnConfigureSettingsRequest?.Invoke();
         }
 
 #region Audio
