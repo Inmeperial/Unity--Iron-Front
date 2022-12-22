@@ -57,14 +57,14 @@ public class ChangeScene : Initializable
             //    UpdateLoadingBar(slider, progress);
             //}
 
-            //if (ao.progress >= 0.9f)
-            //{
-            //    if (slider)
-            //        UpdateLoadingBar(slider, progress);
+            if (ao.progress >= 0.9f)
+            {
+                //if (slider)
+                //    UpdateLoadingBar(slider, progress);
 
-            //    ao.allowSceneActivation = true;
-            //}
-                 
+                ao.allowSceneActivation = true;
+            }
+
 
             yield return null;
         }
