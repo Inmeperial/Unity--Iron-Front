@@ -7,7 +7,6 @@ public class ChangeScene : Initializable
 {
     public static ChangeScene Instance;
 
-    [SerializeField] private static bool _firstLoad = true;
     public override void Initialize()
     {
         if (Instance != null)
@@ -19,19 +18,6 @@ public class ChangeScene : Initializable
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-
-        //if (_firstLoad)
-        //{
-        //    _firstLoad = false;
-
-        //    if (SceneManager.GetActiveScene().name == "LoadScreen")
-        //    {
-        //        Debug.Log("load menu");
-        //        LoadScene("Menu"); 
-        //    }
-        //}
-        //else
-        //    _firstLoad = false;
     }
 
     public void ReloadLevel()
@@ -57,7 +43,7 @@ public class ChangeScene : Initializable
         AsyncOperation loadScreen = SceneManager.LoadSceneAsync("LoadScreen");
         yield return new WaitUntil(() => loadScreen.isDone);
 
-        Slider slider = FindObjectOfType<Slider>();
+        //Slider slider = FindObjectOfType<Slider>();
 
         AsyncOperation ao = SceneManager.LoadSceneAsync(sceneToLoad);
         ao.allowSceneActivation = false;
@@ -65,19 +51,19 @@ public class ChangeScene : Initializable
         
         while (!ao.isDone)
         {
-            float progress = Mathf.Clamp01(ao.progress / 0.9f);
-            if (slider)
-            {
-                UpdateLoadingBar(slider, progress);
-            }
+            //float progress = Mathf.Clamp01(ao.progress / 0.9f);
+            //if (slider)
+            //{
+            //    UpdateLoadingBar(slider, progress);
+            //}
 
-            if (ao.progress >= 0.9f)
-            {
-                if (slider)
-                    UpdateLoadingBar(slider, progress);
+            //if (ao.progress >= 0.9f)
+            //{
+            //    if (slider)
+            //        UpdateLoadingBar(slider, progress);
 
-                ao.allowSceneActivation = true;
-            }
+            //    ao.allowSceneActivation = true;
+            //}
                  
 
             yield return null;
@@ -86,8 +72,8 @@ public class ChangeScene : Initializable
         Debug.Log("Scene " + sceneToLoad + " finished loading");
     }
 
-    void UpdateLoadingBar(Slider slider, float value)
-    {
-        slider.value = value;
-    }
+    //void UpdateLoadingBar(Slider slider, float value)
+    //{
+    //    slider.value = value;
+    //}
 }
