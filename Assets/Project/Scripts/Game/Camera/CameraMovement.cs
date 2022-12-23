@@ -106,6 +106,7 @@ public class CameraMovement : MonoBehaviour
 
     public void MoveTo(Transform transformToMove, Action callback = null, Transform lookAt = null)
     {
+        StopAllCoroutines();
         Vector3 pos = transformToMove.position;
         pos.y = _yPos;
         _cameraLocked = true;
