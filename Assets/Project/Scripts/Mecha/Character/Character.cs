@@ -44,7 +44,7 @@ public class Character : Initializable
     [Header("Configs")]
     [SerializeField] protected EnumsClass.Team _unitTeam;
     [SerializeField] protected LayerMask _block;
-
+    [SerializeField] protected ParticleSystem[] _deathParticles;
     [Header("Data")]
     [SerializeField] protected MechaEquipmentSO _mechaEquipment;
     [SerializeField] protected Sprite _myIcon;
@@ -52,7 +52,7 @@ public class Character : Initializable
     [Header("Sound")]
     [SerializeField] private SoundData _walk;
     [SerializeField] private SoundData _motorStart;
-
+    
     protected string _myName;
 
     protected Equipable _equipable;
@@ -1170,6 +1170,34 @@ public class Character : Initializable
         _legs.DisableCollider();
 
         PlayDeadAnimation();
+
+        Vector3 mechaPos = transform.position;
+
+        foreach (var item in _deathParticles)
+        {
+            float randomX = UnityEngine.Random.Range(-5, 5);
+            float randomY = UnityEngine.Random.Range(0.1f, 4);
+            float randomZ = UnityEngine.Random.Range(-5, 5);
+
+            Vector3 pos = Vector3.zero;
+
+            pos.x = UnityEngine.Random.Range(mechaPos.x - randomX, mechaPos.x + randomX);
+            pos.y = UnityEngine.Random.Range(mechaPos.y - randomY, mechaPos.y + randomY);
+            pos.z = UnityEngine.Random.Range(mechaPos.z - randomZ, mechaPos.z + randomZ);
+            
+            Vector3 dir = Vector3.up;
+
+            dir.x += randomX;
+            dir.y += randomY;
+            dir.z += randomZ;
+
+            dir = dir.normalized;
+
+            EffectsController.Instance.PlayPersistentParticles(item, pos, dir, transform, out ParticleSystem particle);
+
+            particle.gameObject.transform.localScale += new Vector3(Mathf.Abs(randomX), Mathf.Abs(randomY), Mathf.Abs(randomZ));
+        }
+        
         OnMechaDeath?.Invoke(this);
     }
 

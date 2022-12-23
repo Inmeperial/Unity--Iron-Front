@@ -21,7 +21,7 @@ public class KillAllMechas : MonoBehaviour
             foreach (var item in mechas)
             {
                 if (item.GetUnitTeam() == team)
-                    item.Dead();
+                    item.GetBody().ReceiveDamage(9999);
             }
         }
     }

@@ -528,6 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8ead686a30e3c4d98f6a1e81d8b8f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _initializeDelaySeconds: 0
   _waypointsPathfinding: {fileID: 7950991396830017536}
   _gridMovement: {fileID: 3772957672682265908}
   _raycastToTile: {fileID: 560329102395795256}
@@ -546,6 +547,11 @@ MonoBehaviour:
   _block:
     serializedVersion: 2
     m_Bits: 256
+  _deathParticles:
+  - {fileID: 198663536934198432, guid: bb98861c48ad2024ca93498c7dd93a6c, type: 3}
+  - {fileID: 198104970619360998, guid: be6847dd39ab95f4daa2ed98e4f90564, type: 3}
+  - {fileID: 198714429152696258, guid: ea4fb55d0227e604386f44f905cfe7c0, type: 3}
+  - {fileID: 198679442476388764, guid: f293a2dcc753a4a489fefe7f8f312d69, type: 3}
   _mechaEquipment: {fileID: 11400000, guid: bb67f7b610dc7c443a41d01fc5815fa5, type: 2}
   _myIcon: {fileID: 21300000, guid: bdf264d73005a474190b69f6e9becb89, type: 3}
   _walk: {fileID: 11400000, guid: 9a4f4df0560a78e48811662babb130eb, type: 2}
