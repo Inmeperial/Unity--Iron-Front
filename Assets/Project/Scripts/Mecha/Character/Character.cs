@@ -87,7 +87,7 @@ public class Character : Initializable
     protected bool _selectedForAttack;
     protected bool _myTurn = false;
     protected bool _isDead = false;
-    protected bool _equipableSelected;
+    protected bool _isEquipableSelected;
     private bool _isRotated;
     protected bool _unitEnabled = true;
     
@@ -171,7 +171,7 @@ public class Character : Initializable
                 GetTargetToMove();
         }
         
-        if (!_selected && _equipables.Count > 0 && _equipableSelected)
+        if (!_selected && _equipables.Count > 0 && _isEquipableSelected)
             _equipable.Use();
     }
 
@@ -343,9 +343,9 @@ public class Character : Initializable
         
         OnMechaSelected?.Invoke(this);
 
-        if (_equipableSelected)
+        if (_isEquipableSelected)
         {
-            _equipableSelected = false;
+            _isEquipableSelected = false;
             _equipable.Deselect();
             _equipable = null;
         }
@@ -852,7 +852,7 @@ public class Character : Initializable
 
     public void EquipableSelectionState(bool state, Equipable equipable)
     {
-        _equipableSelected = state;
+        _isEquipableSelected = state;
         _equipable = equipable;
     }
 
@@ -862,6 +862,11 @@ public class Character : Initializable
             return;
 
         _equipable.Deselect();
+    }
+
+    public bool IsUsingEquipable()
+    {
+        return _isEquipableSelected;
     }
 
     public Equipable GetSelectedEquipable()
