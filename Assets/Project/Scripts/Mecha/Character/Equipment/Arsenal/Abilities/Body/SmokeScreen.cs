@@ -34,7 +34,7 @@ public class SmokeScreen : Ability
 
     public override void Select()
     {
-        Debug.Log("select ability");
+        _character.DeselectCurrentEquipable();
     }
 
     public override void Deselect()

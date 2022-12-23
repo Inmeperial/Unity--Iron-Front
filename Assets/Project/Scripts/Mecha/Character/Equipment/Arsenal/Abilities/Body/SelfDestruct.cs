@@ -20,6 +20,9 @@ public class SelfDestruct : Ability
     public override void Select()
     {
         OnEquipableSelected?.Invoke();
+
+        _character.DeselectCurrentEquipable();
+
         _character.DeselectThisUnit();
 
         _character.EquipableSelectionState(true, this);

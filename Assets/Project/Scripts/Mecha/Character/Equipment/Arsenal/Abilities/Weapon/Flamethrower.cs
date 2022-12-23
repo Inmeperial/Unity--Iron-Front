@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Flamethrower : WeaponAbility
 {
@@ -35,12 +36,15 @@ public class Flamethrower : WeaponAbility
         _mainCam = Camera.main;
 
         _position = _character.transform.position;
+        
+        OnEquipableSelected?.Invoke();
+
+        _character.DeselectCurrentEquipable();
 
         _character.EquipableSelectionState(true, this);
 
         _character.DeselectThisUnit();
 
-        OnEquipableSelected?.Invoke();
     }
 
 	public override void Deselect()
@@ -63,7 +67,7 @@ public class Flamethrower : WeaponAbility
 	{
         DrawArc();
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
             ExecuteAbility();
 
         if (Input.GetMouseButtonDown(1))

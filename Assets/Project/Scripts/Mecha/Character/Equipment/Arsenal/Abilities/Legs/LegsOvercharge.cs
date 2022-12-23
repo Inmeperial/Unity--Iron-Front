@@ -26,6 +26,10 @@ public class LegsOvercharge : Ability
     }
     public override void Select()
     {
+        OnEquipableSelected?.Invoke();
+
+        _character.DeselectCurrentEquipable();
+
         Use();
     }
 

@@ -26,6 +26,8 @@ public class Push : WeaponAbility
 
         OnEquipableSelected?.Invoke();
 
+        _character.DeselectCurrentEquipable();
+
         PaintUseTiles(_character.GetPositionTile(), 0, Vector3.zero);
 
         _character.EquipableSelectionState(true, this);

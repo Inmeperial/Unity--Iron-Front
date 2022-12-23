@@ -25,7 +25,9 @@ public class SmokeBomb : Item
 	{
 		OnEquipableSelected?.Invoke();
 
-		_character.DeselectThisUnit();
+        _character.DeselectCurrentEquipable();
+
+        _character.DeselectThisUnit();
 
 		_character.EquipableSelectionState(true, this);
 

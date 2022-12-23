@@ -34,6 +34,8 @@ public class PiercingShot : WeaponAbility
 
         OnEquipableSelected?.Invoke();
 
+        _character.DeselectCurrentEquipable();
+
         PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.forward);
         PaintTilesInRange(_character.GetPositionTile(), 0, -Vector3.forward);
         PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.right);

@@ -27,6 +27,8 @@ public class CripplingShot : WeaponAbility
 
 		OnEquipableSelected?.Invoke();
 
+		_character.DeselectCurrentEquipable();
+
 		PaintTilesInRange(_character.GetPositionTile(), 0);
 
 		_character.EquipableSelectionState(true, this);

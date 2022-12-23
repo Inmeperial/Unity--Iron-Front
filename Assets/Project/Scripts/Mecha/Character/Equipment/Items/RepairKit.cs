@@ -20,7 +20,10 @@ public class RepairKit : Item
 	public override void Select()
 	{
 		OnEquipableSelected?.Invoke();
-		PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.forward);
+
+        _character.DeselectCurrentEquipable();
+
+        PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.forward);
 		PaintTilesInRange(_character.GetPositionTile(), 0, -Vector3.forward);
 		PaintTilesInRange(_character.GetPositionTile(), 0, Vector3.right);
 		PaintTilesInRange(_character.GetPositionTile(), 0, -Vector3.right);

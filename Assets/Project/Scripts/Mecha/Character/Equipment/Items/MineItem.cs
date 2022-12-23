@@ -19,7 +19,9 @@ public class MineItem : Item
 	{
 		OnEquipableSelected?.Invoke();
 
-		PaintTilesInRange(_character.GetPositionTile(), 0);
+        _character.DeselectCurrentEquipable();
+
+        PaintTilesInRange(_character.GetPositionTile(), 0);
 
 		_character.DeselectThisUnit();
 

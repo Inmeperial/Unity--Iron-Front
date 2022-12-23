@@ -24,6 +24,8 @@ public class Grenade : Item
     {
         OnEquipableSelected?.Invoke();
 
+        _character.DeselectCurrentEquipable();
+
         _character.DeselectThisUnit();
 
         _character.EquipableSelectionState(true, this);

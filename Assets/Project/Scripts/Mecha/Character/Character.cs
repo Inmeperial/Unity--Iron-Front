@@ -347,6 +347,7 @@ public class Character : Initializable
         {
             _equipableSelected = false;
             _equipable.Deselect();
+            _equipable = null;
         }
 
         RotationBeforeAttacking = transform.rotation; //Cambio Nico
@@ -853,6 +854,14 @@ public class Character : Initializable
     {
         _equipableSelected = state;
         _equipable = equipable;
+    }
+
+    public void DeselectCurrentEquipable()
+    {
+        if (!_equipable)
+            return;
+
+        _equipable.Deselect();
     }
 
     public Equipable GetSelectedEquipable()
