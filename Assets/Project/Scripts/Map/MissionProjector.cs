@@ -16,6 +16,13 @@ public class MissionProjector : MonoBehaviour
 
     private void Awake()
     {
+        if (_image.sprite == null)
+        {
+            Color color = _image.color;
+            color.a = 0;
+            _image.color = color;
+        }
+           
         _origin = _image.rectTransform.anchoredPosition;
     }
 
@@ -56,6 +63,10 @@ public class MissionProjector : MonoBehaviour
 
         _image.sprite = image;
 
+        Color color = _image.color;
+        color.a = 1;
+        _image.color = color;
+        
         time = 0f;
 
         AudioManager.Instance.PlaySound(_cardInSound, gameObject);
