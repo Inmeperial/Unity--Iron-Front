@@ -1175,7 +1175,7 @@ public class Character : Initializable
 
         foreach (var item in _deathParticles)
         {
-            float randomX = UnityEngine.Random.Range(-5, 5);
+            /*float randomX = UnityEngine.Random.Range(-5, 5);
             float randomY = UnityEngine.Random.Range(0.1f, 4);
             float randomZ = UnityEngine.Random.Range(-5, 5);
 
@@ -1191,11 +1191,11 @@ public class Character : Initializable
             dir.y += randomY;
             dir.z += randomZ;
 
-            dir = dir.normalized;
+            dir = dir.normalized;*/
 
-            EffectsController.Instance.PlayPersistentParticles(item, pos, dir, transform, out ParticleSystem particle);
+            EffectsController.Instance.PlayPersistentParticles(item, transform.position + Vector3.up, Vector3.forward, transform, out ParticleSystem particle);
 
-            particle.gameObject.transform.localScale += new Vector3(Mathf.Abs(randomX), Mathf.Abs(randomY), Mathf.Abs(randomZ));
+           // particle.gameObject.transform.localScale += new Vector3(Mathf.Abs(randomX), Mathf.Abs(randomY), Mathf.Abs(randomZ));
         }
         
         OnMechaDeath?.Invoke(this);
