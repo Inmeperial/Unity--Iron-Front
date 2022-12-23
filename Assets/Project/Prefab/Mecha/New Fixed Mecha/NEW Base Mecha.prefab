@@ -1160,7 +1160,8 @@ MonoBehaviour:
   _normalExhaustMinSize: 1
   _normalExhaustMaxSize: 2
   _normalExhaustLifetime: 2
-  _particlesPrefabs: []
+  _particlesPrefabs:
+  - {fileID: 198791558892717060, guid: ce5d11d670035824294132c574dc9c88, type: 3}
 --- !u!54 &931881812042829618
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1497,6 +1498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea6198d2d6ba97459f6c8fe6845c8d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _initializeDelaySeconds: 0
   _owner: {fileID: 0}
   _statusContainer: {fileID: 162026948434770236}
   _showDuration: 0

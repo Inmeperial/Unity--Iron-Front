@@ -32,7 +32,7 @@ public class MechaExhaust : MonoBehaviour
 
         foreach (ParticleSystem prefab in _particlesPrefabs)
         {
-            EffectsController.Instance.PlayPersistentParticles(prefab, _exhaust.transform.position, transform.forward, _exhaust.transform, out ParticleSystem particle);
+            EffectsController.Instance.PlayPersistentParticles(prefab, _exhaust.transform.position, transform.up, _exhaust.transform, out ParticleSystem particle);
 
             if (particle)
                 _createdParticles.Add(particle);

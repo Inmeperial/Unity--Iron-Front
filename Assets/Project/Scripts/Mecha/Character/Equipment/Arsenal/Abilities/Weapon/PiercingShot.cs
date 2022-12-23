@@ -54,6 +54,7 @@ public class PiercingShot : WeaponAbility
             TileHighlight.Instance.MortarClearTilesInAttackRange(_tilesInRange);
 
         _tilesInRange.Clear();
+        _targetedTiles.Clear();
         _charactersToAttack.Clear();
         _character.EquipableSelectionState(false, null);
         _character.SelectThisUnit();

@@ -108,13 +108,13 @@ public class Push : WeaponAbility
     /// <param name="enemy"> The unit that is pushed</param>
     private void PushAction(Tile tileBeignPushedTo, Character enemy)
 	{
+        Body enemyBody = enemy.GetBody();
+        enemyBody.ReceiveDamage(_abilityData.pushDamage);
+
         //Hago un Lerp del enemy hacia el tileBeignPushedTo
         StartCoroutine(LerpPush(enemy.transform, tileBeignPushedTo.transform.position, _abilityData.pushLerpDuration));
 
         enemy.ChangeMyPosTile(tileBeignPushedTo);
-
-        Body enemyBody = enemy.GetBody();
-        enemyBody.ReceiveDamage(_abilityData.pushDamage);
 
         if (collides)
 		{
@@ -133,7 +133,7 @@ public class Push : WeaponAbility
 
         Vector3 startPos = movingTarget.position;
 
-        targetPos += (Vector3.up * 4);
+        targetPos += (Vector3.up * 2);
 
         while(lerpTime < duration)
 		{
