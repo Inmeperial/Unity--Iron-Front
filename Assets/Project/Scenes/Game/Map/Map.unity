@@ -1486,6 +1486,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 598984410}
   m_CullTransparentMesh: 1
+--- !u!1 &618509436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 618509439}
+  - component: {fileID: 618509438}
+  - component: {fileID: 618509437}
+  m_Layer: 5
+  m_Name: UI Blocker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &618509437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618509436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &618509438
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618509436}
+  m_CullTransparentMesh: 1
+--- !u!224 &618509439
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618509436}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 899104872}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &690895521
 GameObject:
   m_ObjectHideFlags: 0
@@ -2174,8 +2250,8 @@ Canvas:
   m_GameObject: {fileID: 899104868}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 998650189}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -2211,6 +2287,7 @@ RectTransform:
   - {fileID: 1087594324}
   - {fileID: 1973278525}
   - {fileID: 2092071075}
+  - {fileID: 618509439}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2366,7 +2443,9 @@ GameObject:
   - component: {fileID: 998650190}
   - component: {fileID: 998650189}
   - component: {fileID: 998650188}
-  m_Layer: 0
+  - component: {fileID: 998650192}
+  - component: {fileID: 998650191}
+  m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -2439,6 +2518,93 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &998650191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998650187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: b283e02d77429224a95f435e2c23d5a3, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 0
+  priority: 1000
+--- !u!114 &998650192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998650187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 998650190}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 1
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: SepiaPPSSettings, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  m_AfterStackBundles:
+  - assemblyQualifiedName: TransitionPPSSettings, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - assemblyQualifiedName: NigthVisionPPSSettings, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - assemblyQualifiedName: TerminatorPPSSettings, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - assemblyQualifiedName: MenuPausePPPPSSettings, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1087594323
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,6 +2617,7 @@ GameObject:
   - component: {fileID: 1087594327}
   - component: {fileID: 1087594326}
   - component: {fileID: 1087594325}
+  - component: {fileID: 1087594328}
   m_Layer: 5
   m_Name: Level 3 Icon (1)
   m_TagString: Untagged
@@ -2522,7 +2689,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1087594326}
   OnLeftClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1087594328}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: SubscribeToFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1619767905}
+        m_TargetAssemblyTypeName: FadePostProcessController, Assembly-CSharp
+        m_MethodName: StartFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -2565,6 +2756,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1087594323}
   m_CullTransparentMesh: 0
+--- !u!114 &1087594328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087594323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b3511dda8b77c446808b779a6340a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadeController: {fileID: 1619767905}
+  _sceneReference: {fileID: 11400000, guid: d95f98ef9cdb23d4b9680194eaf564c6, type: 2}
 --- !u!1 &1163262252
 GameObject:
   m_ObjectHideFlags: 0
@@ -2882,6 +3087,7 @@ GameObject:
   - component: {fileID: 1599635529}
   - component: {fileID: 1599635528}
   - component: {fileID: 1599635527}
+  - component: {fileID: 1599635530}
   m_Layer: 5
   m_Name: Level 1 Icon (1)
   m_TagString: Untagged
@@ -2953,7 +3159,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1599635528}
   OnLeftClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1599635530}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: SubscribeToFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1619767905}
+        m_TargetAssemblyTypeName: FadePostProcessController, Assembly-CSharp
+        m_MethodName: StartFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -2996,6 +3226,121 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1599635525}
   m_CullTransparentMesh: 0
+--- !u!114 &1599635530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599635525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b3511dda8b77c446808b779a6340a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadeController: {fileID: 1619767905}
+  _sceneReference: {fileID: 11400000, guid: 96286f7e090164d439d8d6acb4913f87, type: 2}
+--- !u!1001 &1619767904
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1825391135723337148, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: _camera
+      value: 
+      objectReference: {fileID: 998650187}
+    - target: {fileID: 1825391135723337148, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: _volumePP
+      value: 
+      objectReference: {fileID: 998650191}
+    - target: {fileID: 1825391135723337148, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: _uiBlocker
+      value: 
+      objectReference: {fileID: 618509436}
+    - target: {fileID: 1825391135723337148, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: _curtainClosed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825391135723337149, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825391135723337149, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825391135723337149, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -9.353073
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825391135723337149, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -841.7766
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825391135723337149, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825391135723337149, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825391135723337149, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825391135723337149, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825391135723337149, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825391135723337149, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825391135723337149, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825391135723337151, guid: 223ac3efc82b30944adb3f55fee53da0,
+        type: 3}
+      propertyPath: m_Name
+      value: FadePPController
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 223ac3efc82b30944adb3f55fee53da0, type: 3}
+--- !u!114 &1619767905 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1825391135723337148, guid: 223ac3efc82b30944adb3f55fee53da0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1619767904}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300f102e57d46214598dfb024bc0b32f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1621560352
 GameObject:
   m_ObjectHideFlags: 0
@@ -3008,6 +3353,7 @@ GameObject:
   - component: {fileID: 1621560356}
   - component: {fileID: 1621560355}
   - component: {fileID: 1621560357}
+  - component: {fileID: 1621560358}
   m_Layer: 5
   m_Name: Workshop Icon
   m_TagString: Untagged
@@ -3117,11 +3463,49 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1621560355}
   OnLeftClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1621560358}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: SubscribeToFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1619767905}
+        m_TargetAssemblyTypeName: FadePostProcessController, Assembly-CSharp
+        m_MethodName: StartFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRightClick:
     m_PersistentCalls:
       m_Calls: []
   _missionData: {fileID: 11400000, guid: 904bb938d95ff234ba9196902c668dd1, type: 2}
+--- !u!114 &1621560358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621560352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b3511dda8b77c446808b779a6340a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadeController: {fileID: 1619767905}
+  _sceneReference: {fileID: 11400000, guid: 82fdd0512249c954fa2ee2f0e286cd70, type: 2}
 --- !u!1 &1754609097
 GameObject:
   m_ObjectHideFlags: 0
@@ -3134,6 +3518,7 @@ GameObject:
   - component: {fileID: 1754609101}
   - component: {fileID: 1754609100}
   - component: {fileID: 1754609099}
+  - component: {fileID: 1754609102}
   m_Layer: 5
   m_Name: Level 2 Icon (1)
   m_TagString: Untagged
@@ -3205,7 +3590,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1754609100}
   OnLeftClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1754609102}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: SubscribeToFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1619767905}
+        m_TargetAssemblyTypeName: FadePostProcessController, Assembly-CSharp
+        m_MethodName: StartFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -3248,6 +3657,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1754609097}
   m_CullTransparentMesh: 0
+--- !u!114 &1754609102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754609097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b3511dda8b77c446808b779a6340a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadeController: {fileID: 1619767905}
+  _sceneReference: {fileID: 11400000, guid: 546227a0a3e7f5148aae41b3dc4524d4, type: 2}
 --- !u!1 &1768255054
 GameObject:
   m_ObjectHideFlags: 0
@@ -4367,6 +4790,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 899104872}
     m_Modifications:
+    - target: {fileID: 3741397992338078413, guid: a6de43d4388f3d04fbff001568d08453,
+        type: 3}
+      propertyPath: _camera
+      value: 
+      objectReference: {fileID: 998650187}
+    - target: {fileID: 4954229997036562742, guid: a6de43d4388f3d04fbff001568d08453,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1619767905}
+    - target: {fileID: 4954229997036562742, guid: a6de43d4388f3d04fbff001568d08453,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: StartFade
+      objectReference: {fileID: 0}
     - target: {fileID: 5145465535489038486, guid: a6de43d4388f3d04fbff001568d08453,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4587,6 +5025,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8359480299752088343, guid: a6de43d4388f3d04fbff001568d08453,
+        type: 3}
+      propertyPath: _fadeController
+      value: 
+      objectReference: {fileID: 1619767905}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6de43d4388f3d04fbff001568d08453, type: 3}
 --- !u!224 &2092071075 stripped

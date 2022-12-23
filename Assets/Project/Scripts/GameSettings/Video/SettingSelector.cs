@@ -20,7 +20,6 @@ namespace GameSettings.Video
 
         protected override void Configure()
         {
-            Debug.Log("CONFIGURE SETTING SELECTOR");
             _selector.OnValueChanged += OnValueChanged;
         }
 

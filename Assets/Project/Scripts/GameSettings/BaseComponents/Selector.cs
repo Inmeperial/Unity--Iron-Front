@@ -33,10 +33,6 @@ namespace GameSettings
 
         public void SetValue(int value)
         {
-            Debug.Log("Value: " + value);
-
-            Debug.Log("Options: " + _options.Length);
-
             _text.text = _options[value].TextValue;
 
             _currentValue = value;

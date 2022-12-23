@@ -10,7 +10,6 @@ namespace GameSettings.Video
         protected override void Configure()
         {
             base.Configure();
-            Debug.Log("CONFIGURE RESOLUTION SELECTOR");
 
             int resolutionIndex = Settings.Instance.SettingsData.resolutionIndex;
 
@@ -34,7 +33,6 @@ namespace GameSettings.Video
 
         protected override void InitializeSelector()
         {
-            Debug.Log("INITIALIZE RESOLUTION SELECTOR");
             List<SelectorOption> selectorOptions = new List<SelectorOption>();
 
             Resolution[] screenRes = Screen.resolutions;

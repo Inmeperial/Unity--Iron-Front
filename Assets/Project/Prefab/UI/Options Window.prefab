@@ -100,7 +100,8 @@ GameObject:
   - component: {fileID: 5145465535489762149}
   - component: {fileID: 5145465535489762154}
   - component: {fileID: 5145465535489762155}
-  - component: {fileID: 5145465535489762153}
+  - component: {fileID: 271813914531115013}
+  - component: {fileID: 5632031796909792807}
   m_Layer: 5
   m_Name: Leave Button
   m_TagString: Untagged
@@ -167,7 +168,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5145465535489762153
+--- !u!114 &271813914531115013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,7 +177,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5145465535489762150}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60343f933719e9a44b3fe0d601f1e954, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b3511dda8b77c446808b779a6340a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadeController: {fileID: 0}
+  _sceneReference: {fileID: 11400000, guid: e5c36ac7bba7085488fa6f89e2659cd3, type: 2}
+--- !u!114 &5632031796909792807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5145465535489762150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -207,8 +222,8 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
-  OnLeftClick:
+  m_TargetGraphic: {fileID: 5145465535489762155}
+  m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8978687067449572046}
@@ -223,10 +238,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnRightClick:
-    m_PersistentCalls:
-      m_Calls: []
-  _referenceToScene: {fileID: 11400000, guid: e5c36ac7bba7085488fa6f89e2659cd3, type: 2}
+      - m_Target: {fileID: 271813914531115013}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: SubscribeToFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: FadePostProcessController, Assembly-CSharp
+        m_MethodName: StartFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5145465535835242624
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,7 +745,8 @@ GameObject:
   - component: {fileID: 5145465536025278972}
   - component: {fileID: 5145465536025278945}
   - component: {fileID: 5145465536025278946}
-  - component: {fileID: 5145465536025278947}
+  - component: {fileID: 8359480299752088343}
+  - component: {fileID: 4954229997036562742}
   m_Layer: 5
   m_Name: Leave Button
   m_TagString: Untagged
@@ -777,7 +813,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5145465536025278947
+--- !u!114 &8359480299752088343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -786,7 +822,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5145465536025278973}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60343f933719e9a44b3fe0d601f1e954, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b3511dda8b77c446808b779a6340a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadeController: {fileID: 0}
+  _sceneReference: {fileID: 11400000, guid: f78293395ae668c488f7b1da09ad471b, type: 2}
+--- !u!114 &4954229997036562742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5145465536025278973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -817,8 +867,8 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
-  OnLeftClick:
+  m_TargetGraphic: {fileID: 5145465535489762155}
+  m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8978687067449572046}
@@ -833,10 +883,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnRightClick:
-    m_PersistentCalls:
-      m_Calls: []
-  _referenceToScene: {fileID: 11400000, guid: f78293395ae668c488f7b1da09ad471b, type: 2}
+      - m_Target: {fileID: 8359480299752088343}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: SubscribeToFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: FadePostProcessController, Assembly-CSharp
+        m_MethodName: StartFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5145465536083679170
 GameObject:
   m_ObjectHideFlags: 0

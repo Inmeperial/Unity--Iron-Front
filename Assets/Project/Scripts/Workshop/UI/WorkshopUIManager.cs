@@ -10,6 +10,8 @@ public class WorkshopUIManager : MonoBehaviour
 
     private readonly int NAME_MAX_CHARS = 9;
     [Header("References")]
+    [SerializeField] private GameObject _canvas;
+    [SerializeField] private FadePostProcessController _fadeController;
     [SerializeField] private WorkshopManager _workshopManager;
     [SerializeField] private Button _saveButton;
     [SerializeField] private Sprite _noneIcon;
@@ -89,6 +91,19 @@ public class WorkshopUIManager : MonoBehaviour
     public Action OnCopyAbilityToAll;
 
     public Action OnCopyItemToAll;
+
+    private void Awake()
+    {
+        _canvas.SetActive(false);
+
+        _fadeController.OnTransitionFinished += EnableCanvas;
+    }
+
+    private void EnableCanvas()
+    {
+        _canvas.SetActive(true);
+        _fadeController.OnTransitionFinished -= EnableCanvas;
+    }
 
     private void Start()
     {
