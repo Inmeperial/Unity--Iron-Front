@@ -80,7 +80,7 @@ public class Mortar : MonoBehaviour, IInteractable, IEndActionNotifier
         if (!GameManager.Instance.InputsReader.CanCheckKeys)
             return;
 
-        if (Input.GetMouseButtonDown(0) && CanInteract())
+        if (Input.GetMouseButtonDown(0) && CanInteract() && EventSystem.current.IsPointerOverGameObject() == false)
             Interact();
     }
 
