@@ -1,6 +1,7 @@
 using SceneReference;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GameInitializer : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameInitializer : MonoBehaviour
 
     private void Awake()
     {
+        DebugManager.instance.enableRuntimeUI = false;
         StartCoroutine(InitializeSystems());
     }
     

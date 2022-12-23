@@ -60269,6 +60269,16 @@ PrefabInstance:
       objectReference: {fileID: 670964388}
     - target: {fileID: 4787533123047716625, guid: 267db140ba747ca4b838f643d2d16005,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787533123047716625, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[8].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787533123047716625, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
       objectReference: {fileID: 670964388}
@@ -60279,9 +60289,34 @@ PrefabInstance:
       objectReference: {fileID: 670964388}
     - target: {fileID: 4787533123047716625, guid: 267db140ba747ca4b838f643d2d16005,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[8].m_Target
+      value: 
+      objectReference: {fileID: 1466500267}
+    - target: {fileID: 4787533123047716625, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[10].m_Target
       value: 
       objectReference: {fileID: 1466500267}
+    - target: {fileID: 4787533123047716625, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[8].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787533123047716625, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[8].m_MethodName
+      value: PlayTheSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787533123047716625, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[8].m_TargetAssemblyTypeName
+      value: PlaySound, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787533123047716625, guid: 267db140ba747ca4b838f643d2d16005,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[8].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4787533123128424264, guid: 267db140ba747ca4b838f643d2d16005,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

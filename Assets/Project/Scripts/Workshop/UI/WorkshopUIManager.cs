@@ -172,7 +172,7 @@ public class WorkshopUIManager : MonoBehaviour
         _overviewLegs.SetData(legsName);
         _overviewLegs.SetTooltipData(equipmentData.legs);
 
-        if (equipmentData.leftGunAbility)
+        if (equipmentData.legsAbility)
         {
             _overviewLegsAbility.SetData(equipmentData.legsAbility.objectImage);
             _overviewLegsAbility.SetTooltipData(equipmentData.legsAbility);
