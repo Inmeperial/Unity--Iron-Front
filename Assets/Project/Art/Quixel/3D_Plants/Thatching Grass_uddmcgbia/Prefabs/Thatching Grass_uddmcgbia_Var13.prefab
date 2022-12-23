@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2824871337302803839}
   - component: {fileID: 4166104233816044831}
   - component: {fileID: 8177497103855012647}
-  - component: {fileID: 1563728555258468018}
   m_Layer: 0
   m_Name: Thatching Grass_LOD4_Var13_uddmcgbia
   m_TagString: Untagged
@@ -29,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3933106461844837337}
   m_RootOrder: 4
@@ -52,9 +52,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,20 +82,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &1563728555258468018
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 365084231677429807}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 6643532723055223290, guid: 689b6bedeabd9fa428692c480c97a833, type: 3}
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &713634924985650448
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +94,6 @@ GameObject:
   - component: {fileID: 775406779903543669}
   - component: {fileID: 1979865773296260764}
   - component: {fileID: 4934724578143915776}
-  - component: {fileID: 2030720935471716097}
   m_Layer: 0
   m_Name: Thatching Grass_LOD0_Var13_uddmcgbia
   m_TagString: Untagged
@@ -122,6 +111,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3933106461844837337}
   m_RootOrder: 0
@@ -145,9 +135,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -172,20 +165,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &2030720935471716097
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 713634924985650448}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 5682573806292070497, guid: e04b7761a5deecc4a867a7bcc8858144, type: 3}
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6476871295504972305
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +177,6 @@ GameObject:
   - component: {fileID: 6813500905965144237}
   - component: {fileID: 3653436270111082331}
   - component: {fileID: 8938438199806170787}
-  - component: {fileID: 8989225427887874362}
   m_Layer: 0
   m_Name: Thatching Grass_LOD2_Var13_uddmcgbia
   m_TagString: Untagged
@@ -215,6 +194,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3933106461844837337}
   m_RootOrder: 2
@@ -238,9 +218,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -265,20 +248,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &8989225427887874362
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6476871295504972305}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 3909551136504339669, guid: 51bcab17d99a3ed45bda822cb29243c4, type: 3}
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7318873023732993985
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,7 +260,6 @@ GameObject:
   - component: {fileID: 504986136047229001}
   - component: {fileID: 8938755460296358844}
   - component: {fileID: 6775677735985911128}
-  - component: {fileID: 8058395846584843214}
   m_Layer: 0
   m_Name: Thatching Grass_LOD1_Var13_uddmcgbia
   m_TagString: Untagged
@@ -308,6 +277,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3933106461844837337}
   m_RootOrder: 1
@@ -331,9 +301,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -358,20 +331,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &8058395846584843214
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7318873023732993985}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: -8643157813244942598, guid: 89b695298b86ce84aaf18893c4595f15, type: 3}
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &8085097963290035389
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,6 +359,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 775406779903543669}
   - {fileID: 504986136047229001}
@@ -454,7 +415,6 @@ GameObject:
   - component: {fileID: 658367361484684815}
   - component: {fileID: 8338217340344583285}
   - component: {fileID: 6443805333400785643}
-  - component: {fileID: 1333753005437419779}
   m_Layer: 0
   m_Name: Thatching Grass_LOD3_Var13_uddmcgbia
   m_TagString: Untagged
@@ -472,6 +432,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3933106461844837337}
   m_RootOrder: 3
@@ -495,9 +456,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -522,17 +486,4 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &1333753005437419779
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8228392897036681429}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 6645550430720904205, guid: e67dc52036dd74c4595163705aff0fd4, type: 3}
+  m_AdditionalVertexStreams: {fileID: 0}

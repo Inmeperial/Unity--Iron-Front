@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1958825500679698456}
   - component: {fileID: 5550226672737993928}
   - component: {fileID: 4725438989792881707}
-  - component: {fileID: 8499709744864315016}
   m_Layer: 0
   m_Name: Thatching Grass_LOD0_Var16_uddmcgbia
   m_TagString: Untagged
@@ -84,20 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8499709744864315016
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 300957707270855202}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7118053884593743811, guid: 67e34881aaf4cb643aba74aa66a184db, type: 3}
 --- !u!1 &2659707953446509832
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,7 +94,6 @@ GameObject:
   - component: {fileID: 7393397954892537369}
   - component: {fileID: 5588667120545625606}
   - component: {fileID: 7759127948938294904}
-  - component: {fileID: 3533267206405216556}
   m_Layer: 0
   m_Name: Thatching Grass_LOD1_Var16_uddmcgbia
   m_TagString: Untagged
@@ -182,20 +166,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3533267206405216556
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2659707953446509832}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7647674883196588014, guid: 6bf2dd1c7de372f4592d570441faa6af, type: 3}
 --- !u!1 &6545459524013567893
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +177,6 @@ GameObject:
   - component: {fileID: 613616616794239370}
   - component: {fileID: 3699696575415848342}
   - component: {fileID: 5926991839486364687}
-  - component: {fileID: 7444788287048485441}
   m_Layer: 0
   m_Name: Thatching Grass_LOD2_Var16_uddmcgbia
   m_TagString: Untagged
@@ -280,20 +249,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7444788287048485441
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6545459524013567893}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8634570483289435928, guid: 1b7abbc005265c14aa65897e73a5daaf, type: 3}
 --- !u!1 &7140586836677633903
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +332,6 @@ GameObject:
   - component: {fileID: 2878064583807903552}
   - component: {fileID: 3865942245691312138}
   - component: {fileID: 4920235353479129746}
-  - component: {fileID: 5078185699331317025}
   m_Layer: 0
   m_Name: Thatching Grass_LOD3_Var16_uddmcgbia
   m_TagString: Untagged
@@ -450,20 +404,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5078185699331317025
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7542236190348613620}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -4074950000952378207, guid: 085e44c8cb230ea46935ce85652c7c76, type: 3}
 --- !u!1 &9056310117129382540
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +415,6 @@ GameObject:
   - component: {fileID: 4541744632688468986}
   - component: {fileID: 3287182858238817745}
   - component: {fileID: 3617012454566388006}
-  - component: {fileID: 4074759147669664870}
   m_Layer: 0
   m_Name: Thatching Grass_LOD4_Var16_uddmcgbia
   m_TagString: Untagged
@@ -548,17 +487,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4074759147669664870
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9056310117129382540}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8501364422477400077, guid: 76fef81dafc5c784f87105c6297bfe0b, type: 3}
